@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LastDeck></LastDeck>
+  <HideInBackground>false</HideInBackground>
+  <HideInMenu>false</HideInMenu>
+  <HideEnemyCards>false</HideEnemyCards>
+  <HideEnemyCardCount>false</HideEnemyCardCount>
+  <HidePlayerCardCount>false</HidePlayerCardCount>
+  <HideDrawChances>false</HideDrawChances>
+  <WindowHeight>684</WindowHeight>
+  <HearthstoneDirectory>C:\Program Files (x86)\Hearthstone</HearthstoneDirectory>
+  <ShowInTaskbar>false</ShowInTaskbar>
+</Config>
