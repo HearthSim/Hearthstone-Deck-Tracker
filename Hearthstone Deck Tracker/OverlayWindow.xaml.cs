@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
             Canvas.SetTop(LblDrawChance1, Height * 0.17 + ListViewPlayer.Height*0.95 );
             Canvas.SetLeft(LblDrawChance1, Width - (ListViewPlayer.Width / 2) - 5 - LblDrawChance1.ActualWidth/2 + LblDrawChance2.ActualWidth/2);
 
-            Canvas.SetTop(LblCardCount, Height * 0.17 + ListViewPlayer.Height - 20 + LblDrawChance1.ActualHeight / 2);
+            Canvas.SetTop(LblCardCount, Height * 0.17 + ListViewPlayer.Height*0.95 + 10);
             Canvas.SetLeft(LblCardCount, Width - ListViewPlayer.Width / 2 - 5 - LblCardCount.ActualWidth / 2);
 
             Canvas.SetTop(LblEnemyCardCount, Height * 0.17 + ListViewEnemy.Height*0.95);
