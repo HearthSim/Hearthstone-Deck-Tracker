@@ -24,7 +24,8 @@ namespace Hearthstone_Deck_Tracker
 
             ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
             ListViewEnemy.ItemsSource = _hearthstone.EnemyCards;
-
+            Scaling = 1.0;
+            OpponentScaling = 1.0;
 
         }
 
@@ -80,24 +81,41 @@ namespace Hearthstone_Deck_Tracker
 
         private void ReSizePosLists()
         {
-            ListViewEnemy.Height = 35 * ListViewEnemy.Items.Count * 1.07;
-            ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * 1.07;
+            if ((Height * 0.65 - (ListViewPlayer.Items.Count * 35 * Scaling)) < 5)
+            {
+                Scaling = (Height*0.65)/(ListViewPlayer.Items.Count*35 );
+            }
+            else if (Scaling < 1)
+            {
+                Scaling = 1;
+            }
+            ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling;
 
-            ListViewPlayer.Width = ListViewPlayer.ActualWidth;
+
+            if ((Height * 0.65 - (ListViewEnemy.Items.Count * 35 * OpponentScaling)) < 5)
+            {
+                OpponentScaling = (Height * 0.65) / (ListViewEnemy.Items.Count * 35);
+            }
+            else if (OpponentScaling < 1)
+            {
+                OpponentScaling = 1;
+            }
+            ListViewEnemy.Height = 35 * ListViewEnemy.Items.Count * OpponentScaling;
             
+
             Canvas.SetTop(ListViewEnemy, Height * 0.17);
             Canvas.SetTop(ListViewPlayer, Height * 0.17);
             Canvas.SetLeft(ListViewPlayer, Width - ListViewPlayer.Width - 5);
 
-            Canvas.SetTop(LblDrawChance2, Height * 0.17 + ListViewPlayer.ActualHeight + 2 - (ListViewPlayer.Items.Count * 4));
+            Canvas.SetTop(LblDrawChance2, Height * 0.17 + ListViewPlayer.Height*0.95 );
             Canvas.SetLeft(LblDrawChance2, Width - (ListViewPlayer.Width / 2) - LblDrawChance1.ActualWidth/2 - 5 - LblDrawChance2.ActualWidth / 2);
-            Canvas.SetTop(LblDrawChance1, Height * 0.17 + ListViewPlayer.ActualHeight + 2 - (ListViewPlayer.Items.Count *4));
+            Canvas.SetTop(LblDrawChance1, Height * 0.17 + ListViewPlayer.Height*0.95 );
             Canvas.SetLeft(LblDrawChance1, Width - (ListViewPlayer.Width / 2) - 5 - LblDrawChance1.ActualWidth/2 + LblDrawChance2.ActualWidth/2);
 
-            Canvas.SetTop(LblCardCount, Height * 0.17 + ListViewPlayer.Height + 2 + LblDrawChance1.ActualHeight / 2 - (ListViewPlayer.Items.Count *4));
+            Canvas.SetTop(LblCardCount, Height * 0.17 + ListViewPlayer.Height - 20 + LblDrawChance1.ActualHeight / 2);
             Canvas.SetLeft(LblCardCount, Width - ListViewPlayer.Width / 2 - 5 - LblCardCount.ActualWidth / 2);
 
-            Canvas.SetTop(LblEnemyCardCount, Height * 0.17 + ListViewEnemy.Height + 2 - (ListViewEnemy.Items.Count*4));
+            Canvas.SetTop(LblEnemyCardCount, Height * 0.17 + ListViewEnemy.Height*0.95);
             Canvas.SetLeft(LblEnemyCardCount, 5 + ListViewEnemy.Width / 2 - LblEnemyCardCount.ActualWidth / 2);
         
         }
@@ -137,5 +155,8 @@ namespace Hearthstone_Deck_Tracker
             SetRect(hsRect.top, hsRect.left, hsRect.right - hsRect.left, hsRect.bottom - hsRect.top);
             ReSizePosLists();
         }
+
+        public static double Scaling { get; set; }
+        public static double OpponentScaling { get; set; }
     }
 }

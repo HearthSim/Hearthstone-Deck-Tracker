@@ -17,6 +17,11 @@ namespace Hearthstone_Deck_Tracker
         public int Cost { get; set; }
         public int InHandCount;
 
+        public int Height
+        {
+            get { return (int) (OverlayWindow.Scaling*35); }
+        }
+
 
         public string GetPlayerClass
         {

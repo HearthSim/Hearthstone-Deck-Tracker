@@ -57,8 +57,8 @@
                     <Style TargetType="ListViewItem">
                         <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
                         <Setter Property="Background" Value="{Binding Background}" />
-                        <Setter Property="Height" Value="35" />
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Height" Value="{Binding Height}"></Setter>
                         <Setter Property="Margin" Value="0,-2,0,0"/>
                     </Style>
                     
