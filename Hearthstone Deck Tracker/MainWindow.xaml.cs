@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxHideOverlayInMenu_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideInMenu = true;
+            _config.HideInMenu = false;
             SaveConfigUpdateOverlay();
         }
 
