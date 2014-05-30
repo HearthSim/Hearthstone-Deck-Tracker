@@ -120,7 +120,7 @@
             <system:String>Warrior</system:String>
         </ComboBox>
         <Button x:Name="ButtonUseDeck" Content="Use Deck" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="168" Click="ButtonUseDeck_Click" Height="40" HorizontalAlignment="Left"/>
-        <CheckBox Name="CheckboxHideOverlayInMenu" Content="Highlight Overlay in Menu" HorizontalAlignment="Left" Margin="255,0,0,110" VerticalAlignment="Bottom" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
+        <CheckBox Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="255,0,0,110" VerticalAlignment="Bottom" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
         <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="255,0,0,90" VerticalAlignment="Bottom"/>
         <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="200,37,0,0" VerticalAlignment="Top" Width="50" Height="23" Click="BtnDeleteDeck_Click"/>
         <Label Content="Search:" HorizontalAlignment="Left" Margin="255,36,0,0" VerticalAlignment="Top" Width="47" Height="23"/>
