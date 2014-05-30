@@ -17,6 +17,18 @@ namespace Hearthstone_Deck_Tracker
             }
             return instance;
         }
+
+        public T LoadFromString(string xmlString)
+        {
+            T instance;
+            using (TextReader reader = new StringReader(xmlString))
+            {
+                XmlSerializer xml = new XmlSerializer(Type);
+                instance = (T)xml.Deserialize(reader);
+            }
+            return instance;
+        }
+
         public void Save(string path, object obj)
         {
             using (TextWriter writer = new StreamWriter(path))

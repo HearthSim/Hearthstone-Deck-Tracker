@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker
         {
             InitializeComponent();
 
+            Helper.CheckForUpdates();
+
             //check for log config and create if not existing
             if (!File.Exists(_logConfigPath))
             {

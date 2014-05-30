@@ -82,6 +82,7 @@
     <Compile Include="Hearthstone.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="SerializableVersion.cs" />
     <Compile Include="User32.cs" />
     <Compile Include="XmlManager.cs" />
     <Page Include="MainWindow.xaml">
@@ -1281,6 +1282,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PlayerDecks.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
