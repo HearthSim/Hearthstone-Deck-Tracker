@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -16,6 +17,12 @@ namespace Hearthstone_Deck_Tracker
         private readonly Config _config;
         private Hearthstone _hearthstone;
 
+        //these are for people having issues with the overlay not displaying on the window.
+        private int _offsetX;
+        private int _offsetY;
+        private int _customHeight;
+        private int _customWidth;
+
         public OverlayWindow(Config config, Hearthstone hearthstone)
         {
             InitializeComponent();
@@ -26,7 +33,15 @@ namespace Hearthstone_Deck_Tracker
             ListViewEnemy.ItemsSource = _hearthstone.EnemyCards;
             Scaling = 1.0;
             OpponentScaling = 1.0;
-
+            ShowInTaskbar = _config.ShowInTaskbar;
+            if (_config.VisibleOverlay)
+            {
+                Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
+            }
+            _offsetX = _config.OffsetX;
+            _offsetY = _config.OffsetY;
+            _customWidth = _config.CustomWidth;
+            _customHeight = _config.CustomHeight;
         }
 
         private void SortViews()
@@ -71,12 +86,12 @@ namespace Hearthstone_Deck_Tracker
 
         private void SetRect(int top, int left, int width, int height)
         {
-            Top = top;
-            Left = left;
-            Width = width;
-            Height = height;
-            CanvasInfo.Height = height;
-            CanvasInfo.Width = width;
+            Top = top + _offsetY;
+            Left = left + _offsetX;
+            Width = (_customWidth == -1)?width:_customWidth;
+            Height = (_customHeight == -1)?height:_customHeight;
+            CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
+            CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
         }
 
         private void ReSizePosLists()

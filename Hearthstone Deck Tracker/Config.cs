@@ -13,5 +13,10 @@
         public string HearthstoneDirectory;
         public bool ShowInTaskbar;
         public bool HighlightCardsInHand;
+        public int OffsetX;
+        public int OffsetY;
+        public int CustomWidth;
+        public int CustomHeight;
+        public bool VisibleOverlay;
     }
 }

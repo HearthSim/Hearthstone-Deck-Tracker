@@ -25,7 +25,8 @@ namespace Hearthstone_Deck_Tracker
         OpponentSecretTrigger,
         OpponentDeckDiscard,
         OpponentHandDiscard,
-        PlayerGet
+        PlayerGet,
+        OpponentPlayToHand
     };
 
     public class CardMovementArgs : EventArgs
@@ -232,6 +233,13 @@ namespace Hearthstone_Deck_Tracker
                         case "OPPOSING SECRET":
                             //opponent secret triggered
                             CardMovement(this, new CardMovementArgs(CardMovementType.OpponentSecretTrigger, id));
+                            break;
+                        case "OPPOSING PLAY":
+                            if (to == "OPPOSING HAND")
+                            {
+                                //card from play back to hand (sap/brew)
+                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlayToHand, id));
+                            }
                             break;
                         default:
                             if (to == "OPPOSING HAND")

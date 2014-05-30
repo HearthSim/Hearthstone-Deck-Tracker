@@ -255,6 +255,9 @@ namespace Hearthstone_Deck_Tracker
                         case CardMovementType.OpponentDeckDiscard:
                             HandleOpponentDeckDiscard();
                             break;
+                            case CardMovementType.OpponentPlayToHand:
+                            HandleOpponentPlayToHand(args.CardId);
+                            break;
                         default:
                             Console.WriteLine("Invalid card movement");
                             break;
@@ -263,7 +266,14 @@ namespace Hearthstone_Deck_Tracker
             _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
         }
 
+        
         #region Handle Events
+
+        private void HandleOpponentPlayToHand(string cardId)
+        {
+            _hearthstone.OpponentBackToHand(cardId);
+        }
+
         private void HandlePlayerGet(string cardId)
         {
             _hearthstone.PlayerGet(cardId);
@@ -815,7 +825,6 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             Height = _config.WindowHeight;
-            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.ShowInTaskbar = _config.ShowInTaskbar));
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
 
         }

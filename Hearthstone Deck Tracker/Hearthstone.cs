@@ -252,6 +252,20 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        internal void OpponentBackToHand(string cardId)
+        {
+            EnemyHandCount++;
+            if (EnemyCards.Any(c => c.Id == cardId))
+            {
+                var card = EnemyCards.First(c => c.Id == cardId);
+                EnemyCards.Remove(card);
+                card.Count--;
+                if (card.Count > 0)
+                {
+                    EnemyCards.Add(card);
+                }
+            }
+        }
         internal void EnemyHandDiscard()
         {
             EnemyHandCount--;
@@ -276,5 +290,6 @@ namespace Hearthstone_Deck_Tracker
             }
             EnemyCards.Add(card);
         }
+
     }
 }
