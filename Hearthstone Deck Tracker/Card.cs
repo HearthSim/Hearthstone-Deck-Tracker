@@ -15,6 +15,8 @@ namespace Hearthstone_Deck_Tracker
         private int? _count;
         public string Name { get; set; }
         public int Cost { get; set; }
+        public int InHandCount;
+
 
         public string GetPlayerClass
         {
@@ -32,11 +34,12 @@ namespace Hearthstone_Deck_Tracker
             get
             {
                 return Hearthstone.IsUsingPremade
-                           ? new SolidColorBrush((_count != 0) ? Colors.White : Colors.Gray)
+                    ?new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand) ? Colors.GreenYellow :  (_count != 0) ? Colors.White : Colors.Gray)
                            : ColorEnemy;
             }
         }
 
+       
         public SolidColorBrush ColorEnemy
         {
             get { return new SolidColorBrush(Colors.White); }

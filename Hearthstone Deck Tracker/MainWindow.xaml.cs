@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -42,9 +41,33 @@ namespace Hearthstone_Deck_Tracker
             Helper.CheckForUpdates();
 
             //check for log config and create if not existing
-            if (!File.Exists(_logConfigPath))
+            try
             {
-                File.Copy("log.config", _logConfigPath);
+                if (!File.Exists(_logConfigPath))
+                {
+                    File.Copy("log.config", _logConfigPath);
+                }
+                else
+                {
+                    //update log.config if newer
+                    var localFile = new FileInfo(_logConfigPath);
+                    var file = new FileInfo("log.config");
+                    if (file.LastWriteTime > localFile.LastWriteTime)
+                    {
+
+                        File.Copy("log.config", _logConfigPath, true);
+
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Console.WriteLine("Not authorized write " + _logConfigPath + ". Start as admin(?)");
+                Console.WriteLine(ex.Message);
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
             //load config
@@ -53,6 +76,14 @@ namespace Hearthstone_Deck_Tracker
             _config = _xmlManagerConfig.Load("config.xml");
 
             //load saved decks
+            if (!File.Exists("PlayerDecks.xml"))
+            {
+                //avoid overwriting decks file with new releases.
+                using (var sr = new StreamWriter("PlayerDecks.xml", false))
+                {
+                    sr.WriteLine("<Decks></Decks>");
+                }
+            }
             _xmlManager = new XmlManager<Decks> {Type = typeof (Decks)};
             _deckList = _xmlManager.Load("PlayerDecks.xml");
 
@@ -98,7 +129,7 @@ namespace Hearthstone_Deck_Tracker
             _logReader = new HsLogReader(_config.HearthstoneDirectory);
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
-            _logReader.Start();
+
 
             UpdateDbListView();
 
@@ -107,9 +138,10 @@ namespace Hearthstone_Deck_Tracker
 
             _initialized = true;
 
-
             UpdateDeckList();
             UseSelectedDeck();
+
+            _logReader.Start();
         }
 
         private void LogReaderOnGameStateChange(HsLogReader sender, GameStateArgs args)
@@ -188,7 +220,7 @@ namespace Hearthstone_Deck_Tracker
                     switch (args.MovementType)
                     {
                         case CardMovementType.PlayerGet:
-                            HandlePlayerGet();
+                            HandlePlayerGet(args.CardId);
                             break;
                         case CardMovementType.PlayerDraw:
                             HandlePlayerDraw(args.CardId);
@@ -232,9 +264,9 @@ namespace Hearthstone_Deck_Tracker
         }
 
         #region Handle Events
-        private void HandlePlayerGet()
+        private void HandlePlayerGet(string cardId)
         {
-            _hearthstone.PlayerGet();
+            _hearthstone.PlayerGet(cardId);
         }
 
         private void HandlePlayerDraw(string cardId)
@@ -446,6 +478,47 @@ namespace Hearthstone_Deck_Tracker
 
         #region stupid checkboxes
 
+        private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HighlightCardsInHand = true;
+            Hearthstone.HighlightCardsInHand = true;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxHighlightCardsInHand_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HighlightCardsInHand = false;
+            Hearthstone.HighlightCardsInHand = false;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxHideOverlayInMenu_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideInMenu = true;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxHideOverlayInMenu_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideInMenu = true;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxIncludeNeutral_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            UpdateDbListView();
+        }
+
+        private void CheckboxIncludeNeutral_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            UpdateDbListView();
+        }
         private void CheckboxHideDrawChances_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -711,7 +784,8 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (!card.Name.ToLower().Contains(TextBoxDBFilter.Text.ToLower())) continue;
                 if (ComboBoxFilterClass.SelectedItem.ToString() == "All" ||
-                    ComboBoxFilterClass.SelectedItem.ToString() == card.GetPlayerClass)
+                    ComboBoxFilterClass.SelectedItem.ToString() == card.GetPlayerClass ||
+                    (CheckboxIncludeNeutral.IsChecked.Value && card.GetPlayerClass == "Neutral"))
                 {
                     if (ComboBoxFilterMana.SelectedItem.ToString() == "All")
                         ListViewDB.Items.Add(card);
@@ -738,9 +812,14 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
             CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
             CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
+            CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
+            CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             Height = _config.WindowHeight;
             _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.ShowInTaskbar = _config.ShowInTaskbar));
+            Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
+
         }
+
 
 
     }

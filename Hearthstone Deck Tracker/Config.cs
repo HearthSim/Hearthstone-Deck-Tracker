@@ -12,5 +12,6 @@
         public int WindowHeight;
         public string HearthstoneDirectory;
         public bool ShowInTaskbar;
+        public bool HighlightCardsInHand;
     }
 }
