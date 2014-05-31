@@ -122,12 +122,15 @@ namespace Hearthstone_Deck_Tracker
             }
             else
             {
-                var deckCard = PlayerDeck.FirstOrDefault(x => x.Name != null && x.Name.Equals(card.Name));
-                
-                PlayerDeck.Remove(deckCard);
-                deckCard.Count--;
-                deckCard.InHandCount++;
-                PlayerDeck.Add(deckCard);
+                if (PlayerDeck.Any(c => c.Name == card.Name))
+                {
+                    var deckCard = PlayerDeck.FirstOrDefault(x => x.Name != null && x.Name.Equals(card.Name));
+
+                    PlayerDeck.Remove(deckCard);
+                    deckCard.Count--;
+                    deckCard.InHandCount++;
+                    PlayerDeck.Add(deckCard);
+                }
             }
             PlayerHandCount++;
         }
@@ -200,11 +203,14 @@ namespace Hearthstone_Deck_Tracker
             }
             else //PREMADE
             {
-                Card deckCard = PlayerDeck.FirstOrDefault(c => c.Name != null && c.Name == card.Name);
-                PlayerDeck.Remove(deckCard);
-                deckCard.Count++;
-                deckCard.InHandCount--;
-                PlayerDeck.Add(deckCard);
+                if (PlayerDeck.Any(c => c.Name == card.Name))
+                {
+                    Card deckCard = PlayerDeck.FirstOrDefault(c => c.Name != null && c.Name == card.Name);
+                    PlayerDeck.Remove(deckCard);
+                    deckCard.Count++;
+                    deckCard.InHandCount--;
+                    PlayerDeck.Add(deckCard);
+                }
             }
 
             PlayerHandCount--;
