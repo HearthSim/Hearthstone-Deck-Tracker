@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker
         private int _offsetY;
         private int _customHeight;
         private int _customWidth;
+        private double _maxDeckHeightPct;
 
         public OverlayWindow(Config config, Hearthstone hearthstone)
         {
@@ -42,6 +43,7 @@ namespace Hearthstone_Deck_Tracker
             _offsetY = _config.OffsetY;
             _customWidth = _config.CustomWidth;
             _customHeight = _config.CustomHeight;
+            _maxDeckHeightPct = (_config.MaxHeightPct > 0)? _config.MaxHeightPct : 0.65;
         }
 
         private void SortViews()
