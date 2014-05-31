@@ -165,6 +165,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void UpdatePosition()
         {
+            //hide the overlay depenting on options
+            EnableCanvas(!(_config.HideInBackground || _config.HideInMenu || _config.HideOverlay));
+
             var hsRect = new User32.Rect();
             User32.GetWindowRect(User32.FindWindow(null, "Hearthstone"), ref hsRect);
             SetRect(hsRect.top, hsRect.left, hsRect.right - hsRect.left, hsRect.bottom - hsRect.top);

@@ -23,10 +23,13 @@ namespace Hearthstone_Deck_Tracker
         private readonly Hearthstone _hearthstone;
         private readonly bool _initialized;
         private readonly HsLogReader _logReader;
-        private readonly Thread _otherThread;
+        private readonly Thread _updateThread;
         private readonly OverlayWindow _overlay;
+        private readonly PlayerWindow _playerWindow;
+        private readonly OpponentWindow _opponentWindow;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
+        private readonly OptionsWindow _options;
         private int _cardsInDeck;
 
         private readonly string _logConfigPath =
@@ -45,17 +48,17 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (!File.Exists(_logConfigPath))
                 {
-                    File.Copy("log.config", _logConfigPath);
+                    File.Copy("Files/log.config", _logConfigPath);
                 }
                 else
                 {
                     //update log.config if newer
                     var localFile = new FileInfo(_logConfigPath);
-                    var file = new FileInfo("log.config");
+                    var file = new FileInfo("Files/log.config");
                     if (file.LastWriteTime > localFile.LastWriteTime)
                     {
 
-                        File.Copy("log.config", _logConfigPath, true);
+                        File.Copy("Files/log.config", _logConfigPath, true);
 
                     }
                 }
@@ -102,8 +105,11 @@ namespace Hearthstone_Deck_Tracker
 
 
             //create overlay
-            _overlay = new OverlayWindow(_config, _hearthstone) {Topmost = true};
+            _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
             _overlay.Show();
+
+            _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
+            _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
 
             LoadConfig();
 
@@ -133,8 +139,10 @@ namespace Hearthstone_Deck_Tracker
 
             UpdateDbListView();
 
-            _otherThread = new Thread(Update);
-            _otherThread.Start();
+            _options = new OptionsWindow(_config, _overlay, _xmlManagerConfig, _playerWindow, _opponentWindow);
+
+            _updateThread = new Thread(Update);
+            _updateThread.Start();
 
             _initialized = true;
 
@@ -371,6 +379,18 @@ namespace Hearthstone_Deck_Tracker
                 RemoveCardFromDeck(card);
             }
         }
+
+        private void CheckboxIncludeNeutral_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            UpdateDbListView();
+        }
+
+        private void CheckboxIncludeNeutral_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            UpdateDbListView();
+        }
        
         private void ComboBoxFilterMana_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -486,118 +506,18 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        #region stupid checkboxes
-
-        private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HighlightCardsInHand = true;
-            Hearthstone.HighlightCardsInHand = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHighlightCardsInHand_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HighlightCardsInHand = false;
-            Hearthstone.HighlightCardsInHand = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideOverlayInMenu_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideInMenu = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideOverlayInMenu_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideInMenu = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxIncludeNeutral_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            UpdateDbListView();
-        }
-
-        private void CheckboxIncludeNeutral_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            UpdateDbListView();
-        }
-        private void CheckboxHideDrawChances_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideDrawChances = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideDrawChances_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideDrawChances = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHidePlayerCardCounter_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HidePlayerCardCount = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHidePlayerCardCounter_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HidePlayerCardCount = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideEnemyCardCounter_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideEnemyCardCount = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideEnemyCardCounter_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideEnemyCardCount = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideEnemyCards_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideEnemyCards = true;
-            SaveConfigUpdateOverlay();
-        }
-
-        private void CheckboxHideEnemyCards_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.HideEnemyCards = false;
-            SaveConfigUpdateOverlay();
-        }
-
-        #endregion
-
         private void Window_Closing_1(object sender, CancelEventArgs e)
         {
             try
             {
-                //save config
-                _config.HideInBackground = CheckboxHideOverlayInBackground.IsChecked.Value;
-                _xmlManagerConfig.Save("config.xml", _config);
-
                 _overlay.Close();
                 _logReader.Stop();
-                _otherThread.Abort();
+                _updateThread.Abort();
+                _options.Shutdown();
+                _playerWindow.Shutdown();
+                _opponentWindow.Shutdown();
+                _xmlManagerConfig.Save("config.xml", _config);
+
             }
             catch (Exception)
             {
@@ -677,34 +597,13 @@ namespace Hearthstone_Deck_Tracker
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             BtnSaveDeck.Content = "Save*";
         }
-
-        private void SaveConfigUpdateOverlay()
-        {
-            _xmlManagerConfig.Save("config.xml", _config);
-            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
-        }
-
+        
         private void Update()
         {
             while (true)
             {
                 _overlay.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    bool hide1 = false;
-                    bool hide2 = false;
-                    //hide in background depenting on option
-
-                    if (CheckboxHideOverlayInBackground.IsChecked.Value)
-                    {
-                        hide1 = !User32.IsForegroundWindow("Hearthstone");
-                    }
-
-                    if (CheckboxHideOverlayInMenu.IsChecked.Value)
-                    {
-                        hide2 = _hearthstone.IsInMenu;
-                    }
-
-                    _overlay.EnableCanvas(!(hide1 || hide2));
                     _overlay.UpdatePosition();
                 }));
                 Thread.Sleep(100);
@@ -817,16 +716,15 @@ namespace Hearthstone_Deck_Tracker
             if (ComboBoxDecks.Items.Contains(_config.LastDeck))
                 ComboBoxDecks.SelectedItem = _config.LastDeck;
 
-            CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
-            CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
-            CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
-            CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
-            CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
-            CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
-            CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
 
+        }
+
+        private void BtnOptions_Click(object sender, RoutedEventArgs e)
+        {
+            _options.Show();
+            _options.Activate();
         }
 
 

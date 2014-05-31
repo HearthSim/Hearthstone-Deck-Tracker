@@ -21,6 +21,15 @@ namespace Hearthstone_Deck_Tracker
         {
             get { return (int) (OverlayWindow.Scaling*35); }
         }
+        public int PlayerWindowHeight
+        {
+            get { return (int)(PlayerWindow.Scaling * 35); }
+        }
+
+        public int OpponentWindowHeight
+        {
+            get { return (int)(OpponentWindow.Scaling * 35); }
+        }
 
 
         public string GetPlayerClass
@@ -77,7 +86,7 @@ namespace Hearthstone_Deck_Tracker
                     //card graphic
                     var group = new DrawingGroup();
                     group.Children.Add(
-                        new ImageDrawing(new BitmapImage(new Uri("images/" + cardFileName, UriKind.Relative)),
+                        new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
                                          new Rect(104, 0, 110, 35)));
 
 
@@ -87,10 +96,10 @@ namespace Hearthstone_Deck_Tracker
                             new BitmapImage(
                                 new Uri(
                                     (Rarity == "Legendary")
-                                        ? "images/frame_legendary.png"
+                                        ? "Images/frame_legendary.png"
                                         : ((_count >= 2)
-                                               ? "images/frame_2.png"
-                                               : "images/frame_1.png"),
+                                               ? "Images/frame_2.png"
+                                               : "Images/frame_1.png"),
                                     UriKind.Relative)),
                             new Rect(0, 0, 218, 35)));
 
@@ -98,7 +107,7 @@ namespace Hearthstone_Deck_Tracker
                     if (_count == 0)
                     {
                         group.Children.Add(
-                            new ImageDrawing(new BitmapImage(new Uri("images/dark.png", UriKind.Relative)),
+                            new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
                                              new Rect(0, 0, 218, 35)));
                     }
 

@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void LoadCardDb()
         {
-            var obj = JObject.Parse(File.ReadAllText("cardsDB.json"));
+            var obj = JObject.Parse(File.ReadAllText("Files/cardsDB.json"));
             foreach (var cardType in obj)
             {
                 if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&

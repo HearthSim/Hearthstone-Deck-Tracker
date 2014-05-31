@@ -51,7 +51,7 @@
             </ListView.Resources>
         </ListView>
 
-        <ListView Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,64,0,150" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left">
+        <ListView Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,64,0,55" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="cost" Width="28">
@@ -119,17 +119,11 @@
             <system:String>Warlock</system:String>
             <system:String>Warrior</system:String>
         </ComboBox>
-        <Button x:Name="ButtonUseDeck" Content="Use Deck" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="168" Click="ButtonUseDeck_Click" Height="40" HorizontalAlignment="Left"/>
-        <CheckBox Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="255,0,0,110" VerticalAlignment="Bottom" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
-        <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="255,0,0,90" VerticalAlignment="Bottom"/>
+        <Button x:Name="ButtonUseDeck" Content="Use Deck" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="240" Click="ButtonUseDeck_Click" Height="40" HorizontalAlignment="Left"/>
         <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="200,37,0,0" VerticalAlignment="Top" Width="50" Height="23" Click="BtnDeleteDeck_Click"/>
         <Label Content="Search:" HorizontalAlignment="Left" Margin="255,36,0,0" VerticalAlignment="Top" Width="47" Height="23"/>
-        <CheckBox Name="CheckboxHideEnemyCards" Content="Hide Enemy Cards" HorizontalAlignment="Left" Margin="255,0,0,10" VerticalAlignment="Bottom" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
-        <CheckBox Name="CheckboxHideEnemyCardCounter" Content="Hide Enemy Card Counter" HorizontalAlignment="Left" Margin="255,0,0,30" VerticalAlignment="Bottom" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
-        <CheckBox Name="CheckboxHidePlayerCardCounter" Content="Hide Player Card Counter" HorizontalAlignment="Left" Margin="255,0,0,50" VerticalAlignment="Bottom" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-        <CheckBox Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="255,0,0,70" VerticalAlignment="Bottom" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
-        <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="No Deck" Margin="183,0,0,10" VerticalAlignment="Bottom" Width="67" Click="ButtonNoDeck_Click" Height="40" HorizontalAlignment="Left"/>
+        <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="No Deck" Margin="255,0,0,10" VerticalAlignment="Bottom" Width="67" Click="ButtonNoDeck_Click" Height="40" HorizontalAlignment="Left"/>
         <CheckBox Name="CheckboxIncludeNeutral" Content="Incl. Neutral" HorizontalAlignment="Left" Margin="409,14,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxIncludeNeutral_Checked" Unchecked="CheckboxIncludeNeutral_Unchecked"/>
-        <CheckBox Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="255,0,0,130" VerticalAlignment="Bottom" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+        <Button Name="BtnOptions" Content="Options" HorizontalAlignment="Left" Margin="327,0,0,10" VerticalAlignment="Bottom" Width="166" Height="40" Click="BtnOptions_Click"/>
     </Grid>
 </Window>

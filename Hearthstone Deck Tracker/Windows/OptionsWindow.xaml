@@ -1,0 +1,18 @@
+﻿<Window x:Class="Hearthstone_Deck_Tracker.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Options" Height="270" Width="229" Background="DarkGray" >
+    <Grid>
+        <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
+        <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
+        <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Enemy Cards" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+        <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Enemy Card Counter" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
+        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Player Card Counter" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+        <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+        <Button Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Width="196" Click="BtnShowWindows_Click" Height="33"/>
+        <CheckBox Name="CheckboxHideOverlay" Content="Hide Overlay (completely)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
+        <CheckBox Name="CheckboxWindowsTopmost" Content="Additional Windows Topmost" HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
+
+    </Grid>
+</Window>
