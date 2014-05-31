@@ -71,24 +71,20 @@ namespace Hearthstone_Deck_Tracker
                 {
                     string cardFileName = Name.ToLower().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
 
-                    if (!File.Exists("Images/" + cardFileName))
-                    {
-                        return new ImageBrush();
-                    }
-
-
-                    // stack images
-                    System.Reflection.Assembly.GetEntryAssembly()
-                          .GetManifestResourceStream("Hearthstone_Deck_Tracker.Resouces." + cardFileName + ".png");
-
-
-
-                    //card graphic
+                    //if (!File.Exists("Images/" + cardFileName))
+                    //{
+                    //    return new ImageBrush();
+                    //}
+                    
+                   //card graphic
                     var group = new DrawingGroup();
-                    group.Children.Add(
-                        new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
-                                         new Rect(104, 0, 110, 35)));
 
+                    if (File.Exists("Images/" + cardFileName))
+                    {
+                        group.Children.Add(
+                            new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
+                                             new Rect(104, 0, 110, 35)));
+                    }
 
                     //frame
                     group.Children.Add(

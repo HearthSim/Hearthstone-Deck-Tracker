@@ -221,13 +221,13 @@ namespace Hearthstone_Deck_Tracker
                             if (to == "OPPOSING HAND")
                             {
                                 //opponent draw
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, string.Empty));
+                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
                             }
                             else
                             {
                                 //opponent discard from deck
                                 CardMovement(this,
-                                             new CardMovementArgs(CardMovementType.OpponentDeckDiscard, string.Empty));
+                                             new CardMovementArgs(CardMovementType.OpponentDeckDiscard, id));
                             }
                             break;
                         case "OPPOSING SECRET":
