@@ -20,4 +20,5 @@
   <OpponentWindowHeight>0</OpponentWindowHeight>
   <WindowsTopmost>false</WindowsTopmost>
   <WindowsBackgroundHex></WindowsBackgroundHex>
+  <MaxHeightPct>0.65</MaxHeightPct>
 </Config>

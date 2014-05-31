@@ -96,9 +96,9 @@ namespace Hearthstone_Deck_Tracker
 
         private void ReSizePosLists()
         {
-            if ((Height * 0.65 - (ListViewPlayer.Items.Count * 35 * Scaling)) < 5)
+            if ((Height * _config.MaxHeightPct - (ListViewPlayer.Items.Count * 35 * Scaling)) < 5)
             {
-                Scaling = (Height*0.65)/(ListViewPlayer.Items.Count*35 );
+                Scaling = (Height * _config.MaxHeightPct) / (ListViewPlayer.Items.Count * 35);
             }
             else if (Scaling < 1)
             {
@@ -107,9 +107,9 @@ namespace Hearthstone_Deck_Tracker
             ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling;
 
 
-            if ((Height * 0.65 - (ListViewEnemy.Items.Count * 35 * OpponentScaling)) < 5)
+            if ((Height * _config.MaxHeightPct - (ListViewEnemy.Items.Count * 35 * OpponentScaling)) < 5)
             {
-                OpponentScaling = (Height * 0.65) / (ListViewEnemy.Items.Count * 35);
+                OpponentScaling = (Height * _config.MaxHeightPct) / (ListViewEnemy.Items.Count * 35);
             }
             else if (OpponentScaling < 1)
             {

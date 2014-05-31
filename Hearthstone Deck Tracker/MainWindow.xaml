@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Hearthstone_Deck_Tracker.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
-        Title="Hearthstone Deck Tracker" Height="714" Width="512" Closing="Window_Closing_1" Background="DarkGray" SizeChanged="Window_SizeChanged_1" >
+        Title="Hearthstone Deck Tracker" Height="714" Width="512" Closing="Window_Closing_1" Background="DarkGray" SizeChanged="Window_SizeChanged_1" Icon="Images/HearthstoneDeckTracker.ico" >
     <Grid>
         <TextBox Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="307,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="187" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown"/>
         <Button Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="145,37,0,0" VerticalAlignment="Top" Width="50" Click="BtnSaveDeck_Click" Height="23"/>

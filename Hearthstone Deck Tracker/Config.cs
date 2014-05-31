@@ -23,5 +23,6 @@
         public int OpponentWindowHeight;
         public bool WindowsTopmost;
         public string WindowsBackgroundHex;
+        public double MaxHeightPct;
     }
 }
