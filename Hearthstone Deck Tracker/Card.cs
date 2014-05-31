@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     string cardFileName = Name.ToLower().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
 
-                    if (!File.Exists("images/" + cardFileName))
+                    if (!File.Exists("Images/" + cardFileName))
                     {
                         return new ImageBrush();
                     }

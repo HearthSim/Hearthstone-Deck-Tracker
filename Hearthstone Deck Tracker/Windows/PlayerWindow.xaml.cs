@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -13,14 +14,31 @@ namespace Hearthstone_Deck_Tracker
         public static double Scaling = 1.0;
         private bool _appIsClosing;
         private readonly Config _config;
+
         public PlayerWindow(Config config, ObservableCollection<Card> playerDeck)
         {
             InitializeComponent();
             _config = config;
             ListViewPlayer.ItemsSource = playerDeck;
             playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
-            Height = (_config.PlayerWindowHeight == 0)?400:_config.PlayerWindowHeight;
+            Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
             Topmost = _config.WindowsTopmost;
+            if (_config.WindowsBackgroundHex != "")
+            {
+                try
+                {
+                    var convertFromString = ColorConverter.ConvertFromString(_config.WindowsBackgroundHex);
+                    if (convertFromString != null)
+                    {
+                        var bgColor = (Color) convertFromString;
+                        ListViewPlayer.Background = new SolidColorBrush(bgColor);
+                    }
+                }
+                catch (Exception)
+                {
+                    //... no valid hex
+                }
+            }
         }
 
         private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

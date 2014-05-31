@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -20,7 +21,23 @@ namespace Hearthstone_Deck_Tracker
             ListViewOpponent.ItemsSource = opponentDeck;
             opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
             Height = (_config.OpponentWindowHeight == 0) ? 400 : _config.OpponentWindowHeight;
-            Topmost = _config.WindowsTopmost;
+            Topmost = _config.WindowsTopmost; 
+            if (_config.WindowsBackgroundHex != "")
+            {
+                try
+                {
+                    var convertFromString = ColorConverter.ConvertFromString(_config.WindowsBackgroundHex);
+                    if (convertFromString != null)
+                    {
+                        var bgColor = (Color)convertFromString;
+                        ListViewOpponent.Background = new SolidColorBrush(bgColor);
+                    }
+                }
+                catch (Exception)
+                {
+                    //... no valid hex
+                }
+            }
         }
 
         private void OpponentDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

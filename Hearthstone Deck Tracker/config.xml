@@ -16,4 +16,8 @@
   <CustomWidth>-1</CustomWidth>
   <CustomHeight>-1</CustomHeight>
   <VisibleOverlay>false</VisibleOverlay>
+  <PlayerWindowHeight>0</PlayerWindowHeight>
+  <OpponentWindowHeight>0</OpponentWindowHeight>
+  <WindowsTopmost>false</WindowsTopmost>
+  <WindowsBackgroundHex></WindowsBackgroundHex>
 </Config>

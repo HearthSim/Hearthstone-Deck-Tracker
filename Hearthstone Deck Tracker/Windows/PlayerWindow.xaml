@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Hearthstone_Deck_Tracker.PlayerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="PlayerWindow" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="Black" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" WindowStyle="ToolWindow">
+        Title="Player" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="Black" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1">
     <Grid Name="WindowGrid">
         <ListView Name="ListViewPlayer" Background="#FF4B4B4B" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
             <ListView.View>
