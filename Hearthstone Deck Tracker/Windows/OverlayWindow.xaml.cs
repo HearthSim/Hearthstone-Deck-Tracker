@@ -50,9 +50,11 @@ namespace Hearthstone_Deck_Tracker
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewPlayer.ItemsSource);
             view.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewEnemy.ItemsSource);
             view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 

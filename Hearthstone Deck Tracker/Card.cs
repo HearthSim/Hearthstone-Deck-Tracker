@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker
         public string Id;
         public string PlayerClass;
         public string Rarity;
-        public string Type;
+        public string Type { get; set; }
         private int? _count;
         public string Name { get; set; }
         public int Cost { get; set; }

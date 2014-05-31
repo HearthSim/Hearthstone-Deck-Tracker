@@ -575,6 +575,7 @@ namespace Hearthstone_Deck_Tracker
             ButtonUseDeck.Content = "Use Deck (" + (++_cardsInDeck) + ")";
             var view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDeck.Items);
             view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             BtnSaveDeck.Content = "Save*";
 
@@ -594,6 +595,7 @@ namespace Hearthstone_Deck_Tracker
             ButtonUseDeck.Content = "Use Deck (" + (--_cardsInDeck) + ")";
             var view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDeck.Items);
             view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             BtnSaveDeck.Content = "Save*";
         }
@@ -661,6 +663,7 @@ namespace Hearthstone_Deck_Tracker
                 ButtonUseDeck.Content = "Use Deck (" + (_cardsInDeck) + ")";
                 var view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDeck.Items);
                 view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
                 view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
                 _config.LastDeck = deck.Name;
@@ -708,6 +711,7 @@ namespace Hearthstone_Deck_Tracker
 
             var view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDB.Items);
             view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
