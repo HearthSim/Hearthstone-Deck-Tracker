@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
     /// <summary>
     /// Interaction logic for OptionsWindow.xaml
     /// </summary>
-    public partial class OptionsWindow : Window
+    public partial class OptionsWindow
     {
         private readonly Config _config;
         private readonly OverlayWindow _overlay;

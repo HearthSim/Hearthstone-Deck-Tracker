@@ -57,12 +57,20 @@
     <ApplicationIcon>Images\HearthstoneDeckTracker.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro, Version=0.13.1.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -81,6 +89,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Card.cs" />
+    <Compile Include="NewMainWindow.xaml.cs">
+      <DependentUpon>NewMainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Decks.cs" />
     <Compile Include="Hearthstone.cs" />
     <Compile Include="Helper.cs" />
@@ -97,6 +108,10 @@
     <Compile Include="SerializableVersion.cs" />
     <Compile Include="User32.cs" />
     <Compile Include="XmlManager.cs" />
+    <Page Include="NewMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

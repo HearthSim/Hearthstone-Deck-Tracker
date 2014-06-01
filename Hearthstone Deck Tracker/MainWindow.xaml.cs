@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -9,6 +10,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 
 namespace Hearthstone_Deck_Tracker
@@ -179,8 +183,8 @@ namespace Hearthstone_Deck_Tracker
                         {
                             var deck =
                                 firstOrDefault.Cards;
-                            if (deck != null)
-                                _hearthstone.SetPremadeDeck(new List<Card>(deck));
+                            //if (deck != null)
+                               // _hearthstone.SetPremadeDeck(new List<Card>(deck));
                         }
                     }
                     _hearthstone.IsInMenu = false;
@@ -204,8 +208,8 @@ namespace Hearthstone_Deck_Tracker
                         {
                             var deck =
                                 firstOrDefault.Cards;
-                            if (deck != null)
-                                _hearthstone.SetPremadeDeck(new List<Card>(deck));
+                          //  if (deck != null)
+                            //    _hearthstone.SetPremadeDeck(new List<Card>(deck));
                         }
                     }
                     else
@@ -456,7 +460,7 @@ namespace Hearthstone_Deck_Tracker
         private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
             var deck = new Deck();
-            deck.Cards = new List<Card>();
+          //  deck.Cards = new List<Card>();
             if (ComboBoxDecks.SelectedItem.ToString() == "Create New")
             {
                 deck.Name = TextBoxDeckName.Text;
@@ -616,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
         {
 
             var deck = new Deck();
-            deck.Cards = new List<Card>();
+           // deck.Cards = new List<Card>();
             if (ComboBoxDecks.SelectedItem.ToString() == "Create New")
             {
                 deck.Name = TextBoxDeckName.Text;
@@ -729,6 +733,10 @@ namespace Hearthstone_Deck_Tracker
         {
             _options.Show();
             _options.Activate();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
         }
 
 

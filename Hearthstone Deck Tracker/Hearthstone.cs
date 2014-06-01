@@ -92,13 +92,14 @@ namespace Hearthstone_Deck_Tracker
                     select card).ToList();
         }
 
-        public void SetPremadeDeck(List<Card> cards)
+        public void SetPremadeDeck(ObservableCollection<Card> cards)
         {
             PlayerDeck.Clear();
             foreach (var card in cards)
             {
-                PlayerDeck.Add(card);
+               PlayerDeck.Add(card);
             }
+            //PlayerDeck = cards;
             IsUsingPremade = true;
         }
 

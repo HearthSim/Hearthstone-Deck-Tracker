@@ -1,0 +1,209 @@
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.NewMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Hearthstone Deck Tracker" Height="685" Width="514" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" >
+    <Grid>
+        <TabControl Name="TabControlTracker" Height="auto">
+            <TabItem Header="My Decks">
+                <Grid Background="#FFE5E5E5">
+                    <ListView Name="ListViewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,40,0,10" HorizontalAlignment="Left" Width="240" Height="auto" Panel.ZIndex="4">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="cost" Width="28">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}">
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="{Binding Background}" />
+                                <Setter Property="Height" Value="35" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0,0,0,0"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                    </ListView>
+                    <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="375,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
+                    <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="240" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
+                    <ListBox Name="ListboxDecks" Background="DimGray" HorizontalAlignment="Left" Height="auto" Width="240" SelectionChanged="ListboxDecks_SelectionChanged" Margin="10,40,0,10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="45" Margin="-2,2,3,2">
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="{Binding ClassColor}" Offset="0"/>
+                                            <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black"></Label>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="New Deck">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
+
+                    <ListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="{Binding Background}" />
+                                <Setter Property="Height" Value="35" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0,0,0,0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                						Value="True">
+                                        <Setter Property="Background"
+                							Value="{Binding Background}" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected"
+                						Value="True">
+                                        <Setter Property="Background"
+                							Value="{Binding Background}" />
+                                        <Setter Property="BorderBrush"
+                							Value="Blue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="cost" Width="28">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Cost}" TextAlignment="Center" FontSize="18"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ComboBox x:Name="ComboBoxFilterMana" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="304,10,0,0" VerticalAlignment="Top" Width="50" SelectedIndex="0" SelectionChanged="ComboBoxFilterMana_SelectionChanged" Panel.ZIndex="4">
+                        <system:String>All</system:String>
+                        <system:String>0</system:String>
+                        <system:String>1</system:String>
+                        <system:String>2</system:String>
+                        <system:String>3</system:String>
+                        <system:String>4</system:String>
+                        <system:String>5</system:String>
+                        <system:String>6</system:String>
+                        <system:String>7</system:String>
+                        <system:String>8</system:String>
+                        <system:String>9+</system:String>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="137" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
+                        <system:String>Select a Class</system:String>
+                        <system:String>Druid</system:String>
+                        <system:String>Hunter</system:String>
+                        <system:String>Mage</system:String>
+                        <system:String>Paladin</system:String>
+                        <system:String>Priest</system:String>
+                        <system:String>Rogue</system:String>
+                        <system:String>Shaman</system:String>
+                        <system:String>Warlock</system:String>
+                        <system:String>Warrior</system:String>
+                    </ComboBox>
+                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
+                    <Button x:Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="98" Click="BtnSaveDeck_Click" Height="23" Panel.ZIndex="3"/>
+                    <ListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" MouseDoubleClick="ListViewNewDeck_MouseDoubleClick" HorizontalAlignment="Left" Width="240" Height="auto">
+                        <ListView.Resources>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="{Binding Background}" />
+                                <Setter Property="Height" Value="35" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Margin" Value="0,0,0,0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver"
+                						Value="True">
+                                        <Setter Property="Background"
+                							Value="{Binding Background}" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected"
+                						Value="True">
+                                        <Setter Property="Background"
+                							Value="{Binding Background}" />
+                                        <Setter Property="BorderBrush"
+                							Value="Blue" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="cost" Width="28">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ComboBox Name="ComboboxNeutral" HorizontalAlignment="Left" Margin="359,10,0,0" VerticalAlignment="Top" Width="137" SelectedIndex="0" SelectionChanged="ComboboxNeutral_SelectionChanged" Panel.ZIndex="5">
+                        <system:String>Class + Neutral</system:String>
+                        <system:String>Class Only</system:String>
+                        <system:String>Neutral Only</system:String>
+                    </ComboBox>
+                    <Label Content="Mana:" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top"/>
+                    <Button x:Name="BtnClearNewDeck" Content="Clear" HorizontalAlignment="Left" Margin="152,11,0,0" VerticalAlignment="Top" Width="98" Height="23" Click="BtnClearNewDeck_Click" Panel.ZIndex="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Options">
+                <Grid>
+                    <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Opponent Cards" HorizontalAlignment="Left" Margin="20,284,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Opponent Card Counter" HorizontalAlignment="Left" Margin="20,261,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Player Card Counter" HorizontalAlignment="Left" Margin="20,151,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+                    <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="20,174,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+                    <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="20,197,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+                    <Button x:Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="255,41,0,0" VerticalAlignment="Top" Width="233" Click="BtnShowWindows_Click" Height="41"/>
+                    <CheckBox x:Name="CheckboxHideOverlay" Content="Hide Overlay (completely)" HorizontalAlignment="Left" Margin="20,41,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
+                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional Windows Topmost" HorizontalAlignment="Left" Margin="265,87,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
+                    <Label Content="General:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Player:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top"/>
+
+                </Grid>
+                
+            </TabItem>
+        </TabControl>
+    </Grid>
+</controls:MetroWindow>

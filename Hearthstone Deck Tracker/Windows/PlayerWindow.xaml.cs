@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker
     /// <summary>
     /// Interaction logic for PlayerWindow.xaml
     /// </summary>
-    public partial class PlayerWindow : Window
+    public partial class PlayerWindow
     {
         public static double Scaling = 1.0;
         private bool _appIsClosing;

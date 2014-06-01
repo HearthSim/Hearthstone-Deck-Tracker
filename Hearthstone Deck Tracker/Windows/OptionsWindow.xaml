@@ -1,7 +1,8 @@
-﻿<Window x:Class="Hearthstone_Deck_Tracker.OptionsWindow"
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.OptionsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Options" Height="270" Width="229" Background="DarkGray" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" >
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="Options" Height="270" Width="229" Background="DarkGray" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" >
     <Grid>
         <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
         <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
@@ -15,4 +16,4 @@
         <CheckBox Name="CheckboxWindowsTopmost" Content="Additional Windows Topmost" HorizontalAlignment="Left" Margin="10,208,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
 
     </Grid>
-</Window>
+</controls:MetroWindow>
