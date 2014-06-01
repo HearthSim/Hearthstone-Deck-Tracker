@@ -499,17 +499,6 @@ namespace Hearthstone_Deck_Tracker
             if (_newDeck.Cards.Contains(card))
             {
                 var cardInDeck = _newDeck.Cards.First(c => c.Name == card.Name);
-                if (cardInDeck.Count > 1 || cardInDeck.Rarity == "Legendary")
-                {
-                    if (
-                        MessageBox.Show(
-                            "Are you sure you want to add " + cardInDeck.Count + " of this card to the deck?\n(will not be displayed correctly)",
-                            "More than  " + cardInDeck.Count + " cards", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) !=
-                        MessageBoxResult.Yes)
-                    {
-                        return;
-                    }
-                }
                 _newDeck.Cards.Remove(cardInDeck);
                 cardInDeck.Count++;
                 _newDeck.Cards.Add(cardInDeck);

@@ -88,16 +88,23 @@ namespace Hearthstone_Deck_Tracker
 
                     //frame
                     group.Children.Add(
-                        new ImageDrawing(
-                            new BitmapImage(
-                                new Uri(
-                                    (Rarity == "Legendary")
-                                        ? "Images/frame_legendary.png"
-                                        : ((_count >= 2)
-                                               ? "Images/frame_2.png"
-                                               : "Images/frame_1.png"),
-                                    UriKind.Relative)),
+                        new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)),
                             new Rect(0, 0, 218, 35)));
+
+                    //extra info?
+                    if (_count >= 2 || Rarity == "Legendary")
+                    {
+                        group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)), new Rect(189, 6, 25, 24)));
+
+                        if (_count >= 2 && _count <= 9)
+                        {
+                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + _count + ".png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
+                        }
+                        else
+                        {
+                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
+                        }
+                    }
 
                     //dark overlay
                     if (_count == 0)
