@@ -13,11 +13,17 @@
                                 <GridViewColumn Header="cost" Width="28">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18"></TextBlock>
+                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT">
+                                            </TextBlock>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}">
+                                <GridViewColumn Header="name" Width="155">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock  Text="{Binding Name}" TextAlignment="Left" FontSize="12" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"></TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                             </GridView>
                         </ListView.View>
@@ -74,6 +80,7 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </Style>
                             <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="Background" Value="{Binding Background}" />
                                 <Setter Property="Height" Value="35" />
@@ -142,6 +149,7 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </Style>
                             <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
                                 <Setter Property="Foreground" Value="White" />
                                 <Setter Property="Background" Value="{Binding Background}" />
                                 <Setter Property="Height" Value="35" />

@@ -660,6 +660,7 @@
     <Content Include="Images\healing-touch.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\1553.ttf" />
     <Resource Include="Images\HearthstoneDeckTracker.ico" />
     <Content Include="Images\hellfire.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
