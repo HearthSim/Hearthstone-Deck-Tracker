@@ -639,6 +639,7 @@ namespace Hearthstone_Deck_Tracker
             if (selected == null)
                 return;
            _hearthstone.SetPremadeDeck(selected.Cards);
+            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.SortViews));
            Dispatcher.BeginInvoke(new Action(() =>
            {
                _hearthstone.PlayerHandCount = 0;

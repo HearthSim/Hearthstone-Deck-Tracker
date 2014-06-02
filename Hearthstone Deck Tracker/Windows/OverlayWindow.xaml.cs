@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -48,8 +49,18 @@ namespace Hearthstone_Deck_Tracker
             _maxDeckHeightPct = (_config.MaxHeightPct > 0)? _config.MaxHeightPct : 0.65;
         }
 
-        private void SortViews()
+        public void SortViews()
         {
+            SortCardCollection(ListViewPlayer.ItemsSource);
+            SortCardCollection(ListViewEnemy.ItemsSource);
+        }
+
+        private void SortCardCollection(IEnumerable collection)
+        {
+            var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
+            view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
+            view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
         private void SetEnemyCardCount(int cardCount)
@@ -57,10 +68,7 @@ namespace Hearthstone_Deck_Tracker
             //previous cardcout > current -> enemy played -> resort list
             if (_opponentCardCount > cardCount)
             {
-                CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewEnemy.ItemsSource);
-                view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-                view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                SortCardCollection(ListViewEnemy.ItemsSource);
             }
             _opponentCardCount = cardCount;
             LblEnemyCardCount.Content = "Cards in Hand: " + cardCount;
@@ -71,10 +79,8 @@ namespace Hearthstone_Deck_Tracker
             //previous < current -> draw
             if (_cardCount < cardCount)
             {
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewPlayer.ItemsSource);
-                view.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-                view.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-                view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                if(!Hearthstone.IsUsingPremade)
+                    SortCardCollection(ListViewPlayer.ItemsSource);
             }
             _cardCount = cardCount;
             LblCardCount.Content = "Cards in Hand: " + cardCount;
