@@ -29,6 +29,12 @@ namespace Hearthstone_Deck_Tracker
         OpponentPlayToHand
     };
 
+    public enum AnalyzingState
+    {
+        Start,
+        End
+    }
+
     public class CardMovementArgs : EventArgs
     {
         public CardMovementArgs(CardMovementType movementType, string cardId)
@@ -50,12 +56,23 @@ namespace Hearthstone_Deck_Tracker
 
         public GameState State { get; private set; }
     }
+    public class AnalyzingArgs : EventArgs
+    {
+        public AnalyzingArgs(AnalyzingState state)
+        {
+            State = state;
+        }
+
+        public AnalyzingState State { get; private set; }
+    }
 
     public class HsLogReader
     {
         public delegate void CardMovementHandler(HsLogReader sender, CardMovementArgs args);
 
         public delegate void GameStateHandler(HsLogReader sender, GameStateArgs args);
+
+        public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
 
         private readonly string _fullOutputPath;
         private Thread _analyzerThread;
@@ -90,6 +107,7 @@ namespace Hearthstone_Deck_Tracker
 
         public event CardMovementHandler CardMovement;
         public event GameStateHandler GameStateChange;
+        public event AnalyzingHandler Analyzing;
 
 
         private void ReadFile()
@@ -106,7 +124,9 @@ namespace Hearthstone_Deck_Tracker
 
                         using (var sr = new StreamReader(fs))
                         {
+                            Analyzing(this, new AnalyzingArgs(AnalyzingState.Start));
                             Analyze(sr.ReadToEnd());
+                            Analyzing(this, new AnalyzingArgs(AnalyzingState.End));
                         }
                     }
                 }

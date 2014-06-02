@@ -137,6 +137,7 @@ namespace Hearthstone_Deck_Tracker
             _logReader = new HsLogReader(_config.HearthstoneDirectory);
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
+            _logReader.Analyzing += LogReaderOnAnalyzing;
 
 
             UpdateDbListView();
@@ -153,6 +154,19 @@ namespace Hearthstone_Deck_Tracker
             UseDeck(ListboxDecks.SelectedItem as Deck);
 
             _logReader.Start();
+        }
+
+        private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
+        {
+            if (args.State == AnalyzingState.Start)
+            {
+                //indicate loading maybe
+            }
+            else if (args.State == AnalyzingState.End)
+            {
+                //reader done analyzing new stuff, update things
+                _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
+            }
         }
 
         private void LogReaderOnGameStateChange(HsLogReader sender, GameStateArgs args)
@@ -208,7 +222,6 @@ namespace Hearthstone_Deck_Tracker
                     _hearthstone.EnemyCards.Clear();
                     _hearthstone.EnemyHandCount = 0;
                 }));
-            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
 
         }
 
@@ -262,7 +275,6 @@ namespace Hearthstone_Deck_Tracker
                             break;
                     }
                 }));
-            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
         }
 
         
@@ -629,7 +641,6 @@ namespace Hearthstone_Deck_Tracker
            }));
            _logReader.Reset();
 
-           _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
         }
 
         private void UpdateDbListView()
