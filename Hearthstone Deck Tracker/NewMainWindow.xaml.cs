@@ -77,7 +77,17 @@ namespace Hearthstone_Deck_Tracker
             //load config
             _config = new Config();
             _xmlManagerConfig = new XmlManager<Config> {Type = typeof (Config)};
-            _config = _xmlManagerConfig.Load("config.xml");
+            try
+            {
+                _config = _xmlManagerConfig.Load("config.xml");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please overwrite config with the default one.", "Error loading config.xml");
+                Close();
+                return;
+            }
 
             //load saved decks
             if (!File.Exists("PlayerDecks.xml"))
@@ -89,14 +99,18 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
             _xmlManager = new XmlManager<Decks> {Type = typeof (Decks)};
-            _deckList = _xmlManager.Load("PlayerDecks.xml");
+            try
+            {
+                _deckList = _xmlManager.Load("PlayerDecks.xml");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete PlayerDecks.xml (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
+                Close();
+                return;
+            }
 
-            //add saved decks to gui
-            //foreach (var deck in _deckList.DecksList)
-           // {
-                //ComboBoxDecks.Items.Add(deck.Name);
-            //    ListboxDecks.Items.Add(deck);
-            //}
             ListboxDecks.ItemsSource = _deckList.DecksList;
 
 
@@ -539,7 +553,7 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.EnableCanvas(false)));
+                    _overlay.Dispatcher.BeginInvoke(new Action( () => _overlay.EnableCanvas(false)));
                 }
                 Thread.Sleep(_config.UpdateDelay);
             }
