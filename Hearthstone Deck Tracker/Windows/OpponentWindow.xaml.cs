@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker
         {
             Scale();
             ListViewOpponent.Items.Refresh();
+            Topmost = true;
         }
 
 
@@ -84,6 +85,12 @@ namespace Hearthstone_Deck_Tracker
         {
             _appIsClosing = true;
             Close();
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            if (!_config.WindowsTopmost)
+                Topmost = false;
         }
     }
 }

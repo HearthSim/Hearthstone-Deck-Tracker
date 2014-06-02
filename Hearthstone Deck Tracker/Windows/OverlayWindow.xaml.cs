@@ -169,6 +169,8 @@ namespace Hearthstone_Deck_Tracker
 
         public void UpdatePosition()
         {
+            Topmost = true;
+
             //hide the overlay depenting on options
             EnableCanvas(!(
                 (_config.HideInBackground && !User32.IsForegroundWindow("Hearthstone")) 
@@ -182,7 +184,6 @@ namespace Hearthstone_Deck_Tracker
             //this prevents that from happening. 
             if (hsRect.bottom - hsRect.top == 0)
             {
-                Console.WriteLine(hsRect.bottom - hsRect.top);
                 return;
             }
 

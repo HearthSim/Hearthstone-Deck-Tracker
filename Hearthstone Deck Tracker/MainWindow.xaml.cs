@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class NewMainWindow
+    public partial class MainWindow
     {
         private readonly Config _config;
         private readonly Decks _deckList;
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
             @"\Blizzard\Hearthstone\log.config";
 
 
-        public NewMainWindow()
+        public MainWindow()
         {
             InitializeComponent();
 
@@ -930,6 +930,21 @@ namespace Hearthstone_Deck_Tracker
                 if (string.IsNullOrEmpty(card.Name)) return;
                     AddCardToDeck(card);
             }
+        }
+
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
+            Topmost = true;
+            _overlay.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _overlay.Topmost = false;
+                    _overlay.Topmost = true;
+                }));
+        }
+
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
+            Topmost = false;
         }
 
     }
