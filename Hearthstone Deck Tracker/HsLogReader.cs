@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker
         public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
 
         private readonly string _fullOutputPath;
+        private readonly int _updateDelay;
         private Thread _analyzerThread;
 
         private readonly Regex _cardMovementRegex =
@@ -83,8 +84,9 @@ namespace Hearthstone_Deck_Tracker
         
         private long _previousSize;
 
-        public HsLogReader(string hsDirPath)
+        public HsLogReader(string hsDirPath, int updateDelay)
         {
+            _updateDelay = (updateDelay == 0) ? 100 : updateDelay;
             while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
             {
                 hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
@@ -130,7 +132,7 @@ namespace Hearthstone_Deck_Tracker
                         }
                     }
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(_updateDelay);
             }
         }
 

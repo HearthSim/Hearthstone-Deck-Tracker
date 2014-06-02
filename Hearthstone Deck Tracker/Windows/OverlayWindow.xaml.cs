@@ -177,6 +177,15 @@ namespace Hearthstone_Deck_Tracker
             
             var hsRect = new User32.Rect();
             User32.GetWindowRect(User32.FindWindow(null, "Hearthstone"), ref hsRect);
+
+            //hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is. 
+            //this prevents that from happening. 
+            if (hsRect.bottom - hsRect.top == 0)
+            {
+                Console.WriteLine(hsRect.bottom - hsRect.top);
+                return;
+            }
+
             SetRect(hsRect.top, hsRect.left, hsRect.right - hsRect.left, hsRect.bottom - hsRect.top);
             ReSizePosLists();
         }

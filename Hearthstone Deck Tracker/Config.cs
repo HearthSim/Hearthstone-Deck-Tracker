@@ -24,5 +24,6 @@
         public bool WindowsTopmost;
         public string WindowsBackgroundHex;
         public double MaxHeightPct;
+        public int UpdateDelay;
     }
 }

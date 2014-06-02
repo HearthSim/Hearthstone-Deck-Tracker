@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -28,7 +29,6 @@ namespace Hearthstone_Deck_Tracker
         private readonly OpponentWindow _opponentWindow;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
-        private readonly OptionsWindow _options;
         private Deck _newDeck;
         private bool _editingDeck;
         private bool _newContainsDeck;
@@ -134,16 +134,14 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //log reader
-            _logReader = new HsLogReader(_config.HearthstoneDirectory);
+            _logReader = new HsLogReader(_config.HearthstoneDirectory, _config.UpdateDelay);
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
             _logReader.Analyzing += LogReaderOnAnalyzing;
 
 
             UpdateDbListView();
-
-            _options = new OptionsWindow(_config, _overlay, _xmlManagerConfig, _playerWindow, _opponentWindow);
-
+            
             _updateThread = new Thread(Update);
             _updateThread.Start();
             ListboxDecks.SelectedItem = _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
@@ -473,7 +471,6 @@ namespace Hearthstone_Deck_Tracker
                 _overlay.Close();
                 _logReader.Stop();
                 _updateThread.Abort();
-                _options.Shutdown();
                 _playerWindow.Shutdown();
                 _opponentWindow.Shutdown();
                 _xmlManagerConfig.Save("config.xml", _config);
@@ -491,17 +488,6 @@ namespace Hearthstone_Deck_Tracker
           UpdateDeckList(new Deck());
           UseDeck(new Deck());
           Hearthstone.IsUsingPremade = false;
-
-            
-           /* Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    _hearthstone.PlayerDeck.Clear();
-                    _hearthstone.PlayerHandCount = 0;
-                    _hearthstone.EnemyCards.Clear();
-                    _hearthstone.EnemyHandCount = 0;
-                }));*/
-            
-            //
         }
 
         #endregion
@@ -544,11 +530,18 @@ namespace Hearthstone_Deck_Tracker
         {
             while (true)
             {
-                _overlay.Dispatcher.BeginInvoke(new Action(() =>
+                if (Process.GetProcessesByName("Hearthstone").Length == 1)
                 {
-                    _overlay.UpdatePosition();
-                }));
-                Thread.Sleep(100);
+                    _overlay.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            _overlay.UpdatePosition();
+                        }));
+                }
+                else
+                {
+                    _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.EnableCanvas(false)));
+                }
+                Thread.Sleep(_config.UpdateDelay);
             }
         }
 
@@ -582,7 +575,6 @@ namespace Hearthstone_Deck_Tracker
             _xmlManager.Save("PlayerDecks.xml", _deckList);
             BtnSaveDeck.Content = "Save";
 
-            //move to decks
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
 
@@ -601,7 +593,6 @@ namespace Hearthstone_Deck_Tracker
             _newDeck.Class = string.Empty;
             _newDeck.Name = string.Empty;
             _newContainsDeck = false;
-            //_newDeck.Cards.Clear();
         }
 
         private void UpdateDeckList(Deck selected)
