@@ -285,13 +285,6 @@ namespace Hearthstone_Deck_Tracker
                             break;
                     }
                 }
-                else if (logLine.StartsWith("[Asset]"))
-                {
-                    Regex assetReget = new Regex(@"\w*(name=(?<id>(\w*)))(\s)+\.*");
-                    if (!assetReget.IsMatch(logLine)) return;
-                    var id = assetReget.Match(logLine).Groups["id"].Value.Trim();
-                    Console.WriteLine(id);
-                }
             }
         }
 

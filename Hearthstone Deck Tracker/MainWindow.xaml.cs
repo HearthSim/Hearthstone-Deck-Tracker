@@ -555,6 +555,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     _overlay.Dispatcher.BeginInvoke(new Action( () => _overlay.EnableCanvas(false)));
                 }
+                
                 Thread.Sleep(_config.UpdateDelay);
             }
         }
@@ -935,11 +936,6 @@ namespace Hearthstone_Deck_Tracker
         private void MetroWindow_Activated(object sender, EventArgs e)
         {
             Topmost = true;
-            _overlay.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    _overlay.Topmost = false;
-                    _overlay.Topmost = true;
-                }));
         }
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)

@@ -22,6 +22,8 @@ namespace Hearthstone_Deck_Tracker
         private int _offsetY;
         private int _customHeight;
         private int _customWidth;
+        private int _cardCount;
+        private int _opponentCardCount;
         private double _maxDeckHeightPct;
 
         public OverlayWindow(Config config, Hearthstone hearthstone)
@@ -48,24 +50,34 @@ namespace Hearthstone_Deck_Tracker
 
         private void SortViews()
         {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewPlayer.ItemsSource);
-            view.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-            view.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-            view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewEnemy.ItemsSource);
-            view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-            view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
-        private void SetEnemyCardCount(int count)
+        private void SetEnemyCardCount(int cardCount)
         {
-            LblEnemyCardCount.Content = "Cards in Hand: " + count;
+            //previous cardcout > current -> enemy played -> resort list
+            if (_opponentCardCount > cardCount)
+            {
+                CollectionView view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewEnemy.ItemsSource);
+                view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
+                view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            }
+            _opponentCardCount = cardCount;
+            LblEnemyCardCount.Content = "Cards in Hand: " + cardCount;
         }
 
-        private void SetCardCount(int p, int cardsLeftInDeck)
+        private void SetCardCount(int cardCount, int cardsLeftInDeck)
         {
-            LblCardCount.Content = "Cards in Hand: " + p;
+            //previous < current -> draw
+            if (_cardCount < cardCount)
+            {
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewPlayer.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+                view.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
+                view.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            }
+            _cardCount = cardCount;
+            LblCardCount.Content = "Cards in Hand: " + cardCount;
             if (cardsLeftInDeck <= 0) return;
 
             if (Hearthstone.IsUsingPremade)
@@ -163,14 +175,11 @@ namespace Hearthstone_Deck_Tracker
 
             SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
             SetEnemyCardCount(_hearthstone.EnemyHandCount);
-            SortViews();
             ReSizePosLists();
         }
 
         public void UpdatePosition()
         {
-            Topmost = true;
-
             //hide the overlay depenting on options
             EnableCanvas(!(
                 (_config.HideInBackground && !User32.IsForegroundWindow("Hearthstone")) 
