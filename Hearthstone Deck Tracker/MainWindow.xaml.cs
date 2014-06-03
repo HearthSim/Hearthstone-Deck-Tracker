@@ -65,14 +65,23 @@ namespace Hearthstone_Deck_Tracker
                     }
                 }
             }
-            catch (UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException e)
             {
-                Console.WriteLine("Not authorized write " + _logConfigPath + ". Start as admin(?)");
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(
+                       e.Message + "\n\n" + e.InnerException +
+                       "\n\n Please restart the tracker as administrator",
+                       "Error writing log.config");
+                Close();
+                return;
             }
-            catch (IOException ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(
+                       e.Message + "\n\n" + e.InnerException +
+                       "\n\n What happend here? ",
+                       "Error writing log.config");
+                Close();
+                return;
             }
 
             //load config
