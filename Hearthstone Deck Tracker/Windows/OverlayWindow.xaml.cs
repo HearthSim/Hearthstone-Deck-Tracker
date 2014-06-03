@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker
 
 
             Canvas.SetTop(StackPanelOpponent, Height * _config.OpponentDeckTop / 100);
-            Canvas.SetLeft(StackPanelOpponent, _config.OpponentDeckLeft / 100); 
+            Canvas.SetLeft(StackPanelOpponent, Width * _config.OpponentDeckLeft / 100); 
 
 
 
@@ -168,8 +168,13 @@ namespace Hearthstone_Deck_Tracker
             User32.SetWindowExTransparent(hwnd);
         }
 
-        public void Update()
+        public void Update(bool refresh)
         {
+            if (refresh)
+            {
+                ListViewPlayer.Items.Refresh();
+                ListViewOpponent.Items.Refresh();
+            }
             if (_config.HideDrawChances)
             {
                 LblDrawChance1.Visibility = Visibility.Hidden;

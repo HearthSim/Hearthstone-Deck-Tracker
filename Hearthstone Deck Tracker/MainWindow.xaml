@@ -210,8 +210,8 @@
                     <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
                     <controls:RangeSlider Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="255,157,221,250" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30"/>
                     <controls:RangeSlider Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="10,157,466,250" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30"/>
-                    <Slider Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="39,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged"/>
-                    <Slider Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="284,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged"/>
+                    <Slider Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="39,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
+                    <Slider Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="284,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
 
                 </Grid>
 

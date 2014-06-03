@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker
             else if (args.State == AnalyzingState.End)
             {
                 //reader done analyzing new stuff, update things
-                _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
+                _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(false)));
             }
         }
 
@@ -952,7 +952,7 @@ namespace Hearthstone_Deck_Tracker
         private void SaveConfigUpdateOverlay()
         {
             _xmlManagerConfig.Save("config.xml", _config);
-            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.Update));
+            _overlay.Dispatcher.BeginInvoke(new Action( () => _overlay.Update(true)));
         }
 
         private void BtnShowWindows_Click(object sender, RoutedEventArgs e)
