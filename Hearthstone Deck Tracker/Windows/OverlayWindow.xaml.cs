@@ -25,7 +25,6 @@ namespace Hearthstone_Deck_Tracker
         private int _customWidth;
         private int _cardCount;
         private int _opponentCardCount;
-        private double _maxDeckHeightPct;
 
         public OverlayWindow(Config config, Hearthstone hearthstone)
         {
@@ -34,7 +33,7 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone = hearthstone;
 
             ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
-            ListViewEnemy.ItemsSource = _hearthstone.EnemyCards;
+            ListViewOpponent.ItemsSource = _hearthstone.EnemyCards;
             Scaling = 1.0;
             OpponentScaling = 1.0;
             ShowInTaskbar = _config.ShowInTaskbar;
@@ -46,13 +45,12 @@ namespace Hearthstone_Deck_Tracker
             _offsetY = _config.OffsetY;
             _customWidth = _config.CustomWidth;
             _customHeight = _config.CustomHeight;
-            _maxDeckHeightPct = (_config.MaxHeightPct > 0)? _config.MaxHeightPct : 0.65;
         }
 
         public void SortViews()
         {
             SortCardCollection(ListViewPlayer.ItemsSource);
-            SortCardCollection(ListViewEnemy.ItemsSource);
+            SortCardCollection(ListViewOpponent.ItemsSource);
         }
 
         private void SortCardCollection(IEnumerable collection)
@@ -68,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
             //previous cardcout > current -> enemy played -> resort list
             if (_opponentCardCount > cardCount)
             {
-                SortCardCollection(ListViewEnemy.ItemsSource);
+                SortCardCollection(ListViewOpponent.ItemsSource);
             }
             _opponentCardCount = cardCount;
             LblEnemyCardCount.Content = "Cards in Hand: " + cardCount;
@@ -118,42 +116,49 @@ namespace Hearthstone_Deck_Tracker
 
         private void ReSizePosLists()
         {
-            if ((Height * _config.MaxHeightPct - (ListViewPlayer.Items.Count * 35 * Scaling)) < 5)
+            //player
+            if (((Height * _config.PlayerDeckHeight / 100) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1)
             {
-                Scaling = (Height * _config.MaxHeightPct) / (ListViewPlayer.Items.Count * 35);
+                var previousScaling = Scaling;
+                Scaling = (Height * _config.PlayerDeckHeight / 100) / (ListViewPlayer.Items.Count * 35);
+
+                if(previousScaling != Scaling)
+                    ListViewPlayer.Items.Refresh();
             }
             else if (Scaling < 1)
             {
                 Scaling = 1;
+                Console.WriteLine("set p. to 1");
             }
             ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling;
 
+            Canvas.SetTop(StackPanelPlayer, Height * _config.PlayerDeckTop / 100);
+            Canvas.SetLeft(StackPanelPlayer, Width * _config.PlayerDeckLeft/100 - StackPanelPlayer.ActualWidth);
 
-            if ((Height * _config.MaxHeightPct - (ListViewEnemy.Items.Count * 35 * OpponentScaling)) < 5)
+
+
+            //opponent
+            if (((Height * _config.OpponentDeckHeight / 100) - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1)
             {
-                OpponentScaling = (Height * _config.MaxHeightPct) / (ListViewEnemy.Items.Count * 35);
+                var previousScaling = OpponentScaling;
+                OpponentScaling = (Height * _config.OpponentDeckHeight / 100) / (ListViewOpponent.Items.Count * 35);
+
+                if (previousScaling != OpponentScaling)
+                    ListViewOpponent.Items.Refresh();
             }
             else if (OpponentScaling < 1)
             {
                 OpponentScaling = 1;
+                Console.WriteLine("set op. to 1");
             }
-            ListViewEnemy.Height = 35 * ListViewEnemy.Items.Count * OpponentScaling;
-            
+            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling;
 
-            Canvas.SetTop(ListViewEnemy, Height * 0.17);
-            Canvas.SetTop(ListViewPlayer, Height * 0.17);
-            Canvas.SetLeft(ListViewPlayer, Width - ListViewPlayer.Width - 5);
 
-            Canvas.SetTop(LblDrawChance2, Height * 0.17 + ListViewPlayer.Height*0.95 );
-            Canvas.SetLeft(LblDrawChance2, Width - (ListViewPlayer.Width / 2) - LblDrawChance1.ActualWidth/2 - 5 - LblDrawChance2.ActualWidth / 2);
-            Canvas.SetTop(LblDrawChance1, Height * 0.17 + ListViewPlayer.Height*0.95 );
-            Canvas.SetLeft(LblDrawChance1, Width - (ListViewPlayer.Width / 2) - 5 - LblDrawChance1.ActualWidth/2 + LblDrawChance2.ActualWidth/2);
+            Canvas.SetTop(StackPanelOpponent, Height * _config.OpponentDeckTop / 100);
+            Canvas.SetLeft(StackPanelOpponent, _config.OpponentDeckLeft / 100); 
 
-            Canvas.SetTop(LblCardCount, Height * 0.17 + ListViewPlayer.Height*0.95 + 10);
-            Canvas.SetLeft(LblCardCount, Width - ListViewPlayer.Width / 2 - 5 - LblCardCount.ActualWidth / 2);
 
-            Canvas.SetTop(LblEnemyCardCount, Height * 0.17 + ListViewEnemy.Height*0.95);
-            Canvas.SetLeft(LblEnemyCardCount, 5 + ListViewEnemy.Width / 2 - LblEnemyCardCount.ActualWidth / 2);
+
         
         }
 
@@ -176,7 +181,7 @@ namespace Hearthstone_Deck_Tracker
                 LblDrawChance2.Visibility = Visibility.Visible;
             }
             LblEnemyCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
-            ListViewEnemy.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
+            ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
 
             SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));

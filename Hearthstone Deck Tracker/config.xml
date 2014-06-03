@@ -20,6 +20,11 @@
   <OpponentWindowHeight>0</OpponentWindowHeight>
   <WindowsTopmost>false</WindowsTopmost>
   <WindowsBackgroundHex></WindowsBackgroundHex>
-  <MaxHeightPct>0.65</MaxHeightPct>
   <UpdateDelay>100</UpdateDelay>
+  <PlayDeckTop>17</PlayDeckTop>
+  <PlayerDeckHeight>65</PlayerDeckHeight>
+  <PlayerDeckLeft>99</PlayerDeckLeft>
+  <OpponentDeckTop>17</OpponentDeckTop>
+  <OpponentDeckHeight>65</OpponentDeckHeight>
+  <OpponentDeckLeft>1</OpponentDeckLeft>
 </Config>

@@ -4,7 +4,7 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Hearthstone Deck Tracker" Height="685" Width="514" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <Grid>
-        <TabControl Name="TabControlTracker" Height="auto">
+        <TabControl Name="TabControlTracker" Height="auto" Grid.ColumnSpan="2">
             <TabItem Header="My Decks">
                 <Grid Background="#FFE5E5E5">
                     <ListView Name="ListViewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,40,0,10" HorizontalAlignment="Left" Width="240" Height="auto" Panel.ZIndex="4">
@@ -70,7 +70,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="New Deck">
+            <TabItem Name="TabItemNewDeck" Header="New Deck">
                 <Grid Background="#FFE5E5E5">
                     <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
 
@@ -197,20 +197,24 @@
                 <Grid>
                     <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
                     <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Opponent Cards" HorizontalAlignment="Left" Margin="20,284,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Opponent Card Counter" HorizontalAlignment="Left" Margin="20,261,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Player Card Counter" HorizontalAlignment="Left" Margin="20,151,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-                    <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="20,174,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
-                    <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="20,197,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Cards" HorizontalAlignment="Left" Margin="39,203,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="39,180,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="284,180,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+                    <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="284,203,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+                    <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="284,226,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                     <Button x:Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="255,41,0,0" VerticalAlignment="Top" Width="233" Click="BtnShowWindows_Click" Height="41"/>
                     <CheckBox x:Name="CheckboxHideOverlay" Content="Hide Overlay (completely)" HorizontalAlignment="Left" Margin="20,41,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
                     <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional Windows Topmost" HorizontalAlignment="Left" Margin="265,87,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                     <Label Content="General:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Player:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Player:" HorizontalAlignment="Left" Margin="255,126,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>
+                    <controls:RangeSlider Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="255,157,221,250" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30"/>
+                    <controls:RangeSlider Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="10,157,466,250" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30"/>
+                    <Slider Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="39,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged"/>
+                    <Slider Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="284,157,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged"/>
 
                 </Grid>
-                
+
             </TabItem>
         </TabControl>
     </Grid>

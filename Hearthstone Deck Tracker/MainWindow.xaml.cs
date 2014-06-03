@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
 
 namespace Hearthstone_Deck_Tracker
@@ -84,7 +85,9 @@ namespace Hearthstone_Deck_Tracker
             catch (Exception e)
             {
                 MessageBox.Show(
-                    e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please overwrite config with the default one.", "Error loading config.xml");
+                    e.Message + "\n\n" + e.InnerException +
+                    "\n\n If you don't know how to fix this, please overwrite config with the default one.",
+                    "Error loading config.xml");
                 Close();
                 return;
             }
@@ -106,7 +109,9 @@ namespace Hearthstone_Deck_Tracker
             catch (Exception e)
             {
                 MessageBox.Show(
-                    e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete PlayerDecks.xml (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
+                    e.Message + "\n\n" + e.InnerException +
+                    "\n\n If you don't know how to fix this, please delete PlayerDecks.xml (this will cause you to lose your decks).",
+                    "Error loading PlayerDecks.xml");
                 Close();
                 return;
             }
@@ -118,10 +123,10 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone = new Hearthstone();
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
-            
+
 
             //create overlay
-            _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
+            _overlay = new OverlayWindow(_config, _hearthstone) {Topmost = true};
             _overlay.Show();
 
             _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
@@ -155,10 +160,11 @@ namespace Hearthstone_Deck_Tracker
 
 
             UpdateDbListView();
-            
+
             _updateThread = new Thread(Update);
             _updateThread.Start();
-            ListboxDecks.SelectedItem = _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
+            ListboxDecks.SelectedItem =
+                _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
 
             _initialized = true;
 
@@ -279,7 +285,7 @@ namespace Hearthstone_Deck_Tracker
                         case CardMovementType.OpponentDeckDiscard:
                             HandleOpponentDeckDiscard();
                             break;
-                            case CardMovementType.OpponentPlayToHand:
+                        case CardMovementType.OpponentPlayToHand:
                             HandleOpponentPlayToHand(args.CardId);
                             break;
                         default:
@@ -289,7 +295,7 @@ namespace Hearthstone_Deck_Tracker
                 }));
         }
 
-        
+
         #region Handle Events
 
         private void HandleOpponentPlayToHand(string cardId)
@@ -356,9 +362,11 @@ namespace Hearthstone_Deck_Tracker
         {
             _hearthstone.EnemyDeckDiscard();
         }
+
         #endregion
 
         #region GUI
+
         private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateDbListView();
@@ -390,7 +398,7 @@ namespace Hearthstone_Deck_Tracker
 
             if (originalSource != null)
             {
-                var card = (Card)ListViewNewDeck.SelectedItem;
+                var card = (Card) ListViewNewDeck.SelectedItem;
                 RemoveCardFromDeck(card);
             }
         }
@@ -406,7 +414,7 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             UpdateDbListView();
         }
-       
+
         private void ComboBoxFilterMana_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!_initialized) return;
@@ -438,7 +446,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        
+
         private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
             var deck = ListboxDecks.SelectedItem as Deck;
@@ -498,10 +506,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
-          ListboxDecks.SelectedIndex = -1;
-          UpdateDeckList(new Deck());
-          UseDeck(new Deck());
-          Hearthstone.IsUsingPremade = false;
+            ListboxDecks.SelectedIndex = -1;
+            UpdateDeckList(new Deck());
+            UseDeck(new Deck());
+            Hearthstone.IsUsingPremade = false;
         }
 
         #endregion
@@ -522,7 +530,15 @@ namespace Hearthstone_Deck_Tracker
 
             SortCardCollection(ListViewNewDeck.Items);
             BtnSaveDeck.Content = "Save*";
+            UpdateNewDeckHeader(true);
 
+        }
+
+        private void UpdateNewDeckHeader(bool show)
+        {
+            var headerText = "New Deck";
+            var cardCount = _newDeck.Cards.Sum(c => c.Count);
+            TabItemNewDeck.Header = show ? string.Format("{0} ({1})", headerText, cardCount) : headerText;
         }
 
         private void RemoveCardFromDeck(Card card)
@@ -538,8 +554,9 @@ namespace Hearthstone_Deck_Tracker
 
             SortCardCollection(ListViewNewDeck.Items);
             BtnSaveDeck.Content = "Save*";
+            UpdateNewDeckHeader(true);
         }
-        
+
         private void Update()
         {
             while (true)
@@ -553,9 +570,9 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    _overlay.Dispatcher.BeginInvoke(new Action( () => _overlay.EnableCanvas(false)));
+                    _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.EnableCanvas(false)));
                 }
-                
+
                 Thread.Sleep(_config.UpdateDelay);
             }
         }
@@ -564,8 +581,11 @@ namespace Hearthstone_Deck_Tracker
         {
             if (_newDeck.Cards.Sum(c => c.Count) != 30)
             {
-                var result = MessageBox.Show(string.Format("Deck contains {0} cards. Is this what you want to save?", _newDeck.Cards.Sum(c => c.Count)),
-                                             "Deck does not contain 30 cards.", MessageBoxButton.YesNo);
+                var result =
+                    MessageBox.Show(
+                        string.Format("Deck contains {0} cards. Is this what you want to save?",
+                                      _newDeck.Cards.Sum(c => c.Count)),
+                        "Deck does not contain 30 cards.", MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes)
                     return;
             }
@@ -586,7 +606,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _newDeck.Name = deckName;
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
-            _deckList.DecksList.Add((Deck)_newDeck.Clone());
+            _deckList.DecksList.Add((Deck) _newDeck.Clone());
             _xmlManager.Save("PlayerDecks.xml", _deckList);
             BtnSaveDeck.Content = "Save";
 
@@ -600,6 +620,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void ClearNewDeckSection()
         {
+            UpdateNewDeckHeader(false);
             ComboBoxSelectClass.SelectedIndex = 0;
             TextBoxDeckName.Text = string.Empty;
             TextBoxDBFilter.Text = string.Empty;
@@ -608,6 +629,7 @@ namespace Hearthstone_Deck_Tracker
             _newDeck.Class = string.Empty;
             _newDeck.Name = string.Empty;
             _newContainsDeck = false;
+            
         }
 
         private void UpdateDeckList(Deck selected)
@@ -628,25 +650,25 @@ namespace Hearthstone_Deck_Tracker
 
         private void SortCardCollection(ItemCollection collection)
         {
-            var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
+            var view1 = (CollectionView) CollectionViewSource.GetDefaultView(collection);
             view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
             view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
-        
+
         private void UseDeck(Deck selected)
         {
             if (selected == null)
                 return;
-           _hearthstone.SetPremadeDeck(selected.Cards);
+            _hearthstone.SetPremadeDeck(selected.Cards);
             _overlay.Dispatcher.BeginInvoke(new Action(_overlay.SortViews));
-           Dispatcher.BeginInvoke(new Action(() =>
-           {
-               _hearthstone.PlayerHandCount = 0;
-               _hearthstone.EnemyCards.Clear();
-               _hearthstone.EnemyHandCount = 0;
-           }));
-           _logReader.Reset(false);
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _hearthstone.PlayerHandCount = 0;
+                    _hearthstone.EnemyCards.Clear();
+                    _hearthstone.EnemyHandCount = 0;
+                }));
+            _logReader.Reset(false);
 
         }
 
@@ -659,7 +681,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 ListViewDB.Items.Clear();
             }
-            else 
+            else
             {
                 ListViewDB.Items.Clear();
 
@@ -710,7 +732,7 @@ namespace Hearthstone_Deck_Tracker
                 ListboxDecks.SelectedItem = deck;
             }
 
-           // Height = _config.WindowHeight;
+            // Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
@@ -721,12 +743,21 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             CheckboxHideOverlay.IsChecked = _config.HideOverlay;
 
+            RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
+            RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
+            SliderPlayer.Value = _config.PlayerDeckLeft;
+
+            RangeSliderOpponent.UpperValue = 100 - _config.OpponentDeckTop;
+            RangeSliderOpponent.LowerValue = (100 - _config.OpponentDeckTop) - _config.OpponentDeckHeight;
+            SliderOpponent.Value = _config.OpponentDeckLeft;
+
         }
 
 
         #region MY DECKS
 
         #endregion
+
         private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
         {
 
@@ -750,14 +781,14 @@ namespace Hearthstone_Deck_Tracker
             ClearNewDeckSection();
             _editingDeck = true;
             _newContainsDeck = true;
-            _newDeck = (Deck)selectedDeck.Clone();
+            _newDeck = (Deck) selectedDeck.Clone();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
-            if(ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+            if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
                 ComboBoxSelectClass.SelectedValue = _newDeck.Class;
 
             TextBoxDeckName.Text = _newDeck.Name;
-
+            UpdateNewDeckHeader(true);
             UpdateDbListView();
             TabControlTracker.SelectedIndex = 1;
 
@@ -768,7 +799,7 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             UpdateDbListView();
         }
-        
+
         private void BtnClearNewDeck_Click(object sender, RoutedEventArgs e)
         {
             ClearNewDeckSection();
@@ -890,6 +921,7 @@ namespace Hearthstone_Deck_Tracker
             _config.HideInBackground = false;
             SaveConfigUpdateOverlay();
         }
+
         private void CheckboxWindowsTopmost_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -922,6 +954,7 @@ namespace Hearthstone_Deck_Tracker
             _opponentWindow.Show();
             _opponentWindow.Activate();
         }
+
         #endregion
 
         private void ListViewDB_KeyDown(object sender, KeyEventArgs e)
@@ -930,7 +963,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 var card = (Card) ListViewDB.SelectedItem;
                 if (string.IsNullOrEmpty(card.Name)) return;
-                    AddCardToDeck(card);
+                AddCardToDeck(card);
             }
         }
 
@@ -944,5 +977,51 @@ namespace Hearthstone_Deck_Tracker
             Topmost = false;
         }
 
+        private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.PlayerDeckTop = 100 - RangeSliderPlayer.UpperValue;
+            _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderPlayer_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void SliderPlayer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.PlayerDeckLeft = SliderPlayer.Value;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderOpponent_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.OpponentDeckTop = 100 - RangeSliderOpponent.UpperValue;
+            _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderOpponent_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void SliderOpponent_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.OpponentDeckLeft = SliderOpponent.Value;
+            SaveConfigUpdateOverlay();
+        }
+
     }
 }
+
+    

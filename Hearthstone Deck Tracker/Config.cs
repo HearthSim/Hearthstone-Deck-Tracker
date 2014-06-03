@@ -23,7 +23,12 @@
         public int OpponentWindowHeight;
         public bool WindowsTopmost;
         public string WindowsBackgroundHex;
-        public double MaxHeightPct;
         public int UpdateDelay;
+        public double PlayerDeckTop;
+        public double PlayerDeckHeight;
+        public double OpponentDeckHeight;
+        public double OpponentDeckTop;
+        public double PlayerDeckLeft;
+        public double OpponentDeckLeft;
     }
 }

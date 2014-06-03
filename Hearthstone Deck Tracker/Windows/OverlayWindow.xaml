@@ -5,76 +5,83 @@
     <Grid>
          
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
-            <Label Name="LblCardCount" Content="0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12">
-            </Label>
-            <Label Name="LblDrawChance2" Content="0% " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" Canvas.Left="371" Canvas.Top="94"/>
-            <Label Name="LblDrawChance1" Content="0%" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" FontFamily="Arial" FontSize="14" Canvas.Left="458" Canvas.Top="94"/>
-            <ListView Name="ListViewEnemy" Height="400" Canvas.Left="5" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="name" Width="28">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="name" Width="155">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{Binding ColorEnemy}" />
-                        <Setter Property="Background" Value="{Binding Background}" />
-                        <Setter Property="Height" Value="35" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="Margin" Value="0,-2,0,0"/>
-                    </Style>
-                </ListView.Resources>
-            </ListView>
-            <ListView Name="ListViewPlayer" Height="400" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="name" Width="28">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="name" Width="155">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12"></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                        <Setter Property="Background" Value="{Binding Background}" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="Height" Value="{Binding Height}"></Setter>
-                        <Setter Property="Margin" Value="0,-2,0,0"/>
-                    </Style>
-                    
-                </ListView.Resources>
-            </ListView>
-            <Label x:Name="LblEnemyCardCount" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" Canvas.Left="39" Canvas.Top="47"/>
+            
+            <StackPanel Name="StackPanelOpponent">
+                <ListView Name="ListViewOpponent" Height="400" Canvas.Left="5" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="name" Width="28">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="name" Width="155">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Foreground" Value="{Binding ColorEnemy}" />
+                            <Setter Property="Background" Value="{Binding Background}" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Margin" Value="0,-2,0,0"/>
+                        </Style>
+                    </ListView.Resources>
+                </ListView>
+                <Label x:Name="LblEnemyCardCount" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" Canvas.Left="39" Canvas.Top="47"/>
+
+            </StackPanel>
+            <StackPanel Canvas.Left="438" Canvas.Top="47" Name="StackPanelPlayer">
+                <ListView Name="ListViewPlayer" Height="400" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="name" Width="28">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="name" Width="155">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
+                            <Setter Property="Background" Value="{Binding Background}" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Height" Value="{Binding Height}"></Setter>
+                            <Setter Property="Margin" Value="0,-2,0,0"/>
+                        </Style>
+
+                    </ListView.Resources>
+                </ListView>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label Name="LblDrawChance2" Content="0% " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" Canvas.Left="371" Canvas.Top="94"/>
+                    <Label Name="LblDrawChance1" Content="0%" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" FontFamily="Arial" FontSize="14" Canvas.Left="458" Canvas.Top="94"/>
+                </StackPanel>
+                <Label Name="LblCardCount" Content="0" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" />
+            </StackPanel>
         </Canvas>
 
     </Grid>
