@@ -646,7 +646,7 @@ namespace Hearthstone_Deck_Tracker
                _hearthstone.EnemyCards.Clear();
                _hearthstone.EnemyHandCount = 0;
            }));
-           _logReader.Reset();
+           _logReader.Reset(false);
 
         }
 

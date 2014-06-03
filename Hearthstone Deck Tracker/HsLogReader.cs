@@ -77,12 +77,14 @@ namespace Hearthstone_Deck_Tracker
         private readonly string _fullOutputPath;
         private readonly int _updateDelay;
         private Thread _analyzerThread;
+       
 
         private readonly Regex _cardMovementRegex =
             new Regex(
                 @"\w*(cardId=(?<Id>(\w*))).*(player=(?<player>(\d))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
         
         private long _previousSize;
+        private long _lastGameEnd;
 
         public HsLogReader(string hsDirPath, int updateDelay)
         {
@@ -145,6 +147,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     //game ended
                     GameStateChange(this, new GameStateArgs(GameState.GameEnd));
+                    _lastGameEnd = _previousSize;
                 }
                 else if (logLine.StartsWith("[Zone]"))
                 {
@@ -288,9 +291,12 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        internal void Reset()
+        internal void Reset(bool full)
         {
-            _previousSize = 0;
+            if (full)
+                _previousSize = 0;
+            else
+                _previousSize = _lastGameEnd;
         }
     }
 }
