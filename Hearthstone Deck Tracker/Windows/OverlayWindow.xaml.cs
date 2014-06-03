@@ -2,6 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -128,7 +129,6 @@ namespace Hearthstone_Deck_Tracker
             else if (Scaling < 1)
             {
                 Scaling = 1;
-                Console.WriteLine("set p. to 1");
             }
             ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling;
 
@@ -149,7 +149,6 @@ namespace Hearthstone_Deck_Tracker
             else if (OpponentScaling < 1)
             {
                 OpponentScaling = 1;
-                Console.WriteLine("set op. to 1");
             }
             ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling;
 
@@ -194,8 +193,20 @@ namespace Hearthstone_Deck_Tracker
             ReSizePosLists();
         }
 
+        private bool _needToRefresh;
+        private bool _justActivated;
         public void UpdatePosition()
         {
+            if (!User32.IsForegroundWindow("Hearthstone") && !_needToRefresh)
+            {
+                _needToRefresh = true;
+
+            } else if (_needToRefresh && User32.IsForegroundWindow("Hearthstone"))
+            {
+                _needToRefresh = false;
+                Update(true);
+            }
+
             //hide the overlay depenting on options
             EnableCanvas(!(
                 (_config.HideInBackground && !User32.IsForegroundWindow("Hearthstone")) 
@@ -218,5 +229,6 @@ namespace Hearthstone_Deck_Tracker
 
         public static double Scaling { get; set; }
         public static double OpponentScaling { get; set; }
+
     }
 }
