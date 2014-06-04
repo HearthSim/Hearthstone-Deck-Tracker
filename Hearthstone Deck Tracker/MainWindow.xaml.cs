@@ -292,7 +292,7 @@ namespace Hearthstone_Deck_Tracker
                             HandleOpponentDraw();
                             break;
                         case CardMovementType.OpponentDeckDiscard:
-                            HandleOpponentDeckDiscard();
+                            HandleOpponentDeckDiscard(args.CardId);
                             break;
                         case CardMovementType.OpponentPlayToHand:
                             HandleOpponentPlayToHand(args.CardId);
