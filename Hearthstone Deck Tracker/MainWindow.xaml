@@ -2,32 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
         Title="Hearthstone Deck Tracker" Height="685" Width="514" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Grid.ColumnSpan="2">
             <TabItem Header="My Decks">
                 <Grid Background="#FFE5E5E5">
-                    <ListView Name="ListViewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,40,0,10" HorizontalAlignment="Left" Width="240" Height="auto" Panel.ZIndex="4">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="cost" Width="28">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT">
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="name" Width="155">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Name}" TextAlignment="Left" FontSize="12" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                        <ListView.Resources>
+                    <local:DeckListView x:Name="ListViewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,40,0,10" HorizontalAlignment="Left" Width="240" Height="auto" Panel.ZIndex="4">
+                        <local:DeckListView.Resources>
                             <Style TargetType="GridViewColumnHeader">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </Style>
@@ -44,8 +26,8 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                        </ListView.Resources>
-                    </ListView>
+                        </local:DeckListView.Resources>
+                    </local:DeckListView>
                     <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="375,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
                     <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="240" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
                     <ListBox Name="ListboxDecks" Background="DimGray" HorizontalAlignment="Left" Height="auto" Width="240" SelectionChanged="ListboxDecks_SelectionChanged" Margin="10,40,0,10">
@@ -74,7 +56,7 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
 
-                    <ListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown">
+                    <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -103,19 +85,7 @@
                             </Style>
 
                         </ListView.Resources>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="cost" Width="28">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Cost}" TextAlignment="Center" FontSize="18"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    </local:DeckListView>
                     <ComboBox x:Name="ComboBoxFilterMana" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="304,10,0,0" VerticalAlignment="Top" Width="50" SelectedIndex="0" SelectionChanged="ComboBoxFilterMana_SelectionChanged" Panel.ZIndex="4">
                         <system:String>All</system:String>
                         <system:String>0</system:String>
@@ -143,7 +113,7 @@
                     </ComboBox>
                     <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
                     <Button x:Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="98" Click="BtnSaveDeck_Click" Height="23" Panel.ZIndex="3"/>
-                    <ListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" MouseDoubleClick="ListViewNewDeck_MouseDoubleClick" HorizontalAlignment="Left" Width="240" Height="auto">
+                    <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" MouseDoubleClick="ListViewNewDeck_MouseDoubleClick" HorizontalAlignment="Left" Width="240" Height="auto">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -171,19 +141,7 @@
                                 </Style.Triggers>
                             </Style>
                         </ListView.Resources>
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="cost" Width="28">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock  Text="{Binding Cost}" TextAlignment="Center" FontSize="18"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Header="name" Width="155" DisplayMemberBinding="{Binding Name}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    </local:DeckListView>
                     <ComboBox Name="ComboboxNeutral" HorizontalAlignment="Left" Margin="359,10,0,0" VerticalAlignment="Top" Width="137" SelectedIndex="0" SelectionChanged="ComboboxNeutral_SelectionChanged" Panel.ZIndex="5">
                         <system:String>Class + Neutral</system:String>
                         <system:String>Class Only</system:String>

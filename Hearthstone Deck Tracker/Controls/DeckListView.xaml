@@ -1,0 +1,34 @@
+﻿<ListView x:Class="Hearthstone_Deck_Tracker.DeckListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ListView.View>
+        <GridView>
+            <GridViewColumn Header="cost" Width="28">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="name" Width="155">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
+                            </TextBlock.Effect>
+                        </TextBlock>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+        </GridView>
+    </ListView.View>
+</ListView>
