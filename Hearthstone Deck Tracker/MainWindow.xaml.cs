@@ -367,9 +367,9 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.EnemyDraw();
         }
 
-        private void HandleOpponentDeckDiscard()
+        private void HandleOpponentDeckDiscard(string cardId)
         {
-            _hearthstone.EnemyDeckDiscard();
+            _hearthstone.EnemyDeckDiscard(cardId);
         }
 
         #endregion

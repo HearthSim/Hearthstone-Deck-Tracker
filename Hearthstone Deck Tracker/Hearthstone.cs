@@ -278,9 +278,19 @@ namespace Hearthstone_Deck_Tracker
             EnemyHandCount--;
         }
 
-        internal void EnemyDeckDiscard()
+        internal void EnemyDeckDiscard(string cardId)
         {
-            //nothing for now
+            if (string.IsNullOrEmpty(cardId))
+            {
+                return;
+            }
+            var card = GetCardFromDb(cardId);
+            if (EnemyCards.Any(x => x.Equals(card)))
+            {
+                EnemyCards.Remove(card);
+                card.Count++;
+            }
+            EnemyCards.Add(card);
         }
 
         internal void EnemySecretTriggered(string cardId)
