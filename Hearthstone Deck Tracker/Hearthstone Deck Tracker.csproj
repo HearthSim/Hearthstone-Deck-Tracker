@@ -89,6 +89,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Card.cs" />
+    <Compile Include="Controls\DeckListView.xaml.cs">
+      <DependentUpon>DeckListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,7 @@
     <Compile Include="Hearthstone.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="OutlinedTextBlock.cs" />
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,10 @@
     <Compile Include="SerializableVersion.cs" />
     <Compile Include="User32.cs" />
     <Compile Include="XmlManager.cs" />
+    <Page Include="Controls\DeckListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

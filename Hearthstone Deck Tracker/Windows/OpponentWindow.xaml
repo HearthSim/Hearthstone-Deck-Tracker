@@ -1,28 +1,11 @@
 ﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.OpponentWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="Black" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated">
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+        Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="Black" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated">
     <Grid Name="WindowGrid">
-        <ListView Name="ListViewOpponent" Background="#FF4B4B4B" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="name" Width="28">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="name" Width="155">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12"></TextBlock>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+        <local:DeckListView x:Name="ListViewOpponent" Background="#FF4B4B4B" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -42,6 +25,6 @@
                 </Style>
 
             </ListView.Resources>
-        </ListView>
+        </local:DeckListView>
     </Grid>
 </controls:MetroWindow>
