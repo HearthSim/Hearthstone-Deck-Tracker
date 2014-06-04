@@ -28,4 +28,5 @@
   <OpponentDeckHeight>65</OpponentDeckHeight>
   <OpponentDeckLeft>1</OpponentDeckLeft>
   <OverlayOpacity>100</OverlayOpacity>
+  <KeepOpponentVisible>false</KeepOpponentVisible>
 </Config>

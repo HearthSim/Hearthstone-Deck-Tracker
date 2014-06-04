@@ -31,5 +31,6 @@
         public double PlayerDeckLeft;
         public double OpponentDeckLeft;
         public double OverlayOpacity;
+        public bool KeepOpponentVisible;
     }
 }

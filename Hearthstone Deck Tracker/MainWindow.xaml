@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="685" Width="514" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
+        Title="Hearthstone Deck Tracker" Height="685" Width="514" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Grid.ColumnSpan="2">
             <TabItem Header="My Decks">
@@ -173,6 +173,7 @@
                     <Slider Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="114,110,0,0" VerticalAlignment="Top" Width="100" Value="100" ValueChanged="Slider_ValueChanged"/>
                     <Label Content="Overlay opacity:" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top"/>
                     <Label Content="Player and opponent sliders regulate deck position and (maximum) height" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom"/>
+                    <CheckBox Name="CheckboxKeepOpponentVisible" Content="Deck visible after game" HorizontalAlignment="Left" Margin="39,275,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepOpponentVisible_Checked" Unchecked="CheckboxKeepOpponentVisible_Unchecked"/>
 
                 </Grid>
 

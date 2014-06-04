@@ -246,8 +246,11 @@ namespace Hearthstone_Deck_Tracker
                     }
                     _hearthstone.IsInMenu = true;
                     _hearthstone.PlayerHandCount = 0;
-                    _hearthstone.EnemyCards.Clear();
-                    _hearthstone.EnemyHandCount = 0;
+                    if (!_config.KeepOpponentVisible)
+                    {
+                        _hearthstone.EnemyCards.Clear();
+                        _hearthstone.EnemyHandCount = 0;
+                    }
                 }));
 
         }
@@ -751,6 +754,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             CheckboxHideOverlay.IsChecked = _config.HideOverlay;
+            CheckboxKeepOpponentVisible.IsChecked = _config.KeepOpponentVisible;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -1036,6 +1040,20 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.OverlayOpacity = SliderOverlayOpacity.Value;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxKeepOpponentVisible_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.KeepOpponentVisible = true;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxKeepOpponentVisible_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.KeepOpponentVisible = false;
             SaveConfigUpdateOverlay();
         }
 
