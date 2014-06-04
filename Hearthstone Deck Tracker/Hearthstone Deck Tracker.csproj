@@ -99,7 +99,6 @@
     <Compile Include="Hearthstone.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
-    <Compile Include="OutlinedTextBlock.cs" />
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
     </Compile>
