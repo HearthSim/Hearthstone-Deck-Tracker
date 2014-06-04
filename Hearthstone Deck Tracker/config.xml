@@ -21,7 +21,7 @@
   <WindowsTopmost>false</WindowsTopmost>
   <WindowsBackgroundHex></WindowsBackgroundHex>
   <UpdateDelay>100</UpdateDelay>
-  <PlayDeckTop>17</PlayDeckTop>
+  <PlayerDeckTop>17</PlayerDeckTop>
   <PlayerDeckHeight>65</PlayerDeckHeight>
   <PlayerDeckLeft>99</PlayerDeckLeft>
   <OpponentDeckTop>17</OpponentDeckTop>
