@@ -760,6 +760,8 @@ namespace Hearthstone_Deck_Tracker
             RangeSliderOpponent.LowerValue = (100 - _config.OpponentDeckTop) - _config.OpponentDeckHeight;
             SliderOpponent.Value = _config.OpponentDeckLeft;
 
+            SliderOverlayOpacity.Value = _config.OverlayOpacity;
+
         }
 
 
@@ -1027,6 +1029,13 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.OpponentDeckLeft = SliderOpponent.Value;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.OverlayOpacity = SliderOverlayOpacity.Value;
             SaveConfigUpdateOverlay();
         }
 

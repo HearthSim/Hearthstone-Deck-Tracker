@@ -118,19 +118,18 @@ namespace Hearthstone_Deck_Tracker
         private void ReSizePosLists()
         {
             //player
-            if (((Height * _config.PlayerDeckHeight / 100) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1)
+            if (((Height * _config.PlayerDeckHeight / 100) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
                 Scaling = (Height * _config.PlayerDeckHeight / 100) / (ListViewPlayer.Items.Count * 35);
+                if (Scaling > 1)
+                    Scaling = 1;
 
                 if(previousScaling != Scaling)
                     ListViewPlayer.Items.Refresh();
             }
-            else if (Scaling < 1)
-            {
-                Scaling = 1;
-            }
-            ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling;
+
+            ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling - LblDrawChance1.Height - LblCardCount.Height;
 
             Canvas.SetTop(StackPanelPlayer, Height * _config.PlayerDeckTop / 100);
             Canvas.SetLeft(StackPanelPlayer, Width * _config.PlayerDeckLeft/100 - StackPanelPlayer.ActualWidth);
@@ -138,7 +137,7 @@ namespace Hearthstone_Deck_Tracker
 
 
             //opponent
-            if (((Height * _config.OpponentDeckHeight / 100) - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1)
+            if (((Height * _config.OpponentDeckHeight / 100) - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
             {
                 var previousScaling = OpponentScaling;
                 OpponentScaling = (Height * _config.OpponentDeckHeight / 100) / (ListViewOpponent.Items.Count * 35);
@@ -146,11 +145,7 @@ namespace Hearthstone_Deck_Tracker
                 if (previousScaling != OpponentScaling)
                     ListViewOpponent.Items.Refresh();
             }
-            else if (OpponentScaling < 1)
-            {
-                OpponentScaling = 1;
-            }
-            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling;
+            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling - LblEnemyCardCount.Height;
 
 
             Canvas.SetTop(StackPanelOpponent, Height * _config.OpponentDeckTop / 100);
@@ -174,27 +169,23 @@ namespace Hearthstone_Deck_Tracker
                 ListViewPlayer.Items.Refresh();
                 ListViewOpponent.Items.Refresh();
             }
-            if (_config.HideDrawChances)
-            {
-                LblDrawChance1.Visibility = Visibility.Hidden;
-                LblDrawChance2.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                LblDrawChance1.Visibility = Visibility.Visible;
-                LblDrawChance2.Visibility = Visibility.Visible;
-            }
+
+            Opacity = _config.OverlayOpacity/100;
+
+            LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
+            LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
             LblEnemyCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
 
             SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
             SetEnemyCardCount(_hearthstone.EnemyHandCount);
+
             ReSizePosLists();
         }
 
         private bool _needToRefresh;
-        private bool _justActivated;
+
         public void UpdatePosition()
         {
             if (!User32.IsForegroundWindow("Hearthstone") && !_needToRefresh)

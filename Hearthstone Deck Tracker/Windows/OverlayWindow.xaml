@@ -39,7 +39,7 @@
                         </Style>
                     </ListView.Resources>
                 </ListView>
-                <Label x:Name="LblEnemyCardCount" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" Canvas.Left="39" Canvas.Top="47"/>
+                <Label x:Name="LblEnemyCardCount" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" Canvas.Left="39" Canvas.Top="47" FontWeight="Bold"/>
 
             </StackPanel>
             <StackPanel Canvas.Left="438" Canvas.Top="47" Name="StackPanelPlayer">
@@ -77,10 +77,10 @@
                     </ListView.Resources>
                 </ListView>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Label Name="LblDrawChance2" Content="0% " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" Canvas.Left="371" Canvas.Top="94"/>
-                    <Label Name="LblDrawChance1" Content="0%" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" FontFamily="Arial" FontSize="14" Canvas.Left="458" Canvas.Top="94"/>
+                    <Label Name="LblDrawChance2" Content="0% " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" Canvas.Left="371" Canvas.Top="94" FontWeight="Bold"/>
+                    <Label Name="LblDrawChance1" Content="0%" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="white" FontFamily="Arial" FontSize="14" Canvas.Left="458" Canvas.Top="94" FontWeight="Bold"/>
                 </StackPanel>
-                <Label Name="LblCardCount" Content="0" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" />
+                <Label Name="LblCardCount" Content="0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="12" FontWeight="Bold" />
             </StackPanel>
         </Canvas>
 
