@@ -71,8 +71,8 @@ namespace Hearthstone_Deck_Tracker
             }
             _opponentCardCount = cardCount;
             
-            LblOpponentCardCount.Content = "Hand: " + cardCount;
-            LblOpponentDeckCount.Content = "Deck: " + cardsLeftInDeck;
+            LblOpponentCardCount.Text = "Hand: " + cardCount;
+            LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
         }
 
         private void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -84,20 +84,20 @@ namespace Hearthstone_Deck_Tracker
                     SortCardCollection(ListViewPlayer.ItemsSource);
             }
             _cardCount = cardCount;
-            LblCardCount.Content = "Hand: " + cardCount;
-            LblDeckCount.Content = "Deck: " + cardsLeftInDeck;
+            LblCardCount.Text = "Hand: " + cardCount;
+            LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
             if (cardsLeftInDeck <= 0) return;
 
             if (Hearthstone.IsUsingPremade)
             {
 
-                LblDrawChance2.Content = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
-                LblDrawChance1.Content = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
+                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
+                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
             }
             else
             {
-                LblDrawChance2.Content = "[2]: " + Math.Round(200.0f / (30 - cardsLeftInDeck), 2) + "%";
-                LblDrawChance1.Content = "[1]: " + Math.Round(100.0f / (30 - cardsLeftInDeck), 2) + "%";
+                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / (30 - cardsLeftInDeck), 2) + "%";
+                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / (30 - cardsLeftInDeck), 2) + "%";
             }
         }
     
@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker
         internal void UpdateTurnTimer(TimerEventArgs timerEventArgs)
         {
             //todo: make moveable in option and find good size/pos
-            LblTurnTime.Content = timerEventArgs.Seconds;
+            LblTurnTime.Text = timerEventArgs.Seconds.ToString();
             LblTurnTime.Visibility = timerEventArgs.Running ? Visibility.Visible : Visibility.Hidden;
         }
     }

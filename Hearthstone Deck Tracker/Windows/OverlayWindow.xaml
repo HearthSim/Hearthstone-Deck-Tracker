@@ -6,7 +6,7 @@
     <Grid>
 
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
-            <local:HearthstoneLabel x:Name="LblTurnTime" Content="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
+            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
             <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" >
                 <local:DeckListView x:Name="ListViewPlayer" Height="400" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                     <ListView.Resources>
@@ -23,12 +23,12 @@
                     </ListView.Resources>
                 </local:DeckListView>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneLabel x:Name="LblDrawChance2" FontSize="16" Content="0%" ></local:HearthstoneLabel>
-                    <local:HearthstoneLabel x:Name="LblDrawChance1" FontSize="16" Content="0%" ></local:HearthstoneLabel>
+                    <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" />
+                    <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Margin="4,0,0,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneLabel x:Name="LblCardCount" FontSize="14" Content="Hand: 0"></local:HearthstoneLabel>
-                    <local:HearthstoneLabel x:Name="LblDeckCount" FontSize="14" Content="Deck: 0"></local:HearthstoneLabel>
+                    <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="14" Text="Hand: 0" />
+                    <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="StackPanelOpponent">
@@ -47,8 +47,8 @@
                     </ListView.Resources>
                 </local:DeckListView>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneLabel x:Name="LblOpponentCardCount" FontSize="14" Content="Hand: 0"></local:HearthstoneLabel>
-                    <local:HearthstoneLabel x:Name="LblOpponentDeckCount" FontSize="14" Content="Deck: 0"></local:HearthstoneLabel>
+                    <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
                 </StackPanel>
             </StackPanel>
             

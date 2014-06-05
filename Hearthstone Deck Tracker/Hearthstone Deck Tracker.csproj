@@ -93,8 +93,8 @@
     <Compile Include="Controls\DeckListView.xaml.cs">
       <DependentUpon>DeckListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\HearthstoneLabel.xaml.cs">
-      <DependentUpon>HearthstoneLabel.xaml</DependentUpon>
+    <Compile Include="Controls\HearthstoneTextBlock.xaml.cs">
+      <DependentUpon>HearthstoneTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -118,7 +118,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\HearthstoneLabel.xaml">
+    <Page Include="Controls\HearthstoneTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
