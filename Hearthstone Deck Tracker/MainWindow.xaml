@@ -175,9 +175,9 @@
                     <Label Content="Player and opponent sliders regulate deck position and (maximum) height" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom"/>
                     <CheckBox Name="CheckboxKeepOpponentVisible" Content="Deck visible after game" HorizontalAlignment="Left" Margin="39,330,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepOpponentVisible_Checked" Unchecked="CheckboxKeepOpponentVisible_Unchecked"/>
                     <CheckBox Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="20,136,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked"/>
-                    <CheckBox Name="CheckboxHideTimer" Content="Hide Timer" HorizontalAlignment="Left" Margin="108,163,0,0" VerticalAlignment="Top"/>
-                    <Slider x:Name="SliderTimerLeft" HorizontalAlignment="Left" Margin="39,185,0,0" VerticalAlignment="Top" Width="200" Value="100" ValueChanged="SliderTimerLeft_ValueChanged"/>
-                    <Label Content="Timer Position:" HorizontalAlignment="Left" Margin="15,159,0,0" VerticalAlignment="Top"/>
+                    <CheckBox IsEnabled="False" Name="CheckboxHideTimer" Content="Hide Timer" HorizontalAlignment="Left" Margin="108,163,0,0" VerticalAlignment="Top"/>
+                    <Slider IsEnabled="False" x:Name="SliderTimerLeft" HorizontalAlignment="Left" Margin="39,185,0,0" VerticalAlignment="Top" Width="200" Value="100" ValueChanged="SliderTimerLeft_ValueChanged"/>
+                    <Label IsEnabled="False" Content="Timer Position:" HorizontalAlignment="Left" Margin="15,159,0,0" VerticalAlignment="Top"/>
 
                 </Grid>
 

@@ -6,7 +6,7 @@
     <Grid>
 
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
-            <local:HearthstoneLabel x:Name="LblTurnTime" Content="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
+            <local:HearthstoneLabel Visibility="Hidden" x:Name="LblTurnTime" Content="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
             <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" >
                 <local:DeckListView x:Name="ListViewPlayer" Height="400" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                     <ListView.Resources>

@@ -103,6 +103,7 @@ namespace Hearthstone_Deck_Tracker
         private long _currentOffset;
 
         private int _powerCount;
+        private const int PowerCountTreshold = 14;
 
         public HsLogReader(string hsDirPath, int updateDelay)
         {
@@ -225,7 +226,7 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //player draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
-                                if (_powerCount >= 15)
+                                if (_powerCount >= PowerCountTreshold)
                                 {
                                     TurnStart(this, new TurnStartArgs(Turn.Player));
                                 }
@@ -283,7 +284,7 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //opponent draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
-                                if (_powerCount >= 15)
+                                if (_powerCount >= PowerCountTreshold)
                                 {
                                     TurnStart(this, new TurnStartArgs(Turn.Player));
                                 }
@@ -343,5 +344,6 @@ namespace Hearthstone_Deck_Tracker
 
             }
         }
+
     }
 }

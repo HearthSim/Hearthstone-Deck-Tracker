@@ -177,8 +177,8 @@ namespace Hearthstone_Deck_Tracker
             _logReader.Analyzing += LogReaderOnAnalyzing;
             _logReader.TurnStart += LogReaderOnTurnStart;
 
-            _turnTimer = new TurnTimer(90);
-            _turnTimer.TimerTick += TurnTimerOnTimerTick;
+            //_turnTimer = new TurnTimer(90);
+            //_turnTimer.TimerTick += TurnTimerOnTimerTick;
 
 
             UpdateDbListView();
@@ -215,7 +215,7 @@ namespace Hearthstone_Deck_Tracker
         {
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows
-            _turnTimer.Restart();
+            //_turnTimer.Restart();
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -266,7 +266,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
-            _turnTimer.Stop();
+            //_turnTimer.Stop();
             Dispatcher.BeginInvoke(new Action(() =>
                 {
                     if (Hearthstone.IsUsingPremade)

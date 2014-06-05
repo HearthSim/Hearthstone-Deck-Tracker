@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker
             Seconds = _turnTime;
             _timer.Stop();
             _timer.Start();
+            TimerTick(this, new TimerEventArgs(Seconds, true));
         }
         public void Stop()
         {
