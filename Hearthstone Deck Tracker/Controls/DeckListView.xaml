@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <ListView.View>
@@ -10,22 +11,14 @@
             <GridViewColumn Header="cost" Width="28">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
-                            </TextBlock.Effect>
-                        </TextBlock>
+                        <local:OutlinedTextBlock Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
             <GridViewColumn Header="name" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
-                            </TextBlock.Effect>
-                        </TextBlock>
+                        <local:OutlinedTextBlock Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>

@@ -96,6 +96,7 @@
     <Compile Include="Controls\HearthstoneLabel.xaml.cs">
       <DependentUpon>HearthstoneLabel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
