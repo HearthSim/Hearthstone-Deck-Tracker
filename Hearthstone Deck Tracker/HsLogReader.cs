@@ -100,6 +100,7 @@ namespace Hearthstone_Deck_Tracker
         
         private long _previousSize;
         private long _lastGameEnd;
+        private long _currentOffset;
 
         private int _powerCount;
 
@@ -154,6 +155,7 @@ namespace Hearthstone_Deck_Tracker
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.Start));
                             Analyze(sr.ReadToEnd());
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.End));
+                            
                         }
                     }
                 }
@@ -166,6 +168,7 @@ namespace Hearthstone_Deck_Tracker
             var logLines = log.Split('\n');
             foreach (var logLine in logLines)
             {
+                _currentOffset += logLine.Length;
                 if (logLine.StartsWith("[Power]"))
                 {
                     _powerCount++;
@@ -174,7 +177,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     //game ended
                     GameStateChange(this, new GameStateArgs(GameState.GameEnd));
-                    _lastGameEnd = _previousSize;
+                    _lastGameEnd = _currentOffset;
                 }
                 else if (logLine.StartsWith("[Zone]"))
                 {
@@ -334,7 +337,11 @@ namespace Hearthstone_Deck_Tracker
             if (full)
                 _previousSize = 0;
             else
+            {
+                _currentOffset = _lastGameEnd;
                 _previousSize = _lastGameEnd;
+
+            }
         }
     }
 }
