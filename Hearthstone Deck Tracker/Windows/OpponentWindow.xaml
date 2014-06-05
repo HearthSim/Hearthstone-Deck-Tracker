@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="Black" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated">
+        Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="DimGray" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated">
     <Grid Name="WindowGrid">
+        <StackPanel>
         <local:DeckListView x:Name="ListViewOpponent" Background="#FF4B4B4B" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
@@ -25,6 +26,19 @@
                 </Style>
 
             </ListView.Resources>
-        </local:DeckListView>
+            </local:DeckListView>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Name="LblOpponentCardCount" Content="Hand: 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" FontSize="14">
+                    <Label.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
+                    </Label.Effect>
+                </Label>
+                <Label Name="LblOpponentDeckCount" Content="Deck: 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" FontSize="14">
+                    <Label.Effect>
+                        <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
+                    </Label.Effect>
+                </Label>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </controls:MetroWindow>

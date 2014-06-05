@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -33,6 +34,9 @@ namespace Hearthstone_Deck_Tracker
         private Deck _newDeck;
         private bool _editingDeck;
         private bool _newContainsDeck;
+        private readonly TurnTimer _turnTimer;
+        private System.Windows.Forms.NotifyIcon _notifyIcon;
+
 
         private readonly string _logConfigPath =
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
@@ -124,9 +128,14 @@ namespace Hearthstone_Deck_Tracker
                 Close();
                 return;
             }
-
+            
             ListboxDecks.ItemsSource = _deckList.DecksList;
 
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
+            _notifyIcon.Icon = new Icon(@"Images/HearthstoneDeckTracker.ico");
+            _notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
+            _notifyIcon.Visible = false;
+            
 
             //hearthstone, loads db etc
             _hearthstone = new Hearthstone();
@@ -166,6 +175,10 @@ namespace Hearthstone_Deck_Tracker
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
             _logReader.Analyzing += LogReaderOnAnalyzing;
+            _logReader.TurnStart += LogReaderOnTurnStart;
+
+            _turnTimer = new TurnTimer(90);
+            _turnTimer.TimerTick += TurnTimerOnTimerTick;
 
 
             UpdateDbListView();
@@ -181,6 +194,28 @@ namespace Hearthstone_Deck_Tracker
             UseDeck(ListboxDecks.SelectedItem as Deck);
 
             _logReader.Start();
+        }
+
+        private void NotifyIconOnMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            _notifyIcon.Visible = false;
+            Show();
+            WindowState = WindowState.Normal;
+            Activate();
+        }
+        
+        private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
+        {
+            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
+            //todo: also send to player/opponent window
+
+        }
+
+        private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
+        {
+            //doesn't really matter whose turn it is for now, just restart timer
+            //maybe add timer to player/opponent windows
+            _turnTimer.Restart();
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -231,6 +266,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
+            _turnTimer.Stop();
             Dispatcher.BeginInvoke(new Action(() =>
                 {
                     if (Hearthstone.IsUsingPremade)
@@ -755,6 +791,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             CheckboxHideOverlay.IsChecked = _config.HideOverlay;
             CheckboxKeepOpponentVisible.IsChecked = _config.KeepOpponentVisible;
+            CheckboxMinimizeTray.IsChecked = _config.MinimizeToTray;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -765,6 +802,7 @@ namespace Hearthstone_Deck_Tracker
             SliderOpponent.Value = _config.OpponentDeckLeft;
 
             SliderOverlayOpacity.Value = _config.OverlayOpacity;
+            SliderTimerLeft.Value = _config.TimerLeft;
 
         }
 
@@ -1057,6 +1095,37 @@ namespace Hearthstone_Deck_Tracker
             SaveConfigUpdateOverlay();
         }
 
+        private void CheckboxMinimizeTray_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.MinimizeToTray = true;
+           SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxMinimizeTray_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.MinimizeToTray = false;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void MetroWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (!_config.MinimizeToTray) return;
+            if (WindowState == WindowState.Minimized)
+            {
+                _notifyIcon.Visible = true;
+                _notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray", System.Windows.Forms.ToolTipIcon.Info);
+                Hide();
+            }
+        }
+
+        private void SliderTimerLeft_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimerLeft = SliderTimerLeft.Value;
+            SaveConfigUpdateOverlay();
+        }
     }
 }
 

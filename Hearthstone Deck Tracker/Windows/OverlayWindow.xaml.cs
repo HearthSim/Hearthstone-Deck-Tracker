@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
-        private void SetEnemyCardCount(int cardCount)
+        private void SetEnemyCardCount(int cardCount, int cardsLeftInDeck)
         {
             //previous cardcout > current -> enemy played -> resort list
             if (_opponentCardCount > cardCount)
@@ -70,7 +70,9 @@ namespace Hearthstone_Deck_Tracker
                 SortCardCollection(ListViewOpponent.ItemsSource);
             }
             _opponentCardCount = cardCount;
-            LblEnemyCardCount.Content = "Cards in Hand: " + cardCount;
+            
+            LblOpponentCardCount.Content = "Hand: " + cardCount;
+            LblOpponentDeckCount.Content = "Deck: " + cardsLeftInDeck;
         }
 
         private void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -82,14 +84,15 @@ namespace Hearthstone_Deck_Tracker
                     SortCardCollection(ListViewPlayer.ItemsSource);
             }
             _cardCount = cardCount;
-            LblCardCount.Content = "Cards in Hand: " + cardCount;
+            LblCardCount.Content = "Hand: " + cardCount;
+            LblDeckCount.Content = "Deck: " + cardsLeftInDeck;
             if (cardsLeftInDeck <= 0) return;
 
             if (Hearthstone.IsUsingPremade)
             {
 
-                LblDrawChance2.Content = "[2]: " + Math.Round(200.0f/cardsLeftInDeck, 2) + "%";
-                LblDrawChance1.Content = "[1]: " + Math.Round(100.0f/cardsLeftInDeck, 2) + "%";
+                LblDrawChance2.Content = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
+                LblDrawChance1.Content = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
             }
             else
             {
@@ -145,13 +148,14 @@ namespace Hearthstone_Deck_Tracker
                 if (previousScaling != OpponentScaling)
                     ListViewOpponent.Items.Refresh();
             }
-            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling - LblEnemyCardCount.Height;
+            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling - LblOpponentCardCount.Height;
 
 
             Canvas.SetTop(StackPanelOpponent, Height * _config.OpponentDeckTop / 100);
             Canvas.SetLeft(StackPanelOpponent, Width * _config.OpponentDeckLeft / 100); 
 
-
+            Canvas.SetTop(LblTurnTime, (Height-SystemParameters.WindowCaptionHeight) /2 - LblTurnTime.ActualHeight);
+            Canvas.SetLeft(LblTurnTime, Width * _config.TimerLeft / 100);
 
         
         }
@@ -174,12 +178,12 @@ namespace Hearthstone_Deck_Tracker
 
             LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
             LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
-            LblEnemyCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
+            LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
 
             SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
-            SetEnemyCardCount(_hearthstone.EnemyHandCount);
+            SetEnemyCardCount(_hearthstone.EnemyHandCount, 30 - _hearthstone.EnemyCards.Sum(c => c.Count) - _hearthstone.EnemyHandCount);
 
             ReSizePosLists();
         }
@@ -221,5 +225,12 @@ namespace Hearthstone_Deck_Tracker
         public static double Scaling { get; set; }
         public static double OpponentScaling { get; set; }
 
+
+        internal void UpdateTurnTimer(TimerEventArgs timerEventArgs)
+        {
+            //todo: make moveable in option and find good size/pos
+            LblTurnTime.Content = timerEventArgs.Seconds;
+            LblTurnTime.Visibility = timerEventArgs.Running ? Visibility.Visible : Visibility.Hidden;
+        }
     }
 }

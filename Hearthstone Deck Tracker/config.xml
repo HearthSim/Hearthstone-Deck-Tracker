@@ -29,4 +29,6 @@
   <OpponentDeckLeft>1</OpponentDeckLeft>
   <OverlayOpacity>100</OverlayOpacity>
   <KeepOpponentVisible>false</KeepOpponentVisible>
+  <MinimizeToTray>false</MinimizeToTray>
+  <TimerLeft>75</TimerLeft>
 </Config>

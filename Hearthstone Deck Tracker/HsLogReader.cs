@@ -34,6 +34,10 @@ namespace Hearthstone_Deck_Tracker
         Start,
         End
     }
+    public enum Turn
+    {
+        Player, Opponent
+    }
 
     public class CardMovementArgs : EventArgs
     {
@@ -65,6 +69,15 @@ namespace Hearthstone_Deck_Tracker
 
         public AnalyzingState State { get; private set; }
     }
+    public class TurnStartArgs : EventArgs
+    {
+        public TurnStartArgs(Turn turn)
+        {
+            Turn = turn;
+        }
+
+        public Turn Turn { get; private set; }
+    }
 
     public class HsLogReader
     {
@@ -73,6 +86,8 @@ namespace Hearthstone_Deck_Tracker
         public delegate void GameStateHandler(HsLogReader sender, GameStateArgs args);
 
         public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
+
+        public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
 
         private readonly string _fullOutputPath;
         private readonly int _updateDelay;
@@ -85,6 +100,8 @@ namespace Hearthstone_Deck_Tracker
         
         private long _previousSize;
         private long _lastGameEnd;
+
+        private int _powerCount;
 
         public HsLogReader(string hsDirPath, int updateDelay)
         {
@@ -112,6 +129,7 @@ namespace Hearthstone_Deck_Tracker
         public event CardMovementHandler CardMovement;
         public event GameStateHandler GameStateChange;
         public event AnalyzingHandler Analyzing;
+        public event TurnStartHandler TurnStart;
 
 
         private void ReadFile()
@@ -124,6 +142,11 @@ namespace Hearthstone_Deck_Tracker
                         )
                     {
                         fs.Seek(_previousSize, SeekOrigin.Begin);
+                        if (fs.Length == _previousSize)
+                        {
+                            Thread.Sleep(_updateDelay);
+                            continue;
+                        }
                         _previousSize = fs.Length;
 
                         using (var sr = new StreamReader(fs))
@@ -143,7 +166,11 @@ namespace Hearthstone_Deck_Tracker
             var logLines = log.Split('\n');
             foreach (var logLine in logLines)
             {
-                if (logLine.StartsWith("[Bob] legend rank"))
+                if (logLine.StartsWith("[Power]"))
+                {
+                    _powerCount++;
+                }
+                else if (logLine.StartsWith("[Bob] legend rank"))
                 {
                     //game ended
                     GameStateChange(this, new GameStateArgs(GameState.GameEnd));
@@ -173,6 +200,7 @@ namespace Hearthstone_Deck_Tracker
                         {
                             CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
                         }
+                        _powerCount = 0;
                         continue;
                     }
 
@@ -183,6 +211,7 @@ namespace Hearthstone_Deck_Tracker
                         {
                             GameStateChange(this, new GameStateArgs(GameState.GameBegin));
                         }
+                        _powerCount = 0;
                         continue;
                     }
 
@@ -193,6 +222,10 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //player draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
+                                if (_powerCount >= 15)
+                                {
+                                    TurnStart(this, new TurnStartArgs(Turn.Player));
+                                }
                             }
                             else
                             {
@@ -247,6 +280,10 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //opponent draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
+                                if (_powerCount >= 15)
+                                {
+                                    TurnStart(this, new TurnStartArgs(Turn.Player));
+                                }
                             }
                             else
                             {
@@ -287,6 +324,7 @@ namespace Hearthstone_Deck_Tracker
                             }
                             break;
                     }
+                    _powerCount = 0;
                 }
             }
         }

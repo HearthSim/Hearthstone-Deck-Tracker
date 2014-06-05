@@ -32,5 +32,7 @@
         public double OpponentDeckLeft;
         public double OverlayOpacity;
         public bool KeepOpponentVisible;
+        public bool MinimizeToTray;
+        public double TimerLeft;
     }
 }

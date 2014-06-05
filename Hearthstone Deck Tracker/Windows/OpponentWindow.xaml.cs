@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
                     if (convertFromString != null)
                     {
                         var bgColor = (Color)convertFromString;
-                        ListViewOpponent.Background = new SolidColorBrush(bgColor);
+                        Background = new SolidColorBrush(bgColor);
                     }
                 }
                 catch (Exception)
@@ -47,16 +47,16 @@ namespace Hearthstone_Deck_Tracker
 
         private void Scale()
         {
-            //wtf are the correct values here
-            if (((Height) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 5)
+            if (((Height - LblOpponentDeckCount.ActualHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
-                Scaling = (Height) / (ListViewOpponent.Items.Count * 35);
+                var previousScaling = Scaling;
+                Scaling = (Height - LblOpponentDeckCount.ActualHeight) / (ListViewOpponent.Items.Count * 35);
+                if (Scaling > 1)
+                    Scaling = 1;
+
+                if (previousScaling != Scaling)
+                    ListViewOpponent.Items.Refresh();
             }
-            else if (Scaling < 1)
-            {
-                Scaling = 1.0;
-            }
-            if (Scaling > 1) Scaling = 1.0;
         }
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
