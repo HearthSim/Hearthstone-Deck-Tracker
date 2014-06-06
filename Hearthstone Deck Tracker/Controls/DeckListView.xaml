@@ -8,17 +8,17 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <ListView.View>
         <GridView>
-            <GridViewColumn Header="cost" Width="28">
+            <GridViewColumn Header="cost" Width="32">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Width="28" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="18" />
+                        <local:OutlinedTextBlock Margin="-4,0,0,0" Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
             <GridViewColumn Header="name" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Height="15" VerticalAlignment="Center" Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="12" />
+                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-5,0,0,0" Height="16" VerticalAlignment="Center" Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
