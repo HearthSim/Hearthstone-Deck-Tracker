@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Hearthstone_Deck_Tracker
 {
     /// <summary>
-    /// Interaction logic for HearthstoneLabel.xaml
+    /// Interaction logic for HearthstoneTextBlock.xaml
     /// </summary>
-    public partial class HearthstoneLabel : Label
+    public partial class HearthstoneTextBlock : OutlinedTextBlock
     {
-        public HearthstoneLabel()
+        public HearthstoneTextBlock()
         {
             InitializeComponent();
         }
