@@ -39,6 +39,11 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
+        public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
+        {
+            LblOpponentCardCount.Text = "Hand: " + cardCount;
+            LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
+        }
 
         private void OpponentDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
@@ -47,10 +52,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void Scale()
         {
-            if (((Height - LblOpponentDeckCount.ActualHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+            if (((ListViewOpponent.Height) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
-                Scaling = (Height - LblOpponentDeckCount.ActualHeight) / (ListViewOpponent.Items.Count * 35);
+                Scaling = (ListViewOpponent.Height) / (ListViewOpponent.Items.Count * 35);
                 if (Scaling > 1)
                     Scaling = 1;
 

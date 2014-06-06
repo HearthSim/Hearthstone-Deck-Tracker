@@ -24,20 +24,11 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-
             </ListView.Resources>
             </local:DeckListView>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Name="LblOpponentCardCount" Content="Hand: 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" FontSize="14">
-                    <Label.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
-                    </Label.Effect>
-                </Label>
-                <Label Name="LblOpponentDeckCount" Content="Deck: 0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" FontSize="14">
-                    <Label.Effect>
-                        <DropShadowEffect Color="Black" BlurRadius="1" Direction="315" ShadowDepth="2" Opacity="1" />
-                    </Label.Effect>
-                </Label>
+                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" Text="Hand: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblOpponentDeckCount" Text="Deck: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
             </StackPanel>
         </StackPanel>
     </Grid>

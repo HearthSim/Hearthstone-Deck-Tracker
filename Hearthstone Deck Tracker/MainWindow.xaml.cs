@@ -227,8 +227,25 @@ namespace Hearthstone_Deck_Tracker
             else if (args.State == AnalyzingState.End)
             {
                 //reader done analyzing new stuff, update things
-                _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(false)));
+                if(_overlay.CanvasInfo.IsVisible)
+                    _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(false)));
+                if (_playerWindow.IsVisible)
+                    _playerWindow.Dispatcher.BeginInvoke(
+                        new Action(
+                            () =>
+                            _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
+                                                       _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count))));
+                if (_opponentWindow.IsVisible)
+                    _opponentWindow.Dispatcher.BeginInvoke(
+                        new Action(
+                            () =>
+                            _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
+                                                                 30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
+                                                                 _hearthstone.EnemyHandCount)
+                            ));
+
             }
+
         }
 
         private void LogReaderOnGameStateChange(HsLogReader sender, GameStateArgs args)
