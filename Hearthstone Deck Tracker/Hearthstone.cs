@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly Dictionary<string, Card> _cardDb;
         public ObservableCollection<Card> EnemyCards;
         public int EnemyHandCount;
+        public int OpponentDeckCount;
         public bool IsInMenu;
         public ObservableCollection<Card> PlayerDeck;
         public int PlayerHandCount;
@@ -80,7 +81,6 @@ namespace Hearthstone_Deck_Tracker
             if (cardId == "") return new Card();
             return _cardDb[cardId];
         }
-
 
         public List<Card> GetActualCards()
         {
@@ -170,6 +170,7 @@ namespace Hearthstone_Deck_Tracker
         public void EnemyDraw()
         {
             EnemyHandCount++;
+            OpponentDeckCount--;
         }
 
         public void EnemyPlayed(string cardId)
@@ -220,6 +221,7 @@ namespace Hearthstone_Deck_Tracker
         public void EnemyMulligan()
         {
             EnemyHandCount--;
+            OpponentDeckCount++;
         }
 
         internal void PlayerHandDiscard(string cardId)
@@ -308,5 +310,10 @@ namespace Hearthstone_Deck_Tracker
             EnemyCards.Add(card);
         }
 
+
+        internal void OpponentGet(string cardId)
+        {
+            EnemyHandCount++;
+        }
     }
 }

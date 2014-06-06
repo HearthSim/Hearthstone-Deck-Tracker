@@ -277,6 +277,7 @@ namespace Hearthstone_Deck_Tracker
                     _hearthstone.PlayerHandCount = 0;
                     _hearthstone.EnemyCards.Clear();
                     _hearthstone.EnemyHandCount = 0;
+                    _hearthstone.OpponentDeckCount = 30;
 
                 }));
         }
@@ -303,6 +304,7 @@ namespace Hearthstone_Deck_Tracker
                     {
                         _hearthstone.EnemyCards.Clear();
                         _hearthstone.EnemyHandCount = 0;
+                        _hearthstone.OpponentDeckCount = 30;
                     }
                 }));
 
@@ -353,6 +355,9 @@ namespace Hearthstone_Deck_Tracker
                         case CardMovementType.OpponentPlayToHand:
                             HandleOpponentPlayToHand(args.CardId);
                             break;
+                        case CardMovementType.OpponentGet:
+                            HandleOpponentGet(args.CardId);
+                            break;
                         default:
                             Console.WriteLine("Invalid card movement");
                             break;
@@ -362,6 +367,11 @@ namespace Hearthstone_Deck_Tracker
 
 
         #region Handle Events
+
+        private void HandleOpponentGet(string cardId)
+        {
+            _hearthstone.OpponentGet(cardId);
+        }
 
         private void HandleOpponentPlayToHand(string cardId)
         {
@@ -732,6 +742,7 @@ namespace Hearthstone_Deck_Tracker
                     _hearthstone.PlayerHandCount = 0;
                     _hearthstone.EnemyCards.Clear();
                     _hearthstone.EnemyHandCount = 0;
+                    _hearthstone.OpponentDeckCount = 30;
                 }));
             _logReader.Reset(false);
 

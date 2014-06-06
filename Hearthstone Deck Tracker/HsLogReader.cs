@@ -26,7 +26,8 @@ namespace Hearthstone_Deck_Tracker
         OpponentDeckDiscard,
         OpponentHandDiscard,
         PlayerGet,
-        OpponentPlayToHand
+        OpponentPlayToHand,
+        OpponentGet
     };
 
     public enum AnalyzingState
@@ -311,7 +312,7 @@ namespace Hearthstone_Deck_Tracker
                             if (to == "OPPOSING HAND")
                             {
                                 //coin, thoughtsteal etc
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
+                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentGet, id));
                             }
                             else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
                             {
