@@ -926,6 +926,11 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideDrawChances = true;
             SaveConfigUpdateOverlay();
+            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _playerWindow.LblDrawChance1.Visibility = Visibility.Hidden;
+                _playerWindow.LblDrawChance2.Visibility = Visibility.Hidden;
+            }));
         }
 
         private void CheckboxHideDrawChances_Unchecked(object sender, RoutedEventArgs e)
@@ -933,6 +938,11 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideDrawChances = false;
             SaveConfigUpdateOverlay();
+            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _playerWindow.LblDrawChance1.Visibility = Visibility.Visible;
+                _playerWindow.LblDrawChance2.Visibility = Visibility.Visible;
+            }));
         }
 
         private void CheckboxHidePlayerCardCounter_Checked(object sender, RoutedEventArgs e)
@@ -940,20 +950,35 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HidePlayerCardCount = true;
             SaveConfigUpdateOverlay();
+            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _playerWindow.LblCardCount.Visibility = Visibility.Hidden;
+                    _playerWindow.LblDeckCount.Visibility = Visibility.Hidden;
+                }));
         }
 
         private void CheckboxHidePlayerCardCounter_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HidePlayerCardCount = false;
-            SaveConfigUpdateOverlay();
+            SaveConfigUpdateOverlay(); 
+            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _playerWindow.LblCardCount.Visibility = Visibility.Visible;
+                _playerWindow.LblDeckCount.Visibility = Visibility.Visible;
+            }));
         }
 
         private void CheckboxHideEnemyCardCounter_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideEnemyCardCount = true;
-            SaveConfigUpdateOverlay();
+            SaveConfigUpdateOverlay(); 
+            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Hidden;
+                _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Hidden;
+            }));
         }
 
         private void CheckboxHideEnemyCardCounter_Unchecked(object sender, RoutedEventArgs e)
@@ -961,6 +986,11 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideEnemyCardCount = false;
             SaveConfigUpdateOverlay();
+            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
+                _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Visible;
+            }));
         }
 
         private void CheckboxHideEnemyCards_Checked(object sender, RoutedEventArgs e)

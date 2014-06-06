@@ -11,7 +11,7 @@
             <GridViewColumn Header="cost" Width="32">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Margin="-4,0,0,0" Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" />
+                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-4,0,0,0" Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>

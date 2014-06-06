@@ -179,8 +179,10 @@ namespace Hearthstone_Deck_Tracker
             LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
             LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
             LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
+            LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
+            LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
 
             SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
             SetEnemyCardCount(_hearthstone.EnemyHandCount, 30 - _hearthstone.EnemyCards.Sum(c => c.Count) - _hearthstone.EnemyHandCount);

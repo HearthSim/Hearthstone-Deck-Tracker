@@ -52,10 +52,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void Scale()
         {
-            if (((ListViewOpponent.Height) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+            if (((Height - LblOpponentCardCount.ActualHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
-                Scaling = (ListViewOpponent.Height) / (ListViewOpponent.Items.Count * 35);
+                Scaling = (Height - LblOpponentCardCount.ActualHeight) / (ListViewOpponent.Items.Count * 35);
                 if (Scaling > 1)
                     Scaling = 1;
 
