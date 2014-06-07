@@ -636,6 +636,50 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings();
+
+
+            var clipboard = Clipboard.GetText();
+            if (clipboard.Contains("hearthstats.net"))
+            {
+                settings.DefaultText = clipboard;
+            }
+
+            //import dialog
+            var url = await this.ShowInputAsync("Import deck\n(currently only supports hearthstats.net)", "Url:", settings);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            //todo: how does this work?!
+            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
+
+            var deck = _deckImporter.Import(url);
+
+            if (deck != null)
+            {
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+            }
+            else
+            {
+                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+            }
+
+            await controller.CloseAsync();
+
+        }
+
         #endregion
 
         #region MY DECKS - METHODS
@@ -1186,53 +1230,9 @@ namespace Hearthstone_Deck_Tracker
             _config.TimerLeft = SliderTimerLeft.Value;
             SaveConfigUpdateOverlay();
         }
-
-        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
-        {
-            var settings = new MetroDialogSettings();
-            
-
-            var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats.net"))
-            {
-                settings.DefaultText = clipboard;
-            }
-
-            //import dialog
-            var url = await this.ShowInputAsync("Import deck\n(currently only supports hearthstats.net)", "Url:", settings);
-            if (string.IsNullOrEmpty(url))
-                return;
-
-            //todo: how does this work?!
-            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-
-            var deck = _deckImporter.Import(url);
-
-            if (deck != null)
-            {
-                ClearNewDeckSection();
-                _newContainsDeck = true;
-
-                _newDeck = (Deck)deck.Clone();
-                ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
-                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
-                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
-
-                TextBoxDeckName.Text = _newDeck.Name;
-                UpdateNewDeckHeader(true);
-            }
-            else
-            {
-                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
-            }
-
-            await controller.CloseAsync();
-
-        }
+        #endregion
 
 
 
     }
 }
-        #endregion
