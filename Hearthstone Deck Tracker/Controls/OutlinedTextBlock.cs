@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Documents;
@@ -163,7 +164,7 @@ namespace Hearthstone_Deck_Tracker {
 
         protected override Size MeasureOverride(Size availableSize) {
             this.EnsureFormattedText();
-
+            
             // constrain the formatted text according to the available size
             // the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
             // the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw

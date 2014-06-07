@@ -1,12 +1,14 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,7 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MahApps.Metro.Controls.Dialogs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
@@ -47,15 +49,17 @@ namespace Hearthstone_Deck_Tracker
         private readonly Thread _updateThread;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
+        private readonly DeckImporter _deckImporter;
         private bool _editingDeck;
         private bool _newContainsDeck;
         private Deck _newDeck;
 
 
+
         public MainWindow()
         {
             InitializeComponent();
-
+            
             Helper.CheckForUpdates();
 
             //check for log config and create if not existing
@@ -177,6 +181,8 @@ namespace Hearthstone_Deck_Tracker
                 _xmlManagerConfig.Save("config.xml", _config);
             }
 
+            _deckImporter = new DeckImporter(_hearthstone);
+
             //log reader
             _logReader = new HsLogReader(_config.HearthstoneDirectory, _config.UpdateDelay);
             _logReader.CardMovement += LogReaderOnCardMovement;
@@ -201,6 +207,8 @@ namespace Hearthstone_Deck_Tracker
             UseDeck(ListboxDecks.SelectedItem as Deck);
 
             _logReader.Start();
+
+            
         }
 
         #region LogReader Events
@@ -868,6 +876,12 @@ namespace Hearthstone_Deck_Tracker
             var headerText = "New Deck";
             var cardCount = _newDeck.Cards.Sum(c => c.Count);
             TabItemNewDeck.Header = show ? string.Format("{0} ({1})", headerText, cardCount) : headerText;
+                    if (!_config.KeepOpponentVisible)
+                    {
+                        _hearthstone.EnemyCards.Clear();
+                        _hearthstone.EnemyHandCount = 0;
+                        _hearthstone.OpponentDeckCount = 30;
+                    }
         }
 
         private void AddCardToDeck(Card card)
@@ -909,9 +923,7 @@ namespace Hearthstone_Deck_Tracker
                 _newContainsDeck = true;
             }
         }
-
-        #endregion
-
+        
         #region OPTIONS
 
         private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
@@ -1178,6 +1190,51 @@ namespace Hearthstone_Deck_Tracker
             SaveConfigUpdateOverlay();
         }
 
-        #endregion
+        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings();
+            
+
+            var clipboard = Clipboard.GetText();
+            if (clipboard.Contains("hearthstats.net"))
+            {
+                settings.DefaultText = clipboard;
+            }
+
+            //import dialog
+            var url = await this.ShowInputAsync("Import deck\n(currently only supports hearthstats.net)", "Url:", settings);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            //todo: how does this work?!
+            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
+
+            var deck = _deckImporter.Import(url);
+
+            if (deck != null)
+            {
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+            }
+            else
+            {
+                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+            }
+
+            await controller.CloseAsync();
+
+        }
+
+
+
     }
 }

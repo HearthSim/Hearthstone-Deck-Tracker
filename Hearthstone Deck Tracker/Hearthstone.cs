@@ -58,7 +58,6 @@ namespace Hearthstone_Deck_Tracker
             EnemyCards = new ObservableCollection<Card>();
             _cardDb = new Dictionary<string, Card>();
             LoadCardDb();
-            //PremadePlayerDeck = new ObservableCollection<Card>();
         }
 
         private void LoadCardDb()
@@ -76,10 +75,14 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        public Card GetCardFromDb(string cardId)
+        public Card GetCardFromId(string cardId)
         {
             if (cardId == "") return new Card();
             return _cardDb[cardId];
+        }
+        public Card GetCardFromName(string name)
+        {
+            return _cardDb.FirstOrDefault(c => c.Value.Name == name).Value;
         }
 
         public List<Card> GetActualCards()
@@ -99,7 +102,6 @@ namespace Hearthstone_Deck_Tracker
             {
                PlayerDeck.Add(card);
             }
-            //PlayerDeck = cards;
             IsUsingPremade = true;
         }
 
@@ -110,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
                 PlayerHandCount++;
                 return;
             }
-            var card = GetCardFromDb(cardId);
+            var card = GetCardFromId(cardId);
 
             if (!IsUsingPremade)
             {
@@ -180,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
                 EnemyHandCount--;
                 return;
             }
-            Card card = GetCardFromDb(cardId);
+            Card card = GetCardFromId(cardId);
             if (EnemyCards.Any(x => x.Equals(card)))
             {
                 EnemyCards.Remove(card);
@@ -188,11 +190,13 @@ namespace Hearthstone_Deck_Tracker
             }
             EnemyCards.Add(card);
             EnemyHandCount--;
+
         }
 
+        
         public void Mulligan(string cardId)
         {
-            Card card = GetCardFromDb(cardId);
+            Card card = GetCardFromId(cardId);
             if (!IsUsingPremade)
             {
                 Card deckCard = PlayerDeck.FirstOrDefault(c => c.Equals(card));
@@ -241,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 
         internal void PlayerDeckDiscard(string cardId)
         {
-            Card card = GetCardFromDb(cardId);
+            Card card = GetCardFromId(cardId);
 
             if (!IsUsingPremade)
             {
@@ -286,7 +290,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 return;
             }
-            var card = GetCardFromDb(cardId);
+            var card = GetCardFromId(cardId);
             if (EnemyCards.Any(x => x.Equals(card)))
             {
                 EnemyCards.Remove(card);
@@ -301,7 +305,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 return;
             }
-            Card card = GetCardFromDb(cardId);
+            Card card = GetCardFromId(cardId);
             if (EnemyCards.Any(x => x.Equals(card)))
             {
                 EnemyCards.Remove(card);

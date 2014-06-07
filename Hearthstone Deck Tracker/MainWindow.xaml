@@ -148,7 +148,7 @@
                         <system:String>Neutral Only</system:String>
                     </ComboBox>
                     <Label Content="Mana:" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="BtnClearNewDeck" Content="Clear" HorizontalAlignment="Left" Margin="152,11,0,0" VerticalAlignment="Top" Width="98" Height="23" Click="BtnClearNewDeck_Click" Panel.ZIndex="1"/>
+                    <Button x:Name="BtnImport" Content="Import" HorizontalAlignment="Left" Margin="152,11,0,0" VerticalAlignment="Top" Width="98" Height="23" Click="BtnImport_OnClick" Panel.ZIndex="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Options">
