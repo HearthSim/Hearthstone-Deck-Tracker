@@ -12,15 +12,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using ListViewItem = System.Windows.Controls.ListViewItem;
-using MessageBox = System.Windows.MessageBox;
-using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using Microsoft.Win32;
 
 #endregion
 
@@ -41,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
             @"\Blizzard\Hearthstone\log.config";
 
         private readonly HsLogReader _logReader;
-        private readonly NotifyIcon _notifyIcon;
+        private readonly System.Windows.Forms.NotifyIcon _notifyIcon;
         private readonly OpponentWindow _opponentWindow;
         private readonly OverlayWindow _overlay;
         private readonly PlayerWindow _playerWindow;
@@ -142,7 +138,7 @@ namespace Hearthstone_Deck_Tracker
 
             ListboxDecks.ItemsSource = _deckList.DecksList;
 
-            _notifyIcon = new NotifyIcon();
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.Icon = new Icon(@"Images/HearthstoneDeckTracker.ico");
             _notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
             _notifyIcon.Visible = false;
@@ -462,7 +458,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 _notifyIcon.Visible = true;
                 _notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray",
-                                           ToolTipIcon.Info);
+                                           System.Windows.Forms.ToolTipIcon.Info);
                 Hide();
             }
         }
@@ -484,7 +480,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private void NotifyIconOnMouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIconOnMouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs mouseEventArgs)
         {
             _notifyIcon.Visible = false;
             Show();
@@ -923,7 +919,8 @@ namespace Hearthstone_Deck_Tracker
                 _newContainsDeck = true;
             }
         }
-        
+        #endregion
+
         #region OPTIONS
 
         private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
@@ -1238,3 +1235,4 @@ namespace Hearthstone_Deck_Tracker
 
     }
 }
+        #endregion
