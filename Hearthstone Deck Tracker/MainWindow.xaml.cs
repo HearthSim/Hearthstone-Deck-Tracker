@@ -641,13 +641,13 @@ namespace Hearthstone_Deck_Tracker
             var settings = new MetroDialogSettings();
 
             var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn") || clipboard.Contains("hearthhead"))
+            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn"))
             {
                 settings.DefaultText = clipboard;
             }
 
             //import dialog
-            var url = await this.ShowInputAsync("Import deck\n(currently only supports hearthstats.net)", "Url:", settings);
+            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats\nhearthpwn", "Url:", settings);
             if (string.IsNullOrEmpty(url))
                 return;
 
@@ -670,6 +670,7 @@ namespace Hearthstone_Deck_Tracker
 
                 TextBoxDeckName.Text = _newDeck.Name;
                 UpdateNewDeckHeader(true);
+                UpdateDbListView();
             }
             else
             {
