@@ -27,6 +27,10 @@ namespace Hearthstone_Deck_Tracker
             {
                 return ImportHearthPwn(url);
             }
+            if (url.Contains("hearthhead"))
+            {
+                return null; //ImportHearthHead(url);
+            }
             return null;
         }
 
@@ -35,66 +39,72 @@ namespace Hearthstone_Deck_Tracker
             try
             {
                 var doc = GetHtmlDoc(url);
+
                 var deck = new Deck();
 
-                //get deck name
-                foreach (var a in doc.DocumentNode.SelectNodes("//meta[contains(@name,'description')]"))
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//h1[contains(@class,'page-title')]").FirstChild.InnerText);
+                deck.Name = deckName;
+
+                var deckClass =
+                    HttpUtility.HtmlDecode(
+                        doc.DocumentNode.SelectSingleNode("//div[contains(@class,'col-md-6')]/p").LastChild.InnerText);
+                deck.Class = char.ToUpper(deckClass[0]) + deckClass.Substring(1);
+
+                var cardNameNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'name')]");
+                var cardCountNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'qty')]");
+
+                var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
+                var cardCosts =
+                    cardCountNodes.Select(countNode => int.Parse(countNode.InnerText));
+
+                var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
+                foreach (var info in cardInfo)
                 {
-                    foreach (var attribute in a.Attributes)
-                    {
-                        if (attribute.Name == "content")
-                        {
-                            deck.Name = HttpUtility.HtmlDecode(attribute.Value);
-                            break;
-                        }
-                    }
-                    if (!string.IsNullOrEmpty(deck.Name))
-                        break;
+                    var card = _hearthstone.GetCardFromName(info.Name);
+                    card.Count = info.Count;
+                    deck.Cards.Add(card);
                 }
 
+                return deck;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                return null;
+            }
+        }
+        private Deck ImportHearthHead(string url)
+        {
+            try
+            {
+                var doc = GetHtmlDoc(url);
 
-                foreach (var a in doc.DocumentNode.SelectNodes("//div"))
+                var deck = new Deck();
+                
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//div[contains(@class,'text')]/h1").InnerText);
+                deck.Name = deckName;
+
+                var deckClass =
+                    HttpUtility.HtmlDecode(
+                        doc.DocumentNode.SelectSingleNode("//span[contains(@class,'breadcrumb-arrow')]/a[contains(@href,'/decks?filter')]").InnerText);
+                deck.Class = char.ToUpper(deckClass[0]) + deckClass.Substring(1);
+                
+                var cardNameNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'deckguide-cards-type')]//ul//li//a");
+
+                var cardCountNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'deckguide-cards-type')]/ul/li");
+                
+                var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
+                var cardCosts =
+                    cardCountNodes.Select(countNode => int.Parse(countNode.LastChild.InnerText));
+
+                var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
+                foreach (var info in cardInfo)
                 {
-                    if (string.IsNullOrEmpty(deck.Class))
-                    {
-                        //get deck class
-                        var colmd6Attr = a.Attributes.FirstOrDefault(attr => attr.Value == "col-md-6");
-
-                        if (colmd6Attr != null)
-                        {
-                            var classAttr = a.ChildNodes.FirstOrDefault(c => c.InnerText.Contains("Class:"));
-                            if (classAttr != null)
-                            {
-                                deck.Class = classAttr.InnerText.Split(';')[1];
-                            }
-                        }
-                    }
-
-
-                    var cardName = "";
-                    var cardCount = 0;
-                    foreach (var node in a.ChildNodes)
-                    {
-                        if (node.Attributes.Count == 0)
-                            continue;
-                        if (node.Attributes[0].Value == "name")
-                        {
-                            cardName = HttpUtility.HtmlDecode(node.InnerText);
-                        }
-                        else if (node.Attributes[0].Value == "qty")
-                        {
-                            cardCount = int.Parse(node.InnerText);
-                        }
-
-                    }
-
-                    if (cardName != string.Empty)
-                    {
-                        var realCard = _hearthstone.GetCardFromName(cardName);
-                        realCard.Count = cardCount;
-                        deck.Cards.Add(realCard);
-                    }
+                    var card = _hearthstone.GetCardFromName(info.Name);
+                    card.Count = info.Count;
+                    deck.Cards.Add(card);
                 }
+
                 return deck;
             }
             catch (Exception e)
