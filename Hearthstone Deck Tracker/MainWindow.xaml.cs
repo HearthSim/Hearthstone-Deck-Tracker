@@ -651,10 +651,11 @@ namespace Hearthstone_Deck_Tracker
             if (string.IsNullOrEmpty(url))
                 return;
 
-            //todo: how does this work?!
             var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
             var deck = _deckImporter.Import(url);
+
+            await controller.CloseAsync();
 
             if (deck != null)
             {
@@ -675,7 +676,6 @@ namespace Hearthstone_Deck_Tracker
                 await this.ShowMessageAsync("Error", "Could not load deck from specified url");
             }
 
-            await controller.CloseAsync();
 
         }
 
