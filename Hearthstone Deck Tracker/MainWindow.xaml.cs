@@ -640,9 +640,8 @@ namespace Hearthstone_Deck_Tracker
         {
             var settings = new MetroDialogSettings();
 
-
             var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats.net"))
+            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn"))
             {
                 settings.DefaultText = clipboard;
             }

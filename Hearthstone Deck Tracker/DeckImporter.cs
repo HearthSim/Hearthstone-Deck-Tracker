@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using HtmlAgilityPack;
 
@@ -17,6 +18,19 @@ namespace Hearthstone_Deck_Tracker
         }
         
         public Deck Import(string url)
+        {
+            if (url.Contains("hearthstats"))
+            {
+                return ImportHearthStats(url);
+            }
+            if (url.Contains("hearthpwn"))
+            {
+                return ImportHearthPwn(url);
+            }
+            return null;
+        }
+
+        private Deck ImportHearthStats(string url)
         {
             try
             {
@@ -81,6 +95,46 @@ namespace Hearthstone_Deck_Tracker
                         deck.Cards.Add(realCard);
                     }
                 }
+                return deck;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                return null;
+            }
+        }
+
+        private Deck ImportHearthPwn(string url)
+        {
+            try
+            {
+                var doc = GetHtmlDoc(url);
+
+                var deck = new Deck();
+
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header/h2[contains(@class,'t-deck-title')]").InnerText);
+                deck.Name = deckName;
+
+                var deckClass =
+                    HttpUtility.HtmlDecode(
+                        doc.DocumentNode.SelectSingleNode("//header/span[contains(@class,'class')]").Attributes[0].Value.Split('-')[1]);
+                deck.Class = char.ToUpper(deckClass[0]) + deckClass.Substring(1);
+
+                var cardNameNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
+                var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
+                
+                var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
+                var cardCosts =
+                    cardCountNodes.Select(countNode => int.Parse(Regex.Match(countNode.LastChild.InnerText, @"\d+").Value));
+
+                var cardInfo = cardNames.Zip(cardCosts, (n , c) => new {Name = n, Count = c});
+                foreach (var info in cardInfo)
+                {
+                    var card = _hearthstone.GetCardFromName(info.Name);
+                    card.Count = info.Count;
+                    deck.Cards.Add(card);
+                }
+
                 return deck;
             }
             catch (Exception e)

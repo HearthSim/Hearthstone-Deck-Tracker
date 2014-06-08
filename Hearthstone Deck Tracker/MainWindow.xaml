@@ -54,7 +54,7 @@
             </TabItem>
             <TabItem Name="TabItemNewDeck" Header="New Deck">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
+                    <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
 
                     <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown">
                         <ListView.Resources>
@@ -111,7 +111,7 @@
                         <system:String>Warlock</system:String>
                         <system:String>Warrior</system:String>
                     </ComboBox>
-                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
+                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
                     <Button x:Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="98" Click="BtnSaveDeck_Click" Height="23" Panel.ZIndex="3"/>
                     <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" MouseDoubleClick="ListViewNewDeck_MouseDoubleClick" HorizontalAlignment="Left" Width="240" Height="auto">
                         <ListView.Resources>
