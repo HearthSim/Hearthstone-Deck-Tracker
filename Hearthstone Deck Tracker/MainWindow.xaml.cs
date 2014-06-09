@@ -184,6 +184,11 @@ namespace Hearthstone_Deck_Tracker
 
             _deckImporter = new DeckImporter(_hearthstone);
 
+            //this has to happen before reader starts
+            var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
+            DeckPickerList.SelectDeck(lastDeck);
+
+
             //log reader
             _logReader = new HsLogReader(_config.HearthstoneDirectory, _config.UpdateDelay);
             _logReader.CardMovement += LogReaderOnCardMovement;
@@ -204,10 +209,8 @@ namespace Hearthstone_Deck_Tracker
 
             _initialized = true;
 
-            var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
             if (lastDeck != null)
             {
-                DeckPickerList.SelectDeck(lastDeck);
                 UpdateDeckList(lastDeck);
                 UseDeck(lastDeck);
             }

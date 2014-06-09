@@ -134,6 +134,7 @@ namespace Hearthstone_Deck_Tracker
                 ListboxPicker.SelectedItem = deck;
                 _inClassSelect = false;
             }
+            SelectedDeck = deck;
         }
 
         public void RemoveDeck(Deck deck)
