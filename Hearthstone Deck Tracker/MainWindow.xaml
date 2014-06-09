@@ -30,25 +30,8 @@
                     </local:DeckListView>
                     <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="375,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
                     <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="240" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
-                    <ListBox Name="ListboxDecks" Background="DimGray" HorizontalAlignment="Left" Height="auto" Width="240" SelectionChanged="ListboxDecks_SelectionChanged" Margin="10,40,0,10">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Height="45" Margin="-2,2,3,2">
-                                    <Grid.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="{Binding ClassColor}" Offset="0"/>
-                                            <GradientStop Color="#FFE5E5E5" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Grid.Background>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black"></Label>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
                     <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
+                    <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="557" Width="240"/>
 
                 </Grid>
             </TabItem>

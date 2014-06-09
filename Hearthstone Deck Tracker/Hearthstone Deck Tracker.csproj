@@ -97,6 +97,9 @@
     <Compile Include="Controls\DeckListView.xaml.cs">
       <DependentUpon>DeckListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckPicker.xaml.cs">
+      <DependentUpon>DeckPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HearthstoneTextBlock.xaml.cs">
       <DependentUpon>HearthstoneTextBlock.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
     <Compile Include="User32.cs" />
     <Compile Include="XmlManager.cs" />
     <Page Include="Controls\DeckListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DeckPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

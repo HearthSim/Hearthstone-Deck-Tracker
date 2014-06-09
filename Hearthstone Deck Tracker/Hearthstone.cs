@@ -297,6 +297,7 @@ namespace Hearthstone_Deck_Tracker
                 card.Count++;
             }
             EnemyCards.Add(card);
+            OpponentDeckCount--;
         }
 
         internal void EnemySecretTriggered(string cardId)

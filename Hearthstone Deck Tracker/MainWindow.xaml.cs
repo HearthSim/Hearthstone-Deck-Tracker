@@ -136,7 +136,12 @@ namespace Hearthstone_Deck_Tracker
                 return;
             }
 
-            ListboxDecks.ItemsSource = _deckList.DecksList;
+            foreach (var deck in _deckList.DecksList)
+            {
+                DeckPickerList.AddDeck(deck);
+            }
+            DeckPickerList.SelectedDeckChanged += DeckPickerListOnSelectedDeckChanged;
+            //ListboxDecks.ItemsSource = _deckList.DecksList;
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.Icon = new Icon(@"Images/HearthstoneDeckTracker.ico");
@@ -194,19 +199,26 @@ namespace Hearthstone_Deck_Tracker
 
             _updateThread = new Thread(Update);
             _updateThread.Start();
-            ListboxDecks.SelectedItem =
-                _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
+            //ListboxDecks.SelectedItem =
+            //    _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
 
             _initialized = true;
 
-            UpdateDeckList(ListboxDecks.SelectedItem as Deck);
-            UseDeck(ListboxDecks.SelectedItem as Deck);
+            var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
+            if (lastDeck != null)
+            {
+                DeckPickerList.SelectDeck(lastDeck);
+                UpdateDeckList(lastDeck);
+                UseDeck(lastDeck);
+            }
+
 
             _logReader.Start();
 
             
         }
 
+        
         #region LogReader Events
 
         private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
@@ -329,7 +341,7 @@ namespace Hearthstone_Deck_Tracker
                         _hearthstone.PlayerDeck.Clear();
                     else
                     {
-                        var deck = ListboxDecks.SelectedItem as Deck;
+                        var deck = DeckPickerList.SelectedDeck;
                         if (deck != null)
                             _hearthstone.SetPremadeDeck(deck.Cards);
                     }
@@ -348,7 +360,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     if (Hearthstone.IsUsingPremade)
                     {
-                        var deck = ListboxDecks.SelectedItem as Deck;
+                        var deck = DeckPickerList.SelectedDeck;
                         if (deck != null)
                             _hearthstone.SetPremadeDeck(deck.Cards);
                     }
@@ -494,11 +506,11 @@ namespace Hearthstone_Deck_Tracker
 
         private void LoadConfig()
         {
-            var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
-            if (deck != null && ListboxDecks.Items.Contains(deck))
-            {
-                ListboxDecks.SelectedItem = deck;
-            }
+            //var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
+            //if (deck != null && ListboxDecks.Items.Contains(deck))
+            //{
+            //    ListboxDecks.SelectedItem = deck;
+            //}
 
             // Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
@@ -559,7 +571,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
-            ListboxDecks.SelectedIndex = -1;
+            //ListboxDecks.SelectedIndex = -1;
+            DeckPickerList.SelectedDeck = null;
             UpdateDeckList(new Deck());
             UseDeck(new Deck());
             Hearthstone.IsUsingPremade = false;
@@ -567,8 +580,9 @@ namespace Hearthstone_Deck_Tracker
 
         private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
         {
-            if (ListboxDecks.SelectedIndex == -1) return;
-            var selectedDeck = ListboxDecks.SelectedItem as Deck;
+            //if (ListboxDecks.SelectedIndex == -1) return;
+            //var selectedDeck = ListboxDecks.SelectedItem as Deck;
+            var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck == null) return;
             //move to new deck section with stuff preloaded
             if (_newContainsDeck)
@@ -601,7 +615,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
-            var deck = ListboxDecks.SelectedItem as Deck;
+            //var deck = ListboxDecks.SelectedItem as Deck;
+            var deck = DeckPickerList.SelectedDeck;
             if (deck != null)
             {
                 if (
@@ -613,7 +628,8 @@ namespace Hearthstone_Deck_Tracker
                     {
                         _deckList.DecksList.Remove(deck);
                         _xmlManager.Save("PlayerDecks.xml", _deckList);
-                        ListboxDecks.SelectedIndex = -1;
+                        //ListboxDecks.SelectedIndex = -1;
+                        DeckPickerList.RemoveDeck(deck);
                         ListViewDeck.Items.Clear();
                     }
                     catch (Exception)
@@ -623,19 +639,7 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
-
-        private void ListboxDecks_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!_initialized) return;
-            var deck = ListboxDecks.SelectedItem as Deck;
-            if (deck != null)
-            {
-                Hearthstone.IsUsingPremade = true;
-                UpdateDeckList(deck);
-                UseDeck(deck);
-            }
-        }
-
+        
         private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
         {
             var settings = new MetroDialogSettings();
@@ -713,6 +717,17 @@ namespace Hearthstone_Deck_Tracker
             SortCardCollection(ListViewDeck.Items);
             _config.LastDeck = selected.Name;
             _xmlManagerConfig.Save("config.xml", _config);
+        }
+
+        private void DeckPickerListOnSelectedDeckChanged(DeckPicker sender, Deck deck)
+        {
+            if (!_initialized) return;
+            if (deck != null)
+            {
+                Hearthstone.IsUsingPremade = true;
+                UpdateDeckList(deck);
+                UseDeck(deck);
+            }
         }
 
         #endregion
@@ -867,17 +882,20 @@ namespace Hearthstone_Deck_Tracker
             if (_editingDeck)
             {
                 _deckList.DecksList.Remove(_newDeck);
+                DeckPickerList.RemoveDeck(_newDeck);
             }
             _newDeck.Name = deckName;
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
-            _deckList.DecksList.Add((Deck) _newDeck.Clone());
+            var newDeckClone = (Deck) _newDeck.Clone();
+            _deckList.DecksList.Add(newDeckClone);
+            DeckPickerList.AddAndSelectDeck(newDeckClone);
             _xmlManager.Save("PlayerDecks.xml", _deckList);
             BtnSaveDeck.Content = "Save";
 
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
 
-            ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
+            //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
 
             ClearNewDeckSection();
         }
