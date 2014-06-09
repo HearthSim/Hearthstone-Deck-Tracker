@@ -31,7 +31,7 @@
         public double PlayerDeckLeft;
         public double OpponentDeckLeft;
         public double OverlayOpacity;
-        public bool KeepOpponentVisible;
+        public bool KeepDecksVisible;
         public bool MinimizeToTray;
         public double TimerLeft;
     }

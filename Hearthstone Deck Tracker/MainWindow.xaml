@@ -156,7 +156,7 @@
                     <Slider Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="114,110,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="Slider_ValueChanged"/>
                     <Label Content="Overlay opacity:" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top"/>
                     <Label Content="Player and opponent sliders regulate deck position and (maximum) height" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom"/>
-                    <CheckBox Name="CheckboxKeepOpponentVisible" Content="Deck visible after game" HorizontalAlignment="Left" Margin="39,330,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepOpponentVisible_Checked" Unchecked="CheckboxKeepOpponentVisible_Unchecked"/>
+                    <CheckBox Name="CheckboxKeepDecksVisible" Content="Don't reset Decks after game" HorizontalAlignment="Left" Margin="39,330,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
                     <CheckBox Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="20,136,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked"/>
                     <CheckBox IsEnabled="False" Name="CheckboxHideTimer" Content="Hide Timer" HorizontalAlignment="Left" Margin="108,163,0,0" VerticalAlignment="Top"/>
                     <Slider IsEnabled="False" x:Name="SliderTimerLeft" HorizontalAlignment="Left" Margin="39,185,0,0" VerticalAlignment="Top" Width="200" Value="100" ValueChanged="SliderTimerLeft_ValueChanged"/>
