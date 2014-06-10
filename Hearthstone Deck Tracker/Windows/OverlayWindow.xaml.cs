@@ -144,6 +144,8 @@ namespace Hearthstone_Deck_Tracker
             {
                 var previousScaling = OpponentScaling;
                 OpponentScaling = (Height * _config.OpponentDeckHeight / 100) / (ListViewOpponent.Items.Count * 35);
+                if (OpponentScaling > 1)
+                    OpponentScaling = 1;
 
                 if (previousScaling != OpponentScaling)
                     ListViewOpponent.Items.Refresh();

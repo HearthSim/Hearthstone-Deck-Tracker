@@ -110,18 +110,21 @@ namespace Hearthstone_Deck_Tracker
 
         public void AddDeck(Deck deck)
         {
+            if (deck == null) return;
             var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ?? _hsClasses.First(c => c.Name == "Undefined");
             hsClass.Decks.Add(deck);
         }
 
         public void AddAndSelectDeck(Deck deck)
         {
+            if (deck == null) return;
             AddDeck(deck);
             SelectDeck(deck);
             
         }
         public void SelectDeck(Deck deck)
         {
+            if (deck == null) return;
             var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ?? _hsClasses.First(c => c.Name == "Undefined");
             if (hsClass != null)
             {
@@ -139,6 +142,7 @@ namespace Hearthstone_Deck_Tracker
 
         public void RemoveDeck(Deck deck)
         {
+            if (deck == null) return;
             var hsClass = _hsClasses.FirstOrDefault(c => c.Decks.Contains(deck));
             if (hsClass != null)
             {

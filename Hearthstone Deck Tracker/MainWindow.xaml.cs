@@ -1172,14 +1172,14 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.PlayerDeckTop = 100 - RangeSliderPlayer.UpperValue;
             _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-            SaveConfigUpdateOverlay();
+            //SaveConfigUpdateOverlay();
         }
 
         private void RangeSliderPlayer_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
             if (!_initialized) return;
             _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-            SaveConfigUpdateOverlay();
+            //SaveConfigUpdateOverlay();
         }
 
         private void SliderPlayer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -1194,14 +1194,14 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.OpponentDeckTop = 100 - RangeSliderOpponent.UpperValue;
             _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-            SaveConfigUpdateOverlay();
+            //SaveConfigUpdateOverlay();
         }
 
         private void RangeSliderOpponent_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
             if (!_initialized) return;
             _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-            SaveConfigUpdateOverlay();
+            //SaveConfigUpdateOverlay();
         }
 
         private void SliderOpponent_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -1252,7 +1252,39 @@ namespace Hearthstone_Deck_Tracker
             _config.TimerLeft = SliderTimerLeft.Value;
             SaveConfigUpdateOverlay();
         }
+
+        private void RangeSliderPlayer_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderPlayer_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderPlayer_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderOpponent_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderOpponent_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            SaveConfigUpdateOverlay();
+        }
+
+        private void RangeSliderOpponent_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            SaveConfigUpdateOverlay();
+        }
         #endregion
+
 
 
 
