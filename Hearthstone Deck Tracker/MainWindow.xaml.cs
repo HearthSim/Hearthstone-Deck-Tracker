@@ -788,6 +788,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (_newDeck == null) return;
             _newDeck.Tags = new List<string>(tags);
+            BtnSaveDeck.Content = "Save*";
         }
         #endregion
 
