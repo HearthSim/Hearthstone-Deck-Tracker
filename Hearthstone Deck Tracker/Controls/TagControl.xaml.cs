@@ -68,10 +68,17 @@ namespace Hearthstone_Deck_Tracker
 
         public void LoadTags(List<string> tags)
         {
+            var oldTag = new List<Tag>(_tags);
             _tags.Clear();
             foreach (var tag in tags)
             {
-                _tags.Add(new Tag(tag));
+                bool isSelected = false;
+
+                var old = oldTag.FirstOrDefault(t => t.Name == tag);
+                if (old != null)
+                    isSelected = old.Selected;
+
+                _tags.Add(new Tag(tag, isSelected));
             }
         }
 
@@ -166,6 +173,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
         {
+            var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (msgbxoResult != MessageBoxResult.Yes)
+                return;
+
             var tag = ListboxTags.SelectedItem as Tag;
             if (tag == null) return;
             if (_tags.All(t => t.Equals(tag))) return;
