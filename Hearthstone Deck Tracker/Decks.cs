@@ -106,6 +106,7 @@ namespace Hearthstone_Deck_Tracker
         public Deck()
         {
             Cards = new ObservableCollection<Card>();
+            Tags = new List<string>();
         }
 
         public Deck(string name, string className, ObservableCollection<Card> cards, List<string> tags)
