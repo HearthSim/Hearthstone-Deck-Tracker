@@ -7,7 +7,7 @@
   <HideEnemyCardCount>false</HideEnemyCardCount>
   <HidePlayerCardCount>false</HidePlayerCardCount>
   <HideDrawChances>false</HideDrawChances>
-  <WindowHeight>684</WindowHeight>
+  <WindowHeight>672</WindowHeight>
   <HearthstoneDirectory>C:\Program Files (x86)\Hearthstone</HearthstoneDirectory>
   <ShowInTaskbar>false</ShowInTaskbar>
   <HighlightCardsInHand>false</HighlightCardsInHand>
@@ -31,4 +31,6 @@
   <KeepDecksVisible>false</KeepDecksVisible>
   <MinimizeToTray>false</MinimizeToTray>
   <TimerLeft>75</TimerLeft>
+  <ShowAllDecks>false</ShowAllDecks>
+  <SelectedTags></SelectedTags>
 </Config>

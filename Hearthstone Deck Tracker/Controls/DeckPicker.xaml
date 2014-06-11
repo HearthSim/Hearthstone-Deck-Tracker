@@ -18,8 +18,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black" FontSize="14"></Label>
-           </Grid>
+                <Grid>
+                    <Label Content="{Binding GetName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black" FontSize="14"></Label>
+                    <Label Content="{Binding TagList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,22, 0, 0"></Label>
+                </Grid>
+            </Grid>
         </DataTemplate>
     </ListBox.ItemTemplate>
 </ListBox>

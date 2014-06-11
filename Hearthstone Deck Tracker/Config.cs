@@ -1,4 +1,7 @@
-﻿namespace Hearthstone_Deck_Tracker
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
+
+namespace Hearthstone_Deck_Tracker
 {
     public class Config
     {
@@ -34,5 +37,10 @@
         public bool KeepDecksVisible;
         public bool MinimizeToTray;
         public double TimerLeft;
+        public bool ShowAllDecks;
+
+        [XmlArray(ElementName = "SelectedTags")]
+        [XmlArrayItem(ElementName = "Tag")]
+        public List<string> SelectedTags;
     }
 }

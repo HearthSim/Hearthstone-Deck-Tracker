@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
@@ -10,12 +11,20 @@ namespace Hearthstone_Deck_Tracker
     {
         [XmlElement(ElementName = "Deck")]
         public ObservableCollection<Deck> DecksList;
+
+        [XmlArray(ElementName = "Tags")]
+        [XmlArrayItem(ElementName = "Tag")]
+        public List<string> AllTags;
     }
     public class Deck : ICloneable
     {
         public string Name;
         public string Class;
-        
+
+        [XmlArray(ElementName = "Tags")]
+        [XmlArrayItem(ElementName = "Tag")]
+        public List<string> Tags;
+            
         [XmlIgnore]
         public string GetClass
         {
@@ -26,6 +35,12 @@ namespace Hearthstone_Deck_Tracker
         public string GetName
         {
             get { return Name == "" ? "No Name Set" : Name; }
+        }
+
+        [XmlIgnore]
+        public string TagList
+        {
+            get { return Tags.Count > 0 ? "[" + Tags.Aggregate((t, n) => t + ", " + n ) + "]" : ""; }
         }
 
         [XmlIgnore]
@@ -93,11 +108,12 @@ namespace Hearthstone_Deck_Tracker
             Cards = new ObservableCollection<Card>();
         }
 
-        public Deck(string name, string className, ObservableCollection<Card> cards)
+        public Deck(string name, string className, ObservableCollection<Card> cards, List<string> tags)
         {
             Name = name;
             Class = className;
             Cards = new ObservableCollection<Card>(cards);
+            Tags = new List<string>(tags);
         }
 
         public override string ToString()
@@ -107,7 +123,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Deck(Name, Class, Cards);
+            return new Deck(Name, Class, Cards, Tags);
         }
 
         public override bool Equals(object obj)

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -49,8 +50,7 @@ namespace Hearthstone_Deck_Tracker
         private bool _editingDeck;
         private bool _newContainsDeck;
         private Deck _newDeck;
-
-
+        
 
         public MainWindow()
         {
@@ -135,7 +135,6 @@ namespace Hearthstone_Deck_Tracker
                 Close();
                 return;
             }
-
             foreach (var deck in _deckList.DecksList)
             {
                 DeckPickerList.AddDeck(deck);
@@ -164,6 +163,23 @@ namespace Hearthstone_Deck_Tracker
 
             LoadConfig();
 
+            if (!_deckList.AllTags.Contains("All"))
+            {
+                _deckList.AllTags.Add("All");
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
+            }
+            if (!_deckList.AllTags.Contains("Arena"))
+            {
+                _deckList.AllTags.Add("Arena");
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
+            }
+            if (!_deckList.AllTags.Contains("Constructed"))
+            {
+                _deckList.AllTags.Add("Constructed");
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
+            }
+
+            
             //find hs directory
             if (!File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
             {
@@ -187,6 +203,7 @@ namespace Hearthstone_Deck_Tracker
             //this has to happen before reader starts
             var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
             DeckPickerList.SelectDeck(lastDeck);
+            
 
 
             //log reader
@@ -198,6 +215,12 @@ namespace Hearthstone_Deck_Tracker
 
             //_turnTimer = new TurnTimer(90);
             //_turnTimer.TimerTick += TurnTimerOnTimerTick;
+
+            TagControlFilter.HideStuffToCreateNewTag();
+            TagControlSet.NewTag += TagControlSetOnNewTag;
+            TagControlSet.SelectedTagsChanged += TagControlSetOnSelectedTagsChanged;
+            TagControlSet.DeleteTag += TagControlSetOnDeleteTag;
+            TagControlFilter.SelectedTagsChanged += TagControlFilterOnSelectedTagsChanged;
 
 
             UpdateDbListView();
@@ -222,6 +245,7 @@ namespace Hearthstone_Deck_Tracker
         }
 
         
+
         #region LogReader Events
 
         private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
@@ -340,6 +364,9 @@ namespace Hearthstone_Deck_Tracker
         {
             Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    //avoid new game being started when jaraxxus is played
+                    if (!_hearthstone.IsInMenu) return;
+
                     if (!Hearthstone.IsUsingPremade)
                         _hearthstone.PlayerDeck.Clear();
                     else
@@ -483,6 +510,8 @@ namespace Hearthstone_Deck_Tracker
         {
             try
             {
+                _config.ShowAllDecks = DeckPickerList.ShowAll;
+                _config.WindowHeight = (int)Height;
                 _overlay.Close();
                 _logReader.Stop();
                 _updateThread.Abort();
@@ -504,6 +533,18 @@ namespace Hearthstone_Deck_Tracker
             Activate();
         }
 
+        private void BtnFilterTag_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutFilterTags.IsOpen = !FlyoutFilterTags.IsOpen;
+        }
+
+        private void TagControlFilterOnSelectedTagsChanged(TagControl sender, List<string> tags)
+        {
+            DeckPickerList.SetSelectedTags(tags);
+            _config.SelectedTags = tags;
+            _xmlManagerConfig.Save("config.xml", _config);
+        }
+
         #endregion
 
         #region GENERAL METHODS
@@ -516,7 +557,7 @@ namespace Hearthstone_Deck_Tracker
             //    ListboxDecks.SelectedItem = deck;
             //}
 
-            // Height = _config.WindowHeight;
+            Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
@@ -539,6 +580,18 @@ namespace Hearthstone_Deck_Tracker
 
             SliderOverlayOpacity.Value = _config.OverlayOpacity;
             SliderTimerLeft.Value = _config.TimerLeft;
+
+            DeckPickerList.ShowAll = _config.ShowAllDecks;
+            DeckPickerList.SetSelectedTags(_config.SelectedTags);
+
+
+            TagControlFilter.LoadTags(_deckList.AllTags);
+            TagControlFilter.SetSelectedTags(_config.SelectedTags);
+
+            var tags = new List<string>(_deckList.AllTags);
+            tags.Remove("All");
+            TagControlSet.LoadTags(tags);
+
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -614,6 +667,9 @@ namespace Hearthstone_Deck_Tracker
             TextBoxDeckName.Text = _newDeck.Name;
             UpdateNewDeckHeader(true);
             UpdateDbListView();
+
+            TagControlSet.SetSelectedTags(_newDeck.Tags);
+
             TabControlTracker.SelectedIndex = 1;
         }
 
@@ -687,7 +743,47 @@ namespace Hearthstone_Deck_Tracker
 
 
         }
+        
+        private void BtnSetTag_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutSetTags.IsOpen = !FlyoutSetTags.IsOpen;
+        }
 
+        private void TagControlSetOnNewTag(TagControl sender, string tag)
+        {
+            if (!_deckList.AllTags.Contains(tag))
+            {
+                _deckList.AllTags.Add(tag);
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                TagControlFilter.LoadTags(_deckList.AllTags);
+            }
+        }
+        private void TagControlSetOnDeleteTag(TagControl sender, string tag)
+        {
+            if (_deckList.AllTags.Contains(tag))
+            {
+                _deckList.AllTags.Remove(tag);
+                foreach (var deck in _deckList.DecksList)
+                {
+                    if (deck.Tags.Contains(tag))
+                    {
+                        deck.Tags.Remove(tag);
+                    }
+                }
+                if (_newDeck.Tags.Contains(tag))
+                    _newDeck.Tags.Remove(tag);
+
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                TagControlFilter.LoadTags(_deckList.AllTags);
+                DeckPickerList.UpdateList();
+            }
+        }
+
+        private void TagControlSetOnSelectedTagsChanged(TagControl sender, List<string> tags)
+        {
+            if (_newDeck == null) return;
+            _newDeck.Tags = new List<string>(tags);
+        }
         #endregion
 
         #region MY DECKS - METHODS
@@ -745,15 +841,11 @@ namespace Hearthstone_Deck_Tracker
             _newContainsDeck = true;
             UpdateDbListView();
         }
-
-        private void BtnClearNewDeck_Click(object sender, RoutedEventArgs e)
-        {
-            ClearNewDeckSection();
-        }
-
+        
         private void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
             SaveDeck();
+            FlyoutSetTags.IsOpen = false;
         }
 
         private void ComboBoxFilterMana_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -924,6 +1016,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _newDeck.Name = deckName;
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
+            
             var newDeckClone = (Deck) _newDeck.Clone();
             _deckList.DecksList.Add(newDeckClone);
             DeckPickerList.AddAndSelectDeck(newDeckClone);
@@ -933,6 +1026,7 @@ namespace Hearthstone_Deck_Tracker
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
 
+            DeckPickerList.UpdateList();
             //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
 
             ClearNewDeckSection();
@@ -1304,11 +1398,6 @@ namespace Hearthstone_Deck_Tracker
             SaveConfigUpdateOverlay();
         }
         #endregion
-
-
-
-
-
-
+        
     }
 }
