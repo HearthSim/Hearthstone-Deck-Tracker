@@ -1031,6 +1031,11 @@ namespace Hearthstone_Deck_Tracker
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
 
+            foreach (var tag in _newDeck.Tags)
+            {
+                TagControlFilter.AddSelectedTag(tag);
+            }
+
             DeckPickerList.UpdateList();
             //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
 

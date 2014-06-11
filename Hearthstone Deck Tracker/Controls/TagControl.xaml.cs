@@ -47,7 +47,6 @@ namespace Hearthstone_Deck_Tracker
         public event NewTagHandler NewTag;
         public event DeleteTagHandler DeleteTag;
 
-
         private readonly ObservableCollection<Tag> _tags;   
  
         public TagControl()
@@ -158,6 +157,20 @@ namespace Hearthstone_Deck_Tracker
 
             if(NewTag != null)
                 NewTag(this, tag);
+        }
+
+        public void AddSelectedTag(string tag)
+        {
+            if (!_tags.Any(t => t.Name == tag)) return;
+            if (_tags.First(t => t.Name == "All").Selected) return;
+
+            _tags.First(t => t.Name == tag).Selected = true;
+
+            if (SelectedTagsChanged != null)
+            {
+                var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+                SelectedTagsChanged(this, tagNames);
+            }
         }
 
         public void SetSelectedTags(List<string> tags)
