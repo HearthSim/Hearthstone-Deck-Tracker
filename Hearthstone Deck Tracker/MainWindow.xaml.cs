@@ -161,7 +161,6 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
 
-            LoadConfig();
 
             if (!_deckList.AllTags.Contains("All"))
             {
@@ -179,6 +178,7 @@ namespace Hearthstone_Deck_Tracker
                 _xmlManager.Save("PlayerDecks.xml", _deckList);
             }
 
+            LoadConfig();
             
             //find hs directory
             if (!File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
@@ -584,9 +584,14 @@ namespace Hearthstone_Deck_Tracker
             DeckPickerList.ShowAll = _config.ShowAllDecks;
             DeckPickerList.SetSelectedTags(_config.SelectedTags);
 
-
             TagControlFilter.LoadTags(_deckList.AllTags);
+
+            if (_config.SelectedTags.Count == 0)
+            {
+                _config.SelectedTags = new List<string>() { "All" };
+            }
             TagControlFilter.SetSelectedTags(_config.SelectedTags);
+            DeckPickerList.SetSelectedTags(_config.SelectedTags);
 
             var tags = new List<string>(_deckList.AllTags);
             tags.Remove("All");
