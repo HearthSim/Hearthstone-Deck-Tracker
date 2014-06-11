@@ -780,9 +780,10 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private void ListViewNewDeck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        private void ListViewDB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var originalSource = (DependencyObject) e.OriginalSource;
+            var originalSource = (DependencyObject)e.OriginalSource;
             while ((originalSource != null) && !(originalSource is ListViewItem))
             {
                 originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -790,8 +791,41 @@ namespace Hearthstone_Deck_Tracker
 
             if (originalSource != null)
             {
-                var card = (Card) ListViewNewDeck.SelectedItem;
+                var card = (Card)ListViewDB.SelectedItem;
+                AddCardToDeck(card);
+                _newContainsDeck = true;
+            }
+        }
+
+        private void ListViewNewDeck_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+            var originalSource = (DependencyObject)e.OriginalSource;
+            while ((originalSource != null) && !(originalSource is ListViewItem))
+            {
+                originalSource = VisualTreeHelper.GetParent(originalSource);
+            }
+
+            if (originalSource != null)
+            {
+                var card = (Card)ListViewNewDeck.SelectedItem;
                 RemoveCardFromDeck(card);
+            }
+        }
+
+        private void ListViewNewDeck_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+            var originalSource = (DependencyObject)e.OriginalSource;
+            while ((originalSource != null) && !(originalSource is ListViewItem))
+            {
+                originalSource = VisualTreeHelper.GetParent(originalSource);
+            }
+
+            if (originalSource != null)
+            {
+                var card = (Card)ListViewNewDeck.SelectedItem;
+                AddCardToDeck(card);
             }
         }
 
@@ -970,21 +1004,7 @@ namespace Hearthstone_Deck_Tracker
             UpdateDbListView();
         }
 
-        private void ListViewDB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var originalSource = (DependencyObject) e.OriginalSource;
-            while ((originalSource != null) && !(originalSource is ListViewItem))
-            {
-                originalSource = VisualTreeHelper.GetParent(originalSource);
-            }
-
-            if (originalSource != null)
-            {
-                var card = (Card) ListViewDB.SelectedItem;
-                AddCardToDeck(card);
-                _newContainsDeck = true;
-            }
-        }
+        
         #endregion
 
         #region OPTIONS
@@ -1284,6 +1304,8 @@ namespace Hearthstone_Deck_Tracker
             SaveConfigUpdateOverlay();
         }
         #endregion
+
+
 
 
 

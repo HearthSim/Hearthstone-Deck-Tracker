@@ -18,7 +18,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" FontSize="14"></Label>
+                <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black" FontSize="14"></Label>
            </Grid>
         </DataTemplate>
     </ListBox.ItemTemplate>

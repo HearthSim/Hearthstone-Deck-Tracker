@@ -31,7 +31,7 @@
                     <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="375,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
                     <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="240" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
                     <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
-                    <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="557" Width="240"/>
+                    <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="10,40,0,10" Height="auto" Width="240"/>
 
                 </Grid>
             </TabItem>
@@ -39,7 +39,7 @@
                 <Grid Background="#FFE5E5E5">
                     <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="241" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
 
-                    <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" MouseDoubleClick="ListViewDB_MouseDoubleClick" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown">
+                    <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown" MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -96,7 +96,7 @@
                     </ComboBox>
                     <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
                     <Button x:Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="98" Click="BtnSaveDeck_Click" Height="23" Panel.ZIndex="3"/>
-                    <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" MouseDoubleClick="ListViewNewDeck_MouseDoubleClick" HorizontalAlignment="Left" Width="240" Height="auto">
+                    <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" HorizontalAlignment="Left" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
                         <ListView.Resources>
                             <Style TargetType="{x:Type GridViewColumnHeader}">
                                 <Setter Property="Visibility" Value="Collapsed" />
