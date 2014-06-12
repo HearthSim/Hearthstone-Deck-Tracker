@@ -98,6 +98,13 @@ namespace Hearthstone_Deck_Tracker
             //load config
             _config = new Config();
             _xmlManagerConfig = new XmlManager<Config> {Type = typeof (Config)};
+            if (!File.Exists(_config.ConfigPath))
+            {
+                using (var sr = new StreamWriter(_config.ConfigPath, false))
+                {
+                    sr.WriteLine("<Config></Config>");
+                }
+            }
             try
             {
                 _config = _xmlManagerConfig.Load("config.xml");
@@ -106,7 +113,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 MessageBox.Show(
                     e.Message + "\n\n" + e.InnerException +
-                    "\n\n If you don't know how to fix this, please overwrite config with the default one.",
+                    "\n\n If you don't know how to fix this, please delete config.xml",
                     "Error loading config.xml");
                 Close();
                 return;
@@ -510,6 +517,7 @@ namespace Hearthstone_Deck_Tracker
         {
             try
             {
+                _config.SelectedTags = _config.SelectedTags.Distinct().ToList();
                 _config.ShowAllDecks = DeckPickerList.ShowAll;
                 _config.WindowHeight = (int)Height;
                 _overlay.Close();
@@ -586,10 +594,6 @@ namespace Hearthstone_Deck_Tracker
 
             TagControlFilter.LoadTags(_deckList.AllTags);
 
-            if (_config.SelectedTags.Count == 0)
-            {
-                _config.SelectedTags = new List<string>() { "All" };
-            }
             TagControlFilter.SetSelectedTags(_config.SelectedTags);
             DeckPickerList.SetSelectedTags(_config.SelectedTags);
 
