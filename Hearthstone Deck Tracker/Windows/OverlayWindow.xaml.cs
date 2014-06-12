@@ -190,6 +190,15 @@ namespace Hearthstone_Deck_Tracker
             SetEnemyCardCount(_hearthstone.EnemyHandCount, _hearthstone.OpponentDeckCount);
 
             ReSizePosLists();
+
+            if (_config.HideOverlay)
+            {
+                this.Hide();
+            }
+            else
+            {
+                this.Show();
+            }
         }
 
         private bool _needToRefresh;
