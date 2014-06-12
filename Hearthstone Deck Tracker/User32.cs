@@ -23,6 +23,12 @@ namespace Hearthstone_Deck_Tracker
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
         public static void SetWindowExTransparent(IntPtr hwnd)
         {
             int extendedStyle = GetWindowLong(hwnd, GwlExstyle);

@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
         private readonly DeckImporter _deckImporter;
+        private readonly DeckExporter _deckExporter;
         private bool _editingDeck;
         private bool _newContainsDeck;
         private Deck _newDeck;
@@ -108,6 +109,8 @@ namespace Hearthstone_Deck_Tracker
             try
             {
                 _config = _xmlManagerConfig.Load("config.xml");
+                if(_config.SelectedTags.Count == 0)
+                    _config.SelectedTags.Add("All");
             }
             catch (Exception e)
             {
@@ -206,6 +209,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             _deckImporter = new DeckImporter(_hearthstone);
+            _deckExporter = new DeckExporter(_config);
 
             //this has to happen before reader starts
             var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
@@ -239,6 +243,7 @@ namespace Hearthstone_Deck_Tracker
 
             _initialized = true;
 
+            DeckPickerList.UpdateList();
             if (lastDeck != null)
             {
                 UpdateDeckList(lastDeck);
@@ -1413,6 +1418,26 @@ namespace Hearthstone_Deck_Tracker
             SaveConfigUpdateOverlay();
         }
         #endregion
-        
+
+        private async void BtnExport_Click(object sender, RoutedEventArgs e)
+        {
+            var deck = DeckPickerList.SelectedDeck;
+            if (deck == null) return;
+
+            var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
+                                               "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
+                                               MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result == MessageDialogResult.Affirmative)
+            {
+                var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+                Topmost = false;
+                Thread.Sleep(500);
+                _deckExporter.Export(DeckPickerList.SelectedDeck);
+                await controller.CloseAsync();
+            }
+
+
+        }
     }
 }

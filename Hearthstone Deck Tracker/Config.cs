@@ -44,6 +44,14 @@ namespace Hearthstone_Deck_Tracker
 
         [XmlArray(ElementName = "SelectedTags")]
         [XmlArrayItem(ElementName = "Tag")]
-        public List<string> SelectedTags = new List<string>() { "All" };
+        public List<string> SelectedTags = new List<string>();
+
+        public int ClickDelay = 50;
+        public int SearchDelay = 100;
+        public double CardPosX = 0.15;
+        public double CardPosY = 0.3;
+        public double SearchBoxX = 0.5;
+        public double SearchBoxY = 0.89;
+        public double SearchBoxYFullscreen = 0.92;
     }
 }

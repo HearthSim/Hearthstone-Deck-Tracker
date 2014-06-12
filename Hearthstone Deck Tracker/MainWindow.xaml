@@ -31,11 +31,12 @@
                             </Style>
                         </local:DeckListView.Resources>
                     </local:DeckListView>
-                    <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="375,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
+                    <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="320,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
                     <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="117" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
-                    <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="117" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
+                    <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
                     <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="10,40,0,10" Height="auto" Width="240"/>
                     <Button Name="BtnFilterTag" Content="Filter by Tag" HorizontalAlignment="Left" Margin="132,10,0,0" VerticalAlignment="Top" Width="118" Click="BtnFilterTag_Click"/>
+                    <Button x:Name="BtnExport" Content="Export to HS" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top" Width="105" Height="23" Click="BtnExport_Click" Panel.ZIndex="3"/>
 
 
                 </Grid>
@@ -43,7 +44,7 @@
             <TabItem Name="TabItemNewDeck" Header="New Deck">
                 <Grid Background="#FFE5E5E5">
                     <controls:Flyout x:Name="FlyoutSetTags" Header="Set tags" Position="Right" Width="256" Height="auto" Panel.ZIndex="100">
-                            <local:TagControl Width="auto" Height="auto" x:Name="TagControlSet" />
+                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlSet" />
                     </controls:Flyout>
                     <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="136" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
 
