@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
         private bool _editingDeck;
         private bool _newContainsDeck;
         private Deck _newDeck;
+        private bool _doUpdate;
         
 
         public MainWindow()
@@ -236,6 +237,7 @@ namespace Hearthstone_Deck_Tracker
 
             UpdateDbListView();
 
+            _doUpdate = true;
             _updateThread = new Thread(Update);
             _updateThread.Start();
             //ListboxDecks.SelectedItem =
@@ -522,6 +524,7 @@ namespace Hearthstone_Deck_Tracker
         {
             try
             {
+                _doUpdate = false;
                 _config.SelectedTags = _config.SelectedTags.Distinct().ToList();
                 _config.ShowAllDecks = DeckPickerList.ShowAll;
                 _config.WindowHeight = (int)Height;
@@ -618,13 +621,13 @@ namespace Hearthstone_Deck_Tracker
 
         private void Update()
         {
-            while (true)
+            while (_doUpdate)
             {
                 _overlay.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         if (Process.GetProcessesByName("Hearthstone").Length == 1)
                         {
-                             _overlay.UpdatePosition();
+                            _overlay.UpdatePosition();
                         }
                         else
                         {
@@ -632,7 +635,7 @@ namespace Hearthstone_Deck_Tracker
                         }
                     }));
 
-            Thread.Sleep(_config.UpdateDelay);
+                Thread.Sleep(_config.UpdateDelay);
             }
         }
 

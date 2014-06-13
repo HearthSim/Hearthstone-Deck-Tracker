@@ -81,6 +81,14 @@ namespace Hearthstone_Deck_Tracker
 
             for (int i = 0; i < card.Count; i++)
                 ClickOnPoint(hsHandle, cardPos);
+
+            if (card.Count == 2)
+            {
+                var card2PosX = ratio < 1.5 ? width * _config.Card2PosX : width * _config.Card2PosX * (ratio / 1.33);
+                var card2Pos = new Point((int)card2PosX, (int)(_config.CardPosY * height));
+                ClickOnPoint(hsHandle, card2Pos);
+
+            }
         }
 
         private void ClickOnPoint(IntPtr wndHandle, Point clientPoint)

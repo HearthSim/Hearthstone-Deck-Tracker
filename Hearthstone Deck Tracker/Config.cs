@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker
         public int ClickDelay = 50;
         public int SearchDelay = 100;
         public double CardPosX = 0.15;
+        public double Card2PosX = 0.25;
         public double CardPosY = 0.3;
         public double SearchBoxX = 0.5;
         public double SearchBoxY = 0.89;
