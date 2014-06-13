@@ -628,7 +628,7 @@ namespace Hearthstone_Deck_Tracker
                         }
                         else
                         {
-                            _overlay.EnableCanvas(false);
+                            _overlay.ShowOverlay(false);
                         }
                     }));
 

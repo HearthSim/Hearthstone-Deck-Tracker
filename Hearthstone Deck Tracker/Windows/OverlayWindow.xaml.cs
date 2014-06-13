@@ -103,9 +103,11 @@ namespace Hearthstone_Deck_Tracker
     
 
 
-        public void EnableCanvas(bool enable)
+        public void ShowOverlay(bool enable)
         {
-            CanvasInfo.Visibility = enable ? Visibility.Visible : Visibility.Hidden;
+            if (enable)
+                Show();
+            else Hide();
         }
 
         private void SetRect(int top, int left, int width, int height)
@@ -190,15 +192,7 @@ namespace Hearthstone_Deck_Tracker
             SetEnemyCardCount(_hearthstone.EnemyHandCount, _hearthstone.OpponentDeckCount);
 
             ReSizePosLists();
-
-            if (_config.HideOverlay)
-            {
-                this.Hide();
-            }
-            else
-            {
-                this.Show();
-            }
+           
         }
 
         private bool _needToRefresh;
@@ -216,7 +210,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //hide the overlay depenting on options
-            EnableCanvas(!(
+            ShowOverlay(!(
                 (_config.HideInBackground && !User32.IsForegroundWindow("Hearthstone")) 
                 || (_config.HideInMenu && _hearthstone.IsInMenu)
                 || _config.HideOverlay));

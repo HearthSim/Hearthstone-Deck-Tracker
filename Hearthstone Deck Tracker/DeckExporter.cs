@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker
 
             ClickOnPoint(hsHandle, searchBoxPos);
             SendKeys.SendWait("^(a)");
-            SendKeys.SendWait(card.Name);
+            SendKeys.SendWait(FixCardName(card.Name));
             SendKeys.SendWait("{ENTER}");
 
             Thread.Sleep(_config.SearchDelay);
@@ -96,6 +96,12 @@ namespace Hearthstone_Deck_Tracker
             //lmb up
             mouse_event(0x00000004, 0, 0, 0, UIntPtr.Zero);
             Thread.Sleep(_config.ClickDelay);
+        }
+
+        public string FixCardName(string cardName)
+        {
+            if (cardName == "Windfury") return "Windfury spell";
+            return cardName;
         }
     }
 }

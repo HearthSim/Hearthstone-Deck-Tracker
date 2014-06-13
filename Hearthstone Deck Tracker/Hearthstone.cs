@@ -70,7 +70,8 @@ namespace Hearthstone_Deck_Tracker
                 foreach (var card in cardType.Value)
                 {
                     var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                    _cardDb.Add(tmp.Id, tmp);
+                    if (Helper.IsNumeric(tmp.Id[tmp.Id.Length - 1]))
+                        _cardDb.Add(tmp.Id, tmp);
                 }
             }
         }
