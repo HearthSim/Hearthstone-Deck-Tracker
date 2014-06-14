@@ -26,8 +26,13 @@ namespace Hearthstone_Deck_Tracker
         public int CustomHeight = -1;
         public bool VisibleOverlay = false;
         public int PlayerWindowHeight = 0;
+        public double PlayerWindowTop = 0;
+        public double PlayerWindowLeft = 0;
         public int OpponentWindowHeight = 0;
+        public double OpponentWindowTop = 0;
+        public double OpponentWindowLeft = 0;
         public bool WindowsTopmost = false;
+        public bool WindowsOnStartup = false;
         public string WindowsBackgroundHex = "";
         public int UpdateDelay = 100;
         public double PlayerDeckTop = 17;

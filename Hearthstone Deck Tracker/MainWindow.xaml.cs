@@ -172,7 +172,11 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
 
-
+            if (_config.WindowsOnStartup)
+            {
+                _playerWindow.Show();
+                _opponentWindow.Show();
+            }
             if (!_deckList.AllTags.Contains("All"))
             {
                 _deckList.AllTags.Add("All");
@@ -585,6 +589,8 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideOverlay.IsChecked = _config.HideOverlay;
             CheckboxKeepDecksVisible.IsChecked = _config.KeepDecksVisible;
             CheckboxMinimizeTray.IsChecked = _config.MinimizeToTray;
+            CheckboxWindowsTopmost.IsChecked = _config.WindowsTopmost;
+            CheckboxWindowsOpenAutomatically.IsChecked = _config.WindowsOnStartup;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -1286,6 +1292,20 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = false;
             _playerWindow.Topmost = false;
             _opponentWindow.Topmost = false;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxWindowsOpenAutomatically_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsOnStartup = true;
+            SaveConfigUpdateOverlay();
+        }
+
+        private void CheckboxWindowsOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsOnStartup = false;
             SaveConfigUpdateOverlay();
         }
 

@@ -22,6 +22,14 @@ namespace Hearthstone_Deck_Tracker
             ListViewPlayer.ItemsSource = playerDeck;
             playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
             Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
+            if (_config.PlayerWindowLeft != 0)
+            {
+                Left = _config.PlayerWindowLeft;
+            }
+            if (_config.PlayerWindowTop != 0)
+            {
+                Top = _config.PlayerWindowTop;
+            }
             Topmost = _config.WindowsTopmost;
             if (_config.WindowsBackgroundHex != "")
             {
@@ -110,6 +118,12 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_config.WindowsTopmost)
                 Topmost = false;
+        }
+
+        private void MetroWindow_LocationChanged(object sender, EventArgs e)
+        {
+            _config.PlayerWindowLeft = Left;
+            _config.PlayerWindowTop = Top;
         }
     }
 }
