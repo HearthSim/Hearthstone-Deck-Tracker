@@ -26,6 +26,8 @@
                 </Style>
             </ListView.Resources>
             </local:DeckListView>
+            <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
+            <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" Text="Hand: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblOpponentDeckCount" Text="Deck: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>

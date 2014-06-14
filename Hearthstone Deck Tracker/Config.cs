@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker
         public bool HideInMenu = false;
         public bool HideEnemyCards = false;
         public bool HideEnemyCardCount = false;
+        public bool HideOpponentDrawChances = false;
         public bool HidePlayerCardCount = false;
         public bool HideDrawChances = false;
         public bool HideOverlay = false;

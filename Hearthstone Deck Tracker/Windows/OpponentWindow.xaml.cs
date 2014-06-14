@@ -47,10 +47,20 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
-        public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
+        public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
         {
             LblOpponentCardCount.Text = "Hand: " + cardCount;
             LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
+
+            var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
+
+            var holdingNextTurn2 = Math.Round(200.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
+            LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
+
+            var holdingNextTurn = Math.Round(100.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
+            LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
         }
 
         private void OpponentDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -60,10 +70,12 @@ namespace Hearthstone_Deck_Tracker
 
         private void Scale()
         {
-            if (((Height - LblOpponentCardCount.ActualHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+            var allLabelsHeight = LblOpponentCardCount.ActualHeight + LblOpponentDrawChance1.ActualHeight +
+                                  LblOpponentDrawChance2.ActualHeight;
+            if (((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
-                Scaling = (Height - LblOpponentCardCount.ActualHeight) / (ListViewOpponent.Items.Count * 35);
+                Scaling = (Height - allLabelsHeight) / (ListViewOpponent.Items.Count * 35);
                 if (Scaling > 1)
                     Scaling = 1;
 

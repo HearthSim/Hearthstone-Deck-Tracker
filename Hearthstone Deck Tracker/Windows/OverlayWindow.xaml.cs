@@ -74,6 +74,18 @@ namespace Hearthstone_Deck_Tracker
             
             LblOpponentCardCount.Text = "Hand: " + cardCount;
             LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
+
+            var handWithoutCoin =  cardCount - (_hearthstone.OpponentHasCoin ? 1 : 0);
+
+            var holdingNextTurn2 = Math.Round(200.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var drawNextTurn2 = Math.Round(200.0f/cardsLeftInDeck, 2);
+            LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
+
+            var holdingNextTurn = Math.Round(100.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var drawNextTurn = Math.Round(100.0f/cardsLeftInDeck, 2);
+            LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
+
+
         }
 
         private void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -135,8 +147,6 @@ namespace Hearthstone_Deck_Tracker
                     ListViewPlayer.Items.Refresh();
             }
 
-            ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling - LblDrawChance1.Height - LblCardCount.Height;
-
             Canvas.SetTop(StackPanelPlayer, Height * _config.PlayerDeckTop / 100);
             Canvas.SetLeft(StackPanelPlayer, Width * _config.PlayerDeckLeft/100 - StackPanelPlayer.ActualWidth*_config.OverlayPlayerScaling/100);
 
@@ -153,14 +163,13 @@ namespace Hearthstone_Deck_Tracker
                 if (previousScaling != OpponentScaling)
                     ListViewOpponent.Items.Refresh();
             }
-            ListViewOpponent.Height = 35 * ListViewOpponent.Items.Count * OpponentScaling - LblOpponentCardCount.Height;
 
 
             Canvas.SetTop(StackPanelOpponent, Height * _config.OpponentDeckTop / 100);
             Canvas.SetLeft(StackPanelOpponent, Width * _config.OpponentDeckLeft / 100); 
 
-            Canvas.SetTop(LblTurnTime, (Height-SystemParameters.WindowCaptionHeight) /2 - LblTurnTime.ActualHeight);
-            Canvas.SetLeft(LblTurnTime, Width * _config.TimerLeft / 100);
+            //Canvas.SetTop(LblTurnTime, (Height-SystemParameters.WindowCaptionHeight) /2 - LblTurnTime.ActualHeight);
+            //Canvas.SetLeft(LblTurnTime, Width * _config.TimerLeft / 100);
 
         
         }
@@ -181,8 +190,10 @@ namespace Hearthstone_Deck_Tracker
 
             Opacity = _config.OverlayOpacity/100;
 
-            LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
-            LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Hidden : Visibility.Visible;
+            LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
             LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
             LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;

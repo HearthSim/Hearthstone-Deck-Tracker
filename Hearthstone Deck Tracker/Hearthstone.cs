@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker
         public int PlayerHandCount;
         public string PlayingAgainst;
         public string PlayingAs;
+        public bool OpponentHasCoin;
 
         private readonly List<string> _invalidCardIds = new List<string>
             {
@@ -109,6 +110,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (cardId == "GAME_005")
             {
+                OpponentHasCoin = false;
                 PlayerHandCount++;
                 return;
             }
@@ -181,6 +183,10 @@ namespace Hearthstone_Deck_Tracker
             {
                 EnemyHandCount--;
                 return;
+            }
+            if (cardId == "GAME_005")
+            {
+                OpponentHasCoin = false;
             }
             Card card = GetCardFromId(cardId);
             if (EnemyCards.Any(x => x.Equals(card)))
@@ -319,6 +325,15 @@ namespace Hearthstone_Deck_Tracker
         internal void OpponentGet(string cardId)
         {
             EnemyHandCount++;
+        }
+
+        internal void Reset()
+        {
+            PlayerHandCount = 0;
+            EnemyCards.Clear();
+            EnemyHandCount = 0;
+            OpponentDeckCount = 30;
+            OpponentHasCoin = true;
         }
     }
 }

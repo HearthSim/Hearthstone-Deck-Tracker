@@ -287,7 +287,7 @@ namespace Hearthstone_Deck_Tracker
             else if (args.State == AnalyzingState.End)
             {
                 //reader done analyzing new stuff, update things
-                if (_overlay.CanvasInfo.IsVisible)
+                if (_overlay.IsVisible)
                     _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(false)));
                 if (_playerWindow.IsVisible)
                     _playerWindow.Dispatcher.BeginInvoke(
@@ -301,7 +301,7 @@ namespace Hearthstone_Deck_Tracker
                             () =>
                             _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
                                                                  30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                                 _hearthstone.EnemyHandCount)
+                                                                 _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin)
                             ));
             }
         }
@@ -394,10 +394,7 @@ namespace Hearthstone_Deck_Tracker
                             _hearthstone.SetPremadeDeck(deck.Cards);
                     }
                     _hearthstone.IsInMenu = false;
-                    _hearthstone.PlayerHandCount = 0;
-                    _hearthstone.EnemyCards.Clear();
-                    _hearthstone.EnemyHandCount = 0;
-                    _hearthstone.OpponentDeckCount = 30;
+                    _hearthstone.Reset();
                 }));
         }
 
@@ -419,10 +416,7 @@ namespace Hearthstone_Deck_Tracker
                             _hearthstone.PlayerDeck.Clear();
                         }
 
-                        _hearthstone.EnemyCards.Clear();
-                        _hearthstone.EnemyHandCount = 0;
-                        _hearthstone.OpponentDeckCount = 30;
-                        _hearthstone.PlayerHandCount = 0;
+                        _hearthstone.Reset();
                     }
                     _hearthstone.IsInMenu = true;
                 }));
@@ -581,6 +575,7 @@ namespace Hearthstone_Deck_Tracker
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
+            CheckboxHideOpponentDrawChances.IsChecked = _config.HideOpponentDrawChances;
             CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
             CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
             CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
@@ -1185,8 +1180,8 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _playerWindow.LblDrawChance1.Visibility = Visibility.Hidden;
-                    _playerWindow.LblDrawChance2.Visibility = Visibility.Hidden;
+                    _playerWindow.LblDrawChance1.Visibility = Visibility.Collapsed;
+                    _playerWindow.LblDrawChance2.Visibility = Visibility.Collapsed;
                 }));
         }
 
@@ -1202,6 +1197,30 @@ namespace Hearthstone_Deck_Tracker
                 }));
         }
 
+        private void CheckboxHideOpponentDrawChances_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentDrawChances = true;
+            SaveConfig(true);
+            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _opponentWindow.LblOpponentDrawChance2.Visibility = Visibility.Collapsed;
+                _opponentWindow.LblOpponentDrawChance1.Visibility = Visibility.Collapsed;
+            }));
+        }
+
+        private void CheckboxHideOpponentDrawChances_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentDrawChances = false;
+            SaveConfig(true);
+            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _opponentWindow.LblOpponentDrawChance2.Visibility = Visibility.Visible;
+                _opponentWindow.LblOpponentDrawChance1.Visibility = Visibility.Visible;
+            }));
+
+        }
         private void CheckboxHidePlayerCardCounter_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -1209,8 +1228,8 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _playerWindow.LblCardCount.Visibility = Visibility.Hidden;
-                    _playerWindow.LblDeckCount.Visibility = Visibility.Hidden;
+                    _playerWindow.LblCardCount.Visibility = Visibility.Collapsed;
+                    _playerWindow.LblDeckCount.Visibility = Visibility.Collapsed;
                 }));
         }
 
@@ -1233,8 +1252,8 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
             _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Hidden;
-                    _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Hidden;
+                    _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Collapsed;
+                    _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Collapsed;
                 }));
         }
 
@@ -1325,6 +1344,20 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow.Activate();
             _opponentWindow.Show();
             _opponentWindow.Activate();
+
+            _playerWindow.Dispatcher.BeginInvoke(
+                       new Action(
+                           () =>
+                           _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
+                                                      _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count))));
+
+            _opponentWindow.Dispatcher.BeginInvoke(
+                new Action(
+                    () =>
+                    _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
+                                                         30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
+                                                         _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin)
+                    ));
         }
 
         private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
@@ -1459,6 +1492,7 @@ namespace Hearthstone_Deck_Tracker
                 SliderOverlayOpponentScaling.Value = scaling;
             }
         }
+
         private void SliderOverlayOpponentScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_initialized) return;
@@ -1472,7 +1506,11 @@ namespace Hearthstone_Deck_Tracker
                 SliderOverlayPlayerScaling.Value = scaling;
             }
         }
-
+        
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Process.Start(e.Uri.AbsoluteUri);
+        }
         #endregion
 
         private async void BtnExport_Click(object sender, RoutedEventArgs e)

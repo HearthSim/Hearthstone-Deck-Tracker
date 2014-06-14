@@ -148,7 +148,7 @@
                 <Grid>
                     <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
                     <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Cards" HorizontalAlignment="Left" Margin="39,338,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Cards" HorizontalAlignment="Left" Margin="39,361,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
                     <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="39,315,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
                     <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="284,315,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
                     <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="284,338,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
@@ -173,9 +173,68 @@
                     <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="114,289,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
                     <Label Content="Scaling:" HorizontalAlignment="Left" Margin="39,284,0,0" VerticalAlignment="Top"/>
                     <CheckBox Name="CheckboxSameScaling" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="20,182,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="39,338,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
 
                 </Grid>
 
+            </TabItem>
+            <TabItem Header="Help">
+                <Grid>
+                    <TextBlock Margin="17,10,0,0" VerticalAlignment="Top">
+                        <Bold>
+                            <Run Text="What are all these percentages?"/>
+                        </Bold>
+                    </TextBlock>
+                    <TextBlock Margin="27,31,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                        <Bold>
+                            <Run Text="Player: "/>
+                        </Bold>
+                        <LineBreak />
+                        <Run Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
+                    </TextBlock>
+                    <TextBlock Margin="27,68,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                        <Bold>
+                            <Run Text="Opponent: "/>
+                        </Bold>
+                        <LineBreak />
+                        <Run Text="[2] and [1], again, stand for 2 and 1 copies left in the deck."/>
+                        <LineBreak />
+                        <Bold>
+                            <Run Text="First number:"/>
+                        </Bold>
+                        <Run Text="The chance of your opponent"></Run>
+                        <Italic>
+                            <Run Text="having"/>
+                        </Italic>
+                        <Run Text="a card next turn. (This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn.)"></Run>
+                        <LineBreak />
+                        <Bold>
+                            <Run Text="Second number:"/>
+                        </Bold>
+                        <Run Text="The chance of your opponent"></Run>
+                        <Italic>
+                            <Run Text="drawing"/>
+                        </Italic>
+                        <Run Text="a card next turn. (This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
+                    </TextBlock>
+                    <TextBlock Margin="17,243,0,0" VerticalAlignment="Top">
+                        <Bold>
+                            <Run Text="I found a bug, what do I do?"/>
+                        </Bold>
+                    </TextBlock>
+                    <TextBlock Margin="27,264,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                        <Run Text="Two options here for now:"/>
+                        <LineBreak/>
+                        <Run Text="1) You may be able to find a solution/it already being reported in my"/>
+                        <Hyperlink NavigateUri="http://www.reddit.com/r/hearthstone/comments/27rvsq/updated_automatic_hearthstone_deck_tracker/" RequestNavigate="Hyperlink_RequestNavigate">reddit post.</Hyperlink>
+                        <Run Text="If you can't/it's not leave a comment in the post or send me a PM."/>
+                        <LineBreak/>
+                        <Run Text="2) Check out the"/>
+                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
+                        <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
+                    </TextBlock>
+
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

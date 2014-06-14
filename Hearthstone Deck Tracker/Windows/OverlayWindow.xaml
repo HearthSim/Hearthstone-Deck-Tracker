@@ -8,7 +8,7 @@
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
             <local:HearthstoneTextBlock  Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
             <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" >
-                <local:DeckListView x:Name="ListViewPlayer" Height="400" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                <local:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -32,7 +32,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="StackPanelOpponent">
-                <local:DeckListView x:Name="ListViewOpponent" Height="400" Canvas.Left="5" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
+                <local:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -46,6 +46,8 @@
                         </Style>
                     </ListView.Resources>
                 </local:DeckListView>
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
                     <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
