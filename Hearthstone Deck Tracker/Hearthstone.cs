@@ -70,7 +70,6 @@ namespace Hearthstone_Deck_Tracker
                 foreach (var card in cardType.Value)
                 {
                     var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                    if (Helper.IsNumeric(tmp.Id[tmp.Id.Length - 1]))
                         _cardDb.Add(tmp.Id, tmp);
                 }
             }
@@ -83,7 +82,7 @@ namespace Hearthstone_Deck_Tracker
         }
         public Card GetCardFromName(string name)
         {
-            return _cardDb.FirstOrDefault(c => c.Value.Name == name).Value;
+            return GetActualCards().FirstOrDefault(c => c.Name == name);
         }
 
         public List<Card> GetActualCards()
