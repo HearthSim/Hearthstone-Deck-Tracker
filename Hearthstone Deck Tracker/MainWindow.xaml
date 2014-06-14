@@ -171,6 +171,7 @@
                     <CheckBox IsEnabled="False" Name="CheckboxHideTimer" Content="Hide Timer" HorizontalAlignment="Left" Margin="108,163,0,0" VerticalAlignment="Top"/>
                     <Slider IsEnabled="False" x:Name="SliderTimerLeft" HorizontalAlignment="Left" Margin="39,185,0,0" VerticalAlignment="Top" Width="200" Value="100" ValueChanged="SliderTimerLeft_ValueChanged"/>
                     <Label IsEnabled="False" Content="Timer Position:" HorizontalAlignment="Left" Margin="15,159,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Additional Windows On Startup" HorizontalAlignment="Left" Margin="265,110,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
 
                 </Grid>
 
