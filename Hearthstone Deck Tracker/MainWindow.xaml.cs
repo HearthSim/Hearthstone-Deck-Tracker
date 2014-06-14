@@ -591,6 +591,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxMinimizeTray.IsChecked = _config.MinimizeToTray;
             CheckboxWindowsTopmost.IsChecked = _config.WindowsTopmost;
             CheckboxWindowsOpenAutomatically.IsChecked = _config.WindowsOnStartup;
+            CheckboxSameScaling.IsChecked = _config.UseSameScaling;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -601,7 +602,8 @@ namespace Hearthstone_Deck_Tracker
             SliderOpponent.Value = _config.OpponentDeckLeft;
 
             SliderOverlayOpacity.Value = _config.OverlayOpacity;
-            SliderTimerLeft.Value = _config.TimerLeft;
+            SliderOverlayPlayerScaling.Value = _config.OverlayPlayerScaling;
+            SliderOverlayOpponentScaling.Value = _config.OverlayOpponentScaling;
 
             DeckPickerList.ShowAll = _config.ShowAllDecks;
             DeckPickerList.SetSelectedTags(_config.SelectedTags);
@@ -1137,7 +1139,7 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HighlightCardsInHand = true;
             Hearthstone.HighlightCardsInHand = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHighlightCardsInHand_Unchecked(object sender, RoutedEventArgs e)
@@ -1145,42 +1147,42 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HighlightCardsInHand = false;
             Hearthstone.HighlightCardsInHand = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideOverlay_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideOverlay = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideOverlay_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideOverlay = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideOverlayInMenu_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideInMenu = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideOverlayInMenu_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideInMenu = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideDrawChances_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideDrawChances = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _playerWindow.LblDrawChance1.Visibility = Visibility.Hidden;
@@ -1192,7 +1194,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideDrawChances = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _playerWindow.LblDrawChance1.Visibility = Visibility.Visible;
@@ -1204,7 +1206,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HidePlayerCardCount = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _playerWindow.LblCardCount.Visibility = Visibility.Hidden;
@@ -1216,7 +1218,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HidePlayerCardCount = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _playerWindow.LblCardCount.Visibility = Visibility.Visible;
@@ -1228,7 +1230,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideEnemyCardCount = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Hidden;
@@ -1240,7 +1242,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideEnemyCardCount = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
             _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
@@ -1252,14 +1254,14 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideEnemyCards = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideEnemyCards_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideEnemyCards = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
 
@@ -1267,14 +1269,14 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideInBackground = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxHideOverlayInBackground_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.HideInBackground = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxWindowsTopmost_Checked(object sender, RoutedEventArgs e)
@@ -1283,7 +1285,7 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = true;
             _playerWindow.Topmost = true;
             _opponentWindow.Topmost = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxWindowsTopmost_Unchecked(object sender, RoutedEventArgs e)
@@ -1292,27 +1294,28 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = false;
             _playerWindow.Topmost = false;
             _opponentWindow.Topmost = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxWindowsOpenAutomatically_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.WindowsOnStartup = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxWindowsOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.WindowsOnStartup = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
-        private void SaveConfigUpdateOverlay()
+        private void SaveConfig(bool updateOverlay)
         {
             _xmlManagerConfig.Save("config.xml", _config);
-            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(true)));
+            if(updateOverlay)
+                _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(true)));
         }
 
         private void BtnShowWindows_Click(object sender, RoutedEventArgs e)
@@ -1329,21 +1332,19 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.PlayerDeckTop = 100 - RangeSliderPlayer.UpperValue;
             _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-            //SaveConfigUpdateOverlay();
         }
 
         private void RangeSliderPlayer_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
             if (!_initialized) return;
             _config.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-            //SaveConfigUpdateOverlay();
         }
 
         private void SliderPlayer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_initialized) return;
             _config.PlayerDeckLeft = SliderPlayer.Value;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderOpponent_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
@@ -1351,95 +1352,127 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.OpponentDeckTop = 100 - RangeSliderOpponent.UpperValue;
             _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-            //SaveConfigUpdateOverlay();
         }
 
         private void RangeSliderOpponent_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
             if (!_initialized) return;
             _config.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-            //SaveConfigUpdateOverlay();
         }
 
         private void SliderOpponent_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_initialized) return;
             _config.OpponentDeckLeft = SliderOpponent.Value;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_initialized) return;
             _config.OverlayOpacity = SliderOverlayOpacity.Value;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxKeepDecksVisible_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.KeepDecksVisible = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxKeepDecksVisible_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.KeepDecksVisible = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void CheckboxMinimizeTray_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.MinimizeToTray = true;
-            SaveConfigUpdateOverlay();
+            SaveConfig(false);
         }
 
         private void CheckboxMinimizeTray_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
             _config.MinimizeToTray = false;
-            SaveConfigUpdateOverlay();
+            SaveConfig(false);
         }
-
-        private void SliderTimerLeft_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.TimerLeft = SliderTimerLeft.Value;
-            SaveConfigUpdateOverlay();
+            _config.UseSameScaling = true;
+            SaveConfig(false);
         }
 
+        private void CheckboxSameScaling_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.UseSameScaling = false;
+            SaveConfig(false);
+        }
+        
         private void RangeSliderPlayer_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderPlayer_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderPlayer_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderOpponent_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
 
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderOpponent_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
 
         private void RangeSliderOpponent_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            SaveConfigUpdateOverlay();
+            SaveConfig(true);
         }
+
+        private void SliderOverlayPlayerScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            var scaling = SliderOverlayPlayerScaling.Value;
+            _config.OverlayPlayerScaling = scaling;
+            SaveConfig(false);
+            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateScaling()));
+
+            if (_config.UseSameScaling && SliderOverlayOpponentScaling.Value != scaling)
+            {
+                SliderOverlayOpponentScaling.Value = scaling;
+            }
+        }
+        private void SliderOverlayOpponentScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            var scaling = SliderOverlayOpponentScaling.Value;
+            _config.OverlayOpponentScaling = scaling;
+            SaveConfig(false);
+            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateScaling()));
+
+            if (_config.UseSameScaling && SliderOverlayPlayerScaling.Value != scaling)
+            {
+                SliderOverlayPlayerScaling.Value = scaling;
+            }
+        }
+
         #endregion
 
         private async void BtnExport_Click(object sender, RoutedEventArgs e)
@@ -1462,5 +1495,6 @@ namespace Hearthstone_Deck_Tracker
 
 
         }
+
     }
 }

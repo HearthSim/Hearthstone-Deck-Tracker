@@ -42,6 +42,9 @@ namespace Hearthstone_Deck_Tracker
         public double PlayerDeckLeft = 99.5;
         public double OpponentDeckLeft = 0.5;
         public double OverlayOpacity = 100;
+        public double OverlayPlayerScaling = 100;
+        public double OverlayOpponentScaling = 100;
+        public bool UseSameScaling = true;
         public bool KeepDecksVisible = true;
         public bool MinimizeToTray = false;
         public double TimerLeft = 75;
@@ -59,5 +62,6 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxX = 0.5;
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
+
     }
 }

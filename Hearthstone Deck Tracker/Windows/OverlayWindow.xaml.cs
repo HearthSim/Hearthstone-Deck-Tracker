@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker
             _offsetY = _config.OffsetY;
             _customWidth = _config.CustomWidth;
             _customHeight = _config.CustomHeight;
+            UpdateScaling();
         }
 
         public void SortViews()
@@ -123,10 +124,10 @@ namespace Hearthstone_Deck_Tracker
         private void ReSizePosLists()
         {
             //player
-            if (((Height * _config.PlayerDeckHeight / 100) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+            if (((Height * _config.PlayerDeckHeight / (_config.OverlayPlayerScaling / 100) / 100) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
-                Scaling = (Height * _config.PlayerDeckHeight / 100) / (ListViewPlayer.Items.Count * 35);
+                Scaling = (Height * _config.PlayerDeckHeight / (_config.OverlayPlayerScaling / 100) / 100) / (ListViewPlayer.Items.Count * 35);
                 if (Scaling > 1)
                     Scaling = 1;
 
@@ -137,15 +138,15 @@ namespace Hearthstone_Deck_Tracker
             ListViewPlayer.Height = 35 * ListViewPlayer.Items.Count * Scaling - LblDrawChance1.Height - LblCardCount.Height;
 
             Canvas.SetTop(StackPanelPlayer, Height * _config.PlayerDeckTop / 100);
-            Canvas.SetLeft(StackPanelPlayer, Width * _config.PlayerDeckLeft/100 - StackPanelPlayer.ActualWidth);
+            Canvas.SetLeft(StackPanelPlayer, Width * _config.PlayerDeckLeft/100 - StackPanelPlayer.ActualWidth*_config.OverlayPlayerScaling/100);
 
 
 
             //opponent
-            if (((Height * _config.OpponentDeckHeight / 100) - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
+            if (((Height * _config.OpponentDeckHeight / (_config.OverlayOpponentScaling / 100) / 100) - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
             {
                 var previousScaling = OpponentScaling;
-                OpponentScaling = (Height * _config.OpponentDeckHeight / 100) / (ListViewOpponent.Items.Count * 35);
+                OpponentScaling = (Height * _config.OpponentDeckHeight / (_config.OverlayOpponentScaling / 100) / 100) / (ListViewOpponent.Items.Count * 35);
                 if (OpponentScaling > 1)
                     OpponentScaling = 1;
 
@@ -238,6 +239,13 @@ namespace Hearthstone_Deck_Tracker
             //todo: make moveable in option and find good size/pos
             LblTurnTime.Text = timerEventArgs.Seconds.ToString();
             LblTurnTime.Visibility = timerEventArgs.Running ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public void UpdateScaling()
+        {
+            StackPanelPlayer.RenderTransform = new ScaleTransform(_config.OverlayPlayerScaling / 100, _config.OverlayPlayerScaling / 100);
+            StackPanelOpponent.RenderTransform = new ScaleTransform(_config.OverlayOpponentScaling / 100, _config.OverlayOpponentScaling / 100);
+
         }
     }
 }
