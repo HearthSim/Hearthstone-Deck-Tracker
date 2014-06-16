@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using HtmlAgilityPack;
 
@@ -16,16 +17,16 @@ namespace Hearthstone_Deck_Tracker
         {
             _hearthstone = hearthstone;
         }
-        
-        public Deck Import(string url)
+
+        public async Task<Deck> Import(string url)
         {
             if (url.Contains("hearthstats"))
             {
-                return ImportHearthStats(url);
+                return await ImportHearthStats(url);
             }
             if (url.Contains("hearthpwn"))
             {
-                return ImportHearthPwn(url);
+                return await ImportHearthPwn(url);
             }
             if (url.Contains("hearthhead"))
             {
@@ -34,11 +35,11 @@ namespace Hearthstone_Deck_Tracker
             return null;
         }
 
-        private Deck ImportHearthStats(string url)
+        private async Task<Deck> ImportHearthStats(string url)
         {
             try
             {
-                var doc = GetHtmlDoc(url);
+                var doc = await GetHtmlDoc(url);
 
                 var deck = new Deck();
 
@@ -73,11 +74,11 @@ namespace Hearthstone_Deck_Tracker
                 return null;
             }
         }
-        private Deck ImportHearthHead(string url)
+        private async Task<Deck> ImportHearthHead(string url)
         {
             try
             {
-                var doc = GetHtmlDoc(url);
+                var doc = await GetHtmlDoc(url);
 
                 var deck = new Deck();
                 
@@ -114,11 +115,11 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private Deck ImportHearthPwn(string url)
+        private async Task<Deck> ImportHearthPwn(string url)
         {
             try
             {
-                var doc = GetHtmlDoc(url);
+                var doc = await GetHtmlDoc(url);
 
                 var deck = new Deck();
 
@@ -154,11 +155,11 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        public HtmlDocument GetHtmlDoc(string url)
+        public async Task<HtmlDocument> GetHtmlDoc(string url)
         {
             using (var wc = new WebClient())
             {
-                var websiteContent = wc.DownloadString(url);
+                var websiteContent = await wc.DownloadStringTaskAsync(new Uri(url));
                 using (var reader = new StringReader(websiteContent))
                 {
                     var doc = new HtmlDocument();
@@ -168,11 +169,11 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        public List<string> GetPopularDeckLists()
+        public async Task<List<string>> GetPopularDeckLists()
         {
             string url = @"http://hearthstats.net/decks/public?class=&items=500&sort=num_users&order=desc";
 
-            var doc = GetHtmlDoc(url);
+            var doc = await GetHtmlDoc(url);
 
             var deckUrls = new List<string>();
             foreach (var node in doc.DocumentNode.SelectNodes("//td[contains(@class,'name')]"))
@@ -181,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
                 if (hrefAttr != null)
                     deckUrls.Add(@"http://www.hearthstats.net/" + hrefAttr.Value);
             }
-
+            
             return deckUrls;
         }
     }

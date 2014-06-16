@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -92,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly string _fullOutputPath;
         private readonly int _updateDelay;
-        private Thread _analyzerThread;
+        private bool _doUpdate;
        
 
         private readonly Regex _cardMovementRegex =
@@ -118,14 +120,14 @@ namespace Hearthstone_Deck_Tracker
 
         public void Start()
         {
-            if (_analyzerThread != null) return;
-            _analyzerThread = new Thread(ReadFile);
-            _analyzerThread.Start();
+            _first = true;
+            _doUpdate = true;
+            ReadFileAsync();
+
         }
         public void Stop()
         {
-            _analyzerThread.Abort();
-            _analyzerThread = null;
+            _doUpdate = false;
         }
 
 
@@ -134,20 +136,32 @@ namespace Hearthstone_Deck_Tracker
         public event AnalyzingHandler Analyzing;
         public event TurnStartHandler TurnStart;
 
+        private bool _first;
 
-        private void ReadFile()
+        private async void ReadFileAsync()
         {
-            while (true)
+            while (_doUpdate)
             {
                 if (File.Exists(_fullOutputPath))
                 {
-                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-                        )
+                    //find end of last game (avoids reading the full log on start)
+                    if (_first)
                     {
+                        using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        {
+                            _previousSize = FindLastGameEnd(fs);
+                            _currentOffset = _previousSize;
+                            _first = false;
+                        }
+                    }
+
+                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    {
+                        
                         fs.Seek(_previousSize, SeekOrigin.Begin);
                         if (fs.Length == _previousSize)
                         {
-                            Thread.Sleep(_updateDelay);
+                            await Task.Delay(_updateDelay);
                             continue;
                         }
                         _previousSize = fs.Length;
@@ -161,7 +175,28 @@ namespace Hearthstone_Deck_Tracker
                         }
                     }
                 }
-                Thread.Sleep(_updateDelay);
+                await Task.Delay(_updateDelay);
+            }
+        }
+
+        private long FindLastGameEnd(FileStream fs)
+        {
+            using (var sr = new StreamReader(fs))
+            {
+                var lines = sr.ReadToEnd().Split('\n');
+
+                long offset = 0;
+                long tempOffset = 0;
+                foreach (var line in lines)
+                {
+                    tempOffset += line.Length;
+                    if (line.StartsWith("[Bob] legend rank"))
+                    {
+                        offset = tempOffset;
+                    }
+                }
+
+                return offset;
             }
         }
 

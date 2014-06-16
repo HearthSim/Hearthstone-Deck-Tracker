@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker
     {
         private static XmlManager<SerializableVersion> _xmlManager; 
 
-        public static void CheckForUpdates()
+        public static Version CheckForUpdates()
         {
             SerializableVersion version;
             _xmlManager = new XmlManager<SerializableVersion>() { Type = typeof(SerializableVersion) };
@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 MessageBox.Show(
                     e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please verwrite Version.xml with the default file.", "Error loading Version.xml");
-                return;
+                return null;
             }
 
 
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker
                     System.Diagnostics.Process.Start(releaseDownloadUrl);
                 }
             }
-
+            return currentVersion;
         }
 
         public static bool IsNumeric(char c)

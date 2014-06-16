@@ -2,13 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,8 +40,6 @@ namespace Hearthstone_Deck_Tracker
         private readonly OpponentWindow _opponentWindow;
         private readonly OverlayWindow _overlay;
         private readonly PlayerWindow _playerWindow;
-        private readonly TurnTimer _turnTimer;
-        private readonly Thread _updateThread;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
         private readonly DeckImporter _deckImporter;
@@ -58,7 +54,12 @@ namespace Hearthstone_Deck_Tracker
         {
             InitializeComponent();
             
-            Helper.CheckForUpdates();
+            var version = Helper.CheckForUpdates();
+            if (version != null)
+            {
+                TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
+                                                     version.Build);
+            }
 
             //check for log config and create if not existing
             try
@@ -242,8 +243,9 @@ namespace Hearthstone_Deck_Tracker
             UpdateDbListView();
 
             _doUpdate = true;
-            _updateThread = new Thread(Update);
-            _updateThread.Start();
+            UpdateOverlayAsync();
+
+
             //ListboxDecks.SelectedItem =
             //    _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
 
@@ -262,14 +264,7 @@ namespace Hearthstone_Deck_Tracker
             
         }
 
-        
-
         #region LogReader Events
-
-        private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
-        {
-            //_overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
-        }
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
         {
@@ -288,21 +283,16 @@ namespace Hearthstone_Deck_Tracker
             {
                 //reader done analyzing new stuff, update things
                 if (_overlay.IsVisible)
-                    _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(false)));
+                    _overlay.Update(false);
+
                 if (_playerWindow.IsVisible)
-                    _playerWindow.Dispatcher.BeginInvoke(
-                        new Action(
-                            () =>
-                            _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                                       _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count))));
+                    _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
+                                               _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
+
                 if (_opponentWindow.IsVisible)
-                    _opponentWindow.Dispatcher.BeginInvoke(
-                        new Action(
-                            () =>
-                            _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                                 30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                                 _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin)
-                            ));
+                    _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
+                                                         30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
+                                                         _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
             }
         }
 
@@ -321,57 +311,54 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnCardMovement(HsLogReader sender, CardMovementArgs args)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    switch (args.MovementType)
-                    {
-                        case CardMovementType.PlayerGet:
-                            HandlePlayerGet(args.CardId);
-                            break;
-                        case CardMovementType.PlayerDraw:
-                            HandlePlayerDraw(args.CardId);
-                            break;
-                        case CardMovementType.PlayerMulligan:
-                            HandlePlayerMulligan(args.CardId);
-                            break;
-                        case CardMovementType.PlayerHandDiscard:
-                            HandlePlayerHandDiscard(args.CardId);
-                            break;
-                        case CardMovementType.PlayerPlay:
-                            HandlePlayerPlay(args.CardId);
-                            break;
-                        case CardMovementType.PlayerDeckDiscard:
-                            HandlePlayerDeckDiscard(args.CardId);
-                            break;
-                        case CardMovementType.OpponentSecretTrigger:
-                            HandleOpponentSecretTrigger(args.CardId);
-                            break;
-                        case CardMovementType.OpponentPlay:
-                            HandleOpponentPlay(args.CardId);
-                            break;
-                        case CardMovementType.OpponentMulligan:
-                            HandleOpponentMulligan();
-                            break;
-                        case CardMovementType.OpponentHandDiscard:
-                            HandleOpponentHandDiscard();
-                            break;
-                        case CardMovementType.OpponentDraw:
-                            HandleOpponentDraw();
-                            break;
-                        case CardMovementType.OpponentDeckDiscard:
-                            HandleOpponentDeckDiscard(args.CardId);
-                            break;
-                        case CardMovementType.OpponentPlayToHand:
-                            HandleOpponentPlayToHand(args.CardId);
-                            break;
-                        case CardMovementType.OpponentGet:
-                            HandleOpponentGet(args.CardId);
-                            break;
-                        default:
-                            Console.WriteLine("Invalid card movement");
-                            break;
-                    }
-                }));
+            switch (args.MovementType)
+            {
+                case CardMovementType.PlayerGet:
+                    HandlePlayerGet(args.CardId);
+                    break;
+                case CardMovementType.PlayerDraw:
+                    HandlePlayerDraw(args.CardId);
+                    break;
+                case CardMovementType.PlayerMulligan:
+                    HandlePlayerMulligan(args.CardId);
+                    break;
+                case CardMovementType.PlayerHandDiscard:
+                    HandlePlayerHandDiscard(args.CardId);
+                    break;
+                case CardMovementType.PlayerPlay:
+                    HandlePlayerPlay(args.CardId);
+                    break;
+                case CardMovementType.PlayerDeckDiscard:
+                    HandlePlayerDeckDiscard(args.CardId);
+                    break;
+                case CardMovementType.OpponentSecretTrigger:
+                    HandleOpponentSecretTrigger(args.CardId);
+                    break;
+                case CardMovementType.OpponentPlay:
+                    HandleOpponentPlay(args.CardId);
+                    break;
+                case CardMovementType.OpponentMulligan:
+                    HandleOpponentMulligan();
+                    break;
+                case CardMovementType.OpponentHandDiscard:
+                    HandleOpponentHandDiscard();
+                    break;
+                case CardMovementType.OpponentDraw:
+                    HandleOpponentDraw();
+                    break;
+                case CardMovementType.OpponentDeckDiscard:
+                    HandleOpponentDeckDiscard(args.CardId);
+                    break;
+                case CardMovementType.OpponentPlayToHand:
+                    HandleOpponentPlayToHand(args.CardId);
+                    break;
+                case CardMovementType.OpponentGet:
+                    HandleOpponentGet(args.CardId);
+                    break;
+                default:
+                    Console.WriteLine("Invalid card movement");
+                    break;
+            }
         }
 
         #endregion
@@ -380,8 +367,6 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameStart()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
                     //avoid new game being started when jaraxxus is played
                     if (!_hearthstone.IsInMenu) return;
 
@@ -394,15 +379,12 @@ namespace Hearthstone_Deck_Tracker
                             _hearthstone.SetPremadeDeck(deck.Cards);
                     }
                     _hearthstone.IsInMenu = false;
-                    _hearthstone.Reset();
-                }));
+            _hearthstone.Reset();
         }
 
         private void HandleGameEnd()
         {
             //_turnTimer.Stop();
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
                     if (!_config.KeepDecksVisible)
                     {
                         if (Hearthstone.IsUsingPremade)
@@ -419,7 +401,6 @@ namespace Hearthstone_Deck_Tracker
                         _hearthstone.Reset();
                     }
                     _hearthstone.IsInMenu = true;
-                }));
         }
 
         private void HandleOpponentGet(string cardId)
@@ -528,7 +509,6 @@ namespace Hearthstone_Deck_Tracker
                 _config.WindowHeight = (int)Height;
                 _overlay.Close();
                 _logReader.Stop();
-                _updateThread.Abort();
                 _playerWindow.Shutdown();
                 _opponentWindow.Shutdown();
                 _xmlManagerConfig.Save("config.xml", _config);
@@ -558,6 +538,8 @@ namespace Hearthstone_Deck_Tracker
             _config.SelectedTags = tags;
             _xmlManagerConfig.Save("config.xml", _config);
         }
+
+        
 
         #endregion
 
@@ -622,26 +604,22 @@ namespace Hearthstone_Deck_Tracker
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
-        private void Update()
+        private async void UpdateOverlayAsync()
         {
             while (_doUpdate)
             {
-                _overlay.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        if (Process.GetProcessesByName("Hearthstone").Length == 1)
-                        {
-                            _overlay.UpdatePosition();
-                        }
-                        else
-                        {
-                            _overlay.ShowOverlay(false);
-                        }
-                    }));
-
-                Thread.Sleep(_config.UpdateDelay);
+                if (Process.GetProcessesByName("Hearthstone").Length == 1)
+                {
+                    _overlay.UpdatePosition();
+                }
+                else
+                {
+                    _overlay.ShowOverlay(false);
+                }
+                await Task.Delay(_config.UpdateDelay);
             }
         }
-
+        
         #endregion
 
         #region MY DECKS - GUI
@@ -720,50 +698,26 @@ namespace Hearthstone_Deck_Tracker
             }
         }
         
-        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        private async void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            var settings = new MetroDialogSettings();
+            var deck = DeckPickerList.SelectedDeck;
+            if (deck == null) return;
 
-            var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn"))
+            var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
+                                               "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
+                                               MessageDialogStyle.AffirmativeAndNegative);
+
+            if (result == MessageDialogResult.Affirmative)
             {
-                settings.DefaultText = clipboard;
-            }
-
-            //import dialog
-            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats\nhearthpwn", "Url:", settings);
-            if (string.IsNullOrEmpty(url))
-                return;
-
-            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-
-            var deck = _deckImporter.Import(url);
-
-            await controller.CloseAsync();
-
-            if (deck != null)
-            {
-                ClearNewDeckSection();
-                _newContainsDeck = true;
-
-                _newDeck = (Deck)deck.Clone();
-                ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
-                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
-                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
-
-                TextBoxDeckName.Text = _newDeck.Name;
-                UpdateNewDeckHeader(true);
-                UpdateDbListView();
-            }
-            else
-            {
-                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+                var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+                Topmost = false;
+                await Task.Delay(500);
+                await _deckExporter.Export(DeckPickerList.SelectedDeck);
+                await controller.CloseAsync();
             }
 
 
         }
-        
         private void BtnSetTag_Click(object sender, RoutedEventArgs e)
         {
             FlyoutSetTags.IsOpen = !FlyoutSetTags.IsOpen;
@@ -814,14 +768,13 @@ namespace Hearthstone_Deck_Tracker
             if (selected == null)
                 return;
             _hearthstone.SetPremadeDeck(selected.Cards);
-            _overlay.Dispatcher.BeginInvoke(new Action(_overlay.SortViews));
-            Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    _hearthstone.PlayerHandCount = 0;
-                    _hearthstone.EnemyCards.Clear();
-                    _hearthstone.EnemyHandCount = 0;
-                    _hearthstone.OpponentDeckCount = 30;
-                }));
+            _overlay.SortViews();
+
+            _hearthstone.PlayerHandCount = 0;
+            _hearthstone.EnemyCards.Clear();
+            _hearthstone.EnemyHandCount = 0;
+            _hearthstone.OpponentDeckCount = 30;
+
             _logReader.Reset(false);
         }
 
@@ -893,6 +846,49 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings();
+
+            var clipboard = Clipboard.GetText();
+            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn"))
+            {
+                settings.DefaultText = clipboard;
+            }
+
+            //import dialog
+            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats\nhearthpwn", "Url:", settings);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
+
+            var deck = await _deckImporter.Import(url);
+
+            await controller.CloseAsync();
+
+            if (deck != null)
+            {
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+                UpdateDbListView();
+            }
+            else
+            {
+                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+            }
+
+
+        }
 
         private void ListViewDB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -1178,11 +1174,9 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideDrawChances = true;
             SaveConfig(true);
-            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _playerWindow.LblDrawChance1.Visibility = Visibility.Collapsed;
                     _playerWindow.LblDrawChance2.Visibility = Visibility.Collapsed;
-                }));
+
         }
 
         private void CheckboxHideDrawChances_Unchecked(object sender, RoutedEventArgs e)
@@ -1190,11 +1184,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideDrawChances = false;
             SaveConfig(true);
-            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _playerWindow.LblDrawChance1.Visibility = Visibility.Visible;
                     _playerWindow.LblDrawChance2.Visibility = Visibility.Visible;
-                }));
         }
 
         private void CheckboxHideOpponentDrawChances_Checked(object sender, RoutedEventArgs e)
@@ -1202,11 +1193,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideOpponentDrawChances = true;
             SaveConfig(true);
-            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
-            {
                 _opponentWindow.LblOpponentDrawChance2.Visibility = Visibility.Collapsed;
                 _opponentWindow.LblOpponentDrawChance1.Visibility = Visibility.Collapsed;
-            }));
         }
 
         private void CheckboxHideOpponentDrawChances_Unchecked(object sender, RoutedEventArgs e)
@@ -1214,11 +1202,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideOpponentDrawChances = false;
             SaveConfig(true);
-            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
-            {
                 _opponentWindow.LblOpponentDrawChance2.Visibility = Visibility.Visible;
                 _opponentWindow.LblOpponentDrawChance1.Visibility = Visibility.Visible;
-            }));
 
         }
         private void CheckboxHidePlayerCardCounter_Checked(object sender, RoutedEventArgs e)
@@ -1226,11 +1211,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HidePlayerCardCount = true;
             SaveConfig(true);
-            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _playerWindow.LblCardCount.Visibility = Visibility.Collapsed;
                     _playerWindow.LblDeckCount.Visibility = Visibility.Collapsed;
-                }));
         }
 
         private void CheckboxHidePlayerCardCounter_Unchecked(object sender, RoutedEventArgs e)
@@ -1238,11 +1220,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HidePlayerCardCount = false;
             SaveConfig(true);
-            _playerWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _playerWindow.LblCardCount.Visibility = Visibility.Visible;
                     _playerWindow.LblDeckCount.Visibility = Visibility.Visible;
-                }));
         }
 
         private void CheckboxHideEnemyCardCounter_Checked(object sender, RoutedEventArgs e)
@@ -1250,11 +1229,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideEnemyCardCount = true;
             SaveConfig(true);
-            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Collapsed;
                     _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Collapsed;
-                }));
         }
 
         private void CheckboxHideEnemyCardCounter_Unchecked(object sender, RoutedEventArgs e)
@@ -1262,11 +1238,8 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.HideEnemyCardCount = false;
             SaveConfig(true);
-            _opponentWindow.Dispatcher.BeginInvoke(new Action(() =>
-                {
                     _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
                     _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Visible;
-                }));
         }
 
         private void CheckboxHideEnemyCards_Checked(object sender, RoutedEventArgs e)
@@ -1334,7 +1307,7 @@ namespace Hearthstone_Deck_Tracker
         {
             _xmlManagerConfig.Save("config.xml", _config);
             if(updateOverlay)
-                _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.Update(true)));
+                _overlay.Update(true);
         }
 
         private void BtnShowWindows_Click(object sender, RoutedEventArgs e)
@@ -1345,19 +1318,12 @@ namespace Hearthstone_Deck_Tracker
             _opponentWindow.Show();
             _opponentWindow.Activate();
 
-            _playerWindow.Dispatcher.BeginInvoke(
-                       new Action(
-                           () =>
-                           _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                                      _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count))));
+            _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
+                                       _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
 
-            _opponentWindow.Dispatcher.BeginInvoke(
-                new Action(
-                    () =>
-                    _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                         30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                         _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin)
-                    ));
+            _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
+                                                 30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
+                                                 _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
         }
 
         private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
@@ -1485,7 +1451,7 @@ namespace Hearthstone_Deck_Tracker
             var scaling = SliderOverlayPlayerScaling.Value;
             _config.OverlayPlayerScaling = scaling;
             SaveConfig(false);
-            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateScaling()));
+             _overlay.UpdateScaling();
 
             if (_config.UseSameScaling && SliderOverlayOpponentScaling.Value != scaling)
             {
@@ -1499,7 +1465,7 @@ namespace Hearthstone_Deck_Tracker
             var scaling = SliderOverlayOpponentScaling.Value;
             _config.OverlayOpponentScaling = scaling;
             SaveConfig(false);
-            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateScaling()));
+             _overlay.UpdateScaling();
 
             if (_config.UseSameScaling && SliderOverlayPlayerScaling.Value != scaling)
             {
@@ -1513,26 +1479,6 @@ namespace Hearthstone_Deck_Tracker
         }
         #endregion
 
-        private async void BtnExport_Click(object sender, RoutedEventArgs e)
-        {
-            var deck = DeckPickerList.SelectedDeck;
-            if (deck == null) return;
-
-            var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
-                                               "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
-                                               MessageDialogStyle.AffirmativeAndNegative);
-
-            if (result == MessageDialogResult.Affirmative)
-            {
-                var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
-                Topmost = false;
-                Thread.Sleep(500);
-                _deckExporter.Export(DeckPickerList.SelectedDeck);
-                await controller.CloseAsync();
-            }
-
-
-        }
 
     }
 }

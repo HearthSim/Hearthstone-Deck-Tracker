@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="672" Width="514" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged">
+        Title="Hearthstone Deck Tracker" Height="672" Width="514" MinWidth="514" MaxWidth="514" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Grid.ColumnSpan="2">
             <TabItem Header="My Decks">
@@ -233,6 +233,7 @@
                         <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
                         <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
                     </TextBlock>
+                    <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,7,10" VerticalAlignment="Bottom"/>
 
                 </Grid>
             </TabItem>
