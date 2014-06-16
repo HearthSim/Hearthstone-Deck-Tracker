@@ -15,6 +15,14 @@ namespace Hearthstone_Deck_Tracker
         [XmlArray(ElementName = "Tags")]
         [XmlArrayItem(ElementName = "Tag")]
         public List<string> AllTags;
+
+
+        public List<DeckInfo> LastDeckClass;
+    }
+    public class DeckInfo
+    {
+        public string Name;
+        public string Class;
     }
     public class Deck : ICloneable
     {

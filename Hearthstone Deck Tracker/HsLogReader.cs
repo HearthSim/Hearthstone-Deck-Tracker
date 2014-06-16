@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -60,8 +61,14 @@ namespace Hearthstone_Deck_Tracker
         {
             State = state;
         }
+        public GameStateArgs()
+        {
+            
+        }
 
-        public GameState State { get; private set; }
+        public GameState? State { get; set; }
+        public string PlayerHero { get; set; }
+        public string OpponentHero { get; set; }
     }
     public class AnalyzingArgs : EventArgs
     {
@@ -95,7 +102,19 @@ namespace Hearthstone_Deck_Tracker
         private readonly string _fullOutputPath;
         private readonly int _updateDelay;
         private bool _doUpdate;
-       
+
+        private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>()
+            {
+                {"HERO_01", "Warrior"},
+                {"HERO_02", "Shaman"},
+                {"HERO_03", "Rogue"},
+                {"HERO_04", "Paladin"},
+                {"HERO_05", "Hunter"},
+                {"HERO_06", "Druid"},
+                {"HERO_07", "Warlock"},
+                {"HERO_08", "Mage"},
+                {"HERO_09", "Priest"}
+            };
 
         private readonly Regex _cardMovementRegex =
             new Regex(
@@ -247,9 +266,19 @@ namespace Hearthstone_Deck_Tracker
                     //game start/end
                     if (id.Contains("HERO"))
                     {
-                        if (player == 1 && !from.Contains("PLAY"))
+                        
+                        if (!from.Contains("PLAY"))
                         {
-                            GameStateChange(this, new GameStateArgs(GameState.GameBegin));
+                            if (to.Contains("FRIENDLY"))
+                            {
+                                GameStateChange(this, new GameStateArgs(GameState.GameBegin) { PlayerHero = _heroIdDict[id] });
+                                
+                            }
+                            else if (to.Contains("OPPOSING"))
+                            {
+                                GameStateChange(this,
+                                                new GameStateArgs() { OpponentHero = _heroIdDict[id] });
+                            }
                         }
                         _powerCount = 0;
                         continue;

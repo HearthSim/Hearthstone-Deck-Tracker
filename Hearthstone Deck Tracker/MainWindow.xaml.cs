@@ -298,14 +298,27 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnGameStateChange(HsLogReader sender, GameStateArgs args)
         {
-            switch (args.State)
+            if (!string.IsNullOrEmpty(args.PlayerHero))
             {
-                case GameState.GameBegin:
-                    HandleGameStart();
-                    break;
-                case GameState.GameEnd:
-                    HandleGameEnd();
-                    break;
+                _hearthstone.PlayingAs = args.PlayerHero;
+
+            }
+            if (!string.IsNullOrEmpty(args.OpponentHero))
+            {
+                _hearthstone.PlayingAgainst = args.OpponentHero;
+            }
+
+            if (args.State != null)
+            {
+                switch (args.State)
+                {
+                    case GameState.GameBegin:
+                        HandleGameStart();
+                        break;
+                    case GameState.GameEnd:
+                        HandleGameEnd();
+                        break;
+                }
             }
         }
 
@@ -367,19 +380,53 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameStart()
         {
-                    //avoid new game being started when jaraxxus is played
-                    if (!_hearthstone.IsInMenu) return;
+            //avoid new game being started when jaraxxus is played
+            if (!_hearthstone.IsInMenu) return;
 
-                    if (!Hearthstone.IsUsingPremade)
-                        _hearthstone.PlayerDeck.Clear();
-                    else
-                    {
-                        var deck = DeckPickerList.SelectedDeck;
-                        if (deck != null)
-                            _hearthstone.SetPremadeDeck(deck.Cards);
-                    }
-                    _hearthstone.IsInMenu = false;
+            if (!Hearthstone.IsUsingPremade)
+                _hearthstone.PlayerDeck.Clear();
+            else
+            {
+                var deck = DeckPickerList.SelectedDeck;
+                if (deck != null)
+                    _hearthstone.SetPremadeDeck(deck.Cards);
+            }
+            _hearthstone.IsInMenu = false;
             _hearthstone.Reset();
+
+            //select deck based on hero
+            if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
+            {
+                if (!Hearthstone.IsUsingPremade) return;
+
+                var selectedDeck = DeckPickerList.SelectedDeck;
+
+                if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
+                {
+
+                    var classDecks = _deckList.DecksList.Where(d => d.Class == _hearthstone.PlayingAs).ToList();
+                    if (classDecks.Count == 0)
+                    {
+                        return;
+                    }
+                    if (classDecks.Count == 1)
+                    {
+                        UseDeck(classDecks[0]);
+                    }
+                    else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
+                    {
+                        var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _hearthstone.PlayingAs).Name;
+
+                        var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
+
+                        if (deck != null)
+                        {
+                            DeckPickerList.SelectDeck(deck);
+                            UseDeck(deck);
+                        }
+                    }
+                }
+            }
         }
 
         private void HandleGameEnd()
@@ -801,6 +848,18 @@ namespace Hearthstone_Deck_Tracker
                 Hearthstone.IsUsingPremade = true;
                 UpdateDeckList(deck);
                 UseDeck(deck);
+
+                if (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+                {
+                    var lastSelected = _deckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
+                    if (DeckPickerList.SelectedDeck != null)
+                    {
+                        _deckList.LastDeckClass.Remove(lastSelected);
+                    }
+                }
+
+                _deckList.LastDeckClass.Add(new DeckInfo(){Class = deck.Class, Name = deck.Name});
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
             }
         }
 
