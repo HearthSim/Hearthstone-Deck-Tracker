@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
         public int OpponentDeckCount;
         public bool IsInMenu;
         public ObservableCollection<Card> PlayerDeck;
+        public ObservableCollection<Card> PlayerDrawn; 
         public int PlayerHandCount;
         public string PlayingAgainst;
         public string PlayingAs;
@@ -56,6 +57,7 @@ namespace Hearthstone_Deck_Tracker
         {
             IsInMenu = true;
             PlayerDeck = new ObservableCollection<Card>();
+            PlayerDrawn = new ObservableCollection<Card>();
             EnemyCards = new ObservableCollection<Card>();
             _cardDb = new Dictionary<string, Card>();
             LoadCardDb();
@@ -106,15 +108,24 @@ namespace Hearthstone_Deck_Tracker
             IsUsingPremade = true;
         }
 
-        public void PlayerDraw(string cardId)
+        public bool PlayerDraw(string cardId)
         {
             if (cardId == "GAME_005")
             {
                 OpponentHasCoin = false;
                 PlayerHandCount++;
-                return;
+                return true;
             }
             var card = GetCardFromId(cardId);
+
+
+            if (PlayerDrawn.Contains(card))
+            {
+                PlayerDrawn.Remove(card);
+                card.Count++;
+            }
+            PlayerDrawn.Add(card);
+
 
             if (!IsUsingPremade)
             {
@@ -136,8 +147,13 @@ namespace Hearthstone_Deck_Tracker
                     deckCard.InHandCount++;
                     PlayerDeck.Add(deckCard);
                 }
+                else
+                {
+                    return false;
+                }
             }
             PlayerHandCount++;
+            return true;
         }
 
         //cards from board(?), thoughtsteal etc
@@ -329,6 +345,7 @@ namespace Hearthstone_Deck_Tracker
 
         internal void Reset()
         {
+            PlayerDrawn.Clear();
             PlayerHandCount = 0;
             EnemyCards.Clear();
             EnemyHandCount = 0;

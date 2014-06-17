@@ -33,6 +33,10 @@ namespace Hearthstone_Deck_Tracker
         public double OpponentWindowTop = 0;
         public double OpponentWindowLeft = 0;
         public bool WindowsTopmost = false;
+
+        //todo: add to options
+        public bool WindowsTopmostIfHsForeground = false;
+
         public bool WindowsOnStartup = false;
         public string WindowsBackgroundHex = "";
         public int UpdateDelay = 100;
@@ -63,6 +67,8 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxX = 0.5;
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
+
+        public bool IgnoreWrongDeck = false;
 
     }
 }

@@ -401,7 +401,10 @@ namespace Hearthstone_Deck_Tracker
         internal void Reset(bool full)
         {
             if (full)
+            {
                 _previousSize = 0;
+                _first = true;
+            }
             else
             {
                 _currentOffset = _lastGameEnd;

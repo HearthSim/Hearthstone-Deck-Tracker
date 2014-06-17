@@ -117,6 +117,9 @@
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
     <Compile Include="TurnTimer.cs" />
+    <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
+      <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
     </Compile>
@@ -151,6 +154,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Page Include="Windows\DeckSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\OpponentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

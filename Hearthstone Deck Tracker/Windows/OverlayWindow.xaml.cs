@@ -207,19 +207,9 @@ namespace Hearthstone_Deck_Tracker
            
         }
 
-        private bool _needToRefresh;
 
         public void UpdatePosition()
         {
-            if (!User32.IsForegroundWindow("Hearthstone") && !_needToRefresh)
-            {
-                _needToRefresh = true;
-
-            } else if (_needToRefresh && User32.IsForegroundWindow("Hearthstone"))
-            {
-                _needToRefresh = false;
-                Update(true);
-            }
 
             //hide the overlay depenting on options
             ShowOverlay(!(

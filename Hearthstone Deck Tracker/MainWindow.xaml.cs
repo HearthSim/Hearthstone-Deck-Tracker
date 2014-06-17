@@ -48,6 +48,9 @@ namespace Hearthstone_Deck_Tracker
         private bool _newContainsDeck;
         private Deck _newDeck;
         private bool _doUpdate;
+        private bool _checkForCorrectDeck;
+        private bool _showingIncorrectDeckMessage;
+        private bool _showIncorrectDeckMessage;
         
 
         public MainWindow()
@@ -254,6 +257,7 @@ namespace Hearthstone_Deck_Tracker
             DeckPickerList.UpdateList();
             if (lastDeck != null)
             {
+                DeckPickerList.SelectDeck(lastDeck);
                 UpdateDeckList(lastDeck);
                 UseDeck(lastDeck);
             }
@@ -277,7 +281,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (args.State == AnalyzingState.Start)
             {
-                //indicate loading maybe
+
             }
             else if (args.State == AnalyzingState.End)
             {
@@ -293,6 +297,18 @@ namespace Hearthstone_Deck_Tracker
                     _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
                                                          30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
                                                          _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
+
+
+                if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
+                {
+
+                    Debug.WriteLine("Analyzer done. Showing deck selection dialog.");
+                    _showingIncorrectDeckMessage = true;
+
+                    ShowIncorrectDeckMessage();
+                    //stuff
+                }
+                
             }
         }
 
@@ -411,7 +427,7 @@ namespace Hearthstone_Deck_Tracker
                     }
                     if (classDecks.Count == 1)
                     {
-                        UseDeck(classDecks[0]);
+                        DeckPickerList.SelectDeck(classDecks[0]);
                     }
                     else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
                     {
@@ -421,10 +437,17 @@ namespace Hearthstone_Deck_Tracker
 
                         if (deck != null)
                         {
+                            
                             DeckPickerList.SelectDeck(deck);
+                            UpdateDeckList(deck);
                             UseDeck(deck);
                         }
                     }
+                    _checkForCorrectDeck = false;
+                }
+                else if (selectedDeck.Class == _hearthstone.PlayingAs)
+                {
+                    _checkForCorrectDeck = true;
                 }
             }
         }
@@ -467,8 +490,16 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerDraw(string cardId)
         {
-            _hearthstone.PlayerDraw(cardId);
+           var correctDeck = _hearthstone.PlayerDraw(cardId);
+
+            //can prob. simplify this lol
+            if (_checkForCorrectDeck && !correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
+            {
+                _showIncorrectDeckMessage = true;
+                Debug.WriteLine("Found incorrect deck");
+            }
         }
+
 
         private void HandlePlayerMulligan(string cardId)
         {
@@ -592,6 +623,46 @@ namespace Hearthstone_Deck_Tracker
 
         #region GENERAL METHODS
 
+        private void ShowIncorrectDeckMessage()
+        {
+
+            var decks =
+                _deckList.DecksList.Where(
+                    d => d.Class == _hearthstone.PlayingAs && _hearthstone.PlayerDrawn.All(c => d.Cards.Contains(c)))
+                         .ToList();
+            if (decks.Contains(DeckPickerList.SelectedDeck))
+                decks.Remove(DeckPickerList.SelectedDeck);
+
+            Debug.WriteLine(decks.Count + " possible decks found.");
+            if (decks.Count > 0)
+            {
+
+                DeckSelectionDialog dsDialog = new DeckSelectionDialog(decks);
+
+                dsDialog.ShowDialog();
+
+                var selectedDeck = dsDialog.SelectedDeck;
+
+                if (selectedDeck != null)
+                {
+                    Debug.WriteLine("Selected deck: " + selectedDeck.Name);
+                    DeckPickerList.SelectDeck(selectedDeck);
+                    UpdateDeckList(selectedDeck);
+                    UseDeck(selectedDeck);
+                }
+                else
+                {
+                    //todo: gui item for this
+                    Debug.WriteLine("No deck selected. disbaled deck detection.");
+                    _config.IgnoreWrongDeck = true;
+                }
+            }
+
+            Debug.WriteLine("Done with incorrect deck stuff.");
+            _showingIncorrectDeckMessage = false;
+            _showIncorrectDeckMessage = false;
+        }
+
         private void LoadConfig()
         {
             //var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
@@ -653,11 +724,33 @@ namespace Hearthstone_Deck_Tracker
 
         private async void UpdateOverlayAsync()
         {
+            bool hsForegroundChanged = false;
             while (_doUpdate)
             {
                 if (Process.GetProcessesByName("Hearthstone").Length == 1)
                 {
                     _overlay.UpdatePosition();
+
+                    if (!User32.IsForegroundWindow("Hearthstone") && !hsForegroundChanged)
+                    {
+                        if(_config.WindowsTopmostIfHsForeground)
+                        {
+                            _playerWindow.Topmost = false;
+                            _opponentWindow.Topmost = false;
+                        }
+                        hsForegroundChanged = true;
+
+                    }
+                    else if (hsForegroundChanged && User32.IsForegroundWindow("Hearthstone"))
+                    {
+                        _overlay.Update(true);
+                        if (_config.WindowsTopmostIfHsForeground)
+                        {
+                            _playerWindow.Topmost = true;
+                            _opponentWindow.Topmost = true;
+                        }
+                        hsForegroundChanged = false;
+                    }
                 }
                 else
                 {
@@ -675,6 +768,7 @@ namespace Hearthstone_Deck_Tracker
         {
             //ListboxDecks.SelectedIndex = -1;
             DeckPickerList.SelectedDeck = null;
+            DeckPickerList.SelectedIndex = -1;
             UpdateDeckList(new Deck());
             UseDeck(new Deck());
             Hearthstone.IsUsingPremade = false;
@@ -814,13 +908,11 @@ namespace Hearthstone_Deck_Tracker
         {
             if (selected == null)
                 return;
-            _hearthstone.SetPremadeDeck(selected.Cards);
-            _overlay.SortViews();
+            _hearthstone.Reset();
 
-            _hearthstone.PlayerHandCount = 0;
-            _hearthstone.EnemyCards.Clear();
-            _hearthstone.EnemyHandCount = 0;
-            _hearthstone.OpponentDeckCount = 30;
+            _hearthstone.SetPremadeDeck(selected.Cards);
+
+            _overlay.SortViews();
 
             _logReader.Reset(false);
         }
