@@ -21,8 +21,10 @@ namespace Hearthstone_Deck_Tracker
     {
         public DeckSelectionDialog(IEnumerable<Deck> decks)
         {
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
             DeckPickerList.Items.Clear();
             foreach (var deck in decks)
             {

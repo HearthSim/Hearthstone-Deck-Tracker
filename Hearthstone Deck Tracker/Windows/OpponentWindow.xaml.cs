@@ -52,6 +52,8 @@ namespace Hearthstone_Deck_Tracker
             LblOpponentCardCount.Text = "Hand: " + cardCount;
             LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
+            if (cardsLeftInDeck <= 0) return;
+
             var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
             var holdingNextTurn2 = Math.Round(200.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);

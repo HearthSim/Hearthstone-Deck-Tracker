@@ -10,9 +10,6 @@ namespace Hearthstone_Deck_Tracker
 {
     public class Hearthstone
     {
-        //public bool UsingPremadeDeck;
-        //public ObservableCollection<Card> PremadePlayerDeck; 
-        public static bool IsUsingPremade;
 
         //dont like this solution, cant think of better atm
         public static bool HighlightCardsInHand;
@@ -29,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
         public string PlayingAgainst;
         public string PlayingAs;
         public bool OpponentHasCoin;
+        public bool IsUsingPremade;
 
         private readonly List<string> _invalidCardIds = new List<string>
             {
@@ -110,14 +108,15 @@ namespace Hearthstone_Deck_Tracker
 
         public bool PlayerDraw(string cardId)
         {
+            PlayerHandCount++;
+
             if (cardId == "GAME_005")
             {
                 OpponentHasCoin = false;
-                PlayerHandCount++;
                 return true;
             }
-            var card = GetCardFromId(cardId);
 
+            var card = GetCardFromId(cardId);
 
             if (PlayerDrawn.Contains(card))
             {
@@ -126,64 +125,43 @@ namespace Hearthstone_Deck_Tracker
             }
             PlayerDrawn.Add(card);
 
-
-            if (!IsUsingPremade)
+            if (PlayerDeck.Contains(card))
             {
-                if (PlayerDeck.Contains(card))
-                {
-                    PlayerDeck.Remove(card);
-                    card.Count++;
-                }
-                PlayerDeck.Add(card);
+                var deckCard = PlayerDeck.First(c => c.Equals(card));
+                PlayerDeck.Remove(deckCard);
+                deckCard.Count--;
+                deckCard.InHandCount++;
+                PlayerDeck.Add(deckCard);
             }
             else
             {
-                if (PlayerDeck.Any(c => c.Name == card.Name))
-                {
-                    var deckCard = PlayerDeck.FirstOrDefault(x => x.Name != null && x.Name.Equals(card.Name));
-
-                    PlayerDeck.Remove(deckCard);
-                    deckCard.Count--;
-                    deckCard.InHandCount++;
-                    PlayerDeck.Add(deckCard);
-                }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
-            PlayerHandCount++;
             return true;
         }
 
         //cards from board(?), thoughtsteal etc
         public void PlayerGet(string cardId)
         {
-            PlayerHandCount++; 
-            if (IsUsingPremade)
+            PlayerHandCount++;
+            if (PlayerDeck.Any(c => c.Id == cardId))
             {
-                if (PlayerDeck.Any(c => c.Id == cardId))
-                {
-                    var card = PlayerDeck.First(c => c.Id == cardId);
-                    PlayerDeck.Remove(card);
-                    card.InHandCount++;
-                    PlayerDeck.Add(card);
-                }
+                var card = PlayerDeck.First(c => c.Id == cardId);
+                PlayerDeck.Remove(card);
+                card.InHandCount++;
+                PlayerDeck.Add(card);
             }
         }
 
         public void PlayerPlayed(string cardId)
         {
             PlayerHandCount--;
-            if (IsUsingPremade)
+            if (PlayerDeck.Any(c => c.Id == cardId))
             {
-                if (PlayerDeck.Any(c => c.Id == cardId))
-                {
-                    var card = PlayerDeck.First(c => c.Id == cardId);
-                    PlayerDeck.Remove(card);
-                    card.InHandCount--;
-                    PlayerDeck.Add(card);
-                }
+                var card = PlayerDeck.First(c => c.Id == cardId);
+                PlayerDeck.Remove(card);
+                card.InHandCount--;
+                PlayerDeck.Add(card);
             }
         }
 
@@ -195,9 +173,10 @@ namespace Hearthstone_Deck_Tracker
 
         public void EnemyPlayed(string cardId)
         {
+            EnemyHandCount--;
+
             if (cardId == "")
             {
-                EnemyHandCount--;
                 return;
             }
             if (cardId == "GAME_005")
@@ -211,37 +190,33 @@ namespace Hearthstone_Deck_Tracker
                 card.Count++;
             }
             EnemyCards.Add(card);
-            EnemyHandCount--;
 
         }
-
         
         public void Mulligan(string cardId)
         {
-            Card card = GetCardFromId(cardId);
-            if (!IsUsingPremade)
-            {
-                Card deckCard = PlayerDeck.FirstOrDefault(c => c.Equals(card));
-                if (deckCard.Count > 1)
-                    deckCard.Count--;
-                else
-                {
-                    PlayerDeck.Remove(deckCard);
-                }
-            }
-            else //PREMADE
-            {
-                if (PlayerDeck.Any(c => c.Name == card.Name))
-                {
-                    Card deckCard = PlayerDeck.FirstOrDefault(c => c.Name != null && c.Name == card.Name);
-                    PlayerDeck.Remove(deckCard);
-                    deckCard.Count++;
-                    deckCard.InHandCount--;
-                    PlayerDeck.Add(deckCard);
-                }
-            }
-
             PlayerHandCount--;
+
+            Card card = GetCardFromId(cardId);
+
+            if (PlayerDrawn.Any(c => c.Equals(card)))
+            {
+                var drawnCard = PlayerDrawn.First(c => c.Equals(card));
+                PlayerDrawn.Remove(drawnCard);
+                if (drawnCard.Count > 1)
+                {
+                    drawnCard.Count--;
+                    PlayerDrawn.Add(drawnCard);
+                }
+            }
+            if (PlayerDeck.Any(c =>  c.Equals(card)))
+            {
+                var deckCard = PlayerDeck.First(c => c.Equals(card));
+                PlayerDeck.Remove(deckCard);
+                deckCard.Count++;
+                deckCard.InHandCount--;
+                PlayerDeck.Add(deckCard);
+            }
         }
 
         public void EnemyMulligan()
@@ -250,44 +225,44 @@ namespace Hearthstone_Deck_Tracker
             OpponentDeckCount++;
         }
 
-        internal void PlayerHandDiscard(string cardId)
+        public void PlayerHandDiscard(string cardId)
         {
-            PlayerHandCount--; 
-            if (IsUsingPremade)
+            PlayerHandCount--;
+            if (PlayerDeck.Any(c => c.Id == cardId))
             {
-                if (PlayerDeck.Any(c => c.Id == cardId))
-                {
-                    var card = PlayerDeck.First(c => c.Id == cardId);
-                    PlayerDeck.Remove(card);
-                    card.InHandCount--;
-                    PlayerDeck.Add(card);
-                }
+                var card = PlayerDeck.First(c => c.Id == cardId);
+                PlayerDeck.Remove(card);
+                card.InHandCount--;
+                PlayerDeck.Add(card);
             }
         }
 
-        internal void PlayerDeckDiscard(string cardId)
+        public bool PlayerDeckDiscard(string cardId)
         {
             Card card = GetCardFromId(cardId);
 
-            if (!IsUsingPremade)
+            if (PlayerDrawn.Contains(card))
             {
-                if (PlayerDeck.Contains(card))
-                {
-                    PlayerDeck.Remove(card);
-                    card.Count++;
-                }
-                PlayerDeck.Add(card);
+                PlayerDrawn.Remove(card);
+                card.Count++;
             }
-            else
+            PlayerDrawn.Add(card);
+            
+            if (PlayerDeck.Contains(card))
             {
-                Card deckCard = PlayerDeck.FirstOrDefault(x => x.Name != null && x.Name.Equals(card.Name));
+                var deckCard = PlayerDeck.First(c => c.Equals(card));
                 PlayerDeck.Remove(deckCard);
                 deckCard.Count--;
                 PlayerDeck.Add(deckCard);
             }
+            else
+            {
+                return false;
+            }
+            return true;
         }
 
-        internal void OpponentBackToHand(string cardId)
+        public void OpponentBackToHand(string cardId)
         {
             EnemyHandCount++;
             if (EnemyCards.Any(c => c.Id == cardId))
@@ -301,35 +276,35 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
-        internal void EnemyHandDiscard()
+        public void EnemyHandDiscard()
         {
             EnemyHandCount--;
         }
 
-        internal void EnemyDeckDiscard(string cardId)
+        public void EnemyDeckDiscard(string cardId)
         {
+            OpponentDeckCount--;
             if (string.IsNullOrEmpty(cardId))
             {
                 return;
             }
             var card = GetCardFromId(cardId);
-            if (EnemyCards.Any(x => x.Equals(card)))
+            if (EnemyCards.Contains(card))
             {
                 EnemyCards.Remove(card);
                 card.Count++;
             }
             EnemyCards.Add(card);
-            OpponentDeckCount--;
         }
 
-        internal void EnemySecretTriggered(string cardId)
+        public void EnemySecretTriggered(string cardId)
         {
             if (cardId == "")
             {
                 return;
             }
             Card card = GetCardFromId(cardId);
-            if (EnemyCards.Any(x => x.Equals(card)))
+            if (EnemyCards.Contains(card))
             {
                 EnemyCards.Remove(card);
                 card.Count++;

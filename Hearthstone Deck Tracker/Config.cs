@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
 
+        //todo: add to options
         public bool IgnoreWrongDeck = false;
 
     }

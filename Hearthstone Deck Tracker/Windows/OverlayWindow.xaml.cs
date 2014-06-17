@@ -75,6 +75,9 @@ namespace Hearthstone_Deck_Tracker
             LblOpponentCardCount.Text = "Hand: " + cardCount;
             LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
+
+            if (cardsLeftInDeck <= 0) return;
+
             var handWithoutCoin =  cardCount - (_hearthstone.OpponentHasCoin ? 1 : 0);
 
             var holdingNextTurn2 = Math.Round(200.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
@@ -93,27 +96,20 @@ namespace Hearthstone_Deck_Tracker
             //previous < current -> draw
             if (_cardCount < cardCount)
             {
-                if(!Hearthstone.IsUsingPremade)
-                    SortCardCollection(ListViewPlayer.ItemsSource);
+                //if(!Hearthstone.IsUsingPremade)
+                SortCardCollection(ListViewPlayer.ItemsSource);
             }
             _cardCount = cardCount;
             LblCardCount.Text = "Hand: " + cardCount;
             LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
+
             if (cardsLeftInDeck <= 0) return;
 
-            if (Hearthstone.IsUsingPremade)
-            {
+            LblDrawChance2.Text = "[2]: " + Math.Round(200.0f/cardsLeftInDeck, 2) + "%";
+            LblDrawChance1.Text = "[1]: " + Math.Round(100.0f/cardsLeftInDeck, 2) + "%";
 
-                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
-                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
-            }
-            else
-            {
-                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / (30 - cardsLeftInDeck), 2) + "%";
-                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / (30 - cardsLeftInDeck), 2) + "%";
-            }
         }
-    
+
 
 
         public void ShowOverlay(bool enable)
@@ -200,7 +196,7 @@ namespace Hearthstone_Deck_Tracker
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
             LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
 
-            SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
+            SetCardCount(_hearthstone.PlayerHandCount, 30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
             SetEnemyCardCount(_hearthstone.EnemyHandCount, _hearthstone.OpponentDeckCount);
 
             ReSizePosLists();

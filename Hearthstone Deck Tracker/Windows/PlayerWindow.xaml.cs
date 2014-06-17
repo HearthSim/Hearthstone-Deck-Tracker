@@ -49,22 +49,15 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        public  void SetCardCount(int cardCount, int cardsLeftInDeck)
+        public void SetCardCount(int cardCount, int cardsLeftInDeck)
         {
             LblCardCount.Text = "Hand: " + cardCount;
             LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
+
             if (cardsLeftInDeck <= 0) return;
 
-            if (Hearthstone.IsUsingPremade)
-            {
-                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
-                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
-            }
-            else
-            {
-                LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / (30 - cardsLeftInDeck), 2) + "%";
-                LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / (30 - cardsLeftInDeck), 2) + "%";
-            }
+            LblDrawChance2.Text = "[2]: " + Math.Round(200.0f/cardsLeftInDeck, 2) + "%";
+            LblDrawChance1.Text = "[1]: " + Math.Round(100.0f/cardsLeftInDeck, 2) + "%";
         }
 
         private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

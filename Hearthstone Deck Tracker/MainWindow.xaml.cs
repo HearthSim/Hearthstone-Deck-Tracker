@@ -48,7 +48,6 @@ namespace Hearthstone_Deck_Tracker
         private bool _newContainsDeck;
         private Deck _newDeck;
         private bool _doUpdate;
-        private bool _checkForCorrectDeck;
         private bool _showingIncorrectDeckMessage;
         private bool _showIncorrectDeckMessage;
         
@@ -165,6 +164,7 @@ namespace Hearthstone_Deck_Tracker
 
             //hearthstone, loads db etc
             _hearthstone = new Hearthstone();
+            _hearthstone.Reset();
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
@@ -291,7 +291,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (_playerWindow.IsVisible)
                     _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                               _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
+                                               30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
 
                 if (_opponentWindow.IsVisible)
                     _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
@@ -399,55 +399,47 @@ namespace Hearthstone_Deck_Tracker
             //avoid new game being started when jaraxxus is played
             if (!_hearthstone.IsInMenu) return;
 
-            if (!Hearthstone.IsUsingPremade)
-                _hearthstone.PlayerDeck.Clear();
-            else
-            {
-                var deck = DeckPickerList.SelectedDeck;
-                if (deck != null)
-                    _hearthstone.SetPremadeDeck(deck.Cards);
-            }
+
+            var selectedDeck = DeckPickerList.SelectedDeck;
+            if (selectedDeck != null)
+                _hearthstone.SetPremadeDeck(selectedDeck.Cards);
+
             _hearthstone.IsInMenu = false;
             _hearthstone.Reset();
 
             //select deck based on hero
             if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
             {
-                if (!Hearthstone.IsUsingPremade) return;
-
-                var selectedDeck = DeckPickerList.SelectedDeck;
-
+                if (!_hearthstone.IsUsingPremade) return;
+                
                 if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
                 {
 
                     var classDecks = _deckList.DecksList.Where(d => d.Class == _hearthstone.PlayingAs).ToList();
                     if (classDecks.Count == 0)
                     {
+                        Debug.WriteLine("Found no deck to switch to", "HandleGameStart");
                         return;
                     }
                     if (classDecks.Count == 1)
                     {
                         DeckPickerList.SelectDeck(classDecks[0]);
+                        Debug.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
                     }
                     else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
                     {
                         var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _hearthstone.PlayingAs).Name;
+                        Debug.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
 
                         var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
 
                         if (deck != null)
                         {
-                            
                             DeckPickerList.SelectDeck(deck);
                             UpdateDeckList(deck);
                             UseDeck(deck);
                         }
                     }
-                    _checkForCorrectDeck = false;
-                }
-                else if (selectedDeck.Class == _hearthstone.PlayingAs)
-                {
-                    _checkForCorrectDeck = true;
                 }
             }
         }
@@ -455,22 +447,15 @@ namespace Hearthstone_Deck_Tracker
         private void HandleGameEnd()
         {
             //_turnTimer.Stop();
-                    if (!_config.KeepDecksVisible)
-                    {
-                        if (Hearthstone.IsUsingPremade)
-                        {
-                            var deck = DeckPickerList.SelectedDeck;
-                            if (deck != null)
-                                _hearthstone.SetPremadeDeck(deck.Cards);
-                        }
-                        else
-                        {
-                            _hearthstone.PlayerDeck.Clear();
-                        }
+            if (!_config.KeepDecksVisible)
+            {
+                var deck = DeckPickerList.SelectedDeck;
+                if (deck != null)
+                    _hearthstone.SetPremadeDeck(deck.Cards);
 
-                        _hearthstone.Reset();
-                    }
-                    _hearthstone.IsInMenu = true;
+                _hearthstone.Reset();
+            }
+            _hearthstone.IsInMenu = true;
         }
 
         private void HandleOpponentGet(string cardId)
@@ -492,11 +477,10 @@ namespace Hearthstone_Deck_Tracker
         {
            var correctDeck = _hearthstone.PlayerDraw(cardId);
 
-            //can prob. simplify this lol
-            if (_checkForCorrectDeck && !correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
+            if (!correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
-                Debug.WriteLine("Found incorrect deck");
+                Debug.WriteLine("Found incorrect deck", "HandlePlayerDraw");
             }
         }
 
@@ -518,7 +502,14 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerDeckDiscard(string cardId)
         {
-            _hearthstone.PlayerDeckDiscard(cardId);
+            var correctDeck = _hearthstone.PlayerDeckDiscard(cardId);
+            
+            //don't think this will ever detect an incorrect deck but who knows...
+            if (!correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            {
+                _showIncorrectDeckMessage = true;
+                Debug.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
+            }
         }
 
         private void HandleOpponentSecretTrigger(string cardId)
@@ -639,7 +630,11 @@ namespace Hearthstone_Deck_Tracker
 
                 DeckSelectionDialog dsDialog = new DeckSelectionDialog(decks);
 
+                //todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
+                //when opened for seconds time. why?
                 dsDialog.ShowDialog();
+                
+                    
 
                 var selectedDeck = dsDialog.SelectedDeck;
 
@@ -652,9 +647,9 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    //todo: gui item for this
                     Debug.WriteLine("No deck selected. disbaled deck detection.");
                     _config.IgnoreWrongDeck = true;
+                    SaveConfig(false);
                 }
             }
 
@@ -766,12 +761,13 @@ namespace Hearthstone_Deck_Tracker
 
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
-            //ListboxDecks.SelectedIndex = -1;
+            Debug.WriteLine("set player item source as drawn");
+            _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             DeckPickerList.SelectedDeck = null;
             DeckPickerList.SelectedIndex = -1;
-            UpdateDeckList(new Deck());
-            UseDeck(new Deck());
-            Hearthstone.IsUsingPremade = false;
+            UpdateDeckList(null);
+            UseDeck(null);
+            _hearthstone.IsUsingPremade = false;
         }
 
         private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -919,7 +915,12 @@ namespace Hearthstone_Deck_Tracker
 
         private void UpdateDeckList(Deck selected)
         {
-            if (selected == null) return;
+            if (selected == null)
+            {
+                _config.LastDeck = string.Empty;
+                _xmlManagerConfig.Save("config.xml", _config);
+                return;
+            }
 
             ListViewDeck.Items.Clear();
             foreach (var card in selected.Cards)
@@ -937,7 +938,12 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             if (deck != null)
             {
-                Hearthstone.IsUsingPremade = true;
+                if (_overlay.ListViewPlayer.ItemsSource != _hearthstone.PlayerDeck)
+                {
+                    _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
+                    Debug.WriteLine("Set player itemsource as playerdeck");
+                }
+                _hearthstone.IsUsingPremade = true;
                 UpdateDeckList(deck);
                 UseDeck(deck);
 
@@ -1470,7 +1476,7 @@ namespace Hearthstone_Deck_Tracker
             _opponentWindow.Activate();
 
             _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                       _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
+                                       30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
 
             _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
                                                  30 - _hearthstone.EnemyCards.Sum(c => c.Count) -

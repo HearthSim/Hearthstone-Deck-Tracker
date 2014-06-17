@@ -54,9 +54,10 @@ namespace Hearthstone_Deck_Tracker
         {
             get
             {
-                return Hearthstone.IsUsingPremade
-                    ?new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand) ? Colors.GreenYellow :  (_count != 0) ? Colors.White : Colors.Gray)
-                           : ColorEnemy;
+                return
+                    new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand)
+                                            ? Colors.GreenYellow
+                                            : (_count != 0) ? Colors.White : Colors.Gray);
             }
         }
 
