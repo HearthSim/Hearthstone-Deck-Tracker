@@ -1670,7 +1670,7 @@ Console.WriteLine("HandlePlayerMulligan");
         private void CheckboxAutoSelectDeck_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.AutoSelectDetectedDeck = true;
+            _config.AutoSelectDetectedDeck = false;
             SaveConfig(false);
         }
         
