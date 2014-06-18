@@ -6,7 +6,16 @@
     <Grid>
 
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
-            <local:HearthstoneTextBlock  Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Left="353" Canvas.Top="418" FontSize="24" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="0" Canvas.Top="418" Canvas.Left="418" FontSize="24" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378" Canvas.Left="353" FontSize="32" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338" Canvas.Left="418" FontSize="24" />
+            
+            <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" 
+                          Background="Beige" Foreground="Aqua" Opacity="75" 
+                          VerticalScrollBarVisibility="Visible" >
+                <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua"/>
+            </ScrollViewer>
+                
             <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" >
                 <local:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                     <ListView.Resources>

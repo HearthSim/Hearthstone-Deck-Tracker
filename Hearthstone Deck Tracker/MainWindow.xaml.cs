@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker
     /// </summary>
     public partial class MainWindow
     {
+        private const bool IS_DEBUG = false;
+
         private readonly Config _config;
         private readonly Decks _deckList;
         private readonly Hearthstone _hearthstone;
@@ -51,6 +53,7 @@ namespace Hearthstone_Deck_Tracker
         private bool _showingIncorrectDeckMessage;
         private bool _showIncorrectDeckMessage;
         private readonly Version _newVersion;
+        private TurnTimer _turnTimer;
         
         
         public MainWindow()
@@ -125,6 +128,7 @@ namespace Hearthstone_Deck_Tracker
                 Close();
                 return;
             }
+            _config.Debug = IS_DEBUG;
 
             //load saved decks
             if (!File.Exists("PlayerDecks.xml"))
@@ -231,9 +235,10 @@ namespace Hearthstone_Deck_Tracker
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
             _logReader.Analyzing += LogReaderOnAnalyzing;
+            _logReader.TurnStart += LogReaderOnTurnStart;
 
-            //_turnTimer = new TurnTimer(90);
-            //_turnTimer.TimerTick += TurnTimerOnTimerTick;
+            _turnTimer = new TurnTimer(90);
+            _turnTimer.TimerTick += TurnTimerOnTimerTick;
 
             TagControlFilter.HideStuffToCreateNewTag();
             TagControlSet.NewTag += TagControlSetOnNewTag;
@@ -268,11 +273,17 @@ namespace Hearthstone_Deck_Tracker
 
         #region LogReader Events
 
+        private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
+        {
+            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
+        }
+
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
         {
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows
-            //_turnTimer.Restart();
+            _turnTimer.SetCurrentPlayer(args.Turn);
+            _turnTimer.Restart();
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -441,7 +452,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
-            //_turnTimer.Stop();
+            _turnTimer.Stop();
+            _overlay.HideTimers();
             if (!_config.KeepDecksVisible)
             {
                 var deck = DeckPickerList.SelectedDeck;
@@ -482,6 +494,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerMulligan(string cardId)
         {
+Console.WriteLine("HandlePlayerMulligan");
+            _turnTimer.MulliganDone(Turn.Player);
             _hearthstone.Mulligan(cardId);
         }
 
@@ -519,6 +533,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentMulligan()
         {
+            _turnTimer.MulliganDone(Turn.Opponent);
             _hearthstone.EnemyMulligan();
         }
 
@@ -703,6 +718,12 @@ namespace Hearthstone_Deck_Tracker
 
             DeckPickerList.ShowAll = _config.ShowAllDecks;
             DeckPickerList.SetSelectedTags(_config.SelectedTags);
+
+            CheckboxHideTimers.IsChecked = _config.HideTimers;
+            SliderTimersHorizontal.Value = _config.TimersHorizontalPosition;
+            SliderTimersHorizontalSpacing.Value = _config.TimersHorizontalSpacing;
+            SliderTimersVertical.Value = _config.TimersVerticalPosition;
+            SliderTimersVerticalSpacing.Value = _config.TimersVerticalSpacing;
 
             TagControlFilter.LoadTags(_deckList.AllTags);
 
@@ -1717,6 +1738,49 @@ namespace Hearthstone_Deck_Tracker
             Process.Start(e.Uri.AbsoluteUri);
         }
 
+
+        private void CheckboxHideTimers_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideTimers = true;
+            SaveConfig(true);
+        }
+        
+        private void CheckboxHideTimers_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideTimers = false;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersHorizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersHorizontalPosition = SliderTimersHorizontal.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersHorizontalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersHorizontalSpacing = SliderTimersHorizontalSpacing.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersVertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersVerticalPosition = SliderTimersVertical.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersVerticalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersVerticalSpacing = SliderTimersVerticalSpacing.Value;
+            SaveConfig(true);
+        }
+        #endregion
 
         #endregion
     }
