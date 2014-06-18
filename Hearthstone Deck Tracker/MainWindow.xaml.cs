@@ -1781,7 +1781,6 @@ Console.WriteLine("HandlePlayerMulligan");
             SaveConfig(true);
         }
         #endregion
-
-        #endregion
+        
     }
 }
