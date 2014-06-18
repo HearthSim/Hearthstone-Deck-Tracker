@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker
     /// </summary>
     public partial class MainWindow
     {
+        private const bool IS_DEBUG = false;
+
         private readonly Config _config;
         private readonly Decks _deckList;
         private readonly Hearthstone _hearthstone;
@@ -50,13 +52,14 @@ namespace Hearthstone_Deck_Tracker
         private bool _doUpdate;
         private bool _showingIncorrectDeckMessage;
         private bool _showIncorrectDeckMessage;
+        private readonly Version _newVersion;
+        private TurnTimer _turnTimer;
         
 
         public MainWindow()
         {
             InitializeComponent();
-            
-            var version = Helper.CheckForUpdates();
+            var version = Helper.CheckForUpdates(out _newVersion);
             if (version != null)
             {
                 TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
@@ -125,6 +128,7 @@ namespace Hearthstone_Deck_Tracker
                 Close();
                 return;
             }
+            _config.Debug = IS_DEBUG;
 
             //load saved decks
             if (!File.Exists("PlayerDecks.xml"))
@@ -233,8 +237,8 @@ namespace Hearthstone_Deck_Tracker
             _logReader.Analyzing += LogReaderOnAnalyzing;
             _logReader.TurnStart += LogReaderOnTurnStart;
 
-            //_turnTimer = new TurnTimer(90);
-            //_turnTimer.TimerTick += TurnTimerOnTimerTick;
+            _turnTimer = new TurnTimer(90);
+            _turnTimer.TimerTick += TurnTimerOnTimerTick;
 
             TagControlFilter.HideStuffToCreateNewTag();
             TagControlSet.NewTag += TagControlSetOnNewTag;
@@ -265,16 +269,21 @@ namespace Hearthstone_Deck_Tracker
 
             _logReader.Start();
 
-            
         }
 
         #region LogReader Events
+
+        private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
+        {
+            _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
+        }
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
         {
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows
-            //_turnTimer.Restart();
+            _turnTimer.SetCurrentPlayer(args.Turn);
+            _turnTimer.Restart();
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -295,14 +304,11 @@ namespace Hearthstone_Deck_Tracker
 
                 if (_opponentWindow.IsVisible)
                     _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                         30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                         _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
+                                                         _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
 
 
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
                 {
-
-                    Debug.WriteLine("Analyzer done. Showing deck selection dialog.");
                     _showingIncorrectDeckMessage = true;
 
                     ShowIncorrectDeckMessage();
@@ -446,7 +452,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
-            //_turnTimer.Stop();
+            _turnTimer.Stop();
+            _overlay.HideTimers();
             if (!_config.KeepDecksVisible)
             {
                 var deck = DeckPickerList.SelectedDeck;
@@ -477,7 +484,7 @@ namespace Hearthstone_Deck_Tracker
         {
            var correctDeck = _hearthstone.PlayerDraw(cardId);
 
-            if (!correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Debug.WriteLine("Found incorrect deck", "HandlePlayerDraw");
@@ -487,6 +494,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerMulligan(string cardId)
         {
+Console.WriteLine("HandlePlayerMulligan");
+            _turnTimer.MulliganDone(Turn.Player);
             _hearthstone.Mulligan(cardId);
         }
 
@@ -505,7 +514,7 @@ namespace Hearthstone_Deck_Tracker
             var correctDeck = _hearthstone.PlayerDeckDiscard(cardId);
             
             //don't think this will ever detect an incorrect deck but who knows...
-            if (!correctDeck && !_config.IgnoreWrongDeck && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Debug.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -524,6 +533,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentMulligan()
         {
+            _turnTimer.MulliganDone(Turn.Opponent);
             _hearthstone.EnemyMulligan();
         }
 
@@ -581,6 +591,7 @@ namespace Hearthstone_Deck_Tracker
                 _playerWindow.Shutdown();
                 _opponentWindow.Shutdown();
                 _xmlManagerConfig.Save("config.xml", _config);
+                _xmlManager.Save("PlayerDecks.xml", _deckList);
             }
             catch (Exception)
             {
@@ -608,8 +619,14 @@ namespace Hearthstone_Deck_Tracker
             _xmlManagerConfig.Save("config.xml", _config);
         }
 
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_newVersion != null)
+            {
+                ShowNewUpdateMessage();
+            }
+        }
         
-
         #endregion
 
         #region GENERAL METHODS
@@ -624,7 +641,7 @@ namespace Hearthstone_Deck_Tracker
             if (decks.Contains(DeckPickerList.SelectedDeck))
                 decks.Remove(DeckPickerList.SelectedDeck);
 
-            Debug.WriteLine(decks.Count + " possible decks found.");
+            Debug.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
             if (decks.Count > 0)
             {
 
@@ -647,13 +664,12 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    Debug.WriteLine("No deck selected. disbaled deck detection.");
-                    _config.IgnoreWrongDeck = true;
+                    Debug.WriteLine("No deck selected. disabled deck detection.");
+                    CheckboxDeckDetection.IsChecked = false;
                     SaveConfig(false);
                 }
             }
 
-            Debug.WriteLine("Done with incorrect deck stuff.");
             _showingIncorrectDeckMessage = false;
             _showIncorrectDeckMessage = false;
         }
@@ -682,6 +698,11 @@ namespace Hearthstone_Deck_Tracker
             CheckboxWindowsTopmost.IsChecked = _config.WindowsTopmost;
             CheckboxWindowsOpenAutomatically.IsChecked = _config.WindowsOnStartup;
             CheckboxSameScaling.IsChecked = _config.UseSameScaling;
+            CheckboxDeckDetection.IsChecked = _config.AutoDeckDetection;
+            CheckboxWinTopmostHsForeground.IsChecked = _config.WindowsTopmostIfHsForeground;
+            CheckboxWinTopmostHsForeground.IsEnabled = _config.WindowsTopmost;
+            CheckboxAutoSelectDeck.IsEnabled = _config.AutoDeckDetection;
+            CheckboxAutoSelectDeck.IsChecked = _config.AutoSelectDetectedDeck;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -697,6 +718,12 @@ namespace Hearthstone_Deck_Tracker
 
             DeckPickerList.ShowAll = _config.ShowAllDecks;
             DeckPickerList.SetSelectedTags(_config.SelectedTags);
+
+            CheckboxHideTimers.IsChecked = _config.HideTimers;
+            SliderTimersHorizontal.Value = _config.TimersHorizontalPosition;
+            SliderTimersHorizontalSpacing.Value = _config.TimersHorizontalSpacing;
+            SliderTimersVertical.Value = _config.TimersVerticalPosition;
+            SliderTimersVerticalSpacing.Value = _config.TimersVerticalSpacing;
 
             TagControlFilter.LoadTags(_deckList.AllTags);
 
@@ -728,7 +755,7 @@ namespace Hearthstone_Deck_Tracker
 
                     if (!User32.IsForegroundWindow("Hearthstone") && !hsForegroundChanged)
                     {
-                        if(_config.WindowsTopmostIfHsForeground)
+                        if(_config.WindowsTopmostIfHsForeground && _config.WindowsTopmost)
                         {
                             _playerWindow.Topmost = false;
                             _opponentWindow.Topmost = false;
@@ -739,7 +766,7 @@ namespace Hearthstone_Deck_Tracker
                     else if (hsForegroundChanged && User32.IsForegroundWindow("Hearthstone"))
                     {
                         _overlay.Update(true);
-                        if (_config.WindowsTopmostIfHsForeground)
+                        if (_config.WindowsTopmostIfHsForeground && _config.WindowsTopmost)
                         {
                             _playerWindow.Topmost = true;
                             _opponentWindow.Topmost = true;
@@ -755,6 +782,25 @@ namespace Hearthstone_Deck_Tracker
             }
         }
         
+        private async void ShowNewUpdateMessage()
+        {
+
+            var releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
+            var settings = new MetroDialogSettings();
+            settings.AffirmativeButtonText = "Download";
+            settings.NegativeButtonText = "Not now";
+
+            var result =
+                await this.ShowMessageAsync("New Update available!", "Download version " + string.Format("{0}.{1}.{2}", _newVersion.Major, _newVersion.Minor,
+                                                     _newVersion.Build) + " at\n" + releaseDownloadUrl, MessageDialogStyle.AffirmativeAndNegative,
+                                            settings);
+            if (result == MessageDialogResult.Affirmative)
+            {
+                Process.Start(releaseDownloadUrl);
+            }
+
+        }
+
         #endregion
 
         #region MY DECKS - GUI
@@ -770,7 +816,7 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.IsUsingPremade = false;
         }
 
-        private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
+        private async void BtnEditDeck_Click(object sender, RoutedEventArgs e)
         {
             //if (ListboxDecks.SelectedIndex == -1) return;
             //var selectedDeck = ListboxDecks.SelectedItem as Deck;
@@ -779,11 +825,11 @@ namespace Hearthstone_Deck_Tracker
             //move to new deck section with stuff preloaded
             if (_newContainsDeck)
             {
-                //still contains deck, discard?
-                var result = MessageBox.Show("New Deck Section still contains an unfinished deck. Discard?",
-                                             "Found unfinished deck.", MessageBoxButton.YesNo,
-                                             MessageBoxImage.Exclamation);
-                if (result == MessageBoxResult.No)
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Yes";
+                settings.NegativeButtonText = "No";
+                var result = await this.ShowMessageAsync("Found unfinished deck", "New Deck Section still contains an unfinished deck. Discard?", MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Negative)
                 {
                     TabControlTracker.SelectedIndex = 1;
                     return;
@@ -808,28 +854,28 @@ namespace Hearthstone_Deck_Tracker
             TabControlTracker.SelectedIndex = 1;
         }
 
-        private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
+        private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
             //var deck = ListboxDecks.SelectedItem as Deck;
             var deck = DeckPickerList.SelectedDeck;
             if (deck != null)
             {
-                if (
-                    MessageBox.Show("Are you Sure?", "Delete " + deck.Name, MessageBoxButton.YesNo,
-                                    MessageBoxImage.Asterisk) ==
-                    MessageBoxResult.Yes)
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Yes";
+                settings.NegativeButtonText = "No";
+                var result = await this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?", MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Affirmative)
                 {
                     try
                     {
                         _deckList.DecksList.Remove(deck);
                         _xmlManager.Save("PlayerDecks.xml", _deckList);
-                        //ListboxDecks.SelectedIndex = -1;
                         DeckPickerList.RemoveDeck(deck);
                         ListViewDeck.Items.Clear();
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Error deleting deck");
+                        Debug.WriteLine("Error deleting deck");
                     }
                 }
             }
@@ -896,6 +942,11 @@ namespace Hearthstone_Deck_Tracker
             _newDeck.Tags = new List<string>(tags);
             BtnSaveDeck.Content = "Save*";
         }
+
+        private void BtnNotes_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
+        }
         #endregion
 
         #region MY DECKS - METHODS
@@ -915,14 +966,13 @@ namespace Hearthstone_Deck_Tracker
 
         private void UpdateDeckList(Deck selected)
         {
+            ListViewDeck.Items.Clear();
             if (selected == null)
             {
                 _config.LastDeck = string.Empty;
                 _xmlManagerConfig.Save("config.xml", _config);
                 return;
             }
-
-            ListViewDeck.Items.Clear();
             foreach (var card in selected.Cards)
             {
                 ListViewDeck.Items.Add(card);
@@ -938,6 +988,11 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             if (deck != null)
             {
+                //set up notes
+                DeckNotesEditor.SetDeck(deck);
+                FlyoutNotes.Header = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
+
+                //change player deck itemsource
                 if (_overlay.ListViewPlayer.ItemsSource != _hearthstone.PlayerDeck)
                 {
                     _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
@@ -947,6 +1002,7 @@ namespace Hearthstone_Deck_Tracker
                 UpdateDeckList(deck);
                 UseDeck(deck);
 
+                //set and save last used deck for class
                 if (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
                 {
                     var lastSelected = _deckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
@@ -955,7 +1011,6 @@ namespace Hearthstone_Deck_Tracker
                         _deckList.LastDeckClass.Remove(lastSelected);
                     }
                 }
-
                 _deckList.LastDeckClass.Add(new DeckInfo(){Class = deck.Class, Name = deck.Name});
                 _xmlManager.Save("PlayerDecks.xml", _deckList);
             }
@@ -1434,6 +1489,7 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = true;
             _playerWindow.Topmost = true;
             _opponentWindow.Topmost = true;
+            CheckboxWinTopmostHsForeground.IsEnabled = true;
             SaveConfig(true);
         }
 
@@ -1443,6 +1499,8 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = false;
             _playerWindow.Topmost = false;
             _opponentWindow.Topmost = false;
+            CheckboxWinTopmostHsForeground.IsEnabled = false;
+            CheckboxWinTopmostHsForeground.IsChecked = false;
             SaveConfig(true);
         }
 
@@ -1479,8 +1537,7 @@ namespace Hearthstone_Deck_Tracker
                                        30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
 
             _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                 30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                 _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
+                                                 _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
         }
 
         private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
@@ -1571,6 +1628,52 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(false);
         }
         
+        private void CheckboxWinTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsTopmostIfHsForeground = true;
+            _playerWindow.Topmost = true;
+            _opponentWindow.Topmost = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxWinTopmostHsForeground_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsTopmostIfHsForeground = false;
+            SaveConfig(false);
+        }
+
+        private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.AutoDeckDetection = true;
+            CheckboxAutoSelectDeck.IsEnabled = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.AutoDeckDetection = false;
+            CheckboxAutoSelectDeck.IsChecked = false;
+            CheckboxAutoSelectDeck.IsEnabled = false;
+            SaveConfig(false);
+        }
+
+        private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.AutoSelectDetectedDeck = true;
+            SaveConfig(false);
+        }
+        private void CheckboxAutoSelectDeck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.AutoSelectDetectedDeck = true;
+            SaveConfig(false);
+        }
+        
         private void RangeSliderPlayer_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             SaveConfig(true);
@@ -1634,8 +1737,50 @@ namespace Hearthstone_Deck_Tracker
         {
             Process.Start(e.Uri.AbsoluteUri);
         }
-        #endregion
 
+
+        private void CheckboxHideTimers_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideTimers = true;
+            SaveConfig(true);
+        }
+        
+        private void CheckboxHideTimers_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideTimers = false;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersHorizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersHorizontalPosition = SliderTimersHorizontal.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersHorizontalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersHorizontalSpacing = SliderTimersHorizontalSpacing.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersVertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersVerticalPosition = SliderTimersVertical.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderTimersVerticalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.TimersVerticalSpacing = SliderTimersVerticalSpacing.Value;
+            SaveConfig(true);
+        }
+        #endregion
 
     }
 }

@@ -6,10 +6,12 @@ namespace Hearthstone_Deck_Tracker
 {
     public class Helper
     {
-        private static XmlManager<SerializableVersion> _xmlManager; 
+        private static XmlManager<SerializableVersion> _xmlManager;
 
-        public static Version CheckForUpdates()
+        public static Version CheckForUpdates(out Version newVersionOut)
         {
+            newVersionOut = null;
+
             SerializableVersion version;
             _xmlManager = new XmlManager<SerializableVersion>() { Type = typeof(SerializableVersion) };
 
@@ -21,6 +23,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 MessageBox.Show(
                     e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please verwrite Version.xml with the default file.", "Error loading Version.xml");
+                
                 return null;
             }
 
@@ -35,13 +38,7 @@ namespace Hearthstone_Deck_Tracker
 
             if (newVersion > currentVersion)
             {
-                var releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-                if (
-                    MessageBox.Show("New version available at: \n" + releaseDownloadUrl, "New version available!",
-                                    MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                {
-                    System.Diagnostics.Process.Start(releaseDownloadUrl);
-                }
+                newVersionOut = newVersion;
             }
             return currentVersion;
         }

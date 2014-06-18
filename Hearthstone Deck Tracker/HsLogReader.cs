@@ -239,10 +239,12 @@ namespace Hearthstone_Deck_Tracker
                 {
                     if (!_cardMovementRegex.IsMatch(logLine)) continue;
 
-                    var id = _cardMovementRegex.Match(logLine).Groups["Id"].Value.Trim();
-                    var player = int.Parse(_cardMovementRegex.Match(logLine).Groups["player"].Value);
-                    var from = _cardMovementRegex.Match(logLine).Groups["from"].Value.Trim();
-                    var to = _cardMovementRegex.Match(logLine).Groups["to"].Value.Trim();
+                    Match _match = _cardMovementRegex.Match(logLine);
+
+                    var id = _match.Groups["Id"].Value.Trim();
+                    var player = int.Parse(_match.Groups["player"].Value);
+                    var from = _match.Groups["from"].Value.Trim();
+                    var to = _match.Groups["to"].Value.Trim();
 
                     //coin
                     if (id == "GAME_005")
@@ -351,7 +353,7 @@ namespace Hearthstone_Deck_Tracker
                                 CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
                                 if (_powerCount >= PowerCountTreshold)
                                 {
-                                    TurnStart(this, new TurnStartArgs(Turn.Player));
+                                    TurnStart(this, new TurnStartArgs(Turn.Opponent));
                                 }
                             }
                             else

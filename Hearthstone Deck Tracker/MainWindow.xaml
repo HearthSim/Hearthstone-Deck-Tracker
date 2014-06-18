@@ -3,196 +3,261 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="672" Width="514" MinWidth="514" MaxWidth="514" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged">
+        Title="Hearthstone Deck Tracker" Height="724.509" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
     <Grid>
-        <TabControl Name="TabControlTracker" Height="auto" Grid.ColumnSpan="2">
+        <TabControl Name="TabControlTracker" Height="auto" Width="auto">
             <TabItem Header="My Decks">
                 <Grid Background="#FFE5E5E5">
-                    <controls:Flyout x:Name="FlyoutFilterTags" Header="Filter decks by tag" Position="Right" Width="256" Height="auto" Panel.ZIndex="100">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*">
+                        </ColumnDefinition>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:Flyout x:Name="FlyoutFilterTags" Header="Filter decks by tag" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:TagControl Width="auto" Height="auto" x:Name="TagControlFilter"/>
                     </controls:Flyout>
-                    <local:DeckListView x:Name="ListViewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,40,0,10" HorizontalAlignment="Left" Width="240" Height="auto" Panel.ZIndex="4">
-                        <local:DeckListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Style>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="Background" Value="{Binding Background}" />
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Margin" Value="0,0,0,0"/>
-                                <Setter Property="IsEnabled" Value="False"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </local:DeckListView.Resources>
-                    </local:DeckListView>
-                    <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="320,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="BtnDeleteDeck_Click" Panel.ZIndex="3"/>
-                    <Button x:Name="ButtonNoDeck" ToolTip="This tracks which cards you draw rather than play. Might be good for arena, though only displays up to 2." Content="Use no Deck" Margin="10,10,0,0" Width="117" Click="ButtonNoDeck_Click" Height="21" HorizontalAlignment="Left" Panel.ZIndex="1" VerticalAlignment="Top"/>
-                    <Button x:Name="BtnEditDeck" Content="Edit" HorizontalAlignment="Left" Margin="255,10,0,0" VerticalAlignment="Top" Width="60" Height="23" Click="BtnEditDeck_Click" Panel.ZIndex="2"/>
-                    <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="10,40,0,10" Height="auto" Width="240"/>
-                    <Button Name="BtnFilterTag" Content="Filter by Tag" HorizontalAlignment="Left" Margin="132,10,0,0" VerticalAlignment="Top" Width="118" Click="BtnFilterTag_Click"/>
-                    <Button x:Name="BtnExport" Content="Export to HS" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top" Width="105" Height="23" Click="BtnExport_Click" Panel.ZIndex="3"/>
+                    <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor"></local:DeckNotes>
+                    </controls:Flyout>
+
+                    <Grid Grid.Column="1" Margin="-1,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
+                            <Button x:Name="BtnNotes" Content="Notes" Margin="0,0,3,0" VerticalAlignment="Top" Width="117" Height="26" Click="BtnNotes_Click" />
+                            <Button x:Name="BtnEditDeck" Content="Edit" Margin="3,0,0,0" Width="117" Height="26" Click="BtnEditDeck_Click" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1">
+                            <Button x:Name="BtnExport" Content="Export to HS" Margin="0,0,3,0" Width="117" Height="26" Click="BtnExport_Click" />
+                            <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="117" Height="26" Click="BtnDeleteDeck_Click"/>
+                        </StackPanel>
+                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
+                            <local:DeckListView.Resources>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Background" Value="{Binding Background}" />
+                                    <Setter Property="Height" Value="35" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0,0,0,0"/>
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </local:DeckListView.Resources>
+                        </local:DeckListView>
+                    </Grid>
+
+                    <Grid Grid.Column="0" Margin="0,0,-1,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
+                            <Button x:Name="ButtonNoDeck" Content="Use no Deck" Width="117" Margin="0,0,3,0" Height="26" Click="ButtonNoDeck_Click" />
+                            <Button x:Name="BtnFilterTag" Content="Filter by Tag"  Width="117" Margin="3,0,0,0" Height="26" Click="BtnFilterTag_Click" />
+                        </StackPanel>
+                        <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Center" Margin="0,6,0,6" Height="auto" Width="240" Grid.Row="1"/>
+                    </Grid>
 
 
                 </Grid>
             </TabItem>
             <TabItem Name="TabItemNewDeck" Header="New Deck">
                 <Grid Background="#FFE5E5E5">
-                    <controls:Flyout x:Name="FlyoutSetTags" Header="Set tags" Position="Right" Width="256" Height="auto" Panel.ZIndex="100">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <controls:Flyout x:Name="FlyoutSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:TagControl Width="auto" Height="auto" x:Name="TagControlSet" />
                     </controls:Flyout>
-                    <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="255,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="136" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown" Panel.ZIndex="6"/>
-
-                    <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="255,72,0,10" Width="240" HorizontalAlignment="Left" KeyDown="ListViewDB_KeyDown" MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp">
-                        <ListView.Resources>
-                            <Style TargetType="{x:Type GridViewColumnHeader}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Style>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="Background" Value="{Binding Background}" />
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Margin" Value="0,0,0,0"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver"
+                    <Grid Grid.Column="0" Margin="0,0,-1,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0" Width="240">
+                            <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,3,0" VerticalAlignment="Top" Width="135" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
+                                <system:String>Select a Class</system:String>
+                                <system:String>Druid</system:String>
+                                <system:String>Hunter</system:String>
+                                <system:String>Mage</system:String>
+                                <system:String>Paladin</system:String>
+                                <system:String>Priest</system:String>
+                                <system:String>Rogue</system:String>
+                                <system:String>Shaman</system:String>
+                                <system:String>Warlock</system:String>
+                                <system:String>Warrior</system:String>
+                            </ComboBox>
+                            <Button Name="BtnSetTag" Content="Edit Tags" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="99" Click="BtnSetTag_Click" Height="26"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1" Width="240">
+                            <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="135" />
+                            <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top" Width="99" Click="BtnSaveDeck_Click" Height="26"/>
+                        </StackPanel>
+                        <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Grid.Row="2" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Background" Value="{Binding Background}" />
+                                    <Setter Property="Height" Value="35" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0,0,0,0"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
                 						Value="True">
-                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                 							Value="{Binding Background}" />
-                                    </Trigger>
-                                    <Trigger Property="IsSelected"
+                                        </Trigger>
+                                        <Trigger Property="IsSelected"
                 						Value="True">
-                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                 							Value="{Binding Background}" />
-                                        <Setter Property="BorderBrush"
+                                            <Setter Property="BorderBrush"
                 							Value="Blue" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-
-                        </ListView.Resources>
-                    </local:DeckListView>
-                    <ComboBox x:Name="ComboBoxFilterMana" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="445,41,0,0" VerticalAlignment="Top" Width="50" SelectedIndex="0" SelectionChanged="ComboBoxFilterMana_SelectionChanged" Panel.ZIndex="4">
-                        <system:String>All</system:String>
-                        <system:String>0</system:String>
-                        <system:String>1</system:String>
-                        <system:String>2</system:String>
-                        <system:String>3</system:String>
-                        <system:String>4</system:String>
-                        <system:String>5</system:String>
-                        <system:String>6</system:String>
-                        <system:String>7</system:String>
-                        <system:String>8</system:String>
-                        <system:String>9+</system:String>
-                    </ComboBox>
-                    <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top" Width="137" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
-                        <system:String>Select a Class</system:String>
-                        <system:String>Druid</system:String>
-                        <system:String>Hunter</system:String>
-                        <system:String>Mage</system:String>
-                        <system:String>Paladin</system:String>
-                        <system:String>Priest</system:String>
-                        <system:String>Rogue</system:String>
-                        <system:String>Shaman</system:String>
-                        <system:String>Warlock</system:String>
-                        <system:String>Warrior</system:String>
-                    </ComboBox>
-                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="137" Panel.ZIndex="2" />
-                    <Button x:Name="BtnSaveDeck" Content="Save" HorizontalAlignment="Left" Margin="152,41,0,0" VerticalAlignment="Top" Width="98" Click="BtnSaveDeck_Click" Height="23" Panel.ZIndex="3"/>
-                    <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="10,72,0,10" HorizontalAlignment="Left" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
-                        <ListView.Resources>
-                            <Style TargetType="{x:Type GridViewColumnHeader}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Style>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="Background" Value="{Binding Background}" />
-                                <Setter Property="Height" Value="35" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                <Setter Property="Margin" Value="0,0,0,0"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver"
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Resources>
+                        </local:DeckListView>
+                    </Grid>
+                    <Grid Grid.Column="1" Margin="-1,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0"  Width="240">
+                            <Button x:Name="BtnImport" Content="Import"  Margin="0,0,3,0" Width="98" Height="26" Click="BtnImport_OnClick" />
+                            <ComboBox Name="ComboboxNeutral" Margin="3,0,0,0" Width="136" SelectedIndex="0" SelectionChanged="ComboboxNeutral_SelectionChanged">
+                                <system:String>Class + Neutral</system:String>
+                                <system:String>Class Only</system:String>
+                                <system:String>Neutral Only</system:String>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1"  Width="240">
+                            <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="134" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown"/>
+                            <Label Content="Mana:" Margin="3,0,3,0"/>
+                            <ComboBox x:Name="ComboBoxFilterMana" Width="55" SelectedIndex="0" SelectionChanged="ComboBoxFilterMana_SelectionChanged">
+                                <system:String>All</system:String>
+                                <system:String>0</system:String>
+                                <system:String>1</system:String>
+                                <system:String>2</system:String>
+                                <system:String>3</system:String>
+                                <system:String>4</system:String>
+                                <system:String>5</system:String>
+                                <system:String>6</system:String>
+                                <system:String>7</system:String>
+                                <system:String>8</system:String>
+                                <system:String>9+</system:String>
+                            </ComboBox>
+                        </StackPanel>
+                        <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" Width="240" KeyDown="ListViewDB_KeyDown" MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="2">
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Background" Value="{Binding Background}" />
+                                    <Setter Property="Height" Value="35" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Margin" Value="0,0,0,0"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver"
                 						Value="True">
-                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                 							Value="{Binding Background}" />
-                                    </Trigger>
-                                    <Trigger Property="IsSelected"
+                                        </Trigger>
+                                        <Trigger Property="IsSelected"
                 						Value="True">
-                                        <Setter Property="Background"
+                                            <Setter Property="Background"
                 							Value="{Binding Background}" />
-                                        <Setter Property="BorderBrush"
+                                            <Setter Property="BorderBrush"
                 							Value="Blue" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.Resources>
-                    </local:DeckListView>
-                    <ComboBox Name="ComboboxNeutral" HorizontalAlignment="Left" Margin="359,10,0,0" VerticalAlignment="Top" Width="137" SelectedIndex="0" SelectionChanged="ComboboxNeutral_SelectionChanged" Panel.ZIndex="5">
-                        <system:String>Class + Neutral</system:String>
-                        <system:String>Class Only</system:String>
-                        <system:String>Neutral Only</system:String>
-                    </ComboBox>
-                    <Label Content="Mana:" HorizontalAlignment="Left" Margin="396,41,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="BtnImport" Content="Import" HorizontalAlignment="Left" Margin="255,11,0,0" VerticalAlignment="Top" Width="98" Height="23" Click="BtnImport_OnClick" Panel.ZIndex="1"/>
-                    <Button Name="BtnSetTag" Content="Edit Tags" HorizontalAlignment="Left" Margin="152,11,0,0" VerticalAlignment="Top" Width="98" Click="BtnSetTag_Click" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </ListView.Resources>
+                        </local:DeckListView>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Options">
                 <Grid>
-                    <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide Overlay in Menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide Overlay if HS in Background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide Cards" HorizontalAlignment="Left" Margin="39,361,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="39,315,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide Card Counter" HorizontalAlignment="Left" Margin="284,315,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-                    <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="284,338,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
-                    <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight Cards in Hand" HorizontalAlignment="Left" Margin="284,361,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide overlay in menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide overlay if HS in background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide cards" HorizontalAlignment="Left" Margin="39,389,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="39,343,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="284,343,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+                    <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="284,366,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+                    <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="284,389,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                     <Button x:Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="255,41,0,0" VerticalAlignment="Top" Width="233" Click="BtnShowWindows_Click" Height="41"/>
-                    <CheckBox x:Name="CheckboxHideOverlay" Content="Hide Overlay (completely)" HorizontalAlignment="Left" Margin="20,41,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
-                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional Windows Topmost" HorizontalAlignment="Left" Margin="265,87,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
+                    <CheckBox x:Name="CheckboxHideOverlay" Content="Hide overlay (completely)" HorizontalAlignment="Left" Margin="20,41,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
+                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional windows topmost" HorizontalAlignment="Left" Margin="265,87,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                     <Label Content="General:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Player:" HorizontalAlignment="Left" Margin="255,230,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.761,0.192"/>
-                    <controls:RangeSlider Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="263,261,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" CentralThumbDragCompleted="RangeSliderPlayer_CentralThumbDragCompleted" LowerThumbDragCompleted="RangeSliderPlayer_LowerThumbDragCompleted" UpperThumbDragCompleted="RangeSliderPlayer_UpperThumbDragCompleted"/>
-                    <controls:RangeSlider Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="18,261,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" UpperThumbDragCompleted="RangeSliderOpponent_UpperThumbDragCompleted" LowerThumbDragCompleted="RangeSliderOpponent_LowerThumbDragCompleted" CentralThumbDragCompleted="RangeSliderOpponent_CentralThumbDragCompleted"/>
-                    <Slider Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="39,261,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
-                    <Slider Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="284,261,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
+                    <Label Content="Player:" HorizontalAlignment="Left" Margin="255,258,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.761,0.192"/>
+                    <controls:RangeSlider Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="263,289,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" CentralThumbDragCompleted="RangeSliderPlayer_CentralThumbDragCompleted" LowerThumbDragCompleted="RangeSliderPlayer_LowerThumbDragCompleted" UpperThumbDragCompleted="RangeSliderPlayer_UpperThumbDragCompleted"/>
+                    <controls:RangeSlider Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="18,289,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" UpperThumbDragCompleted="RangeSliderOpponent_UpperThumbDragCompleted" LowerThumbDragCompleted="RangeSliderOpponent_LowerThumbDragCompleted" CentralThumbDragCompleted="RangeSliderOpponent_CentralThumbDragCompleted"/>
+                    <Slider Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="39,289,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
+                    <Slider Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="284,289,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
                     <Slider Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="114,110,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="Slider_ValueChanged"/>
                     <Label Content="Overlay opacity:" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top"/>
-                    <CheckBox Name="CheckboxKeepDecksVisible" Content="Don't reset Decks after game" HorizontalAlignment="Left" Margin="20,159,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
+                    <CheckBox Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="20,159,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
                     <CheckBox Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="20,136,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked"/>
-                    <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Additional Windows On Startup" HorizontalAlignment="Left" Margin="265,110,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
-                    <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="359,289,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged"/>
-                    <Label Content="Scaling:" HorizontalAlignment="Left" Margin="284,284,0,0" VerticalAlignment="Top"/>
-                    <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="114,289,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
-                    <Label Content="Scaling:" HorizontalAlignment="Left" Margin="39,284,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Additional windows on startup" HorizontalAlignment="Left" Margin="265,136,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
+                    <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="359,317,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged"/>
+                    <Label Content="Scaling:" HorizontalAlignment="Left" Margin="284,312,0,0" VerticalAlignment="Top"/>
+                    <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="114,317,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
+                    <Label Content="Scaling:" HorizontalAlignment="Left" Margin="39,312,0,0" VerticalAlignment="Top"/>
                     <CheckBox Name="CheckboxSameScaling" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="20,182,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide Draw Chances" HorizontalAlignment="Left" Margin="39,338,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
+                    <CheckBox x:Name="CheckboxHideTimers" Content="Hide Timers" HorizontalAlignment="Left" Margin="44,537,0,0" VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked" Unchecked="CheckboxHideTimers_Unchecked"/>
+                    <Label x:Name="LblTimersPosition" Content="Timers position:" HorizontalAlignment="Left" Margin="15,492,0,0" VerticalAlignment="Top"/>
+                    <Slider x:Name="SliderTimersHorizontal" HorizontalAlignment="Left" Margin="39,514,0,0" VerticalAlignment="Top" Width="200" ToolTip="Horizontal position of the timers" Value="80" ValueChanged="SliderTimersHorizontal_ValueChanged" LargeChange="0.1" Maximum="90"/>
+                    <Label x:Name="LblTimersSpacing" Content="Timers spacing:" HorizontalAlignment="Left" Margin="252,492,0,0" VerticalAlignment="Top"/>
+                    <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Left" Margin="290,514,0,0" VerticalAlignment="Top" Width="194" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200"/>
+                    <Slider x:Name="SliderTimersVertical" HorizontalAlignment="Left" Margin="15,518,0,0" VerticalAlignment="Top" Width="24" ToolTip="Vertical position of the timers" Orientation="Vertical" Height="108" ValueChanged="SliderTimersVertical_ValueChanged" LargeChange="0.1" Value="50" IsDirectionReversed="True"/>
+                    <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Left" Margin="263,523,0,0" VerticalAlignment="Top" Width="22" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Vertical" Height="103"/>
+                    <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="39,366,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
+                    <CheckBox Name="CheckboxWinTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="284,110,0,0" VerticalAlignment="Top" Checked="CheckboxWinTopmostHsForeground_Checked" Unchecked="CheckboxWinTopmostHsForeground_Unchecked"/>
+                    <CheckBox Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
+                    <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if only 1 possible deck" HorizontalAlignment="Left" Margin="39,228,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
 
                 </Grid>
 
             </TabItem>
             <TabItem Header="Help">
                 <Grid>
-                    <TextBlock Margin="17,10,0,0" VerticalAlignment="Top">
+                    <TextBlock Margin="10,10,7,0" VerticalAlignment="Top">
                         <Bold>
                             <Run Text="What are all these percentages?"/>
                         </Bold>
                     </TextBlock>
-                    <TextBlock Margin="27,31,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                    <TextBlock Margin="20,31,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Bold>
                             <Run Text="Player: "/>
                         </Bold>
                         <LineBreak />
                         <Run Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
                     </TextBlock>
-                    <TextBlock Margin="27,68,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                    <TextBlock Margin="20,68,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Bold>
                             <Run Text="Opponent: "/>
                         </Bold>
@@ -206,7 +271,9 @@
                         <Italic>
                             <Run Text="having"/>
                         </Italic>
-                        <Run Text="a card next turn. (This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn.)"></Run>
+                        <Run Text="a card next turn. "></Run>
+                        <LineBreak />
+                        <Run Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)"></Run>
                         <LineBreak />
                         <Bold>
                             <Run Text="Second number:"/>
@@ -215,14 +282,16 @@
                         <Italic>
                             <Run Text="drawing"/>
                         </Italic>
-                        <Run Text="a card next turn. (This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
+                        <Run Text="a card next turn."></Run>
+                        <LineBreak />
+                        <Run Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
                     </TextBlock>
-                    <TextBlock Margin="17,243,0,0" VerticalAlignment="Top">
+                    <TextBlock Margin="10,249,7,0" VerticalAlignment="Top">
                         <Bold>
                             <Run Text="I found a bug, what do I do?"/>
                         </Bold>
                     </TextBlock>
-                    <TextBlock Margin="27,264,27,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                    <TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Run Text="Two options here for now:"/>
                         <LineBreak/>
                         <Run Text="1) You may be able to find a solution/it already being reported in my"/>
@@ -233,7 +302,10 @@
                         <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
                         <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
                     </TextBlock>
-                    <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,7,10" VerticalAlignment="Bottom"/>
+                    <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
+                    </TextBlock>
 
                 </Grid>
             </TabItem>

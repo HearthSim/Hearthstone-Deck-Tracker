@@ -33,10 +33,7 @@ namespace Hearthstone_Deck_Tracker
         public double OpponentWindowTop = 0;
         public double OpponentWindowLeft = 0;
         public bool WindowsTopmost = false;
-
-        //todo: add to options
         public bool WindowsTopmostIfHsForeground = false;
-
         public bool WindowsOnStartup = false;
         public string WindowsBackgroundHex = "";
         public int UpdateDelay = 100;
@@ -54,6 +51,11 @@ namespace Hearthstone_Deck_Tracker
         public bool MinimizeToTray = false;
         public double TimerLeft = 75;
         public bool ShowAllDecks = false;
+        public bool HideTimers = false;
+        public double TimersHorizontalPosition = 80;
+        public double TimersVerticalPosition = 50;
+        public double TimersHorizontalSpacing = 0;
+        public double TimersVerticalSpacing = 50;
 
         [XmlArray(ElementName = "SelectedTags")]
         [XmlArrayItem(ElementName = "Tag")]
@@ -68,6 +70,10 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
 
+        public bool AutoDeckDetection = true;
+        public bool AutoSelectDetectedDeck = true;
+        [XmlIgnore]
+        public bool Debug = false;
         //todo: add to options
         public bool IgnoreWrongDeck = false;
 
