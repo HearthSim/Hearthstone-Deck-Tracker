@@ -295,8 +295,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (_opponentWindow.IsVisible)
                     _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                         30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                         _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
+                                                         _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
 
 
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
@@ -1522,8 +1521,7 @@ namespace Hearthstone_Deck_Tracker
                                        30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
 
             _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                 30 - _hearthstone.EnemyCards.Sum(c => c.Count) -
-                                                 _hearthstone.EnemyHandCount, _hearthstone.OpponentHasCoin);
+                                                 _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
         }
 
         private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
