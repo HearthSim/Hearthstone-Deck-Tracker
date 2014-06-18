@@ -123,10 +123,7 @@ namespace Hearthstone_Deck_Tracker
         private long _previousSize;
         private long _lastGameEnd;
         private long _currentOffset;
-
-        private int _powerCount;
-        private const int PowerCountTreshold = 14;
-
+        
         public HsLogReader(string hsDirPath, int updateDelay)
         {
             _updateDelay = (updateDelay == 0) ? 100 : updateDelay;
@@ -153,7 +150,6 @@ namespace Hearthstone_Deck_Tracker
         public event CardMovementHandler CardMovement;
         public event GameStateHandler GameStateChange;
         public event AnalyzingHandler Analyzing;
-        public event TurnStartHandler TurnStart;
 
         private bool _first;
 
@@ -225,11 +221,7 @@ namespace Hearthstone_Deck_Tracker
             foreach (var logLine in logLines)
             {
                 _currentOffset += logLine.Length;
-                if (logLine.StartsWith("[Power]"))
-                {
-                    _powerCount++;
-                }
-                else if (logLine.StartsWith("[Bob] legend rank"))
+                if (logLine.StartsWith("[Bob] legend rank"))
                 {
                     //game ended
                     GameStateChange(this, new GameStateArgs(GameState.GameEnd));
@@ -240,7 +232,6 @@ namespace Hearthstone_Deck_Tracker
                     if (!_cardMovementRegex.IsMatch(logLine)) continue;
 
                     var id = _cardMovementRegex.Match(logLine).Groups["Id"].Value.Trim();
-                    var player = int.Parse(_cardMovementRegex.Match(logLine).Groups["player"].Value);
                     var from = _cardMovementRegex.Match(logLine).Groups["from"].Value.Trim();
                     var to = _cardMovementRegex.Match(logLine).Groups["to"].Value.Trim();
 
@@ -259,7 +250,6 @@ namespace Hearthstone_Deck_Tracker
                         {
                             CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
                         }
-                        _powerCount = 0;
                         continue;
                     }
 
@@ -280,7 +270,6 @@ namespace Hearthstone_Deck_Tracker
                                                 new GameStateArgs() { OpponentHero = _heroIdDict[id] });
                             }
                         }
-                        _powerCount = 0;
                         continue;
                     }
 
@@ -291,10 +280,6 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //player draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
-                                if (_powerCount >= PowerCountTreshold)
-                                {
-                                    TurnStart(this, new TurnStartArgs(Turn.Player));
-                                }
                             }
                             else
                             {
@@ -349,10 +334,6 @@ namespace Hearthstone_Deck_Tracker
                             {
                                 //opponent draw
                                 CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
-                                if (_powerCount >= PowerCountTreshold)
-                                {
-                                    TurnStart(this, new TurnStartArgs(Turn.Player));
-                                }
                             }
                             else
                             {
@@ -393,7 +374,6 @@ namespace Hearthstone_Deck_Tracker
                             }
                             break;
                     }
-                    _powerCount = 0;
                 }
             }
         }

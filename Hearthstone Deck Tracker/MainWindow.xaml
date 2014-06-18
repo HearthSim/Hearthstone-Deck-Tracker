@@ -295,7 +295,10 @@
                         <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
                         <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
                     </TextBlock>
-                    <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,7,10" VerticalAlignment="Bottom"/>
+                    <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                        <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
+                    </TextBlock>
 
                 </Grid>
             </TabItem>

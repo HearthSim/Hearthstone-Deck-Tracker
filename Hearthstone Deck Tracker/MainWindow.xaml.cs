@@ -56,7 +56,6 @@ namespace Hearthstone_Deck_Tracker
         public MainWindow()
         {
             InitializeComponent();
-
             var version = Helper.CheckForUpdates(out _newVersion);
             if (version != null)
             {
@@ -232,7 +231,6 @@ namespace Hearthstone_Deck_Tracker
             _logReader.CardMovement += LogReaderOnCardMovement;
             _logReader.GameStateChange += LogReaderOnGameStateChange;
             _logReader.Analyzing += LogReaderOnAnalyzing;
-            _logReader.TurnStart += LogReaderOnTurnStart;
 
             //_turnTimer = new TurnTimer(90);
             //_turnTimer.TimerTick += TurnTimerOnTimerTick;
@@ -300,8 +298,6 @@ namespace Hearthstone_Deck_Tracker
 
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
                 {
-
-                    Debug.WriteLine("Analyzer done. Showing deck selection dialog.");
                     _showingIncorrectDeckMessage = true;
 
                     ShowIncorrectDeckMessage();
@@ -630,7 +626,7 @@ namespace Hearthstone_Deck_Tracker
             if (decks.Contains(DeckPickerList.SelectedDeck))
                 decks.Remove(DeckPickerList.SelectedDeck);
 
-            Debug.WriteLine(decks.Count + " possible decks found.");
+            Debug.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
             if (decks.Count > 0)
             {
 
@@ -653,13 +649,12 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    Debug.WriteLine("No deck selected. disbaled deck detection.");
+                    Debug.WriteLine("No deck selected. disabled deck detection.");
                     CheckboxDeckDetection.IsChecked = false;
                     SaveConfig(false);
                 }
             }
 
-            Debug.WriteLine("Done with incorrect deck stuff.");
             _showingIncorrectDeckMessage = false;
             _showIncorrectDeckMessage = false;
         }
