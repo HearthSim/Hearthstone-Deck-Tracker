@@ -226,7 +226,7 @@ namespace Hearthstone_Deck_Tracker
             foreach (var logLine in logLines)
             {
                 _currentOffset += logLine.Length;
-                if (logLine.StartsWith("[Bob] legend rank"))
+                if (logLine.StartsWith("[Power]"))
                 {
                     _powerCount++;
                 }

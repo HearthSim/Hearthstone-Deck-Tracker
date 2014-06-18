@@ -8,6 +8,8 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore]
         public readonly string ConfigPath = "config.xml";
 
+        public int TrackerWindowLeft = -1;
+        public int TrackerWindowTop = -1;
         public string LastDeck = "";
         public bool HideInBackground = false;
         public bool HideInMenu = false;
@@ -56,6 +58,10 @@ namespace Hearthstone_Deck_Tracker
         public double TimersVerticalPosition = 50;
         public double TimersHorizontalSpacing = 0;
         public double TimersVerticalSpacing = 50;
+        public double TimerWindowTop = 0;
+        public double TimerWindowLeft = 0;
+        public double TimerWindowHeight = 130;
+        public double TimerWindowWidth = 150;
 
         [XmlArray(ElementName = "SelectedTags")]
         [XmlArrayItem(ElementName = "Tag")]
@@ -74,5 +80,8 @@ namespace Hearthstone_Deck_Tracker
         public bool AutoSelectDetectedDeck = true;
         [XmlIgnore]
         public bool Debug = false;
+
+
+
     }
 }

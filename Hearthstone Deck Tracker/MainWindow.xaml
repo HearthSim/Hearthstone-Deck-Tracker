@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded">
+        Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Width="auto">
             <TabItem Header="My Decks">
@@ -243,9 +243,9 @@
                                 <Label x:Name="LblTimersPosition" Content="Timers position:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <Slider x:Name="SliderTimersHorizontal" HorizontalAlignment="Left" Margin="34,32,0,0" VerticalAlignment="Top" Width="200" ToolTip="Horizontal position of the timers" Value="80" ValueChanged="SliderTimersHorizontal_ValueChanged" LargeChange="0.1" Maximum="90"/>
                                 <Label x:Name="LblTimersSpacing" Content="Timers spacing:" HorizontalAlignment="Left" Margin="247,10,0,0" VerticalAlignment="Top"/>
-                                <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="194" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200"/>
+                                <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Left" Margin="285,32,0,0" VerticalAlignment="Top" Width="194" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200" LargeChange="0.1"/>
                                 <Slider x:Name="SliderTimersVertical" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="24" ToolTip="Vertical position of the timers" Orientation="Vertical" Height="108" ValueChanged="SliderTimersVertical_ValueChanged" LargeChange="0.1" Value="50" IsDirectionReversed="True"/>
-                                <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Left" Margin="258,41,0,0" VerticalAlignment="Top" Width="22" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Vertical" Height="103"/>
+                                <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Left" Margin="258,41,0,0" VerticalAlignment="Top" Width="22" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Vertical" Height="103" LargeChange="0.1"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

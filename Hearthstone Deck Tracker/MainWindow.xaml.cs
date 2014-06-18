@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly OpponentWindow _opponentWindow;
         private readonly OverlayWindow _overlay;
         private readonly PlayerWindow _playerWindow;
+        private readonly TimerWindow _timerWindow;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
         private readonly DeckImporter _deckImporter;
@@ -179,11 +180,15 @@ namespace Hearthstone_Deck_Tracker
 
             _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
+            _timerWindow = new TimerWindow(_config);
 
             if (_config.WindowsOnStartup)
             {
                 _playerWindow.Show();
                 _opponentWindow.Show();
+
+                if(!_config.HideTimers)
+                    _timerWindow.Show();
             }
             if (!_deckList.AllTags.Contains("All"))
             {
@@ -275,7 +280,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
         {
+            //why does this need invoke?
             _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
+            _timerWindow.Dispatcher.BeginInvoke(new Action(() => _timerWindow.Update(timerEventArgs)));
+
         }
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
@@ -588,6 +596,7 @@ Console.WriteLine("HandlePlayerMulligan");
                 _config.WindowHeight = (int)Height;
                 _overlay.Close();
                 _logReader.Stop();
+                _timerWindow.Shutdown();
                 _playerWindow.Shutdown();
                 _opponentWindow.Shutdown();
                 _xmlManagerConfig.Save("config.xml", _config);
@@ -676,11 +685,10 @@ Console.WriteLine("HandlePlayerMulligan");
 
         private void LoadConfig()
         {
-            //var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
-            //if (deck != null && ListboxDecks.Items.Contains(deck))
-            //{
-            //    ListboxDecks.SelectedItem = deck;
-            //}
+            if (_config.TrackerWindowTop != -1)
+                Top = _config.TrackerWindowTop;
+            if (_config.TrackerWindowLeft != -1)
+                Left = _config.TrackerWindowLeft;
 
             Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
@@ -759,6 +767,7 @@ Console.WriteLine("HandlePlayerMulligan");
                         {
                             _playerWindow.Topmost = false;
                             _opponentWindow.Topmost = false;
+                            _timerWindow.Topmost = false;
                         }
                         hsForegroundChanged = true;
 
@@ -770,6 +779,7 @@ Console.WriteLine("HandlePlayerMulligan");
                         {
                             _playerWindow.Topmost = true;
                             _opponentWindow.Topmost = true;
+                            _timerWindow.Topmost = true;
                         }
                         hsForegroundChanged = false;
                     }
@@ -1489,6 +1499,7 @@ Console.WriteLine("HandlePlayerMulligan");
             _config.WindowsTopmost = true;
             _playerWindow.Topmost = true;
             _opponentWindow.Topmost = true;
+            _timerWindow.Topmost = true;
             CheckboxWinTopmostHsForeground.IsEnabled = true;
             SaveConfig(true);
         }
@@ -1499,6 +1510,7 @@ Console.WriteLine("HandlePlayerMulligan");
             _config.WindowsTopmost = false;
             _playerWindow.Topmost = false;
             _opponentWindow.Topmost = false;
+            _timerWindow.Topmost = false;
             CheckboxWinTopmostHsForeground.IsEnabled = false;
             CheckboxWinTopmostHsForeground.IsChecked = false;
             SaveConfig(true);
@@ -1532,6 +1544,11 @@ Console.WriteLine("HandlePlayerMulligan");
             _playerWindow.Activate();
             _opponentWindow.Show();
             _opponentWindow.Activate();
+            if(!_config.HideTimers)
+            {
+                _timerWindow.Show();
+                _timerWindow.Activate();
+            }
 
             _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
                                        30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
@@ -1634,6 +1651,7 @@ Console.WriteLine("HandlePlayerMulligan");
             _config.WindowsTopmostIfHsForeground = true;
             _playerWindow.Topmost = true;
             _opponentWindow.Topmost = true;
+            _timerWindow.Topmost = true;
             SaveConfig(false);
         }
 
@@ -1781,6 +1799,12 @@ Console.WriteLine("HandlePlayerMulligan");
             SaveConfig(true);
         }
         #endregion
+
+        private void MetroWindow_LocationChanged(object sender, EventArgs e)
+        {
+            _config.TrackerWindowTop = (int)Top;
+            _config.TrackerWindowLeft = (int)Left;
+        }
         
     }
 }

@@ -132,6 +132,9 @@
     </Compile>
     <Compile Include="SerializableVersion.cs" />
     <Compile Include="User32.cs" />
+    <Compile Include="Windows\TimerWindow.xaml.cs">
+      <DependentUpon>TimerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XmlManager.cs" />
     <Page Include="Controls\DeckListView.xaml">
       <SubType>Designer</SubType>
@@ -175,6 +178,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\PlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TimerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
