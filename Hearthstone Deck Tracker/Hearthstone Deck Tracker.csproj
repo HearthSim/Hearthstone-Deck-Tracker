@@ -97,6 +97,9 @@
     <Compile Include="Controls\DeckListView.xaml.cs">
       <DependentUpon>DeckListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckNotes.xaml.cs">
+      <DependentUpon>DeckNotes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckPicker.xaml.cs">
       <DependentUpon>DeckPicker.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,7 @@
     <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -130,6 +134,10 @@
     <Compile Include="User32.cs" />
     <Compile Include="XmlManager.cs" />
     <Page Include="Controls\DeckListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DeckNotes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
