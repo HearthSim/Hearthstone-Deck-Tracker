@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker
                 var result = dialog.ShowDialog();
                 if (result != true)
                 {
-                    return;
+                    Close();
                 }
                 _config.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
                 _xmlManagerConfig.Save("config.xml", _config);

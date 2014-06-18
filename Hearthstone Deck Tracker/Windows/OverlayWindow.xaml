@@ -10,7 +10,7 @@
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378" Canvas.Left="353" FontSize="32" />
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338" Canvas.Left="418" FontSize="24" />
             
-            <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" 
+            <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" Visibility="Hidden"
                           Background="Beige" Foreground="Aqua" Opacity="75" 
                           VerticalScrollBarVisibility="Visible" >
                 <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua"/>
