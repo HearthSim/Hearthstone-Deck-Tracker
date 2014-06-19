@@ -110,6 +110,7 @@ namespace Hearthstone_Deck_Tracker
         public string FixCardName(string cardName)
         {
             if (cardName == "Windfury") return "Windfury spell";
+            if (cardName == "Fireball") return "Fireball spell";
             return cardName;
         }
     }
