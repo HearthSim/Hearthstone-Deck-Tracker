@@ -571,7 +571,8 @@ Console.WriteLine("HandlePlayerMulligan");
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)
         {
-            Topmost = false;
+            if(!IsKeyboardFocusWithin)
+                Topmost = false;
         }
 
         private void MetroWindow_StateChanged(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -187,6 +188,9 @@ namespace Hearthstone_Deck_Tracker
             {
                 ListViewPlayer.Items.Refresh();
                 ListViewOpponent.Items.Refresh();
+                Topmost = false;
+                Topmost = true;
+                Debug.WriteLine("Refreshed overlay topmost status");
             }
 
             Opacity = _config.OverlayOpacity/100;
