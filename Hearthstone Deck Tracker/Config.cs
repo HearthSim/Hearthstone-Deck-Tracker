@@ -80,8 +80,7 @@ namespace Hearthstone_Deck_Tracker
         public bool AutoSelectDetectedDeck = true;
         [XmlIgnore]
         public bool Debug = false;
-
-
-
+        
+        public bool HideOpponentCardAge = false;
     }
 }

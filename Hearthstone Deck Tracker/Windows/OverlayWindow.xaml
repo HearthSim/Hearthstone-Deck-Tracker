@@ -62,7 +62,19 @@
                     <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
                 </StackPanel>
             </StackPanel>
-            
+
+            <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
+                <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+            </UniformGrid>
         </Canvas>
 
     </Grid>

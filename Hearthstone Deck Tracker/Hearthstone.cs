@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -27,6 +28,8 @@ namespace Hearthstone_Deck_Tracker
         public string PlayingAs;
         public bool OpponentHasCoin;
         public bool IsUsingPremade;
+
+        public int[] OpponentHand { get; private set; }
 
         private readonly List<string> _invalidCardIds = new List<string>
             {
@@ -58,6 +61,12 @@ namespace Hearthstone_Deck_Tracker
             PlayerDrawn = new ObservableCollection<Card>();
             EnemyCards = new ObservableCollection<Card>();
             _cardDb = new Dictionary<string, Card>();
+            OpponentHand = new int[10];
+            for (int i = 0; i < 10; i++)
+            {
+                OpponentHand[i] = -1;
+            }
+            
             LoadCardDb();
         }
 
@@ -326,6 +335,36 @@ namespace Hearthstone_Deck_Tracker
             EnemyHandCount = 0;
             OpponentDeckCount = 30;
             OpponentHasCoin = true;
+            OpponentHand = new int[10];
+            for (int i = 0; i < 10; i++)
+            {
+                OpponentHand[i] = -1;
+            }
+           
+        }
+
+        public void OpponentCardPosChange(CardPosChangeArgs args)
+        {
+            if (args.Action == OpponentHandMovement.Play)
+            {
+                Debug.WriteLine(string.Format("From {0} to Play", args.From), "CardPosChange");
+                OpponentHand[args.From - 1] = -1;
+                for (int i = args.From - 1; i < 9; i++)
+                {
+                    OpponentHand[i] = OpponentHand[i + 1];
+                }
+                OpponentHand[9] = -1;
+            }
+            else if (args.Action == OpponentHandMovement.Draw)
+            {
+                OpponentHand[EnemyHandCount - 1] = args.Turn;
+            }
+            //Debug.WriteLine(string.Join(",", OpponentHand));
+        }
+
+        public List<int> GetOpponentHandAge()
+        {
+            return OpponentHand.Where(x => x != -1).ToList();
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker
         private bool _showingIncorrectDeckMessage;
         private bool _showIncorrectDeckMessage;
         private readonly Version _newVersion;
-        private TurnTimer _turnTimer;
+        private readonly TurnTimer _turnTimer;
         
         
         public MainWindow()
@@ -241,6 +241,7 @@ namespace Hearthstone_Deck_Tracker
             _logReader.GameStateChange += LogReaderOnGameStateChange;
             _logReader.Analyzing += LogReaderOnAnalyzing;
             _logReader.TurnStart += LogReaderOnTurnStart;
+            _logReader.CardPosChange += LogReaderOnCardPosChange;
 
             _turnTimer = new TurnTimer(90);
             _turnTimer.TimerTick += TurnTimerOnTimerTick;
@@ -284,6 +285,11 @@ namespace Hearthstone_Deck_Tracker
             _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
             _timerWindow.Dispatcher.BeginInvoke(new Action(() => _timerWindow.Update(timerEventArgs)));
 
+        }
+
+        private void LogReaderOnCardPosChange(HsLogReader sender, CardPosChangeArgs args)
+        {
+            _hearthstone.OpponentCardPosChange(args);
         }
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
@@ -502,7 +508,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerMulligan(string cardId)
         {
-Console.WriteLine("HandlePlayerMulligan");
+            Debug.WriteLine("HandlePlayerMulligan");
             _turnTimer.MulliganDone(Turn.Player);
             _hearthstone.Mulligan(cardId);
         }
@@ -571,8 +577,7 @@ Console.WriteLine("HandlePlayerMulligan");
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)
         {
-            if(!IsKeyboardFocusWithin)
-                Topmost = false;
+            Topmost = false;
         }
 
         private void MetroWindow_StateChanged(object sender, EventArgs e)

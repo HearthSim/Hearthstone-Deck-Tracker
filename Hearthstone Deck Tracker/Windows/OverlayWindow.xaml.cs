@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace Hearthstone_Deck_Tracker
         private int _cardCount;
         private int _opponentCardCount;
 
+        private List<HearthstoneTextBlock> cardLabels;
+
         public OverlayWindow(Config config, Hearthstone hearthstone)
         {
             InitializeComponent();
@@ -47,6 +50,22 @@ namespace Hearthstone_Deck_Tracker
             _offsetY = _config.OffsetY;
             _customWidth = _config.CustomWidth;
             _customHeight = _config.CustomHeight;
+
+            cardLabels = new List<HearthstoneTextBlock>()
+            {
+                LblCard0,
+                LblCard1,
+                LblCard2,
+                LblCard3,
+                LblCard4,
+                LblCard5,
+                LblCard6,
+                LblCard7,
+                LblCard8,
+                LblCard9,
+            };
+            Canvas.SetTop(LblGrid, 30);
+            LblGrid.Width = Width*0.4;
 
             UpdateScaling();
         }
@@ -193,6 +212,17 @@ namespace Hearthstone_Deck_Tracker
                 Debug.WriteLine("Refreshed overlay topmost status");
             }
 
+            Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.01);
+            for (int i = 0; i < _hearthstone.EnemyHandCount; i++)
+            {
+                cardLabels[i].Text = _hearthstone.OpponentHand[i].ToString();
+                cardLabels[i].Visibility = Visibility.Visible;
+            }
+            for (int i = _hearthstone.EnemyHandCount; i < 10; i++)
+            {
+                cardLabels[i].Visibility = Visibility.Collapsed;
+            }
+
             Opacity = _config.OverlayOpacity/100;
 
             LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
@@ -204,6 +234,10 @@ namespace Hearthstone_Deck_Tracker
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
             LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
+
+            LblGrid.Visibility = _config.HideOpponentCardAge ? Visibility.Hidden : Visibility.Visible;
+            if(LblGrid.Visibility == Visibility.Visible)
+                LblGrid.Visibility = _hearthstone.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 
             DebugViewer.Visibility = _config.Debug ? Visibility.Visible : Visibility.Hidden;
             DebugViewer.Width = (Width * _config.TimerLeft / 100);

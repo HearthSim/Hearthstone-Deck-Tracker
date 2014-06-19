@@ -32,6 +32,11 @@ namespace Hearthstone_Deck_Tracker
         OpponentPlayToHand,
         OpponentGet
     };
+    public enum OpponentHandMovement
+    {
+        Draw,
+        Play
+    }
 
     public enum AnalyzingState
     {
@@ -88,6 +93,19 @@ namespace Hearthstone_Deck_Tracker
 
         public Turn Turn { get; private set; }
     }
+    public class CardPosChangeArgs : EventArgs
+    {
+        public CardPosChangeArgs(OpponentHandMovement action, int from, int turn)
+        {
+            Turn = turn;
+            Action = action;
+            From = from;
+        }
+
+        public OpponentHandMovement Action { get; private set; }
+        public int Turn { get; private set; }
+        public int From { get; private set; }
+    }
 
     public class HsLogReader
     {
@@ -98,6 +116,8 @@ namespace Hearthstone_Deck_Tracker
         public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
 
         public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
+
+        public delegate void CardPosChangeHandler(HsLogReader sender, CardPosChangeArgs args);
 
         private readonly string _fullOutputPath;
         private readonly int _updateDelay;
@@ -118,15 +138,26 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly Regex _cardMovementRegex =
             new Regex(
-                @"\w*(cardId=(?<Id>(\w*))).*(player=(?<player>(\d))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+                @"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+
+        private readonly Regex _opponentCardPosRegex =
+            new Regex(
+                @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+
+        private readonly Regex _opponentPlayRegex = 
+            new Regex(
+                @"\w*(zonePos=(?<zonePos>(\d))).*(zone\ from\ OPPOSING\ HAND).*");
         
+
+
         private long _previousSize;
         private long _lastGameEnd;
         private long _currentOffset;
         
-
         private int _powerCount;
         private const int PowerCountTreshold = 14;
+
+        private int _turnCount;
 
         public HsLogReader(string hsDirPath, int updateDelay)
         {
@@ -155,6 +186,7 @@ namespace Hearthstone_Deck_Tracker
         public event GameStateHandler GameStateChange;
         public event AnalyzingHandler Analyzing;
         public event TurnStartHandler TurnStart;
+        public event CardPosChangeHandler CardPosChange;
 
         private bool _first;
 
@@ -220,6 +252,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        private bool _opposingLast;
         private void Analyze(string log)
         {
             var logLines = log.Split('\n');
@@ -235,168 +268,213 @@ namespace Hearthstone_Deck_Tracker
                     //game ended
                     GameStateChange(this, new GameStateArgs(GameState.GameEnd));
                     _lastGameEnd = _currentOffset;
+                    _turnCount = 0;
                 }
                 else if (logLine.StartsWith("[Zone]"))
                 {
-                    if (!_cardMovementRegex.IsMatch(logLine)) continue;
-
-                    Match _match = _cardMovementRegex.Match(logLine);
-
-                    var id = _match.Groups["Id"].Value.Trim();
-                    var player = int.Parse(_match.Groups["player"].Value);
-                    var from = _match.Groups["from"].Value.Trim();
-                    var to = _match.Groups["to"].Value.Trim();
-
-                    //coin
-                    if (id == "GAME_005")
+                    
+                    if (_cardMovementRegex.IsMatch(logLine))
                     {
-                        if (from == "FRIENDLY HAND")
-                        {
-                            CardMovement(this, new CardMovementArgs(CardMovementType.PlayerHandDiscard, id));
-                        }
-                        else if (to == "FRIENDLY HAND")
-                        {
-                            CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
-                        }
-                        else if (from.Contains("OPPOSING"))
-                        {
-                            CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
-                        }
-                        _powerCount = 0;
-                        continue;
-                    }
+                        _opposingLast = false;
+                        Match match = _cardMovementRegex.Match(logLine);
 
-                    //game start/end
-                    if (id.Contains("HERO"))
-                    {
-                        
-                        if (!from.Contains("PLAY"))
-                        {
-                            if (to.Contains("FRIENDLY"))
-                            {
-                                GameStateChange(this, new GameStateArgs(GameState.GameBegin) { PlayerHero = _heroIdDict[id] });
-                                
-                            }
-                            else if (to.Contains("OPPOSING"))
-                            {
-                                GameStateChange(this,
-                                                new GameStateArgs() { OpponentHero = _heroIdDict[id] });
-                            }
-                        }
-                        _powerCount = 0;
-                        continue;
-                    }
+                        var id = match.Groups["Id"].Value.Trim();
+                        var from = match.Groups["from"].Value.Trim();
+                        var to = match.Groups["to"].Value.Trim();
 
-                    switch (from)
-                    {
-                        case "FRIENDLY DECK":
-                            if (to == "FRIENDLY HAND")
+                        //coin
+                        if (id == "GAME_005")
+                        {
+                            if (from == "FRIENDLY HAND")
                             {
-                                //player draw
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
-                                if (_powerCount >= PowerCountTreshold)
-                                {
-                                    TurnStart(this, new TurnStartArgs(Turn.Player));
-                                }
-                            }
-                            else
-                            {
-                                //player discard from deck
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDeckDiscard, id));
-                            }
-                            break;
-                        case "FRIENDLY HAND":
-                            if (to == "FRIENDLY DECK")
-                            {
-                                //player mulligan
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerMulligan, id));
-                            }
-                            else if (to == "FRIENDLY PLAY")
-                            {
-                                //player played
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
-                            }
-                            else
-                            {
-                                //player discard from hand and spells
                                 CardMovement(this, new CardMovementArgs(CardMovementType.PlayerHandDiscard, id));
                             }
-                            break;
-                        case "OPPOSING HAND":
-                            if (to == "OPPOSING DECK")
+                            else if (to == "FRIENDLY HAND")
                             {
-                                //opponent mulligan
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentMulligan, id));
+                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
                             }
-                            else if (to == "OPPOSING PLAY")
+                            else if (from.Contains("OPPOSING"))
                             {
-                                //opponent played
                                 CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
                             }
-                            else
+                            _powerCount = 0;
+                            continue;
+                        }
+
+                        //game start/end
+                        if (id.Contains("HERO"))
+                        {
+                            if (!from.Contains("PLAY"))
                             {
-                                //spell
-                                if (id != "")
+                                if (to.Contains("FRIENDLY"))
                                 {
+                                    GameStateChange(this,
+                                                    new GameStateArgs(GameState.GameBegin)
+                                                        {
+                                                            PlayerHero = _heroIdDict[id]
+                                                        });
+                                }
+                                else if (to.Contains("OPPOSING"))
+                                {
+                                    GameStateChange(this,
+                                                    new GameStateArgs() {OpponentHero = _heroIdDict[id]});
+                                }
+                            }
+                            _powerCount = 0;
+                            continue;
+                        }
+
+                        switch (from)
+                        {
+                            case "FRIENDLY DECK":
+                                if (to == "FRIENDLY HAND")
+                                {
+                                    //player draw
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
+                                    if (_powerCount >= PowerCountTreshold)
+                                    {
+                                        TurnStart(this, new TurnStartArgs(Turn.Player));
+                                        _turnCount++;
+                                    }
+                                }
+                                else
+                                {
+                                    //player discard from deck
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDeckDiscard, id));
+                                }
+                                break;
+                            case "FRIENDLY HAND":
+                                if (to == "FRIENDLY DECK")
+                                {
+                                    //player mulligan
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerMulligan, id));
+                                }
+                                else if (to == "FRIENDLY PLAY")
+                                {
+                                    //player played
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
+                                }
+                                else
+                                {
+                                    //player discard from hand and spells
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerHandDiscard, id));
+                                }
+                                break;
+                            case "OPPOSING HAND":
+                                _opposingLast = true;
+                                if (to == "OPPOSING DECK")
+                                {
+                                    //opponent mulligan
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentMulligan, id));
+                                }
+                                else if (to == "OPPOSING PLAY")
+                                {
+                                    //opponent played
                                     CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
                                 }
                                 else
                                 {
-                                    //opponent discard from hand
-                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentHandDiscard, id));
+                                    //spell
+                                    if (id != "")
+                                    {
+                                        CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
+                                    }
+                                    else
+                                    {
+                                        //opponent discard from hand
+                                        CardMovement(this,
+                                                     new CardMovementArgs(CardMovementType.OpponentHandDiscard, id));
+                                    }
                                 }
-                            }
-                            break;
-                        case "OPPOSING DECK":
-                            if (to == "OPPOSING HAND")
-                            {
-                                //opponent draw
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
-                                if (_powerCount >= PowerCountTreshold)
+                                break;
+                            case "OPPOSING DECK":
+                                if (to == "OPPOSING HAND")
                                 {
-                                    TurnStart(this, new TurnStartArgs(Turn.Opponent));
+                                    //opponent draw
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
+                                    if (_powerCount >= PowerCountTreshold)
+                                    {
+                                        TurnStart(this, new TurnStartArgs(Turn.Opponent));
+                                        _turnCount++;
+                                    }
+                                }
+                                else
+                                {
+                                    //opponent discard from deck
+                                    CardMovement(this,
+                                                 new CardMovementArgs(CardMovementType.OpponentDeckDiscard, id));
+                                }
+                                break;
+                            case "OPPOSING SECRET":
+                                //opponent secret triggered
+                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentSecretTrigger, id));
+                                break;
+                            case "OPPOSING PLAY":
+                                if (to == "OPPOSING HAND")
+                                {
+                                    //card from play back to hand (sap/brew)
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlayToHand, id));
+                                }
+                                break;
+                            default:
+                                if (to == "OPPOSING HAND")
+                                {
+                                    //coin, thoughtsteal etc
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentGet, id));
+                                }
+                                else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
+                                {
+                                    //CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
+                                }
+                                else if (to == "FRIENDLY HAND")
+                                {
+                                    //thoughtsteal etc
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.PlayerGet, id));
+                                }
+                                else if (to == "FRIENDLY GRAVEYARD" && from == "")
+                                {
+                                    // CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
+                                }
+                                break;
+                        }
+                        _powerCount = 0;
+                    }
+                    else if (_opponentCardPosRegex.IsMatch(logLine))
+                    {
+                        Match match = _opponentCardPosRegex.Match(logLine);
+
+                        var id = match.Groups["Id"].Value.Trim();
+                        var zone = match.Groups["zone"].Value.Trim();
+                        int from;
+
+                        if (int.TryParse(match.Groups["from"].Value.Trim(), out from))
+                        {
+                            if (from == 0 && (id == "" || _opposingLast) && zone == "HAND")
+                            {
+                                //opponent card pos change
+                                try
+                                {
+                                    if (CardPosChange != null)
+                                        CardPosChange(this,
+                                                      new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
+                                                                            (_turnCount / 2) + 1));
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.WriteLine("Error parsing pos. " + e.Message);
                                 }
                             }
-                            else
-                            {
-                                //opponent discard from deck
-                                CardMovement(this,
-                                             new CardMovementArgs(CardMovementType.OpponentDeckDiscard, id));
-                            }
-                            break;
-                        case "OPPOSING SECRET":
-                            //opponent secret triggered
-                            CardMovement(this, new CardMovementArgs(CardMovementType.OpponentSecretTrigger, id));
-                            break;
-                        case "OPPOSING PLAY":
-                            if (to == "OPPOSING HAND")
-                            {
-                                //card from play back to hand (sap/brew)
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlayToHand, id));
-                            }
-                            break;
-                        default:
-                            if (to == "OPPOSING HAND")
-                            {
-                                //coin, thoughtsteal etc
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentGet, id));
-                            }
-                            else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
-                            {
-                                //CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
-                            }
-                            else if (to == "FRIENDLY HAND")
-                            {
-                                //thoughtsteal etc
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerGet, id));
-                            }
-                            else if (to == "FRIENDLY GRAVEYARD" && from == "")
-                            {
-                                // CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
-                            }
-                            break;
+
+                            _opposingLast = false;
+                        }
+                    }  
+                    if (_opponentPlayRegex.IsMatch(logLine))
+                    {
+                        Match match = _opponentPlayRegex.Match(logLine);
+                        var zonePos = int.Parse(match.Groups["zonePos"].Value.Trim());
+                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, (_turnCount / 2) + 1));
                     }
-                    _powerCount = 0;
+
                 }
             }
         }
