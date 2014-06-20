@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -47,6 +48,21 @@ namespace Hearthstone_Deck_Tracker
         {
             int output;
             return Int32.TryParse(c.ToString(), out output);
+        }
+
+        public static bool IsFullscreen(string windowName)
+        {
+            var hsHandle = User32.FindWindow(null, windowName);
+
+            User32.Rect hsWindowRect = new User32.Rect();
+            User32.GetWindowRect(hsHandle, ref hsWindowRect);
+
+            var height = (hsWindowRect.bottom - hsWindowRect.top);
+            var width = (hsWindowRect.right - hsWindowRect.left);
+
+            var bounds = Screen.FromHandle(hsHandle).Bounds;
+
+            return bounds.Width == width && bounds.Height == height;
         }
     }
 }

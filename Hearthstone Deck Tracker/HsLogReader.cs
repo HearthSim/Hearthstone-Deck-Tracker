@@ -490,8 +490,8 @@ namespace Hearthstone_Deck_Tracker
             {
                 _currentOffset = _lastGameEnd;
                 _previousSize = _lastGameEnd;
-
             }
+            _turnCount = 0;
         }
 
     }

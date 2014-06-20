@@ -178,7 +178,7 @@ namespace Hearthstone_Deck_Tracker
             _overlay = new OverlayWindow(_config, _hearthstone) {Topmost = true};
             _overlay.Show();
 
-            _playerWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck);
+            _playerWindow = new PlayerWindow(_config, _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
             _timerWindow = new TimerWindow(_config);
 
@@ -825,11 +825,11 @@ namespace Hearthstone_Deck_Tracker
         {
             Debug.WriteLine("set player item source as drawn");
             _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
+            _hearthstone.IsUsingPremade = false;
             DeckPickerList.SelectedDeck = null;
             DeckPickerList.SelectedIndex = -1;
             UpdateDeckList(null);
             UseDeck(null);
-            _hearthstone.IsUsingPremade = false;
         }
 
         private async void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -969,15 +969,15 @@ namespace Hearthstone_Deck_Tracker
 
         private void UseDeck(Deck selected)
         {
-            if (selected == null)
-                return;
             _hearthstone.Reset();
 
-            _hearthstone.SetPremadeDeck(selected.Cards);
+            if (selected != null)
+                _hearthstone.SetPremadeDeck(selected.Cards);
+
+            _logReader.Reset(true);
 
             _overlay.SortViews();
 
-            _logReader.Reset(false);
         }
 
         private void UpdateDeckList(Deck selected)
@@ -985,6 +985,7 @@ namespace Hearthstone_Deck_Tracker
             ListViewDeck.Items.Clear();
             if (selected == null)
             {
+
                 _config.LastDeck = string.Empty;
                 _xmlManagerConfig.Save("config.xml", _config);
                 return;

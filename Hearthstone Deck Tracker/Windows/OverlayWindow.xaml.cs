@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
             _config = config;
             _hearthstone = hearthstone;
 
-            ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
+            ListViewPlayer.ItemsSource = _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn;
             ListViewOpponent.ItemsSource = _hearthstone.EnemyCards;
             Scaling = 1.0;
             OpponentScaling = 1.0;
@@ -64,8 +64,6 @@ namespace Hearthstone_Deck_Tracker
                 LblCard8,
                 LblCard9,
             };
-            Canvas.SetTop(LblGrid, Height*0.08);
-            LblGrid.Width = Width*0.35;
 
             UpdateScaling();
         }
@@ -192,7 +190,14 @@ namespace Hearthstone_Deck_Tracker
 
             Canvas.SetTop(LblPlayerTurnTime, (Height - SystemParameters.WindowCaptionHeight) * _config.TimersVerticalPosition / 100 + _config.TimersVerticalSpacing);
             Canvas.SetLeft(LblPlayerTurnTime, Width * _config.TimersHorizontalPosition / 100 + _config.TimersHorizontalSpacing);
-        
+
+
+            Canvas.SetTop(LblGrid, (Helper.IsFullscreen("Hearthstone") ? Height * 0.03 : Height * 0.03 + SystemParameters.CaptionHeight));
+
+
+            var ratio = Width/Height;
+            LblGrid.Width = ratio < 1.5 ? Width * 0.3 : Width * 0.15 * (ratio / 1.33);
+
         }
 
         private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -215,7 +220,7 @@ namespace Hearthstone_Deck_Tracker
 
 
             var handCount = _hearthstone.EnemyHandCount < 0 ? 0 : _hearthstone.EnemyHandCount;
-            
+
             //offset label-grid based on handcount
             Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.002*handCount);
 
@@ -278,7 +283,8 @@ namespace Hearthstone_Deck_Tracker
             DebugViewer.Visibility = _config.Debug ? Visibility.Visible : Visibility.Hidden;
             DebugViewer.Width = (Width * _config.TimerLeft / 100);
 
-            SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.PlayerDeck.Sum(deckcard => deckcard.Count));
+            SetCardCount(_hearthstone.PlayerHandCount, _hearthstone.IsUsingPremade?_hearthstone.PlayerDeck.Sum(c => c.Count):30-_hearthstone.PlayerDrawn.Sum(c => c.Count));
+
             SetEnemyCardCount(_hearthstone.EnemyHandCount, _hearthstone.OpponentDeckCount);
 
             ReSizePosLists();
