@@ -91,8 +91,7 @@ namespace Hearthstone_Deck_Tracker
                     e.Message + "\n\n" + e.InnerException +
                     "\n\n Please restart the tracker as administrator",
                     "Error writing log.config");
-                Close();
-                return;
+                Application.Current.Shutdown();
             }
             catch (Exception e)
             {
@@ -100,8 +99,7 @@ namespace Hearthstone_Deck_Tracker
                     e.Message + "\n\n" + e.InnerException +
                     "\n\n What happend here? ",
                     "Error writing log.config");
-                Close();
-                return;
+                Application.Current.Shutdown();
             }
 
             //load config
@@ -126,8 +124,7 @@ namespace Hearthstone_Deck_Tracker
                     e.Message + "\n\n" + e.InnerException +
                     "\n\n If you don't know how to fix this, please delete config.xml",
                     "Error loading config.xml");
-                Close();
-                return;
+                Application.Current.Shutdown();
             }
             _config.Debug = IS_DEBUG;
 
@@ -151,8 +148,7 @@ namespace Hearthstone_Deck_Tracker
                     e.Message + "\n\n" + e.InnerException +
                     "\n\n If you don't know how to fix this, please delete PlayerDecks.xml (this will cause you to lose your decks).",
                     "Error loading PlayerDecks.xml");
-                Close();
-                return;
+                Application.Current.Shutdown();
             }
             foreach (var deck in _deckList.DecksList)
             {
@@ -220,7 +216,9 @@ namespace Hearthstone_Deck_Tracker
                 var result = dialog.ShowDialog();
                 if (result != true)
                 {
-                    Close();
+                    MessageBox.Show("No valid path.", "Error",
+                                    MessageBoxButton.OK);
+                    Application.Current.Shutdown();
                 }
                 _config.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
                 _xmlManagerConfig.Save("config.xml", _config);

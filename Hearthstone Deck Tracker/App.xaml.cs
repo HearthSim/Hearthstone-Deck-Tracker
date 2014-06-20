@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker
     {
         void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-#if RELEASE
+#if (!DEBUG)
             var date = DateTime.Now;
             var fileName = "Crash Reports/" + string.Format("Crash report {0}{1}{2}-{3}{4}", date.Day, date.Month, date.Year, date.Hour, date.Minute);
 
