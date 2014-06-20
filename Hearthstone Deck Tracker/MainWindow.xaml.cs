@@ -703,6 +703,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideOpponentDrawChances.IsChecked = _config.HideOpponentDrawChances;
             CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
             CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
+            CheckboxHideOpponentCardAge.IsChecked = _config.HideOpponentCardAge;
             CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
             CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
@@ -1485,6 +1486,19 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
         }
 
+        private void CheckboxHideOpponentCardAge_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentCardAge = false;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideOpponentCardAge_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentCardAge = true;
+            SaveConfig(true);
+        }
 
         private void CheckboxHideOverlayInBackground_Checked(object sender, RoutedEventArgs e)
         {
@@ -1812,6 +1826,6 @@ namespace Hearthstone_Deck_Tracker
             _config.TrackerWindowTop = (int)Top;
             _config.TrackerWindowLeft = (int)Left;
         }
-        
+
     }
 }

@@ -235,6 +235,7 @@
                                 <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="114,69,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
                                 <Label Content="Scaling:" HorizontalAlignment="Left" Margin="39,64,0,0" VerticalAlignment="Top"/>
                                 <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="39,118,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
+                                <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age" HorizontalAlignment="Left" Margin="39,164,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardAge_Checked" Unchecked="CheckboxHideOpponentCardAge_Unchecked"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Timer">
