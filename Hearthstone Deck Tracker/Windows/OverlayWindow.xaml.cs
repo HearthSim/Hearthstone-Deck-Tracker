@@ -64,8 +64,8 @@ namespace Hearthstone_Deck_Tracker
                 LblCard8,
                 LblCard9,
             };
-            Canvas.SetTop(LblGrid, 30);
-            LblGrid.Width = Width*0.4;
+            Canvas.SetTop(LblGrid, Height*0.08);
+            LblGrid.Width = Width*0.35;
 
             UpdateScaling();
         }
@@ -212,13 +212,45 @@ namespace Hearthstone_Deck_Tracker
                 Debug.WriteLine("Refreshed overlay topmost status");
             }
 
-            Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.01);
 
 
             var handCount = _hearthstone.EnemyHandCount < 0 ? 0 : _hearthstone.EnemyHandCount;
+            
+            //offset label-grid based on handcount
+            Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.002*handCount);
+
+            var labelDistance = LblGrid.Width / (handCount + 1);
 
             for (int i = 0; i < handCount; i++)
             {
+                var offset = labelDistance*Math.Abs(i - handCount/2);
+                offset = offset*offset*0.0015;
+
+
+                if (handCount%2 == 0)
+                {
+                    if (i < handCount/2 - 1)
+                    {
+                        //even hand count -> both middle labels at same height
+                        offset = labelDistance * Math.Abs(i - (handCount / 2 - 1));
+                        offset = offset * offset * 0.0015;
+                        cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                    }
+                    else if (i > handCount/2)
+                    {
+
+                        cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                    }
+                    else
+                    {
+                        var left = (handCount == 2 && i == 0) ? Width * 0.02 : 0;
+                        cardLabels[i].Margin = new Thickness(left, 0, 0, 0);
+                    }
+                }
+                else
+                {
+                    cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                }
                 cardLabels[i].Text = _hearthstone.OpponentHand[i].ToString();
                 cardLabels[i].Visibility = Visibility.Visible;
             }

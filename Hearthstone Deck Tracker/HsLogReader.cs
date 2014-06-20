@@ -448,36 +448,31 @@ namespace Hearthstone_Deck_Tracker
 
                         var id = match.Groups["Id"].Value.Trim();
                         var zone = match.Groups["zone"].Value.Trim();
-                        //int from;
-
-
-                        //if (int.TryParse(match.Groups["from"].Value.Trim(), out from))
-                        //{
-                            if ((id == "" || _opposingLast) && zone == "HAND")
+                        if ((id == "" || _opposingLast) && zone == "HAND")
+                        {
+                            //opponent card pos change
+                            try
                             {
-                                //opponent card pos change
-                                try
-                                {
-                                    if (CardPosChange != null)
-                                        CardPosChange(this,
-                                                      new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                            (_turnCount / 2)));
-                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, (_turnCount/2)), "LogReader");
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.WriteLine("Error parsing pos. " + e.Message);
-                                }
+                                if (CardPosChange != null)
+                                    CardPosChange(this,
+                                                  new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
+                                                                        (_turnCount+1)/2));
+                                Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount+1)/2)),
+                                                "LogReader");
                             }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine("Error parsing pos. " + e.Message);
+                            }
+                        }
 
-                            _opposingLast = false;
-                        //}
-                    }  
+                        _opposingLast = false;
+                    }
                     if (_opponentPlayRegex.IsMatch(logLine))
                     {
                         Match match = _opponentPlayRegex.Match(logLine);
                         var zonePos = int.Parse(match.Groups["zonePos"].Value.Trim());
-                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, (_turnCount / 2)));
+                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, ((_turnCount+1) / 2)));
                     }
 
                 }
