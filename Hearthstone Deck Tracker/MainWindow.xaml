@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" Background="#FFE5E5E5" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged">
+        Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Closing="Window_Closing_1" Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Width="auto">
             <TabItem Header="My Decks">
-                <Grid Background="#FFE5E5E5">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*">
                         </ColumnDefinition>
@@ -34,7 +34,7 @@
                             <Button x:Name="BtnExport" Content="Export to HS" Margin="0,0,3,0" Width="117" Height="26" Click="BtnExport_Click" />
                             <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="117" Height="26" Click="BtnDeleteDeck_Click"/>
                         </StackPanel>
-                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
+                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
                             <local:DeckListView.Resources>
                                 <Style TargetType="GridViewColumnHeader">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -65,7 +65,7 @@
                             <Button x:Name="ButtonNoDeck" Content="Use no Deck" Width="117" Margin="0,0,3,0" Height="26" Click="ButtonNoDeck_Click" />
                             <Button x:Name="BtnFilterTag" Content="Filter by Tag"  Width="117" Margin="3,0,0,0" Height="26" Click="BtnFilterTag_Click" />
                         </StackPanel>
-                        <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Center" Margin="0,6,0,6" Height="auto" Width="240" Grid.Row="1"/>
+                        <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Center" Margin="0,6,0,6" Height="auto" Width="240" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                     </Grid>
 
 
@@ -105,7 +105,7 @@
                             <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="135" />
                             <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top" Width="99" Click="BtnSaveDeck_Click" Height="26"/>
                         </StackPanel>
-                        <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Grid.Row="2" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
+                        <local:DeckListView x:Name="ListViewNewDeck" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.Row="2" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
                             <ListView.Resources>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -166,7 +166,7 @@
                                 <system:String>9+</system:String>
                             </ComboBox>
                         </StackPanel>
-                        <local:DeckListView x:Name="ListViewDB"  Background="DimGray" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" Width="240" KeyDown="ListViewDB_KeyDown" MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="2">
+                        <local:DeckListView x:Name="ListViewDB"  Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" Width="240" KeyDown="ListViewDB_KeyDown" MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="2">
                             <ListView.Resources>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -201,24 +201,27 @@
             </TabItem>
             <TabItem Header="Options">
                 <Grid>
-                    <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide overlay in menu" HorizontalAlignment="Left" Margin="20,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
-                    <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide overlay if HS in background" HorizontalAlignment="Left" Margin="20,87,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
-                    <Button x:Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="255,41,0,0" VerticalAlignment="Top" Width="233" Click="BtnShowWindows_Click" Height="41"/>
-                    <CheckBox x:Name="CheckboxHideOverlay" Content="Hide overlay (completely)" HorizontalAlignment="Left" Margin="20,41,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
-                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional windows topmost" HorizontalAlignment="Left" Margin="265,87,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
-                    <Label Content="General:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Slider Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="114,110,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="Slider_ValueChanged"/>
-                    <Label Content="Overlay opacity:" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top"/>
-                    <CheckBox Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="20,159,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
-                    <CheckBox Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="20,136,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked"/>
-                    <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Additional windows on startup" HorizontalAlignment="Left" Margin="265,136,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
-                    <CheckBox Name="CheckboxSameScaling" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="20,182,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
-                    <CheckBox Name="CheckboxWinTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="284,110,0,0" VerticalAlignment="Top" Checked="CheckboxWinTopmostHsForeground_Checked" Unchecked="CheckboxWinTopmostHsForeground_Unchecked"/>
-                    <CheckBox Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
-                    <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if only 1 possible deck" HorizontalAlignment="Left" Margin="39,228,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                    <TabControl Height="334" Margin="0,258,0,0" Width="496">
+                    <TabControl Width="auto">
+                        <TabItem Header="General" Background="{x:Null}">
+                            <Grid>
+                                <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide overlay in menu" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
+                                <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide overlay if HS in background" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
+                                <Button x:Name="BtnShowWindows" Content="Show Cards in Additional Windows" ToolTip="These windows are non-transparent and can be captured, for example for streaming purposes" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top" Width="233" Click="BtnShowWindows_Click" Height="41"/>
+                                <CheckBox x:Name="CheckboxHideOverlay" Content="Hide overlay (completely)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
+                                <CheckBox x:Name="CheckboxWindowsTopmost" Content="Additional windows topmost" HorizontalAlignment="Left" Margin="255,56,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
+                                <Slider x:Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="104,79,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="Slider_ValueChanged"/>
+                                <Label Content="Overlay opacity:" HorizontalAlignment="Left" Margin="5,74,0,0" VerticalAlignment="Top"/>
+                                <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
+                                <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked"/>
+                                <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Additional windows on startup" HorizontalAlignment="Left" Margin="255,105,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
+                                <CheckBox x:Name="CheckboxSameScaling" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10,151,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
+                                <CheckBox x:Name="CheckboxWinTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="274,79,0,0" VerticalAlignment="Top" Checked="CheckboxWinTopmostHsForeground_Checked" Unchecked="CheckboxWinTopmostHsForeground_Unchecked"/>
+                                <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
+                                <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if only 1 possible deck" HorizontalAlignment="Left" Margin="29,197,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
+                            </Grid>
+                        </TabItem>
                         <TabItem Header="Decks" >
-                            <Grid Background="#FFE5E5E5">
+                            <Grid>
                                 <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide cards" HorizontalAlignment="Left" Margin="39,141,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
                                 <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="39,95,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
                                 <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="284,95,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
@@ -239,7 +242,7 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Timer">
-                            <Grid Background="#FFE5E5E5">
+                            <Grid>
                                 <CheckBox x:Name="CheckboxHideTimers" Content="Hide Timers" HorizontalAlignment="Left" Margin="39,55,0,0" VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked" Unchecked="CheckboxHideTimers_Unchecked"/>
                                 <Label x:Name="LblTimersPosition" Content="Timers position:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <Slider x:Name="SliderTimersHorizontal" HorizontalAlignment="Left" Margin="34,32,0,0" VerticalAlignment="Top" Width="200" ToolTip="Horizontal position of the timers" Value="80" ValueChanged="SliderTimersHorizontal_ValueChanged" LargeChange="0.1" Maximum="90"/>

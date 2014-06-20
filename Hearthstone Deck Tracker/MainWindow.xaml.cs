@@ -66,7 +66,6 @@ namespace Hearthstone_Deck_Tracker
                 TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
                                                      version.Build);
             }
-
             //check for log config and create if not existing
             try
             {
@@ -1324,8 +1323,8 @@ namespace Hearthstone_Deck_Tracker
                 TagControlFilter.AddSelectedTag(tag);
             }
 
-            DeckPickerList.UpdateList();
             DeckPickerList.SelectDeck(newDeckClone);
+            DeckPickerList.UpdateList();
             //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
 
             ClearNewDeckSection();
