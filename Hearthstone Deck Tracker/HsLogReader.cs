@@ -142,7 +142,10 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly Regex _opponentCardPosRegex =
             new Regex(
-                @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+                @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ 0).*");
+        //private readonly Regex _opponentCardPosRegex =
+        //           new Regex(
+        //               @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
         private readonly Regex _opponentPlayRegex = 
             new Regex(
@@ -241,7 +244,7 @@ namespace Hearthstone_Deck_Tracker
                 long tempOffset = 0;
                 foreach (var line in lines)
                 {
-                    tempOffset += line.Length;
+                    tempOffset += line.Length+1;
                     if (line.StartsWith("[Bob] legend rank"))
                     {
                         offset = tempOffset;
@@ -258,7 +261,7 @@ namespace Hearthstone_Deck_Tracker
             var logLines = log.Split('\n');
             foreach (var logLine in logLines)
             {
-                _currentOffset += logLine.Length;
+                _currentOffset += logLine.Length+1;
                 if (logLine.StartsWith("[Power]"))
                 {
                     _powerCount++;
@@ -445,11 +448,12 @@ namespace Hearthstone_Deck_Tracker
 
                         var id = match.Groups["Id"].Value.Trim();
                         var zone = match.Groups["zone"].Value.Trim();
-                        int from;
+                        //int from;
 
-                        if (int.TryParse(match.Groups["from"].Value.Trim(), out from))
-                        {
-                            if (from == 0 && (id == "" || _opposingLast) && zone == "HAND")
+
+                        //if (int.TryParse(match.Groups["from"].Value.Trim(), out from))
+                        //{
+                            if ((id == "" || _opposingLast) && zone == "HAND")
                             {
                                 //opponent card pos change
                                 try
@@ -457,7 +461,8 @@ namespace Hearthstone_Deck_Tracker
                                     if (CardPosChange != null)
                                         CardPosChange(this,
                                                       new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                            (_turnCount / 2) + 1));
+                                                                            (_turnCount / 2)));
+                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, (_turnCount/2)), "LogReader");
                                 }
                                 catch (Exception e)
                                 {
@@ -466,13 +471,13 @@ namespace Hearthstone_Deck_Tracker
                             }
 
                             _opposingLast = false;
-                        }
+                        //}
                     }  
                     if (_opponentPlayRegex.IsMatch(logLine))
                     {
                         Match match = _opponentPlayRegex.Match(logLine);
                         var zonePos = int.Parse(match.Groups["zonePos"].Value.Trim());
-                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, (_turnCount / 2) + 1));
+                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, (_turnCount / 2)));
                     }
 
                 }

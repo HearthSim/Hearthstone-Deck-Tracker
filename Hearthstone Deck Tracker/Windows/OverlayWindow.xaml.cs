@@ -213,12 +213,16 @@ namespace Hearthstone_Deck_Tracker
             }
 
             Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.01);
-            for (int i = 0; i < _hearthstone.EnemyHandCount; i++)
+
+
+            var handCount = _hearthstone.EnemyHandCount < 0 ? 0 : _hearthstone.EnemyHandCount;
+
+            for (int i = 0; i < handCount; i++)
             {
                 cardLabels[i].Text = _hearthstone.OpponentHand[i].ToString();
                 cardLabels[i].Visibility = Visibility.Visible;
             }
-            for (int i = _hearthstone.EnemyHandCount; i < 10; i++)
+            for (int i = handCount; i < 10; i++)
             {
                 cardLabels[i].Visibility = Visibility.Collapsed;
             }
