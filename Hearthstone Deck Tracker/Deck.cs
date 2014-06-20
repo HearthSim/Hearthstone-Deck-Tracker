@@ -101,12 +101,13 @@ namespace Hearthstone_Deck_Tracker
             Tags = new List<string>();
         }
 
-        public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags)
+        public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note)
         {
             Name = name;
             Class = className;
             Cards = new ObservableCollection<Card>(cards);
             Tags = new List<string>(tags);
+            Note = note;
         }
 
         public override string ToString()
@@ -116,7 +117,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Deck(Name, Class, Cards, Tags);
+            return new Deck(Name, Class, Cards, Tags, Note);
         }
 
         public override bool Equals(object obj)

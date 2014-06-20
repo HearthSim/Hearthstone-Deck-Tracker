@@ -1044,9 +1044,30 @@ namespace Hearthstone_Deck_Tracker
             UpdateDbListView();
         }
         
-        private void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
+        private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
-            SaveDeck();
+            if (_editingDeck)
+            {
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Overwrite";
+                settings.NegativeButtonText = "Save as new";
+                var result =
+                    await
+                    this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?",
+                                          MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    SaveDeck(true);
+                }
+                else if (result == MessageDialogResult.Negative)
+                {
+                    SaveDeck(false);
+                }
+            }
+            else
+            {
+                SaveDeck(false);
+            }
             FlyoutSetTags.IsOpen = false;
         }
 
@@ -1231,30 +1252,57 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private void SaveDeck()
+        private async void SaveDeck(bool overwrite)
         {
-            if (_newDeck.Cards.Sum(c => c.Count) != 30)
-            {
-                var result =
-                    MessageBox.Show(
-                        string.Format("Deck contains {0} cards. Is this what you want to save?",
-                                      _newDeck.Cards.Sum(c => c.Count)),
-                        "Deck does not contain 30 cards.", MessageBoxButton.YesNo);
-                if (result != MessageBoxResult.Yes)
-                    return;
-            }
             var deckName = TextBoxDeckName.Text;
+
             if (string.IsNullOrEmpty(deckName))
             {
-                MessageBox.Show("Please set a name for the deck.");
-                return;
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Set";
+                settings.DefaultText = deckName;
+
+                var name = await this.ShowInputAsync("No name set", "Please set a name for the deck", settings);
+
+                if (String.IsNullOrEmpty(name))
+                    return;
+
+                deckName = name;
+                TextBoxDeckName.Text = name;
+
             }
-            if (_deckList.DecksList.Any(d => d.Name == deckName) && !_editingDeck)
+            while (_deckList.DecksList.Any(d => d.Name == deckName) && (!_editingDeck || !overwrite))
             {
-                MessageBox.Show("You already have a deck with that name!");
-                return;
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Set";
+                settings.DefaultText = deckName;
+                string name = await this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+
+                if (String.IsNullOrEmpty(name))
+                    return;
+
+                deckName = name;
+                TextBoxDeckName.Text = name;
+
             }
-            if (_editingDeck)
+
+            if (_newDeck.Cards.Sum(c => c.Count) != 30)
+            {
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Yes";
+                settings.NegativeButtonText = "No";
+
+                var result =
+                    await this.ShowMessageAsync("Not 30 cards", string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
+                                          _newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative,
+                                                settings);
+                if (result != MessageDialogResult.Affirmative)
+                {
+                    return;
+                }
+            }
+            
+            if (_editingDeck && overwrite)
             {
                 _deckList.DecksList.Remove(_newDeck);
                 DeckPickerList.RemoveDeck(_newDeck);
@@ -1277,6 +1325,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             DeckPickerList.UpdateList();
+            DeckPickerList.SelectDeck(newDeckClone);
             //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
 
             ClearNewDeckSection();
@@ -1316,12 +1365,6 @@ namespace Hearthstone_Deck_Tracker
             var headerText = "New Deck";
             var cardCount = _newDeck.Cards.Sum(c => c.Count);
             TabItemNewDeck.Header = show ? string.Format("{0} ({1})", headerText, cardCount) : headerText;
-           /* if (!_config.KeepDecksVisible)
-            {
-                _hearthstone.EnemyCards.Clear();
-                _hearthstone.EnemyHandCount = 0;
-                _hearthstone.OpponentDeckCount = 30;
-            } why is this here!?*/
         }
 
         private void AddCardToDeck(Card card)
