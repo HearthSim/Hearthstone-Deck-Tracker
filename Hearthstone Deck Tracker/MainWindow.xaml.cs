@@ -1136,13 +1136,13 @@ namespace Hearthstone_Deck_Tracker
             var settings = new MetroDialogSettings();
 
             var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn"))
+            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn") || clipboard.Contains("hearthhead") || clipboard.Contains("hearthstoneplayers") || clipboard.Contains("tempostorm"))
             {
                 settings.DefaultText = clipboard;
             }
 
             //import dialog
-            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats\nhearthpwn", "Url:", settings);
+            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats,\nhearthpwn,\nhearthhead,\nhearthstoneplayers,\ntempostorm", "Url:", settings);
             if (string.IsNullOrEmpty(url))
                 return;
 
