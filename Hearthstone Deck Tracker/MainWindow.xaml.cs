@@ -13,9 +13,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Brush = System.Windows.Media.Brush;
+using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
+using SystemColors = System.Windows.SystemColors;
 
 #endregion
 
@@ -55,6 +60,7 @@ namespace Hearthstone_Deck_Tracker
         private bool _showIncorrectDeckMessage;
         private readonly Version _newVersion;
         private readonly TurnTimer _turnTimer;
+        private readonly bool _updatedLogConfig;
         
         
         public MainWindow()
@@ -72,6 +78,7 @@ namespace Hearthstone_Deck_Tracker
                 if (!File.Exists(_logConfigPath))
                 {
                     File.Copy("Files/log.config", _logConfigPath);
+                    _updatedLogConfig = true;
                 }
                 else
                 {
@@ -81,7 +88,9 @@ namespace Hearthstone_Deck_Tracker
                     if (file.LastWriteTime > localFile.LastWriteTime)
                     {
                         File.Copy("Files/log.config", _logConfigPath, true);
+                        _updatedLogConfig = true;
                     }
+
                 }
             }
             catch (UnauthorizedAccessException e)
@@ -200,6 +209,9 @@ namespace Hearthstone_Deck_Tracker
                 _deckList.AllTags.Add("Constructed");
                 _xmlManager.Save("PlayerDecks.xml", _deckList);
             }
+
+            ComboboxAccent.ItemsSource = ThemeManager.Accents;
+            ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
 
             LoadConfig();
             
@@ -637,6 +649,10 @@ namespace Hearthstone_Deck_Tracker
             {
                 ShowNewUpdateMessage();
             }
+            if (_updatedLogConfig)
+            {
+                ShowUpdatedLogConfigMessage();
+            }
         }
         
         #endregion
@@ -688,10 +704,16 @@ namespace Hearthstone_Deck_Tracker
 
         private void LoadConfig()
         {
-            if (_config.TrackerWindowTop != -1)
+            if (_config.TrackerWindowTop != -32000 && _config.TrackerWindowTop != -1)
                 Top = _config.TrackerWindowTop;
-            if (_config.TrackerWindowLeft != -1)
+            if (_config.TrackerWindowLeft != -32000 && _config.TrackerWindowLeft != -1)
                 Left = _config.TrackerWindowLeft;
+
+            var theme = ThemeManager.AppThemes.First(t => t.Name == _config.ThemeName);
+            var accent = ThemeManager.Accents.First(a => a.Name == _config.AccentName);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+            ComboboxTheme.SelectedItem = theme;
+            ComboboxAccent.SelectedItem = accent;
 
             Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
@@ -745,6 +767,13 @@ namespace Hearthstone_Deck_Tracker
             var tags = new List<string>(_deckList.AllTags);
             tags.Remove("All");
             TagControlSet.LoadTags(tags);
+
+            ComboboxWindowBackground.SelectedItem = _config.SelectedWindowBackground;
+            TextboxCustomBackground.IsEnabled = _config.SelectedWindowBackground == "Custom";
+            TextboxCustomBackground.Text = string.IsNullOrEmpty(_config.WindowsBackgroundHex)
+                                               ? "#696969"
+                                               : _config.WindowsBackgroundHex;
+            UpdateAdditionalWindowsBackground();
 
         }
 
@@ -813,6 +842,10 @@ namespace Hearthstone_Deck_Tracker
                 Process.Start(releaseDownloadUrl);
             }
 
+        }
+        private async void ShowUpdatedLogConfigMessage()
+        {
+            await this.ShowMessageAsync("Restart Hearthstone", "This is either your first time starting the tracker or the log.config file has been updated. Please restart heartstone once, for the tracker to work properly.");
         }
 
         #endregion
@@ -1580,32 +1613,11 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxWindowsOpenAutomatically_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.WindowsOnStartup = true;
-            SaveConfig(true);
-        }
-
-        private void CheckboxWindowsOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.WindowsOnStartup = false;
-            SaveConfig(true);
-        }
-
-        private void SaveConfig(bool updateOverlay)
-        {
-            _xmlManagerConfig.Save("config.xml", _config);
-            if(updateOverlay)
-                _overlay.Update(true);
-        }
-
-        private void BtnShowWindows_Click(object sender, RoutedEventArgs e)
-        {
-            //show playeroverlay and enemy overlay
             _playerWindow.Show();
             _playerWindow.Activate();
             _opponentWindow.Show();
             _opponentWindow.Activate();
-            if(!_config.HideTimers)
+            if (!_config.HideTimers)
             {
                 _timerWindow.Show();
                 _timerWindow.Activate();
@@ -1616,6 +1628,26 @@ namespace Hearthstone_Deck_Tracker
 
             _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
                                                  _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
+
+            _config.WindowsOnStartup = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxWindowsOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _playerWindow.Hide();
+            _opponentWindow.Hide();
+            _timerWindow.Hide();
+            _config.WindowsOnStartup = false;
+            SaveConfig(true);
+        }
+
+        private void SaveConfig(bool updateOverlay)
+        {
+            _xmlManagerConfig.Save("config.xml", _config);
+            if(updateOverlay)
+                _overlay.Update(true);
         }
 
         private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
@@ -1710,9 +1742,9 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.WindowsTopmostIfHsForeground = true;
-            _playerWindow.Topmost = true;
-            _opponentWindow.Topmost = true;
-            _timerWindow.Topmost = true;
+            _playerWindow.Topmost = false;
+            _opponentWindow.Topmost = false;
+            _timerWindow.Topmost = false;
             SaveConfig(false);
         }
 
@@ -1720,6 +1752,12 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.WindowsTopmostIfHsForeground = false;
+            if (_config.WindowsTopmost)
+            {
+                _playerWindow.Topmost = true;
+                _opponentWindow.Topmost = true;
+                _timerWindow.Topmost = true;
+            }
             SaveConfig(false);
         }
 
@@ -1861,11 +1899,103 @@ namespace Hearthstone_Deck_Tracker
         }
         #endregion
 
+
+        //TODO: MOVE THESE TO RIGHT REGIONS
         private void MetroWindow_LocationChanged(object sender, EventArgs e)
         {
             _config.TrackerWindowTop = (int)Top;
             _config.TrackerWindowLeft = (int)Left;
         }
 
+        private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            var accent = ComboboxAccent.SelectedItem as Accent;
+            if (accent != null)
+            {
+                ThemeManager.ChangeAppStyle(Application.Current, accent, ThemeManager.DetectAppStyle().Item1);
+                _config.AccentName = accent.Name;
+                SaveConfig(false);
+            }
+        }
+
+        private void ComboboxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            var theme = ComboboxTheme.SelectedItem as AppTheme;
+            if (theme != null)
+            {
+                ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
+                _config.ThemeName = theme.Name;
+                //if(ComboboxWindowBackground.SelectedItem.ToString() != "Default")
+                    UpdateAdditionalWindowsBackground();
+                SaveConfig(false);
+            }
+        }
+
+        private void ComboboxWindowBackground_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            TextboxCustomBackground.IsEnabled = ComboboxWindowBackground.SelectedItem.ToString() == "Custom";
+            _config.SelectedWindowBackground = ComboboxWindowBackground.SelectedItem.ToString();
+            UpdateAdditionalWindowsBackground();
+        }
+        private void UpdateAdditionalWindowsBackground(Brush brush = null)
+        {
+            Brush background = brush;
+
+            switch (ComboboxWindowBackground.SelectedItem.ToString())
+            {
+                case "Theme":
+                    background = Background;
+                    break;
+                case "Light":
+                    background = SystemColors.ControlLightBrush;
+                    break;
+                case "Dark":
+                    background = SystemColors.ControlDarkDarkBrush;
+                    break;
+            }
+            if (background == null)
+            {
+                var hexBackground = BackgroundFromHex();
+                if (hexBackground != null)
+                {
+                    _playerWindow.Background = hexBackground;
+                    _opponentWindow.Background = hexBackground;
+                    _timerWindow.Background = hexBackground;
+                }
+            }
+            else
+            {
+                _playerWindow.Background = background;
+                _opponentWindow.Background = background;
+                _timerWindow.Background = background;
+            }
+        }
+        private SolidColorBrush BackgroundFromHex()
+        {
+            SolidColorBrush brush = null;
+            var hex = TextboxCustomBackground.Text;
+            if (hex.StartsWith("#")) hex = hex.Remove(0, 1);
+            if (!string.IsNullOrEmpty(hex) && hex.Length == 6 && Helper.IsHex(hex))
+            {
+                var color = ColorTranslator.FromHtml("#" + hex);
+                brush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+            }
+            return brush;
+        }
+
+        private void TextboxCustomBackground_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom") return;
+            var background = BackgroundFromHex();
+            if(background != null)
+            {
+                UpdateAdditionalWindowsBackground(background);
+                _config.WindowsBackgroundHex = TextboxCustomBackground.Text;
+                SaveConfig(false);
+            }
+        }
     }
 }

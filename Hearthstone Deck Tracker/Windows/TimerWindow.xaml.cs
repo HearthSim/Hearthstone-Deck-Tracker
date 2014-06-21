@@ -27,11 +27,11 @@ namespace Hearthstone_Deck_Tracker
             InitializeComponent();
             _config = config;
 
-            if (config.TimerWindowLeft != 0)
+            if (config.TimerWindowLeft != 0 && _config.TimerWindowLeft != -32000)
             {
                 Left = config.TimerWindowLeft;
             }
-            if (config.TimerWindowTop != 0)
+            if (config.TimerWindowTop != 0 && _config.TimerWindowTop != -32000)
             {
                 Top = config.TimerWindowTop;
             }
@@ -72,6 +72,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (WindowState == WindowState.Minimized) return;
             _config.TimerWindowHeight = (int)Height;
             _config.TimerWindowWidth = (int)Height;
         }

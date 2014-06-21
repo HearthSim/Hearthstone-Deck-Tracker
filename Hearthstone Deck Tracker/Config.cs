@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using MahApps.Metro;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -37,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
         public bool WindowsTopmost = false;
         public bool WindowsTopmostIfHsForeground = false;
         public bool WindowsOnStartup = false;
-        public string WindowsBackgroundHex = "";
+        public string WindowsBackgroundHex = "#696969";
         public int UpdateDelay = 100;
         public double PlayerDeckTop = 17;
         public double PlayerDeckHeight = 65;
@@ -82,5 +83,10 @@ namespace Hearthstone_Deck_Tracker
         public bool Debug = false;
         
         public bool HideOpponentCardAge = false;
+
+        public string AccentName;
+        public string ThemeName;
+
+        public string SelectedWindowBackground = "Theme";
     }
 }

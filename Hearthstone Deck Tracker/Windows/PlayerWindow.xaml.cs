@@ -22,31 +22,16 @@ namespace Hearthstone_Deck_Tracker
             ListViewPlayer.ItemsSource = playerDeck;
             playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
             Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
-            if (_config.PlayerWindowLeft != 0)
+            if (_config.PlayerWindowLeft != 0 && _config.PlayerWindowLeft != -32000)
             {
                 Left = _config.PlayerWindowLeft;
             }
-            if (_config.PlayerWindowTop != 0)
+            if (_config.PlayerWindowTop != 0 && _config.PlayerWindowTop != -32000)
             {
                 Top = _config.PlayerWindowTop;
             }
             Topmost = _config.WindowsTopmost;
-            if (_config.WindowsBackgroundHex != "")
-            {
-                try
-                {
-                    var convertFromString = ColorConverter.ConvertFromString(_config.WindowsBackgroundHex);
-                    if (convertFromString != null)
-                    {
-                        var bgColor = (Color) convertFromString;
-                        Background = new SolidColorBrush(bgColor);
-                    }
-                }
-                catch (Exception)
-                {
-                    //... no valid hex
-                }
-            }
+            
         }
 
         public void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -115,6 +100,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_LocationChanged(object sender, EventArgs e)
         {
+            if (WindowState == WindowState.Minimized) return;
             _config.PlayerWindowLeft = Left;
             _config.PlayerWindowTop = Top;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows.Forms;
 using MessageBox = System.Windows.MessageBox;
@@ -63,6 +64,21 @@ namespace Hearthstone_Deck_Tracker
             var bounds = Screen.FromHandle(hsHandle).Bounds;
 
             return bounds.Width == width && bounds.Height == height;
+        }
+
+        public static bool IsHex(IEnumerable<char> chars)
+        {
+            bool isHex;
+            foreach (var c in chars)
+            {
+                isHex = ((c >= '0' && c <= '9') ||
+                         (c >= 'a' && c <= 'f') ||
+                         (c >= 'A' && c <= 'F'));
+
+                if (!isHex)
+                    return false;
+            }
+            return true;
         }
     }
 }

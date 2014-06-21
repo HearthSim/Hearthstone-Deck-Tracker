@@ -219,8 +219,9 @@ namespace Hearthstone_Deck_Tracker
 
 
 
-            var handCount = _hearthstone.EnemyHandCount < 0 ? 0 : _hearthstone.EnemyHandCount;
-
+            var handCount = _hearthstone.EnemyHandCount;
+            if (handCount < 0) handCount = 0;
+            if (handCount > 10) handCount = 10;
             //offset label-grid based on handcount
             Canvas.SetLeft(LblGrid, Width/2 - LblGrid.ActualWidth/2 - Width*0.002*handCount);
 
