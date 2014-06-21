@@ -4,8 +4,16 @@ Hearthstone-Deck-Tracker
 This is an automatic deck tracker for Hearthstone.
 
 **Features:**  
-- Tracks cards drawn from deck (or cards left in deck), handcount and drawchances of remaining cards  
-- Tracks cards played by the opponent and his handcount  
+- Tracking:
+  - Cards left in your deck or cards drawn from your deck.
+  - Your handcount, deckcount and draw chances.
+  - Cards played by your opponent.
+  - Your opponent's handcount, deckcount and probablities of him having/drawing cards.
+  - How long your opponent had each card in his hand.
+- Importing decks from hearthpwn and hearthstats.
+- Exporting saved decks to hearthstone (this pretty much avoids the 9 deck limit).
+- Timer for current turn and total time spent for you and your opponent.
+- The tracker tries to automatically select the deck you are playing. (This starts working less well, the more similar decks you have saved)
 
 **How it works:**  
 The automated tracking is done my reading out Hearthstone logfile.  
