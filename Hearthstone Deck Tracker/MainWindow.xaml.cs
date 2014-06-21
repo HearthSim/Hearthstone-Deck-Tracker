@@ -709,8 +709,12 @@ namespace Hearthstone_Deck_Tracker
             if (_config.TrackerWindowLeft != -32000 && _config.TrackerWindowLeft != -1)
                 Left = _config.TrackerWindowLeft;
 
-            var theme = ThemeManager.AppThemes.First(t => t.Name == _config.ThemeName);
-            var accent = ThemeManager.Accents.First(a => a.Name == _config.AccentName);
+            var theme = string.IsNullOrEmpty(_config.ThemeName)
+                            ? ThemeManager.DetectAppStyle().Item1
+                            : ThemeManager.AppThemes.First(t => t.Name == _config.ThemeName);
+            var accent = string.IsNullOrEmpty(_config.AccentName)
+                             ? ThemeManager.DetectAppStyle().Item2
+                             : ThemeManager.Accents.First(a => a.Name == _config.AccentName);
             ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
             ComboboxTheme.SelectedItem = theme;
             ComboboxAccent.SelectedItem = accent;
@@ -1356,9 +1360,8 @@ namespace Hearthstone_Deck_Tracker
                 TagControlFilter.AddSelectedTag(tag);
             }
 
-            DeckPickerList.SelectDeck(newDeckClone);
             DeckPickerList.UpdateList();
-            //ListboxDecks.SelectedItem = _deckList.DecksList.First(d => d.Equals(_newDeck));
+            DeckPickerList.SelectDeck(newDeckClone);
 
             ClearNewDeckSection();
         }
