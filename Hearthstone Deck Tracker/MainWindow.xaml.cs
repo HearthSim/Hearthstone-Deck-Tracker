@@ -19,7 +19,6 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
-using ColorConverter = System.Windows.Media.ColorConverter;
 using SystemColors = System.Windows.SystemColors;
 
 #endregion

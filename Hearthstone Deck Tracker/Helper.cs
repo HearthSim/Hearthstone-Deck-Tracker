@@ -33,14 +33,21 @@ namespace Hearthstone_Deck_Tracker
             var versionXmlUrl =
                 @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
-            var xml = new WebClient().DownloadString(versionXmlUrl);
-            
             var currentVersion = new Version(version.ToString());
-            var newVersion = new Version(_xmlManager.LoadFromString(xml).ToString());
-
-            if (newVersion > currentVersion)
+            try
             {
-                newVersionOut = newVersion;
+                var xml = new WebClient().DownloadString(versionXmlUrl);
+
+                var newVersion = new Version(_xmlManager.LoadFromString(xml).ToString());
+
+                if (newVersion > currentVersion)
+                {
+                    newVersionOut = newVersion;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
             }
             return currentVersion;
         }
