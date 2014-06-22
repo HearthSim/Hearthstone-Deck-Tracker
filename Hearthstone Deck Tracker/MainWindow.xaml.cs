@@ -866,6 +866,7 @@ namespace Hearthstone_Deck_Tracker
         {
             Debug.WriteLine("set player item source as drawn");
             _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
+            _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _hearthstone.IsUsingPremade = false;
             DeckPickerList.SelectedDeck = null;
             DeckPickerList.SelectedIndex = -1;
@@ -1054,6 +1055,7 @@ namespace Hearthstone_Deck_Tracker
                 if (_overlay.ListViewPlayer.ItemsSource != _hearthstone.PlayerDeck)
                 {
                     _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
+                    _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
                     Debug.WriteLine("Set player itemsource as playerdeck");
                 }
                 _hearthstone.IsUsingPremade = true;
