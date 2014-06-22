@@ -265,6 +265,8 @@ namespace Hearthstone_Deck_Tracker
                 cardLabels[i].Visibility = Visibility.Collapsed;
             }
 
+            StackPanelPlayer.Opacity = _config.PlayerOpacity / 100;
+            StackPanelOpponent.Opacity = _config.OpponentOpacity / 100;
             Opacity = _config.OverlayOpacity/100;
 
             LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;

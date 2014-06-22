@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
                 PlayerDeck.Remove(card);
                 card.InHandCount--;
                 PlayerDeck.Add(card);
-            }
+            } 
         }
 
         public void EnemyDraw()
@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
 
         public void EnemyPlayed(string cardId)
         {
-            EnemyHandCount--;
+           EnemyHandCount--;
 
             if (cardId == "")
             {
@@ -199,7 +199,6 @@ namespace Hearthstone_Deck_Tracker
                 card.Count++;
             }
             EnemyCards.Add(card);
-
         }
         
         public void Mulligan(string cardId)

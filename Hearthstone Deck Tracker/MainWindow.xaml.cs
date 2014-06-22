@@ -653,7 +653,12 @@ namespace Hearthstone_Deck_Tracker
                 ShowUpdatedLogConfigMessage();
             }
         }
-        
+
+        private void MetroWindow_LocationChanged(object sender, EventArgs e)
+        {
+            _config.TrackerWindowTop = (int)Top;
+            _config.TrackerWindowLeft = (int)Left;
+        }
         #endregion
 
         #region GENERAL METHODS
@@ -750,6 +755,8 @@ namespace Hearthstone_Deck_Tracker
             SliderOpponent.Value = _config.OpponentDeckLeft;
 
             SliderOverlayOpacity.Value = _config.OverlayOpacity;
+            SliderOpponentOpacity.Value = _config.OpponentOpacity;
+            SliderPlayerOpacity.Value = _config.PlayerOpacity;
             SliderOverlayPlayerScaling.Value = _config.OverlayPlayerScaling;
             SliderOverlayOpponentScaling.Value = _config.OverlayOpponentScaling;
 
@@ -1141,7 +1148,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //import dialog
-            var url = await this.ShowInputAsync("Import deck\nCurrently works with:\nhearthstats,\nhearthpwn,\nhearthhead,\nhearthstoneplayers,\ntempostorm", "Url:", settings);
+            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead*, hearthstoneplayers and tempostorm\n\n*doesn't works 100%, just retry a few times\n\nUrl:", settings);
             if (string.IsNullOrEmpty(url))
                 return;
 
@@ -1692,10 +1699,24 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_initialized) return;
             _config.OverlayOpacity = SliderOverlayOpacity.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderOpponentOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.OpponentOpacity = SliderOpponentOpacity.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderPlayerOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.PlayerOpacity = SliderPlayerOpacity.Value;
             SaveConfig(true);
         }
 
@@ -1726,6 +1747,7 @@ namespace Hearthstone_Deck_Tracker
             _config.MinimizeToTray = false;
             SaveConfig(false);
         }
+
         private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -1786,6 +1808,7 @@ namespace Hearthstone_Deck_Tracker
             _config.AutoSelectDetectedDeck = true;
             SaveConfig(false);
         }
+
         private void CheckboxAutoSelectDeck_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -1857,7 +1880,6 @@ namespace Hearthstone_Deck_Tracker
             Process.Start(e.Uri.AbsoluteUri);
         }
 
-
         private void CheckboxHideTimers_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
@@ -1899,15 +1921,6 @@ namespace Hearthstone_Deck_Tracker
             _config.TimersVerticalSpacing = SliderTimersVerticalSpacing.Value;
             SaveConfig(true);
         }
-        #endregion
-
-
-        //TODO: MOVE THESE TO RIGHT REGIONS
-        private void MetroWindow_LocationChanged(object sender, EventArgs e)
-        {
-            _config.TrackerWindowTop = (int)Top;
-            _config.TrackerWindowLeft = (int)Left;
-        }
 
         private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -1930,7 +1943,7 @@ namespace Hearthstone_Deck_Tracker
                 ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
                 _config.ThemeName = theme.Name;
                 //if(ComboboxWindowBackground.SelectedItem.ToString() != "Default")
-                    UpdateAdditionalWindowsBackground();
+                UpdateAdditionalWindowsBackground();
                 SaveConfig(false);
             }
         }
@@ -1942,6 +1955,7 @@ namespace Hearthstone_Deck_Tracker
             _config.SelectedWindowBackground = ComboboxWindowBackground.SelectedItem.ToString();
             UpdateAdditionalWindowsBackground();
         }
+
         private void UpdateAdditionalWindowsBackground(Brush brush = null)
         {
             Brush background = brush;
@@ -1975,6 +1989,7 @@ namespace Hearthstone_Deck_Tracker
                 _timerWindow.Background = background;
             }
         }
+
         private SolidColorBrush BackgroundFromHex()
         {
             SolidColorBrush brush = null;
@@ -1992,12 +2007,13 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom") return;
             var background = BackgroundFromHex();
-            if(background != null)
+            if (background != null)
             {
                 UpdateAdditionalWindowsBackground(background);
                 _config.WindowsBackgroundHex = TextboxCustomBackground.Text;
                 SaveConfig(false);
             }
         }
+        #endregion
     }
 }

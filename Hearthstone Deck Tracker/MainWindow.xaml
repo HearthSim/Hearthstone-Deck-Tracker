@@ -209,8 +209,8 @@
                         <TabItem Header="General" Background="{x:Null}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"></RowDefinition>
@@ -237,7 +237,7 @@
                                         <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide in menu" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide if HS in background" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
-                                        <Slider x:Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="72,79,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="Slider_ValueChanged"/>
+                                        <Slider x:Name="SliderOverlayOpacity" HorizontalAlignment="Left" Margin="72,79,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpacity_ValueChanged"/>
                                         <Label Content="Opacity:" HorizontalAlignment="Left" Margin="5,74,0,0" VerticalAlignment="Top"/>
 
                                     </Grid>
@@ -271,8 +271,8 @@
                         <TabItem Header="Decks" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="22"></RowDefinition>
@@ -281,25 +281,29 @@
                                 <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10, 0,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
                                 <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="280" Width="235">
                                     <Grid>
-                                        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,64,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-                                        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,87,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
-                                        <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="31,110,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,90,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+                                        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,113,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+                                        <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="31,136,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                                         <controls:RangeSlider x:Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" CentralThumbDragCompleted="RangeSliderPlayer_CentralThumbDragCompleted" LowerThumbDragCompleted="RangeSliderPlayer_LowerThumbDragCompleted" UpperThumbDragCompleted="RangeSliderPlayer_UpperThumbDragCompleted"/>
                                         <Slider x:Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
                                         <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged"/>
                                         <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
+                                        <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderPlayerOpacity_ValueChanged"/>
+                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="280" Width="235">
+                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="280" Width="235" HorizontalAlignment="Center">
                                     <Grid>
-                                        <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide cards" HorizontalAlignment="Left" Margin="31,110,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,64,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideEnemyCards" Content="Hide cards" HorizontalAlignment="Left" Margin="31,136,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCards_Checked" Unchecked="CheckboxHideEnemyCards_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideEnemyCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,90,0,0" VerticalAlignment="Top" Checked="CheckboxHideEnemyCardCounter_Checked" Unchecked="CheckboxHideEnemyCardCounter_Unchecked"/>
                                         <controls:RangeSlider x:Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" UpperThumbDragCompleted="RangeSliderOpponent_UpperThumbDragCompleted" LowerThumbDragCompleted="RangeSliderOpponent_LowerThumbDragCompleted" CentralThumbDragCompleted="RangeSliderOpponent_CentralThumbDragCompleted"/>
                                         <Slider x:Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
                                         <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
                                         <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,87,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age" HorizontalAlignment="Left" Margin="31,133,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardAge_Checked" Unchecked="CheckboxHideOpponentCardAge_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,113,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
+                                        <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age" HorizontalAlignment="Left" Margin="31,159,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardAge_Checked" Unchecked="CheckboxHideOpponentCardAge_Unchecked"/>
+                                        <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOpponentOpacity_ValueChanged"/>
+                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -307,8 +311,8 @@
                         <TabItem Header="Timer" HorizontalAlignment="Right" Width="83">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="22"></RowDefinition>

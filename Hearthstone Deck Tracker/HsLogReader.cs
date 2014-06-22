@@ -210,6 +210,7 @@ namespace Hearthstone_Deck_Tracker
                         }
                     }
 
+
                     using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         
@@ -219,15 +220,24 @@ namespace Hearthstone_Deck_Tracker
                             await Task.Delay(_updateDelay);
                             continue;
                         }
-                        _previousSize = fs.Length;
+                        var newLength = fs.Length;
 
                         using (var sr = new StreamReader(fs))
                         {
+                            var newLines = sr.ReadToEnd();
+                            if (!newLines.EndsWith("\n"))
+                            {
+                                //hearthstone log apparently does not append full lines
+                                await Task.Delay(_updateDelay);
+                                continue;
+                            }
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.Start));
-                            Analyze(sr.ReadToEnd());
+                            Analyze(newLines);
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.End));
-                            
+
                         }
+
+                        _previousSize = newLength;
                     }
                 }
                 await Task.Delay(_updateDelay);

@@ -47,6 +47,8 @@ namespace Hearthstone_Deck_Tracker
         public double PlayerDeckLeft = 99.5;
         public double OpponentDeckLeft = 0.5;
         public double OverlayOpacity = 100;
+        public double PlayerOpacity = 100;
+        public double OpponentOpacity = 100;
         public double OverlayPlayerScaling = 100;
         public double OverlayOpponentScaling = 100;
         public bool UseSameScaling = true;
