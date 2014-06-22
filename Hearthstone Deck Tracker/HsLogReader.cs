@@ -140,7 +140,14 @@ namespace Hearthstone_Deck_Tracker
             new Regex(
                 @"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
-       private readonly Regex _opponentPlayRegex = 
+        private readonly Regex _opponentCardPosRegex =
+            new Regex(
+                @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ 0).*");
+        //private readonly Regex _opponentCardPosRegex =
+        //           new Regex(
+        //               @"\w*(cardId=(?<Id>(\w*))).*(zone=(?<zone>(\w*))).*(from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+
+        private readonly Regex _opponentPlayRegex = 
             new Regex(
                 @"\w*(zonePos=(?<zonePos>(\d))).*(zone\ from\ OPPOSING\ HAND).*");
         
@@ -398,17 +405,11 @@ namespace Hearthstone_Deck_Tracker
                                 {
                                     //opponent draw
                                     CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
-                                    
                                     if (_powerCount >= PowerCountTreshold)
                                     {
                                         TurnStart(this, new TurnStartArgs(Turn.Opponent));
                                         _turnCount++;
                                     }
-
-                                    if (CardPosChange != null)
-                                        CardPosChange(this,
-                                                      new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                            (_turnCount + 1) / 2));
                                 }
                                 else
                                 {
@@ -450,6 +451,32 @@ namespace Hearthstone_Deck_Tracker
                                 break;
                         }
                         _powerCount = 0;
+                    }
+                    else if (_opponentCardPosRegex.IsMatch(logLine))
+                    {
+                        Match match = _opponentCardPosRegex.Match(logLine);
+
+                        var id = match.Groups["Id"].Value.Trim();
+                        var zone = match.Groups["zone"].Value.Trim();
+                        if ((id == "" || _opposingLast) && zone == "HAND")
+                        {
+                            //opponent card pos change
+                            try
+                            {
+                                if (CardPosChange != null)
+                                    CardPosChange(this,
+                                                  new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
+                                                                        (_turnCount+1)/2));
+                                Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount+1)/2)),
+                                                "LogReader");
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.WriteLine("Error parsing pos. " + e.Message);
+                            }
+                        }
+
+                        _opposingLast = false;
                     }
                     if (_opponentPlayRegex.IsMatch(logLine))
                     {
