@@ -40,11 +40,11 @@ namespace Hearthstone_Deck_Tracker
 
             var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
-            var holdingNextTurn2 = Math.Round(200.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
             var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
             LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
 
-            var holdingNextTurn = Math.Round(100.0f * (handWithoutCoin + 1) / (cardsLeftInDeck + handWithoutCoin), 2);
+            var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
             var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
             LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
         }

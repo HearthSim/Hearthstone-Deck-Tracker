@@ -335,7 +335,7 @@ namespace Hearthstone_Deck_Tracker
             OpponentDeckCount = 30;
             OpponentHasCoin = true;
             OpponentHand = new int[10];
-            handPosIndex = 0;
+            //handPosIndex = 0;
             for (int i = 0; i < 10; i++)
             {
                 OpponentHand[i] = -1;
@@ -343,7 +343,7 @@ namespace Hearthstone_Deck_Tracker
            
         }
 
-        private int handPosIndex;
+        //private int handPosIndex;
         public void OpponentCardPosChange(CardPosChangeArgs args)
         {
             if (args.Action == OpponentHandMovement.Play)
@@ -355,22 +355,23 @@ namespace Hearthstone_Deck_Tracker
                     OpponentHand[i] = OpponentHand[i + 1];
                 }
                 OpponentHand[9] = -1;
-                handPosIndex--;
+                //handPosIndex--;
             }
             else if (args.Action == OpponentHandMovement.Draw)
             {
                 //one of the two ifs alone always seems to screw up at some point. maybe this works
-                if (OpponentHand[handPosIndex] == -1)
-                {
-                    OpponentHand[handPosIndex] = args.Turn;
-                    Debug.WriteLine("1set " + handPosIndex + "( " + (EnemyHandCount - 1) + " )");
-                } else if (OpponentHand[EnemyHandCount-1] == -1)
+               // if (OpponentHand[handPosIndex] == -1)
+               // {
+               //     OpponentHand[handPosIndex] = args.Turn;
+                //    Debug.WriteLine("1set " + handPosIndex + "( " + (EnemyHandCount - 1) + " )");
+                //} else 
+                if (OpponentHand[EnemyHandCount - 1] == -1)
                 {
                     OpponentHand[EnemyHandCount - 1] = args.Turn;
-                    Debug.WriteLine("2set " + (EnemyHandCount - 1));
+                    Debug.WriteLine("set " + (EnemyHandCount - 1));
                 }
 
-                handPosIndex++;
+                //handPosIndex++;
             }
             //Debug.WriteLine(string.Join(",", OpponentHand));
         }

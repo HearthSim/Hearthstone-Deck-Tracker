@@ -410,6 +410,12 @@ namespace Hearthstone_Deck_Tracker
                                         TurnStart(this, new TurnStartArgs(Turn.Opponent));
                                         _turnCount++;
                                     }
+                                    if (CardPosChange != null)
+                                        CardPosChange(this,
+                                                      new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
+                                                                            (_turnCount + 1) / 2));
+                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount + 1) / 2)),
+                                                    "LogReader");
                                 }
                                 else
                                 {
@@ -466,8 +472,8 @@ namespace Hearthstone_Deck_Tracker
                                 if (CardPosChange != null)
                                     CardPosChange(this,
                                                   new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                        (_turnCount+1)/2));
-                                Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount+1)/2)),
+                                                                        (_turnCount + 1) / 2));
+                                Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount + 1) / 2)),
                                                 "LogReader");
                             }
                             catch (Exception e)
