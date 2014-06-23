@@ -33,8 +33,5 @@ More information on that  here: http://www.reddit.com/r/hearthstone/comments/268
  - This seems to be a problem with laptops for some reason. You will have to set Custom Width/Height and maybe Offset values in the config.xml. [See here for reference](http://www.reddit.com/r/hearthstone/comments/26seey/automatic_deck_tracker_and_more_with_ingame/chv32lx) 
 tl;dr: Open the config.xml, set VisibleOverlay to true, set CustomWidth and CustomHeight so something around 20% lower than Hearthstone's resolution. You may have to play around with those values a bit. If you have any idea why this happens please contact me
 
-**Known Issues:**
-- There seem to be some issues with fullscreen mode in general.
-- Your opponent's deck may cover up some of your friendslist. (You can hide the cards in the options menu though)
-- There may still be some rare problems with the deck/hand counting. If you notice this (and optimally notices what caused it) let me know.
-- Performance when moving the decks on the overlay it not the greatest currently.
+Donations are much appreciated
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ)
