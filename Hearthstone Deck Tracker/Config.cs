@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker
         public bool WindowsTopmost = false;
         public bool WindowsTopmostIfHsForeground = false;
         public bool WindowsOnStartup = false;
+        public bool TimerWindowOnStartup = false;
+        public bool TimerWindowTopmost = false;
+        public bool TimerWindowTopmostIfHsForeground = false;
         public string WindowsBackgroundHex = "#696969";
         public int UpdateDelay = 100;
         public double PlayerDeckTop = 17;
@@ -90,5 +93,6 @@ namespace Hearthstone_Deck_Tracker
         public string SelectedWindowBackground = "Theme";
         public bool TextOnTopPlayer = false;
         public bool TextOnTopOpponent = false;
+
     }
 }

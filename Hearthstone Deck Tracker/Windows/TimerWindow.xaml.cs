@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 Top = config.TimerWindowTop;
             }
+            Topmost = _config.TimerWindowTopmost;
         }
 
         public void Update(TimerEventArgs timerEventArgs)
@@ -79,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_Deactivated(object sender, EventArgs e)
         {
-            if (!_config.WindowsTopmost)
+            if (!_config.TimerWindowTopmost)
                 Topmost = false;
         }
     }

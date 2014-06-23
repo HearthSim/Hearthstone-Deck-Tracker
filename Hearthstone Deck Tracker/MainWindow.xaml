@@ -216,20 +216,23 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="189" Width="235">
+                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="417" Width="235" Margin="5,5,5,0" Grid.RowSpan="2">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Show decks in additional windows" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWinTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="30,56,0,0" VerticalAlignment="Top" Checked="CheckboxWinTopmostHsForeground_Checked" Unchecked="CheckboxWinTopmostHsForeground_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Left" Margin="110,79,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxWindowBackground_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Left" Margin="98,169,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxWindowBackground_SelectionChanged">
                                             <system:String>Theme</system:String>
                                             <system:String>Light</system:String>
                                             <system:String>Dark</system:String>
                                             <system:String>Custom</system:String>
                                         </ComboBox>
-                                        <Label Content="Background:" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Left" Height="23" HorizontalContentAlignment="Center" Margin="110,111,0,0" TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top" Width="110" TextChanged="TextboxCustomBackground_TextChanged"/>
-                                        <Label Content="Custom hex:" HorizontalAlignment="Left" Margin="11,110,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Background:" HorizontalAlignment="Left" Margin="5,168,0,0" VerticalAlignment="Top"/>
+                                        <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Left" Height="23" HorizontalContentAlignment="Center" Margin="98,200,0,0" TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top" Width="110" TextChanged="TextboxCustomBackground_TextChanged"/>
+                                        <Label Content="Custom hex:" HorizontalAlignment="Left" Margin="5,199,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxTimerTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmost_Checked" Unchecked="CheckboxTimerTopmost_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTimerWindow" Content="Show timer in additional window" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Checked="CheckboxTimerWindow_Checked" Unchecked="CheckboxTimerWindow_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTimerTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="30,135,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmostHsForeground_Checked" Unchecked="CheckboxTimerTopmostHsForeground_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="189" Width="235">

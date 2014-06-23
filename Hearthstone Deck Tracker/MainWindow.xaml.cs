@@ -189,9 +189,10 @@ namespace Hearthstone_Deck_Tracker
             {
                 _playerWindow.Show();
                 _opponentWindow.Show();
-
-                if(!_config.HideTimers)
-                    _timerWindow.Show();
+            }
+            if (_config.TimerWindowOnStartup)
+            {
+                _timerWindow.Show();
             }
             if (!_deckList.AllTags.Contains("All"))
             {
@@ -739,6 +740,9 @@ namespace Hearthstone_Deck_Tracker
             CheckboxMinimizeTray.IsChecked = _config.MinimizeToTray;
             CheckboxWindowsTopmost.IsChecked = _config.WindowsTopmost;
             CheckboxWindowsOpenAutomatically.IsChecked = _config.WindowsOnStartup;
+            CheckboxTimerTopmost.IsChecked = _config.TimerWindowTopmost;
+            CheckboxTimerWindow.IsChecked = _config.TimerWindowOnStartup;
+            CheckboxTimerTopmostHsForeground.IsChecked = _config.TimerWindowTopmostIfHsForeground;
             CheckboxSameScaling.IsChecked = _config.UseSameScaling;
             CheckboxDeckDetection.IsChecked = _config.AutoDeckDetection;
             CheckboxWinTopmostHsForeground.IsChecked = _config.WindowsTopmostIfHsForeground;
@@ -1613,7 +1617,6 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = true;
             _playerWindow.Topmost = true;
             _opponentWindow.Topmost = true;
-            _timerWindow.Topmost = true;
             CheckboxWinTopmostHsForeground.IsEnabled = true;
             SaveConfig(true);
         }
@@ -1624,7 +1627,6 @@ namespace Hearthstone_Deck_Tracker
             _config.WindowsTopmost = false;
             _playerWindow.Topmost = false;
             _opponentWindow.Topmost = false;
-            _timerWindow.Topmost = false;
             CheckboxWinTopmostHsForeground.IsEnabled = false;
             CheckboxWinTopmostHsForeground.IsChecked = false;
             SaveConfig(true);
@@ -1637,11 +1639,6 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow.Activate();
             _opponentWindow.Show();
             _opponentWindow.Activate();
-            if (!_config.HideTimers)
-            {
-                _timerWindow.Show();
-                _timerWindow.Activate();
-            }
 
             _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
                                        30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
@@ -1658,9 +1655,84 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _playerWindow.Hide();
             _opponentWindow.Hide();
-            _timerWindow.Hide();
             _config.WindowsOnStartup = false;
             SaveConfig(true);
+        }
+
+        private void CheckboxWinTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsTopmostIfHsForeground = true;
+            _playerWindow.Topmost = false;
+            _opponentWindow.Topmost = false;
+            SaveConfig(false);
+        }
+
+        private void CheckboxWinTopmostHsForeground_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowsTopmostIfHsForeground = false;
+            if (_config.WindowsTopmost)
+            {
+                _playerWindow.Topmost = true;
+                _opponentWindow.Topmost = true;
+            }
+            SaveConfig(false);
+        }
+
+        private void CheckboxTimerTopmost_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.TimerWindowTopmost = true;
+            _timerWindow.Topmost = true;
+            CheckboxTimerTopmostHsForeground.IsEnabled = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxTimerTopmost_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.TimerWindowTopmost = false;
+            _timerWindow.Topmost = false;
+            CheckboxTimerTopmostHsForeground.IsEnabled = false;
+            CheckboxTimerTopmostHsForeground.IsChecked = false;
+            SaveConfig(true);
+        }
+
+        private void CheckboxTimerWindow_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+                _timerWindow.Show();
+                _timerWindow.Activate();
+            _config.TimerWindowOnStartup = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxTimerWindow_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _timerWindow.Hide();
+            _config.TimerWindowOnStartup = false;
+            SaveConfig(true);
+        }
+
+        private void CheckboxTimerTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.TimerWindowTopmostIfHsForeground = true;
+            _timerWindow.Topmost = false;
+            SaveConfig(false);
+        }
+
+        private void CheckboxTimerTopmostHsForeground_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.TimerWindowTopmostIfHsForeground = false;
+            if (_config.TimerWindowTopmost)
+            {
+                _timerWindow.Topmost = true;
+            }
+            SaveConfig(false);
         }
 
         private void SaveConfig(bool updateOverlay)
@@ -1770,29 +1842,6 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.UseSameScaling = false;
-            SaveConfig(false);
-        }
-
-        private void CheckboxWinTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.WindowsTopmostIfHsForeground = true;
-            _playerWindow.Topmost = false;
-            _opponentWindow.Topmost = false;
-            _timerWindow.Topmost = false;
-            SaveConfig(false);
-        }
-
-        private void CheckboxWinTopmostHsForeground_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            _config.WindowsTopmostIfHsForeground = false;
-            if (_config.WindowsTopmost)
-            {
-                _playerWindow.Topmost = true;
-                _opponentWindow.Topmost = true;
-                _timerWindow.Topmost = true;
-            }
             SaveConfig(false);
         }
 
@@ -2048,5 +2097,7 @@ namespace Hearthstone_Deck_Tracker
             _overlay.SetPlayerTextLocation(_config.TextOnTopPlayer);
             _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
         }
+
+        
     }
 }
