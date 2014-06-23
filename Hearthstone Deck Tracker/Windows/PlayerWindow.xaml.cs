@@ -104,5 +104,22 @@ namespace Hearthstone_Deck_Tracker
             _config.PlayerWindowLeft = Left;
             _config.PlayerWindowTop = Top;
         }
+
+        public void SetTextLocation(bool top)
+        {
+            StackPanelMain.Children.Clear();
+            if (top)
+            {
+                StackPanelMain.Children.Add(StackPanelDraw);
+                StackPanelMain.Children.Add(StackPanelCount);
+                StackPanelMain.Children.Add(ListViewPlayer);
+            }
+            else
+            {
+                StackPanelMain.Children.Add(ListViewPlayer);
+                StackPanelMain.Children.Add(StackPanelDraw);
+                StackPanelMain.Children.Add(StackPanelCount);
+            }
+        }
     }
 }

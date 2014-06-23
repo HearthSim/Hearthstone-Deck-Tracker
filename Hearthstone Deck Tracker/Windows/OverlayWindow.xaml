@@ -31,11 +31,11 @@
                         </Style>
                     </ListView.Resources>
                 </local:DeckListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Name="StackPanelPlayerDraw" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" />
                     <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Margin="4,0,0,0" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Name="StackPanelPlayerCount" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="14" Text="Hand: 0" />
                     <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
                 </StackPanel>
@@ -57,7 +57,7 @@
                 </local:DeckListView>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
                     <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
                 </StackPanel>

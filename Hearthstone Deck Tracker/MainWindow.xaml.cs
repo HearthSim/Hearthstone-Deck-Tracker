@@ -785,6 +785,13 @@ namespace Hearthstone_Deck_Tracker
                                                : _config.WindowsBackgroundHex;
             UpdateAdditionalWindowsBackground();
 
+            ComboboxTextLocationPlayer.SelectedIndex = _config.TextOnTopPlayer ? 0 : 1;
+            ComboboxTextLocationOpponent.SelectedIndex = _config.TextOnTopOpponent ? 0 : 1;
+            _overlay.SetOpponentTextLocation(_config.TextOnTopOpponent);
+            _opponentWindow.SetTextLocation(_config.TextOnTopOpponent);
+            _overlay.SetPlayerTextLocation(_config.TextOnTopPlayer);
+            _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
+
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -2019,5 +2026,27 @@ namespace Hearthstone_Deck_Tracker
             }
         }
         #endregion
+
+        private void ComboboxTextLocationOpponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {//todo:loadinconfig
+            if (!_initialized) return;
+            _config.TextOnTopOpponent = ComboboxTextLocationOpponent.SelectedItem.ToString() == "Top";
+
+            SaveConfig(false);
+            _overlay.SetOpponentTextLocation(_config.TextOnTopOpponent);
+            _opponentWindow.SetTextLocation(_config.TextOnTopOpponent);
+            
+        }
+
+        private void ComboboxTextLocationPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized) return;
+
+            _config.TextOnTopPlayer = ComboboxTextLocationPlayer.SelectedItem.ToString() == "Top";
+            SaveConfig(false);
+
+            _overlay.SetPlayerTextLocation(_config.TextOnTopPlayer);
+            _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
+        }
     }
 }

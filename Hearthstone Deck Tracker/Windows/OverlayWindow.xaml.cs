@@ -360,5 +360,40 @@ namespace Hearthstone_Deck_Tracker
         {
             LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = _config.HideTimers ? Visibility.Hidden : Visibility.Visible;
         }
+
+        public void SetOpponentTextLocation(bool top)
+        {
+            StackPanelOpponent.Children.Clear();
+            if (top)
+            {
+                StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
+                StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
+                StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+                StackPanelOpponent.Children.Add(ListViewOpponent);
+            }
+            else
+            {
+                StackPanelOpponent.Children.Add(ListViewOpponent);
+                StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
+                StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
+                StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+            }
+        }
+        public void SetPlayerTextLocation(bool top)
+        {
+            StackPanelPlayer.Children.Clear();
+            if (top)
+            {
+                StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
+                StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+                StackPanelPlayer.Children.Add(ListViewPlayer);
+            }
+            else
+            {
+                StackPanelPlayer.Children.Add(ListViewPlayer);
+                StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
+                StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+            }
+        }
     }
 }

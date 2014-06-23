@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
         Title="Player" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated" LocationChanged="MetroWindow_LocationChanged">
     <Grid Name="WindowGrid">
-        <StackPanel>
+        <StackPanel Name="StackPanelMain">
         <local:DeckListView x:Name="ListViewPlayer" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
@@ -26,11 +26,11 @@
                 </Style>
             </ListView.Resources>
             </local:DeckListView>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Name="StackPanelDraw" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblDrawChance2" Text="0%" FontSize="16" VerticalAlignment="Center"></local:HearthstoneTextBlock>
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDrawChance1" Text="0%" FontSize="16" VerticalAlignment="Center"></local:HearthstoneTextBlock>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblCardCount" Text="Hand: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDeckCount" Text="Deck: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
             </StackPanel>

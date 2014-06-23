@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
         Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated" LocationChanged="MetroWindow_LocationChanged">
     <Grid Name="WindowGrid">
-        <StackPanel>
+        <StackPanel Name="StackPanelMain">
         <local:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
@@ -28,7 +28,7 @@
             </local:DeckListView>
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" Text="Hand: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblOpponentDeckCount" Text="Deck: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
             </StackPanel>

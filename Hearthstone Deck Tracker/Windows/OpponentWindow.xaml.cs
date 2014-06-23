@@ -110,5 +110,24 @@ namespace Hearthstone_Deck_Tracker
             _config.OpponentWindowLeft = Left;
             _config.OpponentWindowTop = Top;
         }
+
+        public void SetTextLocation(bool top)
+        {
+            StackPanelMain.Children.Clear();
+            if (top)
+            {
+                StackPanelMain.Children.Add(LblOpponentDrawChance2);
+                StackPanelMain.Children.Add(LblOpponentDrawChance1);
+                StackPanelMain.Children.Add(StackPanelCount);
+                StackPanelMain.Children.Add(ListViewOpponent);
+            }
+            else
+            {
+                StackPanelMain.Children.Add(ListViewOpponent);
+                StackPanelMain.Children.Add(LblOpponentDrawChance2);
+                StackPanelMain.Children.Add(LblOpponentDrawChance1);
+                StackPanelMain.Children.Add(StackPanelCount);
+            }
+        }
     }
 }
