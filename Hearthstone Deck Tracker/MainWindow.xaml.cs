@@ -2077,7 +2077,7 @@ namespace Hearthstone_Deck_Tracker
         #endregion
 
         private void ComboboxTextLocationOpponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {//todo:loadinconfig
+        {
             if (!_initialized) return;
             _config.TextOnTopOpponent = ComboboxTextLocationOpponent.SelectedItem.ToString() == "Top";
 
@@ -2098,6 +2098,54 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
         }
 
-        
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            var file = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            var info = new FileInfo(file);
+
+            if (info.Extension != ".txt") return;
+            using (var sr = new StreamReader(file))
+            {
+                var lines = sr.ReadToEnd().Split('\n');
+                var deck = new Deck();
+                foreach (var line in lines)
+                {
+                    var card = _hearthstone.GetCardFromName(line.Trim());
+                    if (card.Name == "") continue;
+
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                    {
+                        deck.Class = card.PlayerClass;
+                    }
+
+                    if (deck.Cards.Contains(card))
+                    {
+                        var deckCard = deck.Cards.First(c => c.Equals(card));
+                        deck.Cards.Remove(deckCard);
+                        deckCard.Count++;
+                        deck.Cards.Add(deckCard);
+                    }
+                    else
+                    {
+                        deck.Cards.Add(card);
+                    }
+                }
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+                UpdateDbListView();
+            }
+        }
+
     }
 }

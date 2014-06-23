@@ -76,7 +76,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="TabItemNewDeck" Header="New Deck">
-                <Grid>
+                <Grid AllowDrop="True" Drop="Grid_Drop">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
