@@ -1144,13 +1144,15 @@ namespace Hearthstone_Deck_Tracker
             var settings = new MetroDialogSettings();
 
             var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn") || clipboard.Contains("hearthhead") || clipboard.Contains("hearthstoneplayers") || clipboard.Contains("tempostorm"))
+            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn") || 
+                clipboard.Contains("hearthhead") || clipboard.Contains("hearthstoneplayers") ||
+                clipboard.Contains("tempostorm") || clipboard.Contains("hearthstonetopdeck"))
             {
                 settings.DefaultText = clipboard;
             }
 
             //import dialog
-            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead*, hearthstoneplayers and tempostorm\n\n*doesn't works 100%, just retry a few times\n\nUrl:", settings);
+            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead*, hearthstoneplayers, hearthstonetopdeck and tempostorm\n\n*doesn't works 100%, just retry a few times\n\nUrl:", settings);
             if (string.IsNullOrEmpty(url))
                 return;
 

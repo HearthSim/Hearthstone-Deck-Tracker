@@ -42,6 +42,10 @@ namespace Hearthstone_Deck_Tracker
             {
                 return await ImportTempostorm(url);
             }
+            if (url.Contains("hearthstonetopdeck"))
+            {
+                return await ImportHsTopdeck(url);
+            }
             return null;
         }
 
@@ -245,6 +249,43 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        private async Task<Deck> ImportHsTopdeck(string url)
+        {
+            try
+            {
+                var doc = await GetHtmlDoc(url);
+
+                var deck = new Deck();
+
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+                deck.Name = deckName;
+
+
+                var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='cardname']");
+
+                foreach (var cardNode in cardNodes)
+                {
+                    var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
+                    var count = int.Parse(text[0].Trim());
+                    var name = string.Join(" ", text.Skip(1));
+                    
+                    var card = _hearthstone.GetCardFromName(name);
+                    card.Count = count;
+                    deck.Cards.Add(card);
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                    {
+                        deck.Class = card.PlayerClass;
+                    }
+                }
+
+                return deck;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                return null;
+            }
+        }
 
         public async Task<HtmlDocument> GetHtmlDoc(string url)
         {

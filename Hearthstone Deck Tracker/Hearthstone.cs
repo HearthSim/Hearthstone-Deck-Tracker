@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker
         }
         public Card GetCardFromName(string name)
         {
-            return GetActualCards().FirstOrDefault(c => c.Name == name);
+            return GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
         }
 
         public List<Card> GetActualCards()

@@ -88,10 +88,9 @@ namespace Hearthstone_Deck_Tracker
             return true;
         }
 
-        public static double DrawProbability(int copies, int deck, int drawcount, int drawtarget = 0)
+        public static double DrawProbability(int copies, int deck, int draw)
         {
-            return 1 - (BinomialCoefficient(copies, drawtarget) * BinomialCoefficient(deck - copies, drawcount - drawtarget) /
-                   BinomialCoefficient(deck, drawcount));
+            return 1 - (BinomialCoefficient(deck - copies, draw) / BinomialCoefficient(deck, draw));
         }
 
         public static double BinomialCoefficient(int n, int k)
