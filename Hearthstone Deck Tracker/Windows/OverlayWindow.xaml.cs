@@ -275,13 +275,15 @@ namespace Hearthstone_Deck_Tracker
 
             LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
             LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+
             LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
             LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-            LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
-            LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Hidden : Visibility.Visible;
-            ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Hidden : Visibility.Visible;
-            LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
-            LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Hidden : Visibility.Visible;
+            LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
+
+            ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Collapsed : Visibility.Visible;
 
             LblGrid.Visibility = _config.HideOpponentCardAge ? Visibility.Hidden : Visibility.Visible;
             if(LblGrid.Visibility == Visibility.Visible)

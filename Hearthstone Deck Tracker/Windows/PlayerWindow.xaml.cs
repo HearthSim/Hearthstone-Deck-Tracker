@@ -31,7 +31,11 @@ namespace Hearthstone_Deck_Tracker
                 Top = _config.PlayerWindowTop;
             }
             Topmost = _config.WindowsTopmost;
-            
+
+            LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public void SetCardCount(int cardCount, int cardsLeftInDeck)

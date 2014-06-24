@@ -29,7 +29,12 @@ namespace Hearthstone_Deck_Tracker
             {
                 Top = _config.OpponentWindowTop;
             }
-            Topmost = _config.WindowsTopmost; 
+            Topmost = _config.WindowsTopmost;
+
+            LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
         }
         public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
         {
