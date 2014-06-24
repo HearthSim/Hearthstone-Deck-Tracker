@@ -3,6 +3,15 @@ Hearthstone-Deck-Tracker
 
 This is an automatic deck tracker for Hearthstone.
 
+The ingame overlay:
+
+![Overlay](http://i.imgur.com/EWd6Ung.jpg "The overlay")
+
+The tracker: 
+
+![Overlay](http://i.imgur.com/A6n6ys6.png "The tracker")
+
+
 **Features:**  
 - Tracking:
   - Cards left in your deck or cards drawn from your deck.
