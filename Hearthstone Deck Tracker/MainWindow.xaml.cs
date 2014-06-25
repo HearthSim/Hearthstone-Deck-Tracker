@@ -763,6 +763,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxTimerTopmost.IsChecked = _config.TimerWindowTopmost;
             CheckboxTimerWindow.IsChecked = _config.TimerWindowOnStartup;
             CheckboxTimerTopmostHsForeground.IsChecked = _config.TimerWindowTopmostIfHsForeground;
+            CheckboxTimerTopmostHsForeground.IsEnabled = _config.TimerWindowTopmost;
             CheckboxSameScaling.IsChecked = _config.UseSameScaling;
             CheckboxDeckDetection.IsChecked = _config.AutoDeckDetection;
             CheckboxWinTopmostHsForeground.IsChecked = _config.WindowsTopmostIfHsForeground;
