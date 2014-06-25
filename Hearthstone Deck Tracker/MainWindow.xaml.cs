@@ -101,6 +101,67 @@ namespace Hearthstone_Deck_Tracker
             }
             _config.Debug = IS_DEBUG;
 
+            //find hs directory
+            if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
+            {
+                using (var hsDirKey =
+                    Registry.LocalMachine.OpenSubKey(
+                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone1"))
+                {
+                    if (hsDirKey != null)
+                    {
+                        _config.HearthstoneDirectory = (string)hsDirKey.GetValue("InstallLocation");
+                        _xmlManagerConfig.Save("config.xml", _config);
+                        _foundHsDirectory = true;
+                    }
+                }
+            }
+            else
+            {
+                _foundHsDirectory = true;
+            }
+
+            if (_foundHsDirectory)
+            {
+                //check for log config and create if not existing
+                try
+                {
+                    if (!File.Exists(_logConfigPath))
+                    {
+                        File.Copy("Files/log.config", _logConfigPath);
+                        _updatedLogConfig = true;
+                    }
+                    else
+                    {
+                        //update log.config if newer
+                        var localFile = new FileInfo(_logConfigPath);
+                        var file = new FileInfo("Files/log.config");
+                        if (file.LastWriteTime > localFile.LastWriteTime)
+                        {
+                            File.Copy("Files/log.config", _logConfigPath, true);
+                            _updatedLogConfig = true;
+                        }
+
+                    }
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    MessageBox.Show(
+                        e.Message + "\n\n" + e.InnerException +
+                        "\n\n Please restart the tracker as administrator",
+                        "Error writing log.config");
+                    Application.Current.Shutdown();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        e.Message + "\n\n" + e.InnerException +
+                        "\n\n What happend here? ",
+                        "Error writing log.config");
+                    Application.Current.Shutdown();
+                }
+            }
+
 
             string languageTag = _config.SelectedLanguage;
             //hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
@@ -153,14 +214,12 @@ namespace Hearthstone_Deck_Tracker
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
-
             //create overlay
-            _overlay = new OverlayWindow(_config, _hearthstone) {Topmost = true};
+            _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
             if (_foundHsDirectory)
             {
                 _overlay.Show();
             }
-
             _playerWindow = new PlayerWindow(_config, _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
             _timerWindow = new TimerWindow(_config);
@@ -195,68 +254,6 @@ namespace Hearthstone_Deck_Tracker
             ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
             LoadConfig();
-
-            //find hs directory
-            if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
-            {
-                using (var hsDirKey =
-                    Registry.LocalMachine.OpenSubKey(
-                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
-                {
-                    if (hsDirKey != null)
-                    {
-                        _config.HearthstoneDirectory = (string) hsDirKey.GetValue("InstallLocation");
-                        _xmlManagerConfig.Save("config.xml", _config);
-                        _foundHsDirectory = true;
-                    }
-                }
-            }
-            else
-            {
-                _foundHsDirectory = true;
-            }
-
-            if(_foundHsDirectory)
-            {
-                //check for log config and create if not existing
-                try
-                {
-                    if (!File.Exists(_logConfigPath))
-                    {
-                        File.Copy("Files/log.config", _logConfigPath);
-                        _updatedLogConfig = true;
-                    }
-                    else
-                    {
-                        //update log.config if newer
-                        var localFile = new FileInfo(_logConfigPath);
-                        var file = new FileInfo("Files/log.config");
-                        if (file.LastWriteTime > localFile.LastWriteTime)
-                        {
-                            File.Copy("Files/log.config", _logConfigPath, true);
-                            _updatedLogConfig = true;
-                        }
-
-                    }
-                }
-                catch (UnauthorizedAccessException e)
-                {
-                    MessageBox.Show(
-                        e.Message + "\n\n" + e.InnerException +
-                        "\n\n Please restart the tracker as administrator",
-                        "Error writing log.config");
-                    Application.Current.Shutdown();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(
-                        e.Message + "\n\n" + e.InnerException +
-                        "\n\n What happend here? ",
-                        "Error writing log.config");
-                    Application.Current.Shutdown();
-                }
-            }
-
 
             _deckImporter = new DeckImporter(_hearthstone);
             _deckExporter = new DeckExporter(_config);
