@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 using (var hsDirKey =
                     Registry.LocalMachine.OpenSubKey(
-                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone1"))
+                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
                 {
                     if (hsDirKey != null)
                     {
