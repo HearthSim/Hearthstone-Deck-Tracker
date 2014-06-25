@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
         public static bool HighlightCardsInHand;
 
 
-        private readonly Dictionary<string, Card> _cardDb;
+        private static Dictionary<string, Card> _cardDb;
         public ObservableCollection<Card> EnemyCards;
         public int EnemyHandCount;
         public int OpponentDeckCount;
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker
                 "NEW1_006",
             };
 
-        public Hearthstone()
+        public Hearthstone(string languageTag)
         {
             IsInMenu = true;
             PlayerDeck = new ObservableCollection<Card>();
@@ -66,33 +66,70 @@ namespace Hearthstone_Deck_Tracker
             {
                 OpponentHand[i] = -1;
             }
-            
-            LoadCardDb();
+
+            LoadCardDb(languageTag);
         }
 
-        private void LoadCardDb()
+        private void LoadCardDb(string languageTag)
         {
-            var obj = JObject.Parse(File.ReadAllText("Files/cardsDB.json"));
-            foreach (var cardType in obj)
+            try
             {
-                if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                    cardType.Key != "Reward") continue;
-                foreach (var card in cardType.Value)
+                var localizedCardNames = new Dictionary<string, string>();
+                if (languageTag != "enUS")
                 {
-                    var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                        _cardDb.Add(tmp.Id, tmp);
+                    var localized = JObject.Parse(File.ReadAllText(string.Format("Files/cardsDB.{0}.json", languageTag)));
+                    foreach (var cardType in localized)
+                    {
+                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                            cardType.Key != "Reward") continue;
+                        foreach (var card in cardType.Value)
+                        {
+                            var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                            localizedCardNames.Add(tmp.Id, tmp.Name);
+                        }
+                    }
                 }
+
+
+                //load engish db (needed for importing, etc)
+                var obj = JObject.Parse(File.ReadAllText("Files/cardsDB.enUS.json"));
+                var tempDb = new Dictionary<string, Card>();
+                foreach (var cardType in obj)
+                {
+                    if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                        cardType.Key != "Reward") continue;
+                    foreach (var card in cardType.Value)
+                    {
+                        var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                        if (languageTag != "enUS")
+                        {
+                            tmp.LocalizedName = localizedCardNames[tmp.Id];
+                        }
+                        tempDb.Add(tmp.Id, tmp);
+                    }
+                }
+                _cardDb = new Dictionary<string, Card>(tempDb);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error loading db: \n" + e);
             }
         }
 
-        public Card GetCardFromId(string cardId)
+        public static Card GetCardFromId(string cardId)
         {
             if (cardId == "") return new Card();
-            return _cardDb[cardId];
+            return (Card)_cardDb[cardId].Clone();
         }
         public Card GetCardFromName(string name)
         {
-            return GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+            if (GetActualCards().Any(c => c.Name.Equals(name)))
+            {
+                return GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+            }
+
+            //not sure with all the values here
+            return new Card("UNKNOWN", "Neutral", "UNKNOWN", "UNKNOWN", name, 0, name, 0, 1);
         }
 
         public List<Card> GetActualCards()
@@ -105,10 +142,10 @@ namespace Hearthstone_Deck_Tracker
                     select card).ToList();
         }
 
-        public void SetPremadeDeck(ObservableCollection<Card> cards)
+        public void SetPremadeDeck(Deck deck)
         {
             PlayerDeck.Clear();
-            foreach (var card in cards)
+            foreach (var card in deck.Cards)
             {
                PlayerDeck.Add(card);
             }

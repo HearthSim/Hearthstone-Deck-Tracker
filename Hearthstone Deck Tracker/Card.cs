@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -7,15 +8,68 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker
 {
-    public struct Card
+    public class Card : ICloneable
     {
+        //cards loaded from playerdeck?
+        public Card()
+        {
+            Count = 1;
+        }
+
+        //cards loaded from db
+        public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
+                    int inHandCount, int count)
+        {
+            Id = id;
+            PlayerClass = playerClass;
+            Rarity = rarity;
+            Type = type;
+            Name = name;
+            Cost = cost;
+            LocalizedName = localizedName;
+            InHandCount = inHandCount;
+            Count = count;
+        }
+        
+
+        private string _localizedName;
+        private string _name;
+
+        public int Count;
         public string Id;
+
+        [XmlIgnore]
         public string PlayerClass;
+
+        [XmlIgnore]
         public string Rarity;
+
+        [XmlIgnore]
         public string Type { get; set; }
-        private int? _count;
-        public string Name { get; set; }
+
+        [XmlIgnore]
+        public string Name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    Load();
+                }
+                return _name;
+            }
+            set { _name = value; }
+        }
+
+        [XmlIgnore]
         public int Cost { get; set; }
+
+        [XmlIgnore]
+        public string LocalizedName
+        {
+            get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
+            set { _localizedName = value; }
+        }
 
         [XmlIgnore]
         public int InHandCount;
@@ -44,12 +98,6 @@ namespace Hearthstone_Deck_Tracker
             get { return PlayerClass ?? "Neutral"; }
         }
 
-        public int Count
-        {
-            get { return _count ?? 1; }
-            set { _count = value; }
-        }
-
         public SolidColorBrush ColorPlayer
         {
             get
@@ -57,7 +105,7 @@ namespace Hearthstone_Deck_Tracker
                 return
                     new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand)
                                             ? Colors.GreenYellow
-                                            : (_count != 0) ? Colors.White : Colors.Gray);
+                                            : (Count != 0) ? Colors.White : Colors.Gray);
             }
         }
 
@@ -79,10 +127,6 @@ namespace Hearthstone_Deck_Tracker
                 {
                     string cardFileName = Name.ToLower().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
 
-                    //if (!File.Exists("Images/" + cardFileName))
-                    //{
-                    //    return new ImageBrush();
-                    //}
                     
                    //card graphic
                     var group = new DrawingGroup();
@@ -100,13 +144,13 @@ namespace Hearthstone_Deck_Tracker
                             new Rect(0, 0, 218, 35)));
 
                     //extra info?
-                    if (_count >= 2 || Rarity == "Legendary")
+                    if (Count >= 2 || Rarity == "Legendary")
                     {
                         group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)), new Rect(189, 6, 25, 24)));
 
-                        if (_count >= 2 && _count <= 9)
+                        if (Count >= 2 && Count <= 9)
                         {
-                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + _count + ".png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
+                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
                         }
                         else
                         {
@@ -115,7 +159,7 @@ namespace Hearthstone_Deck_Tracker
                     }
 
                     //dark overlay
-                    if (_count == 0)
+                    if (Count == 0)
                     {
                         group.Children.Add(
                             new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
@@ -132,7 +176,7 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
-
+        
         public override string ToString()
         {
             return Name + " (" + Count + ")";
@@ -142,8 +186,27 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!(card is Card))
                 return false;
-            var c = (Card) card;
+            var c = (Card)card;
             return c.Name == Name;
+        }
+
+        public object Clone()
+        {
+            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count);
+        }
+
+        private void Load()
+        {
+            Debug.Assert(Id != null);
+
+            var stats = Hearthstone.GetCardFromId(Id);
+            PlayerClass = stats.PlayerClass;
+            Rarity = stats.Rarity;
+            Type = stats.Type;
+            Name = stats.Name;
+            Cost = stats.Cost;
+            LocalizedName = stats.LocalizedName;
+            InHandCount = stats.InHandCount;
         }
     }
 }

@@ -105,7 +105,11 @@ namespace Hearthstone_Deck_Tracker
         {
             Name = name;
             Class = className;
-            Cards = new ObservableCollection<Card>(cards);
+            Cards = new ObservableCollection<Card>();
+            foreach (var card in cards)
+            {
+                Cards.Add((Card)card.Clone());
+            }
             Tags = new List<string>(tags);
             Note = note;
         }

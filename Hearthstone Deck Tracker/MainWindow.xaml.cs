@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -135,6 +137,12 @@ namespace Hearthstone_Deck_Tracker
             }
             _config.Debug = IS_DEBUG;
 
+
+            string languageTag = _config.SelectedLanguage;
+            //hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
+            _hearthstone = Helper.LanguageDict.ContainsValue(languageTag) ? new Hearthstone(languageTag) : new Hearthstone("enUS");
+            _hearthstone.Reset();
+
             //load saved decks
             if (!File.Exists("PlayerDecks.xml"))
             {
@@ -142,6 +150,14 @@ namespace Hearthstone_Deck_Tracker
                 using (var sr = new StreamWriter("PlayerDecks.xml", false))
                 {
                     sr.WriteLine("<Decks></Decks>");
+                }
+            }
+            else
+            {
+                //the new playerdecks.xml wont work with versions below 0.2.19, make copy
+                if (!File.Exists("PlayerDecks_old.xml"))
+                {
+                    File.Copy("PlayerDecks.xml", "PlayerDecks_old.xml");
                 }
             }
             _xmlManager = new XmlManager<Decks> {Type = typeof (Decks)};
@@ -170,9 +186,6 @@ namespace Hearthstone_Deck_Tracker
             _notifyIcon.Visible = false;
 
 
-            //hearthstone, loads db etc
-            _hearthstone = new Hearthstone();
-            _hearthstone.Reset();
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
@@ -212,6 +225,7 @@ namespace Hearthstone_Deck_Tracker
 
             ComboboxAccent.ItemsSource = ThemeManager.Accents;
             ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
+            ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
             LoadConfig();
             
@@ -266,11 +280,7 @@ namespace Hearthstone_Deck_Tracker
 
             _doUpdate = true;
             UpdateOverlayAsync();
-
-
-            //ListboxDecks.SelectedItem =
-            //    _deckList.DecksList.FirstOrDefault(d => d.Name != null && d.Name == _config.LastDeck);
-
+            
             _initialized = true;
 
             DeckPickerList.UpdateList();
@@ -431,7 +441,7 @@ namespace Hearthstone_Deck_Tracker
 
             var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck != null)
-                _hearthstone.SetPremadeDeck(selectedDeck.Cards);
+                _hearthstone.SetPremadeDeck((Deck)selectedDeck.Clone());
 
             _hearthstone.IsInMenu = false;
             _hearthstone.Reset();
@@ -481,7 +491,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 var deck = DeckPickerList.SelectedDeck;
                 if (deck != null)
-                    _hearthstone.SetPremadeDeck(deck.Cards);
+                    _hearthstone.SetPremadeDeck((Deck)deck.Clone());
 
                 _hearthstone.Reset();
             }
@@ -796,6 +806,11 @@ namespace Hearthstone_Deck_Tracker
             _overlay.SetPlayerTextLocation(_config.TextOnTopPlayer);
             _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
 
+            if (Helper.LanguageDict.Values.Contains(_config.SelectedLanguage))
+            {
+                ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == _config.SelectedLanguage).Key;
+                
+            }
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -1025,7 +1040,7 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.Reset();
 
             if (selected != null)
-                _hearthstone.SetPremadeDeck(selected.Cards);
+                _hearthstone.SetPremadeDeck((Deck)selected.Clone());
 
             _logReader.Reset(true);
 
@@ -2145,6 +2160,27 @@ namespace Hearthstone_Deck_Tracker
                 UpdateNewDeckHeader(true);
                 UpdateDbListView();
             }
+        }
+
+        private async void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            var language = ComboboxLanguages.SelectedValue.ToString();
+            if(!Helper.LanguageDict.ContainsKey(language))
+                return;
+
+            var selectedLanguage = Helper.LanguageDict[language];
+
+            if (!File.Exists(string.Format("Files/cardsDB.{0}.json", selectedLanguage)))
+            {
+                return;
+            }
+
+            _config.SelectedLanguage = selectedLanguage;
+
+            await this.ShowMessageAsync("Restarting tracker", "");
+            Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
 
     }

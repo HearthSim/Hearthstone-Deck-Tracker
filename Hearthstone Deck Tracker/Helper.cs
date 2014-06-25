@@ -103,5 +103,21 @@ namespace Hearthstone_Deck_Tracker
             }
             return result;
         }
+        
+        public static Dictionary<string, string> LanguageDict = new Dictionary<string, string>()
+            {
+                {"English", "enUS"},
+                {"Chinese (China)", "zhCN"},
+                {"Chinese (Taiwan)", "zhTW"},
+                {"French", "frFR"},
+                {"German", "deDE"},
+                {"Italian", "itIT"},
+                {"Korean", "koKR"},
+                {"Polish", "plPL"},
+                {"Portuguese", "ptBR"},
+                {"Russian", "ruRU"},
+                {"Spanish (Mexico)", "esMX"},
+                {"Spanish (Spain)", "esES"}
+            }; 
     }
 }

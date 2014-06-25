@@ -18,7 +18,7 @@
             <GridViewColumn Header="name" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-5,0,0,0" Height="16" VerticalAlignment="Center" Text="{Binding Name}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" />
+                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-5,0,0,0" Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
