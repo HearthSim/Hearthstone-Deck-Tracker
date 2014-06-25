@@ -315,7 +315,21 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnCardPosChange(HsLogReader sender, CardPosChangeArgs args)
         {
-            _hearthstone.OpponentCardPosChange(args);
+            switch (args.Action)
+            {
+                case OpponentHandMovement.Draw:
+                    _hearthstone.OpponentDraw(args);
+                    break;
+                case OpponentHandMovement.Play:
+                    _hearthstone.OpponentPlay(args);
+                    break;
+                case OpponentHandMovement.Mulligan:
+                    HandleOpponentMulligan(args.From);
+                    break;
+                case OpponentHandMovement.FromPlayerDeck:
+                    _hearthstone.EnemyGet(args.Turn);
+                    break;
+            }
         }
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
@@ -412,23 +426,14 @@ namespace Hearthstone_Deck_Tracker
                 case CardMovementType.OpponentPlay:
                     HandleOpponentPlay(args.CardId);
                     break;
-                case CardMovementType.OpponentMulligan:
-                    HandleOpponentMulligan();
-                    break;
                 case CardMovementType.OpponentHandDiscard:
                     HandleOpponentHandDiscard();
-                    break;
-                case CardMovementType.OpponentDraw:
-                    HandleOpponentDraw();
                     break;
                 case CardMovementType.OpponentDeckDiscard:
                     HandleOpponentDeckDiscard(args.CardId);
                     break;
                 case CardMovementType.OpponentPlayToHand:
-                    HandleOpponentPlayToHand(args.CardId);
-                    break;
-                case CardMovementType.OpponentGet:
-                    HandleOpponentGet(args.CardId);
+                    HandleOpponentPlayToHand(args.CardId, sender.GetTurnNumber());
                     break;
                 default:
                     Console.WriteLine("Invalid card movement");
@@ -505,14 +510,9 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.IsInMenu = true;
         }
 
-        private void HandleOpponentGet(string cardId)
+        private void HandleOpponentPlayToHand(string cardId, int turn)
         {
-            _hearthstone.OpponentGet(cardId);
-        }
-
-        private void HandleOpponentPlayToHand(string cardId)
-        {
-            _hearthstone.OpponentBackToHand(cardId);
+            _hearthstone.EnemyBackToHand(cardId, turn);
         }
 
         private void HandlePlayerGet(string cardId)
@@ -571,20 +571,15 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.EnemyPlayed(cardId);
         }
 
-        private void HandleOpponentMulligan()
+        private void HandleOpponentMulligan(int pos)
         {
             _turnTimer.MulliganDone(Turn.Opponent);
-            _hearthstone.EnemyMulligan();
+            _hearthstone.EnemyMulligan(pos);
         }
 
         private void HandleOpponentHandDiscard()
         {
             _hearthstone.EnemyHandDiscard();
-        }
-
-        private void HandleOpponentDraw()
-        {
-            _hearthstone.EnemyDraw();
         }
 
         private void HandleOpponentDeckDiscard(string cardId)
@@ -1675,6 +1670,20 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HideOpponentCardAge = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideOpponentCardMarks_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentCardMarks = false;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideOpponentCardMarks_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideOpponentCardMarks = true;
             SaveConfig(true);
         }
 
