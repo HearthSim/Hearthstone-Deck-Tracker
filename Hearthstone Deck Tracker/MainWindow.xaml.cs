@@ -62,6 +62,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly Version _newVersion;
         private readonly TurnTimer _turnTimer;
         private readonly bool _updatedLogConfig;
+        private readonly bool _foundHsDirectory;
         
         
         public MainWindow()
@@ -73,44 +74,7 @@ namespace Hearthstone_Deck_Tracker
                 TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
                                                      version.Build);
             }
-            //check for log config and create if not existing
-            try
-            {
-                if (!File.Exists(_logConfigPath))
-                {
-                    File.Copy("Files/log.config", _logConfigPath);
-                    _updatedLogConfig = true;
-                }
-                else
-                {
-                    //update log.config if newer
-                    var localFile = new FileInfo(_logConfigPath);
-                    var file = new FileInfo("Files/log.config");
-                    if (file.LastWriteTime > localFile.LastWriteTime)
-                    {
-                        File.Copy("Files/log.config", _logConfigPath, true);
-                        _updatedLogConfig = true;
-                    }
-
-                }
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                MessageBox.Show(
-                    e.Message + "\n\n" + e.InnerException +
-                    "\n\n Please restart the tracker as administrator",
-                    "Error writing log.config");
-                Application.Current.Shutdown();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    e.Message + "\n\n" + e.InnerException +
-                    "\n\n What happend here? ",
-                    "Error writing log.config");
-                Application.Current.Shutdown();
-            }
-
+            
             //load config
             _config = new Config();
             _xmlManagerConfig = new XmlManager<Config> {Type = typeof (Config)};
@@ -192,7 +156,10 @@ namespace Hearthstone_Deck_Tracker
 
             //create overlay
             _overlay = new OverlayWindow(_config, _hearthstone) {Topmost = true};
-            _overlay.Show();
+            if (_foundHsDirectory)
+            {
+                _overlay.Show();
+            }
 
             _playerWindow = new PlayerWindow(_config, _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn);
             _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
@@ -228,26 +195,68 @@ namespace Hearthstone_Deck_Tracker
             ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
             LoadConfig();
-            
+
             //find hs directory
-            if (!File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
+            if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
             {
-                MessageBox.Show("Please specify your Hearthstone directory", "Hearthstone directory not found",
-                                MessageBoxButton.OK);
-                var dialog = new OpenFileDialog();
-                dialog.Title = "Select Hearthstone.exe";
-                dialog.DefaultExt = "Hearthstone.exe";
-                dialog.Filter = "Hearthstone.exe|Hearthstone.exe";
-                var result = dialog.ShowDialog();
-                if (result != true)
+                using (var hsDirKey =
+                    Registry.LocalMachine.OpenSubKey(
+                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
                 {
-                    MessageBox.Show("No valid path.", "Error",
-                                    MessageBoxButton.OK);
+                    if (hsDirKey != null)
+                    {
+                        _config.HearthstoneDirectory = (string) hsDirKey.GetValue("InstallLocation");
+                        _xmlManagerConfig.Save("config.xml", _config);
+                        _foundHsDirectory = true;
+                    }
+                }
+            }
+            else
+            {
+                _foundHsDirectory = true;
+            }
+
+            if(_foundHsDirectory)
+            {
+                //check for log config and create if not existing
+                try
+                {
+                    if (!File.Exists(_logConfigPath))
+                    {
+                        File.Copy("Files/log.config", _logConfigPath);
+                        _updatedLogConfig = true;
+                    }
+                    else
+                    {
+                        //update log.config if newer
+                        var localFile = new FileInfo(_logConfigPath);
+                        var file = new FileInfo("Files/log.config");
+                        if (file.LastWriteTime > localFile.LastWriteTime)
+                        {
+                            File.Copy("Files/log.config", _logConfigPath, true);
+                            _updatedLogConfig = true;
+                        }
+
+                    }
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    MessageBox.Show(
+                        e.Message + "\n\n" + e.InnerException +
+                        "\n\n Please restart the tracker as administrator",
+                        "Error writing log.config");
                     Application.Current.Shutdown();
                 }
-                _config.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
-                _xmlManagerConfig.Save("config.xml", _config);
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        e.Message + "\n\n" + e.InnerException +
+                        "\n\n What happend here? ",
+                        "Error writing log.config");
+                    Application.Current.Shutdown();
+                }
             }
+
 
             _deckImporter = new DeckImporter(_hearthstone);
             _deckExporter = new DeckExporter(_config);
@@ -278,7 +287,7 @@ namespace Hearthstone_Deck_Tracker
 
             UpdateDbListView();
 
-            _doUpdate = true;
+            _doUpdate = _foundHsDirectory;
             UpdateOverlayAsync();
             
             _initialized = true;
@@ -291,9 +300,10 @@ namespace Hearthstone_Deck_Tracker
                 UseDeck(lastDeck);
             }
 
-
-            _logReader.Start();
-            
+            if (_foundHsDirectory)
+            {
+                _logReader.Start();
+            }
         }
 
         #region LogReader Events
@@ -655,6 +665,11 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!_foundHsDirectory)
+            {
+                ShowHsNotInstalledMessage();
+                return;
+            }
             if (_newVersion != null)
             {
                 ShowNewUpdateMessage();
@@ -882,6 +897,10 @@ namespace Hearthstone_Deck_Tracker
         private async void ShowUpdatedLogConfigMessage()
         {
             await this.ShowMessageAsync("Restart Hearthstone", "This is either your first time starting the tracker or the log.config file has been updated. Please restart heartstone once, for the tracker to work properly.");
+        }
+        private async void ShowHsNotInstalledMessage()
+        {
+            await this.ShowMessageAsync("Hearthstone install directory not found", "Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).\n\nIf Hearthstone installed on your machine but this message is showing, please manually set the <HearthstoneDirectory> variable in the config.xml file.");
         }
 
         #endregion
@@ -1268,6 +1287,56 @@ namespace Hearthstone_Deck_Tracker
                 AddCardToDeck(card);
             }
         }
+
+        private void Grid_Drop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            var file = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+            var info = new FileInfo(file);
+
+            if (info.Extension != ".txt") return;
+            using (var sr = new StreamReader(file))
+            {
+                var lines = sr.ReadToEnd().Split('\n');
+                var deck = new Deck();
+                foreach (var line in lines)
+                {
+                    var card = _hearthstone.GetCardFromName(line.Trim());
+                    if (card.Name == "") continue;
+
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                    {
+                        deck.Class = card.PlayerClass;
+                    }
+
+                    if (deck.Cards.Contains(card))
+                    {
+                        var deckCard = deck.Cards.First(c => c.Equals(card));
+                        deck.Cards.Remove(deckCard);
+                        deckCard.Count++;
+                        deck.Cards.Add(deckCard);
+                    }
+                    else
+                    {
+                        deck.Cards.Add(card);
+                    }
+                }
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+                UpdateDbListView();
+            }
+        }
+
 
         #endregion
 
@@ -2089,7 +2158,6 @@ namespace Hearthstone_Deck_Tracker
                 SaveConfig(false);
             }
         }
-        #endregion
 
         private void ComboboxTextLocationOpponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -2099,7 +2167,7 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(false);
             _overlay.SetOpponentTextLocation(_config.TextOnTopOpponent);
             _opponentWindow.SetTextLocation(_config.TextOnTopOpponent);
-            
+
         }
 
         private void ComboboxTextLocationPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -2113,60 +2181,11 @@ namespace Hearthstone_Deck_Tracker
             _playerWindow.SetTextLocation(_config.TextOnTopPlayer);
         }
 
-        private void Grid_Drop(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-
-            var file = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-            var info = new FileInfo(file);
-
-            if (info.Extension != ".txt") return;
-            using (var sr = new StreamReader(file))
-            {
-                var lines = sr.ReadToEnd().Split('\n');
-                var deck = new Deck();
-                foreach (var line in lines)
-                {
-                    var card = _hearthstone.GetCardFromName(line.Trim());
-                    if (card.Name == "") continue;
-
-                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-                    {
-                        deck.Class = card.PlayerClass;
-                    }
-
-                    if (deck.Cards.Contains(card))
-                    {
-                        var deckCard = deck.Cards.First(c => c.Equals(card));
-                        deck.Cards.Remove(deckCard);
-                        deckCard.Count++;
-                        deck.Cards.Add(deckCard);
-                    }
-                    else
-                    {
-                        deck.Cards.Add(card);
-                    }
-                }
-                ClearNewDeckSection();
-                _newContainsDeck = true;
-
-                _newDeck = (Deck)deck.Clone();
-                ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
-                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
-                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
-
-                TextBoxDeckName.Text = _newDeck.Name;
-                UpdateNewDeckHeader(true);
-                UpdateDbListView();
-            }
-        }
-
         private async void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!_initialized) return;
             var language = ComboboxLanguages.SelectedValue.ToString();
-            if(!Helper.LanguageDict.ContainsKey(language))
+            if (!Helper.LanguageDict.ContainsKey(language))
                 return;
 
             var selectedLanguage = Helper.LanguageDict[language];
@@ -2183,5 +2202,8 @@ namespace Hearthstone_Deck_Tracker
             Application.Current.Shutdown();
         }
 
+        #endregion
+
+       
     }
 }
