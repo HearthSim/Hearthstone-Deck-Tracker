@@ -10,13 +10,11 @@ namespace Hearthstone_Deck_Tracker
 {
     public class Card : ICloneable
     {
-        //cards loaded from playerdeck?
         public Card()
         {
             Count = 1;
         }
 
-        //cards loaded from db
         public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
                     int inHandCount, int count)
         {
