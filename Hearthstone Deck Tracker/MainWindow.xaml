@@ -216,7 +216,7 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="417" Width="235" Margin="5,5,5,0" Grid.RowSpan="2">
+                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="478" Width="235" Margin="5,5,5,0" Grid.RowSpan="2">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Show decks in additional windows" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
@@ -250,7 +250,7 @@
                                         <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
                                         <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if only 1 possible deck" HorizontalAlignment="Left" Margin="29,79,-11,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,79,-11,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
                                         <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxAccent_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>

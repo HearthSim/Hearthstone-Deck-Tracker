@@ -90,35 +90,43 @@ namespace Hearthstone_Deck_Tracker
                 var localizedCardNames = new Dictionary<string, string>();
                 if (languageTag != "enUS")
                 {
-                    var localized = JObject.Parse(File.ReadAllText(string.Format("Files/cardsDB.{0}.json", languageTag)));
-                    foreach (var cardType in localized)
+                    var file = string.Format("Files/cardsDB.{0}.json", languageTag);
+                    if(File.Exists(file))
                     {
-                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                            cardType.Key != "Reward") continue;
-                        foreach (var card in cardType.Value)
+                        var localized = JObject.Parse(File.ReadAllText(file));
+                        foreach (var cardType in localized)
                         {
-                            var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                            localizedCardNames.Add(tmp.Id, tmp.Name);
+                            if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                                cardType.Key != "Reward") continue;
+                            foreach (var card in cardType.Value)
+                            {
+                                var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                                localizedCardNames.Add(tmp.Id, tmp.Name);
+                            }
                         }
                     }
                 }
 
 
                 //load engish db (needed for importing, etc)
-                var obj = JObject.Parse(File.ReadAllText("Files/cardsDB.enUS.json"));
+                var fileEng = "Files/cardsDB.enUS.json";
                 var tempDb = new Dictionary<string, Card>();
-                foreach (var cardType in obj)
+                if(File.Exists(fileEng))
                 {
-                    if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                        cardType.Key != "Reward") continue;
-                    foreach (var card in cardType.Value)
+                    var obj = JObject.Parse(File.ReadAllText(fileEng));
+                    foreach (var cardType in obj)
                     {
-                        var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                        if (languageTag != "enUS")
+                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                            cardType.Key != "Reward") continue;
+                        foreach (var card in cardType.Value)
                         {
-                            tmp.LocalizedName = localizedCardNames[tmp.Id];
+                            var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                            if (languageTag != "enUS")
+                            {
+                                tmp.LocalizedName = localizedCardNames[tmp.Id];
+                            }
+                            tempDb.Add(tmp.Id, tmp);
                         }
-                        tempDb.Add(tmp.Id, tmp);
                     }
                 }
                 _cardDb = new Dictionary<string, Card>(tempDb);
@@ -132,7 +140,12 @@ namespace Hearthstone_Deck_Tracker
         public static Card GetCardFromId(string cardId)
         {
             if (cardId == "") return new Card();
-            return (Card)_cardDb[cardId].Clone();
+            if (_cardDb.ContainsKey(cardId))
+            {
+                return (Card)_cardDb[cardId].Clone();
+            }
+            Debug.WriteLine("Could not find entry in db for cardId: " + cardId);
+            return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1);
         }
         public Card GetCardFromName(string name)
         {
@@ -142,7 +155,8 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //not sure with all the values here
-            return new Card("UNKNOWN", "Neutral", "UNKNOWN", "UNKNOWN", name, 0, name, 0, 1);
+            Debug.WriteLine("Could not get card from name: " + name);
+            return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1);
         }
 
         public List<Card> GetActualCards()

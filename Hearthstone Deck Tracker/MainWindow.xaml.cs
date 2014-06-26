@@ -104,9 +104,7 @@ namespace Hearthstone_Deck_Tracker
             //find hs directory
             if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
             {
-                using (var hsDirKey =
-                    Registry.LocalMachine.OpenSubKey(
-                        @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
+                using (var hsDirKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
                 {
                     if (hsDirKey != null)
                     {
@@ -160,6 +158,10 @@ namespace Hearthstone_Deck_Tracker
                         "Error writing log.config");
                     Application.Current.Shutdown();
                 }
+            }
+            else
+            {
+                BtnExport.IsEnabled = false;
             }
 
 
@@ -461,7 +463,7 @@ namespace Hearthstone_Deck_Tracker
             //select deck based on hero
             if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
             {
-                if (!_hearthstone.IsUsingPremade) return;
+                if (!_hearthstone.IsUsingPremade || !_config.AutoDeckDetection) return;
                 
                 if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
                 {
@@ -760,6 +762,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxTimerTopmost.IsChecked = _config.TimerWindowTopmost;
             CheckboxTimerWindow.IsChecked = _config.TimerWindowOnStartup;
             CheckboxTimerTopmostHsForeground.IsChecked = _config.TimerWindowTopmostIfHsForeground;
+            CheckboxTimerTopmostHsForeground.IsEnabled = _config.TimerWindowTopmost;
             CheckboxSameScaling.IsChecked = _config.UseSameScaling;
             CheckboxDeckDetection.IsChecked = _config.AutoDeckDetection;
             CheckboxWinTopmostHsForeground.IsChecked = _config.WindowsTopmostIfHsForeground;
@@ -853,8 +856,11 @@ namespace Hearthstone_Deck_Tracker
                         _overlay.Update(true);
                         if (_config.WindowsTopmostIfHsForeground && _config.WindowsTopmost)
                         {
-                            _playerWindow.Topmost = true;
+                            //if player topmost is set to true before opponent:
+                            //clicking on the playerwindow and back to hs causes the playerwindow to be behind hs.
+                            //other way around it works for both windows... what?
                             _opponentWindow.Topmost = true;
+                            _playerWindow.Topmost = true;
                             _timerWindow.Topmost = true;
                         }
                         hsForegroundChanged = false;
@@ -1171,7 +1177,7 @@ namespace Hearthstone_Deck_Tracker
                 if (ListViewDB.Items.Count == 1)
                 {
                     var card = (Card) ListViewDB.Items[0];
-                    AddCardToDeck(card);
+                    AddCardToDeck((Card)card.Clone());
                 }
             }
         }
@@ -1233,7 +1239,7 @@ namespace Hearthstone_Deck_Tracker
             if (originalSource != null)
             {
                 var card = (Card)ListViewDB.SelectedItem;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
                 _newContainsDeck = true;
             }
         }
@@ -1266,7 +1272,7 @@ namespace Hearthstone_Deck_Tracker
             if (originalSource != null)
             {
                 var card = (Card)ListViewNewDeck.SelectedItem;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
             }
         }
 
@@ -1276,7 +1282,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 var card = (Card) ListViewDB.SelectedItem;
                 if (string.IsNullOrEmpty(card.Name)) return;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
             }
         }
 
