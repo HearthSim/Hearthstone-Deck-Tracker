@@ -406,25 +406,20 @@ namespace Hearthstone_Deck_Tracker
                     OpponentHand[i] = OpponentHand[i + 1];
                 }
                 OpponentHand[9] = -1;
-                //handPosIndex--;
             }
             else if (args.Action == OpponentHandMovement.Draw)
             {
-                //one of the two ifs alone always seems to screw up at some point. maybe this works
-               // if (OpponentHand[handPosIndex] == -1)
-               // {
-               //     OpponentHand[handPosIndex] = args.Turn;
-                //    Debug.WriteLine("1set " + handPosIndex + "( " + (EnemyHandCount - 1) + " )");
-                //} else 
+                if (EnemyHandCount - 1 < 0 || EnemyHandCount - 1 > 9)
+                {
+                    //should only be the case if the game crashes
+                    return;
+                }
                 if (OpponentHand[EnemyHandCount - 1] == -1)
                 {
                     OpponentHand[EnemyHandCount - 1] = args.Turn;
                     Debug.WriteLine("set " + (EnemyHandCount - 1));
                 }
-
-                //handPosIndex++;
             }
-            //Debug.WriteLine(string.Join(",", OpponentHand));
         }
 
         public List<int> GetOpponentHandAge()
