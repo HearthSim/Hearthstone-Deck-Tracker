@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
                     var file = string.Format("Files/cardsDB.{0}.json", languageTag);
                     if(File.Exists(file))
                     {
-                        var localized = JObject.Parse(file);
+                        var localized = JObject.Parse(File.ReadAllText(file));
                         foreach (var cardType in localized)
                         {
                             if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
@@ -127,7 +127,12 @@ namespace Hearthstone_Deck_Tracker
         public static Card GetCardFromId(string cardId)
         {
             if (cardId == "") return new Card();
-            return (Card)_cardDb[cardId].Clone();
+            if (_cardDb.ContainsKey(cardId))
+            {
+                return (Card)_cardDb[cardId].Clone();
+            }
+            Debug.WriteLine("Could not find entry in db for cardId: " + cardId);
+            return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1);
         }
         public Card GetCardFromName(string name)
         {
@@ -137,7 +142,8 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //not sure with all the values here
-            return new Card("UNKNOWN", "Neutral", "UNKNOWN", "UNKNOWN", name, 0, name, 0, 1);
+            Debug.WriteLine("Could not get card from name: " + name);
+            return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1);
         }
 
         public List<Card> GetActualCards()
