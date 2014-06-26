@@ -77,35 +77,43 @@ namespace Hearthstone_Deck_Tracker
                 var localizedCardNames = new Dictionary<string, string>();
                 if (languageTag != "enUS")
                 {
-                    var localized = JObject.Parse(File.ReadAllText(string.Format("Files/cardsDB.{0}.json", languageTag)));
-                    foreach (var cardType in localized)
+                    var file = string.Format("Files/cardsDB.{0}.json", languageTag);
+                    if(File.Exists(file))
                     {
-                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                            cardType.Key != "Reward") continue;
-                        foreach (var card in cardType.Value)
+                        var localized = JObject.Parse(file);
+                        foreach (var cardType in localized)
                         {
-                            var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                            localizedCardNames.Add(tmp.Id, tmp.Name);
+                            if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                                cardType.Key != "Reward") continue;
+                            foreach (var card in cardType.Value)
+                            {
+                                var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                                localizedCardNames.Add(tmp.Id, tmp.Name);
+                            }
                         }
                     }
                 }
 
 
                 //load engish db (needed for importing, etc)
-                var obj = JObject.Parse(File.ReadAllText("Files/cardsDB.enUS.json"));
+                var fileEng = "Files/cardsDB.enUS.json";
                 var tempDb = new Dictionary<string, Card>();
-                foreach (var cardType in obj)
+                if(File.Exists(fileEng))
                 {
-                    if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                        cardType.Key != "Reward") continue;
-                    foreach (var card in cardType.Value)
+                    var obj = JObject.Parse(File.ReadAllText(fileEng));
+                    foreach (var cardType in obj)
                     {
-                        var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                        if (languageTag != "enUS")
+                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
+                            cardType.Key != "Reward") continue;
+                        foreach (var card in cardType.Value)
                         {
-                            tmp.LocalizedName = localizedCardNames[tmp.Id];
+                            var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+                            if (languageTag != "enUS")
+                            {
+                                tmp.LocalizedName = localizedCardNames[tmp.Id];
+                            }
+                            tempDb.Add(tmp.Id, tmp);
                         }
-                        tempDb.Add(tmp.Id, tmp);
                     }
                 }
                 _cardDb = new Dictionary<string, Card>(tempDb);

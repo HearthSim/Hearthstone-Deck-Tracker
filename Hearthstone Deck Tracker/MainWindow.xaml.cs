@@ -159,6 +159,10 @@ namespace Hearthstone_Deck_Tracker
                     Application.Current.Shutdown();
                 }
             }
+            else
+            {
+                BtnExport.IsEnabled = false;
+            }
 
 
             string languageTag = _config.SelectedLanguage;
@@ -454,7 +458,7 @@ namespace Hearthstone_Deck_Tracker
             //select deck based on hero
             if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
             {
-                if (!_hearthstone.IsUsingPremade) return;
+                if (!_hearthstone.IsUsingPremade || !_config.AutoDeckDetection) return;
                 
                 if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
                 {
@@ -1175,7 +1179,7 @@ namespace Hearthstone_Deck_Tracker
                 if (ListViewDB.Items.Count == 1)
                 {
                     var card = (Card) ListViewDB.Items[0];
-                    AddCardToDeck(card);
+                    AddCardToDeck((Card)card.Clone());
                 }
             }
         }
@@ -1237,7 +1241,7 @@ namespace Hearthstone_Deck_Tracker
             if (originalSource != null)
             {
                 var card = (Card)ListViewDB.SelectedItem;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
                 _newContainsDeck = true;
             }
         }
@@ -1270,7 +1274,7 @@ namespace Hearthstone_Deck_Tracker
             if (originalSource != null)
             {
                 var card = (Card)ListViewNewDeck.SelectedItem;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
             }
         }
 
@@ -1280,7 +1284,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 var card = (Card) ListViewDB.SelectedItem;
                 if (string.IsNullOrEmpty(card.Name)) return;
-                AddCardToDeck(card);
+                AddCardToDeck((Card)card.Clone());
             }
         }
 
