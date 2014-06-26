@@ -861,8 +861,11 @@ namespace Hearthstone_Deck_Tracker
                         _overlay.Update(true);
                         if (_config.WindowsTopmostIfHsForeground && _config.WindowsTopmost)
                         {
-                            _playerWindow.Topmost = true;
+                            //if player topmost is set to true before opponent:
+                            //clicking on the playerwindow and back to hs causes the playerwindow to be behind hs.
+                            //other way around it works for both windows... what?
                             _opponentWindow.Topmost = true;
+                            _playerWindow.Topmost = true;
                             _timerWindow.Topmost = true;
                         }
                         hsForegroundChanged = false;
