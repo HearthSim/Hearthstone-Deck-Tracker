@@ -333,7 +333,8 @@ namespace Hearthstone_Deck_Tracker
 
         public void EnemyBackToHand(string cardId, int turn)
         {
-            EnemyHandCount++;
+            Debug.WriteLine("EnemyBackToHand");
+
             if (EnemyCards.Any(c => c.Id == cardId))
             {
                 var card = EnemyCards.First(c => c.Id == cardId);
@@ -345,10 +346,13 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
 
+            EnemyHandCount++;
+
+            if (!ValidateEnemyHandCount())
+                return;
+
             OpponentHandAge[EnemyHandCount - 1] = turn;
             OpponentHandMarks[EnemyHandCount - 1] = CardMarkReturned;
-
-            Debug.WriteLine("EnemyBackToHand");
         }
 
         public void EnemyHandDiscard()
@@ -394,13 +398,17 @@ namespace Hearthstone_Deck_Tracker
 
         internal void EnemyGet(int turn)
         {
+            Debug.WriteLine("EnemyGet");
+
             EnemyHandCount++;
+
+            if (!ValidateEnemyHandCount())
+                return;
+
             OpponentHandAge[EnemyHandCount - 1] = turn;
 
             if (OpponentHandMarks[EnemyHandCount - 1] != CardMarkCoin)
                 OpponentHandMarks[EnemyHandCount - 1] = CardMarkStolen;
-
-            Debug.WriteLine("EnemyGet");
         }
 
         internal void Reset()
@@ -429,8 +437,13 @@ namespace Hearthstone_Deck_Tracker
 
         public void OpponentDraw(CardPosChangeArgs args)
         {
+            Debug.WriteLine("OpponentDraw");
+
             EnemyHandCount++;
             OpponentDeckCount--;
+
+            if (!ValidateEnemyHandCount())
+                return;
 
             if (OpponentHandAge[EnemyHandCount - 1] != -1)
             {
@@ -473,6 +486,17 @@ namespace Hearthstone_Deck_Tracker
 
             Debug.WriteLine("OpponentHandAge after play: " + string.Join(",", OpponentHandAge));
             Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks));
+        }
+
+        bool ValidateEnemyHandCount()
+        {
+            if (EnemyHandCount - 1 < 0 || EnemyHandCount - 1 > 9)
+            {
+                Debug.WriteLine("ValidateEnemyHandCount failed! EnemyHandCount = " + EnemyHandCount.ToString());
+                return false;
+            }
+
+            return true;
         }
     }
 }
