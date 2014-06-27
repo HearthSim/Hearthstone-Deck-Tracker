@@ -239,7 +239,7 @@ namespace Hearthstone_Deck_Tracker
             } 
         }
 
-        public void EnemyPlayed(string cardId)
+        public void EnemyPlayed(string cardId, int from)
         {
             EnemyHandCount--;
 
@@ -247,12 +247,15 @@ namespace Hearthstone_Deck_Tracker
                 return;
 
             Card card = GetCardFromId(cardId);
-            if (EnemyCards.Any(x => x.Equals(card)))
+
+            if (from != -1 && OpponentHandMarks[from - 1] == CardMarkStolen)
+                card.IsStolen = true;
+
+            if (EnemyCards.Any(x => x.Equals(card) && x.IsStolen == card.IsStolen))
             {
                 EnemyCards.Remove(card);
                 card.Count++;
             }
-
             EnemyCards.Add(card);
 
             Debug.WriteLine("EnemyPlayed");

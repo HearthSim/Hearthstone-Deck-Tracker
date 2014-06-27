@@ -50,14 +50,16 @@ namespace Hearthstone_Deck_Tracker
 
     public class CardMovementArgs : EventArgs
     {
-        public CardMovementArgs(CardMovementType movementType, string cardId)
+        public CardMovementArgs(CardMovementType movementType, string cardId, int fromZonePos = -1)
         {
             MovementType = movementType;
             CardId = cardId;
+            From = fromZonePos;
         }
 
         public CardMovementType MovementType { get; private set; }
         public string CardId { get; private set; }
+        public int From { get; private set; }
     }
 
     public class GameStateArgs : EventArgs
@@ -375,7 +377,7 @@ namespace Hearthstone_Deck_Tracker
                                 else if (to == "OPPOSING PLAY")
                                 {
                                     //opponent played
-                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id, zonePos));
                                 }
                                 else
                                 {

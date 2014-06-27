@@ -426,7 +426,7 @@ namespace Hearthstone_Deck_Tracker
                     HandleOpponentSecretTrigger(args.CardId);
                     break;
                 case CardMovementType.OpponentPlay:
-                    HandleOpponentPlay(args.CardId);
+                    HandleOpponentPlay(args.CardId, args.From);
                     break;
                 case CardMovementType.OpponentHandDiscard:
                     HandleOpponentHandDiscard();
@@ -568,9 +568,9 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone.EnemySecretTriggered(cardId);
         }
 
-        private void HandleOpponentPlay(string cardId)
+        private void HandleOpponentPlay(string cardId, int from)
         {
-            _hearthstone.EnemyPlayed(cardId);
+            _hearthstone.EnemyPlayed(cardId, from);
         }
 
         private void HandleOpponentMulligan(int pos)

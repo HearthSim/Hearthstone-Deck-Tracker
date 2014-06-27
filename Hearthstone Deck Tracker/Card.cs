@@ -72,6 +72,9 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore]
         public int InHandCount;
 
+        [XmlIgnore] 
+        public bool IsStolen { get; set; }
+
         public int Height
         {
             get { return (int)(OverlayWindow.Scaling * 35); }
@@ -101,7 +104,7 @@ namespace Hearthstone_Deck_Tracker
             get
             {
                 return
-                    new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand)
+                    new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand || IsStolen)
                                             ? Colors.GreenYellow
                                             : (Count != 0) ? Colors.White : Colors.Gray);
             }
