@@ -399,12 +399,12 @@
                         <LineBreak />
                         <Run Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
                     </TextBlock>
-                    <TextBlock Margin="10,249,7,0" VerticalAlignment="Top">
+                    <TextBlock Margin="10,291,7,0" VerticalAlignment="Top">
                         <Bold>
                             <Run Text="I found a bug, what do I do?"/>
                         </Bold>
                     </TextBlock>
-                    <TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                    <TextBlock Margin="20,312,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Run Text="Two options here for now:"/>
                         <LineBreak/>
                         <Run Text="1) You may be able to find a solution/it already being reported in my"/>
@@ -419,6 +419,8 @@
                     <TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
                     </TextBlock>
+                    <TextBlock Margin="10,249,7,0" VerticalAlignment="Top"><Bold><Run Text="Card Marks:"/></Bold></TextBlock>
+                    <TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
 
                 </Grid>
             </TabItem>

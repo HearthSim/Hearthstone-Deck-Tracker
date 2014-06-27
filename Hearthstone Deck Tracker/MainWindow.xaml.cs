@@ -898,9 +898,35 @@ namespace Hearthstone_Deck_Tracker
         }
         private async void ShowHsNotInstalledMessage()
         {
-            await this.ShowMessageAsync("Hearthstone install directory not found", "Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).\n\nIf Hearthstone installed on your machine but this message is showing, please manually set the <HearthstoneDirectory> variable in the config.xml file.");
+            var settings = new MetroDialogSettings();
+            settings.AffirmativeButtonText = "Ok";
+            settings.NegativeButtonText = "Select manually";
+            var result = await this.ShowMessageAsync("Hearthstone install directory not found", "Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).", MessageDialogStyle.AffirmativeAndNegative, settings);
+            if (result == MessageDialogResult.Negative)
+            {
+                var dialog = new OpenFileDialog();
+                dialog.Title = "Select Hearthstone.exe";
+                dialog.DefaultExt = "Hearthstone.exe";
+                dialog.Filter = "Hearthstone.exe|Hearthstone.exe";
+                var dialogResult = dialog.ShowDialog();
+
+                if (dialogResult == true)
+                {
+                    _config.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
+                    _xmlManagerConfig.Save("config.xml", _config);
+                    await Restart();
+                }
+            }
+            
+        
         }
 
+        private async Task Restart()
+        {
+            await this.ShowMessageAsync("Restarting tracker", "");
+            Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
         #endregion
 
         #region MY DECKS - GUI
@@ -2209,11 +2235,9 @@ namespace Hearthstone_Deck_Tracker
 
             _config.SelectedLanguage = selectedLanguage;
 
-            await this.ShowMessageAsync("Restarting tracker", "");
-            Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
-        }
 
+            await Restart();
+        }
         #endregion
 
        
