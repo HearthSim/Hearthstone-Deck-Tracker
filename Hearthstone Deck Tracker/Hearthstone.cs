@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (GetActualCards().Any(c => c.Name.Equals(name)))
             {
-                return GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower());
+                return (Card)GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower()).Clone();
             }
 
             //not sure with all the values here
