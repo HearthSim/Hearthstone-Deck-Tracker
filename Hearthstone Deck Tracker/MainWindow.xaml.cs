@@ -1354,7 +1354,7 @@ namespace Hearthstone_Deck_Tracker
 
                 foreach (var card in _hearthstone.GetActualCards())
                 {
-                    if (!card.Name.ToLower().Contains(TextBoxDBFilter.Text.ToLower()))
+                    if (!card.LocalizedName.ToLower().Contains(TextBoxDBFilter.Text.ToLower()))
                         continue;
                     // mana filter
                     if (ComboBoxFilterMana.SelectedItem.ToString() == "All"
