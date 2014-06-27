@@ -261,7 +261,11 @@ namespace Hearthstone_Deck_Tracker
                 {
                     cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
                 }
-                cardLabels[i].Text = _hearthstone.OpponentHand[i].ToString();
+                cardLabels[i].Text = _hearthstone.OpponentHandAge[i].ToString();
+
+                if (!_config.HideOpponentCardMarks)
+                    cardLabels[i].Text += "\n" + _hearthstone.OpponentHandMarks[i];
+
                 cardLabels[i].Visibility = Visibility.Visible;
             }
             for (int i = handCount; i < 10; i++)

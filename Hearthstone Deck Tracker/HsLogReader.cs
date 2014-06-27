@@ -22,20 +22,20 @@ namespace Hearthstone_Deck_Tracker
         PlayerPlay,
         PlayerDeckDiscard,
         PlayerHandDiscard,
-        OpponentDraw,
-        OpponentMulligan,
         OpponentPlay,
         OpponentSecretTrigger,
         OpponentDeckDiscard,
         OpponentHandDiscard,
         PlayerGet,
         OpponentPlayToHand,
-        OpponentGet
-    };
+    }
+
     public enum OpponentHandMovement
     {
         Draw,
-        Play
+        Play,
+        Mulligan,
+        FromPlayerDeck
     }
 
     public enum AnalyzingState
@@ -172,6 +172,11 @@ namespace Hearthstone_Deck_Tracker
             _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt"; 
         }
 
+        public int GetTurnNumber()
+        {
+            return (_turnCount + 1) / 2;
+        }
+
         public void Start()
         {
             _first = true;
@@ -265,7 +270,6 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private bool _opposingLast;
         private void Analyze(string log)
         {
             var logLines = log.Split('\n');
@@ -288,30 +292,19 @@ namespace Hearthstone_Deck_Tracker
                     
                     if (_cardMovementRegex.IsMatch(logLine))
                     {
-                        _opposingLast = false;
                         Match match = _cardMovementRegex.Match(logLine);
 
                         var id = match.Groups["Id"].Value.Trim();
                         var from = match.Groups["from"].Value.Trim();
                         var to = match.Groups["to"].Value.Trim();
 
-                        //coin
-                        if (id == "GAME_005")
+                        var zonePos = -1;
+
+                        // Only for some log lines, should be valid in every action where we need it
+                        if (_opponentPlayRegex.IsMatch(logLine))
                         {
-                            if (from == "FRIENDLY HAND")
-                            {
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerHandDiscard, id));
-                            }
-                            else if (to == "FRIENDLY HAND")
-                            {
-                                CardMovement(this, new CardMovementArgs(CardMovementType.PlayerDraw, id));
-                            }
-                            else if (from.Contains("OPPOSING"))
-                            {
-                                CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
-                            }
-                            _powerCount = 0;
-                            continue;
+                            Match match2 = _opponentPlayRegex.Match(logLine);
+                            zonePos = int.Parse(match2.Groups["zonePos"].Value.Trim());
                         }
 
                         //game start/end
@@ -374,11 +367,10 @@ namespace Hearthstone_Deck_Tracker
                                 }
                                 break;
                             case "OPPOSING HAND":
-                                _opposingLast = true;
                                 if (to == "OPPOSING DECK")
                                 {
                                     //opponent mulligan
-                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentMulligan, id));
+                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Mulligan, zonePos, GetTurnNumber()));
                                 }
                                 else if (to == "OPPOSING PLAY")
                                 {
@@ -395,33 +387,27 @@ namespace Hearthstone_Deck_Tracker
                                     else
                                     {
                                         //opponent discard from hand
-                                        CardMovement(this,
-                                                     new CardMovementArgs(CardMovementType.OpponentHandDiscard, id));
+                                        CardMovement(this, new CardMovementArgs(CardMovementType.OpponentHandDiscard, id));
                                     }
                                 }
                                 break;
                             case "OPPOSING DECK":
                                 if (to == "OPPOSING HAND")
                                 {
-                                    //opponent draw
-                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDraw, id));
                                     if (_powerCount >= PowerCountTreshold)
                                     {
                                         TurnStart(this, new TurnStartArgs(Turn.Opponent));
                                         _turnCount++;
                                     }
-                                    if (CardPosChange != null)
-                                        CardPosChange(this,
-                                                      new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                            (_turnCount + 1) / 2));
-                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount + 1) / 2)),
-                                                    "LogReader");
+
+                                    //opponent draw
+                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Draw, zonePos, GetTurnNumber()));
+                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", zonePos, GetTurnNumber()), "LogReader");
                                 }
                                 else
                                 {
                                     //opponent discard from deck
-                                    CardMovement(this,
-                                                 new CardMovementArgs(CardMovementType.OpponentDeckDiscard, id));
+                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentDeckDiscard, id));
                                 }
                                 break;
                             case "OPPOSING SECRET":
@@ -439,7 +425,7 @@ namespace Hearthstone_Deck_Tracker
                                 if (to == "OPPOSING HAND")
                                 {
                                     //coin, thoughtsteal etc
-                                    CardMovement(this, new CardMovementArgs(CardMovementType.OpponentGet, id));
+                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.FromPlayerDeck, zonePos, GetTurnNumber()));
                                 }
                                 else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
                                 {
@@ -447,7 +433,7 @@ namespace Hearthstone_Deck_Tracker
                                 }
                                 else if (to == "FRIENDLY HAND")
                                 {
-                                    //thoughtsteal etc
+                                    //coin, thoughtsteal etc
                                     CardMovement(this, new CardMovementArgs(CardMovementType.PlayerGet, id));
                                 }
                                 else if (to == "FRIENDLY GRAVEYARD" && from == "")
@@ -458,37 +444,12 @@ namespace Hearthstone_Deck_Tracker
                         }
                         _powerCount = 0;
                     }
-                    else if (_opponentCardPosRegex.IsMatch(logLine))
-                    {
-                        Match match = _opponentCardPosRegex.Match(logLine);
 
-                        var id = match.Groups["Id"].Value.Trim();
-                        var zone = match.Groups["zone"].Value.Trim();
-                        if ((id == "" || _opposingLast) && zone == "HAND")
-                        {
-                            //opponent card pos change
-                            try
-                            {
-                                if (CardPosChange != null)
-                                    CardPosChange(this,
-                                                  new CardPosChangeArgs(OpponentHandMovement.Draw, 0,
-                                                                        (_turnCount + 1) / 2));
-                                Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", 0, ((_turnCount + 1) / 2)),
-                                                "LogReader");
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.WriteLine("Error parsing pos. " + e.Message);
-                            }
-                        }
-
-                        _opposingLast = false;
-                    }
                     if (_opponentPlayRegex.IsMatch(logLine))
                     {
                         Match match = _opponentPlayRegex.Match(logLine);
                         var zonePos = int.Parse(match.Groups["zonePos"].Value.Trim());
-                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, ((_turnCount+1) / 2)));
+                        CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, GetTurnNumber()));
                     }
 
                 }

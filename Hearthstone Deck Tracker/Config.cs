@@ -88,6 +88,7 @@ namespace Hearthstone_Deck_Tracker
         public bool Debug = false;
         
         public bool HideOpponentCardAge = false;
+        public bool HideOpponentCardMarks = false;
         public string AccentName;
         public string ThemeName;
         public string SelectedWindowBackground = "Theme";

@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker {
             "TextWrapping",
             typeof(TextWrapping),
             typeof(OutlinedTextBlock),
-            new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
+            new FrameworkPropertyMetadata(TextWrapping.Wrap, OnFormattedTextUpdated));
 
         private FormattedText formattedText;
 
