@@ -109,9 +109,20 @@ namespace Hearthstone_Deck_Tracker
 
         public string FixCardName(string cardName)
         {
-            if (cardName == "Windfury") return "Windfury spell";
-            if (cardName == "Fireball") return "Fireball spell";
-            return cardName;
+            switch (cardName)
+            {
+                //english
+                case "Fireball":
+                case "Windfury":
+                    return cardName + " Spell";
+
+                //german
+                case "Feuerball":
+                case "Windzorn":
+                    return cardName + " Zauber";
+                default:
+                    return cardName;
+            }
         }
     }
 }
