@@ -57,10 +57,21 @@ namespace Hearthstone_Deck_Tracker
             var bounds = Screen.FromHandle(hsHandle).Bounds;
             bool isFullscreen = bounds.Width == width && bounds.Height == height;
 
+            if(_config.ExportSetDeckName)
+                await SetDeckName(deck.Name, width, height, hsHandle);
+
             foreach (var card in deck.Cards)
             {
                 await AddCardToDeck(card, width, height, hsHandle, isFullscreen);
             }
+        }
+
+        private async Task SetDeckName(string name, int width, int height, IntPtr hsHandle)
+        {
+            var nameDeckPos = new Point((int)(_config.NameDeckX * width), (int)(_config.NameDeckY * height));
+            await ClickOnPoint(hsHandle, nameDeckPos);
+            SendKeys.SendWait(name);
+            SendKeys.SendWait("{ENTER}");
         }
 
         private async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle, bool isFullscreen)

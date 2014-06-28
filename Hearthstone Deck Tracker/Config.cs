@@ -81,6 +81,9 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxX = 0.5;
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
+        public double NameDeckX = 0.8;
+        public double NameDeckY = 0.05;
+        public bool ExportSetDeckName = true;
 
         public bool AutoDeckDetection = true;
         public bool AutoSelectDetectedDeck = true;
@@ -96,5 +99,6 @@ namespace Hearthstone_Deck_Tracker
         public bool TextOnTopOpponent = false;
 
         public string SelectedLanguage = "enUS";
+
     }
 }

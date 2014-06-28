@@ -770,6 +770,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxWinTopmostHsForeground.IsEnabled = _config.WindowsTopmost;
             CheckboxAutoSelectDeck.IsEnabled = _config.AutoDeckDetection;
             CheckboxAutoSelectDeck.IsChecked = _config.AutoSelectDetectedDeck;
+            CheckboxExportName.IsChecked = _config.ExportSetDeckName;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -820,8 +821,9 @@ namespace Hearthstone_Deck_Tracker
             if (Helper.LanguageDict.Values.Contains(_config.SelectedLanguage))
             {
                 ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == _config.SelectedLanguage).Key;
-                
             }
+
+
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -1029,6 +1031,7 @@ namespace Hearthstone_Deck_Tracker
 
 
         }
+
         private void BtnSetTag_Click(object sender, RoutedEventArgs e)
         {
             FlyoutSetTags.IsOpen = !FlyoutSetTags.IsOpen;
@@ -1043,6 +1046,7 @@ namespace Hearthstone_Deck_Tracker
                 TagControlFilter.LoadTags(_deckList.AllTags);
             }
         }
+
         private void TagControlSetOnDeleteTag(TagControl sender, string tag)
         {
             if (_deckList.AllTags.Contains(tag))
@@ -1154,7 +1158,7 @@ namespace Hearthstone_Deck_Tracker
                 UseDeck(deck);
 
                 //set and save last used deck for class
-                if (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+                while (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
                 {
                     var lastSelected = _deckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
                     if (DeckPickerList.SelectedDeck != null)
@@ -1181,6 +1185,8 @@ namespace Hearthstone_Deck_Tracker
         
         private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
+            _newDeck.Cards = new ObservableCollection<Card>(_newDeck.Cards.OrderBy(c => c.Name).ThenByDescending(c => c.Type).ThenBy(c => c.Cost).ToList());
+
             if (_editingDeck)
             {
                 var settings = new MetroDialogSettings();
@@ -1500,6 +1506,7 @@ namespace Hearthstone_Deck_Tracker
             var newDeckClone = (Deck) _newDeck.Clone();
             _deckList.DecksList.Add(newDeckClone);
             DeckPickerList.AddAndSelectDeck(newDeckClone);
+            
             _xmlManager.Save("PlayerDecks.xml", _deckList);
             BtnSaveDeck.Content = "Save";
 
@@ -2260,8 +2267,23 @@ namespace Hearthstone_Deck_Tracker
 
             await Restart();
         }
+
+        private void CheckboxExportName_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.ExportSetDeckName = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxExportName_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.ExportSetDeckName = false;
+            SaveConfig(false);
+        }
         #endregion
 
-        
     }
 }

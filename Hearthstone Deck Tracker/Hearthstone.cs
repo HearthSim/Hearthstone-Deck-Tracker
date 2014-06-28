@@ -292,6 +292,13 @@ namespace Hearthstone_Deck_Tracker
             EnemyHandCount--;
             OpponentDeckCount++;
             OpponentHandMarks[pos - 1] = CardMarkMulliganInProgress;
+            if (EnemyHandCount <= OpponentHandAge.Count(x => x != -1))
+            {
+                //move from to mulligan pos
+                OpponentHandAge[pos - 1] = OpponentHandAge[EnemyHandCount];
+                OpponentHandAge[EnemyHandCount] = -1;
+                Debug.WriteLine("Fixed hand ages after mulligan (moved {0} to {1})", EnemyHandCount, pos - 1);
+            }
 
             Debug.WriteLine("EnemyMulligan");
         }

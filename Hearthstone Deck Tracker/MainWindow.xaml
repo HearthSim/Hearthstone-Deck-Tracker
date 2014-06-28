@@ -251,24 +251,25 @@
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
                                         <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
                                         <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,79,-11,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxAccent_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="64,161,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxAccent_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="64,115,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxTheme_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="64,130,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxTheme_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <Label Content="Theme:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
-                                        <Label Content="Accent:" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Width="95" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
-                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Theme:" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Accent:" HorizontalAlignment="Left" Margin="10,161,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="79,194,0,0" VerticalAlignment="Top" Width="95" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
+                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
