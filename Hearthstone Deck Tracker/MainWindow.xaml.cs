@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker
                     HandleOpponentMulligan(args.From);
                     break;
                 case OpponentHandMovement.FromPlayerDeck:
-                    _hearthstone.EnemyGet(args.Turn);
+                    _hearthstone.OpponentGet(args.Turn);
                     break;
             }
         }
@@ -426,10 +426,10 @@ namespace Hearthstone_Deck_Tracker
                     HandleOpponentSecretTrigger(args.CardId);
                     break;
                 case CardMovementType.OpponentPlay:
-                    HandleOpponentPlay(args.CardId, args.From);
+                    //moved to CardPosChange
                     break;
                 case CardMovementType.OpponentHandDiscard:
-                    HandleOpponentHandDiscard();
+                    //moved to CardPosChange (included in play)
                     break;
                 case CardMovementType.OpponentDeckDiscard:
                     HandleOpponentDeckDiscard(args.CardId);
@@ -514,7 +514,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentPlayToHand(string cardId, int turn)
         {
-            _hearthstone.EnemyBackToHand(cardId, turn);
+            _hearthstone.OpponentBackToHand(cardId, turn);
         }
 
         private void HandlePlayerGet(string cardId)
@@ -565,28 +565,18 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentSecretTrigger(string cardId)
         {
-            _hearthstone.EnemySecretTriggered(cardId);
-        }
-
-        private void HandleOpponentPlay(string cardId, int from)
-        {
-            _hearthstone.EnemyPlayed(cardId, from);
+            _hearthstone.OpponentSecretTriggered(cardId);
         }
 
         private void HandleOpponentMulligan(int pos)
         {
             _turnTimer.MulliganDone(Turn.Opponent);
-            _hearthstone.EnemyMulligan(pos);
+            _hearthstone.OpponentMulligan(pos);
         }
-
-        private void HandleOpponentHandDiscard()
-        {
-            _hearthstone.EnemyHandDiscard();
-        }
-
+        
         private void HandleOpponentDeckDiscard(string cardId)
         {
-            _hearthstone.EnemyDeckDiscard(cardId);
+            _hearthstone.OpponentDeckDiscard(cardId);
         }
 
         #endregion
