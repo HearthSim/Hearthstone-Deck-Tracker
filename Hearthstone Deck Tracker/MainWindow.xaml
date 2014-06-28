@@ -38,7 +38,7 @@
                             <Button x:Name="BtnExport" Content="Export to HS" Margin="0,0,3,0" Width="117" Height="26" Click="BtnExport_Click" />
                             <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="117" Height="26" Click="BtnDeleteDeck_Click"/>
                         </StackPanel>
-                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
+                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseDoubleClick="ListViewDeck_MouseDoubleClick">
                             <local:DeckListView.Resources>
                                 <Style TargetType="GridViewColumnHeader">
                                     <Setter Property="Visibility" Value="Collapsed" />

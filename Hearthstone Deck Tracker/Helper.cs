@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
@@ -119,5 +122,40 @@ namespace Hearthstone_Deck_Tracker
                 {"Spanish (Mexico)", "esMX"},
                 {"Spanish (Spain)", "esES"}
             }; 
+
+
+        public static bool ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
+        {
+            try
+            {
+                var rtb = new RenderTargetBitmap(230, (int)((dlv.Items.Count+2) * 35.5), dpiX, dpiY, PixelFormats.Pbgra32);
+                rtb.Render(dlv);
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                if (!Directory.Exists("Screenshots"))
+                    Directory.CreateDirectory("Screenshots");
+
+                name = "Screenshots/" + name.Replace("/", " ").Replace("\\", " ").Replace(":", " ").Replace("*", " ").Replace("?", " ").Replace("<", " ").Replace(">", " ").Replace("|", " ");
+
+                if (File.Exists(name + ".png"))
+                {
+                    int num = 1;
+                    while (File.Exists(name + "_" + num + ".png"))
+                        num++;
+                    name += "_" + num;
+                }
+                using (var stream = new FileStream(name + ".png", FileMode.Create, FileAccess.Write))
+                {
+                    encoder.Save(stream);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+        }
     }
 }

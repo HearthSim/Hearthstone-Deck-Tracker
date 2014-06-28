@@ -679,6 +679,7 @@ namespace Hearthstone_Deck_Tracker
             _config.TrackerWindowTop = (int)Top;
             _config.TrackerWindowLeft = (int)Left;
         }
+
         #endregion
 
         #region GENERAL METHODS
@@ -1073,6 +1074,27 @@ namespace Hearthstone_Deck_Tracker
         private void BtnNotes_Click(object sender, RoutedEventArgs e)
         {
             FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
+        }
+
+        private async void ListViewDeck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            PresentationSource source = PresentationSource.FromVisual(this);
+            if (source == null) return;
+
+            double dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+            double dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
+
+            //increase height to get full list rendered
+            var previousHeight = Height;
+            Height = 3000;
+            var success = Helper.ScreenshotDeck(ListViewDeck, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
+            Height = previousHeight;
+
+            if (!success)
+            {
+                await
+                    this.ShowMessageAsync("Error saving screenshot", "");
+            }
         }
         #endregion
 
@@ -2240,6 +2262,6 @@ namespace Hearthstone_Deck_Tracker
         }
         #endregion
 
-       
+        
     }
 }
