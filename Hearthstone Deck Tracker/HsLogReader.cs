@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
 
         public int GetTurnNumber()
         {
-            return (_turnCount + 1) / 2;
+            return (_turnCount) / 2;
         }
 
         public void Start()
@@ -420,6 +420,11 @@ namespace Hearthstone_Deck_Tracker
                                 {
                                     //coin, thoughtsteal etc
                                     CardMovement(this, new CardMovementArgs(CardMovementType.PlayerGet, id));
+                                    if (_turnCount < 2 && id == "GAME_005")
+                                    {
+                                        //increment turn count once in case player goes second (check turn count to avoid this from happening when thoughsteal takes coin)
+                                        _turnCount++;
+                                    }
                                 }
                                 else if (to == "FRIENDLY GRAVEYARD" && from == "")
                                 {
