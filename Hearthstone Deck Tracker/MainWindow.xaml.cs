@@ -1151,9 +1151,13 @@ namespace Hearthstone_Deck_Tracker
                 while (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
                 {
                     var lastSelected = _deckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
-                    if (DeckPickerList.SelectedDeck != null)
+                    if (lastSelected != null)
                     {
                         _deckList.LastDeckClass.Remove(lastSelected);
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
                 _deckList.LastDeckClass.Add(new DeckInfo(){Class = deck.Class, Name = deck.Name});
@@ -1378,7 +1382,11 @@ namespace Hearthstone_Deck_Tracker
                 UpdateDbListView();
             }
         }
-
+        
+        private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateDbListView();
+        }
 
         #endregion
 
@@ -1521,10 +1529,10 @@ namespace Hearthstone_Deck_Tracker
             TextBoxDeckName.Text = string.Empty;
             TextBoxDBFilter.Text = string.Empty;
             ComboBoxFilterMana.SelectedIndex = 0;
-            _newDeck.Cards.Clear();
-            _newDeck.Class = string.Empty;
-            _newDeck.Name = string.Empty;
+            _newDeck = new Deck();
+            ListViewNewDeck.ItemsSource = _newDeck.Cards;
             _newContainsDeck = false;
+            _editingDeck = false;
         }
 
         private void RemoveCardFromDeck(Card card)
@@ -1569,11 +1577,18 @@ namespace Hearthstone_Deck_Tracker
             UpdateNewDeckHeader(true);
         }
 
-        private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateDbListView();
-        }
 
+        private async void ShowClearNewDeckMessage()
+        {
+            var settings = new MetroDialogSettings();
+            settings.AffirmativeButtonText = "Yes";
+            settings.NegativeButtonText = "No";
+            var result = await this.ShowMessageAsync("Clear deck?", "", MessageDialogStyle.AffirmativeAndNegative, settings);
+            if (result == MessageDialogResult.Affirmative)
+            {
+                ClearNewDeckSection();
+            }
+        }
         
         #endregion
 
@@ -2274,6 +2289,8 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(false);
         }
         #endregion
+
+        
 
     }
 }
