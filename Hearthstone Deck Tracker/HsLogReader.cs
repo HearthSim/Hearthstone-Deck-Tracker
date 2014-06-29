@@ -1,11 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -43,9 +45,11 @@ namespace Hearthstone_Deck_Tracker
         Start,
         End
     }
+
     public enum Turn
     {
-        Player, Opponent
+        Player,
+        Opponent
     }
 
     public class CardMovementArgs : EventArgs
@@ -68,15 +72,16 @@ namespace Hearthstone_Deck_Tracker
         {
             State = state;
         }
+
         public GameStateArgs()
         {
-            
         }
 
         public GameState? State { get; set; }
         public string PlayerHero { get; set; }
         public string OpponentHero { get; set; }
     }
+
     public class AnalyzingArgs : EventArgs
     {
         public AnalyzingArgs(AnalyzingState state)
@@ -86,6 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
         public AnalyzingState State { get; private set; }
     }
+
     public class TurnStartArgs : EventArgs
     {
         public TurnStartArgs(Turn turn)
@@ -95,6 +101,7 @@ namespace Hearthstone_Deck_Tracker
 
         public Turn Turn { get; private set; }
     }
+
     public class CardPosChangeArgs : EventArgs
     {
         public CardPosChangeArgs(OpponentHandMovement action, int @from, int turn, string id)
@@ -113,21 +120,25 @@ namespace Hearthstone_Deck_Tracker
 
     public class HsLogReader
     {
-        public delegate void CardMovementHandler(HsLogReader sender, CardMovementArgs args);
-
-        public delegate void GameStateHandler(HsLogReader sender, GameStateArgs args);
-
         public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
 
-        public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
+        public delegate void CardMovementHandler(HsLogReader sender, CardMovementArgs args);
 
         public delegate void CardPosChangeHandler(HsLogReader sender, CardPosChangeArgs args);
 
-        private readonly string _fullOutputPath;
-        private readonly int _updateDelay;
-        private bool _doUpdate;
+        public delegate void GameStateHandler(HsLogReader sender, GameStateArgs args);
 
-        private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>()
+        public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
+
+        private const int PowerCountTreshold = 14;
+
+        private readonly Regex _cardMovementRegex =
+            new Regex(
+                @"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+
+        private readonly string _fullOutputPath;
+
+        private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>
             {
                 {"HERO_01", "Warrior"},
                 {"HERO_02", "Shaman"},
@@ -140,22 +151,19 @@ namespace Hearthstone_Deck_Tracker
                 {"HERO_09", "Priest"}
             };
 
-        private readonly Regex _cardMovementRegex =
-            new Regex(
-                @"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
-
-        private readonly Regex _opponentPlayRegex = 
+        private readonly Regex _opponentPlayRegex =
             new Regex(
                 @"\w*(zonePos=(?<zonePos>(\d))).*(zone\ from\ OPPOSING\ HAND).*");
-        
+
+        private readonly int _updateDelay;
 
 
-        private long _previousSize;
-        private long _lastGameEnd;
         private long _currentOffset;
-        
+        private bool _doUpdate;
+        private bool _first;
+        private long _lastGameEnd;
         private int _powerCount;
-        private const int PowerCountTreshold = 14;
+        private long _previousSize;
 
         private int _turnCount;
 
@@ -166,12 +174,12 @@ namespace Hearthstone_Deck_Tracker
             {
                 hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
             }
-            _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt"; 
+            _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
         }
 
         public int GetTurnNumber()
         {
-            return (_turnCount) / 2;
+            return (_turnCount)/2;
         }
 
         public void Start()
@@ -179,8 +187,8 @@ namespace Hearthstone_Deck_Tracker
             _first = true;
             _doUpdate = true;
             ReadFileAsync();
-
         }
+
         public void Stop()
         {
             _doUpdate = false;
@@ -193,8 +201,6 @@ namespace Hearthstone_Deck_Tracker
         public event TurnStartHandler TurnStart;
         public event CardPosChangeHandler CardPosChange;
 
-        private bool _first;
-
         private async void ReadFileAsync()
         {
             while (_doUpdate)
@@ -204,7 +210,9 @@ namespace Hearthstone_Deck_Tracker
                     //find end of last game (avoids reading the full log on start)
                     if (_first)
                     {
-                        using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                        using (
+                            var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+                            )
                         {
                             _previousSize = FindLastGameEnd(fs);
                             _currentOffset = _previousSize;
@@ -213,9 +221,9 @@ namespace Hearthstone_Deck_Tracker
                     }
 
 
-                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+                        )
                     {
-                        
                         fs.Seek(_previousSize, SeekOrigin.Begin);
                         if (fs.Length == _previousSize)
                         {
@@ -236,7 +244,6 @@ namespace Hearthstone_Deck_Tracker
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.Start));
                             Analyze(newLines);
                             Analyzing(this, new AnalyzingArgs(AnalyzingState.End));
-
                         }
 
                         _previousSize = newLength;
@@ -256,7 +263,7 @@ namespace Hearthstone_Deck_Tracker
                 long tempOffset = 0;
                 foreach (var line in lines)
                 {
-                    tempOffset += line.Length+1;
+                    tempOffset += line.Length + 1;
                     if (line.StartsWith("[Bob] legend rank"))
                     {
                         offset = tempOffset;
@@ -272,7 +279,7 @@ namespace Hearthstone_Deck_Tracker
             var logLines = log.Split('\n');
             foreach (var logLine in logLines)
             {
-                _currentOffset += logLine.Length+1;
+                _currentOffset += logLine.Length + 1;
                 if (logLine.StartsWith("[Power]"))
                 {
                     _powerCount++;
@@ -286,7 +293,6 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else if (logLine.StartsWith("[Zone]"))
                 {
-                    
                     if (_cardMovementRegex.IsMatch(logLine))
                     {
                         Match match = _cardMovementRegex.Match(logLine);
@@ -320,7 +326,7 @@ namespace Hearthstone_Deck_Tracker
                                 else if (to.Contains("OPPOSING"))
                                 {
                                     GameStateChange(this,
-                                                    new GameStateArgs() {OpponentHero = _heroIdDict[id]});
+                                                    new GameStateArgs {OpponentHero = _heroIdDict[id]});
                                 }
                             }
                             _powerCount = 0;
@@ -373,7 +379,9 @@ namespace Hearthstone_Deck_Tracker
                                 }
                                 else
                                 {
-                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, GetTurnNumber(), id));
+                                    CardPosChange(this,
+                                                  new CardPosChangeArgs(OpponentHandMovement.Play, zonePos,
+                                                                        GetTurnNumber(), id));
                                 }
                                 break;
                             case "OPPOSING DECK":
@@ -386,8 +394,12 @@ namespace Hearthstone_Deck_Tracker
                                     }
 
                                     //opponent draw
-                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Draw, zonePos, GetTurnNumber(), id));
-                                    Debug.WriteLine(string.Format("Opponent draw from {0} at turn {1}", zonePos, GetTurnNumber()), "LogReader");
+                                    CardPosChange(this,
+                                                  new CardPosChangeArgs(OpponentHandMovement.Draw, zonePos,
+                                                                        GetTurnNumber(), id));
+                                    Debug.WriteLine(
+                                        string.Format("Opponent draw from {0} at turn {1}", zonePos, GetTurnNumber()),
+                                        "LogReader");
                                 }
                                 else
                                 {
@@ -410,7 +422,9 @@ namespace Hearthstone_Deck_Tracker
                                 if (to == "OPPOSING HAND")
                                 {
                                     //coin, thoughtsteal etc
-                                    CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.FromPlayerDeck, zonePos, GetTurnNumber(), id));
+                                    CardPosChange(this,
+                                                  new CardPosChangeArgs(OpponentHandMovement.FromPlayerDeck, zonePos,
+                                                                        GetTurnNumber(), id));
                                 }
                                 else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
                                 {
@@ -452,6 +466,5 @@ namespace Hearthstone_Deck_Tracker
             }
             _turnCount = 0;
         }
-
     }
 }

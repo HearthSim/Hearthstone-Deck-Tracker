@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -7,40 +9,26 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker
 {
     public class Hearthstone
     {
-
-        //dont like this solution, cant think of better atm
-        public static bool HighlightCardsInHand;
-
-
-        private static Dictionary<string, Card> _cardDb;
-        public ObservableCollection<Card> EnemyCards;
-        public int EnemyHandCount;
-        public int OpponentDeckCount;
-        public bool IsInMenu;
-        public ObservableCollection<Card> PlayerDeck;
-        public ObservableCollection<Card> PlayerDrawn; 
-        public int PlayerHandCount;
-        public string PlayingAgainst;
-        public string PlayingAs;
-        public bool OpponentHasCoin;
-        public bool IsUsingPremade;
+        public enum CardMark
+        {
+            None = ' ',
+            Coin = 'C',
+            Returned = 'R',
+            Mulliganed = 'M',
+            Stolen = 'S'
+        }
 
         private const int DefaultCoinPosition = 4;
         private const int MaxHandSize = 10;
+        public static bool HighlightCardsInHand;
 
-        public int[] OpponentHandAge { get; private set; }
-        public char[] OpponentHandMarks { get; private set; }
-
-        private const char CardMarkNone = ' ';
-        private const char CardMarkCoin = 'C';
-        private const char CardMarkReturned = 'R';
-        private const char CardMarkMulliganInProgress = 'm';
-        private const char CardMarkMulliganed = 'M';
-        private const char CardMarkStolen = 'S';
+        private static Dictionary<string, Card> _cardDb;
 
         private readonly List<string> _invalidCardIds = new List<string>
             {
@@ -65,6 +53,18 @@ namespace Hearthstone_Deck_Tracker
                 "NEW1_006",
             };
 
+        public ObservableCollection<Card> EnemyCards;
+        public int EnemyHandCount;
+        public bool IsInMenu;
+        public bool IsUsingPremade;
+        public int OpponentDeckCount;
+        public bool OpponentHasCoin;
+        public ObservableCollection<Card> PlayerDeck;
+        public ObservableCollection<Card> PlayerDrawn;
+        public int PlayerHandCount;
+        public string PlayingAgainst;
+        public string PlayingAs;
+
         public Hearthstone(string languageTag)
         {
             IsInMenu = true;
@@ -73,15 +73,18 @@ namespace Hearthstone_Deck_Tracker
             EnemyCards = new ObservableCollection<Card>();
             _cardDb = new Dictionary<string, Card>();
             OpponentHandAge = new int[MaxHandSize];
-            OpponentHandMarks = new char[MaxHandSize];
+            OpponentHandMarks = new CardMark[MaxHandSize];
             for (int i = 0; i < MaxHandSize; i++)
             {
                 OpponentHandAge[i] = -1;
-                OpponentHandMarks[i] = CardMarkNone;
+                OpponentHandMarks[i] = CardMark.None;
             }
 
             LoadCardDb(languageTag);
         }
+
+        public int[] OpponentHandAge { get; private set; }
+        public CardMark[] OpponentHandMarks { get; private set; }
 
         private void LoadCardDb(string languageTag)
         {
@@ -91,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
                 if (languageTag != "enUS")
                 {
                     var file = string.Format("Files/cardsDB.{0}.json", languageTag);
-                    if(File.Exists(file))
+                    if (File.Exists(file))
                     {
                         var localized = JObject.Parse(File.ReadAllText(file));
                         foreach (var cardType in localized)
@@ -111,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
                 //load engish db (needed for importing, etc)
                 var fileEng = "Files/cardsDB.enUS.json";
                 var tempDb = new Dictionary<string, Card>();
-                if(File.Exists(fileEng))
+                if (File.Exists(fileEng))
                 {
                     var obj = JObject.Parse(File.ReadAllText(fileEng));
                     foreach (var cardType in obj)
@@ -142,16 +145,17 @@ namespace Hearthstone_Deck_Tracker
             if (cardId == "") return new Card();
             if (_cardDb.ContainsKey(cardId))
             {
-                return (Card)_cardDb[cardId].Clone();
+                return (Card) _cardDb[cardId].Clone();
             }
             Debug.WriteLine("Could not find entry in db for cardId: " + cardId);
             return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1);
         }
+
         public Card GetCardFromName(string name)
         {
             if (GetActualCards().Any(c => c.Name.Equals(name)))
             {
-                return (Card)GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower()).Clone();
+                return (Card) GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower()).Clone();
             }
 
             //not sure with all the values here
@@ -174,7 +178,7 @@ namespace Hearthstone_Deck_Tracker
             PlayerDeck.Clear();
             foreach (var card in deck.Cards)
             {
-               PlayerDeck.Add(card);
+                PlayerDeck.Add(card);
             }
             IsUsingPremade = true;
         }
@@ -212,7 +216,7 @@ namespace Hearthstone_Deck_Tracker
             if (cardId == "GAME_005")
             {
                 OpponentHasCoin = false;
-                OpponentHandMarks[DefaultCoinPosition] = CardMarkNone;
+                OpponentHandMarks[DefaultCoinPosition] = CardMark.None;
                 OpponentHandAge[DefaultCoinPosition] = -1;
             }
 
@@ -235,9 +239,9 @@ namespace Hearthstone_Deck_Tracker
                 PlayerDeck.Remove(card);
                 card.InHandCount--;
                 PlayerDeck.Add(card);
-            } 
+            }
         }
-        
+
         public void Mulligan(string cardId)
         {
             PlayerHandCount--;
@@ -254,7 +258,7 @@ namespace Hearthstone_Deck_Tracker
                     PlayerDrawn.Add(drawnCard);
                 }
             }
-            if (PlayerDeck.Any(c =>  c.Equals(card)))
+            if (PlayerDeck.Any(c => c.Equals(card)))
             {
                 var deckCard = PlayerDeck.First(c => c.Equals(card));
                 PlayerDeck.Remove(deckCard);
@@ -268,7 +272,7 @@ namespace Hearthstone_Deck_Tracker
         {
             EnemyHandCount--;
             OpponentDeckCount++;
-            OpponentHandMarks[pos - 1] = CardMarkMulliganInProgress;
+            OpponentHandMarks[pos - 1] = CardMark.Mulliganed;
             if (EnemyHandCount <= OpponentHandAge.Count(x => x != -1))
             {
                 //move from to mulligan pos
@@ -303,7 +307,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             PlayerDrawn.Add(card);
-            
+
             if (PlayerDeck.Contains(card))
             {
                 var deckCard = PlayerDeck.First(c => c.Equals(card));
@@ -339,7 +343,7 @@ namespace Hearthstone_Deck_Tracker
                 return;
 
             OpponentHandAge[EnemyHandCount - 1] = turn;
-            OpponentHandMarks[EnemyHandCount - 1] = CardMarkReturned;
+            OpponentHandMarks[EnemyHandCount - 1] = CardMark.Returned;
         }
 
         public void OpponentDeckDiscard(string cardId)
@@ -387,12 +391,12 @@ namespace Hearthstone_Deck_Tracker
 
             OpponentHandAge[EnemyHandCount - 1] = turn;
 
-            if (OpponentHandMarks[EnemyHandCount - 1] != CardMarkCoin)
-                OpponentHandMarks[EnemyHandCount - 1] = CardMarkStolen;
+            if (OpponentHandMarks[EnemyHandCount - 1] != CardMark.Coin)
+                OpponentHandMarks[EnemyHandCount - 1] = CardMark.Stolen;
 
 
             Debug.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks));
+            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
         internal void Reset()
@@ -405,16 +409,16 @@ namespace Hearthstone_Deck_Tracker
             EnemyHandCount = 0;
             OpponentDeckCount = 30;
             OpponentHandAge = new int[MaxHandSize];
-            OpponentHandMarks = new char[MaxHandSize];
+            OpponentHandMarks = new CardMark[MaxHandSize];
 
             for (int i = 0; i < MaxHandSize; i++)
             {
                 OpponentHandAge[i] = -1;
-                OpponentHandMarks[i] = CardMarkNone;
+                OpponentHandMarks[i] = CardMark.None;
             }
 
             // Assuming opponent has coin, corrected if we draw it
-            OpponentHandMarks[DefaultCoinPosition] = CardMarkCoin;
+            OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
             OpponentHandAge[DefaultCoinPosition] = 0;
             OpponentHasCoin = true;
         }
@@ -432,7 +436,7 @@ namespace Hearthstone_Deck_Tracker
             if (OpponentHandAge[EnemyHandCount - 1] != -1)
             {
                 Debug.WriteLine(string.Format("Card {0} is already set to {1}", EnemyHandCount - 1,
-                    OpponentHandAge[EnemyHandCount - 1]), "OpponentDraw");
+                                              OpponentHandAge[EnemyHandCount - 1]), "OpponentDraw");
 
                 return;
             }
@@ -440,67 +444,54 @@ namespace Hearthstone_Deck_Tracker
             Debug.WriteLine(string.Format("Set {0} to {1}", EnemyHandCount - 1, args.Turn), "OpponentDraw");
 
             OpponentHandAge[EnemyHandCount - 1] = args.Turn;
-            OpponentHandMarks[EnemyHandCount - 1] = CardMarkNone;
+            OpponentHandMarks[EnemyHandCount - 1] = CardMark.None;
 
             Debug.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks));
+            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
         public void OpponentPlay(CardPosChangeArgs args)
         {
             EnemyHandCount--;
 
-            if (string.IsNullOrEmpty(args.Id))
+            if (!string.IsNullOrEmpty(args.Id))
             {
-                return;
-            }
-            
-            Card card = GetCardFromId(args.Id);
+                Card card = GetCardFromId(args.Id);
 
-            if (args.From != -1 && OpponentHandMarks[args.From - 1] == CardMarkStolen)
-                card.IsStolen = true;
+                if (args.From != -1 && OpponentHandMarks[args.From - 1] == CardMark.Stolen)
+                    card.IsStolen = true;
 
-            if (EnemyCards.Any(x => x.Equals(card) && x.IsStolen == card.IsStolen))
-            {
-                EnemyCards.Remove(card);
-                card.Count++;
-            }
-            EnemyCards.Add(card);
-
-            if (card.IsStolen)
-                Debug.WriteLine("Opponent played stolen card from " + args.From);
-            else
-                Debug.WriteLine("Opponent played from " + args.From);
-
-
-
-            if (OpponentHandMarks[args.From - 1] == CardMarkMulliganInProgress)
-            {
-                Debug.WriteLine(string.Format("Opponent card {0} - mulliganed", args.From), "OpponentPlay");
-
-                OpponentHandMarks[args.From - 1] = CardMarkMulliganed;
-            }
-            else
-            {
-                Debug.WriteLine(string.Format("From {0} to Play", args.From), "OpponentPlay");
-
-                for (int i = args.From - 1; i < 9; i++)
+                if (EnemyCards.Any(x => x.Equals(card) && x.IsStolen == card.IsStolen))
                 {
-                    OpponentHandAge[i] = OpponentHandAge[i + 1];
-                    OpponentHandMarks[i] = OpponentHandMarks[i + 1];
+                    EnemyCards.Remove(card);
+                    card.Count++;
                 }
+                EnemyCards.Add(card);
 
-                OpponentHandAge[9] = -1;
-                OpponentHandMarks[9] = CardMarkNone;
+                if (card.IsStolen)
+                    Debug.WriteLine("Opponent played stolen card from " + args.From);
+                else
+                    Debug.WriteLine("Opponent played from " + args.From);
             }
 
+
+            Debug.WriteLine(string.Format("From {0} to Play", args.From), "OpponentPlay");
+
+            for (int i = args.From - 1; i < MaxHandSize - 1; i++)
+            {
+                OpponentHandAge[i] = OpponentHandAge[i + 1];
+                OpponentHandMarks[i] = OpponentHandMarks[i + 1];
+            }
+
+            OpponentHandAge[MaxHandSize - 1] = -1;
+            OpponentHandMarks[MaxHandSize - 1] = CardMark.None;
 
 
             Debug.WriteLine("OpponentHandAge after play: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks));
+            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
-        bool ValidateEnemyHandCount()
+        private bool ValidateEnemyHandCount()
         {
             if (EnemyHandCount - 1 < 0 || EnemyHandCount - 1 > 9)
             {
