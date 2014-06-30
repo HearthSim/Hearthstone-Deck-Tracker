@@ -27,11 +27,11 @@ namespace Hearthstone_Deck_Tracker
             InitializeComponent();
             _config = config;
 
-            if (config.TimerWindowLeft != 0 && _config.TimerWindowLeft != -32000)
+            if (_config.TimerWindowLeft != -32000)
             {
                 Left = config.TimerWindowLeft;
             }
-            if (config.TimerWindowTop != 0 && _config.TimerWindowTop != -32000)
+            if (_config.TimerWindowTop != -32000)
             {
                 Top = config.TimerWindowTop;
             }

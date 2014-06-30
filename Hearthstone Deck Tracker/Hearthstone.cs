@@ -273,12 +273,13 @@ namespace Hearthstone_Deck_Tracker
             EnemyHandCount--;
             OpponentDeckCount++;
             OpponentHandMarks[pos - 1] = CardMark.Mulliganed;
-            if (EnemyHandCount <= OpponentHandAge.Count(x => x != -1))
+            if (EnemyHandCount < OpponentHandAge.Count(x => x != -1))
             {
-                //move from to mulligan pos
-                OpponentHandAge[pos - 1] = OpponentHandAge[EnemyHandCount];
+                //move from to mulligan pos - I don't need this, right? it's 0 anyway and only ends up being wrong if the game for some reason counts the mulliganed card as drawn on turn 1
+                //OpponentHandAge[pos - 1] = OpponentHandAge[EnemyHandCount];
                 OpponentHandAge[EnemyHandCount] = -1;
-                Debug.WriteLine("Fixed hand ages after mulligan (moved {0} to {1})", EnemyHandCount, pos - 1);
+                //Debug.WriteLine("Fixed hand ages after mulligan (moved {0} to {1})", EnemyHandCount, pos - 1);
+                Debug.WriteLine("Fixed hand ages after mulligan (removed {0})", EnemyHandCount);
             }
 
             Debug.WriteLine("EnemyMulligan");

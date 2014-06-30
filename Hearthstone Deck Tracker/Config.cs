@@ -30,11 +30,11 @@ namespace Hearthstone_Deck_Tracker
         public int CustomHeight = -1;
         public bool VisibleOverlay = false;
         public int PlayerWindowHeight = 0;
-        public double PlayerWindowTop = 0;
-        public double PlayerWindowLeft = 0;
+        public double PlayerWindowTop = -32000;
+        public double PlayerWindowLeft = -32000;
         public int OpponentWindowHeight = 0;
-        public double OpponentWindowTop = 0;
-        public double OpponentWindowLeft = 0;
+        public double OpponentWindowTop = -32000;
+        public double OpponentWindowLeft = -32000;
         public bool WindowsTopmost = false;
         public bool WindowsTopmostIfHsForeground = false;
         public bool WindowsOnStartup = false;
@@ -64,8 +64,8 @@ namespace Hearthstone_Deck_Tracker
         public double TimersVerticalPosition = 50;
         public double TimersHorizontalSpacing = 0;
         public double TimersVerticalSpacing = 50;
-        public double TimerWindowTop = 0;
-        public double TimerWindowLeft = 0;
+        public double TimerWindowTop = -32000;
+        public double TimerWindowLeft = -32000;
         public double TimerWindowHeight = 130;
         public double TimerWindowWidth = 150;
 

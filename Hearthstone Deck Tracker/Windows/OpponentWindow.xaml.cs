@@ -21,11 +21,11 @@ namespace Hearthstone_Deck_Tracker
             ListViewOpponent.ItemsSource = opponentDeck;
             opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
             Height = (_config.OpponentWindowHeight == 0) ? 400 : _config.OpponentWindowHeight;
-            if (_config.OpponentWindowLeft != 0 && _config.OpponentWindowLeft != -32000)
+            if (_config.OpponentWindowLeft != -32000)
             {
                 Left = _config.OpponentWindowLeft;
             }
-            if (_config.OpponentWindowTop != 0 && _config.OpponentWindowTop != -32000)
+            if (_config.OpponentWindowTop != -32000)
             {
                 Top = _config.OpponentWindowTop;
             }
