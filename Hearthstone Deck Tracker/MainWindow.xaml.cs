@@ -108,9 +108,15 @@ namespace Hearthstone_Deck_Tracker
                 {
                     if (hsDirKey != null)
                     {
-                        _config.HearthstoneDirectory = (string)hsDirKey.GetValue("InstallLocation");
-                        _xmlManagerConfig.Save("config.xml", _config);
-                        _foundHsDirectory = true;
+                        var hsDir = (string)hsDirKey.GetValue("InstallLocation");
+
+                        //verify the installlocation actually is correct (possibly moved?)
+                        if (File.Exists(hsDir + @"\Hearthstone.exe"))
+                        {
+                            _config.HearthstoneDirectory = hsDir;
+                            _xmlManagerConfig.Save("config.xml", _config);
+                            _foundHsDirectory = true;
+                        }
                     }
                 }
             }
