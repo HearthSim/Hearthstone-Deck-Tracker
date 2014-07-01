@@ -22,6 +22,8 @@ namespace Hearthstone_Deck_Tracker
     public partial class OverlayWindow
     {
         private readonly List<HearthstoneTextBlock> _cardLabels;
+        private readonly List<HearthstoneTextBlock> _cardMarkLabels;
+        private readonly List<StackPanel> _stackPanelsMarks;
         private readonly Config _config;
         private readonly int _customHeight;
         private readonly int _customWidth;
@@ -65,6 +67,32 @@ namespace Hearthstone_Deck_Tracker
                     LblCard7,
                     LblCard8,
                     LblCard9,
+                };
+            _cardMarkLabels = new List<HearthstoneTextBlock>
+                {
+                    LblCardMark0,
+                    LblCardMark1,
+                    LblCardMark2,
+                    LblCardMark3,
+                    LblCardMark4,
+                    LblCardMark5,
+                    LblCardMark6,
+                    LblCardMark7,
+                    LblCardMark8,
+                    LblCardMark9,
+                };
+            _stackPanelsMarks = new List<StackPanel>
+                {
+                    Marks0,
+                    Marks1,
+                    Marks2,
+                    Marks3,
+                    Marks4,
+                    Marks5,
+                    Marks6,
+                    Marks7,
+                    Marks8,
+                    Marks9,
                 };
 
             UpdateScaling();
@@ -258,32 +286,48 @@ namespace Hearthstone_Deck_Tracker
                         //even hand count -> both middle labels at same height
                         offset = labelDistance*Math.Abs(i - (handCount/2 - 1));
                         offset = offset*offset*0.0015;
-                        _cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                        _stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
                     }
                     else if (i > handCount/2)
                     {
-                        _cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                        _stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
                     }
                     else
                     {
                         var left = (handCount == 2 && i == 0) ? Width*0.02 : 0;
-                        _cardLabels[i].Margin = new Thickness(left, 0, 0, 0);
+                        _stackPanelsMarks[i].Margin = new Thickness(left, 0, 0, 0);
                     }
                 }
                 else
                 {
-                    _cardLabels[i].Margin = new Thickness(0, -offset, 0, 0);
+                    _stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
                 }
-                _cardLabels[i].Text = _hearthstone.OpponentHandAge[i].ToString();
+
+                if (!_config.HideOpponentCardAge)
+                {
+                    _cardLabels[i].Text = _hearthstone.OpponentHandAge[i].ToString();
+                    _cardLabels[i].Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _cardLabels[i].Visibility = Visibility.Collapsed;
+                }
 
                 if (!_config.HideOpponentCardMarks)
-                    _cardLabels[i].Text += "\n" + (char) _hearthstone.OpponentHandMarks[i];
+                {
+                    _cardMarkLabels[i].Text = ((char)_hearthstone.OpponentHandMarks[i]).ToString();
+                    _cardMarkLabels[i].Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    _cardMarkLabels[i].Visibility = Visibility.Collapsed;
+                }
 
-                _cardLabels[i].Visibility = Visibility.Visible;
+                _stackPanelsMarks[i].Visibility = Visibility.Visible;
             }
             for (int i = handCount; i < 10; i++)
             {
-                _cardLabels[i].Visibility = Visibility.Collapsed;
+                _stackPanelsMarks[i].Visibility = Visibility.Collapsed;
             }
 
             StackPanelPlayer.Opacity = _config.PlayerOpacity/100;
@@ -306,9 +350,8 @@ namespace Hearthstone_Deck_Tracker
 
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Collapsed : Visibility.Visible;
 
-            LblGrid.Visibility = _config.HideOpponentCardAge ? Visibility.Hidden : Visibility.Visible;
-            if (LblGrid.Visibility == Visibility.Visible)
-                LblGrid.Visibility = _hearthstone.IsInMenu ? Visibility.Hidden : Visibility.Visible;
+
+            LblGrid.Visibility = _hearthstone.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 
             DebugViewer.Visibility = _config.Debug ? Visibility.Visible : Visibility.Hidden;
             DebugViewer.Width = (Width*_config.TimerLeft/100);

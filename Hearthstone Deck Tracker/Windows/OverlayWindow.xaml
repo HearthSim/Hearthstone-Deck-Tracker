@@ -64,16 +64,46 @@
             </StackPanel>
 
             <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
-                <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                <StackPanel Name="Marks0">
+                    <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks1">
+                    <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks2">
+                    <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks3">
+                    <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks4">
+                    <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks5">
+                    <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks6">
+                    <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks7">
+                    <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks8">
+                    <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
+                <StackPanel Name="Marks9">
+                    <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                </StackPanel>
             </UniformGrid>
         </Canvas>
 
