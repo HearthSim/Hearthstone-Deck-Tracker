@@ -133,12 +133,19 @@ namespace Hearthstone_Deck_Tracker
 
             Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
 
-            //lmb down
-            User32.mouse_event(0x00000002, 0, 0, 0, UIntPtr.Zero);
+            //mouse down
+            if (SystemInformation.MouseButtonsSwapped)
+                User32.mouse_event((uint)User32.MouseEventFlags.RightDown, 0, 0, 0, UIntPtr.Zero);
+            else
+                User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
+
             await Task.Delay(_config.ClickDelay);
 
-            //lmb up
-            User32.mouse_event(0x00000004, 0, 0, 0, UIntPtr.Zero);
+            //mouse up
+            if (SystemInformation.MouseButtonsSwapped)
+                User32.mouse_event((uint)User32.MouseEventFlags.RightUp, 0, 0, 0, UIntPtr.Zero);
+            else
+                User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
             await Task.Delay(_config.ClickDelay);
         }
 

@@ -56,5 +56,14 @@ namespace Hearthstone_Deck_Tracker
             public int right;
             public int bottom;
         }
+
+        [Flags]
+        public enum MouseEventFlags : uint
+        {
+            LeftDown = 0x00000002,
+            LeftUp = 0x00000004,
+            RightDown = 0x00000008,
+            RightUp = 0x00000010
+        }
     }
 }
