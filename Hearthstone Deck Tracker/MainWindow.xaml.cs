@@ -13,14 +13,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
+using Clipboard = System.Windows.Clipboard;
 using Color = System.Windows.Media.Color;
+using DataFormats = System.Windows.DataFormats;
+using DragEventArgs = System.Windows.DragEventArgs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SystemColors = System.Windows.SystemColors;
 
 #endregion
@@ -63,6 +72,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly TurnTimer _turnTimer;
         private readonly bool _updatedLogConfig;
         private readonly bool _foundHsDirectory;
+        private const string EventKeys = "None,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12";
         
         
         public MainWindow()
@@ -261,6 +271,10 @@ namespace Hearthstone_Deck_Tracker
             ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
             ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
+            ComboboxKeyPressGameStart.ItemsSource = EventKeys.Split(',');
+            ComboboxKeyPressGameEnd.ItemsSource = EventKeys.Split(',');
+            
+
             LoadConfig();
 
             _deckImporter = new DeckImporter(_hearthstone);
@@ -458,6 +472,10 @@ namespace Hearthstone_Deck_Tracker
             //avoid new game being started when jaraxxus is played
             if (!_hearthstone.IsInMenu) return;
 
+            if (_config.KeyPressOnGameStart != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameStart))
+            {
+                SendKeys.SendWait("{" + _config.KeyPressOnGameStart + "}");
+            }
 
             var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck != null)
@@ -505,6 +523,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
+            if (_config.KeyPressOnGameEnd != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameEnd))
+            {
+                SendKeys.SendWait("{" + _config.KeyPressOnGameEnd + "}");
+            }
             _turnTimer.Stop();
             _overlay.HideTimers();
             if (!_config.KeepDecksVisible)
@@ -725,9 +747,9 @@ namespace Hearthstone_Deck_Tracker
 
         private void LoadConfig()
         {
-            if (_config.TrackerWindowTop != -32000 && _config.TrackerWindowTop != -1)
+            if (_config.TrackerWindowTop >= 0)
                 Top = _config.TrackerWindowTop;
-            if (_config.TrackerWindowLeft != -32000 && _config.TrackerWindowLeft != -1)
+            if (_config.TrackerWindowLeft >= 0)
                 Left = _config.TrackerWindowLeft;
 
             var theme = string.IsNullOrEmpty(_config.ThemeName)
@@ -820,6 +842,17 @@ namespace Hearthstone_Deck_Tracker
                 ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == _config.SelectedLanguage).Key;
             }
 
+            if (!EventKeys.Split(',').Contains(_config.KeyPressOnGameStart))
+            {
+                _config.KeyPressOnGameStart = "None";
+            }
+            ComboboxKeyPressGameStart.SelectedValue = _config.KeyPressOnGameStart;
+
+            if (!EventKeys.Split(',').Contains(_config.KeyPressOnGameEnd))
+            {
+                _config.KeyPressOnGameEnd = "None";
+            }
+            ComboboxKeyPressGameEnd.SelectedValue = _config.KeyPressOnGameEnd;
 
         }
 
@@ -2309,6 +2342,21 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized)
                 return;
             _config.PrioritizeGolden = false;
+            SaveConfig(false);
+        }
+        private void ComboboxKeyPressGameStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.KeyPressOnGameStart = ComboboxKeyPressGameStart.SelectedValue.ToString();
+            SaveConfig(false);
+        }
+
+        private void ComboboxKeyPressGameEnd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.KeyPressOnGameEnd = ComboboxKeyPressGameEnd.SelectedValue.ToString();
             SaveConfig(false);
         }
         #endregion

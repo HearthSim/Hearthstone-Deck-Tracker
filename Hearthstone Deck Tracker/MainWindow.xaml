@@ -216,7 +216,7 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="528" Width="235" Margin="5,5,5,0" Grid.RowSpan="2">
+                                <GroupBox Header="Additional Windows" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="339" Width="234" Margin="6,5,6,0">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Show decks in additional windows" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
@@ -245,7 +245,7 @@
 
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Other" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="329" Width="235" Margin="5,5,0,0">
+                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="538" Width="235" Margin="5,5,0,0" Grid.RowSpan="2">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
@@ -271,6 +271,10 @@
                                         <Label Content="Language:" HorizontalAlignment="Left" Margin="10,217,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
+                                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Left" Margin="124,268,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged"/>
+                                        <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="10,268,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="124,299,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
+                                        <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="10,299,0,0" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
