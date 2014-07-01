@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker
         public bool HidePlayerCardCount = false;
         public bool HideDrawChances = false;
         public bool HideOverlay = false;
+        public bool HideDecksInOverlay = false;
         public int WindowHeight = 672;
         public string HearthstoneDirectory = "";
         public bool ShowInTaskbar = false;

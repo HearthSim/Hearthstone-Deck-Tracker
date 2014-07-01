@@ -775,6 +775,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxHideOverlayInMenu.IsChecked = _config.HideInMenu;
             CheckboxHighlightCardsInHand.IsChecked = _config.HighlightCardsInHand;
             CheckboxHideOverlay.IsChecked = _config.HideOverlay;
+            CheckboxHideDecksInOverlay.IsChecked = _config.HideDecksInOverlay;
             CheckboxKeepDecksVisible.IsChecked = _config.KeepDecksVisible;
             CheckboxMinimizeTray.IsChecked = _config.MinimizeToTray;
             CheckboxWindowsTopmost.IsChecked = _config.WindowsTopmost;
@@ -2360,8 +2361,23 @@ namespace Hearthstone_Deck_Tracker
             _config.KeyPressOnGameEnd = ComboboxKeyPressGameEnd.SelectedValue.ToString();
             SaveConfig(false);
         }
-        #endregion
 
+        private void CheckboxHideDecksInOverlay_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.HideDecksInOverlay = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideDecksInOverlay_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.HideDecksInOverlay = false;
+            SaveConfig(true);
+        }
+        #endregion
 
     }
 }
