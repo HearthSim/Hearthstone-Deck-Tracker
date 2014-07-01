@@ -100,5 +100,6 @@ namespace Hearthstone_Deck_Tracker
 
         public string SelectedLanguage = "enUS";
 
+        public bool PrioritizeGolden = true;
     }
 }

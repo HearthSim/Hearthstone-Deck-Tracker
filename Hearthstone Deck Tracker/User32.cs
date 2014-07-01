@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace Hearthstone_Deck_Tracker
@@ -7,6 +8,7 @@ namespace Hearthstone_Deck_Tracker
     {
         private const int WsExTransparent = 0x00000020;
         private const int GwlExstyle = (-20);
+        public const int SwRestore = 9;
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
@@ -28,6 +30,12 @@ namespace Hearthstone_Deck_Tracker
 
         [DllImport("user32.dll")]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
+
+        [DllImport("user32.dll")]
+        public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
         public static void SetWindowExTransparent(IntPtr hwnd)
         {

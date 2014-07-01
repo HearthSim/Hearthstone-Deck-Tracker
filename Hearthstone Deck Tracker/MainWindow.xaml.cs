@@ -767,6 +767,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxAutoSelectDeck.IsEnabled = _config.AutoDeckDetection;
             CheckboxAutoSelectDeck.IsChecked = _config.AutoSelectDetectedDeck;
             CheckboxExportName.IsChecked = _config.ExportSetDeckName;
+            CheckboxPrioGolden.IsChecked = _config.PrioritizeGolden;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -2294,9 +2295,24 @@ namespace Hearthstone_Deck_Tracker
             _config.ExportSetDeckName = false;
             SaveConfig(false);
         }
+
+        private void CheckboxPrioGolden_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.PrioritizeGolden = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxPrioGolden_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            _config.PrioritizeGolden = false;
+            SaveConfig(false);
+        }
         #endregion
 
-        
 
     }
 }
