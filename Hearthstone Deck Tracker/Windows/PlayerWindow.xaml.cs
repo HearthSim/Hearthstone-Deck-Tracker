@@ -14,10 +14,12 @@ namespace Hearthstone_Deck_Tracker
         public static double Scaling = 1.0;
         private bool _appIsClosing;
         private readonly Config _config;
+        private bool _forScreenshot;
 
-        public PlayerWindow(Config config, ObservableCollection<Card> playerDeck)
+        public PlayerWindow(Config config, ObservableCollection<Card> playerDeck, bool forScreenshot = false)
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            _forScreenshot = forScreenshot;
             _config = config;
             ListViewPlayer.ItemsSource = playerDeck;
             playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
@@ -36,6 +38,15 @@ namespace Hearthstone_Deck_Tracker
             LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
             LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
             LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+
+            if (forScreenshot)
+            {
+                StackPanelDraw.Visibility = Visibility.Collapsed;
+                StackPanelCount.Visibility = Visibility.Collapsed;
+                
+                Height = 34*ListViewPlayer.Items.Count;
+                Scale();
+            }
         }
 
         public void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -70,6 +81,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
         {
+            if (_forScreenshot) return;
             Scale();
             ListViewPlayer.Items.Refresh();
             _config.PlayerWindowHeight = (int)Height;
@@ -104,6 +116,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_LocationChanged(object sender, EventArgs e)
         {
+            if (_forScreenshot) return;
             if (WindowState == WindowState.Minimized) return;
             _config.PlayerWindowLeft = Left;
             _config.PlayerWindowTop = Top;

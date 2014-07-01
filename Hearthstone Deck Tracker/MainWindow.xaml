@@ -31,14 +31,15 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
-                            <Button x:Name="BtnNotes" Content="Notes" Margin="0,0,3,0" VerticalAlignment="Top" Width="117" Height="26" Click="BtnNotes_Click" />
-                            <Button x:Name="BtnEditDeck" Content="Edit" Margin="3,0,0,0" Width="117" Height="26" Click="BtnEditDeck_Click" />
+                            <Button x:Name="BtnNotes" Content="Notes" Margin="0,0,3,0" VerticalAlignment="Top" Width="76" Height="26" Click="BtnNotes_Click" />
+                            <Button x:Name="BtnEditDeck" Content="Edit" Margin="3,0,3,0" Width="76" Height="26" Click="BtnEditDeck_Click" />
+                            <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="76" Height="26" Click="BtnDeleteDeck_Click"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1">
                             <Button x:Name="BtnExport" Content="Export to HS" Margin="0,0,3,0" Width="117" Height="26" Click="BtnExport_Click" />
-                            <Button x:Name="BtnDeleteDeck" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="117" Height="26" Click="BtnDeleteDeck_Click"/>
+                            <Button x:Name="BtnScreenshot" Content="Screenshot Deck" Margin="3,0,0,0" Width="117" Height="26" Click="BtnScreenhot_Click" />
                         </StackPanel>
-                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseDoubleClick="ListViewDeck_MouseDoubleClick">
+                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
                             <local:DeckListView.Resources>
                                 <Style TargetType="GridViewColumnHeader">
                                     <Setter Property="Visibility" Value="Collapsed" />

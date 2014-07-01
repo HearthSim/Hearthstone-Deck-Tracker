@@ -124,11 +124,11 @@ namespace Hearthstone_Deck_Tracker
             }; 
 
 
-        public static bool ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
+        public static string ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
         {
             try
             {
-                var rtb = new RenderTargetBitmap(230, (int)((dlv.Items.Count+2) * 35.5), dpiX, dpiY, PixelFormats.Pbgra32);
+                var rtb = new RenderTargetBitmap((int)dlv.ActualWidth, (int)dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
                 rtb.Render(dlv);
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(rtb));
@@ -149,11 +149,11 @@ namespace Hearthstone_Deck_Tracker
                 {
                     encoder.Save(stream);
                 }
-                return true;
+                return name;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
 
         }

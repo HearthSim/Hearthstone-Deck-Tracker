@@ -1112,24 +1112,29 @@ namespace Hearthstone_Deck_Tracker
             FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
         }
 
-        private async void ListViewDeck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            PresentationSource source = PresentationSource.FromVisual(this);
+        private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
+        {            
+            PlayerWindow screenShotWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck, true);
+            screenShotWindow.Show();
+            screenShotWindow.Top = 0;
+            screenShotWindow.Left = 0;
+            await Task.Delay(100);
+            PresentationSource source = PresentationSource.FromVisual(screenShotWindow);
             if (source == null) return;
 
             double dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
             double dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-            //increase height to get full list rendered
-            var previousHeight = Height;
-            Height = 3000;
-            var success = Helper.ScreenshotDeck(ListViewDeck, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
-            Height = previousHeight;
+            var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
 
-            if (!success)
+            screenShotWindow.Shutdown();
+            if (fileName == null)
             {
-                await
-                    this.ShowMessageAsync("Error saving screenshot", "");
+                await this.ShowMessageAsync("","Error saving screenshot");
+            }
+            else
+            {
+                await this.ShowMessageAsync("", "Saved to " + fileName);
             }
         }
         #endregion
