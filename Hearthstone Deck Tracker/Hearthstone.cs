@@ -455,6 +455,10 @@ namespace Hearthstone_Deck_Tracker
         {
             EnemyHandCount--;
 
+            if (args.Id == "GAME_005")
+            {
+                OpponentHasCoin = false;
+            }
             if (!string.IsNullOrEmpty(args.Id))
             {
                 Card card = GetCardFromId(args.Id);
