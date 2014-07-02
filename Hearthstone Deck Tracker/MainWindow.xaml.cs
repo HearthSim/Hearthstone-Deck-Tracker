@@ -1134,7 +1134,13 @@ namespace Hearthstone_Deck_Tracker
             }
             else
             {
-                await this.ShowMessageAsync("", "Saved to " + fileName);
+                var settings = new MetroDialogSettings();
+                settings.NegativeButtonText = "Open folder";
+                var result = await this.ShowMessageAsync("", "Saved to " + fileName, MessageDialogStyle.AffirmativeAndNegative, settings);
+                if (result == MessageDialogResult.Negative)
+                {
+                    Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "/Screenshots");
+                }
             }
         }
         #endregion
