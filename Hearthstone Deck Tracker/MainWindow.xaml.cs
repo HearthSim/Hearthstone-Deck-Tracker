@@ -52,6 +52,8 @@ namespace Hearthstone_Deck_Tracker
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
             @"\Blizzard\Hearthstone\log.config";
 
+        private string _decksPath;
+
         private readonly HsLogReader _logReader;
         private readonly System.Windows.Forms.NotifyIcon _notifyIcon;
         private readonly OpponentWindow _opponentWindow;
@@ -87,17 +89,21 @@ namespace Hearthstone_Deck_Tracker
             
             //load config
             _config = new Config();
+            Directory.CreateDirectory(_config.HomeDir);
+
             _xmlManagerConfig = new XmlManager<Config> {Type = typeof (Config)};
             if (!File.Exists(_config.ConfigPath))
             {
-                using (var sr = new StreamWriter(_config.ConfigPath, false))
+                if (File.Exists("config.xml"))
+                    File.Move("config.xml", _config.ConfigPath); // migrate config to new location
+                else using (var sr = new StreamWriter(_config.ConfigPath, false))
                 {
                     sr.WriteLine("<Config></Config>");
                 }
             }
             try
             {
-                _config = _xmlManagerConfig.Load("config.xml");
+                _config = _xmlManagerConfig.Load(_config.ConfigPath);
                 if(_config.SelectedTags.Count == 0)
                     _config.SelectedTags.Add("All");
             }
@@ -105,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 MessageBox.Show(
                     e.Message + "\n\n" + e.InnerException +
-                    "\n\n If you don't know how to fix this, please delete config.xml",
+                    "\n\n If you don't know how to fix this, please delete " + _config.ConfigPath,
                     "Error loading config.xml");
                 Application.Current.Shutdown();
             }
@@ -124,7 +130,7 @@ namespace Hearthstone_Deck_Tracker
                         if (File.Exists(hsDir + @"\Hearthstone.exe"))
                         {
                             _config.HearthstoneDirectory = hsDir;
-                            _xmlManagerConfig.Save("config.xml", _config);
+                            WriteConfig();
                             _foundHsDirectory = true;
                         }
                     }
@@ -186,11 +192,16 @@ namespace Hearthstone_Deck_Tracker
             _hearthstone = Helper.LanguageDict.ContainsValue(languageTag) ? new Hearthstone(languageTag) : new Hearthstone("enUS");
             _hearthstone.Reset();
 
+            _decksPath = _config.HomeDir + @"\PlayerDecks.xml";
+
+            if (File.Exists("PlayerDecks.xml") && !File.Exists(_decksPath)) // migrate decks to home dir
+                File.Move("PlayerDecks.xml", _decksPath);
+
             //load saved decks
-            if (!File.Exists("PlayerDecks.xml"))
+            if (!File.Exists(_decksPath))
             {
                 //avoid overwriting decks file with new releases.
-                using (var sr = new StreamWriter("PlayerDecks.xml", false))
+                using (var sr = new StreamWriter(_decksPath, false))
                 {
                     sr.WriteLine("<Decks></Decks>");
                 }
@@ -198,21 +209,21 @@ namespace Hearthstone_Deck_Tracker
             else
             {
                 //the new playerdecks.xml wont work with versions below 0.2.19, make copy
-                if (!File.Exists("PlayerDecks_old.xml"))
+                if (!File.Exists(_decksPath + ".old"))
                 {
-                    File.Copy("PlayerDecks.xml", "PlayerDecks_old.xml");
+                    File.Copy(_decksPath, _decksPath + ".old");
                 }
             }
             _xmlManager = new XmlManager<Decks> {Type = typeof (Decks)};
             try
             {
-                _deckList = _xmlManager.Load("PlayerDecks.xml");
+                _deckList = _xmlManager.Load(_decksPath);
             }
             catch (Exception e)
             {
                 MessageBox.Show(
                     e.Message + "\n\n" + e.InnerException +
-                    "\n\n If you don't know how to fix this, please delete PlayerDecks.xml (this will cause you to lose your decks).",
+                    "\n\n If you don't know how to fix this, please delete " + _decksPath + " (this will cause you to lose your decks).",
                     "Error loading PlayerDecks.xml");
                 Application.Current.Shutdown();
             }
@@ -254,17 +265,17 @@ namespace Hearthstone_Deck_Tracker
             if (!_deckList.AllTags.Contains("All"))
             {
                 _deckList.AllTags.Add("All");
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
             }
             if (!_deckList.AllTags.Contains("Arena"))
             {
                 _deckList.AllTags.Add("Arena");
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
             }
             if (!_deckList.AllTags.Contains("Constructed"))
             {
                 _deckList.AllTags.Add("Constructed");
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
             }
 
             ComboboxAccent.ItemsSource = ThemeManager.Accents;
@@ -323,6 +334,16 @@ namespace Hearthstone_Deck_Tracker
             {
                 _logReader.Start();
             }
+        }
+
+        private void WriteConfig()
+        {
+            _xmlManagerConfig.Save(_config.ConfigPath, _config);
+        }
+
+        private void WriteDecks()
+        {
+            _xmlManager.Save(_decksPath, _deckList);
         }
 
         #region LogReader Events
@@ -646,8 +667,8 @@ namespace Hearthstone_Deck_Tracker
                 _timerWindow.Shutdown();
                 _playerWindow.Shutdown();
                 _opponentWindow.Shutdown();
-                _xmlManagerConfig.Save("config.xml", _config);
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteConfig();
+                WriteDecks();
             }
             catch (Exception)
             {
@@ -672,7 +693,7 @@ namespace Hearthstone_Deck_Tracker
         {
             DeckPickerList.SetSelectedTags(tags);
             _config.SelectedTags = tags;
-            _xmlManagerConfig.Save("config.xml", _config);
+            WriteConfig();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -948,7 +969,7 @@ namespace Hearthstone_Deck_Tracker
                 if (dialogResult == true)
                 {
                     _config.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
-                    _xmlManagerConfig.Save("config.xml", _config);
+                    WriteConfig();
                     await Restart();
                 }
             }
@@ -1031,7 +1052,7 @@ namespace Hearthstone_Deck_Tracker
                     try
                     {
                         _deckList.DecksList.Remove(deck);
-                        _xmlManager.Save("PlayerDecks.xml", _deckList);
+                        WriteDecks();
                         DeckPickerList.RemoveDeck(deck);
                         ListViewDeck.Items.Clear();
                     }
@@ -1074,7 +1095,7 @@ namespace Hearthstone_Deck_Tracker
             if (!_deckList.AllTags.Contains(tag))
             {
                 _deckList.AllTags.Add(tag);
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
                 TagControlFilter.LoadTags(_deckList.AllTags);
             }
         }
@@ -1094,7 +1115,7 @@ namespace Hearthstone_Deck_Tracker
                 if (_newDeck.Tags.Contains(tag))
                     _newDeck.Tags.Remove(tag);
 
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
                 TagControlFilter.LoadTags(_deckList.AllTags);
                 DeckPickerList.UpdateList();
             }
@@ -1167,7 +1188,7 @@ namespace Hearthstone_Deck_Tracker
             {
 
                 _config.LastDeck = string.Empty;
-                _xmlManagerConfig.Save("config.xml", _config);
+                WriteConfig();
                 return;
             }
             foreach (var card in selected.Cards)
@@ -1177,7 +1198,7 @@ namespace Hearthstone_Deck_Tracker
 
             SortCardCollection(ListViewDeck.Items);
             _config.LastDeck = selected.Name;
-            _xmlManagerConfig.Save("config.xml", _config);
+            WriteConfig();
         }
 
         private void DeckPickerListOnSelectedDeckChanged(DeckPicker sender, Deck deck)
@@ -1214,7 +1235,7 @@ namespace Hearthstone_Deck_Tracker
                     }
                 }
                 _deckList.LastDeckClass.Add(new DeckInfo(){Class = deck.Class, Name = deck.Name});
-                _xmlManager.Save("PlayerDecks.xml", _deckList);
+                WriteDecks();
             }
         }
 
@@ -1557,8 +1578,8 @@ namespace Hearthstone_Deck_Tracker
             var newDeckClone = (Deck) _newDeck.Clone();
             _deckList.DecksList.Add(newDeckClone);
             DeckPickerList.AddAndSelectDeck(newDeckClone);
-            
-            _xmlManager.Save("PlayerDecks.xml", _deckList);
+
+            WriteDecks();
             BtnSaveDeck.Content = "Save";
 
             TabControlTracker.SelectedIndex = 0;
@@ -1946,7 +1967,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void SaveConfig(bool updateOverlay)
         {
-            _xmlManagerConfig.Save("config.xml", _config);
+            WriteConfig();
             if(updateOverlay)
                 _overlay.Update(true);
         }

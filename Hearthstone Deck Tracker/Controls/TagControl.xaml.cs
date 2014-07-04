@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker
     /// </summary>
     public partial class TagControl : UserControl
     {
-        private class Tag
+        private new class Tag
         {
             public string Name { get; set; }
             public bool Selected { get; set; }
@@ -36,6 +36,11 @@ namespace Hearthstone_Deck_Tracker
                 var other = obj as Tag;
                 if (other == null) return false;
                 return other.Name == Name;
+            }
+
+            public override int GetHashCode()
+            {
+                return Name.GetHashCode();
             }
         }
 

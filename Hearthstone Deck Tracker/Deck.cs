@@ -53,40 +53,28 @@ namespace Hearthstone_Deck_Tracker
                 {
                     case "Druid":
                         return (Color)ColorConverter.ConvertFromString("#FF7D0A");
-                        break;
                     case "Death Knight":
                         return (Color)ColorConverter.ConvertFromString("#C41F3B");
-                        break;
                     case "Hunter":
                         return (Color)ColorConverter.ConvertFromString("#ABD473");
-                        break;
                     case "Mage":
                         return (Color)ColorConverter.ConvertFromString("#69CCF0");
-                        break;
                     case "Monk":
                         return (Color)ColorConverter.ConvertFromString("#00FF96");
-                        break;
                     case "Paladin":
                         return (Color)ColorConverter.ConvertFromString("#F58CBA");
-                        break;
                     case "Priest":
                         return (Color)ColorConverter.ConvertFromString("#FFFFFF");
-                        break;
                     case "Rogue":
                         return (Color)ColorConverter.ConvertFromString("#FFF569");
-                        break;
                     case "Shaman":
                         return (Color)ColorConverter.ConvertFromString("#0070DE");
-                        break;
                     case "Warlock":
                         return (Color)ColorConverter.ConvertFromString("#9482C9");
-                        break;
                     case "Warrior":
                         return (Color)ColorConverter.ConvertFromString("#C79C6E");
-                        break;
                     default:
                         return Colors.Gray;
-                        break;
                 }
             }
         }
@@ -129,6 +117,11 @@ namespace Hearthstone_Deck_Tracker
             var deck = obj as Deck;
             if (deck == null) return false;
             return Name == deck.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
 }

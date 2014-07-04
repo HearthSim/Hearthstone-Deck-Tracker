@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using MahApps.Metro;
 
@@ -7,7 +8,10 @@ namespace Hearthstone_Deck_Tracker
     public class Config
     {
         [XmlIgnore]
-        public readonly string ConfigPath = "config.xml";
+        public readonly string HomeDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
+
+        [XmlIgnore]
+        public readonly string ConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker\config.xml";
 
         public int TrackerWindowLeft = -1;
         public int TrackerWindowTop = -1;
