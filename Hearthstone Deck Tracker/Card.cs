@@ -191,6 +191,11 @@ namespace Hearthstone_Deck_Tracker
             return c.Name == Name;
         }
 
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
         public object Clone()
         {
             return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count);
