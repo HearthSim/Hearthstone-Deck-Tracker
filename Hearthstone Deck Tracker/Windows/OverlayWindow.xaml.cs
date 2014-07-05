@@ -352,7 +352,7 @@ namespace Hearthstone_Deck_Tracker
             LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
 
             ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Collapsed : Visibility.Visible;
-
+            ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 
             LblGrid.Visibility = _hearthstone.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 

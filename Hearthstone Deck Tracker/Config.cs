@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker
         public bool HideOpponentDrawChances = false;
         public bool HidePlayerCardCount = false;
         public bool HideDrawChances = false;
+        public bool HidePlayerCards = false;
         public bool HideOverlay = false;
         public bool HideDecksInOverlay = false;
         public int WindowHeight = 672;
@@ -109,5 +110,6 @@ namespace Hearthstone_Deck_Tracker
 
         public string KeyPressOnGameStart = "None";
         public string KeyPressOnGameEnd = "None";
+
     }
 }

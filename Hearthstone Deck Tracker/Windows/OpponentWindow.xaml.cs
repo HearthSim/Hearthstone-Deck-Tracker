@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker
             LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
             LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
             LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
+            ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Collapsed : Visibility.Visible;
         }
         public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
         {
