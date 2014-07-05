@@ -157,6 +157,8 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly int _updateDelay;
 
+        //should be about 30,000 lines
+        private const int MaxFileLength = 1000000;
 
         private long _currentOffset;
         private bool _doUpdate;
@@ -164,7 +166,6 @@ namespace Hearthstone_Deck_Tracker
         private long _lastGameEnd;
         private int _powerCount;
         private long _previousSize;
-
         private int _turnCount;
 
         public HsLogReader(string hsDirPath, int updateDelay)
@@ -214,7 +215,13 @@ namespace Hearthstone_Deck_Tracker
                             var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
                             )
                         {
-                            _previousSize = FindLastGameEnd(fs);
+                            var fileOffset = 0L;
+                            if (fs.Length > MaxFileLength)
+                            {
+                                fileOffset = fs.Length - MaxFileLength;
+                                fs.Seek(fs.Length - MaxFileLength, SeekOrigin.Begin);
+                            }
+                            _previousSize = FindLastGameEnd(fs) + fileOffset;
                             _currentOffset = _previousSize;
                             _first = false;
                         }
