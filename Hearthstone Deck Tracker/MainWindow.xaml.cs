@@ -853,7 +853,7 @@ namespace Hearthstone_Deck_Tracker
                                                ? "#696969"
                                                : _config.WindowsBackgroundHex;
             UpdateAdditionalWindowsBackground();
-
+            
             ComboboxTextLocationPlayer.SelectedIndex = _config.TextOnTopPlayer ? 0 : 1;
             ComboboxTextLocationOpponent.SelectedIndex = _config.TextOnTopOpponent ? 0 : 1;
             _overlay.SetOpponentTextLocation(_config.TextOnTopOpponent);
@@ -998,15 +998,23 @@ namespace Hearthstone_Deck_Tracker
             DeckPickerList.SelectedIndex = -1;
             UpdateDeckList(null);
             UseDeck(null);
+            EnableDeckButtons(false);
+        }
+
+        private void EnableDeckButtons(bool enable)
+        {
+            BtnScreenshot.IsEnabled = enable;
+            BtnNotes.IsEnabled = enable;
+            BtnExport.IsEnabled = enable;
+            BtnDeleteDeck.IsEnabled = enable;
+            BtnEditDeck.IsEnabled = enable;
         }
 
         private async void BtnEditDeck_Click(object sender, RoutedEventArgs e)
         {
-            //if (ListboxDecks.SelectedIndex == -1) return;
-            //var selectedDeck = ListboxDecks.SelectedItem as Deck;
             var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck == null) return;
-            //move to new deck section with stuff preloaded
+
             if (_newContainsDeck)
             {
                 var settings = new MetroDialogSettings();
@@ -1040,7 +1048,6 @@ namespace Hearthstone_Deck_Tracker
 
         private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
-            //var deck = ListboxDecks.SelectedItem as Deck;
             var deck = DeckPickerList.SelectedDeck;
             if (deck != null)
             {
@@ -1131,11 +1138,13 @@ namespace Hearthstone_Deck_Tracker
 
         private void BtnNotes_Click(object sender, RoutedEventArgs e)
         {
+            if (DeckPickerList.SelectedDeck == null) return;
             FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
         }
 
         private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            if (DeckPickerList.SelectedDeck == null) return;
             PlayerWindow screenShotWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck, true);
             screenShotWindow.Show();
             screenShotWindow.Top = 0;
@@ -1235,8 +1244,13 @@ namespace Hearthstone_Deck_Tracker
                         break;
                     }
                 }
-                _deckList.LastDeckClass.Add(new DeckInfo(){Class = deck.Class, Name = deck.Name});
+                _deckList.LastDeckClass.Add(new DeckInfo() {Class = deck.Class, Name = deck.Name});
                 WriteDecks();
+                EnableDeckButtons(true);
+            }
+            else
+            {
+                EnableDeckButtons(false);
             }
         }
 
@@ -1254,6 +1268,7 @@ namespace Hearthstone_Deck_Tracker
         
         private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
+            if (DeckPickerList.SelectedDeck == null) return;
             _newDeck.Cards = new ObservableCollection<Card>(_newDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
 
             if (_editingDeck)
