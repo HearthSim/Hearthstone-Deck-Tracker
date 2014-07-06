@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 
         public static bool IsForegroundWindow(String lpWindowName)
         {
-            return GetForegroundWindow() == FindWindow(null, lpWindowName);
+            return GetForegroundWindow() == FindWindow("UnityWndClass", lpWindowName);
         }
 
         [StructLayout(LayoutKind.Sequential)]

@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (deck == null) return;
 
-            var hsHandle = User32.FindWindow(null, "Hearthstone");
+            var hsHandle = User32.FindWindow("UnityWndClass", "Hearthstone");
 
             if (!User32.IsForegroundWindow("Hearthstone"))
             {

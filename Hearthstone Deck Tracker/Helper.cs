@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Media;
@@ -64,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 
         public static bool IsFullscreen(string windowName)
         {
-            var hsHandle = User32.FindWindow(null, windowName);
+            var hsHandle = User32.FindWindow("UnityWndClass", windowName);
 
             User32.Rect hsWindowRect = new User32.Rect();
             User32.GetWindowRect(hsHandle, ref hsWindowRect);
