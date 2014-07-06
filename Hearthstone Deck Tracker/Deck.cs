@@ -97,6 +97,8 @@ namespace Hearthstone_Deck_Tracker
         {
             Cards = new ObservableCollection<Card>();
             Tags = new List<string>();
+            Note = string.Empty;
+            Url = string.Empty;
         }
 
         public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url)

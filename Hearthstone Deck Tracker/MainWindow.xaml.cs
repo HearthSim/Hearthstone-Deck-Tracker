@@ -1003,8 +1003,11 @@ namespace Hearthstone_Deck_Tracker
             _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _hearthstone.IsUsingPremade = false;
+            DeckPickerList.SelectedDeck.IsSelectedInGui = false;
             DeckPickerList.SelectedDeck = null;
             DeckPickerList.SelectedIndex = -1;
+            DeckPickerList.ListboxPicker.Items.Refresh();
+
             UpdateDeckList(null);
             UseDeck(null);
             EnableDeckButtons(false);
@@ -1154,7 +1157,7 @@ namespace Hearthstone_Deck_Tracker
         private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
         {
             if (DeckPickerList.SelectedDeck == null) return;
-            PlayerWindow screenShotWindow = new PlayerWindow(_config, _hearthstone.PlayerDeck, true);
+            PlayerWindow screenShotWindow = new PlayerWindow(_config, DeckPickerList.SelectedDeck.Cards, true);
             screenShotWindow.Show();
             screenShotWindow.Top = 0;
             screenShotWindow.Left = 0;
@@ -1355,9 +1358,16 @@ namespace Hearthstone_Deck_Tracker
 
             if (deck != null)
             {
-                deck.Url = url;
-                deck.Note += url;
                 var reimport = _editingDeck && _newDeck != null && _newDeck.Url == url;
+
+                deck.Url = url;
+
+                if(reimport) //keep old notes
+                    deck.Note = _newDeck.Note;
+
+                if(!deck.Note.Contains(url))
+                    deck.Note = url + "\n" + deck.Note;
+
                 ClearNewDeckSection();
                 _newContainsDeck = true;
                 _editingDeck = reimport;
