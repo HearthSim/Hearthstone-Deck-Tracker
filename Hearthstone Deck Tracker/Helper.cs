@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -136,7 +137,10 @@ namespace Hearthstone_Deck_Tracker
                 if (!Directory.Exists("Screenshots"))
                     Directory.CreateDirectory("Screenshots");
 
-                name = "Screenshots/" + name.Replace("/", " ").Replace("\\", " ").Replace(":", " ").Replace("*", " ").Replace("?", " ").Replace("<", " ").Replace(">", " ").Replace("|", " ");
+                //replace invalid chars
+                var invalidChars = new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars());
+                var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
+                name = "Screenshots/" + regex.Replace(name, "");
 
                 if (File.Exists(name + ".png"))
                 {
