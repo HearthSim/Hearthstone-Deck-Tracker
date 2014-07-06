@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error loading db: \n" + e);
+                Logger.WriteLine("Error loading db: \n" + e);
             }
         }
 
@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 return (Card) _cardDb[cardId].Clone();
             }
-            Debug.WriteLine("Could not find entry in db for cardId: " + cardId);
+            Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
             return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1);
         }
 
@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //not sure with all the values here
-            Debug.WriteLine("Could not get card from name: " + name);
+            Logger.WriteLine("Could not get card from name: " + name);
             return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1);
         }
 
@@ -275,14 +275,11 @@ namespace Hearthstone_Deck_Tracker
             OpponentHandMarks[pos - 1] = CardMark.Mulliganed;
             if (EnemyHandCount < OpponentHandAge.Count(x => x != -1))
             {
-                //move from to mulligan pos - I don't need this, right? it's 0 anyway and only ends up being wrong if the game for some reason counts the mulliganed card as drawn on turn 1
-                //OpponentHandAge[pos - 1] = OpponentHandAge[EnemyHandCount];
                 OpponentHandAge[EnemyHandCount] = -1;
-                //Debug.WriteLine("Fixed hand ages after mulligan (moved {0} to {1})", EnemyHandCount, pos - 1);
-                Debug.WriteLine("Fixed hand ages after mulligan (removed {0})", EnemyHandCount);
+                Logger.WriteLine(string.Format("Fixed hand ages after mulligan (removed {0})", EnemyHandCount));
             }
 
-            Debug.WriteLine("EnemyMulligan");
+            Logger.WriteLine("EnemyMulligan");
         }
 
         public void PlayerHandDiscard(string cardId)
@@ -325,7 +322,7 @@ namespace Hearthstone_Deck_Tracker
 
         public void OpponentBackToHand(string cardId, int turn)
         {
-            Debug.WriteLine("EnemyBackToHand");
+            Logger.WriteLine("EnemyBackToHand");
 
             if (EnemyCards.Any(c => c.Id == cardId))
             {
@@ -361,7 +358,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             EnemyCards.Add(card);
-            Debug.WriteLine("EnemyDeckDiscard");
+            Logger.WriteLine("EnemyDeckDiscard");
         }
 
         public void OpponentSecretTriggered(string cardId)
@@ -378,12 +375,12 @@ namespace Hearthstone_Deck_Tracker
 
             EnemyCards.Add(card);
 
-            Debug.WriteLine("EnemySecretTriggered");
+            Logger.WriteLine("EnemySecretTriggered");
         }
 
         internal void OpponentGet(int turn)
         {
-            Debug.WriteLine("EnemyGet");
+            Logger.WriteLine("EnemyGet");
 
             EnemyHandCount++;
 
@@ -396,13 +393,13 @@ namespace Hearthstone_Deck_Tracker
                 OpponentHandMarks[EnemyHandCount - 1] = CardMark.Stolen;
 
 
-            Debug.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
+            Logger.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
+            Logger.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
         internal void Reset()
         {
-            Debug.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
+            Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
 
             PlayerDrawn.Clear();
             PlayerHandCount = 0;
@@ -426,8 +423,6 @@ namespace Hearthstone_Deck_Tracker
 
         public void OpponentDraw(CardPosChangeArgs args)
         {
-            Debug.WriteLine("OpponentDraw");
-
             EnemyHandCount++;
             OpponentDeckCount--;
 
@@ -436,19 +431,19 @@ namespace Hearthstone_Deck_Tracker
 
             if (OpponentHandAge[EnemyHandCount - 1] != -1)
             {
-                Debug.WriteLine(string.Format("Card {0} is already set to {1}", EnemyHandCount - 1,
+                Logger.WriteLine(string.Format("Card {0} is already set to {1}", EnemyHandCount - 1,
                                               OpponentHandAge[EnemyHandCount - 1]), "OpponentDraw");
 
                 return;
             }
 
-            Debug.WriteLine(string.Format("Set {0} to {1}", EnemyHandCount - 1, args.Turn), "OpponentDraw");
+            Logger.WriteLine(string.Format("Set {0} to {1}", EnemyHandCount - 1, args.Turn), "OpponentDraw");
 
             OpponentHandAge[EnemyHandCount - 1] = args.Turn;
             OpponentHandMarks[EnemyHandCount - 1] = CardMark.None;
 
-            Debug.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
+            Logger.WriteLine("OpponentHandAge after draw: " + string.Join(",", OpponentHandAge));
+            Logger.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
         public void OpponentPlay(CardPosChangeArgs args)
@@ -474,13 +469,13 @@ namespace Hearthstone_Deck_Tracker
                 EnemyCards.Add(card);
 
                 if (card.IsStolen)
-                    Debug.WriteLine("Opponent played stolen card from " + args.From);
+                    Logger.WriteLine("Opponent played stolen card from " + args.From);
                 else
-                    Debug.WriteLine("Opponent played from " + args.From);
+                    Logger.WriteLine("Opponent played from " + args.From);
             }
 
 
-            Debug.WriteLine(string.Format("From {0} to Play", args.From), "OpponentPlay");
+            Logger.WriteLine(string.Format("From {0} to Play", args.From), "OpponentPlay");
 
             for (int i = args.From - 1; i < MaxHandSize - 1; i++)
             {
@@ -492,15 +487,15 @@ namespace Hearthstone_Deck_Tracker
             OpponentHandMarks[MaxHandSize - 1] = CardMark.None;
 
 
-            Debug.WriteLine("OpponentHandAge after play: " + string.Join(",", OpponentHandAge));
-            Debug.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
+            Logger.WriteLine("OpponentHandAge after play: " + string.Join(",", OpponentHandAge));
+            Logger.WriteLine("OpponentHandMarks         : " + string.Join(",", OpponentHandMarks.Select(mark => (char)mark)));
         }
 
         private bool ValidateEnemyHandCount()
         {
             if (EnemyHandCount - 1 < 0 || EnemyHandCount - 1 > 9)
             {
-                Debug.WriteLine("ValidateEnemyHandCount failed! EnemyHandCount = " + EnemyHandCount.ToString());
+                Logger.WriteLine("ValidateEnemyHandCount failed! EnemyHandCount = " + EnemyHandCount.ToString());
                 return false;
             }
 

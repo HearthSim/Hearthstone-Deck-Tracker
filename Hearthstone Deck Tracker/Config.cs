@@ -13,6 +13,15 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore]
         public readonly string ConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker\config.xml";
 
+        [XmlIgnore]
+        public string LogFilePath
+        {
+            get { return _currentLogFile ?? GetLogFileName(); }
+        }
+
+        private string _currentLogFile;
+
+        public bool GenerateLog = false;
         public int TrackerWindowLeft = -1;
         public int TrackerWindowTop = -1;
         public string LastDeck = "";
@@ -111,5 +120,12 @@ namespace Hearthstone_Deck_Tracker
         public string KeyPressOnGameStart = "None";
         public string KeyPressOnGameEnd = "None";
 
+        private string GetLogFileName()
+        {
+            var date = DateTime.Now;
+            _currentLogFile =  string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour,
+                                 date.Minute, date.Second);
+            return _currentLogFile;
+        }
     }
 }

@@ -404,7 +404,7 @@ namespace Hearthstone_Deck_Tracker
                                     CardPosChange(this,
                                                   new CardPosChangeArgs(OpponentHandMovement.Draw, zonePos,
                                                                         GetTurnNumber(), id));
-                                    Debug.WriteLine(
+                                    Logger.WriteLine(
                                         string.Format("Opponent draw from {0} at turn {1}", zonePos, GetTurnNumber()),
                                         "LogReader");
                                 }

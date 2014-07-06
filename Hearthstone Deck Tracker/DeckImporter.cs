@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
@@ -244,7 +244,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }
@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + "\n" + e.StackTrace);
+                Logger.WriteLine(e.Message + "\n" + e.StackTrace);
                 return null;
             }
         }

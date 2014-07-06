@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
             @"\Blizzard\Hearthstone\log.config";
 
-        private string _decksPath;
+        private readonly string _decksPath;
 
         private readonly HsLogReader _logReader;
         private readonly System.Windows.Forms.NotifyIcon _notifyIcon;
@@ -80,13 +80,14 @@ namespace Hearthstone_Deck_Tracker
         public MainWindow()
         {
             InitializeComponent();
+            
             var version = Helper.CheckForUpdates(out _newVersion);
             if (version != null)
             {
                 TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
                                                      version.Build);
             }
-            
+
             //load config
             _config = new Config();
             Directory.CreateDirectory(_config.HomeDir);
@@ -116,6 +117,14 @@ namespace Hearthstone_Deck_Tracker
                 Application.Current.Shutdown();
             }
             _config.Debug = IS_DEBUG;
+
+            if (_config.GenerateLog)
+            {
+                Directory.CreateDirectory("Logs");
+                var listener = new TextWriterTraceListener(_config.LogFilePath);
+                Trace.Listeners.Add(listener);
+                Trace.AutoFlush = true;
+            }
 
             //find hs directory
             if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
@@ -479,7 +488,7 @@ namespace Hearthstone_Deck_Tracker
                     HandleOpponentPlayToHand(args.CardId, sender.GetTurnNumber());
                     break;
                 default:
-                    Console.WriteLine("Invalid card movement");
+                    Logger.WriteLine("Invalid card movement");
                     break;
             }
         }
@@ -516,18 +525,18 @@ namespace Hearthstone_Deck_Tracker
                     var classDecks = _deckList.DecksList.Where(d => d.Class == _hearthstone.PlayingAs).ToList();
                     if (classDecks.Count == 0)
                     {
-                        Debug.WriteLine("Found no deck to switch to", "HandleGameStart");
+                        Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
                         return;
                     }
                     if (classDecks.Count == 1)
                     {
                         DeckPickerList.SelectDeck(classDecks[0]);
-                        Debug.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
+                        Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
                     }
                     else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
                     {
                         var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _hearthstone.PlayingAs).Name;
-                        Debug.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
+                        Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
 
                         var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
 
@@ -578,14 +587,14 @@ namespace Hearthstone_Deck_Tracker
             if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
-                Debug.WriteLine("Found incorrect deck", "HandlePlayerDraw");
+                Logger.WriteLine("Found incorrect deck", "HandlePlayerDraw");
             }
         }
 
 
         private void HandlePlayerMulligan(string cardId)
         {
-            Debug.WriteLine("HandlePlayerMulligan");
+            Logger.WriteLine("HandlePlayerMulligan");
             _turnTimer.MulliganDone(Turn.Player);
             _hearthstone.Mulligan(cardId);
         }
@@ -608,7 +617,7 @@ namespace Hearthstone_Deck_Tracker
             if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
-                Debug.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
+                Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
             }
         }
 
@@ -734,7 +743,7 @@ namespace Hearthstone_Deck_Tracker
             if (decks.Contains(DeckPickerList.SelectedDeck))
                 decks.Remove(DeckPickerList.SelectedDeck);
 
-            Debug.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
+            Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
             if (decks.Count > 0)
             {
 
@@ -750,14 +759,14 @@ namespace Hearthstone_Deck_Tracker
 
                 if (selectedDeck != null)
                 {
-                    Debug.WriteLine("Selected deck: " + selectedDeck.Name);
+                    Logger.WriteLine("Selected deck: " + selectedDeck.Name);
                     DeckPickerList.SelectDeck(selectedDeck);
                     UpdateDeckList(selectedDeck);
                     UseDeck(selectedDeck);
                 }
                 else
                 {
-                    Debug.WriteLine("No deck selected. disabled deck detection.");
+                    Logger.WriteLine("No deck selected. disabled deck detection.");
                     CheckboxDeckDetection.IsChecked = false;
                     SaveConfig(false);
                 }
@@ -990,7 +999,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("set player item source as drawn");
+            Logger.WriteLine("set player item source as drawn");
             _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _hearthstone.IsUsingPremade = false;
@@ -1066,7 +1075,7 @@ namespace Hearthstone_Deck_Tracker
                     }
                     catch (Exception)
                     {
-                        Debug.WriteLine("Error deleting deck");
+                        Logger.WriteLine("Error deleting deck");
                     }
                 }
             }
@@ -1225,11 +1234,12 @@ namespace Hearthstone_Deck_Tracker
                 {
                     _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
                     _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
-                    Debug.WriteLine("Set player itemsource as playerdeck");
+                    Logger.WriteLine("Set player itemsource as playerdeck");
                 }
                 _hearthstone.IsUsingPremade = true;
                 UpdateDeckList(deck);
                 UseDeck(deck);
+                Logger.WriteLine("Switched to deck: " + deck.Name);
 
                 //set and save last used deck for class
                 while (_deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
@@ -1345,8 +1355,12 @@ namespace Hearthstone_Deck_Tracker
 
             if (deck != null)
             {
+                deck.Url = url;
+                deck.Note += url;
+                var reimport = _editingDeck && _newDeck != null && _newDeck.Url == url;
                 ClearNewDeckSection();
                 _newContainsDeck = true;
+                _editingDeck = reimport;
 
                 _newDeck = (Deck)deck.Clone();
                 ListViewNewDeck.ItemsSource = _newDeck.Cards;
@@ -1552,6 +1566,7 @@ namespace Hearthstone_Deck_Tracker
                 TextBoxDeckName.Text = name;
 
             }
+
             while (_deckList.DecksList.Any(d => d.Name == deckName) && (!_editingDeck || !overwrite))
             {
                 var settings = new MetroDialogSettings();
@@ -1564,7 +1579,6 @@ namespace Hearthstone_Deck_Tracker
 
                 deckName = name;
                 TextBoxDeckName.Text = name;
-
             }
 
             if (_newDeck.Cards.Sum(c => c.Count) != 30)

@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker
         public string Name;
         public string Class;
         public string Note;
+        public string Url;
 
         [XmlArray(ElementName = "Tags")]
         [XmlArrayItem(ElementName = "Tag")]
@@ -89,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
             Tags = new List<string>();
         }
 
-        public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note)
+        public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url)
         {
             Name = name;
             Class = className;
@@ -100,6 +101,7 @@ namespace Hearthstone_Deck_Tracker
             }
             Tags = new List<string>(tags);
             Note = note;
+            Url = url;
         }
 
         public override string ToString()
@@ -109,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Deck(Name, Class, Cards, Tags, Note);
+            return new Deck(Name, Class, Cards, Tags, Note, Url);
         }
 
         public override bool Equals(object obj)
