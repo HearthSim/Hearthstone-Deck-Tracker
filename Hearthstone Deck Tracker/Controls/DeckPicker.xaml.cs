@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker
         {
             public List<Deck> Decks;
             public List<string> SelectedTags;
+            public string Name;
 
             public string TagList
             {
@@ -45,15 +46,6 @@ namespace Hearthstone_Deck_Tracker
                                      d =>
                                      SelectedTags.Contains("All") ||
                                      SelectedTags.Any(tag => d.Tags.Any(deckTag => deckTag == tag))) + ")"; }
-            }
-
-            public string Name;
-
-            public HsClass(string name)
-            {
-                Name = name;
-                Decks = new List<Deck>();
-                SelectedTags = new List<string>();
             }
 
             public Color ClassColor
@@ -88,6 +80,17 @@ namespace Hearthstone_Deck_Tracker
                             return Colors.Gray;
                     }
                 }
+            }
+            public FontWeight GetFontWeight
+            {
+                get { return FontWeights.Bold; }
+            }
+
+            public HsClass(string name)
+            {
+                Name = name;
+                Decks = new List<Deck>();
+                SelectedTags = new List<string>();
             }
         }
 
@@ -194,10 +197,11 @@ namespace Hearthstone_Deck_Tracker
         {
             if (ListboxPicker.SelectedIndex == -1) return;
             if (!_initialized) return;
-            if (_inClassSelect)
+
+            var selectedClass = ListboxPicker.SelectedItem as HsClass;
+            if (selectedClass != null)
             {
-                var selectedClass = ListboxPicker.SelectedItem as HsClass;
-                if (selectedClass != null)
+                if (_inClassSelect)
                 {
                     ShowAll = selectedClass.Name == "All";
 
@@ -224,11 +228,7 @@ namespace Hearthstone_Deck_Tracker
                     }
                     _inClassSelect = false;
                 }
-            }
-            else
-            {
-                var selectedClass = ListboxPicker.SelectedItem as HsClass;
-                if (selectedClass != null)
+                else
                 {
                     if (selectedClass.Name == "Back")
                     {
@@ -242,14 +242,18 @@ namespace Hearthstone_Deck_Tracker
                         _inClassSelect = true;
                     }
                 }
-                else
+            }
+            else
+            {
+                var newSelectedDeck = ListboxPicker.SelectedItem as Deck;
+                if (newSelectedDeck != null)
                 {
-                    var selectedDeck = ListboxPicker.SelectedItem as Deck;
-                    if (selectedDeck != null)
-                    {
-                        SelectedDeckChanged(this, selectedDeck);
-                        SelectedDeck = selectedDeck;
-                    }
+                    if(SelectedDeck != null)
+                        SelectedDeck.IsSelectedInGui = false;
+                    newSelectedDeck.IsSelectedInGui = true;
+                    ListboxPicker.Items.Refresh();
+                    SelectedDeckChanged(this, newSelectedDeck);
+                    SelectedDeck = newSelectedDeck;
                 }
             }
         }

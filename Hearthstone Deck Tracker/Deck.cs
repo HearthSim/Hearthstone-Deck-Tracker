@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
@@ -27,7 +28,12 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore]
         public string GetName
         {
-            get { return Name == "" ? "No Name Set" : Name; }
+            get { return IsSelectedInGui ? string.Format("> {0} <", Name) : Name; }
+        }
+        [XmlIgnore]
+        public FontWeight GetFontWeight
+        {
+            get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Bold; }
         }
 
         [XmlIgnore]
@@ -80,6 +86,9 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        [XmlIgnore]
+        public bool IsSelectedInGui;
+        
         [XmlArray(ElementName = "Cards")]
         [XmlArrayItem(ElementName = "Card")]
         public ObservableCollection<Card> Cards;

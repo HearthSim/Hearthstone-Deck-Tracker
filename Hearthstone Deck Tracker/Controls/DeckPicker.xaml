@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid>
-                    <Label Content="{Binding GetName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Black" FontSize="14" Foreground="Black"></Label>
+                    <Label Content="{Binding GetName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="{Binding GetFontWeight}" FontSize="14" Foreground="Black"></Label>
                     <Label Content="{Binding TagList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,22, 0, 0" Foreground="Black"></Label>
                 </Grid>
             </Grid>
