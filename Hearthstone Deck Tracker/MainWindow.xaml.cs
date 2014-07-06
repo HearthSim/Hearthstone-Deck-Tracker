@@ -1003,7 +1003,10 @@ namespace Hearthstone_Deck_Tracker
             _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
             _hearthstone.IsUsingPremade = false;
-            DeckPickerList.SelectedDeck.IsSelectedInGui = false;
+
+            if(DeckPickerList.SelectedDeck != null)
+                DeckPickerList.SelectedDeck.IsSelectedInGui = false;
+
             DeckPickerList.SelectedDeck = null;
             DeckPickerList.SelectedIndex = -1;
             DeckPickerList.ListboxPicker.Items.Refresh();
