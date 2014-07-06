@@ -252,7 +252,10 @@ namespace Hearthstone_Deck_Tracker
                         SelectedDeck.IsSelectedInGui = false;
                     newSelectedDeck.IsSelectedInGui = true;
                     ListboxPicker.Items.Refresh();
-                    SelectedDeckChanged(this, newSelectedDeck);
+
+                    if(SelectedDeckChanged != null)
+                        SelectedDeckChanged(this, newSelectedDeck);
+
                     SelectedDeck = newSelectedDeck;
                 }
             }
