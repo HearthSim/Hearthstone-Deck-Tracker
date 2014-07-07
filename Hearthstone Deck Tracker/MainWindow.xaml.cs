@@ -950,6 +950,11 @@ namespace Hearthstone_Deck_Tracker
             }
             ComboboxKeyPressGameEnd.SelectedValue = _config.KeyPressOnGameEnd;
 
+            CheckboxHideManaCurveMyDecks.IsChecked = _config.HideManaCurveMyDecks;
+            ManaCurveMyDecks.Visibility = _config.HideManaCurveMyDecks ? Visibility.Collapsed : Visibility.Visible;
+            CheckboxHideManaCurveNewDeck.IsChecked = _config.HideManaCurveNewDeck;
+            ManaCurveNewDeck.Visibility = _config.HideManaCurveNewDeck ? Visibility.Collapsed : Visibility.Visible;
+
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -2567,8 +2572,38 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(false);
             await Restart();
         }
-        #endregion
+        private void CheckboxManaCurveMyDecks_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideManaCurveMyDecks = true;
+            ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+            SaveConfig(false);
+        }
 
+        private void CheckboxManaCurveMyDecks_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideManaCurveMyDecks = false;
+            ManaCurveMyDecks.Visibility = Visibility.Visible;
+            SaveConfig(false);
+        }
+
+        private void CheckboxManaCurveNewDeck_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideManaCurveNewDeck = true;
+            ManaCurveNewDeck.Visibility = Visibility.Collapsed;
+            SaveConfig(false);
+        }
+
+        private void CheckboxManaCurveNewDeck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideManaCurveNewDeck = false;
+            ManaCurveNewDeck.Visibility = Visibility.Visible;
+            SaveConfig(false);
+        }
+        #endregion
 
     }
 }

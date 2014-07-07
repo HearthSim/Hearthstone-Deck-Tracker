@@ -126,6 +126,10 @@ namespace Hearthstone_Deck_Tracker
         public string KeyPressOnGameStart = "None";
         public string KeyPressOnGameEnd = "None";
 
+        public bool HideManaCurveMyDecks = false;
+        public bool HideManaCurveNewDeck = false;
+
+
         private string GetLogFileName()
         {
             var date = DateTime.Now;

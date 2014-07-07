@@ -284,6 +284,8 @@
                                         <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="119,299,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
                                         <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="5,299,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData" HorizontalAlignment="Left" Margin="10,471,0,0" VerticalAlignment="Top" Checked="CheckboxAppData_Checked" Unchecked="CheckboxAppData_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideManaCurveMyDecks" Content="Hide manacurve in My Decks" HorizontalAlignment="Left" Margin="10,352,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveMyDecks_Checked" Unchecked="CheckboxManaCurveMyDecks_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideManaCurveNewDeck" Content="Hide manacurve in New Deck" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveNewDeck_Checked" Unchecked="CheckboxManaCurveNewDeck_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
