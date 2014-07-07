@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
             var max = progressBarValues.Max();
+            if (max == 0.0)
+                max = 0.000001;
             for (int i = 0; i < 8; i++)
             {
                 _progressBars[i].Value = 100*progressBarValues[i]/max;
