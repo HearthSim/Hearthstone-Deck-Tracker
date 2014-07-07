@@ -29,6 +29,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
                             <Button x:Name="BtnNotes" IsEnabled="False" Content="Notes" Margin="0,0,3,0" VerticalAlignment="Top" Width="76" Height="26" Click="BtnNotes_Click" />
@@ -59,6 +60,7 @@
                                 </Style>
                             </local:DeckListView.Resources>
                         </local:DeckListView>
+                        <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,0,0,6"></local:ManaCurve>
                     </Grid>
 
                     <Grid Grid.Column="0" Margin="0,0,-1,0">
@@ -90,6 +92,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0" Width="240">
                             <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,3,0" VerticalAlignment="Top" Width="135" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
@@ -139,6 +142,7 @@
                                 </Style>
                             </ListView.Resources>
                         </local:DeckListView>
+                        <local:ManaCurve x:Name="ManaCurveNewDeck" Grid.Row="3" Height="150" Margin="0,0,0,6"></local:ManaCurve>
                     </Grid>
                     <Grid Grid.Column="1" Margin="-1,0,0,0">
                         <Grid.RowDefinitions>

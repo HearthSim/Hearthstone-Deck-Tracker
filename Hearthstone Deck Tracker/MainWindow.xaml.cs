@@ -1089,6 +1089,7 @@ namespace Hearthstone_Deck_Tracker
             UpdateDeckList(null);
             UseDeck(null);
             EnableDeckButtons(false);
+            ManaCurveMyDecks.ClearDeck();
         }
 
         private void EnableDeckButtons(bool enable)
@@ -1338,6 +1339,7 @@ namespace Hearthstone_Deck_Tracker
                 _deckList.LastDeckClass.Add(new DeckInfo() {Class = deck.Class, Name = deck.Name});
                 WriteDecks();
                 EnableDeckButtons(true);
+                ManaCurveMyDecks.SetDeck(deck);
             }
             else
             {
@@ -1626,6 +1628,8 @@ namespace Hearthstone_Deck_Tracker
                     }
                 }
 
+                if(_newDeck != null)
+                    ManaCurveNewDeck.SetDeck(_newDeck);
 
                 var view1 = (CollectionView) CollectionViewSource.GetDefaultView(ListViewDB.Items);
                 view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
@@ -1724,6 +1728,7 @@ namespace Hearthstone_Deck_Tracker
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
             _newContainsDeck = false;
             _editingDeck = false;
+            ManaCurveNewDeck.ClearDeck();
         }
 
         private void RemoveCardFromDeck(Card card)

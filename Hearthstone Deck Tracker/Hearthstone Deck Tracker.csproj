@@ -106,6 +106,9 @@
     <Compile Include="Controls\HearthstoneTextBlock.xaml.cs">
       <DependentUpon>HearthstoneTextBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ManaCurve.xaml.cs">
+      <DependentUpon>ManaCurve.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\HearthstoneTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManaCurve.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1393,6 +1400,7 @@
     <Content Include="Images\ysera.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\mana.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
