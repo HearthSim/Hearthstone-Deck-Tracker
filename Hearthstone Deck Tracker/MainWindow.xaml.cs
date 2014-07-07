@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker
             @"\Blizzard\Hearthstone\log.config";
 
         private readonly string _decksPath;
+        private readonly string _configPath;
 
         private readonly HsLogReader _logReader;
         private readonly System.Windows.Forms.NotifyIcon _notifyIcon;
@@ -88,25 +89,24 @@ namespace Hearthstone_Deck_Tracker
                                                      version.Build);
             }
 
-            //load config
+            #region load config
             _config = new Config();
-            Directory.CreateDirectory(_config.HomeDir);
-
             _xmlManagerConfig = new XmlManager<Config> {Type = typeof (Config)};
-            if (!File.Exists(_config.ConfigPath))
-            {
-                if (File.Exists("config.xml"))
-                    File.Move("config.xml", _config.ConfigPath); // migrate config to new location
-                else using (var sr = new StreamWriter(_config.ConfigPath, false))
-                {
-                    sr.WriteLine("<Config></Config>");
-                }
-            }
+
+            bool foundConfig = false;
             try
             {
-                _config = _xmlManagerConfig.Load(_config.ConfigPath);
-                if(_config.SelectedTags.Count == 0)
-                    _config.SelectedTags.Add("All");
+
+                if(File.Exists("config.xml"))
+                {
+                    _config = _xmlManagerConfig.Load("config.xml");
+                    foundConfig = true;
+                }
+                else if(File.Exists(_config.AppDataPath + @"\config.xml"))
+                {
+                    _config = _xmlManagerConfig.Load(_config.AppDataPath + @"\config.xml");
+                    foundConfig = true;
+                }
             }
             catch (Exception e)
             {
@@ -116,6 +116,50 @@ namespace Hearthstone_Deck_Tracker
                     "Error loading config.xml");
                 Application.Current.Shutdown();
             }
+            _configPath = _config.ConfigPath;
+            if (!foundConfig)
+            {
+                using (var sr = new StreamWriter(_config.ConfigPath, false))
+                {
+                    sr.WriteLine("<Config></Config>");
+                }
+            }
+            else
+            {
+                //check if config needs to be moved
+                if (_config.SaveInAppData)
+                {
+                    if (File.Exists("config.xml"))
+                    {
+                        Directory.CreateDirectory(_config.HomeDir);
+                        if (File.Exists(_config.ConfigPath))
+                        {
+                            //backup in case the file already exists
+                            File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+                        }
+                        File.Move("config.xml", _config.ConfigPath);
+                        Logger.WriteLine("Moved config to appdata");
+                    }
+                }
+                else
+                {
+                    if (File.Exists(_config.AppDataPath + @"\config.xml"))
+                    {
+                        if (File.Exists(_config.ConfigPath))
+                        {
+                            //backup in case the file already exists
+                            File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+                        }
+                        File.Move(_config.AppDataPath + @"\config.xml", _config.ConfigPath);
+                        Logger.WriteLine("Moved config to local");
+                    }
+                }
+            }
+            #endregion
+
+            if (_config.SelectedTags.Count == 0)
+                _config.SelectedTags.Add("All");
+
             _config.Debug = IS_DEBUG;
 
             if (_config.GenerateLog)
@@ -126,7 +170,7 @@ namespace Hearthstone_Deck_Tracker
                 Trace.AutoFlush = true;
             }
 
-            //find hs directory
+            #region find hearthstone dir
             if (string.IsNullOrEmpty(_config.HearthstoneDirectory) || !File.Exists(_config.HearthstoneDirectory + @"\Hearthstone.exe"))
             {
                 using (var hsDirKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
@@ -194,17 +238,33 @@ namespace Hearthstone_Deck_Tracker
             {
                 BtnExport.IsEnabled = false;
             }
-
+            #endregion
 
             string languageTag = _config.SelectedLanguage;
             //hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
             _hearthstone = Helper.LanguageDict.ContainsValue(languageTag) ? new Hearthstone(languageTag) : new Hearthstone("enUS");
             _hearthstone.Reset();
 
-            _decksPath = _config.HomeDir + @"\PlayerDecks.xml";
+            #region playerdecks
+            _decksPath = _config.HomeDir + "PlayerDecks.xml";
 
-            if (File.Exists("PlayerDecks.xml") && !File.Exists(_decksPath)) // migrate decks to home dir
-                File.Move("PlayerDecks.xml", _decksPath);
+            if (_config.SaveInAppData)
+            {
+                if(File.Exists("PlayerDecks.xml"))
+                {
+                    File.Move("PlayerDecks.xml", _decksPath);
+                    Logger.WriteLine("Moved decks to appdata");
+                }
+            }
+            else
+            {
+                var appDataPath = _config.AppDataPath + @"\PlayerDecks.xml";
+                if (File.Exists(appDataPath))
+                {
+                    File.Move(appDataPath, _decksPath);
+                    Logger.WriteLine("Moved decks to local");
+                }
+            }
 
             //load saved decks
             if (!File.Exists(_decksPath))
@@ -223,6 +283,7 @@ namespace Hearthstone_Deck_Tracker
                     File.Copy(_decksPath, _decksPath + ".old");
                 }
             }
+
             _xmlManager = new XmlManager<Decks> {Type = typeof (Decks)};
             try
             {
@@ -236,12 +297,13 @@ namespace Hearthstone_Deck_Tracker
                     "Error loading PlayerDecks.xml");
                 Application.Current.Shutdown();
             }
+            #endregion
+
             foreach (var deck in _deckList.DecksList)
             {
                 DeckPickerList.AddDeck(deck);
             }
             DeckPickerList.SelectedDeckChanged += DeckPickerListOnSelectedDeckChanged;
-            //ListboxDecks.ItemsSource = _deckList.DecksList;
 
             _notifyIcon = new System.Windows.Forms.NotifyIcon();
             _notifyIcon.Icon = new Icon(@"Images/HearthstoneDeckTracker.ico");
@@ -345,21 +407,11 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private void WriteConfig()
-        {
-            _xmlManagerConfig.Save(_config.ConfigPath, _config);
-        }
-
-        private void WriteDecks()
-        {
-            _xmlManager.Save(_decksPath, _deckList);
-        }
 
         #region LogReader Events
 
         private void TurnTimerOnTimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
         {
-            //why does this need invoke?
             _overlay.Dispatcher.BeginInvoke(new Action(() => _overlay.UpdateTurnTimer(timerEventArgs)));
             _timerWindow.Dispatcher.BeginInvoke(new Action(() => _timerWindow.Update(timerEventArgs)));
 
@@ -367,6 +419,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnCardPosChange(HsLogReader sender, CardPosChangeArgs args)
         {
+            Logger.WriteLine(string.Format("Opponent{0} (id:{1} turn:{2} from:{3})", args.Action.ToString(), args.Id, args.Turn, args.From), "LogReader");
             switch (args.Action)
             {
                 case OpponentHandMovement.Draw:
@@ -386,6 +439,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
         {
+            Logger.WriteLine(string.Format("{0}-turn ({1})", args.Turn, sender.GetTurnNumber() + 1), "LogReader");
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows
             _turnTimer.SetCurrentPlayer(args.Turn);
@@ -416,9 +470,7 @@ namespace Hearthstone_Deck_Tracker
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
                 {
                     _showingIncorrectDeckMessage = true;
-
                     ShowIncorrectDeckMessage();
-                    //stuff
                 }
                 
             }
@@ -429,11 +481,13 @@ namespace Hearthstone_Deck_Tracker
             if (!string.IsNullOrEmpty(args.PlayerHero))
             {
                 _hearthstone.PlayingAs = args.PlayerHero;
+                Logger.WriteLine("Playing as " + args.PlayerHero, "Hearthstone");
 
             }
             if (!string.IsNullOrEmpty(args.OpponentHero))
             {
                 _hearthstone.PlayingAgainst = args.OpponentHero;
+                Logger.WriteLine("Playing against " + args.OpponentHero, "Hearthstone");
             }
 
             if (args.State != null)
@@ -452,6 +506,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void LogReaderOnCardMovement(HsLogReader sender, CardMovementArgs args)
         {
+            Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", args.MovementType.ToString(), args.CardId, sender.GetTurnNumber(), args.From), "LogReader");
+
             switch (args.MovementType)
             {
                 case CardMovementType.PlayerGet:
@@ -497,14 +553,18 @@ namespace Hearthstone_Deck_Tracker
 
         #region Handle Events
 
+        
         private void HandleGameStart()
         {
             //avoid new game being started when jaraxxus is played
             if (!_hearthstone.IsInMenu) return;
 
+            Logger.WriteLine("Game start");
+
             if (_config.KeyPressOnGameStart != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameStart))
             {
                 SendKeys.SendWait("{" + _config.KeyPressOnGameStart + "}");
+                Logger.WriteLine("Sent keypress: " + _config.KeyPressOnGameStart);
             }
 
             var selectedDeck = DeckPickerList.SelectedDeck;
@@ -553,9 +613,11 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleGameEnd()
         {
+            Logger.WriteLine("Game end");
             if (_config.KeyPressOnGameEnd != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameEnd))
             {
                 SendKeys.SendWait("{" + _config.KeyPressOnGameEnd + "}");
+                Logger.WriteLine("Sent keypress: " + _config.KeyPressOnGameEnd);
             }
             _turnTimer.Stop();
             _overlay.HideTimers();
@@ -582,19 +644,18 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandlePlayerDraw(string cardId)
         {
-           var correctDeck = _hearthstone.PlayerDraw(cardId);
+            var correctDeck = _hearthstone.PlayerDraw(cardId);
 
-            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage &&
+                _hearthstone.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
-                Logger.WriteLine("Found incorrect deck", "HandlePlayerDraw");
+                Logger.WriteLine("Found incorrect deck");
             }
         }
 
-
         private void HandlePlayerMulligan(string cardId)
         {
-            Logger.WriteLine("HandlePlayerMulligan");
             _turnTimer.MulliganDone(Turn.Player);
             _hearthstone.Mulligan(cardId);
         }
@@ -793,6 +854,8 @@ namespace Hearthstone_Deck_Tracker
             ComboboxTheme.SelectedItem = theme;
             ComboboxAccent.SelectedItem = accent;
 
+            CheckboxSaveAppData.IsChecked = _config.SaveInAppData;
+
             Height = _config.WindowHeight;
             Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
@@ -958,10 +1021,12 @@ namespace Hearthstone_Deck_Tracker
             }
 
         }
+
         private async void ShowUpdatedLogConfigMessage()
         {
             await this.ShowMessageAsync("Restart Hearthstone", "This is either your first time starting the tracker or the log.config file has been updated. Please restart heartstone once, for the tracker to work properly.");
         }
+
         private async void ShowHsNotInstalledMessage()
         {
             var settings = new MetroDialogSettings();
@@ -992,6 +1057,16 @@ namespace Hearthstone_Deck_Tracker
             await this.ShowMessageAsync("Restarting tracker", "");
             Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
+        }
+
+        private void WriteConfig()
+        {
+            _xmlManagerConfig.Save(_configPath, _config);
+        }
+
+        private void WriteDecks()
+        {
+            _xmlManager.Save(_decksPath, _deckList);
         }
         #endregion
 
@@ -2471,7 +2546,24 @@ namespace Hearthstone_Deck_Tracker
             _config.HideDecksInOverlay = false;
             SaveConfig(true);
         }
+
+        private async void CheckboxAppData_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.SaveInAppData = true;
+            SaveConfig(false);
+            await Restart();
+        }
+
+        private async void CheckboxAppData_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.SaveInAppData = false;
+            SaveConfig(false);
+            await Restart();
+        }
         #endregion
+
 
     }
 }

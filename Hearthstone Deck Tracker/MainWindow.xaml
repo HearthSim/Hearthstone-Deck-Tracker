@@ -279,6 +279,7 @@
                                         <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="5,268,0,0" VerticalAlignment="Top"/>
                                         <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="119,299,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
                                         <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="5,299,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData" HorizontalAlignment="Left" Margin="10,471,0,0" VerticalAlignment="Top" Checked="CheckboxAppData_Checked" Unchecked="CheckboxAppData_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>

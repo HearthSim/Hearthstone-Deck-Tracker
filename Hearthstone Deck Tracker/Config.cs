@@ -7,20 +7,26 @@ namespace Hearthstone_Deck_Tracker
 {
     public class Config
     {
-        [XmlIgnore]
-        public readonly string HomeDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
+        public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
+        private string _currentLogFile;
 
-        [XmlIgnore]
-        public readonly string ConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker\config.xml";
+        public string HomeDir
+        {
+            get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
+        }
 
-        [XmlIgnore]
+        public string ConfigPath
+        {
+            get { return HomeDir + "config.xml"; }
+        }
+
         public string LogFilePath
         {
             get { return _currentLogFile ?? GetLogFileName(); }
         }
 
-        private string _currentLogFile;
 
+        public bool SaveInAppData = true;
         public bool GenerateLog = false;
         public int TrackerWindowLeft = -1;
         public int TrackerWindowTop = -1;

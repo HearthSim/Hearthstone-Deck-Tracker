@@ -333,7 +333,7 @@ namespace Hearthstone_Deck_Tracker
                                 else if (to.Contains("OPPOSING"))
                                 {
                                     GameStateChange(this,
-                                                    new GameStateArgs {OpponentHero = _heroIdDict[id]});
+                                                    new GameStateArgs { OpponentHero = _heroIdDict[id] });
                                 }
                             }
                             _powerCount = 0;
@@ -404,9 +404,6 @@ namespace Hearthstone_Deck_Tracker
                                     CardPosChange(this,
                                                   new CardPosChangeArgs(OpponentHandMovement.Draw, zonePos,
                                                                         GetTurnNumber(), id));
-                                    Logger.WriteLine(
-                                        string.Format("Opponent draw from {0} at turn {1}", zonePos, GetTurnNumber()),
-                                        "LogReader");
                                 }
                                 else
                                 {
@@ -458,7 +455,7 @@ namespace Hearthstone_Deck_Tracker
                 }
             }
         }
-
+        
         internal void Reset(bool full)
         {
             if (full)
