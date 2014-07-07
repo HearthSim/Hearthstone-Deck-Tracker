@@ -10,24 +10,24 @@
             <Rectangle Name="WeaponsRect" Height="auto">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFE62626" Offset="0"/>
-                        <GradientStop Color="#FFE48989" Offset="1"/>
+                        <GradientStop Color="#FFAA1E28" Offset="0"/>
+                        <GradientStop Color="#FFD7AABE" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
             <Rectangle Name="SpellsRect" Height="auto">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF006EDC" Offset="0"/>
-                        <GradientStop Color="#FF71AAE2" Offset="1"/>
+                        <GradientStop Color="#FF1E6EAA" Offset="0"/>
+                        <GradientStop Color="#FFA0C8D7" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
             <Rectangle Name="MinionsRect" Height="auto">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF5AC501" Offset="0.003"/>
-                        <GradientStop Color="#FF9CBD80" Offset="1"/>
+                        <GradientStop Color="#FF6EAA1E" Offset="0.003"/>
+                        <GradientStop Color="#FFC8D7A0" Offset="1"/>
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
