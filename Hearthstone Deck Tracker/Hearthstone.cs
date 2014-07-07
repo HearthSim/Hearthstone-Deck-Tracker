@@ -462,6 +462,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (EnemyCards.Any(x => x.Equals(card) && x.IsStolen == card.IsStolen))
                 {
+                    card = EnemyCards.First(x => x.Equals(card) && x.IsStolen == card.IsStolen);
                     EnemyCards.Remove(card);
                     card.Count++;
                 }
