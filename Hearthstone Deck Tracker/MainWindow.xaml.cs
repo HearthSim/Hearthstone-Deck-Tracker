@@ -781,6 +781,8 @@ namespace Hearthstone_Deck_Tracker
             {
                 ShowUpdatedLogConfigMessage();
             }
+            ManaCurveMyDecks.UpdateValues();
+            ManaCurveNewDeck.UpdateValues();
         }
 
         private void MetroWindow_LocationChanged(object sender, EventArgs e)
@@ -2604,6 +2606,5 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(false);
         }
         #endregion
-
     }
 }

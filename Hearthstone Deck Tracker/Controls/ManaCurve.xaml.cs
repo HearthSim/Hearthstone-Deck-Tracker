@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -21,21 +8,22 @@ namespace Hearthstone_Deck_Tracker
     public partial class ManaCurve : UserControl
     {
         private Deck _deck;
-        private readonly ProgressBar[] _progressBars;
+        private readonly ManaCostBar[] _manaCostBars;
         private readonly Label[] _countLabels;
         public ManaCurve()
         {
             InitializeComponent();
-            _progressBars = new ProgressBar[]
+
+            _manaCostBars = new ManaCostBar[]
                 {
-                    ProgressBar0,
-                    ProgressBar1,
-                    ProgressBar2,
-                    ProgressBar3,
-                    ProgressBar4,
-                    ProgressBar5,
-                    ProgressBar6,
-                    ProgressBar7,
+                    ManaCostBar0,
+                    ManaCostBar1,
+                    ManaCostBar2,
+                    ManaCostBar3,
+                    ManaCostBar4,
+                    ManaCostBar5,
+                    ManaCostBar6,
+                    ManaCostBar7,
                 };
             _countLabels = new Label[]
                 {
@@ -61,36 +49,72 @@ namespace Hearthstone_Deck_Tracker
             _deck = null;
             for(int i = 0; i < 8; i++)
             {
-                _progressBars[i].Value = 0;
+                _manaCostBars[i].SetValues(0, 0, 0);
                 _countLabels[i].Content = 0;
             }
         }
 
-        private void UpdateValues()
+        public void UpdateValues()
         {
             if (_deck == null) return;
 
             var counts = new int[8];
-            var progressBarValues = new double[8];
+            var weapons = new int[8];
+            var spells = new int[8];
+            var minions = new int[8];
             foreach (var card in _deck.Cards)
             {
                 if (card.Cost >= 7)
                 {
-                    progressBarValues[7] += card.Count;
+                    switch (card.Type)
+                    {
+                        case "Weapon":
+                            weapons[7] += card.Count;
+                            break;
+                        case "Spell":
+                            spells[7] += card.Count;
+                            break;
+                        case "Minion":
+                            minions[7] += card.Count;
+                            break;
+                    }
                     counts[7] += card.Count;
                 }
                 else
                 {
-                    progressBarValues[card.Cost] += card.Count;
+                    switch (card.Type)
+                    {
+                        case "Weapon":
+                            weapons[card.Cost] += card.Count;
+                            break;
+                        case "Spell":
+                            spells[card.Cost] += card.Count;
+                            break;
+                        case "Minion":
+                            minions[card.Cost] += card.Count;
+                            break;
+                    }
                     counts[card.Cost] += card.Count;
                 }
             }
-            var max = progressBarValues.Max();
-            if (max == 0.0)
-                max = 0.000001;
+            var max = 0;
             for (int i = 0; i < 8; i++)
             {
-                _progressBars[i].Value = 100*progressBarValues[i]/max;
+                var sum = weapons[i] + spells[i] + minions[i];
+                if (sum > max)
+                    max = sum;
+            }
+            
+            for (int i = 0; i < 8; i++)
+            {
+                if (max == 0)
+                {
+                    _manaCostBars[i].SetValues(0, 0, 0);
+                }
+                else
+                {
+                    _manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max);
+                }
                 _countLabels[i].Content = counts[i];
             }
         }

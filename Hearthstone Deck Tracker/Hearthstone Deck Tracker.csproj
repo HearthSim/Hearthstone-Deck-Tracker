@@ -109,6 +109,9 @@
     <Compile Include="Controls\ManaCurve.xaml.cs">
       <DependentUpon>ManaCurve.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ManaCostBar.xaml.cs">
+      <DependentUpon>ManaCostBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
     <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
@@ -157,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCurve.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManaCostBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
