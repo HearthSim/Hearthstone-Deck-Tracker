@@ -22,42 +22,34 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0"></local:ManaCostBar>
-        <Label Name="CountLabel0" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="0" Margin="0,0,0,3" FontSize="22"  Grid.Column="0" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto"  Grid.Column="1" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel1" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="1" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="1" Margin="0,0,0,3" FontSize="22"  Grid.Column="1" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto"  Grid.Column="2" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel2" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="2" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="2" Margin="0,0,0,3" FontSize="22"  Grid.Column="2" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto"  Grid.Column="3" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel3" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="3" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="3" Margin="0,0,0,3" FontSize="22"  Grid.Column="3" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto"  Grid.Column="4" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel4" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="4" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="4" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="4" Margin="0,0,0,3" FontSize="22"  Grid.Column="4" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto"  Grid.Column="5" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel5" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="5" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="5" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="5" Margin="0,0,0,3" FontSize="22"  Grid.Column="5" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto"  Grid.Column="6" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel6" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="6" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="6" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="6" Margin="0,0,0,3" FontSize="22"  Grid.Column="6" Grid.Row="1"/>
 
         <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto"  Grid.Column="7" Grid.Row="0" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}"/>
-        <Label Name="CountLabel7" FontWeight="Bold" Content="0" Height="26" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="7" Grid.Row="0"></Label>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="7" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="7" Margin="7,0,11,0" FontSize="22"  Grid.Column="7" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="+" Margin="14,5,4,0" FontSize="16"  Grid.Column="7" Grid.Row="1"/>

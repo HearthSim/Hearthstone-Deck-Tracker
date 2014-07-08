@@ -1,4 +1,6 @@
-﻿namespace Hearthstone_Deck_Tracker
+﻿using System.Windows;
+
+namespace Hearthstone_Deck_Tracker
 {
     /// <summary>
     /// Interaction logic for MultiProgressBar.xaml
@@ -10,11 +12,17 @@
             InitializeComponent();
         }
 
-        public void SetValues(double first, double second, double third)
+        public void SetValues(double first, double second, double third, int count)
         {
             WeaponsRect.Height = ActualHeight * first / 100;
             SpellsRect.Height = ActualHeight * second / 100;
             MinionsRect.Height = ActualHeight * third / 100;
+
+            LabelCount.Content = count;
+
+            var offset = TotalHeight - 22;
+            if (offset < -4) offset = -4;
+            LabelCount.Margin = new Thickness(0, 0, 0, offset);
         }
         public double TotalHeight
         {

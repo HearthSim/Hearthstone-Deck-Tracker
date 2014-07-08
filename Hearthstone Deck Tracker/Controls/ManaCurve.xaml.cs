@@ -10,7 +10,6 @@ namespace Hearthstone_Deck_Tracker
     {
         private Deck _deck;
         private readonly ManaCostBar[] _manaCostBars;
-        private readonly Label[] _countLabels;
         public ManaCurve()
         {
             InitializeComponent();
@@ -26,17 +25,6 @@ namespace Hearthstone_Deck_Tracker
                     ManaCostBar6,
                     ManaCostBar7,
                 };
-            _countLabels = new Label[]
-                {
-                    CountLabel0,
-                    CountLabel1,
-                    CountLabel2,
-                    CountLabel3,
-                    CountLabel4,
-                    CountLabel5,
-                    CountLabel6,
-                    CountLabel7,
-                };
         }
         public void SetDeck(Deck deck)
         {
@@ -50,8 +38,7 @@ namespace Hearthstone_Deck_Tracker
             _deck = null;
             for(int i = 0; i < 8; i++)
             {
-                _manaCostBars[i].SetValues(0, 0, 0);
-                _countLabels[i].Content = 0;
+                _manaCostBars[i].SetValues(0, 0, 0, 0);
             }
         }
 
@@ -110,20 +97,12 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (max == 0)
                 {
-                    _manaCostBars[i].SetValues(0, 0, 0);
+                    _manaCostBars[i].SetValues(0, 0, 0, 0);
                 }
                 else
                 {
-                    _manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max);
+                    _manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max, counts[i]);
                 }
-                _countLabels[i].Content = counts[i];
-
-                //todo: not sure I like this
-                var offset = _manaCostBars[i].ActualHeight - _manaCostBars[i].TotalHeight;
-                if (_manaCostBars[i].TotalHeight > 20)
-                    _countLabels[i].Margin = new Thickness(0, offset - 4, 0, 0);
-                else
-                    _countLabels[i].Margin = new Thickness(0, _manaCostBars[i].ActualHeight - 22, 0, 0);
             }
         }
 

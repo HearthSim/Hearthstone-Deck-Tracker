@@ -28,7 +28,12 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore]
         public string GetName
         {
-            get { return IsSelectedInGui ? string.Format("> {0} <", Name) : Name; }
+            get
+            {
+                var charCount = IsSelectedInGui ? 20 : 25;
+                var tmpName = Name.Length > charCount ? string.Join("", Name.Take(charCount)) + "..." : Name;
+                return IsSelectedInGui ? string.Format("> {0} <", tmpName) : tmpName;
+            }
         }
         [XmlIgnore]
         public FontWeight GetFontWeight

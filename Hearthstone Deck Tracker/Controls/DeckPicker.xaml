@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" x:Name="ListboxPicker" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" SelectionChanged="ListboxPicker_SelectionChanged">
+             d:DesignHeight="300" d:DesignWidth="300" x:Name="ListboxPicker" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" SelectionChanged="ListboxPicker_SelectionChanged">
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Grid Height="45" Margin="-2,2,3,2">
+            <Grid Height="45" Margin="-2,2,3,2" Width="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="{Binding ClassColor}" Offset="0"/>
