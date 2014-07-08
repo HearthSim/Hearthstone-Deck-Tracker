@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
         }
 
         public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
-                    int inHandCount, int count, string text, int attack, int health, string race)
+                    int inHandCount, int count, string text, int attack, int health, string race, int? durability)
         {
             Id = id;
             PlayerClass = playerClass;
@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker
             Attack = attack;
             Health = health;
             Race = race;
+            Durability = durability;
         }
         
 
@@ -66,7 +67,19 @@ namespace Hearthstone_Deck_Tracker
         public string Race { get; set; }
 
         [XmlIgnore]
-        public string RaceOrType { get { return Race ?? Type; } }
+        public string RaceOrType
+        {
+            get { return Race ?? Type; }
+        }
+
+        [XmlIgnore]
+        public int? Durability { get; set; }
+
+        [XmlIgnore]
+        public int DurabilityOrHealth
+        {
+            get { return Durability ?? Health; }
+        }
 
         private string _text;
 
@@ -232,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race);
+            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race, Durability);
         }
 
         private void Load()
@@ -251,6 +264,7 @@ namespace Hearthstone_Deck_Tracker
             Attack = stats.Attack;
             Health = stats.Health;
             Race = stats.Race;
+            Durability = stats.Durability;
         }
     }
 }
