@@ -120,10 +120,10 @@ namespace Hearthstone_Deck_Tracker
 
                 //todo: not sure I like this
                 var offset = _manaCostBars[i].ActualHeight - _manaCostBars[i].TotalHeight;
-                if (_manaCostBars[i].TotalHeight > 25)
-                    _countLabels[i].Margin = new Thickness(0, offset, 0, 0);
+                if (_manaCostBars[i].TotalHeight > 20)
+                    _countLabels[i].Margin = new Thickness(0, offset - 4, 0, 0);
                 else
-                    _countLabels[i].Margin = new Thickness(0, _manaCostBars[i].ActualHeight - 25, 0, 0);
+                    _countLabels[i].Margin = new Thickness(0, _manaCostBars[i].ActualHeight - 22, 0, 0);
             }
         }
 

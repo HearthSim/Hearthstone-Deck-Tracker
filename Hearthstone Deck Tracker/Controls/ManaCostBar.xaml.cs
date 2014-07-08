@@ -18,7 +18,7 @@
         }
         public double TotalHeight
         {
-            get { return WeaponsRect.ActualHeight + SpellsRect.ActualHeight + MinionsRect.ActualHeight; } 
+            get { return WeaponsRect.Height + SpellsRect.Height + MinionsRect.Height; } 
         }
     }
 }
