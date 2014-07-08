@@ -100,16 +100,23 @@ namespace Hearthstone_Deck_Tracker
             bool foundConfig = false;
             try
             {
-
                 if(File.Exists("config.xml"))
                 {
                     _config = _xmlManagerConfig.Load("config.xml");
                     foundConfig = true;
                 }
-                else if(File.Exists(_config.AppDataPath + @"\config.xml"))
+                else if (File.Exists(_config.AppDataPath + @"\config.xml"))
                 {
                     _config = _xmlManagerConfig.Load(_config.AppDataPath + @"\config.xml");
                     foundConfig = true;
+                }
+                else
+                {
+                    //save locally if appdata doesn't exist (when e.g. not on C)
+                    if (!Directory.Exists(_config.AppDataPath))
+                    {
+                        _config.SaveInAppData = false;
+                    }
                 }
             }
             catch (Exception e)
