@@ -43,8 +43,24 @@ namespace Hearthstone_Deck_Tracker
         public int Attack { get; set; }
         [XmlIgnore]
         public int Health { get; set; }
+
         [XmlIgnore]
-        public string Text { get { return _text; } set { _text = value != null ? value.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "").Replace("$", "") : null; } }
+        public string Text
+        {
+            get { return _text; }
+            set
+            {
+                _text = value != null
+                            ? value.Replace("<b>", "")
+                                   .Replace("</b>", "")
+                                   .Replace("<i>", "")
+                                   .Replace("</i>", "")
+                                   .Replace("$", "")
+                                   .Replace("#", "")
+                                   .Replace("\\n", "\n")
+                            : null;
+            }
+        }
 
         private string _text;
 
