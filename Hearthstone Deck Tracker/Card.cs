@@ -63,6 +63,13 @@ namespace Hearthstone_Deck_Tracker
                             : null;
             }
         }
+
+        [XmlIgnore]
+        public Visibility ShowIconsInTooltip
+        {
+            get { return Type == "Spell" ? Visibility.Hidden : Visibility.Visible; }
+        }
+
         [XmlIgnore]
         public string Race { get; set; }
 
