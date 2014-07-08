@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrush}}" BorderThickness="1">
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
-            <Rectangle Name="WeaponsRect" Height="auto">
+            <Rectangle Name="WeaponsRect" Height="auto" Stroke="#FFD7AABE" StrokeThickness="-1">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFAA1E28" Offset="0"/>
@@ -15,7 +15,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <Rectangle Name="SpellsRect" Height="auto">
+            <Rectangle Name="SpellsRect" Height="auto" Stroke="#FFA0C8D7" StrokeThickness="-1">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF1E6EAA" Offset="0"/>
@@ -23,7 +23,7 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <Rectangle Name="MinionsRect" Height="auto">
+            <Rectangle Name="MinionsRect" Height="auto" Stroke="#FFC8D7A0" StrokeThickness="-1">
                 <Rectangle.Fill>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF6EAA1E" Offset="0.003"/>

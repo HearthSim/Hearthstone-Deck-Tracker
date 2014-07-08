@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
         }
 
         public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
-                    int inHandCount, int count)
+                    int inHandCount, int count, string text, int attack, int health)
         {
             Id = id;
             PlayerClass = playerClass;
@@ -27,6 +27,9 @@ namespace Hearthstone_Deck_Tracker
             LocalizedName = localizedName;
             InHandCount = inHandCount;
             Count = count;
+            Text = text;
+            Attack = attack;
+            Health = health;
         }
         
 
@@ -35,6 +38,15 @@ namespace Hearthstone_Deck_Tracker
 
         public int Count;
         public string Id;
+
+        [XmlIgnore]
+        public int Attack { get; set; }
+        [XmlIgnore]
+        public int Health { get; set; }
+        [XmlIgnore]
+        public string Text { get { return _text; } set { _text = value != null ? value.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "").Replace("$", "") : null; } }
+
+        private string _text;
 
         [XmlIgnore]
         public string PlayerClass;
@@ -198,7 +210,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count);
+            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health);
         }
 
         private void Load()
@@ -213,6 +225,9 @@ namespace Hearthstone_Deck_Tracker
             Cost = stats.Cost;
             LocalizedName = stats.LocalizedName;
             InHandCount = stats.InHandCount;
+            Text = stats.Text;
+            Attack = stats.Attack;
+            Health = stats.Health;
         }
     }
 }

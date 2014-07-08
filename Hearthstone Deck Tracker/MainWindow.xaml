@@ -46,6 +46,16 @@
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </Style>
                                 <Style TargetType="ListViewItem">
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                                    <Setter Property="ToolTipService.IsEnabled" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                <local:CardToolTip></local:CardToolTip>
+                                            </ToolTip>
+                                        </Setter.Value>
+                                    </Setter>
                                     <Setter Property="Foreground" Value="White" />
                                     <Setter Property="Background" Value="{Binding Background}" />
                                     <Setter Property="Height" Value="35" />
@@ -119,6 +129,16 @@
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </Style>
                                 <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                                    <Setter Property="ToolTipService.IsEnabled" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                <local:CardToolTip></local:CardToolTip>
+                                            </ToolTip>
+                                        </Setter.Value>
+                                    </Setter>
                                     <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
                                     <Setter Property="Foreground" Value="White" />
                                     <Setter Property="Background" Value="{Binding Background}" />
@@ -181,6 +201,16 @@
                                     <Setter Property="Visibility" Value="Collapsed" />
                                 </Style>
                                 <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                                    <Setter Property="ToolTipService.IsEnabled" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                <local:CardToolTip></local:CardToolTip>
+                                            </ToolTip>
+                                        </Setter.Value>
+                                    </Setter>
                                     <Setter Property="FontFamily" Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
                                     <Setter Property="Foreground" Value="White" />
                                     <Setter Property="Background" Value="{Binding Background}" />
@@ -226,18 +256,19 @@
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Show decks in additional windows" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWinTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="30,56,0,0" VerticalAlignment="Top" Checked="CheckboxWinTopmostHsForeground_Checked" Unchecked="CheckboxWinTopmostHsForeground_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Left" Margin="98,169,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxWindowBackground_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Left" Margin="98,159,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxWindowBackground_SelectionChanged">
                                             <system:String>Theme</system:String>
                                             <system:String>Light</system:String>
                                             <system:String>Dark</system:String>
                                             <system:String>Custom</system:String>
                                         </ComboBox>
-                                        <Label Content="Background:" HorizontalAlignment="Left" Margin="5,168,0,0" VerticalAlignment="Top"/>
-                                        <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Left" Height="23" HorizontalContentAlignment="Center" Margin="98,200,0,0" TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top" Width="110" TextChanged="TextboxCustomBackground_TextChanged"/>
-                                        <Label Content="Custom hex:" HorizontalAlignment="Left" Margin="5,199,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxTimerTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmost_Checked" Unchecked="CheckboxTimerTopmost_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxTimerWindow" Content="Show timer in additional window" HorizontalAlignment="Left" Margin="10,89,0,0" VerticalAlignment="Top" Checked="CheckboxTimerWindow_Checked" Unchecked="CheckboxTimerWindow_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxTimerTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="30,135,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmostHsForeground_Checked" Unchecked="CheckboxTimerTopmostHsForeground_Unchecked"/>
+                                        <Label Content="Background:" HorizontalAlignment="Left" Margin="5,158,0,0" VerticalAlignment="Top"/>
+                                        <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Left" Height="23" HorizontalContentAlignment="Center" Margin="98,190,0,0" TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top" Width="110" TextChanged="TextboxCustomBackground_TextChanged"/>
+                                        <Label Content="Custom hex:" HorizontalAlignment="Left" Margin="5,189,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxTimerTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmost_Checked" Unchecked="CheckboxTimerTopmost_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTimerWindow" Content="Show timer in additional window" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Checked="CheckboxTimerWindow_Checked" Unchecked="CheckboxTimerWindow_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTimerTopmostHsForeground" Content="Only if HS in foreground" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" Checked="CheckboxTimerTopmostHsForeground_Checked" Unchecked="CheckboxTimerTopmostHsForeground_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Checked="CheckboxWindowCardToolTips_Checked" Unchecked="CheckboxWindowCardToolTips_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="240" Width="235" Margin="5,0,0,0">
@@ -259,14 +290,14 @@
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
                                         <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
                                         <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,79,-11,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="59,184,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxAccent_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="119,184,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxAccent_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="59,153,0,0" VerticalAlignment="Top" Width="110" SelectionChanged="ComboboxTheme_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="119,153,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxTheme_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
@@ -275,17 +306,18 @@
                                         </ComboBox>
                                         <Label Content="Theme:" HorizontalAlignment="Left" Margin="5,153,0,0" VerticalAlignment="Top"/>
                                         <Label Content="Accent:" HorizontalAlignment="Left" Margin="5,184,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="74,217,0,0" VerticalAlignment="Top" Width="95" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
-                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="5,217,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="119,215,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
+                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="5,215,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Left" Margin="119,268,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged"/>
-                                        <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="5,268,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="119,299,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
-                                        <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="5,299,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Left" Margin="119,246,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged"/>
+                                        <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="5,246,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="119,277,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
+                                        <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="5,277,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData" HorizontalAlignment="Left" Margin="10,471,0,0" VerticalAlignment="Top" Checked="CheckboxAppData_Checked" Unchecked="CheckboxAppData_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideManaCurveMyDecks" Content="Hide manacurve in My Decks" HorizontalAlignment="Left" Margin="10,352,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveMyDecks_Checked" Unchecked="CheckboxManaCurveMyDecks_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideManaCurveNewDeck" Content="Hide manacurve in New Deck" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveNewDeck_Checked" Unchecked="CheckboxManaCurveNewDeck_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideManaCurveMyDecks" Content="Manacurve in My Decks" HorizontalAlignment="Left" Margin="10,313,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveMyDecks_Checked" Unchecked="CheckboxManaCurveMyDecks_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideManaCurveNewDeck" Content="Manacurve in New Deck" HorizontalAlignment="Left" Margin="10,336,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveNewDeck_Checked" Unchecked="CheckboxManaCurveNewDeck_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,359,0,0" VerticalAlignment="Top" Checked="CheckboxTrackerCardToolTips_Checked" Unchecked="CheckboxTrackerCardToolTips_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>

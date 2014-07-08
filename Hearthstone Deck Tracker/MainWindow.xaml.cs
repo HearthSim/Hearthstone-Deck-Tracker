@@ -76,7 +76,11 @@ namespace Hearthstone_Deck_Tracker
         private readonly bool _updatedLogConfig;
         private readonly bool _foundHsDirectory;
         private const string EventKeys = "None,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12";
-        
+
+        public bool ShowToolTip 
+        {
+            get { return _config.TrackerCardToolTips; }
+        }
         
         public MainWindow()
         {
@@ -781,8 +785,14 @@ namespace Hearthstone_Deck_Tracker
             {
                 ShowUpdatedLogConfigMessage();
             }
+
+            //preload the manacurve in new deck
+            TabControlTracker.SelectedIndex = 1;
+            TabControlTracker.UpdateLayout();
+            TabControlTracker.SelectedIndex = 0;
+
             ManaCurveMyDecks.UpdateValues();
-            ManaCurveNewDeck.UpdateValues();
+
         }
 
         private void MetroWindow_LocationChanged(object sender, EventArgs e)
@@ -952,10 +962,13 @@ namespace Hearthstone_Deck_Tracker
             }
             ComboboxKeyPressGameEnd.SelectedValue = _config.KeyPressOnGameEnd;
 
-            CheckboxHideManaCurveMyDecks.IsChecked = _config.HideManaCurveMyDecks;
-            ManaCurveMyDecks.Visibility = _config.HideManaCurveMyDecks ? Visibility.Collapsed : Visibility.Visible;
-            CheckboxHideManaCurveNewDeck.IsChecked = _config.HideManaCurveNewDeck;
-            ManaCurveNewDeck.Visibility = _config.HideManaCurveNewDeck ? Visibility.Collapsed : Visibility.Visible;
+            CheckboxHideManaCurveMyDecks.IsChecked = _config.ManaCurveMyDecks;
+            ManaCurveMyDecks.Visibility = _config.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
+            CheckboxHideManaCurveNewDeck.IsChecked = _config.ManaCurveNewDeck;
+            ManaCurveNewDeck.Visibility = _config.ManaCurveNewDeck ? Visibility.Visible : Visibility.Collapsed;
+
+            CheckboxTrackerCardToolTips.IsChecked = _config.TrackerCardToolTips;
+            CheckboxWindowCardToolTips.IsChecked = _config.WindowCardToolTips;
 
         }
 
@@ -1138,6 +1151,7 @@ namespace Hearthstone_Deck_Tracker
             TextBoxDeckName.Text = _newDeck.Name;
             UpdateNewDeckHeader(true);
             UpdateDbListView();
+
 
             TagControlSet.SetSelectedTags(_newDeck.Tags);
 
@@ -1364,8 +1378,10 @@ namespace Hearthstone_Deck_Tracker
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
             _newContainsDeck = true;
             UpdateDbListView();
+
+            ManaCurveNewDeck.UpdateValues();
         }
-        
+
         private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
             _newDeck.Cards = new ObservableCollection<Card>(_newDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
@@ -1634,7 +1650,6 @@ namespace Hearthstone_Deck_Tracker
                         }
                     }
                 }
-
                 if(_newDeck != null)
                     ManaCurveNewDeck.SetDeck(_newDeck);
 
@@ -1642,6 +1657,7 @@ namespace Hearthstone_Deck_Tracker
                 view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
                 view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
                 view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+
             }
         }
 
@@ -1736,6 +1752,7 @@ namespace Hearthstone_Deck_Tracker
             _newContainsDeck = false;
             _editingDeck = false;
             ManaCurveNewDeck.ClearDeck();
+            
         }
 
         private void RemoveCardFromDeck(Card card)
@@ -2577,34 +2594,67 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxManaCurveMyDecks_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideManaCurveMyDecks = true;
-            ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+            _config.ManaCurveMyDecks = true;
+            ManaCurveMyDecks.Visibility = Visibility.Visible;
             SaveConfig(false);
         }
 
         private void CheckboxManaCurveMyDecks_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideManaCurveMyDecks = false;
-            ManaCurveMyDecks.Visibility = Visibility.Visible;
+            _config.ManaCurveMyDecks = false;
+            ManaCurveMyDecks.Visibility = Visibility.Collapsed;
             SaveConfig(false);
         }
 
         private void CheckboxManaCurveNewDeck_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideManaCurveNewDeck = true;
-            ManaCurveNewDeck.Visibility = Visibility.Collapsed;
+            _config.ManaCurveNewDeck = true;
+            ManaCurveNewDeck.Visibility = Visibility.Visible;
             SaveConfig(false);
         }
 
         private void CheckboxManaCurveNewDeck_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideManaCurveNewDeck = false;
-            ManaCurveNewDeck.Visibility = Visibility.Visible;
+            _config.ManaCurveNewDeck = false;
+            ManaCurveNewDeck.Visibility = Visibility.Collapsed;
+            SaveConfig(false);
+        }
+
+        private async void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
+        {
+            //this is probably somehow possible without restarting
+            if (!_initialized) return;
+            _config.TrackerCardToolTips = true;
+            SaveConfig(false);
+            await Restart();
+        }
+
+        private async void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+        {
+            //this is probably somehow possible without restarting
+            if (!_initialized) return;
+            _config.TrackerCardToolTips = false;
+            SaveConfig(false);
+            await Restart();
+        }
+
+        private void CheckboxWindowCardToolTips_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowCardToolTips = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxWindowCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.WindowCardToolTips = false;
             SaveConfig(false);
         }
         #endregion
+
     }
 }

@@ -16,5 +16,9 @@
             SpellsRect.Height = ActualHeight * second / 100;
             MinionsRect.Height = ActualHeight * third / 100;
         }
+        public double TotalHeight
+        {
+            get { return WeaponsRect.ActualHeight + SpellsRect.ActualHeight + MinionsRect.ActualHeight; } 
+        }
     }
 }

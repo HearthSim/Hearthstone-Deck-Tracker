@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -116,6 +117,13 @@ namespace Hearthstone_Deck_Tracker
                     _manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max);
                 }
                 _countLabels[i].Content = counts[i];
+
+                //todo: not sure I like this
+                var offset = _manaCostBars[i].ActualHeight - _manaCostBars[i].TotalHeight;
+                if (_manaCostBars[i].TotalHeight > 25)
+                    _countLabels[i].Margin = new Thickness(0, offset, 0, 0);
+                else
+                    _countLabels[i].Margin = new Thickness(0, _manaCostBars[i].ActualHeight - 25, 0, 0);
             }
         }
 

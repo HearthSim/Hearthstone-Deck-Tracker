@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
         }
 
 
+
         public bool SaveInAppData = true;
         public bool GenerateLog = false;
         public int TrackerWindowLeft = -1;
@@ -126,8 +127,11 @@ namespace Hearthstone_Deck_Tracker
         public string KeyPressOnGameStart = "None";
         public string KeyPressOnGameEnd = "None";
 
-        public bool HideManaCurveMyDecks = false;
-        public bool HideManaCurveNewDeck = false;
+        public bool ManaCurveMyDecks = true;
+        public bool ManaCurveNewDeck = true;
+
+        public bool TrackerCardToolTips = true;
+        public bool WindowCardToolTips = true;
 
 
         private string GetLogFileName()

@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
         {
             try
             {
-                var localizedCardNames = new Dictionary<string, string>();
+                var localizedCards = new Dictionary<string, Card>();
                 if (languageTag != "enUS")
                 {
                     var file = string.Format("Files/cardsDB.{0}.json", languageTag);
@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker
                             foreach (var card in cardType.Value)
                             {
                                 var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-                                localizedCardNames.Add(tmp.Id, tmp.Name);
+                                localizedCards.Add(tmp.Id, tmp);
                             }
                         }
                     }
@@ -126,7 +126,9 @@ namespace Hearthstone_Deck_Tracker
                             var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
                             if (languageTag != "enUS")
                             {
-                                tmp.LocalizedName = localizedCardNames[tmp.Id];
+                                var localizedCard = localizedCards[tmp.Id];
+                                tmp.LocalizedName = localizedCard.Name;
+                                tmp.Text = localizedCard.Text;
                             }
                             tempDb.Add(tmp.Id, tmp);
                         }
@@ -150,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
                 return (Card) _cardDb[cardId].Clone();
             }
             Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
-            return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1);
+            return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0);
         }
 
         public Card GetCardFromName(string name)
@@ -162,7 +164,7 @@ namespace Hearthstone_Deck_Tracker
 
             //not sure with all the values here
             Logger.WriteLine("Could not get card from name: " + name);
-            return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1);
+            return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0);
         }
 
         public List<Card> GetActualCards()

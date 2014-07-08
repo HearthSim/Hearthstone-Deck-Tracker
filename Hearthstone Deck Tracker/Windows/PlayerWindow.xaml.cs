@@ -16,6 +16,11 @@ namespace Hearthstone_Deck_Tracker
         private readonly Config _config;
         private bool _forScreenshot;
 
+        public bool ShowToolTip
+        {
+            get { return _config.WindowCardToolTips; }
+        }
+
         public PlayerWindow(Config config, ObservableCollection<Card> playerDeck, bool forScreenshot = false)
         {
             InitializeComponent(); 

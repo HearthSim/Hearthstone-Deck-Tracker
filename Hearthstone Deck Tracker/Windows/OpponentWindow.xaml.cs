@@ -14,6 +14,12 @@ namespace Hearthstone_Deck_Tracker
         public static double Scaling = 1.0;
         private bool _appIsClosing;
         private readonly Config _config;
+
+        public bool ShowToolTip
+        {
+            get { return _config.WindowCardToolTips; }
+        }
+
         public OpponentWindow(Config config, ObservableCollection<Card> opponentDeck)
         {
             InitializeComponent();
