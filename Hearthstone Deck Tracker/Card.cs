@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
         }
 
         public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
-                    int inHandCount, int count, string text, int attack, int health)
+                    int inHandCount, int count, string text, int attack, int health, string race)
         {
             Id = id;
             PlayerClass = playerClass;
@@ -30,6 +30,7 @@ namespace Hearthstone_Deck_Tracker
             Text = text;
             Attack = attack;
             Health = health;
+            Race = race;
         }
         
 
@@ -61,6 +62,11 @@ namespace Hearthstone_Deck_Tracker
                             : null;
             }
         }
+        [XmlIgnore]
+        public string Race { get; set; }
+
+        [XmlIgnore]
+        public string RaceOrType { get { return Race ?? Type; } }
 
         private string _text;
 
@@ -226,7 +232,7 @@ namespace Hearthstone_Deck_Tracker
 
         public object Clone()
         {
-            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health);
+            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race);
         }
 
         private void Load()
@@ -244,6 +250,7 @@ namespace Hearthstone_Deck_Tracker
             Text = stats.Text;
             Attack = stats.Attack;
             Health = stats.Health;
+            Race = stats.Race;
         }
     }
 }

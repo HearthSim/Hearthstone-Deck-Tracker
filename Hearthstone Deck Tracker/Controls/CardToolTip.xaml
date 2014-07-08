@@ -27,7 +27,7 @@
         </Grid>
             <TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14" VerticalAlignment="Top" FontWeight="Medium" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
             <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
-                <local:HearthstoneTextBlock Text="{Binding Type}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"></local:HearthstoneTextBlock>
             </Grid>
         </Grid>
     </Border>
