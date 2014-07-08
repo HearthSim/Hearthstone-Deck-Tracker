@@ -290,14 +290,14 @@
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
                                         <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
                                         <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,79,-11,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="119,184,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxAccent_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="89,184,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxAccent_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
                                                 </DataTemplate>
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
-                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="119,153,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxTheme_SelectionChanged">
+                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="89,153,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxTheme_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}"/>
@@ -306,7 +306,7 @@
                                         </ComboBox>
                                         <Label Content="Theme:" HorizontalAlignment="Left" Margin="5,153,0,0" VerticalAlignment="Top"/>
                                         <Label Content="Accent:" HorizontalAlignment="Left" Margin="5,184,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="119,215,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
+                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="89,215,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
                                         <Label Content="Language:" HorizontalAlignment="Left" Margin="5,215,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
@@ -467,7 +467,6 @@
                     </TextBlock>
                     <TextBlock Margin="10,249,7,0" VerticalAlignment="Top"><Bold><Run Text="Card Marks:"/></Bold></TextBlock>
                     <TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
-
                 </Grid>
             </TabItem>
         </TabControl>

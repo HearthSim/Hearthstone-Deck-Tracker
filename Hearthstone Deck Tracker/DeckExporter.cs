@@ -156,13 +156,18 @@ namespace Hearthstone_Deck_Tracker
                 //english
                 case "Fireball":
                 case "Windfury":
+                case "Claw":
                     return cardName + " Spell";
                 case "Slam":
                     return cardName + " Draw";
+                case "Silence":
+                    return cardName + " minion.";
+
 
                 //german
                 case "Feuerball":
                 case "Windzorn":
+                case "Klaue":
                     return cardName + " Zauber";
                 default:
                     return cardName;
