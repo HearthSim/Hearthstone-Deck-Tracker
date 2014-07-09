@@ -65,5 +65,22 @@ namespace Hearthstone_Deck_Tracker
             RightDown = 0x00000008,
             RightUp = 0x00000010
         }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetCursorPos(out MousePoint lpPoint);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MousePoint
+        {
+            public int X;
+            public int Y;
+        }
+        public static Point GetMousePos()
+        {
+            var p = new MousePoint();
+            GetCursorPos(out p);
+            return new Point(p.X, p.Y);
+        }
     }
 }

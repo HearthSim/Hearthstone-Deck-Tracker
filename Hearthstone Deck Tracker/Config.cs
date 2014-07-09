@@ -25,8 +25,6 @@ namespace Hearthstone_Deck_Tracker
             get { return _currentLogFile ?? GetLogFileName(); }
         }
 
-
-
         public bool SaveInAppData = true;
         public bool GenerateLog = false;
         public int TrackerWindowLeft = -1;
@@ -132,6 +130,8 @@ namespace Hearthstone_Deck_Tracker
 
         public bool TrackerCardToolTips = true;
         public bool WindowCardToolTips = true;
+        public bool OverlayCardToolTips = true;
+
 
 
         private string GetLogFileName()

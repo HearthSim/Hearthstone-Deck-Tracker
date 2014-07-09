@@ -978,6 +978,7 @@ namespace Hearthstone_Deck_Tracker
 
             CheckboxTrackerCardToolTips.IsChecked = _config.TrackerCardToolTips;
             CheckboxWindowCardToolTips.IsChecked = _config.WindowCardToolTips;
+            CheckboxOverlayCardToolTips.IsChecked = _config.OverlayCardToolTips;
 
         }
 
@@ -2662,6 +2663,20 @@ namespace Hearthstone_Deck_Tracker
             if (!_initialized) return;
             _config.WindowCardToolTips = false;
             SaveConfig(false);
+        }
+
+        private void CheckboxOverlayCardToolTips_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.OverlayCardToolTips = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxOverlayCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.OverlayCardToolTips = false;
+            SaveConfig(true);
         }
         #endregion
 

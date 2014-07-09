@@ -9,7 +9,7 @@
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="0" Canvas.Top="418" Canvas.Left="418" FontSize="24" />
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378" Canvas.Left="353" FontSize="32" />
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338" Canvas.Left="418" FontSize="24" />
-            
+
             <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" Visibility="Hidden"
                           Background="Beige" Foreground="Aqua" Opacity="75" 
                           VerticalScrollBarVisibility="Visible" >
@@ -105,6 +105,7 @@
                     <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
                 </StackPanel>
             </UniformGrid>
+            <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Visibility="Hidden"/>
         </Canvas>
 
     </Grid>
