@@ -59,6 +59,7 @@ namespace Hearthstone_Deck_Tracker
                         case "Weapon":
                             weapons[7] += card.Count;
                             break;
+                        case "Enchantment":
                         case "Spell":
                             spells[7] += card.Count;
                             break;
@@ -75,6 +76,7 @@ namespace Hearthstone_Deck_Tracker
                         case "Weapon":
                             weapons[card.Cost] += card.Count;
                             break;
+                        case "Enchantment":
                         case "Spell":
                             spells[card.Cost] += card.Count;
                             break;
