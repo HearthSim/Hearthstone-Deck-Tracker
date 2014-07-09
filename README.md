@@ -9,7 +9,7 @@ The ingame overlay:
 
 The tracker: 
 
-![Overlay](http://i.imgur.com/A6n6ys6.png "The tracker")
+![Overlay](http://i.imgur.com/T7beWjm.png "The tracker")
 
 
 **Features:**  
