@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker
 
         public async Task<Deck> Import(string url)
         {
-            if (url.Contains("hearthstats"))
+            if (url.Contains("hearthstats") || url.Contains("hss.io"))
             {
                 return await ImportHearthStats(url);
             }

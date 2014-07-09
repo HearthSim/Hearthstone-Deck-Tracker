@@ -1457,9 +1457,12 @@ namespace Hearthstone_Deck_Tracker
             var settings = new MetroDialogSettings();
 
             var clipboard = Clipboard.GetText();
-            if (clipboard.Contains("hearthstats") || clipboard.Contains("hearthpwn") || 
-                clipboard.Contains("hearthhead") || clipboard.Contains("hearthstoneplayers") ||
-                clipboard.Contains("tempostorm") || clipboard.Contains("hearthstonetopdeck"))
+            var validUrls = new[]
+                {
+                    "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
+                    "hearthstonetopdeck"
+                };
+            if (validUrls.Any(clipboard.Contains))
             {
                 settings.DefaultText = clipboard;
             }
