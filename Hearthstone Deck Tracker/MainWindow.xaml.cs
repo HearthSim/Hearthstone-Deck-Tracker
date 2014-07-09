@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker
                 else
                 {
                     //save locally if appdata doesn't exist (when e.g. not on C)
-                    if (!Directory.Exists(_config.AppDataPath))
+                    if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
                     {
                         _config.SaveInAppData = false;
                     }
@@ -130,6 +130,8 @@ namespace Hearthstone_Deck_Tracker
             _configPath = _config.ConfigPath;
             if (!foundConfig)
             {
+                if(_config.HomeDir != string.Empty)
+                    Directory.CreateDirectory(_config.HomeDir);
                 using (var sr = new StreamWriter(_config.ConfigPath, false))
                 {
                     sr.WriteLine("<Config></Config>");
