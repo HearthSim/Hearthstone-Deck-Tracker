@@ -421,7 +421,7 @@
                             <Run Text="Opponent: "/>
                         </Bold>
                         <LineBreak />
-                        <Run Text="[2] and [1], again, stand for 2 and 1 copies left in the deck."/>
+                        <Run Text="[2] and [1] stands for the number of copies left in deck+hand / deck."/>
                         <LineBreak />
                         <Bold>
                             <Run Text="First number:"/>
