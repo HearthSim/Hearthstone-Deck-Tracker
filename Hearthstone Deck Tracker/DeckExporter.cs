@@ -42,21 +42,19 @@ namespace Hearthstone_Deck_Tracker
                 return;
             }
 
-            User32.Rect hsWindowRect = new User32.Rect();
-            User32.GetWindowRect(hsHandle, ref hsWindowRect);
+            var hsRect = User32.GetHearthstoneRect(false);
 
-            var height = (hsWindowRect.bottom - hsWindowRect.top);
-            var width = (hsWindowRect.right - hsWindowRect.left);
-
+            //todo bounds affected by dpi?
             var bounds = Screen.FromHandle(hsHandle).Bounds;
-            bool isFullscreen = bounds.Width == width && bounds.Height == height;
+            
+            bool isFullscreen = bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
 
             if(_config.ExportSetDeckName)
-                await SetDeckName(deck.Name, width, height, hsHandle);
+                await SetDeckName(deck.Name, hsRect.Width, hsRect.Height, hsHandle);
 
             foreach (var card in deck.Cards)
             {
-                await AddCardToDeck(card, width, height, hsHandle, isFullscreen);
+                await AddCardToDeck(card, hsRect.Width, hsRect.Height, hsHandle, isFullscreen);
             }
         }
 

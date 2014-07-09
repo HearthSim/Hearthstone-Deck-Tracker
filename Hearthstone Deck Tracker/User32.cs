@@ -82,5 +82,19 @@ namespace Hearthstone_Deck_Tracker
             GetCursorPos(out p);
             return new Point(p.X, p.Y);
         }
+        public static Rectangle GetHearthstoneRect(bool dpiScaling)
+        {
+            var rect = new Rect();
+            GetWindowRect(FindWindow("UnityWndClass", "Hearthstone"), ref rect);
+            if (dpiScaling)
+            {
+                rect.top = (int) (rect.top/Helper.DpiScalingY);
+                rect.bottom = (int) (rect.bottom/Helper.DpiScalingY);
+                rect.left = (int) (rect.left/Helper.DpiScalingX);
+                rect.right = (int) (rect.right/Helper.DpiScalingX);
+            }
+            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+        }
+
     }
 }

@@ -327,6 +327,7 @@ namespace Hearthstone_Deck_Tracker
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
+
             //create overlay
             _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
             if (_foundHsDirectory)
@@ -781,6 +782,12 @@ namespace Hearthstone_Deck_Tracker
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            PresentationSource presentationsource = PresentationSource.FromVisual(this);
+            if (presentationsource != null) // make sure it's connected
+            {
+                Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
+                Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
+            }
             if (!_foundHsDirectory)
             {
                 ShowHsNotInstalledMessage();

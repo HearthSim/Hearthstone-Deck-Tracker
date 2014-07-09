@@ -16,6 +16,10 @@ namespace Hearthstone_Deck_Tracker
     {
         private static XmlManager<SerializableVersion> _xmlManager;
 
+        public static double DpiScalingX = 1.0;
+
+        public static double DpiScalingY = 1.0;
+
         public static Version CheckForUpdates(out Version newVersionOut)
         {
             newVersionOut = null;
@@ -68,15 +72,11 @@ namespace Hearthstone_Deck_Tracker
         {
             var hsHandle = User32.FindWindow("UnityWndClass", windowName);
 
-            User32.Rect hsWindowRect = new User32.Rect();
-            User32.GetWindowRect(hsHandle, ref hsWindowRect);
-
-            var height = (hsWindowRect.bottom - hsWindowRect.top);
-            var width = (hsWindowRect.right - hsWindowRect.left);
+            var hsRect = User32.GetHearthstoneRect(false);
 
             var bounds = Screen.FromHandle(hsHandle).Bounds;
 
-            return bounds.Width == width && bounds.Height == height;
+            return bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
         }
 
         public static bool IsHex(IEnumerable<char> chars)

@@ -385,6 +385,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void UpdateCardTooltip()
         {
+            //todo: if distance to left or right of overlay < tooltip width -> switch side
             var pos = User32.GetMousePos();
             var relativePlayerDeckPos = StackPanelPlayer.PointFromScreen(new Point(pos.X, pos.Y));
             var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
@@ -448,17 +449,17 @@ namespace Hearthstone_Deck_Tracker
                              || (_config.HideInMenu && _hearthstone.IsInMenu)
                              || _config.HideOverlay));
 
-            var hsRect = new User32.Rect();
-            User32.GetWindowRect(User32.FindWindow("UnityWndClass", "Hearthstone"), ref hsRect);
+
+            var hsRect = User32.GetHearthstoneRect(true);
 
             //hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is. 
             //this prevents that from happening. 
-            if (hsRect.bottom - hsRect.top == 0)
+            if (hsRect.Height == 0)
             {
                 return;
             }
 
-            SetRect(hsRect.top, hsRect.left, hsRect.right - hsRect.left, hsRect.bottom - hsRect.top);
+            SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
             ReSizePosLists();
 
             if(_config.OverlayCardToolTips)
