@@ -265,6 +265,11 @@ namespace Hearthstone_Deck_Tracker
             {
                 if(File.Exists("PlayerDecks.xml"))
                 {
+                    if (File.Exists(_decksPath))
+                    {
+                        //backup in case the file already exists
+                        File.Move(_decksPath, _decksPath + DateTime.Now.ToFileTime());
+                    }
                     File.Move("PlayerDecks.xml", _decksPath);
                     Logger.WriteLine("Moved decks to appdata");
                 }
@@ -274,6 +279,11 @@ namespace Hearthstone_Deck_Tracker
                 var appDataPath = _config.AppDataPath + @"\PlayerDecks.xml";
                 if (File.Exists(appDataPath))
                 {
+                    if (File.Exists(_decksPath))
+                    {
+                        //backup in case the file already exists
+                        File.Move(_decksPath, _decksPath + DateTime.Now.ToFileTime());
+                    }
                     File.Move(appDataPath, _decksPath);
                     Logger.WriteLine("Moved decks to local");
                 }
