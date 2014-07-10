@@ -60,11 +60,6 @@ namespace Hearthstone_Deck_Tracker
                 var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//h1[contains(@class,'page-title')]").FirstChild.InnerText);
                 deck.Name = deckName;
 
-                var deckClass =
-                    HttpUtility.HtmlDecode(
-                        doc.DocumentNode.SelectSingleNode("//div[contains(@class,'col-md-6')]/p").LastChild.InnerText);
-                deck.Class = char.ToUpper(deckClass[0]) + deckClass.Substring(1);
-
                 var cardNameNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'name')]");
                 var cardCountNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'qty')]");
 
@@ -78,6 +73,10 @@ namespace Hearthstone_Deck_Tracker
                     var card = _hearthstone.GetCardFromName(info.Name);
                     card.Count = info.Count;
                     deck.Cards.Add(card);
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                    {
+                        deck.Class = card.PlayerClass;
+                    }
                 }
 
                 return deck;
@@ -183,11 +182,6 @@ namespace Hearthstone_Deck_Tracker
                 var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header/h2[contains(@class,'t-deck-title')]").InnerText);
                 deck.Name = deckName;
 
-                var deckClass =
-                    HttpUtility.HtmlDecode(
-                        doc.DocumentNode.SelectSingleNode("//header/span[contains(@class,'class')]").Attributes[0].Value.Split('-')[1]);
-                deck.Class = char.ToUpper(deckClass[0]) + deckClass.Substring(1);
-
                 var cardNameNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
                 var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
                 
@@ -201,6 +195,10 @@ namespace Hearthstone_Deck_Tracker
                     var card = _hearthstone.GetCardFromName(info.Name);
                     card.Count = info.Count;
                     deck.Cards.Add(card);
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                    {
+                        deck.Class = card.PlayerClass;
+                    }
                 }
 
                 return deck;
