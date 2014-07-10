@@ -1790,6 +1790,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void RemoveCardFromDeck(Card card)
         {
+            if (card == null) 
+                return;
             if (card.Count > 1)
             {
                 _newDeck.Cards.Remove(card);
@@ -1813,6 +1815,8 @@ namespace Hearthstone_Deck_Tracker
 
         private void AddCardToDeck(Card card)
         {
+            if (card == null) 
+                return;
             if (_newDeck.Cards.Contains(card))
             {
                 var cardInDeck = _newDeck.Cards.First(c => c.Name == card.Name);
