@@ -21,7 +21,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0"></local:ManaCostBar>
+        <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0"/>
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1"/>
         <local:HearthstoneTextBlock Text="0" Margin="0,0,0,3" FontSize="22"  Grid.Column="0" Grid.Row="1"/>
 
