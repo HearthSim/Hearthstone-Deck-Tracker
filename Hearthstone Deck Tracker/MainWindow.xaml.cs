@@ -209,13 +209,16 @@ namespace Hearthstone_Deck_Tracker
 
             if (_foundHsDirectory)
             {
+
                 //check for log config and create if not existing
                 try
                 {
+                    //always overwrite is true by default. 
                     if (!File.Exists(_logConfigPath))
                     {
-                        File.Copy("Files/log.config", _logConfigPath);
                         _updatedLogConfig = true;
+                        File.Copy("Files/log.config", _logConfigPath, true);
+                        Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _configPath));
                     }
                     else
                     {
@@ -224,27 +227,27 @@ namespace Hearthstone_Deck_Tracker
                         var file = new FileInfo("Files/log.config");
                         if (file.LastWriteTime > localFile.LastWriteTime)
                         {
-                            File.Copy("Files/log.config", _logConfigPath, true);
                             _updatedLogConfig = true;
+                            File.Copy("Files/log.config", _logConfigPath, true);
+                            Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _configPath));
                         }
-
+                        else if (_config.AlwaysOverwriteLogConfig)
+                        {
+                            File.Copy("Files/log.config", _logConfigPath, true);
+                            Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _configPath));
+                        }
                     }
-                }
-                catch (UnauthorizedAccessException e)
-                {
-                    MessageBox.Show(
-                        e.Message + "\n\n" + e.InnerException +
-                        "\n\n Please restart the tracker as administrator",
-                        "Error writing log.config");
-                    Application.Current.Shutdown();
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(
-                        e.Message + "\n\n" + e.InnerException +
-                        "\n\n What happend here? ",
-                        "Error writing log.config");
-                    Application.Current.Shutdown();
+                    if (_updatedLogConfig)
+                    {
+                        MessageBox.Show(
+                            e.Message + "\n\n" + e.InnerException +
+                            "\n\n Please manually copy the log.config from the Files directory to \"%LocalAppData%/Blizzard/Hearthstone\".",
+                            "Error writing log.config");
+                        Application.Current.Shutdown();
+                    }
                 }
             }
             else

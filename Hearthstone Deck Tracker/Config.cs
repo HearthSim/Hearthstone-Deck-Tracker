@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker
 
         public bool SaveInAppData = true;
         public bool GenerateLog = false;
+        public bool AlwaysOverwriteLogConfig = true;
         public int TrackerWindowLeft = -1;
         public int TrackerWindowTop = -1;
         public string LastDeck = "";
