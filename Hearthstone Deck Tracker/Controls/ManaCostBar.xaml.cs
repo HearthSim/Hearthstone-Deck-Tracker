@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
@@ -22,8 +23,8 @@ namespace Hearthstone_Deck_Tracker
         {
             InitializeComponent();
             _previousBarHeights = new double[] {0.0, 0.0, 0.0};
-            _bars = new Rectangle[] {WeaponsRect, SpellsRect, MinionsRect};
-            AnimationDuration = 500;
+            _bars = new Rectangle[] { WeaponsRect, SpellsRect, MinionsRect };
+            AnimationDuration = 300;
             FrameDelay = 20;
             _nextAnimation = new double[3];
             _isAnimationRunning = false;
@@ -48,7 +49,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (bar.Height < to)
                 {
-                    bar.Height += (ActualHeight * FrameDelay) / AnimationDuration;
+                    bar.Height +=  (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
                     if (bar.Height > to)
                     {
                         bar.Height = to;
@@ -65,14 +66,14 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (bar.Height > to)
                 {
-                    var newHeight = bar.Height - (ActualHeight * FrameDelay) / AnimationDuration;
+                    var newHeight = bar.Height - (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
                     if (newHeight < to || newHeight < 0)
                     {
                         bar.Height = to;
                         return true;
                     }
 
-                    bar.Height -= (ActualHeight * FrameDelay) / AnimationDuration;
+                    bar.Height -= (Math.Abs(from - to)  * FrameDelay) / AnimationDuration;
                 }
                 else
                 {
