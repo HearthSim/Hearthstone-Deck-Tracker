@@ -12,8 +12,9 @@ namespace Hearthstone_Deck_Tracker
     {
         private readonly double[] _previousBarHeights;
         private readonly Rectangle[] _bars;
-        private readonly Queue<double[]> _animationQueue;
+        private double[] _nextAnimation;
         private bool _isAnimationRunning;
+        private bool _cancelCurrentAnimation;
         public int AnimationDuration { get; set; }
         public int FrameDelay { get; set; }
 
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
             _bars = new Rectangle[] {WeaponsRect, SpellsRect, MinionsRect};
             AnimationDuration = 500;
             FrameDelay = 20;
-            _animationQueue = new Queue<double[]>();
+            _nextAnimation = new double[3];
             _isAnimationRunning = false;
         }
 
@@ -33,10 +34,12 @@ namespace Hearthstone_Deck_Tracker
         {
             LabelCount.Content = count;
 
-            _animationQueue.Enqueue(new double[] {ActualHeight * weapons / 100, ActualHeight * spells / 100, ActualHeight * minions / 100});
+            _nextAnimation = new double[] {ActualHeight*weapons/100, ActualHeight*spells/100, ActualHeight*minions/100};
 
             if (!_isAnimationRunning)
                 Animate();
+            else
+                _cancelCurrentAnimation = true;
         }
 
         private bool AnimateBar(Rectangle bar, double from, double to)
@@ -88,9 +91,10 @@ namespace Hearthstone_Deck_Tracker
         {
             _isAnimationRunning = true;
 
-            while(_animationQueue.Count > 0)
+            while(_nextAnimation != null)
             {
-                var targetValues = _animationQueue.Dequeue();
+                var targetValues = _nextAnimation;
+                _nextAnimation = null;
 
                 bool[] done = {false, false, false};
 
@@ -103,6 +107,8 @@ namespace Hearthstone_Deck_Tracker
 
                 while (!done[0] || !done[1] || !done[2])
                 {
+                    if (_cancelCurrentAnimation)
+                        break;
                     //minions first, weapons last
                     if (!done[2])
                         done[2] = AnimateBar(_bars[2], _previousBarHeights[2], targetValues[2]);
@@ -116,9 +122,11 @@ namespace Hearthstone_Deck_Tracker
                     await Task.Delay(FrameDelay);
                 }
 
-                _previousBarHeights[0] = targetValues[0];
-                _previousBarHeights[1] = targetValues[1];
-                _previousBarHeights[2] = targetValues[2];
+                _cancelCurrentAnimation = false;
+                _previousBarHeights[0] = _bars[0].Height;
+                _previousBarHeights[1] = _bars[1].Height;
+                _previousBarHeights[2] = _bars[2].Height;
+
             }
 
             _isAnimationRunning = false;
