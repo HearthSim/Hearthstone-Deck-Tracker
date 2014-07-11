@@ -93,7 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Card.cs" />
+    <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
     </Compile>
@@ -119,7 +119,7 @@
     <Compile Include="Controls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Deck.cs" />
+    <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Logger.cs" />
@@ -127,7 +127,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Decks.cs" />
-    <Compile Include="Hearthstone.cs" />
+    <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
     <Compile Include="TurnTimer.cs" />

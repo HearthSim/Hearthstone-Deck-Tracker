@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -28,22 +29,22 @@ namespace Hearthstone_Deck_Tracker
         private readonly Config _config;
         private readonly int _customHeight;
         private readonly int _customWidth;
-        private readonly Hearthstone _hearthstone;
+        private readonly Game _game;
         private readonly int _offsetX;
         private readonly int _offsetY;
         private int _cardCount;
         private int _opponentCardCount;
 
-        public OverlayWindow(Config config, Hearthstone hearthstone)
+        public OverlayWindow(Config config, Game game)
         {
             InitializeComponent();
             _config = config;
-            _hearthstone = hearthstone;
+            _game = game;
 
-            ListViewPlayer.ItemsSource = _hearthstone.IsUsingPremade
-                                             ? _hearthstone.PlayerDeck
-                                             : _hearthstone.PlayerDrawn;
-            ListViewOpponent.ItemsSource = _hearthstone.EnemyCards;
+            ListViewPlayer.ItemsSource = _game.IsUsingPremade
+                                             ? _game.PlayerDeck
+                                             : _game.PlayerDrawn;
+            ListViewOpponent.ItemsSource = _game.OpponentCards;
             Scaling = 1.0;
             OpponentScaling = 1.0;
             ShowInTaskbar = _config.ShowInTaskbar;
@@ -116,9 +117,9 @@ namespace Hearthstone_Deck_Tracker
             view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         }
 
-        private void SetEnemyCardCount(int cardCount, int cardsLeftInDeck)
+        private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
         {
-            //previous cardcout > current -> enemy played -> resort list
+            //previous cardcout > current -> opponent played -> resort list
             if (_opponentCardCount > cardCount)
             {
                 SortCardCollection(ListViewOpponent.ItemsSource);
@@ -131,7 +132,7 @@ namespace Hearthstone_Deck_Tracker
 
             if (cardsLeftInDeck <= 0) return;
 
-            var handWithoutCoin = cardCount - (_hearthstone.OpponentHasCoin ? 1 : 0);
+            var handWithoutCoin = cardCount - (_game.OpponentHasCoin ? 1 : 0);
             
 
             var holdingNextTurn2 =
@@ -267,7 +268,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
 
-            var handCount = _hearthstone.EnemyHandCount;
+            var handCount = _game.OpponentHandCount;
             if (handCount < 0) handCount = 0;
             if (handCount > 10) handCount = 10;
             //offset label-grid based on handcount
@@ -307,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (!_config.HideOpponentCardAge)
                 {
-                    _cardLabels[i].Text = _hearthstone.OpponentHandAge[i].ToString();
+                    _cardLabels[i].Text = _game.OpponentHandAge[i].ToString();
                     _cardLabels[i].Visibility = Visibility.Visible;
                 }
                 else
@@ -317,7 +318,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (!_config.HideOpponentCardMarks)
                 {
-                    _cardMarkLabels[i].Text = ((char)_hearthstone.OpponentHandMarks[i]).ToString();
+                    _cardMarkLabels[i].Text = ((char)_game.OpponentHandMarks[i]).ToString();
                     _cardMarkLabels[i].Visibility = Visibility.Visible;
                 }
                 else
@@ -350,23 +351,23 @@ namespace Hearthstone_Deck_Tracker
             LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances
                                                     ? Visibility.Collapsed
                                                     : Visibility.Visible;
-            LblOpponentCardCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
-            LblOpponentDeckCount.Visibility = _config.HideEnemyCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 
-            ListViewOpponent.Visibility = _config.HideEnemyCards ? Visibility.Collapsed : Visibility.Visible;
+            ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
             ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 
-            LblGrid.Visibility = _hearthstone.IsInMenu ? Visibility.Hidden : Visibility.Visible;
+            LblGrid.Visibility = _game.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 
             DebugViewer.Visibility = _config.Debug ? Visibility.Visible : Visibility.Hidden;
             DebugViewer.Width = (Width*_config.TimerLeft/100);
 
-            SetCardCount(_hearthstone.PlayerHandCount,
-                         _hearthstone.IsUsingPremade
-                             ? _hearthstone.PlayerDeck.Sum(c => c.Count)
-                             : 30 - _hearthstone.PlayerDrawn.Sum(c => c.Count));
+            SetCardCount(_game.PlayerHandCount,
+                         _game.IsUsingPremade
+                             ? _game.PlayerDeck.Sum(c => c.Count)
+                             : 30 - _game.PlayerDrawn.Sum(c => c.Count));
 
-            SetEnemyCardCount(_hearthstone.EnemyHandCount, _hearthstone.OpponentDeckCount);
+            SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount);
 
             ReSizePosLists();
         }
@@ -446,7 +447,7 @@ namespace Hearthstone_Deck_Tracker
             //hide the overlay depenting on options
             ShowOverlay(!(
                              (_config.HideInBackground && !User32.IsForegroundWindow("Hearthstone"))
-                             || (_config.HideInMenu && _hearthstone.IsInMenu)
+                             || (_config.HideInMenu && _game.IsInMenu)
                              || _config.HideOverlay));
 
 

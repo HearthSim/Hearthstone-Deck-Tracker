@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Hearthstone
 {
     public class Card : ICloneable
     {
@@ -158,14 +158,14 @@ namespace Hearthstone_Deck_Tracker
             get
             {
                 return
-                    new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand || IsStolen)
+                    new SolidColorBrush((InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
                                             ? Colors.GreenYellow
                                             : (Count != 0) ? Colors.White : Colors.Gray);
             }
         }
 
        
-        public SolidColorBrush ColorEnemy
+        public SolidColorBrush ColorOpponent
         {
             get { return new SolidColorBrush(Colors.White); }
         }
@@ -259,7 +259,7 @@ namespace Hearthstone_Deck_Tracker
         {
             Debug.Assert(Id != null);
 
-            var stats = Hearthstone.GetCardFromId(Id);
+            var stats = Game.GetCardFromId(Id);
             PlayerClass = stats.PlayerClass;
             Rarity = stats.Rarity;
             Type = stats.Type;

@@ -17,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -46,7 +47,7 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly Config _config;
         private readonly Decks _deckList;
-        private readonly Hearthstone _hearthstone;
+        private readonly Game _game;
         private readonly bool _initialized;
 
         private readonly string _logConfigPath =
@@ -259,8 +260,8 @@ namespace Hearthstone_Deck_Tracker
 
             string languageTag = _config.SelectedLanguage;
             //hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
-            _hearthstone = Helper.LanguageDict.ContainsValue(languageTag) ? new Hearthstone(languageTag) : new Hearthstone("enUS");
-            _hearthstone.Reset();
+            _game = Helper.LanguageDict.ContainsValue(languageTag) ? new Game(languageTag) : new Game("enUS");
+            _game.Reset();
 
             #region playerdecks
             _decksPath = _config.HomeDir + "PlayerDecks.xml";
@@ -343,13 +344,13 @@ namespace Hearthstone_Deck_Tracker
 
 
             //create overlay
-            _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
+            _overlay = new OverlayWindow(_config, _game) { Topmost = true };
             if (_foundHsDirectory)
             {
                 _overlay.Show();
             }
-            _playerWindow = new PlayerWindow(_config, _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn);
-            _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
+            _playerWindow = new PlayerWindow(_config, _game.IsUsingPremade ? _game.PlayerDeck : _game.PlayerDrawn);
+            _opponentWindow = new OpponentWindow(_config, _game.OpponentCards);
             _timerWindow = new TimerWindow(_config);
 
             if (_config.WindowsOnStartup)
@@ -387,7 +388,7 @@ namespace Hearthstone_Deck_Tracker
 
             LoadConfig();
 
-            _deckImporter = new DeckImporter(_hearthstone);
+            _deckImporter = new DeckImporter(_game);
             _deckExporter = new DeckExporter(_config);
 
             //this has to happen before reader starts
@@ -451,16 +452,16 @@ namespace Hearthstone_Deck_Tracker
             switch (args.Action)
             {
                 case OpponentHandMovement.Draw:
-                    _hearthstone.OpponentDraw(args);
+                    _game.OpponentDraw(args);
                     break;
                 case OpponentHandMovement.Play:
-                    _hearthstone.OpponentPlay(args);
+                    _game.OpponentPlay(args);
                     break;
                 case OpponentHandMovement.Mulligan:
                     HandleOpponentMulligan(args.From);
                     break;
                 case OpponentHandMovement.FromPlayerDeck:
-                    _hearthstone.OpponentGet(args.Turn);
+                    _game.OpponentGet(args.Turn);
                     break;
             }
         }
@@ -487,12 +488,12 @@ namespace Hearthstone_Deck_Tracker
                     _overlay.Update(false);
 
                 if (_playerWindow.IsVisible)
-                    _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                               30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
+                    _playerWindow.SetCardCount(_game.PlayerHandCount,
+                                               30 - _game.PlayerDrawn.Sum(card => card.Count));
 
                 if (_opponentWindow.IsVisible)
-                    _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                         _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
+                    _opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
+                                                         _game.OpponentDeckCount, _game.OpponentHasCoin);
 
 
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
@@ -508,13 +509,13 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!string.IsNullOrEmpty(args.PlayerHero))
             {
-                _hearthstone.PlayingAs = args.PlayerHero;
+                _game.PlayingAs = args.PlayerHero;
                 Logger.WriteLine("Playing as " + args.PlayerHero, "Hearthstone");
 
             }
             if (!string.IsNullOrEmpty(args.OpponentHero))
             {
-                _hearthstone.PlayingAgainst = args.OpponentHero;
+                _game.PlayingAgainst = args.OpponentHero;
                 Logger.WriteLine("Playing against " + args.OpponentHero, "Hearthstone");
             }
 
@@ -585,7 +586,7 @@ namespace Hearthstone_Deck_Tracker
         private void HandleGameStart()
         {
             //avoid new game being started when jaraxxus is played
-            if (!_hearthstone.IsInMenu) return;
+            if (!_game.IsInMenu) return;
 
             Logger.WriteLine("Game start");
 
@@ -597,20 +598,20 @@ namespace Hearthstone_Deck_Tracker
 
             var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck != null)
-                _hearthstone.SetPremadeDeck((Deck)selectedDeck.Clone());
+                _game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
-            _hearthstone.IsInMenu = false;
-            _hearthstone.Reset();
+            _game.IsInMenu = false;
+            _game.Reset();
 
             //select deck based on hero
-            if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
+            if (!string.IsNullOrEmpty(_game.PlayingAs))
             {
-                if (!_hearthstone.IsUsingPremade || !_config.AutoDeckDetection) return;
+                if (!_game.IsUsingPremade || !_config.AutoDeckDetection) return;
                 
-                if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
+                if (selectedDeck == null || selectedDeck.Class != _game.PlayingAs)
                 {
 
-                    var classDecks = _deckList.DecksList.Where(d => d.Class == _hearthstone.PlayingAs).ToList();
+                    var classDecks = _deckList.DecksList.Where(d => d.Class == _game.PlayingAs).ToList();
                     if (classDecks.Count == 0)
                     {
                         Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
@@ -621,9 +622,9 @@ namespace Hearthstone_Deck_Tracker
                         DeckPickerList.SelectDeck(classDecks[0]);
                         Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
                     }
-                    else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
+                    else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _game.PlayingAs))
                     {
-                        var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _hearthstone.PlayingAs).Name;
+                        var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _game.PlayingAs).Name;
                         Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
 
                         var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
@@ -653,29 +654,29 @@ namespace Hearthstone_Deck_Tracker
             {
                 var deck = DeckPickerList.SelectedDeck;
                 if (deck != null)
-                    _hearthstone.SetPremadeDeck((Deck)deck.Clone());
+                    _game.SetPremadeDeck((Deck)deck.Clone());
 
-                _hearthstone.Reset();
+                _game.Reset();
             }
-            _hearthstone.IsInMenu = true;
+            _game.IsInMenu = true;
         }
 
         private void HandleOpponentPlayToHand(string cardId, int turn)
         {
-            _hearthstone.OpponentBackToHand(cardId, turn);
+            _game.OpponentBackToHand(cardId, turn);
         }
 
         private void HandlePlayerGet(string cardId)
         {
-            _hearthstone.PlayerGet(cardId);
+            _game.PlayerGet(cardId);
         }
 
         private void HandlePlayerDraw(string cardId)
         {
-            var correctDeck = _hearthstone.PlayerDraw(cardId);
+            var correctDeck = _game.PlayerDraw(cardId);
 
             if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage &&
-                _hearthstone.IsUsingPremade)
+                _game.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Logger.WriteLine("Found incorrect deck");
@@ -685,25 +686,25 @@ namespace Hearthstone_Deck_Tracker
         private void HandlePlayerMulligan(string cardId)
         {
             _turnTimer.MulliganDone(Turn.Player);
-            _hearthstone.Mulligan(cardId);
+            _game.Mulligan(cardId);
         }
 
         private void HandlePlayerHandDiscard(string cardId)
         {
-            _hearthstone.PlayerHandDiscard(cardId);
+            _game.PlayerHandDiscard(cardId);
         }
 
         private void HandlePlayerPlay(string cardId)
         {
-            _hearthstone.PlayerPlayed(cardId);
+            _game.PlayerPlayed(cardId);
         }
 
         private void HandlePlayerDeckDiscard(string cardId)
         {
-            var correctDeck = _hearthstone.PlayerDeckDiscard(cardId);
+            var correctDeck = _game.PlayerDeckDiscard(cardId);
             
             //don't think this will ever detect an incorrect deck but who knows...
-            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _game.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -712,18 +713,18 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentSecretTrigger(string cardId)
         {
-            _hearthstone.OpponentSecretTriggered(cardId);
+            _game.OpponentSecretTriggered(cardId);
         }
 
         private void HandleOpponentMulligan(int pos)
         {
             _turnTimer.MulliganDone(Turn.Opponent);
-            _hearthstone.OpponentMulligan(pos);
+            _game.OpponentMulligan(pos);
         }
         
         private void HandleOpponentDeckDiscard(string cardId)
         {
-            _hearthstone.OpponentDeckDiscard(cardId);
+            _game.OpponentDeckDiscard(cardId);
         }
 
         #endregion
@@ -841,7 +842,7 @@ namespace Hearthstone_Deck_Tracker
 
             var decks =
                 _deckList.DecksList.Where(
-                    d => d.Class == _hearthstone.PlayingAs && _hearthstone.PlayerDrawn.All(c => d.Cards.Contains(c)))
+                    d => d.Class == _game.PlayingAs && _game.PlayerDrawn.All(c => d.Cards.Contains(c)))
                          .ToList();
             if (decks.Contains(DeckPickerList.SelectedDeck))
                 decks.Remove(DeckPickerList.SelectedDeck);
@@ -899,12 +900,12 @@ namespace Hearthstone_Deck_Tracker
             CheckboxSaveAppData.IsChecked = _config.SaveInAppData;
 
             Height = _config.WindowHeight;
-            Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
+            Game.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
             CheckboxHideOpponentDrawChances.IsChecked = _config.HideOpponentDrawChances;
-            CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
-            CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
+            CheckboxHideOpponentCards.IsChecked = _config.HideOpponentCards;
+            CheckboxHideOpponentCardCounter.IsChecked = _config.HideOpponentCardCount;
             CheckboxHideOpponentCardAge.IsChecked = _config.HideOpponentCardAge;
             CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
             CheckboxHidePlayerCards.IsChecked = _config.HidePlayerCards;
@@ -1126,9 +1127,9 @@ namespace Hearthstone_Deck_Tracker
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
             Logger.WriteLine("set player item source as drawn");
-            _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
-            _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
-            _hearthstone.IsUsingPremade = false;
+            _overlay.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
+            _playerWindow.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
+            _game.IsUsingPremade = false;
 
             if(DeckPickerList.SelectedDeck != null)
                 DeckPickerList.SelectedDeck.IsSelectedInGui = false;
@@ -1322,10 +1323,10 @@ namespace Hearthstone_Deck_Tracker
 
         private void UseDeck(Deck selected)
         {
-            _hearthstone.Reset();
+            _game.Reset();
 
             if (selected != null)
-                _hearthstone.SetPremadeDeck((Deck)selected.Clone());
+                _game.SetPremadeDeck((Deck)selected.Clone());
 
             _logReader.Reset(true);
 
@@ -1363,13 +1364,13 @@ namespace Hearthstone_Deck_Tracker
                 FlyoutNotes.Header = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
 
                 //change player deck itemsource
-                if (_overlay.ListViewPlayer.ItemsSource != _hearthstone.PlayerDeck)
+                if (_overlay.ListViewPlayer.ItemsSource != _game.PlayerDeck)
                 {
-                    _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
-                    _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
+                    _overlay.ListViewPlayer.ItemsSource = _game.PlayerDeck;
+                    _playerWindow.ListViewPlayer.ItemsSource = _game.PlayerDeck;
                     Logger.WriteLine("Set player itemsource as playerdeck");
                 }
-                _hearthstone.IsUsingPremade = true;
+                _game.IsUsingPremade = true;
                 UpdateDeckList(deck);
                 UseDeck(deck);
                 Logger.WriteLine("Switched to deck: " + deck.Name);
@@ -1492,7 +1493,7 @@ namespace Hearthstone_Deck_Tracker
                         while (name.Length > 0 && Helper.IsNumeric(name[0]))
                             name = name.Remove(0, 1);
 
-                        var card = _hearthstone.GetCardFromName(name);
+                        var card = _game.GetCardFromName(name);
                         if (card.Id == "UNKNOWN")
                             continue;
 
@@ -1648,7 +1649,7 @@ namespace Hearthstone_Deck_Tracker
                 var deck = new Deck();
                 foreach (var line in lines)
                 {
-                    var card = _hearthstone.GetCardFromName(line.Trim());
+                    var card = _game.GetCardFromName(line.Trim());
                     if (card.Name == "") continue;
 
                     if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -1704,7 +1705,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 ListViewDB.Items.Clear();
 
-                foreach (var card in _hearthstone.GetActualCards())
+                foreach (var card in _game.GetActualCards())
                 {
                     if (!card.LocalizedName.ToLower().Contains(TextBoxDBFilter.Text.ToLower()))
                         continue;
@@ -1912,7 +1913,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HighlightCardsInHand = true;
-            Hearthstone.HighlightCardsInHand = true;
+            Game.HighlightCardsInHand = true;
             SaveConfig(true);
         }
 
@@ -1920,7 +1921,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HighlightCardsInHand = false;
-            Hearthstone.HighlightCardsInHand = false;
+            Game.HighlightCardsInHand = false;
             SaveConfig(true);
         }
 
@@ -2025,36 +2026,36 @@ namespace Hearthstone_Deck_Tracker
         }
 
 
-        private void CheckboxHideEnemyCardCounter_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCardCounter_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCardCount = true;
+            _config.HideOpponentCardCount = true;
             SaveConfig(true);
             _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Collapsed;
             _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Collapsed;
         }
 
-        private void CheckboxHideEnemyCardCounter_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCardCounter_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCardCount = false;
+            _config.HideOpponentCardCount = false;
             SaveConfig(true);
             _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
             _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Visible;
         }
 
-        private void CheckboxHideEnemyCards_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCards_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCards = true;
+            _config.HideOpponentCards = true;
             SaveConfig(true);
             _opponentWindow.ListViewOpponent.Visibility = Visibility.Collapsed;
         }
 
-        private void CheckboxHideEnemyCards_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCards_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCards = false;
+            _config.HideOpponentCards = false;
             SaveConfig(true);
             _opponentWindow.ListViewOpponent.Visibility = Visibility.Visible;
         }
@@ -2130,11 +2131,11 @@ namespace Hearthstone_Deck_Tracker
             _opponentWindow.Show();
             _opponentWindow.Activate();
 
-            _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                       30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
+            _playerWindow.SetCardCount(_game.PlayerHandCount,
+                                       30 - _game.PlayerDrawn.Sum(card => card.Count));
 
-            _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                 _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
+            _opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
+                                                 _game.OpponentDeckCount, _game.OpponentHasCoin);
 
             _config.WindowsOnStartup = true;
             SaveConfig(true);
