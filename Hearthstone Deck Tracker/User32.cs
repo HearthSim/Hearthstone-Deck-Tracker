@@ -12,6 +12,9 @@ namespace Hearthstone_Deck_Tracker
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
+        
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(String lpClassName, String lpWindowName);
@@ -85,7 +88,7 @@ namespace Hearthstone_Deck_Tracker
         public static Rectangle GetHearthstoneRect(bool dpiScaling)
         {
             var rect = new Rect();
-            GetWindowRect(FindWindow("UnityWndClass", "Hearthstone"), ref rect);
+            GetClientRect(FindWindow("UnityWndClass", "Hearthstone"), ref rect);
             if (dpiScaling)
             {
                 rect.top = (int) (rect.top/Helper.DpiScalingY);
