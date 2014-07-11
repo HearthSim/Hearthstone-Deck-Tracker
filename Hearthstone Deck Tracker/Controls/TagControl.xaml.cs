@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker
         public event DeleteTagHandler DeleteTag;
 
         private readonly ObservableCollection<Tag> _tags;   
- 
+
         public TagControl()
         {
             InitializeComponent();
@@ -187,6 +187,11 @@ namespace Hearthstone_Deck_Tracker
             }
             ListboxTags.Items.Refresh();
             
+        }
+
+        public List<string> GetTags()
+        {
+            return _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
         }
 
         private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)

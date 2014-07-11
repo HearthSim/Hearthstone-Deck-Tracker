@@ -1274,7 +1274,6 @@ namespace Hearthstone_Deck_Tracker
         private void TagControlSetOnSelectedTagsChanged(TagControl sender, List<string> tags)
         {
             if (_newDeck == null) return;
-            _newDeck.Tags = new List<string>(tags);
             BtnSaveDeck.Content = "Save*";
         }
 
@@ -1751,6 +1750,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _newDeck.Name = deckName;
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
+            _newDeck.Tags = TagControlSet.GetTags();
             
             var newDeckClone = (Deck) _newDeck.Clone();
             _deckList.DecksList.Add(newDeckClone);
