@@ -1481,7 +1481,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //import dialog
-            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead*, hearthstoneplayers, hearthstonetopdeck and tempostorm\n\n*doesn't works 100%, just retry a few times\n\nUrl:", settings);
+            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead, hearthstoneplayers, hearthstonetopdeck and tempostorm\n\nUrl:", settings);
             if (string.IsNullOrEmpty(url))
                 return;
 

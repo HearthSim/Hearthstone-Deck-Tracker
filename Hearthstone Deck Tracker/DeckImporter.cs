@@ -8,7 +8,8 @@ using System.Net.Cache;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using HtmlAgilityPack;
+using System.Windows.Forms;
+using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -90,14 +91,13 @@ namespace Hearthstone_Deck_Tracker
 
         private async Task<Deck> ImportHearthHead(string url)
         {
-            //problems with cache (?), can only download each deck one. webclient cache options dont help, neither do "url extentions" like &randomnumber
             try
             {
-                var doc = await GetHtmlDoc(url);
+                var doc = await GetHtmlDocJs(url);
 
                 var deck = new Deck();
-                
-                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='main-contents']/div[3]/h1").InnerText);
+
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckguide-name']").InnerText);
                 deck.Name = deckName;
 
 
@@ -296,6 +296,27 @@ namespace Hearthstone_Deck_Tracker
                     doc.Load(reader);
                     return doc;
                 }
+            }
+        }
+
+        public async Task<HtmlDocument> GetHtmlDocJs(string url)
+        {
+            using (var wb = new WebBrowser())
+            {
+                var done = false;
+                var doc = new HtmlDocument();
+                //                  avoid cache
+                wb.Navigate(url + "?" + DateTime.Now.Ticks);
+                wb.DocumentCompleted += (sender, args) =>
+                    {
+                        doc.Load(wb.DocumentStream);
+                        done = true;
+                    };
+                while (!done)
+                {
+                    await Task.Delay(50);
+                }
+                return doc;
             }
         }
 
