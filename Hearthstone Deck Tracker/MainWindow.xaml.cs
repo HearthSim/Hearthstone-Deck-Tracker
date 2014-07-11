@@ -1759,6 +1759,11 @@ namespace Hearthstone_Deck_Tracker
             WriteDecks();
             BtnSaveDeck.Content = "Save";
 
+            if (_editingDeck)
+            {
+                TagControlSet.SetSelectedTags(new List<string>());
+            }
+
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
 
