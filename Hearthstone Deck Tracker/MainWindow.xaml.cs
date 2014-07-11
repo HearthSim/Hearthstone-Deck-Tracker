@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -1467,8 +1468,9 @@ namespace Hearthstone_Deck_Tracker
         private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
         {
             var settings = new MetroDialogSettings();
-
+            Deck deck = null;
             var clipboard = Clipboard.GetText();
+            var clipboardLines = clipboard.Split('\n');
             var validUrls = new[]
                 {
                     "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
@@ -1478,6 +1480,56 @@ namespace Hearthstone_Deck_Tracker
             {
                 settings.DefaultText = clipboard;
             }
+            else if (clipboardLines.Length >= 1 && clipboardLines.Length <= 100)
+            {
+                try
+                {
+                    foreach (var line in clipboardLines)
+                    {
+                        var parts = line.Split(new[] {" x "}, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length == 0) continue;
+                        var name = parts[0].Trim();
+                        while (name.Length > 0 && Helper.IsNumeric(name[0]))
+                            name = name.Remove(0, 1);
+
+                        var card = _hearthstone.GetCardFromName(name);
+                        if (card.Id == "UNKNOWN")
+                            continue;
+
+                        if (parts.Length > 1)
+                            int.TryParse(parts[1], out card.Count);
+
+                        if (deck == null)
+                            deck = new Deck();
+
+                        if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                            deck.Class = card.PlayerClass;
+
+                        deck.Cards.Add(card);
+                    }
+
+                    if (deck != null)
+                    {
+                        ClearNewDeckSection();
+                        _newContainsDeck = true;
+
+                        _newDeck = (Deck)deck.Clone();
+                        ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                        if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                            ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                        TextBoxDeckName.Text = _newDeck.Name;
+                        UpdateNewDeckHeader(true);
+                        UpdateDbListView();
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
 
             //import dialog
             var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead, hearthstoneplayers, hearthstonetopdeck and tempostorm\n\nUrl:", settings);
@@ -1486,7 +1538,7 @@ namespace Hearthstone_Deck_Tracker
 
             var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
-            var deck = await _deckImporter.Import(url);
+            deck = await _deckImporter.Import(url);
 
             await controller.CloseAsync();
 
