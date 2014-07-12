@@ -408,12 +408,11 @@
                                     <RowDefinition Height="auto" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Game Logging" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="163" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Game Logging" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="133" Width="235" Margin="5,0,0,0">
                                     <Grid>
                                         <CheckBox Name="CheckboxLogGames" Content="Log Games" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxLogGames_Checked" Unchecked="CheckboxLogGames_Unchecked"/>
-                                        <TextBox Name="TextboxLogGamesName" controls:TextboxHelper.Watermark="Game name" IsEnabled="False" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="203" TextChanged="TextboxLogGamesName_TextChanged"/>
-                                        <TextBox Name="TextboxLogGamesPath" controls:TextboxHelper.Watermark="Save to" IsEnabled="False"  HorizontalAlignment="Left" Height="23" Margin="10,64,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="203" IsReadOnly="True"/>
-                                        <Button Name="BtnLogGamesSelectDir" Content="Select Directory" IsEnabled="False" HorizontalAlignment="Left" Margin="93,95,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogGamesSelectDir_Click"/>
+                                        <TextBox Name="TextboxLogGamesPath" controls:TextboxHelper.Watermark="Save to" IsEnabled="False"  HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="203" IsReadOnly="True"/>
+                                        <Button Name="BtnLogGamesSelectDir" Content="Select Directory" IsEnabled="False" HorizontalAlignment="Left" Margin="93,64,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogGamesSelectDir_Click"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>

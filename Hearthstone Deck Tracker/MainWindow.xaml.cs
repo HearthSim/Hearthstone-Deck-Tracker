@@ -653,32 +653,7 @@ namespace Hearthstone_Deck_Tracker
             _overlay.HideTimers();
             if (_config.SavePlayedGames)
             {
-                try
-                {
-                    if (_game.PlayerDrawn != null && _game.PlayerDrawn.Count > 0)
-                    {
-                        var serializer = new XmlSerializer(typeof(Card[]));
-
-                        if (string.IsNullOrEmpty(_config.SavePlayedGamesPath)) 
-                            return;
-                        
-                        Directory.CreateDirectory(_config.SavePlayedGamesPath);
-                        var filePath = @_config.SavePlayedGamesPath + @"\" + @_config.SavePlayedGamesName + "_" + Helper.RemoveInvalidChars(DateTime.Now.ToLocalTime().ToString()) + ".xml";
-                        Logger.WriteLine("Saving game to: " + filePath);
-                        using (var sw = new StreamWriter(filePath))
-                        {
-                            if(_game.OpponentCards != null)
-                                serializer.Serialize(sw, _game.OpponentCards.ToArray());
-
-                            serializer.Serialize(sw, _game.PlayerDrawn.ToArray());
-                            Logger.WriteLine("Success saving game");
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.WriteLine("Error saving game\n" + e.StackTrace);
-                }
+                SavePlayedCards();
             }
             if (!_config.KeepDecksVisible)
             {
@@ -1033,10 +1008,8 @@ namespace Hearthstone_Deck_Tracker
             CheckboxOverlayCardToolTips.IsChecked = _config.OverlayCardToolTips;
 
             CheckboxLogGames.IsChecked = _config.SavePlayedGames;
-            TextboxLogGamesName.IsEnabled = _config.SavePlayedGames;
             TextboxLogGamesPath.IsEnabled = _config.SavePlayedGames;
             BtnLogGamesSelectDir.IsEnabled = _config.SavePlayedGames;
-            TextboxLogGamesName.Text = _config.SavePlayedGamesName;
             TextboxLogGamesPath.Text = _config.SavePlayedGamesPath;
 
             if (_config.SavePlayedGames && TextboxLogGamesPath.Text.Length == 0)
@@ -1158,6 +1131,43 @@ namespace Hearthstone_Deck_Tracker
         private void WriteDecks()
         {
             _xmlManager.Save(_decksPath, _deckList);
+        }
+
+        private void SavePlayedCards()
+        {
+            try
+            {
+                if (_game.PlayerDrawn != null && _game.PlayerDrawn.Count > 0)
+                {
+                    var serializer = new XmlSerializer(typeof(Card[]);
+
+                    if (string.IsNullOrEmpty(_config.SavePlayedGamesPath))
+                        return;
+
+                    Directory.CreateDirectory(_config.SavePlayedGamesPath);
+                    var dateString = string.Format("{0}{1}{2}{3}{4}{5}", DateTime.Now.Day, DateTime.Now.Month,
+                                                   DateTime.Now.Year, DateTime.Now.Hour, DateTime.Now.Minute,
+                                                   DateTime.Now.Second);
+                    var path = _config.SavePlayedGamesPath + "\\" + dateString;
+                    Directory.CreateDirectory(path);
+                    Logger.WriteLine("Saving games to: " + path);
+                    using (var sw = new StreamWriter(path + "\\Player.xml"))
+                    {
+                        serializer.Serialize(sw, _game.PlayerDrawn.ToArray());
+                        Logger.WriteLine("Success saving Player.xml");
+                    }
+                    using (var sw = new StreamWriter(path + "\\Opponent.xml"))
+                    {
+                        if (_game.OpponentCards != null)
+                            serializer.Serialize(sw, _game.OpponentCards.ToArray());
+                        Logger.WriteLine("Success saving Opponent.xml");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.WriteLine("Error saving game\n" + e.StackTrace);
+            }
         }
         #endregion
 
@@ -2807,7 +2817,6 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxLogGames_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            TextboxLogGamesName.IsEnabled = true;
             TextboxLogGamesPath.IsEnabled = true;
             BtnLogGamesSelectDir.IsEnabled = true;
             _config.SavePlayedGames = true;
@@ -2819,27 +2828,9 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxLogGames_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            TextboxLogGamesName.IsEnabled = false;
             TextboxLogGamesPath.IsEnabled = false;
             BtnLogGamesSelectDir.IsEnabled = false;
             _config.SavePlayedGames = false;
-            SaveConfig(false);
-        }
-
-        private void TextboxLogGamesName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (!_initialized) return;
-
-            var cursorpos = TextboxLogGamesName.SelectionStart;
-            var originalTextLength = TextboxLogGamesName.Text.Length;
-
-            TextboxLogGamesName.Text = Helper.RemoveInvalidChars(TextboxLogGamesName.Text);
-            _config.SavePlayedGamesName = TextboxLogGamesName.Text;
-
-            var delta = originalTextLength - TextboxLogGamesName.Text.Length;
-            if(delta > 0)
-                TextboxLogGamesName.SelectionStart = cursorpos - delta;
-            
             SaveConfig(false);
         }
 
