@@ -17,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
@@ -650,6 +651,35 @@ namespace Hearthstone_Deck_Tracker
             }
             _turnTimer.Stop();
             _overlay.HideTimers();
+            if (_config.SavePlayedGames)
+            {
+                try
+                {
+                    if (_game.PlayerDrawn != null && _game.PlayerDrawn.Count > 0)
+                    {
+                        var serializer = new XmlSerializer(typeof(Card[]));
+
+                        if (string.IsNullOrEmpty(_config.SavePlayedGamesPath)) 
+                            return;
+                        
+                        Directory.CreateDirectory(_config.SavePlayedGamesPath);
+                        var filePath = @_config.SavePlayedGamesPath + @"\" + @_config.SavePlayedGamesName + "_" + Helper.RemoveInvalidChars(DateTime.Now.ToLocalTime().ToString()) + ".xml";
+                        Logger.WriteLine("Saving game to: " + filePath);
+                        using (var sw = new StreamWriter(filePath))
+                        {
+                            if(_game.OpponentCards != null)
+                                serializer.Serialize(sw, _game.OpponentCards.ToArray());
+
+                            serializer.Serialize(sw, _game.PlayerDrawn.ToArray());
+                            Logger.WriteLine("Success saving game");
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.WriteLine("Error saving game\n" + e.StackTrace);
+                }
+            }
             if (!_config.KeepDecksVisible)
             {
                 var deck = DeckPickerList.SelectedDeck;
@@ -1002,6 +1032,15 @@ namespace Hearthstone_Deck_Tracker
             CheckboxWindowCardToolTips.IsChecked = _config.WindowCardToolTips;
             CheckboxOverlayCardToolTips.IsChecked = _config.OverlayCardToolTips;
 
+            CheckboxLogGames.IsChecked = _config.SavePlayedGames;
+            TextboxLogGamesName.IsEnabled = _config.SavePlayedGames;
+            TextboxLogGamesPath.IsEnabled = _config.SavePlayedGames;
+            BtnLogGamesSelectDir.IsEnabled = _config.SavePlayedGames;
+            TextboxLogGamesName.Text = _config.SavePlayedGamesName;
+            TextboxLogGamesPath.Text = _config.SavePlayedGamesPath;
+
+            if (_config.SavePlayedGames && TextboxLogGamesPath.Text.Length == 0)
+                TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
         }
 
         private void SortCardCollection(ItemCollection collection)
@@ -2764,6 +2803,63 @@ namespace Hearthstone_Deck_Tracker
             SaveConfig(true);
         }
         #endregion
+
+        private void CheckboxLogGames_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            TextboxLogGamesName.IsEnabled = true;
+            TextboxLogGamesPath.IsEnabled = true;
+            BtnLogGamesSelectDir.IsEnabled = true;
+            _config.SavePlayedGames = true;
+            if(TextboxLogGamesPath.Text.Length == 0)
+                TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
+            SaveConfig(false);
+        }
+
+        private void CheckboxLogGames_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            TextboxLogGamesName.IsEnabled = false;
+            TextboxLogGamesPath.IsEnabled = false;
+            BtnLogGamesSelectDir.IsEnabled = false;
+            _config.SavePlayedGames = false;
+            SaveConfig(false);
+        }
+
+        private void TextboxLogGamesName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_initialized) return;
+
+            var cursorpos = TextboxLogGamesName.SelectionStart;
+            var originalTextLength = TextboxLogGamesName.Text.Length;
+
+            TextboxLogGamesName.Text = Helper.RemoveInvalidChars(TextboxLogGamesName.Text);
+            _config.SavePlayedGamesName = TextboxLogGamesName.Text;
+
+            var delta = originalTextLength - TextboxLogGamesName.Text.Length;
+            if(delta > 0)
+                TextboxLogGamesName.SelectionStart = cursorpos - delta;
+            
+            SaveConfig(false);
+        }
+
+        private void BtnLogGamesSelectDir_Click(object sender, RoutedEventArgs e)
+        {
+            var folderDialog = new FolderBrowserDialog();
+            var result = folderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                TextboxLogGamesPath.Text = folderDialog.SelectedPath;
+                _config.SavePlayedGamesPath = folderDialog.SelectedPath;
+
+                TextboxLogGamesPath.BorderBrush =
+                    new SolidColorBrush(TextboxLogGamesPath.Text.Length == 0
+                                            ? Colors.Red
+                                            : SystemColors.ActiveBorderColor);
+                SaveConfig(false);
+            }
+        }
+
 
     }
 }

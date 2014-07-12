@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -69,6 +73,9 @@ namespace Hearthstone_Deck_Tracker
         public double PlayerWindowTop = -32000;
         public bool PrioritizeGolden = true;
         public bool SaveInAppData = true;
+        public bool SavePlayedGames = false;
+        public string SavePlayedGamesName = "Game";
+        public string SavePlayedGamesPath = "";
         public double SearchBoxX = 0.5;
         public double SearchBoxY = 0.89;
         public double SearchBoxYFullscreen = 0.92;
@@ -123,7 +130,6 @@ namespace Hearthstone_Deck_Tracker
         {
             get { return _currentLogFile ?? GetLogFileName(); }
         }
-
 
         private string GetLogFileName()
         {

@@ -139,10 +139,7 @@ namespace Hearthstone_Deck_Tracker
                 if (!Directory.Exists("Screenshots"))
                     Directory.CreateDirectory("Screenshots");
 
-                //replace invalid chars
-                var invalidChars = new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars());
-                var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
-                name = "Screenshots/" + regex.Replace(name, "");
+                name = "Screenshots/" + RemoveInvalidChars(name);
 
                 if (File.Exists(name + ".png"))
                 {
@@ -162,6 +159,13 @@ namespace Hearthstone_Deck_Tracker
                 return null;
             }
 
+        }
+
+        public static string RemoveInvalidChars(string s)
+        {
+            var invalidChars = new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars());
+            var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
+            return regex.Replace(s, "");
         }
     }
 }
