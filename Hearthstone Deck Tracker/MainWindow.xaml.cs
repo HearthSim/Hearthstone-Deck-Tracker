@@ -1139,7 +1139,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (_game.PlayerDrawn != null && _game.PlayerDrawn.Count > 0)
                 {
-                    var serializer = new XmlSerializer(typeof(Card[]);
+                    var serializer = new XmlSerializer(typeof(Card[]));
 
                     if (string.IsNullOrEmpty(_config.SavePlayedGamesPath))
                         return;
