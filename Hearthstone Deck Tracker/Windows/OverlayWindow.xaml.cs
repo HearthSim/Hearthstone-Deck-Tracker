@@ -387,7 +387,7 @@ namespace Hearthstone_Deck_Tracker
             if (PointInsideControl(relativePlayerDeckPos, ListViewPlayer))
             {
                 //card size = card list height / ammount of cards
-                var cardSize = (StackPanelPlayer.ActualHeight - 29) / ListViewPlayer.Items.Count;
+                var cardSize = ListViewPlayer.ActualHeight / ListViewPlayer.Items.Count;
                 var cardIndex = (int)(relativePlayerDeckPos.Y / cardSize);
                 if (cardIndex < 0 || cardIndex >= ListViewPlayer.Items.Count)
                     return;
@@ -410,7 +410,7 @@ namespace Hearthstone_Deck_Tracker
             else if (PointInsideControl(relativeOpponentDeckPos, ListViewOpponent))
             {
                 //card size = card list height / ammount of cards
-                var cardSize = (StackPanelOpponent.ActualHeight - 29) / ListViewOpponent.Items.Count;
+                var cardSize = ListViewOpponent.ActualHeight / ListViewOpponent.Items.Count;
                 var cardIndex = (int)(relativeOpponentDeckPos.Y / cardSize);
                 if (cardIndex < 0 || cardIndex >= ListViewOpponent.Items.Count)
                     return;
