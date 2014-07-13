@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
         {
             public List<Deck> Decks;
             public List<string> SelectedTags;
+            public Operation TagOperation;
             public string Name;
 
             public string TagList
@@ -45,8 +46,11 @@ namespace Hearthstone_Deck_Tracker
                                : Name + " (" +
                                  Decks.Count(
                                      d =>
-                                     SelectedTags.Contains("All") ||
-                                     SelectedTags.Any(tag => d.Tags.Any(deckTag => deckTag == tag))) + ")"; }
+                                     SelectedTags.Any(t => t == "All") ||
+                                     (TagOperation == Operation.Or
+                                          ? SelectedTags.Any(t => d.Tags.Contains(t))
+                                          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
+                }
             }
 
             public Color ClassColor
@@ -102,6 +106,7 @@ namespace Hearthstone_Deck_Tracker
         public bool ShowAll;
         public List<string> SelectedTags;
         private HsClass _selectedClass;
+        public Operation TagOperation;
 
         public Deck SelectedDeck;
 
@@ -162,14 +167,16 @@ namespace Hearthstone_Deck_Tracker
                     {
                         foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
                         {
-                            ListboxPicker.Items.Add(d);
+                            if (DeckMatchesSelectedTags(d))
+                                ListboxPicker.Items.Add(d);
                         }
                     }
                     else
                     {
                         foreach (var d in hsClass.Decks)
                         {
-                            ListboxPicker.Items.Add(d);
+                            if (DeckMatchesSelectedTags(d))
+                                ListboxPicker.Items.Add(d);
                         }
                     }
                     ListboxPicker.SelectedItem = deck;
@@ -177,6 +184,14 @@ namespace Hearthstone_Deck_Tracker
                 }
             
             SelectedDeck = deck;
+        }
+
+        private bool DeckMatchesSelectedTags(Deck deck)
+        {
+            return SelectedTags.Any(t => t == "All") ||
+                   (TagOperation == Operation.Or
+                        ? SelectedTags.Any(t => deck.Tags.Contains(t))
+                        : SelectedTags.All(t => deck.Tags.Contains(t)));
         }
 
         public void RemoveDeck(Deck deck)
@@ -215,7 +230,7 @@ namespace Hearthstone_Deck_Tracker
                     {
                         foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
                         {
-                            if (SelectedTags.Any(t => t == "All") || SelectedTags.Any(t => d.Tags.Contains(t)))
+                            if (DeckMatchesSelectedTags(d))
                                 ListboxPicker.Items.Add(d);
                         }
                     }
@@ -223,7 +238,7 @@ namespace Hearthstone_Deck_Tracker
                     {
                         foreach (var d in selectedClass.Decks)
                         {
-                            if (SelectedTags.Any(t => t == "All") || SelectedTags.Any(t => d.Tags.Contains(t)))
+                            if (DeckMatchesSelectedTags(d))
                                 ListboxPicker.Items.Add(d);
                         }
                     }
@@ -285,7 +300,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
                     {
-                        if (SelectedTags.Any(t => t == "All") || SelectedTags.Any(t => d.Tags.Contains(t)))
+                        if (DeckMatchesSelectedTags(d))
                             ListboxPicker.Items.Add(d);
                     }
                 }
@@ -293,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     foreach (var d in _selectedClass.Decks)
                     {
-                        if (SelectedTags.Any(t => t == "All") || SelectedTags.Any(t => d.Tags.Contains(t)))
+                        if (DeckMatchesSelectedTags(d))
                             ListboxPicker.Items.Add(d);
                     }
                 }
@@ -311,6 +326,13 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-
+        public void SetTagOperation(Operation o)
+        {
+            TagOperation = o;
+            foreach (var hsClass in _hsClasses)
+            {
+                hsClass.TagOperation = o;
+            }
+        }
     }
 }

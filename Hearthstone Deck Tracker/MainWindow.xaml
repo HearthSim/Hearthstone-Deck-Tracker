@@ -23,24 +23,25 @@
                     <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
                     </controls:Flyout>
+                    <controls:Flyout x:Name="FlyoutDeckOptions" Header="More..." Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:DeckOptions Width="auto" Height="auto" x:Name="DeckOptionsFlyout" Margin="3,0,0,0"></local:DeckOptions>
+                    </controls:Flyout>
+                    <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlMyDecks" />
+                    </controls:Flyout>
 
                     <Grid Grid.Column="1" Margin="-1,0,0,0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
-                            <Button x:Name="BtnNotes" IsEnabled="False" Content="Notes" Margin="0,0,3,0" VerticalAlignment="Top" Width="76" Height="26" Click="BtnNotes_Click" />
-                            <Button x:Name="BtnEditDeck" IsEnabled="False" Content="Edit" Margin="3,0,3,0" Width="76" Height="26" Click="BtnEditDeck_Click" />
-                            <Button x:Name="BtnDeleteDeck" IsEnabled="False" Content="Delete" HorizontalAlignment="Left" Margin="3,0,0,0" Width="76" Height="26" Click="BtnDeleteDeck_Click"/>
+                            <Button Name="BtnEditDeck" IsEnabled="False" Content="Edit Deck" Margin="0,0,3,0" Width="117" Height="26" Click="BtnEditDeck_Click" />
+                            <Button Name="BtnDeckOptions" IsEnabled ="False" Content ="More..." Margin="3,0,0,0" Width="117" Height="26" Click="BtnDeckOptions_Click"></Button>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1">
-                            <Button x:Name="BtnExport" IsEnabled="False" Content="Export to HS" Margin="0,0,3,0" Width="117" Height="26" Click="BtnExport_Click" />
-                            <Button x:Name="BtnScreenshot" IsEnabled="False" Content="Screenshot Deck" Margin="3,0,0,0" Width="117" Height="26" Click="BtnScreenhot_Click" />
-                        </StackPanel>
-                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1"/>
+                        <local:DeckListView x:Name="ListViewDeck" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial"  Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto">
                             <local:DeckListView.Resources>
                                 <Style TargetType="GridViewColumnHeader">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -70,7 +71,7 @@
                                 </Style>
                             </local:DeckListView.Resources>
                         </local:DeckListView>
-                        <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,0,0,6"></local:ManaCurve>
+                        <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6"></local:ManaCurve>
                     </Grid>
 
                     <Grid Grid.Column="0" Margin="0,0,-1,0">
@@ -94,8 +95,11 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:Flyout x:Name="FlyoutSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlSet" />
+                    <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+                    </controls:Flyout>
+                    <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
                     </controls:Flyout>
                     <Grid Grid.Column="0" Margin="0,0,-1,0">
                         <Grid.RowDefinitions>
@@ -171,7 +175,7 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0"  Width="240">
-                            <Button x:Name="BtnImport" Content="Import"  Margin="0,0,3,0" Width="98" Height="26" Click="BtnImport_OnClick" />
+                            <Button x:Name="BtnImport" Content="Import"  Margin="0,0,3,0" Width="98" Height="26" Click="BtnImport_OnClick" VerticalAlignment="Bottom" />
                             <ComboBox Name="ComboboxNeutral" Margin="3,0,0,0" Width="136" SelectedIndex="0" SelectionChanged="ComboboxNeutral_SelectionChanged">
                                 <system:String>Class + Neutral</system:String>
                                 <system:String>Class Only</system:String>
@@ -331,6 +335,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="22"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
@@ -342,7 +347,7 @@
                                         <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="31,185,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                                         <controls:RangeSlider x:Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" CentralThumbDragCompleted="RangeSliderPlayer_CentralThumbDragCompleted" LowerThumbDragCompleted="RangeSliderPlayer_LowerThumbDragCompleted" UpperThumbDragCompleted="RangeSliderPlayer_UpperThumbDragCompleted"/>
                                         <Slider x:Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
-                                        <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged"/>
+                                        <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged" Minimum="0.0001"/>
                                         <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
                                         <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderPlayerOpacity_ValueChanged"/>
                                         <Label Content="Opacity:" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top"/>
@@ -359,7 +364,7 @@
                                         <CheckBox x:Name="CheckboxHideOpponentCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,116,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardCounter_Checked" Unchecked="CheckboxHideOpponentCardCounter_Unchecked"/>
                                         <controls:RangeSlider x:Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" UpperThumbDragCompleted="RangeSliderOpponent_UpperThumbDragCompleted" LowerThumbDragCompleted="RangeSliderOpponent_LowerThumbDragCompleted" CentralThumbDragCompleted="RangeSliderOpponent_CentralThumbDragCompleted"/>
                                         <Slider x:Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
-                                        <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged"/>
+                                        <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged" Minimum="0.0001"/>
                                         <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
                                         <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,139,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
                                         <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOpponentOpacity_ValueChanged"/>
@@ -369,6 +374,13 @@
                                             <system:String>Bottom</system:String>
                                         </ComboBox>
                                         <Label Content="Text:" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Height="216" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
+                                    <Grid>
+                                        <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxDeckSortingClassFirst_Checked" Unchecked="CheckboxDeckSortingClassFirst_Unchecked"/>
+                                        <Label Content="More to come" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
                                     </Grid>
                                 </GroupBox>
                             </Grid>

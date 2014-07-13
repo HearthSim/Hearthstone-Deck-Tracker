@@ -16,6 +16,10 @@ using System.Windows.Shapes;
 
 namespace Hearthstone_Deck_Tracker
 {
+    public enum Operation
+    {
+        And, Or
+    }
     /// <summary>
     /// Interaction logic for TagControl.xaml
     /// </summary>
@@ -48,9 +52,12 @@ namespace Hearthstone_Deck_Tracker
         public delegate void NewTagHandler(TagControl sender, string tag);
         public delegate void DeleteTagHandler(TagControl sender, string tag);
 
+        public delegate void OperationChangedHandler(TagControl sender, Operation operation);
+
         public event SelectedTagsChangedHandler SelectedTagsChanged;
         public event NewTagHandler NewTag;
         public event DeleteTagHandler DeleteTag;
+        public event OperationChangedHandler OperationChanged;
 
         private readonly ObservableCollection<Tag> _tags;   
 
@@ -208,6 +215,18 @@ namespace Hearthstone_Deck_Tracker
 
             if (DeleteTag != null)
                 DeleteTag(this, tag.Name);
+        }
+
+        private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if(OperationChanged != null)
+                OperationChanged(this, Operation.And);
+        }
+
+        private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+            if (OperationChanged != null)
+                OperationChanged(this, Operation.Or);
         }
     }
 }

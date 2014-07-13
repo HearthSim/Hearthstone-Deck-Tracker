@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
@@ -136,23 +142,12 @@ namespace Hearthstone_Deck_Tracker
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(rtb));
 
-                if (!Directory.Exists("Screenshots"))
-                    Directory.CreateDirectory("Screenshots");
-
-                name = "Screenshots/" + RemoveInvalidChars(name);
-
-                if (File.Exists(name + ".png"))
-                {
-                    int num = 1;
-                    while (File.Exists(name + "_" + num + ".png"))
-                        num++;
-                    name += "_" + num;
-                }
-                using (var stream = new FileStream(name + ".png", FileMode.Create, FileAccess.Write))
+                var path = GetValidFilePath("Screenshots", name, ".png");
+                using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     encoder.Save(stream);
                 }
-                return name;
+                return path;
             }
             catch (Exception)
             {
@@ -161,11 +156,51 @@ namespace Hearthstone_Deck_Tracker
 
         }
 
+        public static string GetValidFilePath(string dir, string name, string extension)
+        {
+            var validDir = RemoveInvalidChars(dir);
+            if (!Directory.Exists(validDir))
+                Directory.CreateDirectory(validDir);
+
+            if (!extension.StartsWith("."))
+                extension = "." + extension;
+
+            var path = validDir + "\\" + RemoveInvalidChars(name);
+            if (File.Exists(path + extension))
+            {
+                int num = 1;
+                while (File.Exists(path + "_" + num + extension))
+                    num++;
+                path += "_" + num;
+            }
+
+            return path + extension;
+        }
+
         public static string RemoveInvalidChars(string s)
         {
             var invalidChars = new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars());
             var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
             return regex.Replace(s, "");
+        }
+
+        public static void SortCardCollection(IEnumerable collection, bool classFirst)
+        {
+            if (collection == null) return;
+            var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
+            view1.SortDescriptions.Clear();
+
+            if(classFirst)
+                view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
+
+            view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
+            view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+        }
+
+        public static string DeckToIdString(Deck deck)
+        {
+            return deck.Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
         }
     }
 }

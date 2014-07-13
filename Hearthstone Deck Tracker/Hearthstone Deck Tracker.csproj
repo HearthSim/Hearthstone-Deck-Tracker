@@ -93,6 +93,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
+      <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\DeckImport.xaml.cs">
+      <DependentUpon>DeckImport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
+      <DependentUpon>DeckOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
@@ -100,7 +109,7 @@
     <Compile Include="Controls\DeckListView.xaml.cs">
       <DependentUpon>DeckListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckNotes.xaml.cs">
+    <Compile Include="FlyoutControls\DeckNotes.xaml.cs">
       <DependentUpon>DeckNotes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker.xaml.cs">
@@ -116,7 +125,7 @@
       <DependentUpon>ManaCostBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
-    <Compile Include="Controls\TagControl.xaml.cs">
+    <Compile Include="FlyoutControls\TagControl.xaml.cs">
       <DependentUpon>TagControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\Deck.cs" />
@@ -154,7 +163,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeckNotes.xaml">
+    <Page Include="Controls\ManaCostBarToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckImport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckNotes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,7 +195,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TagControl.xaml">
+    <Page Include="FlyoutControls\TagControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
