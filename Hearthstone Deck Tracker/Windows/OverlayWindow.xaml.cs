@@ -105,16 +105,8 @@ namespace Hearthstone_Deck_Tracker
 
         public void SortViews()
         {
-            SortCardCollection(ListViewPlayer.ItemsSource);
-            SortCardCollection(ListViewOpponent.ItemsSource);
-        }
-
-        private void SortCardCollection(IEnumerable collection)
-        {
-            var view1 = (CollectionView) CollectionViewSource.GetDefaultView(collection);
-            view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-            view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            Helper.SortCardCollection(ListViewPlayer.ItemsSource, _config.CardSortingClassFirst);
+            Helper.SortCardCollection(ListViewOpponent.ItemsSource, _config.CardSortingClassFirst);
         }
 
         private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
@@ -122,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
             //previous cardcout > current -> opponent played -> resort list
             if (_opponentCardCount > cardCount)
             {
-                SortCardCollection(ListViewOpponent.ItemsSource);
+                Helper.SortCardCollection(ListViewOpponent.ItemsSource, _config.CardSortingClassFirst);
             }
             _opponentCardCount = cardCount;
 
@@ -152,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
             //previous < current -> draw
             if (_cardCount < cardCount)
             {
-                SortCardCollection(ListViewPlayer.ItemsSource);
+                Helper.SortCardCollection(ListViewPlayer.ItemsSource, _config.CardSortingClassFirst);
             }
             _cardCount = cardCount;
             LblCardCount.Text = "Hand: " + cardCount;

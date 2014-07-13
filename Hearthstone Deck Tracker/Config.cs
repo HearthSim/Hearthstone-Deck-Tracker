@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker
         public double Card2PosX = 0.25;
         public double CardPosX = 0.15;
         public double CardPosY = 0.3;
+        public bool CardSortingClassFirst = false;
         public int ClickDelay = 50;
         public int CustomHeight = -1;
         public int CustomWidth = -1;
@@ -87,6 +88,7 @@ namespace Hearthstone_Deck_Tracker
         public string SelectedWindowBackground = "Theme";
         public bool ShowAllDecks = false;
         public bool ShowInTaskbar = false;
+        public Operation TagOperation = Operation.Or;
         public bool TextOnTopOpponent = false;
         public bool TextOnTopPlayer = false;
         public string ThemeName;
@@ -130,7 +132,7 @@ namespace Hearthstone_Deck_Tracker
         {
             get { return _currentLogFile ?? GetLogFileName(); }
         }
-
+        
         private string GetLogFileName()
         {
             var date = DateTime.Now;

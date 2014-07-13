@@ -126,8 +126,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         [XmlIgnore]
         public int InHandCount;
 
+        [XmlIgnore]
+        public bool IsClassCard { get { return GetPlayerClass != "Neutral"; } }
+
         [XmlIgnore] 
         public bool IsStolen { get; set; }
+
 
         public int Height
         {
@@ -255,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race, Durability);
         }
 
-        private void Load()
+        public void Load()
         {
             Debug.Assert(Id != null);
 
