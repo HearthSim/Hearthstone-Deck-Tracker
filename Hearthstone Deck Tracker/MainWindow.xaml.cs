@@ -1880,7 +1880,8 @@ namespace Hearthstone_Deck_Tracker
                     }
 
                     SetNewDeck(deck);
-                    ShowMessage("Error loading deck", "");
+                    if(deck == null)
+                        ShowMessage("Error loading deck", "");
                 }
                 catch (Exception ex)
                 {

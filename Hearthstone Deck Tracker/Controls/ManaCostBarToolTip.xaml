@@ -19,9 +19,9 @@
             <Ellipse Fill="#FFAA1E28" Stroke="#FFD7AABE" Grid.Row="0" Grid.Column="0" Width="10" Height="10"></Ellipse>
             <Ellipse Fill="#FF1E6EAA" Stroke="#FFA0C8D7" Grid.Row="1" Grid.Column="0" Width="10" Height="10"></Ellipse>
             <Ellipse Fill="#FF6EAA1E" Stroke="#FFC8D7A0" Grid.Row="2" Grid.Column="0" Width="10" Height="10"></Ellipse>
-            <TextBlock Name="TextblockWeapons" Text="Weapons: 0" Grid.Row="0" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0"></TextBlock>
-            <TextBlock Name="TextblockSpells" Text="Spells: 0" Grid.Row="1" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0"></TextBlock>
-            <TextBlock Name="TextblockMinions" Text="Minions: 0" Grid.Row="2" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0"></TextBlock>
+            <TextBlock Name="TextblockWeapons" Text="Weapons: 0" Grid.Row="0" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
+            <TextBlock Name="TextblockSpells" Text="Spells: 0" Grid.Row="1" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
+            <TextBlock Name="TextblockMinions" Text="Minions: 0" Grid.Row="2" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
         </Grid>
     </Border>
 </UserControl>
