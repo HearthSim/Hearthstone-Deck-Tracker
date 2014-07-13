@@ -394,15 +394,16 @@ namespace Hearthstone_Deck_Tracker
             //player card tooltips
             if (PointInsideControl(relativePlayerDeckPos, ListViewPlayer))
             {
-                //cards have height 35, margin 2 - slightly off with lower scaling
-                var cardSize = 35 * Scaling - 2;
+                //card size = card list height / ammount of cards
+                var cardSize = (StackPanelPlayer.ActualHeight-29) / ListViewPlayer.Items.Count;
                 var cardIndex = (int)(relativePlayerDeckPos.Y / cardSize);
                 if (cardIndex < 0 || cardIndex >= ListViewPlayer.Items.Count)
                     return;
 
                 ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items[cardIndex]);
 
-                var topOffset = Canvas.GetTop(StackPanelPlayer) + cardIndex * cardSize;
+                //offset is affected by scaling
+                var topOffset = Canvas.GetTop(StackPanelPlayer) + cardIndex * cardSize * _config.OverlayPlayerScaling / 100;
 
                 //prevent tooltip from going outside of the overlay
                 if (topOffset + ToolTipCard.ActualHeight > Height)
@@ -494,8 +495,6 @@ namespace Hearthstone_Deck_Tracker
 
         public void UpdateScaling()
         {
-            _config.OverlayPlayerScaling += 0.00001;
-            _config.OverlayOpponentScaling += 0.00001;
             StackPanelPlayer.RenderTransform = new ScaleTransform(_config.OverlayPlayerScaling/100,
                                                                   _config.OverlayPlayerScaling/100);
             StackPanelOpponent.RenderTransform = new ScaleTransform(_config.OverlayOpponentScaling/100,
