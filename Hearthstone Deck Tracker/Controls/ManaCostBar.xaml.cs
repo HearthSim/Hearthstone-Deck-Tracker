@@ -28,9 +28,16 @@ namespace Hearthstone_Deck_Tracker
             FrameDelay = 20;
             _nextAnimation = new double[3];
             _isAnimationRunning = false;
+            McbToolTip.SetValue(DataContextProperty, this);
         }
 
-        
+        public void SetTooltipValues(int weapons, int spells, int minions)
+        {
+            McbToolTip.TextblockWeapons.Text = "Weapons: " + weapons;
+            McbToolTip.TextblockSpells.Text = "Spells: " + spells;
+            McbToolTip.TextblockMinions.Text = "Minions: " + minions;
+        }
+
         public void SetValues(double weapons, double spells, double minions, int count)
         {
             LabelCount.Content = count;
