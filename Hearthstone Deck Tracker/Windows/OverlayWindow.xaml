@@ -47,7 +47,7 @@
                             <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="Foreground" Value="{Binding ColorEnemy}" />
+                            <Setter Property="Foreground" Value="{Binding ColorOpponent}" />
                             <Setter Property="Background" Value="{Binding Background}" />
                             <Setter Property="Height" Value="{Binding OpponentHeight}" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

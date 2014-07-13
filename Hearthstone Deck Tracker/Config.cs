@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker
         public bool AlwaysOverwriteLogConfig = true;
         public bool AutoDeckDetection = true;
         public bool AutoSelectDetectedDeck = true;
+        public bool BringHsToForeground = false;
         public double Card2PosX = 0.25;
         public double CardPosX = 0.15;
         public double CardPosY = 0.3;
@@ -27,6 +28,7 @@ namespace Hearthstone_Deck_Tracker
         [XmlIgnore] 
         public bool Debug = false;
         public bool ExportSetDeckName = true;
+        public bool FlashHs = true;
         public bool GenerateLog = false;
         public string HearthstoneDirectory = "";
         public bool HideDecksInOverlay = false;

@@ -22,7 +22,7 @@
                                 </ToolTip>
                             </Setter.Value>
                         </Setter>
-                        <Setter Property="Foreground" Value="{Binding ColorEnemy}" />
+                        <Setter Property="Foreground" Value="{Binding ColorOpponent}" />
                     <Setter Property="Background" Value="{Binding Background}" />
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     <Setter Property="Height" Value="{Binding OpponentWindowHeight}"></Setter>
@@ -30,7 +30,7 @@
                     <Setter Property="IsEnabled" Value="False"/>
                     <Style.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{Binding ColorEnemy}" />
+                                <Setter Property="Foreground" Value="{Binding ColorOpponent}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>

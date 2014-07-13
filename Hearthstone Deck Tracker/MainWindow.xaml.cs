@@ -498,6 +498,15 @@ namespace Hearthstone_Deck_Tracker
             //maybe add timer to player/opponent windows
             _turnTimer.SetCurrentPlayer(args.Turn);
             _turnTimer.Restart();
+            if (args.Turn == Turn.Player && !_game.IsInMenu)
+            {
+                if (_config.FlashHs)
+                    User32.FlashHs();
+
+                if (_config.BringHsToForeground)
+                    User32.BringHsToForeground();
+            }
+            
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -614,6 +623,11 @@ namespace Hearthstone_Deck_Tracker
             if (!_game.IsInMenu) return;
 
             Logger.WriteLine("Game start");
+
+            if (_config.FlashHs)
+                User32.FlashHs();
+            if (_config.BringHsToForeground)
+                User32.BringHsToForeground();
 
             if (_config.KeyPressOnGameStart != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameStart))
             {
@@ -958,6 +972,8 @@ namespace Hearthstone_Deck_Tracker
             CheckboxAutoSelectDeck.IsChecked = _config.AutoSelectDetectedDeck;
             CheckboxExportName.IsChecked = _config.ExportSetDeckName;
             CheckboxPrioGolden.IsChecked = _config.PrioritizeGolden;
+            CheckboxBringHsToForegorund.IsChecked = _config.BringHsToForeground;
+            CheckboxFlashHs.IsChecked = _config.BringHsToForeground;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -1044,7 +1060,6 @@ namespace Hearthstone_Deck_Tracker
 
             CheckboxDeckSortingClassFirst.IsChecked = _config.CardSortingClassFirst;
         }
-
 
         private async void UpdateOverlayAsync()
         {
@@ -3036,10 +3051,33 @@ namespace Hearthstone_Deck_Tracker
             Helper.SortCardCollection(ListViewNewDeck.Items, false);
         }
 
-       
+        private void CheckboxBringHsToForegorund_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.BringHsToForeground = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxBringHsToForegorund_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.BringHsToForeground = false;
+            SaveConfig(false);
+        }
         #endregion
 
-       
+        private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.FlashHs = true;
+            SaveConfig(false);
+        }
 
+        private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.FlashHs = false;
+            SaveConfig(false);
+        }
     }
 }
