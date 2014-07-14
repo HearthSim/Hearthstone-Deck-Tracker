@@ -11,9 +11,6 @@ namespace Hearthstone_Deck_Tracker
         public const int SwRestore = 9;
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
-        
-        [DllImport("user32.dll")]
         public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
@@ -59,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
             public int right;
             public int bottom;
         }
-
+        
         [Flags]
         public enum MouseEventFlags : uint
         {
@@ -79,25 +76,42 @@ namespace Hearthstone_Deck_Tracker
             public int X;
             public int Y;
         }
+        
         public static Point GetMousePos()
         {
             var p = new MousePoint();
             GetCursorPos(out p);
             return new Point(p.X, p.Y);
         }
+        
         public static Rectangle GetHearthstoneRect(bool dpiScaling)
         {
-            var rect = new Rect();
-            GetClientRect(FindWindow("UnityWndClass", "Hearthstone"), ref rect);
+        	// Returns the co-ordinates of Hearthstone's client area in screen co-ordinates
+            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+        	var rect = new Rect();
+            var ptUL = new Point();
+            var ptLR = new Point();
+            
+            GetClientRect(hsHandle, ref rect);
+            
+            ptUL.X = rect.left;
+            ptUL.Y = rect.top;
+ 
+            ptLR.X = rect.right;
+            ptLR.Y = rect.bottom;
+            
+            ClientToScreen(hsHandle, ref ptUL);
+            ClientToScreen(hsHandle, ref ptLR);
+ 
             if (dpiScaling)
             {
-                rect.top = (int) (rect.top/Helper.DpiScalingY);
-                rect.bottom = (int) (rect.bottom/Helper.DpiScalingY);
-                rect.left = (int) (rect.left/Helper.DpiScalingX);
-                rect.right = (int) (rect.right/Helper.DpiScalingX);
+                ptUL.X = (int) (ptUL.X / Helper.DpiScalingX);
+            	ptUL.Y = (int) (ptUL.Y / Helper.DpiScalingY);
+                ptLR.X = (int) (ptLR.X / Helper.DpiScalingX);
+            	ptLR.Y = (int) (ptLR.Y / Helper.DpiScalingY);
             }
-            return new Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
+            
+            return new Rectangle(ptUL.X, ptUL.Y, ptLR.X - ptUL.X, ptLR.Y - ptUL.Y);
         }
-
     }
 }

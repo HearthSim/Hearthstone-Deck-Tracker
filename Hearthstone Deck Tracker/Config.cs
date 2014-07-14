@@ -100,8 +100,7 @@ namespace Hearthstone_Deck_Tracker
         public double Card2PosX = 0.25;
         public double CardPosY = 0.3;
         public double SearchBoxX = 0.5;
-        public double SearchBoxY = 0.89;
-        public double SearchBoxYFullscreen = 0.92;
+        public double SearchBoxY = 0.92;
         public double NameDeckX = 0.8;
         public double NameDeckY = 0.05;
         public bool ExportSetDeckName = true;
