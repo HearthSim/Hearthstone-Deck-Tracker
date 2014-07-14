@@ -730,6 +730,10 @@ namespace Hearthstone_Deck_Tracker
         {
             _turnTimer.MulliganDone(Turn.Player);
             _game.Mulligan(cardId);
+
+            //without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
+            _overlay.ListViewPlayer.Items.Refresh();
+            _playerWindow.ListViewPlayer.Items.Refresh();
         }
 
         private void HandlePlayerHandDiscard(string cardId)
@@ -1742,7 +1746,9 @@ namespace Hearthstone_Deck_Tracker
                 var card = Game.GetCardFromId(splitEntry[0]);
                 if (card.Id == "UNKNOWN")
                     continue;
-                int.TryParse(splitEntry[1], out card.Count);
+                var count = 1;
+                int.TryParse(splitEntry[1], out count);
+                card.Count = count;
 
                 if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
                     deck.Class = card.GetPlayerClass;
@@ -1882,8 +1888,11 @@ namespace Hearthstone_Deck_Tracker
                         if (card.Id == "UNKNOWN")
                             continue;
 
+                        var count = 1;
                         if (parts.Length > 1)
-                            int.TryParse(parts[1], out card.Count);
+                            int.TryParse(parts[1], out count);
+
+                        card.Count = count;
 
                         if (deck == null)
                             deck = new Deck();
@@ -2091,9 +2100,7 @@ namespace Hearthstone_Deck_Tracker
             if (_newDeck.Cards.Contains(card))
             {
                 var cardInDeck = _newDeck.Cards.First(c => c.Name == card.Name);
-                _newDeck.Cards.Remove(cardInDeck);
                 cardInDeck.Count++;
-                _newDeck.Cards.Add(cardInDeck);
             }
             else
             {

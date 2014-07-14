@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             PlayerDeck.Clear();
             foreach (var card in deck.Cards)
             {
-                PlayerDeck.Add(card);
+                PlayerDeck.Add((Card)card.Clone());
             }
             IsUsingPremade = true;
         }
@@ -190,22 +190,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             PlayerHandCount++;
 
-            var card = GetCardFromId(cardId);
-
-            if (PlayerDrawn.Contains(card))
+            var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
+            if (drawnCard != null)
             {
-                PlayerDrawn.Remove(card);
-                card.Count++;
+                drawnCard.Count++;
             }
-            PlayerDrawn.Add(card);
-
-            if (PlayerDeck.Contains(card))
+            else
             {
-                var deckCard = PlayerDeck.First(c => c.Equals(card));
-                PlayerDeck.Remove(deckCard);
+                PlayerDrawn.Add(GetCardFromId(cardId));
+            }
+
+            var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+            if (deckCard != null)
+            {
                 deckCard.Count--;
                 deckCard.InHandCount++;
-                PlayerDeck.Add(deckCard);
                 LogDeckChange(false, deckCard, true);
             }
             else
@@ -226,50 +225,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             }
 
             PlayerHandCount++;
-            if (PlayerDeck.Any(c => c.Id == cardId))
-            {
-                var card = PlayerDeck.First(c => c.Id == cardId);
-                PlayerDeck.Remove(card);
+            var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+            if (card != null)
                 card.InHandCount++;
-                PlayerDeck.Add(card);
-            }
         }
 
         public void PlayerPlayed(string cardId)
         {
             PlayerHandCount--;
-            if (PlayerDeck.Any(c => c.Id == cardId))
-            {
-                var card = PlayerDeck.First(c => c.Id == cardId);
-                PlayerDeck.Remove(card);
+            var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+            if (card != null)
                 card.InHandCount--;
-                PlayerDeck.Add(card);
-            }
         }
 
         public void Mulligan(string cardId)
         {
             PlayerHandCount--;
 
-            Card card = GetCardFromId(cardId);
-
-            if (PlayerDrawn.Any(c => c.Equals(card)))
+            var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
+            if (drawnCard != null)
             {
-                var drawnCard = PlayerDrawn.First(c => c.Equals(card));
-                PlayerDrawn.Remove(drawnCard);
-                if (drawnCard.Count > 1)
-                {
-                    drawnCard.Count--;
-                    PlayerDrawn.Add(drawnCard);
-                }
+                drawnCard.Count--;
+                if (drawnCard.Count < 1)
+                    PlayerDrawn.Remove(drawnCard);
             }
-            if (PlayerDeck.Any(c => c.Equals(card)))
+
+            var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+            if(deckCard != null)
             {
-                var deckCard = PlayerDeck.First(c => c.Equals(card));
-                PlayerDeck.Remove(deckCard);
                 deckCard.Count++;
                 deckCard.InHandCount--;
-                PlayerDeck.Add(deckCard);
                 LogDeckChange(false, deckCard, false);
             }
         }
@@ -289,34 +274,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
         public void PlayerHandDiscard(string cardId)
         {
-            PlayerHandCount--;
-            if (PlayerDeck.Any(c => c.Id == cardId))
-            {
-                var card = PlayerDeck.First(c => c.Id == cardId);
-                PlayerDeck.Remove(card);
-                card.InHandCount--;
-                PlayerDeck.Add(card);
-            }
+            PlayerPlayed(cardId);
         }
 
         public bool PlayerDeckDiscard(string cardId)
         {
-            Card card = GetCardFromId(cardId);
+            PlayerHandCount++;
 
-            if (PlayerDrawn.Contains(card))
+            var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
+            if (drawnCard != null)
             {
-                PlayerDrawn.Remove(card);
-                card.Count++;
+                drawnCard.Count++;
+            }
+            else
+            {
+                PlayerDrawn.Add(GetCardFromId(cardId));
             }
 
-            PlayerDrawn.Add(card);
-
-            if (PlayerDeck.Contains(card))
+            var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+            if (deckCard != null)
             {
-                var deckCard = PlayerDeck.First(c => c.Equals(card));
-                PlayerDeck.Remove(deckCard);
                 deckCard.Count--;
-                PlayerDeck.Add(deckCard);
                 LogDeckChange(false, deckCard, true);
             }
             else
@@ -328,19 +306,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
         public void OpponentBackToHand(string cardId, int turn)
         {
-            if (OpponentCards.Any(c => c.Id == cardId))
+            OpponentHandCount++;
+
+            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+            if (card != null)
             {
-                var card = OpponentCards.First(c => c.Id == cardId);
-                OpponentCards.Remove(card);
                 card.Count--;
-                if (card.Count > 0)
-                {
-                    OpponentCards.Add(card);
-                }
+                if (card.Count < 1)
+                    OpponentCards.Remove(card);
+
                 LogDeckChange(true, card, true);
             }
-
-            OpponentHandCount++;
 
             if (!ValidateOpponentHandCount())
                 return;
@@ -352,38 +328,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         public void OpponentDeckDiscard(string cardId)
         {
             OpponentDeckCount--;
-            if (string.IsNullOrEmpty(cardId))
-                return;
 
-            var card = GetCardFromId(cardId);
-            if (OpponentCards.Contains(card))
+            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+            if (card != null)
             {
-                OpponentCards.Remove(card);
                 card.Count++;
             }
+            else
+            {
+                card = GetCardFromId(cardId);
+                OpponentCards.Add(card);
+            }
 
-            OpponentCards.Add(card);
             LogDeckChange(true, card, false);
         }
 
         public void OpponentSecretTriggered(string cardId)
         {
-            if (cardId == "")
-                return;
-
-            Card card = GetCardFromId(cardId);
-            if (OpponentCards.Contains(card))
+            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+            if (card != null)
             {
-                OpponentCards.Remove(card);
                 card.Count++;
             }
-
-            OpponentCards.Add(card);
+            else
+            {
+                card = GetCardFromId(cardId);
+                OpponentCards.Add(card);
+            }
 
             LogDeckChange(true, card, false);
         }
 
-        internal void OpponentGet(int turn)
+        public void OpponentGet(int turn)
         {
             OpponentHandCount++;
 
@@ -398,7 +374,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             LogOpponentHand();
         }
 
-        internal void Reset()
+        public void Reset()
         {
             Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
 
@@ -456,18 +432,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             }
             if (!string.IsNullOrEmpty(args.Id))
             {
-                Card card = GetCardFromId(args.Id);
+                var stolen = args.From != -1 && OpponentHandMarks[args.From - 1] == CardMark.Stolen;
+                var card = OpponentCards.FirstOrDefault(c => c.Id == args.Id && c.IsStolen == stolen);
 
-                if (args.From != -1 && OpponentHandMarks[args.From - 1] == CardMark.Stolen)
-                    card.IsStolen = true;
-
-                if (OpponentCards.Any(x => x.Equals(card) && x.IsStolen == card.IsStolen))
+                if (card != null)
                 {
-                    card = OpponentCards.First(x => x.Equals(card) && x.IsStolen == card.IsStolen);
-                    OpponentCards.Remove(card);
                     card.Count++;
                 }
-                OpponentCards.Add(card);
+                else
+                {
+                    card = GetCardFromId(args.Id);
+                    card.IsStolen = stolen;
+                    OpponentCards.Add(card);
+                }
+
                 LogDeckChange(true, card, false);
 
                 if (card.IsStolen)

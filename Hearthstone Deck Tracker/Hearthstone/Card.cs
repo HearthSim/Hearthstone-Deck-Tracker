@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -8,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-    public class Card : ICloneable
+    public class Card : ICloneable, INotifyPropertyChanged
     {
         public Card()
         {
@@ -38,7 +40,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         private string _localizedName;
         private string _name;
 
-        public int Count;
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                _count = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string Id;
 
         [XmlIgnore]
@@ -124,14 +135,33 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         }
 
         [XmlIgnore]
-        public int InHandCount;
+        public int InHandCount
+        {
+            get { return _inHandCount; }
+            set
+            {
+                _inHandCount = value;
+                OnPropertyChanged();
+            }
+        }
 
         [XmlIgnore]
         public bool IsClassCard { get { return GetPlayerClass != "Neutral"; } }
 
-        [XmlIgnore] 
-        public bool IsStolen { get; set; }
+        [XmlIgnore]
+        public bool IsStolen
+        {
+            get { return _isStolen; }
+            set
+            {
+                _isStolen = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private bool _isStolen;
+        private int _inHandCount;
+        private int _count;
 
         public int Height
         {
@@ -276,6 +306,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             Health = stats.Health;
             Race = stats.Race;
             Durability = stats.Durability;
+            OnPropertyChanged();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
