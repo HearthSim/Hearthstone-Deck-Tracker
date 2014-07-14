@@ -279,8 +279,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
         public bool PlayerDeckDiscard(string cardId)
         {
-            PlayerHandCount++;
-
             var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
             if (drawnCard != null)
             {
