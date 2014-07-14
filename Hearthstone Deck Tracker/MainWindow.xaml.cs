@@ -689,7 +689,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _turnTimer.Stop();
             _overlay.HideTimers();
-            if (_config.SavePlayedGames)
+            if (_config.SavePlayedGames && !_game.IsInMenu)
             {
                 SavePlayedCards();
             }
