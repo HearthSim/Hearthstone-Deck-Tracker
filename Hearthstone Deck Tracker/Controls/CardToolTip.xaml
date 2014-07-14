@@ -20,14 +20,14 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
                 <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ShowIconsInTooltip}"/>
-                <local:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding ShowIconsInTooltip}"></local:HearthstoneTextBlock>
-            <local:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding ShowIconsInTooltip}" />
+                <local:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
                 <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ShowIconsInTooltip}"/>
-                <local:HearthstoneTextBlock Text="{Binding DurabilityOrHealth}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding ShowIconsInTooltip}"></local:HearthstoneTextBlock>
-        </Grid>
-            <TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14" VerticalAlignment="Top" FontWeight="Medium" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0"></TextBlock>
-            <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
-                <local:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Text="{Binding DurabilityOrHealth}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding ShowIconsInTooltip}" />
+            </Grid>
+            <TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14" VerticalAlignment="Top" FontWeight="Medium" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0" TextAlignment="Center" />
+        <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
+                <local:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
             </Grid>
         </Grid>
     </Border>
