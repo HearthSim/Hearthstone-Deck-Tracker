@@ -215,17 +215,17 @@ namespace Hearthstone_Deck_Tracker
 
             // Timers
             Canvas.SetTop(LblTurnTime,
-                          (Height - SystemParameters.WindowCaptionHeight)*_config.TimersVerticalPosition/100 - 5);
+                          Height*_config.TimersVerticalPosition/100 - 5);
             Canvas.SetLeft(LblTurnTime, Width*_config.TimersHorizontalPosition/100);
 
             Canvas.SetTop(LblOpponentTurnTime,
-                          (Height - SystemParameters.WindowCaptionHeight)*_config.TimersVerticalPosition/100 -
+                          Height*_config.TimersVerticalPosition/100 -
                           _config.TimersVerticalSpacing);
             Canvas.SetLeft(LblOpponentTurnTime,
                            (Width*_config.TimersHorizontalPosition/100) + _config.TimersHorizontalSpacing);
 
             Canvas.SetTop(LblPlayerTurnTime,
-                          (Height - SystemParameters.WindowCaptionHeight)*_config.TimersVerticalPosition/100 +
+                          Height*_config.TimersVerticalPosition/100 +
                           _config.TimersVerticalSpacing);
             Canvas.SetLeft(LblPlayerTurnTime,
                            Width*_config.TimersHorizontalPosition/100 + _config.TimersHorizontalSpacing);
