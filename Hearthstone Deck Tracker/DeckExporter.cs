@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 
             var cardPosX = ratio < 1.5 ? width*_config.CardPosX : width*_config.CardPosX*(ratio/1.33);
 
-            var searchBoxPos = new Point((int) (_config.SearchBoxX*width), (int) (_config.SearchBoxY*height));
+            var searchBoxPos = new Point((int) (_config.SearchBoxX*width), (int) (_config.SearchBoxPosY*height));
             var cardPos = new Point((int) cardPosX, (int) (_config.CardPosY*height));
 
             await ClickOnPoint(hsHandle, searchBoxPos);
@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
             else
                 User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
 
-            //await Task.Delay(_config.ClickDelay);
+            await Task.Delay(_config.ClickDelay);
 
             //mouse up
             if (SystemInformation.MouseButtonsSwapped)

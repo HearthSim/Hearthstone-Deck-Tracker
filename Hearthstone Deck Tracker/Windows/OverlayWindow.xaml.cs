@@ -170,8 +170,8 @@ namespace Hearthstone_Deck_Tracker
             Left = left + _offsetX;
             Width = (_customWidth == -1) ? width : _customWidth;
             Height = (_customHeight == -1) ? height : _customHeight;
-            //CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
-            //CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
+            CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
+            CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
         }
 
         private void ReSizePosLists()
@@ -231,11 +231,6 @@ namespace Hearthstone_Deck_Tracker
                            Width*_config.TimersHorizontalPosition/100 + _config.TimersHorizontalSpacing);
 
 
-//            Canvas.SetTop(LblGrid,
-//                          (Helper.IsFullscreen("Hearthstone")
-//                               ? Height*0.03
-//                               : Height*0.03 + SystemParameters.CaptionHeight));
-            
             Canvas.SetTop(LblGrid, Height*0.03);
 
             var ratio = Width/Height;

@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
         public string SavePlayedGamesName = "Game";
         public string SavePlayedGamesPath = "";
         public double SearchBoxX = 0.5;
-        public double SearchBoxY = 0.89;
+        public double SearchBoxPosY = 0.92;
         public int SearchDelay = 100;
         public string SelectedLanguage = "enUS";
         [XmlArray(ElementName = "SelectedTags")] 
