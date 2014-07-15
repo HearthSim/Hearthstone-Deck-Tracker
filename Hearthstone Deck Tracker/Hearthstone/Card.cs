@@ -1,14 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-    public class Card : ICloneable
+    public class Card : ICloneable, INotifyPropertyChanged
     {
         public Card()
         {
@@ -38,7 +40,16 @@ namespace Hearthstone_Deck_Tracker
         private string _localizedName;
         private string _name;
 
-        public int Count;
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                _count = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string Id;
 
         [XmlIgnore]
@@ -124,10 +135,33 @@ namespace Hearthstone_Deck_Tracker
         }
 
         [XmlIgnore]
-        public int InHandCount;
+        public int InHandCount
+        {
+            get { return _inHandCount; }
+            set
+            {
+                _inHandCount = value;
+                OnPropertyChanged();
+            }
+        }
 
-        [XmlIgnore] 
-        public bool IsStolen { get; set; }
+        [XmlIgnore]
+        public bool IsClassCard { get { return GetPlayerClass != "Neutral"; } }
+
+        [XmlIgnore]
+        public bool IsStolen
+        {
+            get { return _isStolen; }
+            set
+            {
+                _isStolen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isStolen;
+        private int _inHandCount;
+        private int _count;
 
         public int Height
         {
@@ -158,14 +192,14 @@ namespace Hearthstone_Deck_Tracker
             get
             {
                 return
-                    new SolidColorBrush((InHandCount > 0 && Hearthstone.HighlightCardsInHand || IsStolen)
+                    new SolidColorBrush((InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
                                             ? Colors.GreenYellow
                                             : (Count != 0) ? Colors.White : Colors.Gray);
             }
         }
 
        
-        public SolidColorBrush ColorEnemy
+        public SolidColorBrush ColorOpponent
         {
             get { return new SolidColorBrush(Colors.White); }
         }
@@ -255,11 +289,11 @@ namespace Hearthstone_Deck_Tracker
             return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race, Durability);
         }
 
-        private void Load()
+        public void Load()
         {
             Debug.Assert(Id != null);
 
-            var stats = Hearthstone.GetCardFromId(Id);
+            var stats = Game.GetCardFromId(Id);
             PlayerClass = stats.PlayerClass;
             Rarity = stats.Rarity;
             Type = stats.Type;
@@ -272,6 +306,16 @@ namespace Hearthstone_Deck_Tracker
             Health = stats.Health;
             Race = stats.Race;
             Durability = stats.Durability;
+            OnPropertyChanged();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

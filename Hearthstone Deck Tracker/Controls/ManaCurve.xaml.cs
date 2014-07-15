@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -39,6 +40,7 @@ namespace Hearthstone_Deck_Tracker
             for(int i = 0; i < 8; i++)
             {
                 _manaCostBars[i].SetValues(0, 0, 0, 0);
+                _manaCostBars[i].SetTooltipValues(0, 0, 0);
             }
         }
 
@@ -99,11 +101,13 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (max == 0)
                 {
-                    _manaCostBars[i].SetValues(0, 0, 0, 0);
+                    _manaCostBars[i].SetValues(0, 0, 0, 0); 
+                    _manaCostBars[i].SetTooltipValues(0, 0, 0);
                 }
                 else
                 {
                     _manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max, counts[i]);
+                    _manaCostBars[i].SetTooltipValues(weapons[i], spells[i], minions[i]);
                 }
             }
         }

@@ -37,6 +37,9 @@ namespace Hearthstone_Deck_Tracker
         [DllImport("user32.dll")]
         public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
 
+        [DllImport("user32.dll")]
+        static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
+
         public static void SetWindowExTransparent(IntPtr hwnd)
         {
             int extendedStyle = GetWindowLong(hwnd, GwlExstyle);
@@ -112,6 +115,18 @@ namespace Hearthstone_Deck_Tracker
             }
             
             return new Rectangle(ptUL.X, ptUL.Y, ptLR.X - ptUL.X, ptLR.Y - ptUL.Y);
+        }
+
+        public static void BringHsToForeground()
+        {
+            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+            SetForegroundWindow(hsHandle);
+        }
+
+        public static void FlashHs()
+        {
+            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+            FlashWindow(hsHandle, false);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -45,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly Config _config;
         private readonly Decks _deckList;
-        private readonly Hearthstone _hearthstone;
+        private readonly Game _game;
         private readonly bool _initialized;
 
         private readonly string _logConfigPath =
@@ -56,13 +59,14 @@ namespace Hearthstone_Deck_Tracker
         private readonly string _configPath;
 
         private readonly HsLogReader _logReader;
-        private readonly System.Windows.Forms.NotifyIcon _notifyIcon;
+        private readonly NotifyIcon _notifyIcon;
         private readonly OpponentWindow _opponentWindow;
         private readonly OverlayWindow _overlay;
         private readonly PlayerWindow _playerWindow;
         private readonly TimerWindow _timerWindow;
         private readonly XmlManager<Decks> _xmlManager;
         private readonly XmlManager<Config> _xmlManagerConfig;
+        private readonly XmlManager<Deck> _xmlManagerDeck; 
         private readonly DeckImporter _deckImporter;
         private readonly DeckExporter _deckExporter;
         private bool _editingDeck;
@@ -250,16 +254,12 @@ namespace Hearthstone_Deck_Tracker
                     }
                 }
             }
-            else
-            {
-                BtnExport.IsEnabled = false;
-            }
             #endregion
 
             string languageTag = _config.SelectedLanguage;
             //hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
-            _hearthstone = Helper.LanguageDict.ContainsValue(languageTag) ? new Hearthstone(languageTag) : new Hearthstone("enUS");
-            _hearthstone.Reset();
+            _game = Helper.LanguageDict.ContainsValue(languageTag) ? new Game(languageTag) : new Game("enUS");
+            _game.Reset();
 
             #region playerdecks
             _decksPath = _config.HomeDir + "PlayerDecks.xml";
@@ -336,19 +336,21 @@ namespace Hearthstone_Deck_Tracker
             _notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
             _notifyIcon.Visible = false;
 
+            _xmlManagerDeck = new XmlManager<Deck>();
+            _xmlManagerDeck.Type = typeof(Deck);
 
             _newDeck = new Deck();
             ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
 
             //create overlay
-            _overlay = new OverlayWindow(_config, _hearthstone) { Topmost = true };
+            _overlay = new OverlayWindow(_config, _game) { Topmost = true };
             if (_foundHsDirectory)
             {
                 _overlay.Show();
             }
-            _playerWindow = new PlayerWindow(_config, _hearthstone.IsUsingPremade ? _hearthstone.PlayerDeck : _hearthstone.PlayerDrawn);
-            _opponentWindow = new OpponentWindow(_config, _hearthstone.EnemyCards);
+            _playerWindow = new PlayerWindow(_config, _game.IsUsingPremade ? _game.PlayerDeck : _game.PlayerDrawn);
+            _opponentWindow = new OpponentWindow(_config, _game.OpponentCards);
             _timerWindow = new TimerWindow(_config);
 
             if (_config.WindowsOnStartup)
@@ -382,18 +384,35 @@ namespace Hearthstone_Deck_Tracker
 
             ComboboxKeyPressGameStart.ItemsSource = EventKeys.Split(',');
             ComboboxKeyPressGameEnd.ItemsSource = EventKeys.Split(',');
-            
 
             LoadConfig();
 
-            _deckImporter = new DeckImporter(_hearthstone);
+            _deckImporter = new DeckImporter(_game);
             _deckExporter = new DeckExporter(_config);
 
             //this has to happen before reader starts
             var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == _config.LastDeck);
             DeckPickerList.SelectDeck(lastDeck);
-            
 
+            //deck options flyout button events
+            DeckOptionsFlyout.BtnDeleteDeck.Click += DeckOptionsFlyoutBtnDeleteDeck_Click;
+            DeckOptionsFlyout.BtnExportHs.Click += DeckOptionsFlyoutBtnExportHs_Click;
+            DeckOptionsFlyout.BtnNotes.Click += DeckOptionsFlyoutBtnNotes_Click;
+            DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
+            DeckOptionsFlyout.BtnCloneDeck.Click += DeckOptionsFlyoutCloneDeck_Click;
+            DeckOptionsFlyout.BtnTags.Click += DeckOptionsFlyoutBtnTags_Click;
+            DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
+            DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
+
+            DeckOptionsFlyout.DeckOptionsButtonClicked += CloseDeckOptionsFlyout;
+
+            //deck import flyout button events
+            DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
+            DeckImportFlyout.BtnArenavalue.Click += DeckImportFlyoutBtnArenavalue_Click;
+            DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
+            DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
+
+            DeckImportFlyout.DeckOptionsButtonClicked += CloseDeckImportFlyout;
 
             //log reader
             _logReader = new HsLogReader(_config.HearthstoneDirectory, _config.UpdateDelay);
@@ -407,10 +426,17 @@ namespace Hearthstone_Deck_Tracker
             _turnTimer.TimerTick += TurnTimerOnTimerTick;
 
             TagControlFilter.HideStuffToCreateNewTag();
-            TagControlSet.NewTag += TagControlSetOnNewTag;
-            TagControlSet.SelectedTagsChanged += TagControlSetOnSelectedTagsChanged;
-            TagControlSet.DeleteTag += TagControlSetOnDeleteTag;
+            TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
+            TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
+
+            TagControlNewDeck.NewTag += TagControlOnNewTag;
+            TagControlNewDeck.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+            TagControlNewDeck.DeleteTag += TagControlOnDeleteTag;
+            TagControlMyDecks.NewTag += TagControlOnNewTag;
+            TagControlMyDecks.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+            TagControlMyDecks.DeleteTag += TagControlOnDeleteTag;
             TagControlFilter.SelectedTagsChanged += TagControlFilterOnSelectedTagsChanged;
+            TagControlFilter.OperationChanged += TagControlFilterOnOperationChanged;
 
 
             UpdateDbListView();
@@ -432,8 +458,9 @@ namespace Hearthstone_Deck_Tracker
             {
                 _logReader.Start();
             }
-        }
 
+            Helper.SortCardCollection(ListViewDeck.Items, _config.CardSortingClassFirst);
+        }
 
         #region LogReader Events
 
@@ -450,16 +477,16 @@ namespace Hearthstone_Deck_Tracker
             switch (args.Action)
             {
                 case OpponentHandMovement.Draw:
-                    _hearthstone.OpponentDraw(args);
+                    _game.OpponentDraw(args);
                     break;
                 case OpponentHandMovement.Play:
-                    _hearthstone.OpponentPlay(args);
+                    _game.OpponentPlay(args);
                     break;
                 case OpponentHandMovement.Mulligan:
                     HandleOpponentMulligan(args.From);
                     break;
                 case OpponentHandMovement.FromPlayerDeck:
-                    _hearthstone.OpponentGet(args.Turn);
+                    _game.OpponentGet(args.Turn);
                     break;
             }
         }
@@ -471,6 +498,15 @@ namespace Hearthstone_Deck_Tracker
             //maybe add timer to player/opponent windows
             _turnTimer.SetCurrentPlayer(args.Turn);
             _turnTimer.Restart();
+            if (args.Turn == Turn.Player && !_game.IsInMenu)
+            {
+                if (_config.FlashHs)
+                    User32.FlashHs();
+
+                if (_config.BringHsToForeground)
+                    User32.BringHsToForeground();
+            }
+            
         }
 
         private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
@@ -486,12 +522,12 @@ namespace Hearthstone_Deck_Tracker
                     _overlay.Update(false);
 
                 if (_playerWindow.IsVisible)
-                    _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                               30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
+                    _playerWindow.SetCardCount(_game.PlayerHandCount,
+                                               30 - _game.PlayerDrawn.Sum(card => card.Count));
 
                 if (_opponentWindow.IsVisible)
-                    _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                         _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
+                    _opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
+                                                         _game.OpponentDeckCount, _game.OpponentHasCoin);
 
 
                 if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
@@ -507,13 +543,13 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!string.IsNullOrEmpty(args.PlayerHero))
             {
-                _hearthstone.PlayingAs = args.PlayerHero;
+                _game.PlayingAs = args.PlayerHero;
                 Logger.WriteLine("Playing as " + args.PlayerHero, "Hearthstone");
 
             }
             if (!string.IsNullOrEmpty(args.OpponentHero))
             {
-                _hearthstone.PlayingAgainst = args.OpponentHero;
+                _game.PlayingAgainst = args.OpponentHero;
                 Logger.WriteLine("Playing against " + args.OpponentHero, "Hearthstone");
             }
 
@@ -584,9 +620,14 @@ namespace Hearthstone_Deck_Tracker
         private void HandleGameStart()
         {
             //avoid new game being started when jaraxxus is played
-            if (!_hearthstone.IsInMenu) return;
+            if (!_game.IsInMenu) return;
 
             Logger.WriteLine("Game start");
+
+            if (_config.FlashHs)
+                User32.FlashHs();
+            if (_config.BringHsToForeground)
+                User32.BringHsToForeground();
 
             if (_config.KeyPressOnGameStart != "None" && EventKeys.Split(',').Contains(_config.KeyPressOnGameStart))
             {
@@ -596,20 +637,20 @@ namespace Hearthstone_Deck_Tracker
 
             var selectedDeck = DeckPickerList.SelectedDeck;
             if (selectedDeck != null)
-                _hearthstone.SetPremadeDeck((Deck)selectedDeck.Clone());
+                _game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
-            _hearthstone.IsInMenu = false;
-            _hearthstone.Reset();
+            _game.IsInMenu = false;
+            _game.Reset();
 
             //select deck based on hero
-            if (!string.IsNullOrEmpty(_hearthstone.PlayingAs))
+            if (!string.IsNullOrEmpty(_game.PlayingAs))
             {
-                if (!_hearthstone.IsUsingPremade || !_config.AutoDeckDetection) return;
+                if (!_game.IsUsingPremade || !_config.AutoDeckDetection) return;
                 
-                if (selectedDeck == null || selectedDeck.Class != _hearthstone.PlayingAs)
+                if (selectedDeck == null || selectedDeck.Class != _game.PlayingAs)
                 {
 
-                    var classDecks = _deckList.DecksList.Where(d => d.Class == _hearthstone.PlayingAs).ToList();
+                    var classDecks = _deckList.DecksList.Where(d => d.Class == _game.PlayingAs).ToList();
                     if (classDecks.Count == 0)
                     {
                         Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
@@ -620,9 +661,9 @@ namespace Hearthstone_Deck_Tracker
                         DeckPickerList.SelectDeck(classDecks[0]);
                         Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
                     }
-                    else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _hearthstone.PlayingAs))
+                    else if (_deckList.LastDeckClass.Any(ldc => ldc.Class == _game.PlayingAs))
                     {
-                        var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _hearthstone.PlayingAs).Name;
+                        var lastDeckName = _deckList.LastDeckClass.First(ldc => ldc.Class == _game.PlayingAs).Name;
                         Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
 
                         var deck = _deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
@@ -648,33 +689,37 @@ namespace Hearthstone_Deck_Tracker
             }
             _turnTimer.Stop();
             _overlay.HideTimers();
+            if (_config.SavePlayedGames && !_game.IsInMenu)
+            {
+                SavePlayedCards();
+            }
             if (!_config.KeepDecksVisible)
             {
                 var deck = DeckPickerList.SelectedDeck;
                 if (deck != null)
-                    _hearthstone.SetPremadeDeck((Deck)deck.Clone());
+                    _game.SetPremadeDeck((Deck)deck.Clone());
 
-                _hearthstone.Reset();
+                _game.Reset();
             }
-            _hearthstone.IsInMenu = true;
+            _game.IsInMenu = true;
         }
 
         private void HandleOpponentPlayToHand(string cardId, int turn)
         {
-            _hearthstone.OpponentBackToHand(cardId, turn);
+            _game.OpponentBackToHand(cardId, turn);
         }
 
         private void HandlePlayerGet(string cardId)
         {
-            _hearthstone.PlayerGet(cardId);
+            _game.PlayerGet(cardId);
         }
 
         private void HandlePlayerDraw(string cardId)
         {
-            var correctDeck = _hearthstone.PlayerDraw(cardId);
+            var correctDeck = _game.PlayerDraw(cardId);
 
             if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage &&
-                _hearthstone.IsUsingPremade)
+                _game.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Logger.WriteLine("Found incorrect deck");
@@ -684,25 +729,29 @@ namespace Hearthstone_Deck_Tracker
         private void HandlePlayerMulligan(string cardId)
         {
             _turnTimer.MulliganDone(Turn.Player);
-            _hearthstone.Mulligan(cardId);
+            _game.Mulligan(cardId);
+
+            //without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
+            _overlay.ListViewPlayer.Items.Refresh();
+            _playerWindow.ListViewPlayer.Items.Refresh();
         }
 
         private void HandlePlayerHandDiscard(string cardId)
         {
-            _hearthstone.PlayerHandDiscard(cardId);
+            _game.PlayerHandDiscard(cardId);
         }
 
         private void HandlePlayerPlay(string cardId)
         {
-            _hearthstone.PlayerPlayed(cardId);
+            _game.PlayerPlayed(cardId);
         }
 
         private void HandlePlayerDeckDiscard(string cardId)
         {
-            var correctDeck = _hearthstone.PlayerDeckDiscard(cardId);
+            var correctDeck = _game.PlayerDeckDiscard(cardId);
             
             //don't think this will ever detect an incorrect deck but who knows...
-            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _hearthstone.IsUsingPremade)
+            if (!correctDeck && _config.AutoDeckDetection && !_showIncorrectDeckMessage && !_showingIncorrectDeckMessage && _game.IsUsingPremade)
             {
                 _showIncorrectDeckMessage = true;
                 Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -711,18 +760,18 @@ namespace Hearthstone_Deck_Tracker
 
         private void HandleOpponentSecretTrigger(string cardId)
         {
-            _hearthstone.OpponentSecretTriggered(cardId);
+            _game.OpponentSecretTriggered(cardId);
         }
 
         private void HandleOpponentMulligan(int pos)
         {
             _turnTimer.MulliganDone(Turn.Opponent);
-            _hearthstone.OpponentMulligan(pos);
+            _game.OpponentMulligan(pos);
         }
         
         private void HandleOpponentDeckDiscard(string cardId)
         {
-            _hearthstone.OpponentDeckDiscard(cardId);
+            _game.OpponentDeckDiscard(cardId);
         }
 
         #endregion
@@ -811,8 +860,8 @@ namespace Hearthstone_Deck_Tracker
                 ShowNewUpdateMessage();
             }
             if (_updatedLogConfig)
-            {
-                ShowUpdatedLogConfigMessage();
+            {            
+                ShowMessage("Restart Hearthstone", "This is either your first time starting the tracker or the log.config file has been updated. Please restart heartstone once, for the tracker to work properly.");
             }
 
             //preload the manacurve in new deck
@@ -840,7 +889,7 @@ namespace Hearthstone_Deck_Tracker
 
             var decks =
                 _deckList.DecksList.Where(
-                    d => d.Class == _hearthstone.PlayingAs && _hearthstone.PlayerDrawn.All(c => d.Cards.Contains(c)))
+                    d => d.Class == _game.PlayingAs && _game.PlayerDrawn.All(c => d.Cards.Contains(c)))
                          .ToList();
             if (decks.Contains(DeckPickerList.SelectedDeck))
                 decks.Remove(DeckPickerList.SelectedDeck);
@@ -898,12 +947,12 @@ namespace Hearthstone_Deck_Tracker
             CheckboxSaveAppData.IsChecked = _config.SaveInAppData;
 
             Height = _config.WindowHeight;
-            Hearthstone.HighlightCardsInHand = _config.HighlightCardsInHand;
+            Game.HighlightCardsInHand = _config.HighlightCardsInHand;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
             CheckboxHideOpponentDrawChances.IsChecked = _config.HideOpponentDrawChances;
-            CheckboxHideEnemyCards.IsChecked = _config.HideEnemyCards;
-            CheckboxHideEnemyCardCounter.IsChecked = _config.HideEnemyCardCount;
+            CheckboxHideOpponentCards.IsChecked = _config.HideOpponentCards;
+            CheckboxHideOpponentCardCounter.IsChecked = _config.HideOpponentCardCount;
             CheckboxHideOpponentCardAge.IsChecked = _config.HideOpponentCardAge;
             CheckboxHidePlayerCardCounter.IsChecked = _config.HidePlayerCardCount;
             CheckboxHidePlayerCards.IsChecked = _config.HidePlayerCards;
@@ -927,6 +976,8 @@ namespace Hearthstone_Deck_Tracker
             CheckboxAutoSelectDeck.IsChecked = _config.AutoSelectDetectedDeck;
             CheckboxExportName.IsChecked = _config.ExportSetDeckName;
             CheckboxPrioGolden.IsChecked = _config.PrioritizeGolden;
+            CheckboxBringHsToForegorund.IsChecked = _config.BringHsToForeground;
+            CheckboxFlashHs.IsChecked = _config.BringHsToForeground;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -958,7 +1009,10 @@ namespace Hearthstone_Deck_Tracker
 
             var tags = new List<string>(_deckList.AllTags);
             tags.Remove("All");
-            TagControlSet.LoadTags(tags);
+            TagControlNewDeck.LoadTags(tags);
+            TagControlMyDecks.LoadTags(tags);
+            DeckPickerList.SetTagOperation(_config.TagOperation);
+            TagControlFilter.OperationSwitch.IsChecked = _config.TagOperation == Operation.And;
 
             ComboboxWindowBackground.SelectedItem = _config.SelectedWindowBackground;
             TextboxCustomBackground.IsEnabled = _config.SelectedWindowBackground == "Custom";
@@ -1000,14 +1054,15 @@ namespace Hearthstone_Deck_Tracker
             CheckboxWindowCardToolTips.IsChecked = _config.WindowCardToolTips;
             CheckboxOverlayCardToolTips.IsChecked = _config.OverlayCardToolTips;
 
-        }
+            CheckboxLogGames.IsChecked = _config.SavePlayedGames;
+            TextboxLogGamesPath.IsEnabled = _config.SavePlayedGames;
+            BtnLogGamesSelectDir.IsEnabled = _config.SavePlayedGames;
+            TextboxLogGamesPath.Text = _config.SavePlayedGamesPath;
 
-        private void SortCardCollection(ItemCollection collection)
-        {
-            var view1 = (CollectionView) CollectionViewSource.GetDefaultView(collection);
-            view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-            view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-            view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            if (_config.SavePlayedGames && TextboxLogGamesPath.Text.Length == 0)
+                TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
+
+            CheckboxDeckSortingClassFirst.IsChecked = _config.CardSortingClassFirst;
         }
 
         private async void UpdateOverlayAsync()
@@ -1072,9 +1127,10 @@ namespace Hearthstone_Deck_Tracker
 
         }
 
-        private async void ShowUpdatedLogConfigMessage()
+        private async void ShowMessage(string title, string message)
         {
-            await this.ShowMessageAsync("Restart Hearthstone", "This is either your first time starting the tracker or the log.config file has been updated. Please restart heartstone once, for the tracker to work properly.");
+            await this.ShowMessageAsync(title, message);
+
         }
 
         private async void ShowHsNotInstalledMessage()
@@ -1118,6 +1174,43 @@ namespace Hearthstone_Deck_Tracker
         {
             _xmlManager.Save(_decksPath, _deckList);
         }
+
+        private void SavePlayedCards()
+        {
+            try
+            {
+                if (_game.PlayerDrawn != null && _game.PlayerDrawn.Count > 0)
+                {
+                    var serializer = new XmlSerializer(typeof(Card[]));
+
+                    if (string.IsNullOrEmpty(_config.SavePlayedGamesPath))
+                        return;
+
+                    Directory.CreateDirectory(_config.SavePlayedGamesPath);
+                    var dateString = string.Format("{0}{1}{2}{3}{4}{5}", DateTime.Now.Day, DateTime.Now.Month,
+                                                   DateTime.Now.Year, DateTime.Now.Hour, DateTime.Now.Minute,
+                                                   DateTime.Now.Second);
+                    var path = _config.SavePlayedGamesPath + "\\" + dateString;
+                    Directory.CreateDirectory(path);
+                    Logger.WriteLine("Saving games to: " + path);
+                    using (var sw = new StreamWriter(path + "\\Player.xml"))
+                    {
+                        serializer.Serialize(sw, _game.PlayerDrawn.ToArray());
+                        Logger.WriteLine("Success saving Player.xml");
+                    }
+                    using (var sw = new StreamWriter(path + "\\Opponent.xml"))
+                    {
+                        if (_game.OpponentCards != null)
+                            serializer.Serialize(sw, _game.OpponentCards.ToArray());
+                        Logger.WriteLine("Success saving Opponent.xml");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.WriteLine("Error saving game\n" + e.StackTrace);
+            }
+        }
         #endregion
 
         #region MY DECKS - GUI
@@ -1125,9 +1218,9 @@ namespace Hearthstone_Deck_Tracker
         private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
         {
             Logger.WriteLine("set player item source as drawn");
-            _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
-            _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDrawn;
-            _hearthstone.IsUsingPremade = false;
+            _overlay.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
+            _playerWindow.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
+            _game.IsUsingPremade = false;
 
             if(DeckPickerList.SelectedDeck != null)
                 DeckPickerList.SelectedDeck.IsSelectedInGui = false;
@@ -1144,11 +1237,9 @@ namespace Hearthstone_Deck_Tracker
 
         private void EnableDeckButtons(bool enable)
         {
-            BtnScreenshot.IsEnabled = enable;
-            BtnNotes.IsEnabled = enable;
-            BtnExport.IsEnabled = enable;
-            BtnDeleteDeck.IsEnabled = enable;
+            DeckOptionsFlyout.EnableButtons(enable);
             BtnEditDeck.IsEnabled = enable;
+            BtnDeckOptions.IsEnabled = enable;
         }
 
         private async void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -1183,12 +1274,12 @@ namespace Hearthstone_Deck_Tracker
             UpdateDbListView();
 
 
-            TagControlSet.SetSelectedTags(_newDeck.Tags);
+            TagControlNewDeck.SetSelectedTags(_newDeck.Tags);
 
             TabControlTracker.SelectedIndex = 1;
         }
 
-        private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
+        private async void DeckOptionsFlyoutBtnDeleteDeck_Click(object sender, RoutedEventArgs e)
         {
             var deck = DeckPickerList.SelectedDeck;
             if (deck != null)
@@ -1204,7 +1295,7 @@ namespace Hearthstone_Deck_Tracker
                         _deckList.DecksList.Remove(deck);
                         WriteDecks();
                         DeckPickerList.RemoveDeck(deck);
-                        ListViewDeck.Items.Clear();
+                        ListViewDeck.ItemsSource = null;
                     }
                     catch (Exception)
                     {
@@ -1214,7 +1305,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
         
-        private async void BtnExport_Click(object sender, RoutedEventArgs e)
+        private async void DeckOptionsFlyoutBtnExportHs_Click(object sender, RoutedEventArgs e)
         {
             var deck = DeckPickerList.SelectedDeck;
             if (deck == null) return;
@@ -1237,20 +1328,22 @@ namespace Hearthstone_Deck_Tracker
 
         private void BtnSetTag_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutSetTags.IsOpen = !FlyoutSetTags.IsOpen;
+            FlyoutNewDeckSetTags.IsOpen = !FlyoutNewDeckSetTags.IsOpen;
         }
 
-        private void TagControlSetOnNewTag(TagControl sender, string tag)
+        private void TagControlOnNewTag(TagControl sender, string tag)
         {
             if (!_deckList.AllTags.Contains(tag))
             {
                 _deckList.AllTags.Add(tag);
                 WriteDecks();
                 TagControlFilter.LoadTags(_deckList.AllTags);
+                TagControlMyDecks.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
+                TagControlNewDeck.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
             }
         }
 
-        private void TagControlSetOnDeleteTag(TagControl sender, string tag)
+        private void TagControlOnDeleteTag(TagControl sender, string tag)
         {
             if (_deckList.AllTags.Contains(tag))
             {
@@ -1267,24 +1360,33 @@ namespace Hearthstone_Deck_Tracker
 
                 WriteDecks();
                 TagControlFilter.LoadTags(_deckList.AllTags);
+                TagControlMyDecks.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
+                TagControlNewDeck.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
                 DeckPickerList.UpdateList();
             }
         }
 
-        private void TagControlSetOnSelectedTagsChanged(TagControl sender, List<string> tags)
+        private void TagControlOnSelectedTagsChanged(TagControl sender, List<string> tags)
         {
             if (_newDeck == null) return;
-            _newDeck.Tags = new List<string>(tags);
-            BtnSaveDeck.Content = "Save*";
+            if(sender.Name == "TagControlNewDeck")
+                BtnSaveDeck.Content = "Save*";
+            else if (sender.Name == "TagControlMyDecks")
+            {
+                var deck = DeckPickerList.SelectedDeck;
+                deck.Tags = tags;
+                DeckPickerList.UpdateList();
+                DeckPickerList.SelectDeck(deck);
+            }
         }
 
-        private void BtnNotes_Click(object sender, RoutedEventArgs e)
+        private void DeckOptionsFlyoutBtnNotes_Click(object sender, RoutedEventArgs e)
         {
             if (DeckPickerList.SelectedDeck == null) return;
             FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
         }
 
-        private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
+        private async void DeckOptionsFlyoutBtnScreenhot_Click(object sender, RoutedEventArgs e)
         {
             if (DeckPickerList.SelectedDeck == null) return;
             PlayerWindow screenShotWindow = new PlayerWindow(_config, DeckPickerList.SelectedDeck.Cards, true);
@@ -1307,25 +1409,92 @@ namespace Hearthstone_Deck_Tracker
             }
             else
             {
-                var settings = new MetroDialogSettings();
-                settings.NegativeButtonText = "Open folder";
-                var result = await this.ShowMessageAsync("", "Saved to " + fileName, MessageDialogStyle.AffirmativeAndNegative, settings);
-                if (result == MessageDialogResult.Negative)
-                {
-                    Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "/Screenshots");
-                }
+                await ShowSavedFileMessage(fileName, "Screenshots");
             }
         }
+
+        private async Task ShowSavedFileMessage(string fileName, string dir)
+        {
+            var settings = new MetroDialogSettings();
+            settings.NegativeButtonText = "Open folder";
+            var result =
+                await
+                this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
+            if (result == MessageDialogResult.Negative)
+            {
+                Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "\\" + dir);
+            }
+        }
+        
+        private void DeckOptionsFlyoutBtnClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            var deck = DeckPickerList.SelectedDeck;
+            if (deck == null) return;
+            Clipboard.SetText(Helper.DeckToIdString(deck));
+            ShowMessage("", "copied to clipboard");
+        }
+
+        private async void DeckOptionsFlyoutBtnSaveToFile_Click(object sender, RoutedEventArgs e)
+        {
+            var deck = DeckPickerList.SelectedDeck;
+            if (deck == null) return;
+            var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
+            _xmlManagerDeck.Save(path, deck);
+            await ShowSavedFileMessage(path, "SavedDecks");
+        }
+
+        private void DeckOptionsFlyoutBtnTags_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutMyDecksSetTags.IsOpen = true;
+            if (DeckPickerList.SelectedDeck != null)
+                TagControlMyDecks.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
+        }
+
+        private async void DeckOptionsFlyoutCloneDeck_Click(object sender, RoutedEventArgs e)
+        {
+            var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
+
+            while (_deckList.DecksList.Any(d => d.Name == clone.Name))
+            {
+                var settings = new MetroDialogSettings();
+                settings.AffirmativeButtonText = "Set";
+                settings.DefaultText = clone.Name;
+                string name = await this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+
+                if (String.IsNullOrEmpty(name))
+                    return;
+
+                clone.Name = name;
+            }
+
+            _deckList.DecksList.Add(clone);
+            DeckPickerList.AddAndSelectDeck(clone);
+
+            WriteDecks();
+        }
+
+        private void TagControlFilterOnOperationChanged(TagControl sender, Operation operation)
+        {
+            _config.TagOperation = operation;
+            DeckPickerList.SetTagOperation(operation);
+            DeckPickerList.UpdateList();
+        }
+
+        private void BtnDeckOptions_Click(object sender, RoutedEventArgs e)
+        {
+            FlyoutDeckOptions.IsOpen = true;
+        }
+
         #endregion
 
         #region MY DECKS - METHODS
 
         private void UseDeck(Deck selected)
         {
-            _hearthstone.Reset();
+            _game.Reset();
 
             if (selected != null)
-                _hearthstone.SetPremadeDeck((Deck)selected.Clone());
+                _game.SetPremadeDeck((Deck)selected.Clone());
 
             _logReader.Reset(true);
 
@@ -1335,7 +1504,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void UpdateDeckList(Deck selected)
         {
-            ListViewDeck.Items.Clear();
+            ListViewDeck.ItemsSource = null;
             if (selected == null)
             {
 
@@ -1343,12 +1512,9 @@ namespace Hearthstone_Deck_Tracker
                 WriteConfig();
                 return;
             }
-            foreach (var card in selected.Cards)
-            {
-                ListViewDeck.Items.Add(card);
-            }
+            ListViewDeck.ItemsSource = selected.Cards;
 
-            SortCardCollection(ListViewDeck.Items);
+            Helper.SortCardCollection(ListViewDeck.Items, _config.CardSortingClassFirst);
             _config.LastDeck = selected.Name;
             WriteConfig();
         }
@@ -1360,16 +1526,18 @@ namespace Hearthstone_Deck_Tracker
             {
                 //set up notes
                 DeckNotesEditor.SetDeck(deck);
-                FlyoutNotes.Header = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
+                var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
+                FlyoutNotes.Header = flyoutHeader;
+                FlyoutDeckOptions.Header = flyoutHeader;
 
                 //change player deck itemsource
-                if (_overlay.ListViewPlayer.ItemsSource != _hearthstone.PlayerDeck)
+                if (_overlay.ListViewPlayer.ItemsSource != _game.PlayerDeck)
                 {
-                    _overlay.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
-                    _playerWindow.ListViewPlayer.ItemsSource = _hearthstone.PlayerDeck;
+                    _overlay.ListViewPlayer.ItemsSource = _game.PlayerDeck;
+                    _playerWindow.ListViewPlayer.ItemsSource = _game.PlayerDeck;
                     Logger.WriteLine("Set player itemsource as playerdeck");
                 }
-                _hearthstone.IsUsingPremade = true;
+                _game.IsUsingPremade = true;
                 UpdateDeckList(deck);
                 UseDeck(deck);
                 Logger.WriteLine("Switched to deck: " + deck.Name);
@@ -1391,11 +1559,17 @@ namespace Hearthstone_Deck_Tracker
                 WriteDecks();
                 EnableDeckButtons(true);
                 ManaCurveMyDecks.SetDeck(deck);
+                TagControlMyDecks.SetSelectedTags(deck.Tags);
             }
             else
             {
                 EnableDeckButtons(false);
             }
+        }
+
+        private void CloseDeckOptionsFlyout(DeckOptions sender)
+        {
+            FlyoutDeckOptions.IsOpen = false;
         }
 
         #endregion
@@ -1438,7 +1612,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 SaveDeck(false);
             }
-            FlyoutSetTags.IsOpen = false;
+            FlyoutNewDeckSetTags.IsOpen = false;
         }
 
         private void ComboBoxFilterMana_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1465,63 +1639,9 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private async void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        private void BtnImport_OnClick(object sender, RoutedEventArgs e)
         {
-            var settings = new MetroDialogSettings();
-
-            var clipboard = Clipboard.GetText();
-            var validUrls = new[]
-                {
-                    "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-                    "hearthstonetopdeck"
-                };
-            if (validUrls.Any(clipboard.Contains))
-            {
-                settings.DefaultText = clipboard;
-            }
-
-            //import dialog
-            var url = await this.ShowInputAsync("Import deck", "Currently supported:\nhearthstats, hearthpwn, hearthhead, hearthstoneplayers, hearthstonetopdeck and tempostorm\n\nUrl:", settings);
-            if (string.IsNullOrEmpty(url))
-                return;
-
-            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-
-            var deck = await _deckImporter.Import(url);
-
-            await controller.CloseAsync();
-
-            if (deck != null)
-            {
-                var reimport = _editingDeck && _newDeck != null && _newDeck.Url == url;
-
-                deck.Url = url;
-
-                if(reimport) //keep old notes
-                    deck.Note = _newDeck.Note;
-
-                if(!deck.Note.Contains(url))
-                    deck.Note = url + "\n" + deck.Note;
-
-                ClearNewDeckSection();
-                _newContainsDeck = true;
-                _editingDeck = reimport;
-
-                _newDeck = (Deck)deck.Clone();
-                ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
-                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
-                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
-
-                TextBoxDeckName.Text = _newDeck.Name;
-                UpdateNewDeckHeader(true);
-                UpdateDbListView();
-            }
-            else
-            {
-                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
-            }
-
+            FlyoutDeckImport.IsOpen = true;
 
         }
 
@@ -1591,50 +1711,208 @@ namespace Hearthstone_Deck_Tracker
             var info = new FileInfo(file);
 
             if (info.Extension != ".txt") return;
-            using (var sr = new StreamReader(file))
-            {
-                var lines = sr.ReadToEnd().Split('\n');
-                var deck = new Deck();
-                foreach (var line in lines)
-                {
-                    var card = _hearthstone.GetCardFromName(line.Trim());
-                    if (card.Name == "") continue;
-
-                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-                    {
-                        deck.Class = card.PlayerClass;
-                    }
-
-                    if (deck.Cards.Contains(card))
-                    {
-                        var deckCard = deck.Cards.First(c => c.Equals(card));
-                        deck.Cards.Remove(deckCard);
-                        deckCard.Count++;
-                        deck.Cards.Add(deckCard);
-                    }
-                    else
-                    {
-                        deck.Cards.Add(card);
-                    }
-                }
-                ClearNewDeckSection();
-                _newContainsDeck = true;
-
-                _newDeck = (Deck)deck.Clone();
-                ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
-                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
-                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
-
-                TextBoxDeckName.Text = _newDeck.Name;
-                UpdateNewDeckHeader(true);
-                UpdateDbListView();
-            }
+            
         }
         
         private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateDbListView();
+        }
+
+        private void CloseDeckImportFlyout(DeckImport sender)
+        {
+            FlyoutDeckImport.IsOpen = false;
+        }
+
+        private async void DeckImportFlyoutBtnIdString_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings();
+            var clipboard = Clipboard.GetText();
+            if (clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
+            {
+                settings.DefaultText = clipboard;
+            }
+
+            //import dialog
+            var idString = await this.ShowInputAsync("Import deck", "", settings);
+            if (string.IsNullOrEmpty(idString))
+                return;
+            var deck = new Deck();
+            foreach (var entry in idString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var splitEntry = entry.Split(':');
+                if (splitEntry.Length != 2)
+                    continue;
+                var card = Game.GetCardFromId(splitEntry[0]);
+                if (card.Id == "UNKNOWN")
+                    continue;
+                var count = 1;
+                int.TryParse(splitEntry[1], out count);
+                card.Count = count;
+
+                if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+                    deck.Class = card.GetPlayerClass;
+
+                deck.Cards.Add(card);
+            }
+            SetNewDeck(deck);
+        }
+
+        private void DeckImportFlyoutBtnFile_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.Title = "Select Deck File";
+            dialog.DefaultExt = "*.xml;*.txt";
+            dialog.Filter = "Deck Files|*.txt;*.xml";
+            var dialogResult = dialog.ShowDialog();
+            if (dialogResult == true)
+            {
+                try
+                {
+                    Deck deck = null;
+
+                    if (dialog.FileName.EndsWith(".txt"))
+                    {
+                        using (var sr = new StreamReader(dialog.FileName))
+                        {
+                            deck = new Deck();
+                            var lines = sr.ReadToEnd().Split('\n');
+                            foreach (var line in lines)
+                            {
+                                var card = _game.GetCardFromName(line.Trim());
+                                if (card.Name == "") continue;
+
+                                if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                                {
+                                    deck.Class = card.PlayerClass;
+                                }
+
+                                if (deck.Cards.Contains(card))
+                                {
+                                    var deckCard = deck.Cards.First(c => c.Equals(card));
+                                    deck.Cards.Remove(deckCard);
+                                    deckCard.Count++;
+                                    deck.Cards.Add(deckCard);
+                                }
+                                else
+                                {
+                                    deck.Cards.Add(card);
+                                }
+                            }
+
+                        }
+                    }
+                    else if (dialog.FileName.EndsWith(".xml"))
+                    {
+                        deck = _xmlManagerDeck.Load(dialog.FileName);
+                        //not all required information is saved in xml
+                        foreach (var card in deck.Cards)
+                        {
+                            card.Load();
+                        }
+                        TagControlNewDeck.SetSelectedTags(deck.Tags);
+
+                    }
+                    SetNewDeck(deck);
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLine("Error getting deck from file: \n" + ex.Message + "\n" + ex.StackTrace);
+                }
+            }
+        }
+
+        private async void DeckImportFlyoutBtnWebClick(object sender, RoutedEventArgs e)
+        {
+            var settings = new MetroDialogSettings();
+            var clipboard = Clipboard.GetText();
+            var validUrls = new[]
+                {
+                    "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
+                    "hearthstonetopdeck"
+                };
+            if (validUrls.Any(clipboard.Contains))
+            {
+                settings.DefaultText = clipboard;
+            }
+
+            //import dialog
+            var url = await this.ShowInputAsync("Import deck", "", settings);
+            if (string.IsNullOrEmpty(url))
+                return;
+
+            var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
+
+            var deck = await _deckImporter.Import(url);
+
+            await controller.CloseAsync();
+
+            if (deck != null)
+            {
+                var reimport = _editingDeck && _newDeck != null && _newDeck.Url == url;
+
+                deck.Url = url;
+
+                if (reimport) //keep old notes
+                    deck.Note = _newDeck.Note;
+
+                if (!deck.Note.Contains(url))
+                    deck.Note = url + "\n" + deck.Note;
+
+                SetNewDeck(deck, reimport);
+            }
+            else
+            {
+                await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+            }
+
+        }
+
+        private void DeckImportFlyoutBtnArenavalue_Click(object sender, RoutedEventArgs e)
+        {
+            Deck deck = null;
+            var clipboardLines = Clipboard.GetText().Split('\n');
+            if (clipboardLines.Length >= 1 && clipboardLines.Length <= 100)
+            {
+                try
+                {
+                    foreach (var line in clipboardLines)
+                    {
+                        var parts = line.Split(new[] { " x " }, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length == 0) continue;
+                        var name = parts[0].Trim();
+                        while (name.Length > 0 && Helper.IsNumeric(name[0]))
+                            name = name.Remove(0, 1);
+
+                        var card = _game.GetCardFromName(name);
+                        if (card.Id == "UNKNOWN")
+                            continue;
+
+                        var count = 1;
+                        if (parts.Length > 1)
+                            int.TryParse(parts[1], out count);
+
+                        card.Count = count;
+
+                        if (deck == null)
+                            deck = new Deck();
+
+                        if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                            deck.Class = card.PlayerClass;
+
+                        deck.Cards.Add(card);
+                    }
+
+                    SetNewDeck(deck);
+                    if(deck == null)
+                        ShowMessage("Error loading deck", "");
+                }
+                catch (Exception ex)
+                {
+                    Logger.WriteLine("Error importing from arenavalue: " + ex.StackTrace);
+                    ShowMessage("Error loading deck", "");
+                }
+            }
         }
 
         #endregion
@@ -1653,7 +1931,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 ListViewDB.Items.Clear();
 
-                foreach (var card in _hearthstone.GetActualCards())
+                foreach (var card in _game.GetActualCards())
                 {
                     if (!card.LocalizedName.ToLower().Contains(TextBoxDBFilter.Text.ToLower()))
                         continue;
@@ -1686,11 +1964,7 @@ namespace Hearthstone_Deck_Tracker
                 if(_newDeck != null)
                     ManaCurveNewDeck.SetDeck(_newDeck);
 
-                var view1 = (CollectionView) CollectionViewSource.GetDefaultView(ListViewDB.Items);
-                view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-                view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-
+                Helper.SortCardCollection(ListViewDB.Items, _config.CardSortingClassFirst);
             }
         }
 
@@ -1751,6 +2025,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _newDeck.Name = deckName;
             _newDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
+            _newDeck.Tags = TagControlNewDeck.GetTags();
             
             var newDeckClone = (Deck) _newDeck.Clone();
             _deckList.DecksList.Add(newDeckClone);
@@ -1758,6 +2033,11 @@ namespace Hearthstone_Deck_Tracker
 
             WriteDecks();
             BtnSaveDeck.Content = "Save";
+
+            if (_editingDeck)
+            {
+                TagControlNewDeck.SetSelectedTags(new List<string>());
+            }
 
             TabControlTracker.SelectedIndex = 0;
             _editingDeck = false;
@@ -1801,7 +2081,7 @@ namespace Hearthstone_Deck_Tracker
             else
                 _newDeck.Cards.Remove(card);
 
-            SortCardCollection(ListViewNewDeck.Items);
+            Helper.SortCardCollection(ListViewNewDeck.Items, _config.CardSortingClassFirst);
             BtnSaveDeck.Content = "Save*";
             UpdateNewDeckHeader(true);
         }
@@ -1820,20 +2100,37 @@ namespace Hearthstone_Deck_Tracker
             if (_newDeck.Cards.Contains(card))
             {
                 var cardInDeck = _newDeck.Cards.First(c => c.Name == card.Name);
-                _newDeck.Cards.Remove(cardInDeck);
                 cardInDeck.Count++;
-                _newDeck.Cards.Add(cardInDeck);
             }
             else
             {
                 _newDeck.Cards.Add(card);
             }
 
-            SortCardCollection(ListViewNewDeck.Items);
+            Helper.SortCardCollection(ListViewNewDeck.Items, _config.CardSortingClassFirst);
             BtnSaveDeck.Content = "Save*";
             UpdateNewDeckHeader(true);
         }
 
+        private void SetNewDeck(Deck deck, bool editing = false)
+        {
+            if (deck != null)
+            {
+                ClearNewDeckSection();
+                _newContainsDeck = true;
+                _editingDeck = editing;
+
+                _newDeck = (Deck)deck.Clone();
+                ListViewNewDeck.ItemsSource = _newDeck.Cards;
+
+                if (ComboBoxSelectClass.Items.Contains(_newDeck.Class))
+                    ComboBoxSelectClass.SelectedValue = _newDeck.Class;
+
+                TextBoxDeckName.Text = _newDeck.Name;
+                UpdateNewDeckHeader(true);
+                UpdateDbListView();
+            }
+        }
 
         private async void ShowClearNewDeckMessage()
         {
@@ -1855,7 +2152,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HighlightCardsInHand = true;
-            Hearthstone.HighlightCardsInHand = true;
+            Game.HighlightCardsInHand = true;
             SaveConfig(true);
         }
 
@@ -1863,7 +2160,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (!_initialized) return;
             _config.HighlightCardsInHand = false;
-            Hearthstone.HighlightCardsInHand = false;
+            Game.HighlightCardsInHand = false;
             SaveConfig(true);
         }
 
@@ -1968,36 +2265,36 @@ namespace Hearthstone_Deck_Tracker
         }
 
 
-        private void CheckboxHideEnemyCardCounter_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCardCounter_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCardCount = true;
+            _config.HideOpponentCardCount = true;
             SaveConfig(true);
             _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Collapsed;
             _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Collapsed;
         }
 
-        private void CheckboxHideEnemyCardCounter_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCardCounter_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCardCount = false;
+            _config.HideOpponentCardCount = false;
             SaveConfig(true);
             _opponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
             _opponentWindow.LblOpponentDeckCount.Visibility = Visibility.Visible;
         }
 
-        private void CheckboxHideEnemyCards_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCards_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCards = true;
+            _config.HideOpponentCards = true;
             SaveConfig(true);
             _opponentWindow.ListViewOpponent.Visibility = Visibility.Collapsed;
         }
 
-        private void CheckboxHideEnemyCards_Unchecked(object sender, RoutedEventArgs e)
+        private void CheckboxHideOpponentCards_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideEnemyCards = false;
+            _config.HideOpponentCards = false;
             SaveConfig(true);
             _opponentWindow.ListViewOpponent.Visibility = Visibility.Visible;
         }
@@ -2073,11 +2370,11 @@ namespace Hearthstone_Deck_Tracker
             _opponentWindow.Show();
             _opponentWindow.Activate();
 
-            _playerWindow.SetCardCount(_hearthstone.PlayerHandCount,
-                                       30 - _hearthstone.PlayerDrawn.Sum(card => card.Count));
+            _playerWindow.SetCardCount(_game.PlayerHandCount,
+                                       30 - _game.PlayerDrawn.Sum(card => card.Count));
 
-            _opponentWindow.SetOpponentCardCount(_hearthstone.EnemyHandCount,
-                                                 _hearthstone.OpponentDeckCount, _hearthstone.OpponentHasCoin);
+            _opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
+                                                 _game.OpponentDeckCount, _game.OpponentHasCoin);
 
             _config.WindowsOnStartup = true;
             SaveConfig(true);
@@ -2705,7 +3002,89 @@ namespace Hearthstone_Deck_Tracker
             _config.OverlayCardToolTips = false;
             SaveConfig(true);
         }
+
+        private void CheckboxLogGames_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            TextboxLogGamesPath.IsEnabled = true;
+            BtnLogGamesSelectDir.IsEnabled = true;
+            _config.SavePlayedGames = true;
+            if (TextboxLogGamesPath.Text.Length == 0)
+                TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
+            SaveConfig(false);
+        }
+
+        private void CheckboxLogGames_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            TextboxLogGamesPath.IsEnabled = false;
+            BtnLogGamesSelectDir.IsEnabled = false;
+            _config.SavePlayedGames = false;
+            SaveConfig(false);
+        }
+
+        private void BtnLogGamesSelectDir_Click(object sender, RoutedEventArgs e)
+        {
+            var folderDialog = new FolderBrowserDialog();
+            var result = folderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                TextboxLogGamesPath.Text = folderDialog.SelectedPath;
+                _config.SavePlayedGamesPath = folderDialog.SelectedPath;
+
+                TextboxLogGamesPath.BorderBrush =
+                    new SolidColorBrush(TextboxLogGamesPath.Text.Length == 0
+                                            ? Colors.Red
+                                            : SystemColors.ActiveBorderColor);
+                SaveConfig(false);
+            }
+        }
+
+        private void CheckboxDeckSortingClassFirst_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.CardSortingClassFirst = true;
+            SaveConfig(false);
+            Helper.SortCardCollection(ListViewDeck.ItemsSource, true);
+            Helper.SortCardCollection(ListViewNewDeck.Items, true);
+        }
+
+        private void CheckboxDeckSortingClassFirst_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.CardSortingClassFirst = false;
+            SaveConfig(false);
+            Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
+            Helper.SortCardCollection(ListViewNewDeck.Items, false);
+        }
+
+        private void CheckboxBringHsToForegorund_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.BringHsToForeground = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxBringHsToForegorund_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.BringHsToForeground = false;
+            SaveConfig(false);
+        }
         #endregion
 
+        private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.FlashHs = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.FlashHs = false;
+            SaveConfig(false);
+        }
     }
 }

@@ -13,28 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Controls
 {
     /// <summary>
-    /// Interaction logic for DeckNotes.xaml
+    /// Interaction logic for ManaCostBarToolTip.xaml
     /// </summary>
-    public partial class DeckNotes : UserControl
+    public partial class ManaCostBarToolTip : UserControl
     {
-        private Deck currentDeck;
-        public DeckNotes()
+        public ManaCostBarToolTip()
         {
             InitializeComponent();
-        }
-
-        public void SetDeck(Deck deck)
-        {
-            currentDeck = deck;
-            Textbox.Text = deck.Note;
-        }
-
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            currentDeck.Note = Textbox.Text;
         }
     }
 }

@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.DeckImport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Margin="3,0,3,0">
+                <GroupBox Header="From Web">
+                    <StackPanel>
+                        <TextBlock Height="auto" TextWrapping="Wrap" >
+                <Bold>Supported websites:</Bold> <LineBreak />
+                hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck
+                        </TextBlock>
+                        <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0" Click="BtnWeb_Click" />
+                        <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,6,0,0" >
+                <Bold>arenavalue.com:</Bold> <LineBreak />
+                Can't get the normal import method to work currently, so this is how you do it: <LineBreak />
+                1) Highlight the list on the right of the website (from the first manacrystal to the end of the last card) <LineBreak />
+                2) Copy (rightclick > copy or ctrl-c)<LineBreak />
+                3) Click button below
+                        </TextBlock>
+                        <Button Name="BtnArenavalue" Content="Import from arenavalue" Height="26" Margin="0,6,0,0" Click="BtnArenavalue_Click" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="From File">
+                    <StackPanel>
+                        <TextBlock Height="auto" TextWrapping="Wrap">
+                        <Bold>Text file:</Bold> <LineBreak />
+                        One card per line, multiple copies => multiple lines
+                        </TextBlock>
+                        <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,3,0,0" >
+                        <Bold>Xml file:</Bold> <LineBreak />
+                        Obtained from:<LineBreak /> 
+                            My Decks>More...>Save to file
+                        </TextBlock>
+                        <Button Name="BtnFile" Content="Import from file" Height="26" Margin="0,6,0,0" Click="BtnFileXml_Click" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="From Id-string">
+                    <StackPanel>
+                        <TextBlock Height="auto" TextWrapping="Wrap">
+                        <Bold>ID-string style:</Bold> <LineBreak />
+                        id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;) <LineBreak />
+                        Obtained from: <LineBreak />My Decks>More...>Copy IDs to Clipboard
+                        </TextBlock>
+                        <Button Name="BtnIdString" Content="Import from id-string" Height="26" Margin="0,6,0,0" Click="BtnText_Click" />
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

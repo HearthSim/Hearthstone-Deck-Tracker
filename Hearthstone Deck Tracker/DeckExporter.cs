@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -44,7 +45,6 @@ namespace Hearthstone_Deck_Tracker
 
             var hsRect = User32.GetHearthstoneRect(false);
 
-            //todo bounds affected by dpi?
             var bounds = Screen.FromHandle(hsHandle).Bounds;
             
             bool isFullscreen = bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
