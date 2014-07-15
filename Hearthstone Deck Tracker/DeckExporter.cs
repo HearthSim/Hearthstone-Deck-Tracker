@@ -70,10 +70,9 @@ namespace Hearthstone_Deck_Tracker
         {
             var ratio = (double) width/height;
 
-            var searchBoxY = (isFullscreen ? _config.SearchBoxYFullscreen : _config.SearchBoxY);
             var cardPosX = ratio < 1.5 ? width*_config.CardPosX : width*_config.CardPosX*(ratio/1.33);
 
-            var searchBoxPos = new Point((int) (_config.SearchBoxX*width), (int) (searchBoxY*height));
+            var searchBoxPos = new Point((int) (_config.SearchBoxX*width), (int) (_config.SearchBoxPosY*height));
             var cardPos = new Point((int) cardPosX, (int) (_config.CardPosY*height));
 
             await ClickOnPoint(hsHandle, searchBoxPos);
@@ -105,7 +104,7 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    await ClickOnPoint(hsHandle, cardPos);
+                    await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
                 }
                 
             }
