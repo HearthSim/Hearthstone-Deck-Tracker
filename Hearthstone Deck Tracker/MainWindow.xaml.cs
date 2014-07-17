@@ -1187,10 +1187,7 @@ namespace Hearthstone_Deck_Tracker
                         return;
 
                     Directory.CreateDirectory(_config.SavePlayedGamesPath);
-                    var dateString = string.Format("{0}{1}{2}{3}{4}{5}", DateTime.Now.Day, DateTime.Now.Month,
-                                                   DateTime.Now.Year, DateTime.Now.Hour, DateTime.Now.Minute,
-                                                   DateTime.Now.Second);
-                    var path = _config.SavePlayedGamesPath + "\\" + dateString;
+                    var path = _config.SavePlayedGamesPath + "\\" + DateTime.Now.ToString("ddMMyyyyHHmmss");
                     Directory.CreateDirectory(path);
                     Logger.WriteLine("Saving games to: " + path);
                     using (var sw = new StreamWriter(path + "\\Player.xml"))
