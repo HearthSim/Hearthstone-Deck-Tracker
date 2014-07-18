@@ -52,12 +52,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 "NEW1_006",
             };
 
+        public readonly List<string> SecretIdsHunter = new List<string>
+            {
+                "EX1_610", //explosive trap
+                "EX1_611", //freezing trap
+                "EX1_533", //misdirection
+                "EX1_609", //snipe
+                "EX1_554" //snake trap
+            };
+        public readonly List<string> SecretIdsMage = new List<string>
+            {
+                "EX1_287", //counterspell
+                "EX1_289", //ice barrier
+                "EX1_295", //ice block
+                "EX1_294", //mirror entity
+                "tt_010", //spellbender
+                "EX1_594" //vaporize
+            };
+        public readonly List<string> SecretIdsPaladin = new List<string>
+            {
+                "EX1_132", //eye for an eye
+                "EX1_130", //noble sacrifice
+                "EX1_136", //redemption
+                "EX1_379" //repentance
+            };
+
         public ObservableCollection<Card> OpponentCards;
         public int OpponentHandCount;
         public bool IsInMenu;
         public bool IsUsingPremade;
         public int OpponentDeckCount;
         public bool OpponentHasCoin;
+        public int OpponentSecretCount;
         public ObservableCollection<Card> PlayerDeck;
         public ObservableCollection<Card> PlayerDrawn;
         public int PlayerHandCount;
@@ -84,6 +110,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
         public int[] OpponentHandAge { get; private set; }
         public CardMark[] OpponentHandMarks { get; private set; }
+
 
         private void LoadCardDb(string languageTag)
         {
@@ -396,6 +423,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
             PlayerDrawn.Clear();
             PlayerHandCount = 0;
+            OpponentSecretCount = 0;
             OpponentCards.Clear();
             OpponentHandCount = 0;
             OpponentDeckCount = 30;

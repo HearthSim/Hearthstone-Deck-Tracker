@@ -63,6 +63,10 @@
                 </StackPanel>
             </StackPanel>
 
+            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto">
+
+            </StackPanel>
+
             <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
                 <StackPanel Name="Marks0">
                     <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>

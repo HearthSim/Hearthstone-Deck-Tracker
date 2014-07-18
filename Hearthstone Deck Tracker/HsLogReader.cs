@@ -130,6 +130,8 @@ namespace Hearthstone_Deck_Tracker
 
         public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
 
+        public delegate void SecretPlayedHandler(HsLogReader sender);
+
         private const int PowerCountTreshold = 14;
 
         private readonly Regex _cardMovementRegex =
@@ -201,6 +203,7 @@ namespace Hearthstone_Deck_Tracker
         public event AnalyzingHandler Analyzing;
         public event TurnStartHandler TurnStart;
         public event CardPosChangeHandler CardPosChange;
+        public event SecretPlayedHandler SecretPlayed;
 
         private async void ReadFileAsync()
         {
@@ -386,6 +389,11 @@ namespace Hearthstone_Deck_Tracker
                                 }
                                 else
                                 {
+                                    if (to == "OPPOSING SECRET")
+                                    {
+                                        if(SecretPlayed !=  null)
+                                            SecretPlayed(this);
+                                    }
                                     CardPosChange(this,
                                                   new CardPosChangeArgs(OpponentHandMovement.Play, zonePos,
                                                                         GetTurnNumber(), id));

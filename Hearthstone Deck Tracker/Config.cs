@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker
         public bool HideOverlay = false;
         public bool HidePlayerCardCount = false;
         public bool HidePlayerCards = false;
+        public bool HideSecrets = false;
         public bool HideTimers = false;
         public bool HighlightCardsInHand = false;
         public bool KeepDecksVisible = true;
@@ -82,6 +83,8 @@ namespace Hearthstone_Deck_Tracker
         public double SearchBoxX = 0.5;
         public double SearchBoxPosY = 0.92;
         public int SearchDelay = 100;
+        public double SecretsLeft = 15;
+        public double SecretsTop = 5;
         public string SelectedLanguage = "enUS";
         [XmlArray(ElementName = "SelectedTags")] 
         [XmlArrayItem(ElementName = "Tag")] 
@@ -133,7 +136,9 @@ namespace Hearthstone_Deck_Tracker
         {
             get { return _currentLogFile ?? GetLogFileName(); }
         }
-        
+
+
+
         private string GetLogFileName()
         {
             var date = DateTime.Now;

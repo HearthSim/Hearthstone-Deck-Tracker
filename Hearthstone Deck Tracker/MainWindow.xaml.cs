@@ -421,6 +421,7 @@ namespace Hearthstone_Deck_Tracker
             _logReader.Analyzing += LogReaderOnAnalyzing;
             _logReader.TurnStart += LogReaderOnTurnStart;
             _logReader.CardPosChange += LogReaderOnCardPosChange;
+            _logReader.SecretPlayed += LogReaderOnSecretPlayed;
 
             _turnTimer = new TurnTimer(90);
             _turnTimer.TimerTick += TurnTimerOnTimerTick;
@@ -460,6 +461,13 @@ namespace Hearthstone_Deck_Tracker
             }
 
             Helper.SortCardCollection(ListViewDeck.Items, _config.CardSortingClassFirst);
+
+        }
+
+        private void LogReaderOnSecretPlayed(HsLogReader sender)
+        {
+            _game.OpponentSecretCount++;
+            _overlay.ShowSecrets(_game.PlayingAgainst);
         }
 
         #region LogReader Events
@@ -689,6 +697,7 @@ namespace Hearthstone_Deck_Tracker
             }
             _turnTimer.Stop();
             _overlay.HideTimers();
+            _overlay.HideSecrets();
             if (_config.SavePlayedGames && !_game.IsInMenu)
             {
                 SavePlayedCards();
@@ -761,6 +770,12 @@ namespace Hearthstone_Deck_Tracker
         private void HandleOpponentSecretTrigger(string cardId)
         {
             _game.OpponentSecretTriggered(cardId);
+            _game.OpponentSecretCount--;
+            if (_game.OpponentSecretCount <= 0)
+            {
+                _overlay.HideSecrets();
+            }
+            
         }
 
         private void HandleOpponentMulligan(int pos)
@@ -978,6 +993,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxPrioGolden.IsChecked = _config.PrioritizeGolden;
             CheckboxBringHsToForegorund.IsChecked = _config.BringHsToForeground;
             CheckboxFlashHs.IsChecked = _config.BringHsToForeground;
+            CheckboxHideSecrets.IsChecked = _config.HideSecrets;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -1001,6 +1017,10 @@ namespace Hearthstone_Deck_Tracker
             SliderTimersHorizontalSpacing.Value = _config.TimersHorizontalSpacing;
             SliderTimersVertical.Value = _config.TimersVerticalPosition;
             SliderTimersVerticalSpacing.Value = _config.TimersVerticalSpacing;
+
+            SliderSecretsHorizontal.Value = _config.SecretsLeft;
+            SliderSecretsVertical.Value = _config.SecretsTop;
+
 
             TagControlFilter.LoadTags(_deckList.AllTags);
 
@@ -3068,7 +3088,6 @@ namespace Hearthstone_Deck_Tracker
             _config.BringHsToForeground = false;
             SaveConfig(false);
         }
-        #endregion
 
         private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
         {
@@ -3083,5 +3102,48 @@ namespace Hearthstone_Deck_Tracker
             _config.FlashHs = false;
             SaveConfig(false);
         }
+
+        private void SliderSecretsHorizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.SecretsLeft = SliderSecretsHorizontal.Value;
+            SaveConfig(true);
+        }
+
+        private void SliderSecretsVertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_initialized) return;
+            _config.SecretsTop = SliderSecretsVertical.Value;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideSecrets_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideSecrets = false;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHideSecrets_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HideSecrets = true;
+            SaveConfig(true);
+        }
+
+        private void BtnShowSecrets_Click(object sender, RoutedEventArgs e)
+        {
+            if (BtnShowSecrets.Content.Equals("Show"))
+            {
+                _overlay.ShowSecrets("Mage");
+                BtnShowSecrets.Content = "Hide";
+            }
+            else
+            {
+                _overlay.HideSecrets();
+                BtnShowSecrets.Content = "Show";
+            }
+        }
+        #endregion
     }
 }
