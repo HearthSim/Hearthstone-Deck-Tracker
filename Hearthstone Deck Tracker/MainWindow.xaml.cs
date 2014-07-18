@@ -3120,15 +3120,18 @@ namespace Hearthstone_Deck_Tracker
         private void CheckboxHideSecrets_Checked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideSecrets = false;
-            SaveConfig(true);
+            _config.HideSecrets = true;
+            SaveConfig(false);
+            _overlay.HideSecrets();
         }
 
         private void CheckboxHideSecrets_Unchecked(object sender, RoutedEventArgs e)
         {
             if (!_initialized) return;
-            _config.HideSecrets = true;
-            SaveConfig(true);
+            _config.HideSecrets = false;
+            SaveConfig(false);
+            if(!_game.IsInMenu)
+                _overlay.ShowSecrets(_game.PlayingAgainst);
         }
 
         private void BtnShowSecrets_Click(object sender, RoutedEventArgs e)
