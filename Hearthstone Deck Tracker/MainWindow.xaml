@@ -287,7 +287,7 @@
                                         <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardAge_Checked" Unchecked="CheckboxHideOpponentCardAge_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="Hide card-marks" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardMarks_Checked" Unchecked="CheckboxHideOpponentCardMarks_Unchecked" HorizontalAlignment="Left" Width="114"/>
                                         <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="Card tooltips" Margin="10,148,0,0" VerticalAlignment="Top" Checked="CheckboxOverlayCardToolTips_Checked" Unchecked="CheckboxOverlayCardToolTips_Unchecked" HorizontalAlignment="Left" Width="114"/>
-                                        <CheckBox x:Name="CheckboxHideSecrets" Content="Hide timers" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked" Unchecked="CheckboxHideSecrets_Unchecked" Margin="128,102,0,0"/>
+                                        <CheckBox x:Name="CheckboxHideSecrets" Content="Hide secrets" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked" Unchecked="CheckboxHideSecrets_Unchecked" Margin="128,102,0,0"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Other" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="538" Width="235" Margin="10,0,0,0" Grid.RowSpan="2">

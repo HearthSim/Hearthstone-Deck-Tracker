@@ -582,6 +582,7 @@ namespace Hearthstone_Deck_Tracker
         private string _lastSecretsClass;
         public void ShowSecrets(string hsClass)
         {
+            if (_config.HideSecrets) return;
             if(_lastSecretsClass != hsClass)
             {
                 List<string> ids;
