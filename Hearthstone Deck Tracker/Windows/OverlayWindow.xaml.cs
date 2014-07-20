@@ -616,7 +616,7 @@ namespace Hearthstone_Deck_Tracker
 
         public void HideSecrets()
         {
-            StackPanelSecrets.Visibility = Visibility.Hidden;
+            StackPanelSecrets.Visibility = Visibility.Collapsed;
         }
     }
 }
