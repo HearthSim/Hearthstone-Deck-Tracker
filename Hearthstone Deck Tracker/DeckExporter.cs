@@ -76,8 +76,7 @@ namespace Hearthstone_Deck_Tracker
             var cardPos = new Point((int) cardPosX, (int) (_config.CardPosY*height));
 
             await ClickOnPoint(hsHandle, searchBoxPos);
-            SendKeys.SendWait("^(a)");
-            SendKeys.SendWait(FixCardName(card.LocalizedName));
+            SendKeys.SendWait(FixCardName(card.LocalizedName).ToLower());
             SendKeys.SendWait("{ENTER}");
 
             await Task.Delay(_config.SearchDelay);
