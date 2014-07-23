@@ -159,6 +159,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             }
         }
 
+        public bool WasDiscarded
+        {
+            get { return _wasDiscarded; }
+            set
+            {
+                _wasDiscarded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _wasDiscarded;
         private bool _isStolen;
         private int _inHandCount;
         private int _count;
@@ -191,10 +202,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             get
             {
+                Color color;
+                if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
+                    color = Colors.GreenYellow;
+                else if (Count == 0)
+                    color = Colors.Gray;
+                else if (WasDiscarded && Game.HighlightDiscarded)
+                    color = Colors.IndianRed;
+                else 
+                    color = Colors.White;
                 return
-                    new SolidColorBrush((InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
-                                            ? Colors.GreenYellow
-                                            : (Count != 0) ? Colors.White : Colors.Gray);
+                    new SolidColorBrush(color);
             }
         }
 

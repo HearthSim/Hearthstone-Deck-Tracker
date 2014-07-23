@@ -377,6 +377,7 @@
                                             <system:String>Bottom</system:String>
                                         </ComboBox>
                                         <Label Content="Text:" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxHighlightDiscarded" Content="Highlight discarded from deck" HorizontalAlignment="Left" Margin="31,185,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightDiscarded_Checked" Unchecked="CheckboxHighlightDiscarded_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Height="216" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">

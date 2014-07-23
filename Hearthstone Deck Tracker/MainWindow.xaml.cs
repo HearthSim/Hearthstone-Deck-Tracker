@@ -787,6 +787,10 @@ namespace Hearthstone_Deck_Tracker
         private void HandleOpponentDeckDiscard(string cardId)
         {
             _game.OpponentDeckDiscard(cardId);
+
+            //there seems to be an issue with the overlay not updating here.
+            //possibly a problem with order of logs?
+            _overlay.ListViewOpponent.Items.Refresh();
         }
 
         #endregion
@@ -963,6 +967,7 @@ namespace Hearthstone_Deck_Tracker
 
             Height = _config.WindowHeight;
             Game.HighlightCardsInHand = _config.HighlightCardsInHand;
+            Game.HighlightDiscarded = _config.HighlightDiscarded;
             CheckboxHideOverlayInBackground.IsChecked = _config.HideInBackground;
             CheckboxHideDrawChances.IsChecked = _config.HideDrawChances;
             CheckboxHideOpponentDrawChances.IsChecked = _config.HideOpponentDrawChances;
@@ -994,6 +999,7 @@ namespace Hearthstone_Deck_Tracker
             CheckboxBringHsToForegorund.IsChecked = _config.BringHsToForeground;
             CheckboxFlashHs.IsChecked = _config.BringHsToForeground;
             CheckboxHideSecrets.IsChecked = _config.HideSecrets;
+            CheckboxHighlightDiscarded.IsChecked = _config.HighlightDiscarded;
 
             RangeSliderPlayer.UpperValue = 100 - _config.PlayerDeckTop;
             RangeSliderPlayer.LowerValue = (100 - _config.PlayerDeckTop) - _config.PlayerDeckHeight;
@@ -3148,5 +3154,21 @@ namespace Hearthstone_Deck_Tracker
             }
         }
         #endregion
+
+        private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HighlightDiscarded = true;
+            Game.HighlightDiscarded = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxHighlightDiscarded_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            _config.HighlightDiscarded = false;
+            Game.HighlightDiscarded = false;
+            SaveConfig(true);
+        }
     }
 }

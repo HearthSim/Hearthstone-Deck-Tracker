@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         private const int DefaultCoinPosition = 4;
         private const int MaxHandSize = 10;
         public static bool HighlightCardsInHand;
+        public static bool HighlightDiscarded;
 
         private static Dictionary<string, Card> _cardDb;
 
@@ -89,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         public int OpponentSecretCount;
         public int[] OpponentHandAge { get; private set; }
         public CardMark[] OpponentHandMarks { get; private set; }
+
+
         public ObservableCollection<Card> PlayerDeck;
         public ObservableCollection<Card> PlayerDrawn;
         public int PlayerHandCount;
@@ -354,7 +357,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
             if(!string.IsNullOrEmpty(cardId))
             {
-                var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+                var card = OpponentCards.FirstOrDefault(c => c.Id == cardId && !c.WasDiscarded);
                 if (card != null)
                 {
                     card.Count--;
@@ -378,7 +381,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             if (string.IsNullOrEmpty(cardId))
                  return;
 
-            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId && c.WasDiscarded);
             if (card != null)
             {
                 card.Count++;
@@ -386,6 +389,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             else
             {
                 card = GetCardFromId(cardId);
+                card.WasDiscarded = true;
                 OpponentCards.Add(card);
             }
 
@@ -396,7 +400,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             if (string.IsNullOrEmpty(cardId)) 
                 return;
-            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId);
+            var card = OpponentCards.FirstOrDefault(c => c.Id == cardId && !c.WasDiscarded);
             if (card != null)
             {
                 card.Count++;
@@ -485,7 +489,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             if (!string.IsNullOrEmpty(args.Id))
             {
                 var stolen = args.From != -1 && OpponentHandMarks[args.From - 1] == CardMark.Stolen;
-                var card = OpponentCards.FirstOrDefault(c => c.Id == args.Id && c.IsStolen == stolen);
+                var card = OpponentCards.FirstOrDefault(c => c.Id == args.Id && c.IsStolen == stolen && !c.WasDiscarded);
 
                 if (card != null)
                 {
