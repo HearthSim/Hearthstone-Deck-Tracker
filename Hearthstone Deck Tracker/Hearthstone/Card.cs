@@ -324,6 +324,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             Health = stats.Health;
             Race = stats.Race;
             Durability = stats.Durability;
+            _wasDiscarded = false;
             OnPropertyChanged();
         }
 
