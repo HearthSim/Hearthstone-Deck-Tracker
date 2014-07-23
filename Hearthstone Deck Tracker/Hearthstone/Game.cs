@@ -50,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 "GAME",
                 "DREAM",
                 "NEW1_006",
+                "NAX"
             };
 
         public readonly List<string> SecretIdsHunter = new List<string>
@@ -63,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         public readonly List<string> SecretIdsMage = new List<string>
             {
                 "EX1_287", //counterspell
+                "FP1_018", //duplicate
                 "EX1_289", //ice barrier
                 "EX1_295", //ice block
                 "EX1_294", //mirror entity
@@ -71,6 +73,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             };
         public readonly List<string> SecretIdsPaladin = new List<string>
             {
+                "FP1_020", //avenge
                 "EX1_132", //eye for an eye
                 "EX1_130", //noble sacrifice
                 "EX1_136", //redemption
@@ -84,11 +87,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         public int OpponentDeckCount;
         public bool OpponentHasCoin;
         public int OpponentSecretCount;
+        public int[] OpponentHandAge { get; private set; }
+        public CardMark[] OpponentHandMarks { get; private set; }
         public ObservableCollection<Card> PlayerDeck;
         public ObservableCollection<Card> PlayerDrawn;
         public int PlayerHandCount;
         public string PlayingAgainst;
         public string PlayingAs;
+        private readonly List<string> _validCardSets = new List<string>
+            {
+                "Basic",
+                "Reward",
+                "Expert",
+                "Promotion",
+                "Curse of Naxxramas"
+            };
 
         public Game(string languageTag)
         {
@@ -108,9 +121,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             LoadCardDb(languageTag);
         }
 
-        public int[] OpponentHandAge { get; private set; }
-        public CardMark[] OpponentHandMarks { get; private set; }
-
 
         private void LoadCardDb(string languageTag)
         {
@@ -125,8 +135,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                         var localized = JObject.Parse(File.ReadAllText(file));
                         foreach (var cardType in localized)
                         {
-                            if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                                cardType.Key != "Reward") continue;
+                            if (!_validCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
                             foreach (var card in cardType.Value)
                             {
                                 var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
@@ -145,8 +154,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                     var obj = JObject.Parse(File.ReadAllText(fileEng));
                     foreach (var cardType in obj)
                     {
-                        if (cardType.Key != "Basic" && cardType.Key != "Expert" && cardType.Key != "Promotion" &&
-                            cardType.Key != "Reward") continue;
+                        if (!_validCardSets.Any(cs => cs.Equals(cardType.Key))) continue; ;
                         foreach (var card in cardType.Value)
                         {
                             var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());

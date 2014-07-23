@@ -307,7 +307,7 @@
     <Content Include="Images\animal-companion.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\anubar-ambusher.png">
+    <Content Include="Images\anub-ar-ambusher.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\arathi-weaponsmith.png">
@@ -550,7 +550,7 @@
     <Content Include="Images\deathlord.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\deaths-bite.png">
+    <Content Include="Images\death-s-bite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\deathwing.png">
@@ -935,7 +935,7 @@
     <Content Include="Images\keeper-of-the-grove.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\kelthuzad.png">
+    <Content Include="Images\kel-thuzad.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\kidnapper.png">
@@ -1148,7 +1148,7 @@
     <Content Include="Images\necrotic-poison.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\nerubar-weblord.png">
+    <Content Include="Images\nerub-ar-weblord.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\nerubian-egg.png">
