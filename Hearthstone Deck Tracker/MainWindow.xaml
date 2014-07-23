@@ -109,7 +109,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0" Width="240">
-                            <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,3,0" VerticalAlignment="Top" Width="135" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
+                            <ComboBox x:Name="ComboBoxSelectClass"  HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,3,0" VerticalAlignment="Top" Width="117" SelectedIndex="0" SelectionChanged="ComboBoxFilterClass_SelectionChanged">
                                 <system:String>Select a Class</system:String>
                                 <system:String>Druid</system:String>
                                 <system:String>Hunter</system:String>
@@ -121,11 +121,13 @@
                                 <system:String>Warlock</system:String>
                                 <system:String>Warrior</system:String>
                             </ComboBox>
-                            <Button Name="BtnSetTag" Content="Edit Tags" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="99" Click="BtnSetTag_Click" Height="26"/>
+                            <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="117" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1" Width="240">
-                            <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"  VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="135" />
-                            <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top" Width="99" Click="BtnSaveDeck_Click" Height="26"/>
+                            <Button Name="BtnClear" Content="Clear" HorizontalAlignment="Left" Margin="0,0,3,0" VerticalAlignment="Top" Width="76" Click="BtnClear_Click" Height="26"/>
+                            <Button Name="BtnSetTag" Content="Edit Tags" HorizontalAlignment="Left" Margin="3,0,3,0" VerticalAlignment="Top" Width="76" Click="BtnSetTag_Click" Height="26"/>
+
+                            <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top" Width="76" Click="BtnSaveDeck_Click" Height="26"/>
                         </StackPanel>
                         <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Grid.Row="2" Foreground="White" FontWeight="Bold" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6" HorizontalAlignment="Center" Width="240" Height="auto" MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp" MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
                             <ListView.Resources>

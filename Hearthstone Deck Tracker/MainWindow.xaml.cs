@@ -3170,5 +3170,10 @@ namespace Hearthstone_Deck_Tracker
             Game.HighlightDiscarded = false;
             SaveConfig(true);
         }
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            ShowClearNewDeckMessage();
+        }
     }
 }
