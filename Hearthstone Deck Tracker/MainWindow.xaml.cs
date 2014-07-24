@@ -748,11 +748,15 @@ namespace Hearthstone_Deck_Tracker
         private void HandlePlayerHandDiscard(string cardId)
         {
             _game.PlayerHandDiscard(cardId);
+            _overlay.ListViewPlayer.Items.Refresh();
+            _playerWindow.ListViewPlayer.Items.Refresh();
         }
 
         private void HandlePlayerPlay(string cardId)
         {
             _game.PlayerPlayed(cardId);
+            _overlay.ListViewPlayer.Items.Refresh();
+            _playerWindow.ListViewPlayer.Items.Refresh();
         }
 
         private void HandlePlayerDeckDiscard(string cardId)
@@ -791,6 +795,7 @@ namespace Hearthstone_Deck_Tracker
             //there seems to be an issue with the overlay not updating here.
             //possibly a problem with order of logs?
             _overlay.ListViewOpponent.Items.Refresh();
+            _opponentWindow.ListViewOpponent.Items.Refresh();
         }
 
         #endregion
