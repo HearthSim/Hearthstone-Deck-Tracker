@@ -159,8 +159,8 @@ namespace Hearthstone_Deck_Tracker
 
         private readonly int _updateDelay;
 
-        //should be about 30,000 lines
-        private const int MaxFileLength = 1000000;
+        //should be about 90,000 lines
+        private const int MaxFileLength = 3000000;
 
         private long _currentOffset;
         private bool _doUpdate;
