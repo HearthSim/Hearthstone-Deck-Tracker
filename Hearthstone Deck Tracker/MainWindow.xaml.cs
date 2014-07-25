@@ -1617,6 +1617,7 @@ namespace Hearthstone_Deck_Tracker
         private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
         {
             _newDeck.Cards = new ObservableCollection<Card>(_newDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
+            ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
             if (_editingDeck)
             {
