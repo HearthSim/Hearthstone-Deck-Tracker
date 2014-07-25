@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 }
                 try
                 {
-                    string cardFileName = Name.ToLower().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
+                    string cardFileName = Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
 
                     
                    //card graphic
