@@ -66,9 +66,9 @@ namespace Hearthstone_Deck_Tracker
 		private readonly TimerWindow _timerWindow;
 		private readonly XmlManager<Decks> _xmlManager;
 		private readonly XmlManager<Config> _xmlManagerConfig;
-		private readonly XmlManager<Deck> _xmlManagerDeck;
+		public readonly XmlManager<Deck> _xmlManagerDeck;
 		private readonly DeckImporter _deckImporter;
-		private readonly DeckExporter _deckExporter;
+		internal readonly DeckExporter _deckExporter;
 		private bool _editingDeck;
 		private bool _newContainsDeck;
 		private Deck _newDeck;
@@ -401,13 +401,13 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SelectDeck(lastDeck);
 
 			//deck options flyout button events
-			DeckOptionsFlyout.BtnExportHs.Click += DeckOptionsFlyoutBtnExportHs_Click;
-			DeckOptionsFlyout.BtnNotes.Click += DeckOptionsFlyoutBtnNotes_Click;
-			DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
-			DeckOptionsFlyout.BtnCloneDeck.Click += DeckOptionsFlyoutCloneDeck_Click;
-			DeckOptionsFlyout.BtnTags.Click += DeckOptionsFlyoutBtnTags_Click;
+			//DeckOptionsFlyout.BtnExportHs.Click += DeckOptionsFlyoutBtnExportHs_Click;
+			//DeckOptionsFlyout.BtnNotes.Click += DeckOptionsFlyoutBtnNotes_Click;
+			//DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
+			//DeckOptionsFlyout.BtnCloneDeck.Click += DeckOptionsFlyoutCloneDeck_Click;
+			//DeckOptionsFlyout.BtnTags.Click += DeckOptionsFlyoutBtnTags_Click;
 			DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
-			DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
+			//DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
 
 			DeckOptionsFlyout.DeckOptionsButtonClicked += (DeckOptions sender) => { FlyoutDeckOptions.IsOpen = false; };
 
@@ -1163,7 +1163,7 @@ namespace Hearthstone_Deck_Tracker
 
 		}
 
-		private async void ShowMessage(string title, string message)
+		public async void ShowMessage(string title, string message)
 		{
 			await this.ShowMessageAsync(title, message);
 
@@ -1312,27 +1312,6 @@ namespace Hearthstone_Deck_Tracker
 			TabControlTracker.SelectedIndex = 1;
 		}
 
-		private async void DeckOptionsFlyoutBtnExportHs_Click(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDeck;
-			if (deck == null) return;
-
-			var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
-											   "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
-											   MessageDialogStyle.AffirmativeAndNegative);
-
-			if (result == MessageDialogResult.Affirmative)
-			{
-				var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
-				Topmost = false;
-				await Task.Delay(500);
-				await _deckExporter.Export(DeckPickerList.SelectedDeck);
-				await controller.CloseAsync();
-			}
-
-
-		}
-
 		private void BtnSetTag_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutNewDeckSetTags.IsOpen = !FlyoutNewDeckSetTags.IsOpen;
@@ -1387,43 +1366,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		/*
-		private void DeckOptionsFlyoutBtnNotes_Click(object sender, RoutedEventArgs e)
-		{
-			if (DeckPickerList.SelectedDeck == null) return;
-			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
-		}
-		*/
-
-		/*
-		private async void DeckOptionsFlyoutBtnScreenhot_Click(object sender, RoutedEventArgs e)
-		{
-			if (DeckPickerList.SelectedDeck == null) return;
-			PlayerWindow screenShotWindow = new PlayerWindow(_config, DeckPickerList.SelectedDeck.Cards, true);
-			screenShotWindow.Show();
-			screenShotWindow.Top = 0;
-			screenShotWindow.Left = 0;
-			await Task.Delay(100);
-			PresentationSource source = PresentationSource.FromVisual(screenShotWindow);
-			if (source == null) return;
-
-			double dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
-			double dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
-
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
-
-			screenShotWindow.Shutdown();
-			if (fileName == null)
-			{
-				await this.ShowMessageAsync("", "Error saving screenshot");
-			}
-			else
-			{
-				await ShowSavedFileMessage(fileName, "Screenshots");
-			}
-		}
-		*/
-
 		public async Task ShowSavedFileMessage(string fileName, string dir)
 		{
 			var settings = new MetroDialogSettings();
@@ -1435,53 +1377,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "\\" + dir);
 			}
-		}
-
-		private void DeckOptionsFlyoutBtnClipboard_Click(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDeck;
-			if (deck == null) return;
-			Clipboard.SetText(Helper.DeckToIdString(deck));
-			ShowMessage("", "copied to clipboard");
-		}
-
-		private async void DeckOptionsFlyoutBtnSaveToFile_Click(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDeck;
-			if (deck == null) return;
-			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
-			_xmlManagerDeck.Save(path, deck);
-			await ShowSavedFileMessage(path, "SavedDecks");
-		}
-
-		private void DeckOptionsFlyoutBtnTags_Click(object sender, RoutedEventArgs e)
-		{
-			FlyoutMyDecksSetTags.IsOpen = true;
-			if (DeckPickerList.SelectedDeck != null)
-				TagControlMyDecks.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
-		}
-
-		private async void DeckOptionsFlyoutCloneDeck_Click(object sender, RoutedEventArgs e)
-		{
-			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
-
-			while (_deckList.DecksList.Any(d => d.Name == clone.Name))
-			{
-				var settings = new MetroDialogSettings();
-				settings.AffirmativeButtonText = "Set";
-				settings.DefaultText = clone.Name;
-				string name = await this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
-
-				if (String.IsNullOrEmpty(name))
-					return;
-
-				clone.Name = name;
-			}
-
-			_deckList.DecksList.Add(clone);
-			DeckPickerList.AddAndSelectDeck(clone);
-
-			WriteDecks();
 		}
 
 		private void TagControlFilterOnOperationChanged(TagControl sender, Operation operation)

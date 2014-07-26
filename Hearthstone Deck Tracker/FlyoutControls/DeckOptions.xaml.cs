@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker
@@ -40,8 +41,24 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void BtnExport_Click(object sender, RoutedEventArgs e)
+		private async void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
+			var deck = Window.DeckPickerList.SelectedDeck;
+			if (deck == null) return;
+
+			var result = await Window.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
+											   "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
+											   MessageDialogStyle.AffirmativeAndNegative);
+
+			if (result == MessageDialogResult.Affirmative)
+			{
+				var controller = await Window.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+				Window.Topmost = false;
+				await Task.Delay(500);
+				await Window._deckExporter.Export(Window.DeckPickerList.SelectedDeck);
+				await controller.CloseAsync();
+			}
+
 			After_Click();
 		}
 
@@ -111,23 +128,59 @@ namespace Hearthstone_Deck_Tracker
 			After_Click();
 		}
 
-		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
+		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
+			var clone = (Deck)Window.DeckPickerList.SelectedDeck.Clone();
+
+			while (Window._deckList.DecksList.Any(d => d.Name == clone.Name))
+			{
+				var settings = new MetroDialogSettings();
+				settings.AffirmativeButtonText = "Set";
+				settings.DefaultText = clone.Name;
+				string name = await Window.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+
+				if (String.IsNullOrEmpty(name))
+					return;
+
+				clone.Name = name;
+			}
+
+			Window._deckList.DecksList.Add(clone);
+			Window.DeckPickerList.AddAndSelectDeck(clone);
+
+			Window.WriteDecks();
+
 			After_Click();
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
+			Window.FlyoutMyDecksSetTags.IsOpen = true;
+			if (Window.DeckPickerList.SelectedDeck != null)
+				Window.TagControlMyDecks.SetSelectedTags(Window.DeckPickerList.SelectedDeck.Tags);
+
 			After_Click();
 		}
 
-		private void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
+		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
+			var deck = Window.DeckPickerList.SelectedDeck;
+			if (deck == null) return;
+			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
+			Window._xmlManagerDeck.Save(path, deck);
+			await Window.ShowSavedFileMessage(path, "SavedDecks");
+
+
 			After_Click();
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
+			var deck = Window.DeckPickerList.SelectedDeck;
+			if (deck == null) return;
+			Clipboard.SetText(Helper.DeckToIdString(deck));
+			Window.ShowMessage("", "copied to clipboard");
+
 			After_Click();
 		}
 
