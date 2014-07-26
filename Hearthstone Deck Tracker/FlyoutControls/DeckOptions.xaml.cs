@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			if (Window.DeckPickerList.SelectedDeck == null) return;
-			PlayerWindow screenShotWindow = new PlayerWindow(Window._config, Window.DeckPickerList.SelectedDeck.Cards, true);
+			PlayerWindow screenShotWindow = new PlayerWindow(Config.Instance, Window.DeckPickerList.SelectedDeck.Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
