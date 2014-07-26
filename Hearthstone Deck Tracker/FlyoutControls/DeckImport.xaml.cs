@@ -138,8 +138,39 @@ namespace Hearthstone_Deck_Tracker
 			After_Click();
 		}
 
-		private void BtnIdString_Click(object sender, RoutedEventArgs e)
+		private async void BtnIdString_Click(object sender, RoutedEventArgs e)
 		{
+			var settings = new MetroDialogSettings();
+			var clipboard = Clipboard.GetText();
+			if (clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
+			{
+				settings.DefaultText = clipboard;
+			}
+
+			//import dialog
+			var idString = await Window.ShowInputAsync("Import deck", "", settings);
+			if (string.IsNullOrEmpty(idString))
+				return;
+			var deck = new Deck();
+			foreach (var entry in idString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+			{
+				var splitEntry = entry.Split(':');
+				if (splitEntry.Length != 2)
+					continue;
+				var card = Game.GetCardFromId(splitEntry[0]);
+				if (card.Id == "UNKNOWN")
+					continue;
+				var count = 1;
+				int.TryParse(splitEntry[1], out count);
+				card.Count = count;
+
+				if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+					deck.Class = card.GetPlayerClass;
+
+				deck.Cards.Add(card);
+			}
+			Window.SetNewDeck(deck);
+
 			After_Click();
 		}
 
@@ -174,7 +205,7 @@ namespace Hearthstone_Deck_Tracker
 
 								if (deck.Cards.Contains(card))
 								{
-									var deckCard = Window.deck.Cards.First(c => c.Equals(card));
+									var deckCard = deck.Cards.First(c => c.Equals(card));
 									deck.Cards.Remove(deckCard);
 									deckCard.Count++;
 									deck.Cards.Add(deckCard);

@@ -94,7 +94,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 
-
 			#region Aaron Campf
 			DeckOptionsFlyout.Window = this;
 			DeckImportFlyout.Window = this;
@@ -126,9 +125,8 @@ namespace Hearthstone_Deck_Tracker
 					foundConfig = true;
 				}
 				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
-
-				//save locally if appdata doesn't exist (when e.g. not on C)
 				{
+					//save locally if appdata doesn't exist (when e.g. not on C)
 					_config.SaveInAppData = false;
 				}
 
@@ -419,7 +417,7 @@ namespace Hearthstone_Deck_Tracker
 			//DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
 			//DeckImportFlyout.BtnArenavalue.Click += DeckImportFlyoutBtnArenavalue_Click;
 			//DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
-			DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
+			//DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
 
 			DeckImportFlyout.DeckOptionsButtonClicked += (DeckImport sender) => { FlyoutDeckImport.IsOpen = false; };
 
@@ -442,6 +440,7 @@ namespace Hearthstone_Deck_Tracker
 			TagControlNewDeck.NewTag += TagControlOnNewTag;
 			TagControlNewDeck.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
 			TagControlNewDeck.DeleteTag += TagControlOnDeleteTag;
+
 			TagControlMyDecks.NewTag += TagControlOnNewTag;
 			TagControlMyDecks.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
 			TagControlMyDecks.DeleteTag += TagControlOnDeleteTag;
@@ -1522,6 +1521,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				SaveDeck(false);
 			}
+
 			FlyoutNewDeckSetTags.IsOpen = false;
 		}
 
@@ -1627,47 +1627,6 @@ namespace Hearthstone_Deck_Tracker
 		private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			UpdateDbListView();
-		}
-
-		/*
-		private void CloseDeckImportFlyout(DeckImport sender)
-		{
-			FlyoutDeckImport.IsOpen = false;
-		}
-		*/
-
-		private async void DeckImportFlyoutBtnIdString_Click(object sender, RoutedEventArgs e)
-		{
-			var settings = new MetroDialogSettings();
-			var clipboard = Clipboard.GetText();
-			if (clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
-			{
-				settings.DefaultText = clipboard;
-			}
-
-			//import dialog
-			var idString = await this.ShowInputAsync("Import deck", "", settings);
-			if (string.IsNullOrEmpty(idString))
-				return;
-			var deck = new Deck();
-			foreach (var entry in idString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-			{
-				var splitEntry = entry.Split(':');
-				if (splitEntry.Length != 2)
-					continue;
-				var card = Game.GetCardFromId(splitEntry[0]);
-				if (card.Id == "UNKNOWN")
-					continue;
-				var count = 1;
-				int.TryParse(splitEntry[1], out count);
-				card.Count = count;
-
-				if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
-					deck.Class = card.GetPlayerClass;
-
-				deck.Cards.Add(card);
-			}
-			SetNewDeck(deck);
 		}
 
 		#endregion

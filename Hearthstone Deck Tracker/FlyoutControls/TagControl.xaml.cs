@@ -16,217 +16,235 @@ using System.Windows.Shapes;
 
 namespace Hearthstone_Deck_Tracker
 {
-    public enum Operation
-    {
-        And, Or
-    }
-    /// <summary>
-    /// Interaction logic for TagControl.xaml
-    /// </summary>
-    public partial class TagControl : UserControl
-    {
-        private new class Tag
-        {
-            public string Name { get; set; }
-            public bool Selected { get; set; }
-            public Tag(string name, bool selected = false)
-            {
-                Name = name;
-                Selected = selected;
-            }
+	public enum Operation
+	{
+		And, Or
+	}
+	/// <summary>
+	/// Interaction logic for TagControl.xaml
+	/// </summary>
+	public partial class TagControl : UserControl
+	{
+		#region Tag
 
-            public override bool Equals(object obj)
-            {
-                var other = obj as Tag;
-                if (other == null) return false;
-                return other.Name == Name;
-            }
+		private new class Tag
+		{
+			public string Name { get; set; }
+			public bool Selected { get; set; }
+			public Tag(string name, bool selected = false)
+			{
+				Name = name;
+				Selected = selected;
+			}
 
-            public override int GetHashCode()
-            {
-                return Name.GetHashCode();
-            }
-        }
+			public override bool Equals(object obj)
+			{
+				var other = obj as Tag;
+				if (other == null) return false;
+				return other.Name == Name;
+			}
 
-        public delegate void SelectedTagsChangedHandler(TagControl sender, List<string> tags);
-        public delegate void NewTagHandler(TagControl sender, string tag);
-        public delegate void DeleteTagHandler(TagControl sender, string tag);
+			public override int GetHashCode()
+			{
+				return Name.GetHashCode();
+			}
+		}
 
-        public delegate void OperationChangedHandler(TagControl sender, Operation operation);
+		#endregion
 
-        public event SelectedTagsChangedHandler SelectedTagsChanged;
-        public event NewTagHandler NewTag;
-        public event DeleteTagHandler DeleteTag;
-        public event OperationChangedHandler OperationChanged;
+		#region Delegates/Events/Properties
 
-        private readonly ObservableCollection<Tag> _tags;   
+		public delegate void SelectedTagsChangedHandler(TagControl sender, List<string> tags);
+		public delegate void NewTagHandler(TagControl sender, string tag);
+		public delegate void DeleteTagHandler(TagControl sender, string tag);
 
-        public TagControl()
-        {
-            InitializeComponent();
+		public delegate void OperationChangedHandler(TagControl sender, Operation operation);
 
-            _tags = new ObservableCollection<Tag>();
-            ListboxTags.ItemsSource = _tags;
+		public event SelectedTagsChangedHandler SelectedTagsChanged;
+		public event NewTagHandler NewTag;
+		public event DeleteTagHandler DeleteTag;
+		public event OperationChangedHandler OperationChanged;
 
-        }
+		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
 
-        public void HideStuffToCreateNewTag()
-        {
-            TextboxNewTag.Visibility = Visibility.Hidden;
-            BtnAddTag.Visibility = Visibility.Hidden;
-            BtnDeleteTag.Visibility = Visibility.Hidden;
-        }
+		#endregion
 
-        public void LoadTags(List<string> tags)
-        {
-            var oldTag = new List<Tag>(_tags);
-            _tags.Clear();
-            foreach (var tag in tags)
-            {
-                bool isSelected = false;
+		#region Methods
+		public void HideStuffToCreateNewTag()
+		{
+			TextboxNewTag.Visibility = Visibility.Hidden;
+			BtnAddTag.Visibility = Visibility.Hidden;
+			BtnDeleteTag.Visibility = Visibility.Hidden;
+		}
 
-                var old = oldTag.FirstOrDefault(t => t.Name == tag);
-                if (old != null)
-                    isSelected = old.Selected;
+		public void LoadTags(List<string> tags)
+		{
+			var oldTag = new List<Tag>(_tags);
+			_tags.Clear();
+			foreach (var tag in tags)
+			{
+				bool isSelected = false;
 
-                _tags.Add(new Tag(tag, isSelected));
-            }
-        }
+				var old = oldTag.FirstOrDefault(t => t.Name == tag);
+				if (old != null)
+					isSelected = old.Selected;
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            var originalSource = (DependencyObject)e.OriginalSource;
-            while ((originalSource != null) && !(originalSource is CheckBox))
-            {
-                originalSource = VisualTreeHelper.GetParent(originalSource);
-            }
+				_tags.Add(new Tag(tag, isSelected));
+			}
+		}
 
-            if (originalSource != null)
-            {
-                var checkBox = originalSource as CheckBox;
+		public List<string> GetTags()
+		{
+			return _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+		}
 
-                var selectedValue = checkBox.Content.ToString();
+		public void SetSelectedTags(List<string> tags)
+		{
+			if (tags == null) return;
+			foreach (var tag in _tags)
+			{
+				tag.Selected = tags.Contains(tag.Name);
+			}
+			ListboxTags.Items.Refresh();
 
-                _tags.First(t => t.Name == selectedValue).Selected = true;
-                if(_tags.Any(t => t.Name == "All"))
-                {
-                    if (selectedValue == "All")
-                    {
-                        foreach (var tag in _tags)
-                        {
-                            if (tag.Name != "All")
-                            {
-                                tag.Selected = false;
-                            }
-                        }
-                    }
-                    else
-                        _tags.First(t => t.Name == "All").Selected = false;
-                    
-                }
-                ListboxTags.Items.Refresh();
-                
-                if (SelectedTagsChanged != null)
-                {
-                    var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-                    SelectedTagsChanged(this, tagNames);
-                }
+		}
 
-            }
-        }
+		public void AddSelectedTag(string tag)
+		{
+			if (!_tags.Any(t => t.Name == tag)) return;
+			if (_tags.First(t => t.Name == "All").Selected) return;
 
-        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            var originalSource = (DependencyObject)e.OriginalSource;
-            while ((originalSource != null) && !(originalSource is CheckBox))
-            {
-                originalSource = VisualTreeHelper.GetParent(originalSource);
-            }
+			_tags.First(t => t.Name == tag).Selected = true;
 
-            if (originalSource != null)
-            {
-                var checkBox = originalSource as CheckBox;
+			if (SelectedTagsChanged != null)
+			{
+				var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+				SelectedTagsChanged(this, tagNames);
+			}
+		}
 
-                var selectedValue = checkBox.Content.ToString();
+		#endregion
 
-                _tags.First(t => t.Name == selectedValue).Selected = false;
+		#region Events
 
-                if (SelectedTagsChanged != null)
-                {
-                    var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-                    SelectedTagsChanged(this, tagNames);
-                }
+		private void CheckBox_Checked(object sender, RoutedEventArgs e)
+		{
+			var originalSource = (DependencyObject)e.OriginalSource;
+			while ((originalSource != null) && !(originalSource is CheckBox))
+			{
+				originalSource = VisualTreeHelper.GetParent(originalSource);
+			}
 
-            }
-        }
+			if (originalSource != null)
+			{
+				var checkBox = originalSource as CheckBox;
+				var selectedValue = checkBox.Content.ToString();
 
-        private void BtnAddTag_Click(object sender, RoutedEventArgs e)
-        {
-            var tag = TextboxNewTag.Text;
-            if (_tags.Any(t => t.Name == tag)) return;
+				_tags.First(t => t.Name == selectedValue).Selected = true;
+				if (_tags.Any(t => t.Name == "All"))
+				{
+					if (selectedValue == "All")
+					{
+						foreach (var tag in _tags.Where(tag => tag.Name != "All"))
+						{
+							tag.Selected = false;
+						}
 
-            _tags.Add(new Tag(tag));
+						/*
+						foreach (var tag in _tags)
+						{
+							if (tag.Name != "All")
+							{
+								tag.Selected = false;
+							}
+						}
+						*/
+					}
+					else
+						_tags.First(t => t.Name == "All").Selected = false;
 
-            if(NewTag != null)
-                NewTag(this, tag);
-        }
+				}
+				ListboxTags.Items.Refresh();
 
-        public void AddSelectedTag(string tag)
-        {
-            if (!_tags.Any(t => t.Name == tag)) return;
-            if (_tags.First(t => t.Name == "All").Selected) return;
+				if (SelectedTagsChanged != null)
+				{
+					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+					SelectedTagsChanged(this, tagNames);
+				}
 
-            _tags.First(t => t.Name == tag).Selected = true;
+			}
+		}
 
-            if (SelectedTagsChanged != null)
-            {
-                var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
-                SelectedTagsChanged(this, tagNames);
-            }
-        }
+		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+		{
+			var originalSource = (DependencyObject)e.OriginalSource;
+			while ((originalSource != null) && !(originalSource is CheckBox))
+			{
+				originalSource = VisualTreeHelper.GetParent(originalSource);
+			}
 
-        public void SetSelectedTags(List<string> tags)
-        {
-            if (tags == null) return;
-            foreach (var tag in _tags)
-            {
-                tag.Selected = tags.Contains(tag.Name);
-            }
-            ListboxTags.Items.Refresh();
-            
-        }
+			if (originalSource != null)
+			{
+				var checkBox = originalSource as CheckBox;
+				var selectedValue = checkBox.Content.ToString();
 
-        public List<string> GetTags()
-        {
-            return _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
-        }
+				_tags.First(t => t.Name == selectedValue).Selected = false;
 
-        private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
-        {
-            var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-            if (msgbxoResult != MessageBoxResult.Yes)
-                return;
+				if (SelectedTagsChanged != null)
+				{
+					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+					SelectedTagsChanged(this, tagNames);
+				}
 
-            var tag = ListboxTags.SelectedItem as Tag;
-            if (tag == null) return;
-            if (_tags.All(t => t.Equals(tag))) return;
+			}
+		}
 
-            _tags.Remove(_tags.First(t => t.Equals(tag)));
+		private void BtnAddTag_Click(object sender, RoutedEventArgs e)
+		{
+			var tag = TextboxNewTag.Text;
+			if (_tags.Any(t => t.Name == tag)) return;
 
-            if (DeleteTag != null)
-                DeleteTag(this, tag.Name);
-        }
+			_tags.Add(new Tag(tag));
 
-        private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
-        {
-            if(OperationChanged != null)
-                OperationChanged(this, Operation.And);
-        }
+			if (NewTag != null)
+				NewTag(this, tag);
+		}
 
-        private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            if (OperationChanged != null)
-                OperationChanged(this, Operation.Or);
-        }
-    }
+		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
+		{
+			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+			if (msgbxoResult != MessageBoxResult.Yes)
+				return;
+
+			var tag = ListboxTags.SelectedItem as Tag;
+			if (tag == null) return;
+			if (_tags.All(t => t.Equals(tag))) return;
+
+			_tags.Remove(_tags.First(t => t.Equals(tag)));
+
+			if (DeleteTag != null)
+				DeleteTag(this, tag.Name);
+		}
+
+		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if (OperationChanged != null)
+				OperationChanged(this, Operation.And);
+		}
+
+		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if (OperationChanged != null)
+				OperationChanged(this, Operation.Or);
+		}
+
+		#endregion
+
+		public TagControl()
+		{
+			InitializeComponent();
+
+			ListboxTags.ItemsSource = _tags;
+		}
+	}
 }
