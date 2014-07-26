@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
 
@@ -33,14 +34,20 @@ namespace Hearthstone_Deck_Tracker
         private readonly Game _game;
         private readonly int _offsetX;
         private readonly int _offsetY;
+        private readonly User32.MouseInput _mouseInput;
         private int _cardCount;
         private int _opponentCardCount;
+        private string _lastSecretsClass;
+        private bool _needToRefreshSecrets;
 
         public OverlayWindow(Config config, Game game)
         {
             InitializeComponent();
             _config = config;
             _game = game;
+
+            _mouseInput = new User32.MouseInput();
+            _mouseInput.Click += MouseInputOnClick;
 
             ListViewPlayer.ItemsSource = _game.IsUsingPremade
                                              ? _game.PlayerDeck
@@ -99,6 +106,35 @@ namespace Hearthstone_Deck_Tracker
                 };
 
             UpdateScaling();
+        }
+
+        private void MouseInputOnClick(object sender, EventArgs eventArgs)
+        {
+            if(!User32.IsForegroundWindow("Hearthstone")) return;
+            if (ToolTipCard.Visibility == Visibility.Visible)
+            {
+                var card = ToolTipCard.DataContext as Card;
+                if (card == null) return;
+
+                // 1: normal, 0: grayed out
+                card.Count = card.Count == 0 ? 1 : 0;
+
+
+                //reload secrets panel
+                var cards = StackPanelSecrets.Children.OfType<Controls.Card>().Select(c => c.DataContext).OfType<Card>().ToList();
+
+                StackPanelSecrets.Children.Clear();
+                foreach (var c in cards)
+                {
+                    var cardObj = new Controls.Card();
+                    cardObj.SetValue(DataContextProperty, c);
+                    StackPanelSecrets.Children.Add(cardObj);
+                }
+
+                //reset secrets when new secret is played
+                _needToRefreshSecrets = true;
+            }
+
         }
 
         public static double Scaling { get; set; }
@@ -235,6 +271,7 @@ namespace Hearthstone_Deck_Tracker
 
 
             Canvas.SetTop(LblGrid, Height*0.03);
+            
 
             var ratio = Width/Height;
             LblGrid.Width = ratio < 1.5 ? Width*0.3 : Width*0.15*(ratio/1.33);
@@ -373,7 +410,6 @@ namespace Hearthstone_Deck_Tracker
             }
             return false;
         }
-
 
         private void UpdateCardTooltip()
         {
@@ -579,11 +615,10 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        private string _lastSecretsClass;
         public void ShowSecrets(string hsClass)
         {
             if (_config.HideSecrets) return;
-            if(_lastSecretsClass != hsClass)
+            if(_lastSecretsClass != hsClass || _needToRefreshSecrets)
             {
                 List<string> ids;
                 switch (hsClass)
@@ -609,6 +644,7 @@ namespace Hearthstone_Deck_Tracker
                     StackPanelSecrets.Children.Add(cardObj);
                 }
                 _lastSecretsClass = hsClass;
+                _needToRefreshSecrets = false;
             }
             StackPanelSecrets.Visibility = Visibility.Visible;
 
@@ -617,6 +653,11 @@ namespace Hearthstone_Deck_Tracker
         public void HideSecrets()
         {
             StackPanelSecrets.Visibility = Visibility.Collapsed;
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            _mouseInput.Dispose();
         }
     }
 }

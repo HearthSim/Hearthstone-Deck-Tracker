@@ -11,7 +11,7 @@
             <ColumnDefinition Width="32"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" Grid.Column="0"/>
-        <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" Grid.Column="1"/>
+        <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" Fill="{Binding ColorPlayer}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" Grid.Column="0"/>
+        <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}" Fill="{Binding ColorPlayer}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" Grid.Column="1"/>
     </Grid>
 </UserControl>

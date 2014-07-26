@@ -128,5 +128,81 @@ namespace Hearthstone_Deck_Tracker
             var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
             FlashWindow(hsHandle, false);
         }
+
+
+        //http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/
+        public class WindowsHookHelper
+        {
+            public delegate IntPtr HookDelegate(
+                Int32 code, IntPtr wParam, IntPtr lParam);
+
+            [DllImport("User32.dll")]
+            public static extern IntPtr CallNextHookEx(
+                IntPtr hHook, Int32 nCode, IntPtr wParam, IntPtr lParam);
+
+            [DllImport("User32.dll")]
+            public static extern IntPtr UnhookWindowsHookEx(IntPtr hHook);
+
+
+            [DllImport("User32.dll")]
+            public static extern IntPtr SetWindowsHookEx(
+                Int32 idHook, HookDelegate lpfn, IntPtr hmod,
+                Int32 dwThreadId);
+        }
+
+
+
+        public class MouseInput : IDisposable
+        {
+            public event EventHandler<EventArgs> Click;
+
+            private WindowsHookHelper.HookDelegate mouseDelegate;
+            private IntPtr mouseHandle;
+            private const Int32 WH_MOUSE_LL = 14;
+            private const Int32 WM_LBUTTONDOWN = 0x201;
+
+            private bool disposed;
+
+            public MouseInput()
+            {
+                mouseDelegate = MouseHookDelegate;
+                mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, mouseDelegate, IntPtr.Zero, 0);
+            }
+
+            private IntPtr MouseHookDelegate(Int32 code, IntPtr wParam, IntPtr lParam)
+            {
+                if (code < 0)
+                    return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
+
+                if(wParam.ToInt32() == WM_LBUTTONDOWN)
+                {
+                    if (Click != null)
+                        Click(this, new EventArgs());
+                }
+
+                return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
+            }
+
+            public void Dispose()
+            {
+                Dispose(true);
+            }
+
+            protected virtual void Dispose(bool disposing)
+            {
+                if (!disposed)
+                {
+                    if (mouseHandle != IntPtr.Zero)
+                        WindowsHookHelper.UnhookWindowsHookEx(mouseHandle);
+
+                    disposed = true;
+                }
+            }
+
+            ~MouseInput()
+            {
+                Dispose(false);
+            }
+        }
     }
 }
