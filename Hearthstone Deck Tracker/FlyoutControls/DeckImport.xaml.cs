@@ -63,7 +63,8 @@ namespace Hearthstone_Deck_Tracker
 
 			var controller = await Window.ShowProgressAsync("Loading Deck...", "please wait");
 
-			var deck = await Window._deckImporter.Import(url);
+			//var deck = await Window._deckImporter.Import(url);
+			var deck = await DeckImporter.Import(url);
 
 			await controller.CloseAsync();
 
