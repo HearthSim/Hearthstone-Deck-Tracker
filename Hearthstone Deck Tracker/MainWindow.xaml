@@ -1,13 +1,13 @@
 <controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" 
-        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing_1" 
-        Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" 
-        StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged"
-        BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib"
+		xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+		xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+		Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" 
+		Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing_1" 
+		Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" 
+		StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged"
+		BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
 	<Grid>
 		<TabControl Name="TabControlTracker" Height="auto" Width="auto">
 			<TabItem Header="My Decks">
@@ -153,16 +153,16 @@
 									<Setter Property="Margin" Value="0,0,0,0"/>
 									<Style.Triggers>
 										<Trigger Property="IsMouseOver"
-                						Value="True">
+										Value="True">
 											<Setter Property="Background"
-                							Value="{Binding Background}" />
+											Value="{Binding Background}" />
 										</Trigger>
 										<Trigger Property="IsSelected"
-                						Value="True">
+										Value="True">
 											<Setter Property="Background"
-                							Value="{Binding Background}" />
+											Value="{Binding Background}" />
 											<Setter Property="BorderBrush"
-                							Value="Blue" />
+											Value="Blue" />
 										</Trigger>
 									</Style.Triggers>
 								</Style>
@@ -225,16 +225,16 @@
 									<Setter Property="Margin" Value="0,0,0,0"/>
 									<Style.Triggers>
 										<Trigger Property="IsMouseOver"
-                						Value="True">
+										Value="True">
 											<Setter Property="Background"
-                							Value="{Binding Background}" />
+											Value="{Binding Background}" />
 										</Trigger>
 										<Trigger Property="IsSelected"
-                						Value="True">
+										Value="True">
 											<Setter Property="Background"
-                							Value="{Binding Background}" />
+											Value="{Binding Background}" />
 											<Setter Property="BorderBrush"
-                							Value="Blue" />
+											Value="Blue" />
 										</Trigger>
 									</Style.Triggers>
 								</Style>
@@ -452,65 +452,65 @@
 			<TabItem Header="Help">
 				<Grid>
 					<TextBlock Margin="10,10,7,0" VerticalAlignment="Top">
-                        <Bold>
-                            <Run Text="What are all these percentages?"/>
-                        </Bold>
+						<Bold>
+							<Run Text="What are all these percentages?"/>
+						</Bold>
 					</TextBlock>
 					<TextBlock Margin="20,31,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                        <Bold>
-                            <Run Text="Player: "/>
-                        </Bold>
-                        <LineBreak />
-                        <Run Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
+						<Bold>
+							<Run Text="Player: "/>
+						</Bold>
+						<LineBreak />
+						<Run Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
 					</TextBlock>
 					<TextBlock Margin="20,68,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                        <Bold>
-                            <Run Text="Opponent: "/>
-                        </Bold>
-                        <LineBreak />
-                        <Run Text="[2] and [1] stands for the number of copies left in deck+hand / deck."/>
-                        <LineBreak />
-                        <Bold>
-                            <Run Text="First number:"/>
-                        </Bold>
-                        <Run Text="The chance of your opponent"></Run>
-                        <Italic>
-                            <Run Text="having"/>
-                        </Italic>
-                        <Run Text="a card next turn. "></Run>
-                        <LineBreak />
-                        <Run Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)"></Run>
-                        <LineBreak />
-                        <Bold>
-                            <Run Text="Second number:"/>
-                        </Bold>
-                        <Run Text="The chance of your opponent"></Run>
-                        <Italic>
-                            <Run Text="drawing"/>
-                        </Italic>
-                        <Run Text="a card next turn."></Run>
-                        <LineBreak />
-                        <Run Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
+						<Bold>
+							<Run Text="Opponent: "/>
+						</Bold>
+						<LineBreak />
+						<Run Text="[2] and [1] stands for the number of copies left in deck+hand / deck."/>
+						<LineBreak />
+						<Bold>
+							<Run Text="First number:"/>
+						</Bold>
+						<Run Text="The chance of your opponent"></Run>
+						<Italic>
+							<Run Text="having"/>
+						</Italic>
+						<Run Text="a card next turn. "></Run>
+						<LineBreak />
+						<Run Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)"></Run>
+						<LineBreak />
+						<Bold>
+							<Run Text="Second number:"/>
+						</Bold>
+						<Run Text="The chance of your opponent"></Run>
+						<Italic>
+							<Run Text="drawing"/>
+						</Italic>
+						<Run Text="a card next turn."></Run>
+						<LineBreak />
+						<Run Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
 					</TextBlock>
 					<TextBlock Margin="10,291,7,0" VerticalAlignment="Top">
-                        <Bold>
-                            <Run Text="I found a bug, what do I do?"/>
-                        </Bold>
+						<Bold>
+							<Run Text="I found a bug, what do I do?"/>
+						</Bold>
 					</TextBlock>
 					<TextBlock Margin="20,312,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                        <Run Text="Two options here for now:"/>
-                        <LineBreak/>
-                        <Run Text="1) You may be able to find a solution/it already being reported in my"/>
-                        <Hyperlink NavigateUri="http://www.reddit.com/r/hearthstone/comments/27rvsq/updated_automatic_hearthstone_deck_tracker/" RequestNavigate="Hyperlink_RequestNavigate">reddit post.</Hyperlink>
-                        <Run Text="If you can't/it's not leave a comment in the post or send me a PM."/>
-                        <LineBreak/>
-                        <Run Text="2) Check out the"/>
-                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
-                        <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
+						<Run Text="Two options here for now:"/>
+						<LineBreak/>
+						<Run Text="1) You may be able to find a solution/it already being reported in my"/>
+						<Hyperlink NavigateUri="http://www.reddit.com/r/hearthstone/comments/27rvsq/updated_automatic_hearthstone_deck_tracker/" RequestNavigate="Hyperlink_RequestNavigate">reddit post.</Hyperlink>
+						<Run Text="If you can't/it's not leave a comment in the post or send me a PM."/>
+						<LineBreak/>
+						<Run Text="2) Check out the"/>
+						<Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
+						<Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
 					</TextBlock>
 					<TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom"/>
 					<TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
+						<Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
 					</TextBlock>
 					<TextBlock Margin="10,249,7,0" VerticalAlignment="Top"><Bold><Run Text="Card Marks:"/></Bold></TextBlock>
 					<TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
