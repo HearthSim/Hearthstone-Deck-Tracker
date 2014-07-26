@@ -36,7 +36,7 @@
                         Obtained from:<LineBreak /> 
                             My Decks>More...>Save to file
                         </TextBlock>
-                        <Button Name="BtnFile" Content="Import from file" Height="26" Margin="0,6,0,0" Click="BtnFileXml_Click" />
+                        <Button Name="BtnFile" Content="Import from file" Height="26" Margin="0,6,0,0" Click="BtnFile_Click" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="From Id-string">
@@ -46,7 +46,7 @@
                         id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;) <LineBreak />
                         Obtained from: <LineBreak />My Decks>More...>Copy IDs to Clipboard
                         </TextBlock>
-                        <Button Name="BtnIdString" Content="Import from id-string" Height="26" Margin="0,6,0,0" Click="BtnText_Click" />
+                        <Button Name="BtnIdString" Content="Import from id-string" Height="26" Margin="0,6,0,0" Click="BtnIdString_Click" />
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

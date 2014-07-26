@@ -44,11 +44,13 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class MainWindow
 	{
+		#region Properties
+
 		private const bool IS_DEBUG = false;
 
 		public readonly Config _config;
 		public readonly Decks _deckList;
-		private readonly Game _game;
+		public readonly Game _game;
 		private readonly bool _initialized;
 
 		private readonly string _logConfigPath =
@@ -67,11 +69,11 @@ namespace Hearthstone_Deck_Tracker
 		private readonly XmlManager<Decks> _xmlManager;
 		private readonly XmlManager<Config> _xmlManagerConfig;
 		public readonly XmlManager<Deck> _xmlManagerDeck;
-		private readonly DeckImporter _deckImporter;
+		internal readonly DeckImporter _deckImporter;
 		internal readonly DeckExporter _deckExporter;
-		private bool _editingDeck;
+		public bool _editingDeck;
 		private bool _newContainsDeck;
-		private Deck _newDeck;
+		public Deck _newDeck;
 		private bool _doUpdate;
 		private bool _showingIncorrectDeckMessage;
 		private bool _showIncorrectDeckMessage;
@@ -86,6 +88,8 @@ namespace Hearthstone_Deck_Tracker
 			get { return _config.TrackerCardToolTips; }
 		}
 
+		#endregion
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -93,7 +97,7 @@ namespace Hearthstone_Deck_Tracker
 
 			#region Aaron Campf
 			DeckOptionsFlyout.Window = this;
-
+			DeckImportFlyout.Window = this;
 
 			#endregion
 
@@ -406,15 +410,15 @@ namespace Hearthstone_Deck_Tracker
 			//DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
 			//DeckOptionsFlyout.BtnCloneDeck.Click += DeckOptionsFlyoutCloneDeck_Click;
 			//DeckOptionsFlyout.BtnTags.Click += DeckOptionsFlyoutBtnTags_Click;
-			DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
+			//DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
 			//DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
 
 			DeckOptionsFlyout.DeckOptionsButtonClicked += (DeckOptions sender) => { FlyoutDeckOptions.IsOpen = false; };
 
 			//deck import flyout button events
-			DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
-			DeckImportFlyout.BtnArenavalue.Click += DeckImportFlyoutBtnArenavalue_Click;
-			DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
+			//DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
+			//DeckImportFlyout.BtnArenavalue.Click += DeckImportFlyoutBtnArenavalue_Click;
+			//DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
 			DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
 
 			DeckImportFlyout.DeckOptionsButtonClicked += (DeckImport sender) => { FlyoutDeckImport.IsOpen = false; };
@@ -1152,15 +1156,13 @@ namespace Hearthstone_Deck_Tracker
 			settings.AffirmativeButtonText = "Download";
 			settings.NegativeButtonText = "Not now";
 
-			var result =
-				await this.ShowMessageAsync("New Update available!", "Download version " + string.Format("{0}.{1}.{2}", _newVersion.Major, _newVersion.Minor,
-													 _newVersion.Build) + " at\n" + releaseDownloadUrl, MessageDialogStyle.AffirmativeAndNegative,
-											settings);
+			var result = await this.ShowMessageAsync("New Update available!", "Download version " + string.Format("{0}.{1}.{2}", _newVersion.Major, _newVersion.Minor,
+													 _newVersion.Build) + " at\n" + releaseDownloadUrl, MessageDialogStyle.AffirmativeAndNegative, settings);
+
 			if (result == MessageDialogResult.Affirmative)
 			{
 				Process.Start(releaseDownloadUrl);
 			}
-
 		}
 
 		public async void ShowMessage(string title, string message)
@@ -1668,163 +1670,6 @@ namespace Hearthstone_Deck_Tracker
 			SetNewDeck(deck);
 		}
 
-		private void DeckImportFlyoutBtnFile_Click(object sender, RoutedEventArgs e)
-		{
-			var dialog = new OpenFileDialog();
-			dialog.Title = "Select Deck File";
-			dialog.DefaultExt = "*.xml;*.txt";
-			dialog.Filter = "Deck Files|*.txt;*.xml";
-			var dialogResult = dialog.ShowDialog();
-			if (dialogResult == true)
-			{
-				try
-				{
-					Deck deck = null;
-
-					if (dialog.FileName.EndsWith(".txt"))
-					{
-						using (var sr = new StreamReader(dialog.FileName))
-						{
-							deck = new Deck();
-							var lines = sr.ReadToEnd().Split('\n');
-							foreach (var line in lines)
-							{
-								var card = _game.GetCardFromName(line.Trim());
-								if (card.Name == "") continue;
-
-								if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-								{
-									deck.Class = card.PlayerClass;
-								}
-
-								if (deck.Cards.Contains(card))
-								{
-									var deckCard = deck.Cards.First(c => c.Equals(card));
-									deck.Cards.Remove(deckCard);
-									deckCard.Count++;
-									deck.Cards.Add(deckCard);
-								}
-								else
-								{
-									deck.Cards.Add(card);
-								}
-							}
-
-						}
-					}
-					else if (dialog.FileName.EndsWith(".xml"))
-					{
-						deck = _xmlManagerDeck.Load(dialog.FileName);
-						//not all required information is saved in xml
-						foreach (var card in deck.Cards)
-						{
-							card.Load();
-						}
-						TagControlNewDeck.SetSelectedTags(deck.Tags);
-
-					}
-					SetNewDeck(deck);
-				}
-				catch (Exception ex)
-				{
-					Logger.WriteLine("Error getting deck from file: \n" + ex.Message + "\n" + ex.StackTrace);
-				}
-			}
-		}
-
-		private async void DeckImportFlyoutBtnWebClick(object sender, RoutedEventArgs e)
-		{
-			var settings = new MetroDialogSettings();
-			var clipboard = Clipboard.GetText();
-			var validUrls = new[]
-                {
-                    "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-                    "hearthstonetopdeck"
-                };
-			if (validUrls.Any(clipboard.Contains))
-			{
-				settings.DefaultText = clipboard;
-			}
-
-			//import dialog
-			var url = await this.ShowInputAsync("Import deck", "", settings);
-			if (string.IsNullOrEmpty(url))
-				return;
-
-			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-
-			var deck = await _deckImporter.Import(url);
-
-			await controller.CloseAsync();
-
-			if (deck != null)
-			{
-				var reimport = _editingDeck && _newDeck != null && _newDeck.Url == url;
-
-				deck.Url = url;
-
-				if (reimport) //keep old notes
-					deck.Note = _newDeck.Note;
-
-				if (!deck.Note.Contains(url))
-					deck.Note = url + "\n" + deck.Note;
-
-				SetNewDeck(deck, reimport);
-			}
-			else
-			{
-				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
-			}
-
-		}
-
-		private void DeckImportFlyoutBtnArenavalue_Click(object sender, RoutedEventArgs e)
-		{
-			Deck deck = null;
-			var clipboardLines = Clipboard.GetText().Split('\n');
-			if (clipboardLines.Length >= 1 && clipboardLines.Length <= 100)
-			{
-				try
-				{
-					foreach (var line in clipboardLines)
-					{
-						var parts = line.Split(new[] { " x " }, StringSplitOptions.RemoveEmptyEntries);
-						if (parts.Length == 0) continue;
-						var name = parts[0].Trim();
-						while (name.Length > 0 && Helper.IsNumeric(name[0]))
-							name = name.Remove(0, 1);
-
-						var card = _game.GetCardFromName(name);
-						if (card.Id == "UNKNOWN")
-							continue;
-
-						var count = 1;
-						if (parts.Length > 1)
-							int.TryParse(parts[1], out count);
-
-						card.Count = count;
-
-						if (deck == null)
-							deck = new Deck();
-
-						if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-							deck.Class = card.PlayerClass;
-
-						deck.Cards.Add(card);
-					}
-
-					SetNewDeck(deck);
-					if (deck == null)
-						ShowMessage("Error loading deck", "");
-				}
-				catch (Exception ex)
-				{
-					Logger.WriteLine("Error importing from arenavalue: " + ex.StackTrace);
-					ShowMessage("Error loading deck", "");
-				}
-			}
-		}
-
 		#endregion
 
 		#region NEW DECK METHODS
@@ -2022,7 +1867,7 @@ namespace Hearthstone_Deck_Tracker
 			UpdateNewDeckHeader(true);
 		}
 
-		private void SetNewDeck(Deck deck, bool editing = false)
+		public void SetNewDeck(Deck deck, bool editing = false)
 		{
 			if (deck != null)
 			{
