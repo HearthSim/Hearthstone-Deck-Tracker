@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
 			var deck = Window.DeckPickerList.SelectedDeck;
 			if (deck == null) return;
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
-			Window._xmlManagerDeck.Save(path, deck);
+			XmlManager<Deck>.Save(path, deck);
 			await Window.ShowSavedFileMessage(path, "SavedDecks");
 
 

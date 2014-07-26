@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if (dialog.FileName.EndsWith(".xml"))
 					{
-						deck = Window._xmlManagerDeck.Load(dialog.FileName);
+						deck = XmlManager<Deck>.Load(dialog.FileName);
 						//not all required information is saved in xml
 						foreach (var card in deck.Cards)
 						{

@@ -66,9 +66,9 @@ namespace Hearthstone_Deck_Tracker
 		private readonly OverlayWindow _overlay;
 		private readonly PlayerWindow _playerWindow;
 		private readonly TimerWindow _timerWindow;
-		private readonly XmlManager<Decks> _xmlManager;
-		private readonly XmlManager<Config> _xmlManagerConfig;
-		public readonly XmlManager<Deck> _xmlManagerDeck;
+		//private readonly XmlManager<Decks> _xmlManager;
+		//private readonly XmlManager<Config> _xmlManagerConfig;
+		//public readonly XmlManager<Deck> _xmlManagerDeck;
 		internal readonly DeckImporter _deckImporter;
 		internal readonly DeckExporter _deckExporter;
 		public bool _editingDeck;
@@ -99,8 +99,8 @@ namespace Hearthstone_Deck_Tracker
 			DeckImportFlyout.Window = this;
 
 
-			_xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
-			_configPath = Config.Load(_xmlManagerConfig);
+			//_xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
+			_configPath = Config.Load();
 
 			#endregion
 			var version = Helper.CheckForUpdates(out _newVersion);
@@ -320,10 +320,10 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
-			_xmlManager = new XmlManager<Decks> { Type = typeof(Decks) };
+			//_xmlManager = new XmlManager<Decks> { Type = typeof(Decks) };
 			try
 			{
-				_deckList = _xmlManager.Load(_decksPath);
+				_deckList = XmlManager<Decks>.Load(_decksPath);
 			}
 			catch (Exception e)
 			{
@@ -346,8 +346,8 @@ namespace Hearthstone_Deck_Tracker
 			_notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
 			_notifyIcon.Visible = false;
 
-			_xmlManagerDeck = new XmlManager<Deck>();
-			_xmlManagerDeck.Type = typeof(Deck);
+			//_xmlManagerDeck = new XmlManager<Deck>();
+			//_xmlManagerDeck.Type = typeof(Deck);
 
 			_newDeck = new Deck();
 			ListViewNewDeck.ItemsSource = _newDeck.Cards;
@@ -540,12 +540,10 @@ namespace Hearthstone_Deck_Tracker
 					_overlay.Update(false);
 
 				if (_playerWindow.IsVisible)
-					_playerWindow.SetCardCount(_game.PlayerHandCount,
-											   30 - _game.PlayerDrawn.Sum(card => card.Count));
+					_playerWindow.SetCardCount(_game.PlayerHandCount, 30 - _game.PlayerDrawn.Sum(card => card.Count));
 
 				if (_opponentWindow.IsVisible)
-					_opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
-														 _game.OpponentDeckCount, _game.OpponentHasCoin);
+					_opponentWindow.SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount, _game.OpponentHasCoin);
 
 
 				if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
@@ -1206,12 +1204,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void WriteConfig()
 		{
-			_xmlManagerConfig.Save(_configPath, Config.Instance);
+			XmlManager<Config>.Save(_configPath, Config.Instance);
 		}
 
 		public void WriteDecks()
 		{
-			_xmlManager.Save(_decksPath, _deckList);
+			XmlManager<Decks>.Save(_decksPath, _deckList);
 		}
 
 		private void SavePlayedCards()

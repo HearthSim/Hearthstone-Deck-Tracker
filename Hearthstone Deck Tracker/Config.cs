@@ -155,7 +155,8 @@ namespace Hearthstone_Deck_Tracker
 		public static Config Instance { get { return _Config; } }
 
 
-		public static string Load(XmlManager<Config> _xmlManagerConfig)
+		//public static string Load(XmlManager<Config> _xmlManagerConfig)
+		public static string Load()
 		{
 			string _configPath;
 			//var _Config = new Config();
@@ -166,12 +167,12 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if (File.Exists("config.xml"))
 				{
-					_Config = _xmlManagerConfig.Load("config.xml");
+					_Config = XmlManager<Config>.Load("config.xml");
 					foundConfig = true;
 				}
 				else if (File.Exists(_Config.AppDataPath + @"\config.xml"))
 				{
-					_Config = _xmlManagerConfig.Load(_Config.AppDataPath + @"\config.xml");
+					_Config = XmlManager<Config>.Load(_Config.AppDataPath + @"\config.xml");
 					foundConfig = true;
 				}
 				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
