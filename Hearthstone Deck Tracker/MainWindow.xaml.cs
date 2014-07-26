@@ -46,8 +46,8 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private const bool IS_DEBUG = false;
 
-		private readonly Config _config;
-		private readonly Decks _deckList;
+		public readonly Config _config;
+		public readonly Decks _deckList;
 		private readonly Game _game;
 		private readonly bool _initialized;
 
@@ -90,11 +90,18 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 
+
+			#region Aaron Campf
+			DeckOptionsFlyout.Window = this;
+
+
+			#endregion
+
+
 			var version = Helper.CheckForUpdates(out _newVersion);
 			if (version != null)
 			{
-				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
-													 version.Build);
+				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor, version.Build);
 			}
 
 			#region load config
@@ -394,7 +401,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SelectDeck(lastDeck);
 
 			//deck options flyout button events
-			DeckOptionsFlyout.BtnDeleteDeck.Click += DeckOptionsFlyoutBtnDeleteDeck_Click;
 			DeckOptionsFlyout.BtnExportHs.Click += DeckOptionsFlyoutBtnExportHs_Click;
 			DeckOptionsFlyout.BtnNotes.Click += DeckOptionsFlyoutBtnNotes_Click;
 			DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
@@ -403,7 +409,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
 			DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
 
-			DeckOptionsFlyout.DeckOptionsButtonClicked += CloseDeckOptionsFlyout;
+			DeckOptionsFlyout.DeckOptionsButtonClicked += (DeckOptions sender) => { FlyoutDeckOptions.IsOpen = false; };
 
 			//deck import flyout button events
 			DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
@@ -411,7 +417,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
 			DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
 
-			DeckImportFlyout.DeckOptionsButtonClicked += CloseDeckImportFlyout;
+			DeckImportFlyout.DeckOptionsButtonClicked += (DeckImport sender) => { FlyoutDeckImport.IsOpen = false; };
 
 			//log reader
 			_logReader = new HsLogReader(_config.HearthstoneDirectory, _config.UpdateDelay);
@@ -1200,7 +1206,7 @@ namespace Hearthstone_Deck_Tracker
 			_xmlManagerConfig.Save(_configPath, _config);
 		}
 
-		private void WriteDecks()
+		public void WriteDecks()
 		{
 			_xmlManager.Save(_decksPath, _deckList);
 		}
@@ -1306,32 +1312,6 @@ namespace Hearthstone_Deck_Tracker
 			TabControlTracker.SelectedIndex = 1;
 		}
 
-		private async void DeckOptionsFlyoutBtnDeleteDeck_Click(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDeck;
-			if (deck != null)
-			{
-				var settings = new MetroDialogSettings();
-				settings.AffirmativeButtonText = "Yes";
-				settings.NegativeButtonText = "No";
-				var result = await this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?", MessageDialogStyle.AffirmativeAndNegative, settings);
-				if (result == MessageDialogResult.Affirmative)
-				{
-					try
-					{
-						_deckList.DecksList.Remove(deck);
-						WriteDecks();
-						DeckPickerList.RemoveDeck(deck);
-						ListViewDeck.ItemsSource = null;
-					}
-					catch (Exception)
-					{
-						Logger.WriteLine("Error deleting deck");
-					}
-				}
-			}
-		}
-
 		private async void DeckOptionsFlyoutBtnExportHs_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDeck;
@@ -1407,12 +1387,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		/*
 		private void DeckOptionsFlyoutBtnNotes_Click(object sender, RoutedEventArgs e)
 		{
 			if (DeckPickerList.SelectedDeck == null) return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
 		}
+		*/
 
+		/*
 		private async void DeckOptionsFlyoutBtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			if (DeckPickerList.SelectedDeck == null) return;
@@ -1439,8 +1422,9 @@ namespace Hearthstone_Deck_Tracker
 				await ShowSavedFileMessage(fileName, "Screenshots");
 			}
 		}
+		*/
 
-		private async Task ShowSavedFileMessage(string fileName, string dir)
+		public async Task ShowSavedFileMessage(string fileName, string dir)
 		{
 			var settings = new MetroDialogSettings();
 			settings.NegativeButtonText = "Open folder";
@@ -1594,11 +1578,12 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		/*
 		private void CloseDeckOptionsFlyout(DeckOptions sender)
 		{
 			FlyoutDeckOptions.IsOpen = false;
 		}
-
+		*/
 		#endregion
 
 		#region NEW DECK GUI
@@ -1747,10 +1732,12 @@ namespace Hearthstone_Deck_Tracker
 			UpdateDbListView();
 		}
 
+		/*
 		private void CloseDeckImportFlyout(DeckImport sender)
 		{
 			FlyoutDeckImport.IsOpen = false;
 		}
+		*/
 
 		private async void DeckImportFlyoutBtnIdString_Click(object sender, RoutedEventArgs e)
 		{
