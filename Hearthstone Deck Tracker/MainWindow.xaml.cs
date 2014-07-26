@@ -44,9 +44,6 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class MainWindow
 	{
-
-		#region Properties
-
 		private const bool IS_DEBUG = false;
 
 		private readonly Config _config;
@@ -89,9 +86,6 @@ namespace Hearthstone_Deck_Tracker
 			get { return _config.TrackerCardToolTips; }
 		}
 
-		#endregion
-
-
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -99,7 +93,8 @@ namespace Hearthstone_Deck_Tracker
 			var version = Helper.CheckForUpdates(out _newVersion);
 			if (version != null)
 			{
-				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor,
+													 version.Build);
 			}
 
 			#region load config
@@ -124,6 +119,7 @@ namespace Hearthstone_Deck_Tracker
 					//save locally if appdata doesn't exist (when e.g. not on C)
 					_config.SaveInAppData = false;
 				}
+
 			}
 			catch (Exception e)
 			{
@@ -160,17 +156,19 @@ namespace Hearthstone_Deck_Tracker
 						Logger.WriteLine("Moved config to appdata");
 					}
 				}
-				else if (File.Exists(_config.AppDataPath + @"\config.xml"))
+				else
 				{
-					if (File.Exists(_config.ConfigPath))
+					if (File.Exists(_config.AppDataPath + @"\config.xml"))
 					{
-						//backup in case the file already exists
-						File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+						if (File.Exists(_config.ConfigPath))
+						{
+							//backup in case the file already exists
+							File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+						}
+						File.Move(_config.AppDataPath + @"\config.xml", _config.ConfigPath);
+						Logger.WriteLine("Moved config to local");
 					}
-					File.Move(_config.AppDataPath + @"\config.xml", _config.ConfigPath);
-					Logger.WriteLine("Moved config to local");
 				}
-
 			}
 			#endregion
 
@@ -213,6 +211,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if (_foundHsDirectory)
 			{
+
 				//check for log config and create if not existing
 				try
 				{
@@ -301,7 +300,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else if (!File.Exists(_decksPath + ".old"))
-			{ //the new playerdecks.xml wont work with versions below 0.2.19, make copy
+			{
+				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
 				File.Copy(_decksPath, _decksPath + ".old");
 			}
 
@@ -533,7 +533,6 @@ namespace Hearthstone_Deck_Tracker
 					_opponentWindow.SetOpponentCardCount(_game.OpponentHandCount,
 														 _game.OpponentDeckCount, _game.OpponentHasCoin);
 
-
 				if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
 				{
 					_showingIncorrectDeckMessage = true;
@@ -654,13 +653,13 @@ namespace Hearthstone_Deck_Tracker
 				if (selectedDeck == null || selectedDeck.Class != _game.PlayingAs)
 				{
 
-					//TODO: Double Check if then change
 					var classDecks = _deckList.DecksList.Where(d => d.Class == _game.PlayingAs).ToList();
 					if (classDecks.Count == 0)
 					{
 						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
+						return;
 					}
-					else if (classDecks.Count == 1)
+					if (classDecks.Count == 1)
 					{
 						DeckPickerList.SelectDeck(classDecks[0]);
 						Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
@@ -1157,6 +1156,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void ShowMessage(string title, string message)
 		{
 			await this.ShowMessageAsync(title, message);
+
 		}
 
 		private async void ShowHsNotInstalledMessage()
@@ -1528,9 +1528,9 @@ namespace Hearthstone_Deck_Tracker
 		private void UpdateDeckList(Deck selected)
 		{
 			ListViewDeck.ItemsSource = null;
-
 			if (selected == null)
 			{
+
 				_config.LastDeck = string.Empty;
 				WriteConfig();
 				return;
@@ -1666,6 +1666,7 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnImport_OnClick(object sender, RoutedEventArgs e)
 		{
 			FlyoutDeckImport.IsOpen = true;
+
 		}
 
 		private void ListViewDB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1686,6 +1687,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewNewDeck_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
+
 			var originalSource = (DependencyObject)e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is ListViewItem))
 			{
@@ -1701,6 +1703,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewNewDeck_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
 		{
+
 			var originalSource = (DependencyObject)e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is ListViewItem))
 			{
@@ -1848,10 +1851,10 @@ namespace Hearthstone_Deck_Tracker
 			var settings = new MetroDialogSettings();
 			var clipboard = Clipboard.GetText();
 			var validUrls = new[]
-				{
-					"hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-					"hearthstonetopdeck"
-				};
+                {
+                    "hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
+                    "hearthstonetopdeck"
+                };
 			if (validUrls.Any(clipboard.Contains))
 			{
 				settings.DefaultText = clipboard;
@@ -1954,7 +1957,7 @@ namespace Hearthstone_Deck_Tracker
 
 				foreach (var card in _game.GetActualCards())
 				{
-					if (!card.LocalizedName.ToLower().Contains(TextBoxDBFilter.Text.ToLower()))
+					if (!card.LocalizedName.ToLowerInvariant().Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
 						continue;
 					// mana filter
 					if (ComboBoxFilterMana.SelectedItem.ToString() == "All"
