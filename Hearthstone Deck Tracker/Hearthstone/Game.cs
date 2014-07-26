@@ -197,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             if (GetActualCards().Any(c => c.Name.Equals(name)))
             {
-                return (Card) GetActualCards().FirstOrDefault(c => c.Name.ToLower() == name.ToLower()).Clone();
+                return (Card) GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Clone();
             }
 
             //not sure with all the values here
