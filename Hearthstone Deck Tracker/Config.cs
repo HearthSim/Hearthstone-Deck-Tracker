@@ -12,10 +12,10 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class Config
 	{
-		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-											 @"\HearthstoneDeckTracker";
+		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
 
 		public string AccentName;
+		[Obsolete("Always True")]
 		public bool AlwaysOverwriteLogConfig = true;
 		public bool AutoDeckDetection = true;
 		public bool AutoSelectDetectedDeck = true;
@@ -152,8 +152,8 @@ namespace Hearthstone_Deck_Tracker
 
 
 
-		/*
-		public static void Load(string _configPath)
+
+		public static void Load(string _configPath, Config _config, XmlManager<Config> _xmlManagerConfig)
 		{
 			//var _config = new Config();
 			//var _xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 		}
-		*/
+
 
 	}
 }
