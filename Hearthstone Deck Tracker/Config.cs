@@ -15,7 +15,6 @@ namespace Hearthstone_Deck_Tracker
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
 
 		public string AccentName;
-		[Obsolete("Always True")]
 		public bool AlwaysOverwriteLogConfig = true;
 		public bool AutoDeckDetection = true;
 		public bool AutoSelectDetectedDeck = true;

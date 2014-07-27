@@ -14,16 +14,16 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
-	internal class DeckExporter
+	internal static class DeckExporter
 	{
-		private readonly Config _config;
+		//private readonly Config _config;
 
-		public DeckExporter(Config config)
-		{
-			_config = config;
-		}
+		//public DeckExporter(Config config)
+		//{
+		//	_config = config;
+		//}
 
-		public async Task Export(Deck deck)
+		public static async Task Export(Deck deck)
 		{
 			if (deck == null) return;
 
@@ -44,12 +44,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var hsRect = User32.GetHearthstoneRect(false);
-
 			var bounds = Screen.FromHandle(hsHandle).Bounds;
-
 			bool isFullscreen = bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
 
-			if (_config.ExportSetDeckName)
+			if (Config.Instance.ExportSetDeckName)
 				await SetDeckName(deck.Name, hsRect.Width, hsRect.Height, hsHandle);
 
 			foreach (var card in deck.Cards)
@@ -58,59 +56,50 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task SetDeckName(string name, int width, int height, IntPtr hsHandle)
+		private static async Task SetDeckName(string name, int width, int height, IntPtr hsHandle)
 		{
-			var nameDeckPos = new Point((int)(_config.NameDeckX * width), (int)(_config.NameDeckY * height));
+			var nameDeckPos = new Point((int)(Config.Instance.NameDeckX * width), (int)(Config.Instance.NameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			SendKeys.SendWait(name);
 			SendKeys.SendWait("{ENTER}");
 		}
 
-		private async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle, bool isFullscreen)
+		private static async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle, bool isFullscreen)
 		{
 			var ratio = (double)width / height;
-
-			var cardPosX = ratio < 1.5 ? width * _config.CardPosX : width * _config.CardPosX * (ratio / 1.33);
-
-			var searchBoxPos = new Point((int)(_config.SearchBoxX * width), (int)(_config.SearchBoxPosY * height));
-			var cardPos = new Point((int)cardPosX, (int)(_config.CardPosY * height));
+			var cardPosX = ratio < 1.5 ? width * Config.Instance.CardPosX : width * Config.Instance.CardPosX * (ratio / 1.33);
+			var searchBoxPos = new Point((int)(Config.Instance.SearchBoxX * width), (int)(Config.Instance.SearchBoxPosY * height));
+			var cardPos = new Point((int)cardPosX, (int)(Config.Instance.CardPosY * height));
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 			SendKeys.SendWait(FixCardName(card.LocalizedName).ToLowerInvariant());
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(_config.SearchDelay);
+			await Task.Delay(Config.Instance.SearchDelay);
 
-			var card2PosX = ratio < 1.5 ? width * _config.Card2PosX : width * _config.Card2PosX * (ratio / 1.33);
-			var cardPosY = _config.CardPosY * height;
+			var card2PosX = ratio < 1.5 ? width * Config.Instance.Card2PosX : width * Config.Instance.Card2PosX * (ratio / 1.33);
+			var cardPosY = Config.Instance.CardPosY * height;
 			for (int i = 0; i < card.Count; i++)
 			{
-				if (_config.PrioritizeGolden)
+				if (Config.Instance.PrioritizeGolden)
 				{
 					if (card.Count == 2)
 						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+					else if (CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05))))
+						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 					else
-					{
-						if (CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05))))
-						{
-							await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-						}
-						else
-						{
-							await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-						}
-					}
+						await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				}
 				else
 				{
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				}
-
 			}
+
 			if (card.Count == 2)
 			{
 				//click again to make sure we get 2 cards 
-				if (_config.PrioritizeGolden)
+				if (Config.Instance.PrioritizeGolden)
 				{
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
@@ -123,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)
+		private static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)
 		{
 			User32.ClientToScreen(wndHandle, ref clientPoint);
 
@@ -135,17 +124,18 @@ namespace Hearthstone_Deck_Tracker
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
 
-			await Task.Delay(_config.ClickDelay);
+			await Task.Delay(Config.Instance.ClickDelay);
 
 			//mouse up
 			if (SystemInformation.MouseButtonsSwapped)
 				User32.mouse_event((uint)User32.MouseEventFlags.RightUp, 0, 0, 0, UIntPtr.Zero);
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
-			await Task.Delay(_config.ClickDelay);
+
+			await Task.Delay(Config.Instance.ClickDelay);
 		}
 
-		private string FixCardName(string cardName)
+		private static string FixCardName(string cardName)
 		{
 			switch (cardName)
 			{
@@ -170,17 +160,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private bool CheckForGolden(IntPtr wndHandle, Point point)
+		private static bool CheckForGolden(IntPtr wndHandle, Point point)
 		{
-			const int width = 50;
-			const int height = 50;
-
-			const int targetHue = 43;
+			const int width = 50, height = 50, targetHue = 43;
 			const float targetSat = 0.38f;
-
 			var avgHue = 0.0f;
 			var avgSat = 0.0f;
 			var capture = CaptureHearthstone(wndHandle, point, width, height);
+
 			if (capture == null)
 				return false;
 
@@ -206,7 +193,7 @@ namespace Hearthstone_Deck_Tracker
 			return avgHue <= targetHue && avgSat <= targetSat;
 		}
 
-		public Bitmap CaptureHearthstone(IntPtr wndHandle, Point point, int width, int height)
+		private static Bitmap CaptureHearthstone(IntPtr wndHandle, Point point, int width, int height)
 		{
 			User32.ClientToScreen(wndHandle, ref point);
 			if (!User32.IsForegroundWindow("Hearthstone")) return null;

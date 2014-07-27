@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker
 		//private readonly XmlManager<Config> _xmlManagerConfig;
 		//public readonly XmlManager<Deck> _xmlManagerDeck;
 		//internal readonly DeckImporter _deckImporter;
-		internal readonly DeckExporter _deckExporter;
+		//internal readonly DeckExporter _deckExporter;
 		public bool _editingDeck;
 		private bool _newContainsDeck;
 		public Deck _newDeck;
@@ -78,14 +78,15 @@ namespace Hearthstone_Deck_Tracker
 		private bool _showingIncorrectDeckMessage;
 		private bool _showIncorrectDeckMessage;
 		private readonly Version _newVersion;
-		private readonly TurnTimer _turnTimer;
+		//private readonly TurnTimer _turnTimer;
 
 
 		private readonly bool _updatedLogConfig;
 
 
 		private readonly bool _foundHsDirectory;
-		private const string EventKeys = "None,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12";
+		//private const string EventKeys = "None,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12";
+		private ReadOnlyCollection<string> EventKeys = new ReadOnlyCollection<string>(new[] { "None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" });
 
 		public bool ShowToolTip
 		{
@@ -320,14 +321,14 @@ namespace Hearthstone_Deck_Tracker
 			ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
-			ComboboxKeyPressGameStart.ItemsSource = EventKeys.Split(',');
-			ComboboxKeyPressGameEnd.ItemsSource = EventKeys.Split(',');
+			ComboboxKeyPressGameStart.ItemsSource = EventKeys;
+			ComboboxKeyPressGameEnd.ItemsSource = EventKeys;
 
 			LoadConfig();
 
 			DeckImporter._game = _game;
 			//_deckImporter = new DeckImporter(_game);
-			_deckExporter = new DeckExporter(Config.Instance);
+			//_deckExporter = new DeckExporter(Config.Instance);
 
 			//this has to happen before reader starts
 			var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
@@ -361,8 +362,10 @@ namespace Hearthstone_Deck_Tracker
 			_logReader.CardPosChange += LogReaderOnCardPosChange;
 			_logReader.SecretPlayed += LogReaderOnSecretPlayed;
 
-			_turnTimer = new TurnTimer(90);
-			_turnTimer.TimerTick += TurnTimerOnTimerTick;
+			//_turnTimer = new TurnTimer(90);
+			//_turnTimer.TimerTick += TurnTimerOnTimerTick;
+			TurnTimer.Create(90);
+			TurnTimer.Instance.TimerTick += TurnTimerOnTimerTick;
 
 			TagControlFilter.HideStuffToCreateNewTag();
 			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
@@ -442,8 +445,8 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine(string.Format("{0}-turn ({1})", args.Turn, sender.GetTurnNumber() + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer
 			//maybe add timer to player/opponent windows
-			_turnTimer.SetCurrentPlayer(args.Turn);
-			_turnTimer.Restart();
+			TurnTimer.Instance.SetCurrentPlayer(args.Turn);
+			TurnTimer.Instance.Restart();
 			if (args.Turn == Turn.Player && !_game.IsInMenu)
 			{
 				if (Config.Instance.FlashHs)
@@ -572,7 +575,7 @@ namespace Hearthstone_Deck_Tracker
 			if (Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
 
-			if (Config.Instance.KeyPressOnGameStart != "None" && EventKeys.Split(',').Contains(Config.Instance.KeyPressOnGameStart))
+			if (Config.Instance.KeyPressOnGameStart != "None" && EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
@@ -624,12 +627,12 @@ namespace Hearthstone_Deck_Tracker
 		private void HandleGameEnd()
 		{
 			Logger.WriteLine("Game end");
-			if (Config.Instance.KeyPressOnGameEnd != "None" && EventKeys.Split(',').Contains(Config.Instance.KeyPressOnGameEnd))
+			if (Config.Instance.KeyPressOnGameEnd != "None" && EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
 			}
-			_turnTimer.Stop();
+			TurnTimer.Instance.Stop();
 			_overlay.HideTimers();
 			_overlay.HideSecrets();
 			if (Config.Instance.SavePlayedGames && !_game.IsInMenu)
@@ -670,7 +673,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandlePlayerMulligan(string cardId)
 		{
-			_turnTimer.MulliganDone(Turn.Player);
+			TurnTimer.Instance.MulliganDone(Turn.Player);
 			_game.Mulligan(cardId);
 
 			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
@@ -716,7 +719,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandleOpponentMulligan(int pos)
 		{
-			_turnTimer.MulliganDone(Turn.Opponent);
+			TurnTimer.Instance.MulliganDone(Turn.Opponent);
 			_game.OpponentMulligan(pos);
 		}
 
@@ -993,13 +996,13 @@ namespace Hearthstone_Deck_Tracker
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 			}
 
-			if (!EventKeys.Split(',').Contains(Config.Instance.KeyPressOnGameStart))
+			if (!EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				Config.Instance.KeyPressOnGameStart = "None";
 			}
 			ComboboxKeyPressGameStart.SelectedValue = Config.Instance.KeyPressOnGameStart;
 
-			if (!EventKeys.Split(',').Contains(Config.Instance.KeyPressOnGameEnd))
+			if (!EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				Config.Instance.KeyPressOnGameEnd = "None";
 			}
