@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 						while (name.Length > 0 && Helper.IsNumeric(name[0]))
 							name = name.Remove(0, 1);
 
-						var card = Helper.MainWindow._game.GetCardFromName(name);
+						var card = Game.Instance.GetCardFromName(name);
 						if (card.Id == "UNKNOWN")
 							continue;
 
@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker
 							var lines = sr.ReadToEnd().Split('\n');
 							foreach (var line in lines)
 							{
-								var card = Helper.MainWindow._game.GetCardFromName(line.Trim());
+								var card = Game.Instance.GetCardFromName(line.Trim());
 								if (card.Name == "") continue;
 
 								if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")

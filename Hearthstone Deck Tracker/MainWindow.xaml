@@ -4,7 +4,7 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
         Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" 
-        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing_1" 
+        Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing" 
         Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" 
         StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">

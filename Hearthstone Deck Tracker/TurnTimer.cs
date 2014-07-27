@@ -31,8 +31,8 @@ namespace Hearthstone_Deck_Tracker
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
-		public event TimerTickHandler TimerTick;
-		public delegate void TimerTickHandler(TurnTimer sender, TimerEventArgs e);
+		//public event TimerTickHandler TimerTick;
+		//public delegate void TimerTickHandler(TurnTimer sender, TimerEventArgs e);
 
 		public Turn _currentTurn;
 		private bool _playerMulliganed = false;
@@ -135,5 +135,14 @@ namespace Hearthstone_Deck_Tracker
 				_opponentMulliganed = true;
 			}
 		}
+
+
+
+		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
+		{
+			Helper.MainWindow._overlay.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow._overlay.UpdateTurnTimer(timerEventArgs)));
+			Helper.MainWindow._timerWindow.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow._timerWindow.Update(timerEventArgs)));
+		}
+
 	}
 }
