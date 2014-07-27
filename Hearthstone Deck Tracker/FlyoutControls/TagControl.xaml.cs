@@ -288,10 +288,9 @@ namespace Hearthstone_Deck_Tracker
 				foreach (var deck in Window._deckList.DecksList)
 				{
 					if (deck.Tags.Contains(tag))
-					{
 						deck.Tags.Remove(tag);
-					}
 				}
+
 				if (Window._newDeck.Tags.Contains(tag))
 					Window._newDeck.Tags.Remove(tag);
 
