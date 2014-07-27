@@ -46,9 +46,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
-		//public readonly Config _config;
 		public readonly Decks _deckList;
-		//public readonly Game _game;
 		private readonly bool _initialized;
 
 		private readonly string _logConfigPath =
@@ -58,16 +56,10 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
 		private readonly string _configPath;
 
-		//private readonly HsLogReader _logReader;
 		private readonly NotifyIcon _notifyIcon;
 		public readonly OpponentWindow _opponentWindow;
 		public readonly OverlayWindow _overlay;
 		public readonly TimerWindow _timerWindow;
-		//private readonly XmlManager<Decks> _xmlManager;
-		//private readonly XmlManager<Config> _xmlManagerConfig;
-		//public readonly XmlManager<Deck> _xmlManagerDeck;
-		//internal readonly DeckImporter _deckImporter;
-		//internal readonly DeckExporter _deckExporter;
 		public bool _editingDeck;
 		private bool _newContainsDeck;
 		public Deck _newDeck;
@@ -75,15 +67,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool _showingIncorrectDeckMessage;
 		public bool _showIncorrectDeckMessage;
 		public readonly Version _newVersion;
-		//private readonly TurnTimer _turnTimer;
 		public readonly PlayerWindow _playerWindow;
-
-
 		private readonly bool _updatedLogConfig;
-
-
 		private readonly bool _foundHsDirectory;
-		//private const string EventKeys = "None,F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,F11,F12";
 		public ReadOnlyCollection<string> EventKeys = new ReadOnlyCollection<string>(new[] { "None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" });
 
 		public bool ShowToolTip
@@ -2114,7 +2100,6 @@ namespace Hearthstone_Deck_Tracker
 			#endregion
 
 			//hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
-			//_game = Helper.LanguageDict.ContainsValue(languageTag) ? new Game(languageTag) : new Game("enUS");
 			Game.Create();
 			Game.Instance.Reset();
 
@@ -2136,26 +2121,20 @@ namespace Hearthstone_Deck_Tracker
 			{
 				DeckPickerList.AddDeck(deck);
 			}
-			//DeckPickerList.SelectedDeckChanged += DeckPickerListOnSelectedDeckChanged;
 
 			_notifyIcon = new System.Windows.Forms.NotifyIcon();
 			_notifyIcon.Icon = new Icon(@"Images/HearthstoneDeckTracker.ico");
 			_notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
 			_notifyIcon.Visible = false;
 
-			//_xmlManagerDeck = new XmlManager<Deck>();
-			//_xmlManagerDeck.Type = typeof(Deck);
-
 			_newDeck = new Deck();
 			ListViewNewDeck.ItemsSource = _newDeck.Cards;
-
 
 			//create overlay
 			_overlay = new OverlayWindow(Config.Instance, Game.Instance) { Topmost = true };
 			if (_foundHsDirectory)
-			{
 				_overlay.Show();
-			}
+
 			_playerWindow = new PlayerWindow(Config.Instance, Game.Instance.IsUsingPremade ? Game.Instance.PlayerDeck : Game.Instance.PlayerDrawn);
 			_opponentWindow = new OpponentWindow(Config.Instance, Game.Instance.OpponentCards);
 			_timerWindow = new TimerWindow(Config.Instance);
@@ -2194,61 +2173,22 @@ namespace Hearthstone_Deck_Tracker
 
 			LoadConfig();
 
-			//DeckImporter._game = Game.Instance;
-			//_deckImporter = new DeckImporter(_game);
-			//_deckExporter = new DeckExporter(Config.Instance);
-
 			//this has to happen before reader starts
 			var lastDeck = _deckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
 			DeckPickerList.SelectDeck(lastDeck);
 
-			//deck options flyout button events
-			//DeckOptionsFlyout.BtnExportHs.Click += DeckOptionsFlyoutBtnExportHs_Click;
-			//DeckOptionsFlyout.BtnNotes.Click += DeckOptionsFlyoutBtnNotes_Click;
-			//DeckOptionsFlyout.BtnScreenshot.Click += DeckOptionsFlyoutBtnScreenhot_Click;
-			//DeckOptionsFlyout.BtnCloneDeck.Click += DeckOptionsFlyoutCloneDeck_Click;
-			//DeckOptionsFlyout.BtnTags.Click += DeckOptionsFlyoutBtnTags_Click;
-			//DeckOptionsFlyout.BtnSaveToFile.Click += DeckOptionsFlyoutBtnSaveToFile_Click;
-			//DeckOptionsFlyout.BtnClipboard.Click += DeckOptionsFlyoutBtnClipboard_Click;
-
 			DeckOptionsFlyout.DeckOptionsButtonClicked += (DeckOptions sender) => { FlyoutDeckOptions.IsOpen = false; };
-
-			//deck import flyout button events
-			//DeckImportFlyout.BtnWeb.Click += DeckImportFlyoutBtnWebClick;
-			//DeckImportFlyout.BtnArenavalue.Click += DeckImportFlyoutBtnArenavalue_Click;
-			//DeckImportFlyout.BtnFile.Click += DeckImportFlyoutBtnFile_Click;
-			//DeckImportFlyout.BtnIdString.Click += DeckImportFlyoutBtnIdString_Click;
 
 			DeckImportFlyout.DeckOptionsButtonClicked += (DeckImport sender) => { FlyoutDeckImport.IsOpen = false; };
 
-			//log reader
-			//_logReader = new HsLogReader(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay);
-			//_logReader.CardMovement += LogReaderOnCardMovement;
-			//_logReader.GameStateChange += LogReaderOnGameStateChange;
-			//_logReader.Analyzing += LogReaderOnAnalyzing;
-			//_logReader.TurnStart += LogReaderOnTurnStart;
-			//_logReader.CardPosChange += LogReaderOnCardPosChange;
-			//_logReader.SecretPlayed += LogReaderOnSecretPlayed;
-
-			//_turnTimer = new TurnTimer(90);
-			//_turnTimer.TimerTick += TurnTimerOnTimerTick;
 			TurnTimer.Create(90);
-			//TurnTimer.Instance.TimerTick += TurnTimerOnTimerTick;
 
 			TagControlFilter.HideStuffToCreateNewTag();
 			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
 			TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
 
-			//TagControlNewDeck.NewTag += TagControlOnNewTag;
-			//TagControlNewDeck.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			//TagControlNewDeck.DeleteTag += TagControlOnDeleteTag;
-
-			//TagControlMyDecks.NewTag += TagControlOnNewTag;
-			//TagControlMyDecks.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			//TagControlMyDecks.DeleteTag += TagControlOnDeleteTag;
 			TagControlFilter.SelectedTagsChanged += TagControlFilterOnSelectedTagsChanged;
 			TagControlFilter.OperationChanged += TagControlFilterOnOperationChanged;
-
 
 			UpdateDbListView();
 
@@ -2327,7 +2267,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
 
 
 		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
