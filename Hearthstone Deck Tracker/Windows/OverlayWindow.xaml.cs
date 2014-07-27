@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -28,6 +29,7 @@ namespace Hearthstone_Deck_Tracker
         private readonly List<HearthstoneTextBlock> _cardLabels;
         private readonly List<HearthstoneTextBlock> _cardMarkLabels;
         private readonly List<StackPanel> _stackPanelsMarks;
+	    private readonly List<UIElement> _movableElements; 
         private readonly Config _config;
         private readonly int _customHeight;
         private readonly int _customWidth;
@@ -47,7 +49,15 @@ namespace Hearthstone_Deck_Tracker
             _game = game;
 
             _mouseInput = new User32.MouseInput();
-            _mouseInput.Click += MouseInputOnClick;
+            _mouseInput.LmbDown += MouseInputOnLmbDown;
+
+	        _mouseInput.LmbUp += (sender, args) =>
+		        {
+			        _lmbDown = false;
+			        _selectedUIElement = null;
+		        };
+
+			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
 
             ListViewPlayer.ItemsSource = _game.IsUsingPremade
                                              ? _game.PlayerDeck
@@ -104,13 +114,100 @@ namespace Hearthstone_Deck_Tracker
                     Marks8,
                     Marks9,
                 };
+			_movableElements = new List<UIElement>
+				{
+					StackPanelPlayer,
+					StackPanelOpponent,
+					StackPanelSecrets,
+					LblTurnTime
+				};
 
             UpdateScaling();
         }
 
-        private void MouseInputOnClick(object sender, EventArgs eventArgs)
+	    private void MouseInputOnMouseMoved(object sender, EventArgs eventArgs)
+	    {
+		    if (!_lmbDown) return;
+
+			var pos = User32.GetMousePos();
+			var newPos = new Point(pos.X, pos.Y);
+		    var delta = new Point((newPos.X - _mousePos.X)*100, (newPos.Y - _mousePos.Y)*100);
+
+			var panel = _selectedUIElement as StackPanel;
+			if (panel != null)
+			{
+				if (panel.Name.Contains("Player"))
+				{
+					_config.PlayerDeckTop += delta.Y / Height;
+					_config.PlayerDeckLeft += delta.X / Width;
+				}
+				else if (panel.Name.Contains("Opponent"))
+				{
+					_config.OpponentDeckTop += delta.Y / Height;
+					_config.OpponentDeckLeft += delta.X / Width;
+				}
+				else if (panel.Name.Contains("Secret"))
+				{
+					_config.SecretsTop += delta.Y / Height;
+					_config.SecretsLeft += delta.X / Width;
+				}
+			}
+
+			var timer = _selectedUIElement as HearthstoneTextBlock;
+			if (timer != null)
+			{
+				if (timer.Name.Contains("Turn"))
+				{
+					
+				}
+			}
+
+		    _mousePos = newPos;
+
+	    }
+
+	    private bool _uiMovable;
+	    private bool _lmbDown;
+	    private UIElement _selectedUIElement;
+	    private Point _mousePos;
+        private void MouseInputOnLmbDown(object sender, EventArgs eventArgs)
         {
             if(!User32.IsForegroundWindow("Hearthstone")) return;
+
+			if (_uiMovable)
+			{
+				_lmbDown = true;
+
+				var pos = User32.GetMousePos();
+				_mousePos = new Point(pos.X, pos.Y);
+		        foreach (var movableElement in _movableElements)
+		        {
+					var relativePos = movableElement.PointFromScreen(_mousePos);
+					
+			        var panel = movableElement as StackPanel;
+			        if (panel != null)
+					{
+						if (PointInsideControl(relativePos, panel.ActualWidth, panel.ActualHeight))
+						{
+							_selectedUIElement = movableElement;
+							return;
+						}
+					}
+
+			        var timer = movableElement as HearthstoneTextBlock;
+					if (timer != null)
+					{
+						if (PointInsideControl(relativePos, timer.ActualWidth, timer.ActualHeight))
+						{
+							_selectedUIElement = movableElement;
+							return;
+						}
+					}
+
+		        }
+		        return;
+	        }
+
             if (ToolTipCard.Visibility == Visibility.Visible)
             {
                 var card = ToolTipCard.DataContext as Card;
@@ -659,5 +756,16 @@ namespace Hearthstone_Deck_Tracker
         {
             _mouseInput.Dispose();
         }
+
+	    public bool UnlockUI()
+	    {
+		    _uiMovable = !_uiMovable;
+
+		    Background = _uiMovable
+			                 ? (SolidColorBrush) new BrushConverter().ConvertFrom("#4C0000FF")
+			                 : new SolidColorBrush(Colors.Transparent);
+
+		    return _uiMovable;
+	    }
     }
 }

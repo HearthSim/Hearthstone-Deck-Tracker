@@ -2733,5 +2733,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			ShowClearNewDeckMessage();
 		}
+
+		private void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
+		{
+			BtnUnlockOverlay.Content = _overlay.UnlockUI() ? "Lock" : "Unlock";
+		}
 	}
 }
