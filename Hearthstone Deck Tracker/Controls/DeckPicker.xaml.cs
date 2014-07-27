@@ -348,13 +348,13 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.FlyoutDeckOptions.Header = flyoutHeader;
 
 				//change player deck itemsource
-				if (Helper.MainWindow._overlay.ListViewPlayer.ItemsSource != Game.Instance.PlayerDeck)
+				if (Helper.MainWindow._overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
 				{
-					Helper.MainWindow._overlay.ListViewPlayer.ItemsSource = Game.Instance.PlayerDeck;
-					Helper.MainWindow._playerWindow.ListViewPlayer.ItemsSource = Game.Instance.PlayerDeck;
+					Helper.MainWindow._overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					Helper.MainWindow._playerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
 					Logger.WriteLine("Set player itemsource as playerdeck");
 				}
-				Game.Instance.IsUsingPremade = true;
+				Game.IsUsingPremade = true;
 				Helper.MainWindow.UpdateDeckList(deck);
 				Helper.MainWindow.UseDeck(deck);
 				Logger.WriteLine("Switched to deck: " + deck.Name);
@@ -383,5 +383,23 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.EnableDeckButtons(false);
 			}
 		}
+
+
+		private void Try_To_Sort()
+		{
+			//TODO: Figure out how to make this work
+
+			var Lists = _hsClasses.OrderBy(x => x.Name).ToList();
+			_hsClasses.Clear();
+			_hsClasses.AddRange(Lists);
+
+			ListboxPicker.Items.Clear();
+			foreach (var hsClass in _hsClasses)
+			{
+				ListboxPicker.Items.Add(hsClass);
+			}
+		}
+
+
 	}
 }

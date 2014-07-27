@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var decks =
 				_deckList.DecksList.Where(
-					d => d.Class == Game.Instance.PlayingAs && Game.Instance.PlayerDrawn.All(c => d.Cards.Contains(c))
+					d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))
 				).ToList();
 			if (decks.Contains(DeckPickerList.SelectedDeck))
 				decks.Remove(DeckPickerList.SelectedDeck);
@@ -482,7 +482,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				if (Game.Instance.PlayerDrawn != null && Game.Instance.PlayerDrawn.Count > 0)
+				if (Game.PlayerDrawn != null && Game.PlayerDrawn.Count > 0)
 				{
 					var serializer = new XmlSerializer(typeof(Card[]));
 
@@ -495,13 +495,13 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Saving games to: " + path);
 					using (var sw = new StreamWriter(path + "\\Player.xml"))
 					{
-						serializer.Serialize(sw, Game.Instance.PlayerDrawn.ToArray());
+						serializer.Serialize(sw, Game.PlayerDrawn.ToArray());
 						Logger.WriteLine("Success saving Player.xml");
 					}
 					using (var sw = new StreamWriter(path + "\\Opponent.xml"))
 					{
-						if (Game.Instance.OpponentCards != null)
-							serializer.Serialize(sw, Game.Instance.OpponentCards.ToArray());
+						if (Game.OpponentCards != null)
+							serializer.Serialize(sw, Game.OpponentCards.ToArray());
 						Logger.WriteLine("Success saving Opponent.xml");
 					}
 				}
@@ -519,9 +519,9 @@ namespace Hearthstone_Deck_Tracker
 		private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
 		{
 			Logger.WriteLine("set player item source as drawn");
-			_overlay.ListViewPlayer.ItemsSource = Game.Instance.PlayerDrawn;
-			_playerWindow.ListViewPlayer.ItemsSource = Game.Instance.PlayerDrawn;
-			Game.Instance.IsUsingPremade = false;
+			_overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+			_playerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+			Game.IsUsingPremade = false;
 
 			if (DeckPickerList.SelectedDeck != null)
 				DeckPickerList.SelectedDeck.IsSelectedInGui = false;
@@ -616,10 +616,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UseDeck(Deck selected)
 		{
-			Game.Instance.Reset();
+			Game.Reset();
 
 			if (selected != null)
-				Game.Instance.SetPremadeDeck((Deck)selected.Clone());
+				Game.SetPremadeDeck((Deck)selected.Clone());
 
 			HsLogReader.Instance.Reset(true);
 
@@ -809,7 +809,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				ListViewDB.Items.Clear();
 
-				foreach (var card in Game.Instance.GetActualCards())
+				foreach (var card in Game.GetActualCards())
 				{
 					if (!card.LocalizedName.ToLowerInvariant().Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
 						continue;
@@ -1244,11 +1244,9 @@ namespace Hearthstone_Deck_Tracker
 			_opponentWindow.Show();
 			_opponentWindow.Activate();
 
-			_playerWindow.SetCardCount(Game.Instance.PlayerHandCount,
-									   30 - Game.Instance.PlayerDrawn.Sum(card => card.Count));
+			_playerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
 
-			_opponentWindow.SetOpponentCardCount(Game.Instance.OpponentHandCount,
-												 Game.Instance.OpponentDeckCount, Game.Instance.OpponentHasCoin);
+			_opponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
 
 			Config.Instance.WindowsOnStartup = true;
 			SaveConfig(true);
@@ -1987,8 +1985,8 @@ namespace Hearthstone_Deck_Tracker
 			if (!_initialized) return;
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
-			if (!Game.Instance.IsInMenu)
-				_overlay.ShowSecrets(Game.Instance.PlayingAgainst);
+			if (!Game.IsInMenu)
+				_overlay.ShowSecrets(Game.PlayingAgainst);
 		}
 
 		private void BtnShowSecrets_Click(object sender, RoutedEventArgs e)
@@ -2100,8 +2098,8 @@ namespace Hearthstone_Deck_Tracker
 			#endregion
 
 			//hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
-			Game.Create();
-			Game.Instance.Reset();
+			//Game.Create();
+			Game.Reset();
 
 			Setup_Deck_List_File();
 			try
@@ -2131,12 +2129,12 @@ namespace Hearthstone_Deck_Tracker
 			ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
 			//create overlay
-			_overlay = new OverlayWindow(Config.Instance, Game.Instance) { Topmost = true };
+			_overlay = new OverlayWindow(Config.Instance) { Topmost = true };
 			if (_foundHsDirectory)
 				_overlay.Show();
 
-			_playerWindow = new PlayerWindow(Config.Instance, Game.Instance.IsUsingPremade ? Game.Instance.PlayerDeck : Game.Instance.PlayerDrawn);
-			_opponentWindow = new OpponentWindow(Config.Instance, Game.Instance.OpponentCards);
+			_playerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
+			_opponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
 			_timerWindow = new TimerWindow(Config.Instance);
 
 			if (Config.Instance.WindowsOnStartup)
@@ -2216,8 +2214,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Setup_Deck_List_File()
 		{
-			//_decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
-
 			if (Config.Instance.SaveInAppData)
 			{
 				if (File.Exists("PlayerDecks.xml"))
@@ -2260,10 +2256,6 @@ namespace Hearthstone_Deck_Tracker
 				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
 				File.Copy(_decksPath, _decksPath + ".old");
 			}
-
-
-			//_xmlManager = new XmlManager<Decks> { Type = typeof(Decks) };
-
 		}
 
 		#endregion
