@@ -60,12 +60,11 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _decksPath;
 		private readonly string _configPath;
 
-		private readonly HsLogReader _logReader;
+		//private readonly HsLogReader _logReader;
 		private readonly NotifyIcon _notifyIcon;
-		private readonly OpponentWindow _opponentWindow;
-		private readonly OverlayWindow _overlay;
-		private readonly PlayerWindow _playerWindow;
-		private readonly TimerWindow _timerWindow;
+		public readonly OpponentWindow _opponentWindow;
+		public readonly OverlayWindow _overlay;
+		public readonly TimerWindow _timerWindow;
 		//private readonly XmlManager<Decks> _xmlManager;
 		//private readonly XmlManager<Config> _xmlManagerConfig;
 		//public readonly XmlManager<Deck> _xmlManagerDeck;
@@ -75,10 +74,11 @@ namespace Hearthstone_Deck_Tracker
 		private bool _newContainsDeck;
 		public Deck _newDeck;
 		private bool _doUpdate;
-		private bool _showingIncorrectDeckMessage;
-		private bool _showIncorrectDeckMessage;
-		private readonly Version _newVersion;
+		public bool _showingIncorrectDeckMessage;
+		public bool _showIncorrectDeckMessage;
+		public readonly Version _newVersion;
 		//private readonly TurnTimer _turnTimer;
+		public readonly PlayerWindow _playerWindow;
 
 
 		private readonly bool _updatedLogConfig;
@@ -100,14 +100,17 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 
 			#region Aaron Campf
+			Helper.MainWindow = this;
+			/*
 			DeckOptionsFlyout.Window = this;
 			DeckImportFlyout.Window = this;
 			TagControlMyDecks.Window = this;
 			TagControlNewDeck.Window = this;
-
+			*/
 
 			//_xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
 			_configPath = Config.Load();
+			HsLogReader.Create();
 
 			#endregion
 
@@ -357,13 +360,13 @@ namespace Hearthstone_Deck_Tracker
 			DeckImportFlyout.DeckOptionsButtonClicked += (DeckImport sender) => { FlyoutDeckImport.IsOpen = false; };
 
 			//log reader
-			_logReader = new HsLogReader(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay);
-			_logReader.CardMovement += LogReaderOnCardMovement;
-			_logReader.GameStateChange += LogReaderOnGameStateChange;
-			_logReader.Analyzing += LogReaderOnAnalyzing;
-			_logReader.TurnStart += LogReaderOnTurnStart;
-			_logReader.CardPosChange += LogReaderOnCardPosChange;
-			_logReader.SecretPlayed += LogReaderOnSecretPlayed;
+			//_logReader = new HsLogReader(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay);
+			//_logReader.CardMovement += LogReaderOnCardMovement;
+			//_logReader.GameStateChange += LogReaderOnGameStateChange;
+			//_logReader.Analyzing += LogReaderOnAnalyzing;
+			//_logReader.TurnStart += LogReaderOnTurnStart;
+			//_logReader.CardPosChange += LogReaderOnCardPosChange;
+			//_logReader.SecretPlayed += LogReaderOnSecretPlayed;
 
 			//_turnTimer = new TurnTimer(90);
 			//_turnTimer.TimerTick += TurnTimerOnTimerTick;
@@ -402,7 +405,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if (_foundHsDirectory)
 			{
-				_logReader.Start();
+				HsLogReader.Instance.Start();
 			}
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
@@ -423,150 +426,11 @@ namespace Hearthstone_Deck_Tracker
 			_timerWindow.Dispatcher.BeginInvoke(new Action(() => _timerWindow.Update(timerEventArgs)));
 		}
 
-		private void LogReaderOnCardPosChange(HsLogReader sender, CardPosChangeArgs args)
-		{
-			Logger.WriteLine(string.Format("Opponent{0} (id:{1} turn:{2} from:{3})", args.Action.ToString(), args.Id, args.Turn, args.From), "LogReader");
-			switch (args.Action)
-			{
-				case OpponentHandMovement.Draw:
-					_game.OpponentDraw(args);
-					break;
-				case OpponentHandMovement.Play:
-					_game.OpponentPlay(args);
-					break;
-				case OpponentHandMovement.Mulligan:
-					HandleOpponentMulligan(args.From);
-					break;
-				case OpponentHandMovement.FromPlayerDeck:
-					_game.OpponentGet(args.Turn);
-					break;
-			}
-		}
-
-		private void LogReaderOnTurnStart(HsLogReader sender, TurnStartArgs args)
-		{
-			Logger.WriteLine(string.Format("{0}-turn ({1})", args.Turn, sender.GetTurnNumber() + 1), "LogReader");
-			//doesn't really matter whose turn it is for now, just restart timer
-			//maybe add timer to player/opponent windows
-			TurnTimer.Instance.SetCurrentPlayer(args.Turn);
-			TurnTimer.Instance.Restart();
-			if (args.Turn == Turn.Player && !_game.IsInMenu)
-			{
-				if (Config.Instance.FlashHs)
-					User32.FlashHs();
-
-				if (Config.Instance.BringHsToForeground)
-					User32.BringHsToForeground();
-			}
-
-		}
-
-		private void LogReaderOnAnalyzing(HsLogReader sender, AnalyzingArgs args)
-		{
-			if (args.State == AnalyzingState.Start)
-			{
-
-			}
-			else if (args.State == AnalyzingState.End)
-			{
-				//reader done analyzing new stuff, update things
-				if (_overlay.IsVisible)
-					_overlay.Update(false);
-
-				if (_playerWindow.IsVisible)
-					_playerWindow.SetCardCount(_game.PlayerHandCount, 30 - _game.PlayerDrawn.Sum(card => card.Count));
-
-				if (_opponentWindow.IsVisible)
-					_opponentWindow.SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount, _game.OpponentHasCoin);
-
-
-				if (_showIncorrectDeckMessage && !_showingIncorrectDeckMessage)
-				{
-					_showingIncorrectDeckMessage = true;
-					ShowIncorrectDeckMessage();
-				}
-
-			}
-		}
-
-		private void LogReaderOnGameStateChange(HsLogReader sender, GameStateArgs args)
-		{
-			if (!string.IsNullOrEmpty(args.PlayerHero))
-			{
-				_game.PlayingAs = args.PlayerHero;
-				Logger.WriteLine("Playing as " + args.PlayerHero, "Hearthstone");
-
-			}
-			if (!string.IsNullOrEmpty(args.OpponentHero))
-			{
-				_game.PlayingAgainst = args.OpponentHero;
-				Logger.WriteLine("Playing against " + args.OpponentHero, "Hearthstone");
-			}
-
-			if (args.State != null)
-			{
-				switch (args.State)
-				{
-					case GameState.GameBegin:
-						HandleGameStart();
-						break;
-					case GameState.GameEnd:
-						HandleGameEnd();
-						break;
-				}
-			}
-		}
-
-		private void LogReaderOnCardMovement(HsLogReader sender, CardMovementArgs args)
-		{
-			Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", args.MovementType.ToString(), args.CardId, sender.GetTurnNumber(), args.From), "LogReader");
-
-			switch (args.MovementType)
-			{
-				case CardMovementType.PlayerGet:
-					HandlePlayerGet(args.CardId);
-					break;
-				case CardMovementType.PlayerDraw:
-					HandlePlayerDraw(args.CardId);
-					break;
-				case CardMovementType.PlayerMulligan:
-					HandlePlayerMulligan(args.CardId);
-					break;
-				case CardMovementType.PlayerHandDiscard:
-					HandlePlayerHandDiscard(args.CardId);
-					break;
-				case CardMovementType.PlayerPlay:
-					HandlePlayerPlay(args.CardId);
-					break;
-				case CardMovementType.PlayerDeckDiscard:
-					HandlePlayerDeckDiscard(args.CardId);
-					break;
-				case CardMovementType.OpponentSecretTrigger:
-					HandleOpponentSecretTrigger(args.CardId);
-					break;
-				case CardMovementType.OpponentPlay:
-					//moved to CardPosChange
-					break;
-				case CardMovementType.OpponentHandDiscard:
-					//moved to CardPosChange (included in play)
-					break;
-				case CardMovementType.OpponentDeckDiscard:
-					HandleOpponentDeckDiscard(args.CardId);
-					break;
-				case CardMovementType.OpponentPlayToHand:
-					HandleOpponentPlayToHand(args.CardId, sender.GetTurnNumber());
-					break;
-				default:
-					Logger.WriteLine("Invalid card movement");
-					break;
-			}
-		}
-
 		#endregion
 
 		#region Handle Events
 
-		private void HandleGameStart()
+		public void HandleGameStart()
 		{
 			//avoid new game being started when jaraxxus is played
 			if (!_game.IsInMenu) return;
@@ -627,7 +491,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void HandleGameEnd()
+		public void HandleGameEnd()
 		{
 			Logger.WriteLine("Game end");
 			if (Config.Instance.KeyPressOnGameEnd != "None" && EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
@@ -653,17 +517,17 @@ namespace Hearthstone_Deck_Tracker
 			_game.IsInMenu = true;
 		}
 
-		private void HandleOpponentPlayToHand(string cardId, int turn)
+		public void HandleOpponentPlayToHand(string cardId, int turn)
 		{
 			_game.OpponentBackToHand(cardId, turn);
 		}
 
-		private void HandlePlayerGet(string cardId)
+		public void HandlePlayerGet(string cardId)
 		{
 			_game.PlayerGet(cardId);
 		}
 
-		private void HandlePlayerDraw(string cardId)
+		public void HandlePlayerDraw(string cardId)
 		{
 			var correctDeck = _game.PlayerDraw(cardId);
 
@@ -674,7 +538,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void HandlePlayerMulligan(string cardId)
+		public void HandlePlayerMulligan(string cardId)
 		{
 			TurnTimer.Instance.MulliganDone(Turn.Player);
 			_game.Mulligan(cardId);
@@ -684,21 +548,21 @@ namespace Hearthstone_Deck_Tracker
 			_playerWindow.ListViewPlayer.Items.Refresh();
 		}
 
-		private void HandlePlayerHandDiscard(string cardId)
+		public void HandlePlayerHandDiscard(string cardId)
 		{
 			_game.PlayerHandDiscard(cardId);
 			_overlay.ListViewPlayer.Items.Refresh();
 			_playerWindow.ListViewPlayer.Items.Refresh();
 		}
 
-		private void HandlePlayerPlay(string cardId)
+		public void HandlePlayerPlay(string cardId)
 		{
 			_game.PlayerPlayed(cardId);
 			_overlay.ListViewPlayer.Items.Refresh();
 			_playerWindow.ListViewPlayer.Items.Refresh();
 		}
 
-		private void HandlePlayerDeckDiscard(string cardId)
+		public void HandlePlayerDeckDiscard(string cardId)
 		{
 			var correctDeck = _game.PlayerDeckDiscard(cardId);
 
@@ -710,7 +574,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void HandleOpponentSecretTrigger(string cardId)
+		public void HandleOpponentSecretTrigger(string cardId)
 		{
 			_game.OpponentSecretTriggered(cardId);
 			_game.OpponentSecretCount--;
@@ -720,13 +584,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void HandleOpponentMulligan(int pos)
+		public void HandleOpponentMulligan(int pos)
 		{
 			TurnTimer.Instance.MulliganDone(Turn.Opponent);
 			_game.OpponentMulligan(pos);
 		}
 
-		private void HandleOpponentDeckDiscard(string cardId)
+		public void HandleOpponentDeckDiscard(string cardId)
 		{
 			_game.OpponentDeckDiscard(cardId);
 
@@ -770,7 +634,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 				Config.Instance.WindowHeight = (int)Height;
 				_overlay.Close();
-				_logReader.Stop();
+				HsLogReader.Instance.Stop();
 				_timerWindow.Shutdown();
 				_playerWindow.Shutdown();
 				_opponentWindow.Shutdown();
@@ -845,7 +709,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#region GENERAL METHODS
 
-		private void ShowIncorrectDeckMessage()
+		public void ShowIncorrectDeckMessage()
 		{
 			var decks =
 				_deckList.DecksList.Where(
@@ -1280,7 +1144,7 @@ namespace Hearthstone_Deck_Tracker
 			if (selected != null)
 				_game.SetPremadeDeck((Deck)selected.Clone());
 
-			_logReader.Reset(true);
+			HsLogReader.Instance.Reset(true);
 
 			_overlay.SortViews();
 

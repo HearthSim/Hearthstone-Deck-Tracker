@@ -18,8 +18,11 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public class Helper
+	public static class Helper
 	{
+		public static MainWindow MainWindow { get; set; }
+
+
 		//private static XmlManager<SerializableVersion> _xmlManager;
 
 		public static double DpiScalingX = 1.0;
