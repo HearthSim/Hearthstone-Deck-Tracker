@@ -102,12 +102,15 @@ namespace Hearthstone_Deck_Tracker
 			#region Aaron Campf
 			DeckOptionsFlyout.Window = this;
 			DeckImportFlyout.Window = this;
+			TagControlMyDecks.Window = this;
+			TagControlNewDeck.Window = this;
 
 
 			//_xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
 			_configPath = Config.Load();
 
 			#endregion
+
 			var version = Helper.CheckForUpdates(out _newVersion);
 			if (version != null)
 			{
@@ -371,13 +374,13 @@ namespace Hearthstone_Deck_Tracker
 			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
 			TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
 
-			TagControlNewDeck.NewTag += TagControlOnNewTag;
-			TagControlNewDeck.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			TagControlNewDeck.DeleteTag += TagControlOnDeleteTag;
+			//TagControlNewDeck.NewTag += TagControlOnNewTag;
+			//TagControlNewDeck.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+			//TagControlNewDeck.DeleteTag += TagControlOnDeleteTag;
 
-			TagControlMyDecks.NewTag += TagControlOnNewTag;
-			TagControlMyDecks.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			TagControlMyDecks.DeleteTag += TagControlOnDeleteTag;
+			//TagControlMyDecks.NewTag += TagControlOnNewTag;
+			//TagControlMyDecks.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+			//TagControlMyDecks.DeleteTag += TagControlOnDeleteTag;
 			TagControlFilter.SelectedTagsChanged += TagControlFilterOnSelectedTagsChanged;
 			TagControlFilter.OperationChanged += TagControlFilterOnOperationChanged;
 
@@ -1239,55 +1242,6 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnSetTag_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutNewDeckSetTags.IsOpen = !FlyoutNewDeckSetTags.IsOpen;
-		}
-
-		private void TagControlOnNewTag(TagControl sender, string tag)
-		{
-			if (!_deckList.AllTags.Contains(tag))
-			{
-				_deckList.AllTags.Add(tag);
-				WriteDecks();
-				TagControlFilter.LoadTags(_deckList.AllTags);
-				TagControlMyDecks.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
-				TagControlNewDeck.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
-			}
-		}
-
-		private void TagControlOnDeleteTag(TagControl sender, string tag)
-		{
-			if (_deckList.AllTags.Contains(tag))
-			{
-				_deckList.AllTags.Remove(tag);
-				foreach (var deck in _deckList.DecksList)
-				{
-					if (deck.Tags.Contains(tag))
-					{
-						deck.Tags.Remove(tag);
-					}
-				}
-				if (_newDeck.Tags.Contains(tag))
-					_newDeck.Tags.Remove(tag);
-
-				WriteDecks();
-				TagControlFilter.LoadTags(_deckList.AllTags);
-				TagControlMyDecks.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
-				TagControlNewDeck.LoadTags(_deckList.AllTags.Where(t => t != "All").ToList());
-				DeckPickerList.UpdateList();
-			}
-		}
-
-		private void TagControlOnSelectedTagsChanged(TagControl sender, List<string> tags)
-		{
-			if (_newDeck == null) return;
-			if (sender.Name == "TagControlNewDeck")
-				BtnSaveDeck.Content = "Save*";
-			else if (sender.Name == "TagControlMyDecks")
-			{
-				var deck = DeckPickerList.SelectedDeck;
-				deck.Tags = tags;
-				DeckPickerList.UpdateList();
-				DeckPickerList.SelectDeck(deck);
-			}
 		}
 
 		public async Task ShowSavedFileMessage(string fileName, string dir)

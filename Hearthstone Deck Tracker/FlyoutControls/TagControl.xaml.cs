@@ -245,6 +245,63 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 
 			ListboxTags.ItemsSource = _tags;
+
+			this.NewTag += TagControlOnNewTag;
+			this.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+			this.DeleteTag += TagControlOnDeleteTag;
 		}
+
+
+		public MainWindow Window;
+
+		private void TagControlOnNewTag(TagControl sender, string tag)
+		{
+			if (!Window._deckList.AllTags.Contains(tag))
+			{
+				Window._deckList.AllTags.Add(tag);
+				Window.WriteDecks();
+				Window.TagControlFilter.LoadTags(Window._deckList.AllTags);
+				Window.TagControlMyDecks.LoadTags(Window._deckList.AllTags.Where(t => t != "All").ToList());
+				Window.TagControlNewDeck.LoadTags(Window._deckList.AllTags.Where(t => t != "All").ToList());
+			}
+		}
+
+		private void TagControlOnSelectedTagsChanged(TagControl sender, List<string> tags)
+		{
+			if (Window._newDeck == null) return;
+			if (sender.Name == "TagControlNewDeck")
+				Window.BtnSaveDeck.Content = "Save*";
+			else if (sender.Name == "TagControlMyDecks")
+			{
+				var deck = Window.DeckPickerList.SelectedDeck;
+				deck.Tags = tags;
+				Window.DeckPickerList.UpdateList();
+				Window.DeckPickerList.SelectDeck(deck);
+			}
+		}
+
+		private void TagControlOnDeleteTag(TagControl sender, string tag)
+		{
+			if (Window._deckList.AllTags.Contains(tag))
+			{
+				Window._deckList.AllTags.Remove(tag);
+				foreach (var deck in Window._deckList.DecksList)
+				{
+					if (deck.Tags.Contains(tag))
+					{
+						deck.Tags.Remove(tag);
+					}
+				}
+				if (Window._newDeck.Tags.Contains(tag))
+					Window._newDeck.Tags.Remove(tag);
+
+				Window.WriteDecks();
+				Window.TagControlFilter.LoadTags(Window._deckList.AllTags);
+				Window.TagControlMyDecks.LoadTags(Window._deckList.AllTags.Where(t => t != "All").ToList());
+				Window.TagControlNewDeck.LoadTags(Window._deckList.AllTags.Where(t => t != "All").ToList());
+				Window.DeckPickerList.UpdateList();
+			}
+		}
+
 	}
 }
