@@ -2058,74 +2058,11 @@ namespace Hearthstone_Deck_Tracker
 				Trace.Listeners.Add(listener);
 				Trace.AutoFlush = true;
 			}
+			
+			_foundHsDirectory = FindHearthstoneDir();
 
-			#region find hearthstone dir
-			if (string.IsNullOrEmpty(Config.Instance.HearthstoneDirectory) || !File.Exists(Config.Instance.HearthstoneDirectory + @"\Hearthstone.exe"))
-			{
-				using (var hsDirKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
-				{
-					if (hsDirKey != null)
-					{
-						var hsDir = (string)hsDirKey.GetValue("InstallLocation");
-
-						//verify the installlocation actually is correct (possibly moved?)
-						if (File.Exists(hsDir + @"\Hearthstone.exe"))
-						{
-							Config.Instance.HearthstoneDirectory = hsDir;
-							WriteConfig();
-							_foundHsDirectory = true;
-						}
-					}
-				}
-			}
-			else
-			{
-				_foundHsDirectory = true;
-			}
-
-			if (_foundHsDirectory)
-			{
-				//check for log config and create if not existing
-				try
-				{
-					//always overwrite is true by default. 
-					if (!File.Exists(_logConfigPath))
-					{
-						_updatedLogConfig = true;
-						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _configPath));
-					}
-					else
-					{
-						//update log.config if newer
-						var localFile = new FileInfo(_logConfigPath);
-						var file = new FileInfo("Files/log.config");
-						if (file.LastWriteTime > localFile.LastWriteTime)
-						{
-							_updatedLogConfig = true;
-							File.Copy("Files/log.config", _logConfigPath, true);
-							Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _configPath));
-						}
-						else if (Config.Instance.AlwaysOverwriteLogConfig)
-						{
-							File.Copy("Files/log.config", _logConfigPath, true);
-							Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _configPath));
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					if (_updatedLogConfig)
-					{
-						MessageBox.Show(
-							e.Message + "\n\n" + e.InnerException +
-							"\n\n Please manually copy the log.config from the Files directory to \"%LocalAppData%/Blizzard/Hearthstone\".",
-							"Error writing log.config");
-						Application.Current.Shutdown();
-					}
-				}
-			}
-			#endregion
+			if(_foundHsDirectory)
+				_updatedLogConfig = UpdateLogConfigFile();
 
 			//hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
 			//Game.Create();
@@ -2240,6 +2177,80 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 
+		}
+
+		private bool FindHearthstoneDir()
+		{
+			var found = false;
+			if (string.IsNullOrEmpty(Config.Instance.HearthstoneDirectory) || !File.Exists(Config.Instance.HearthstoneDirectory + @"\Hearthstone.exe"))
+			{
+				using (var hsDirKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
+				{
+					if (hsDirKey != null)
+					{
+						var hsDir = (string)hsDirKey.GetValue("InstallLocation");
+
+						//verify the installlocation actually is correct (possibly moved?)
+						if (File.Exists(hsDir + @"\Hearthstone.exe"))
+						{
+							Config.Instance.HearthstoneDirectory = hsDir;
+							WriteConfig();
+							found = true;
+						}
+					}
+				}
+			}
+			else
+			{
+				found = true;
+			}
+
+			return found;
+		}
+
+		private bool UpdateLogConfigFile()
+		{
+			var updated = false;
+			//check for log config and create if not existing
+			try
+			{
+				//always overwrite is true by default. 
+				if (!File.Exists(_logConfigPath))
+				{
+					updated = true;
+					File.Copy("Files/log.config", _logConfigPath, true);
+					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _configPath));
+				}
+				else
+				{
+					//update log.config if newer
+					var localFile = new FileInfo(_logConfigPath);
+					var file = new FileInfo("Files/log.config");
+					if (file.LastWriteTime > localFile.LastWriteTime)
+					{
+						updated = true;
+						File.Copy("Files/log.config", _logConfigPath, true);
+						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _configPath));
+					}
+					else if (Config.Instance.AlwaysOverwriteLogConfig)
+					{
+						File.Copy("Files/log.config", _logConfigPath, true);
+						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _configPath));
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				if (_updatedLogConfig)
+				{
+					MessageBox.Show(
+						e.Message + "\n\n" + e.InnerException +
+						"\n\n Please manually copy the log.config from the Files directory to \"%LocalAppData%/Blizzard/Hearthstone\".",
+						"Error writing log.config");
+					Application.Current.Shutdown();
+				}
+			}
+			return updated;
 		}
 
 		private void Setup_Deck_List_File()
