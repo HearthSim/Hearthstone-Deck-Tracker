@@ -257,7 +257,7 @@
                                     <RowDefinition Height="auto" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Additional Windows" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="288" Margin="6,10,2,0">
+                                <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="288" Margin="10,0,0,0">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsTopmost_Checked" Unchecked="CheckboxWindowsTopmost_Unchecked"/>
                                         <CheckBox x:Name="CheckboxWindowsOpenAutomatically" Content="Show decks in additional windows" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxWindowsOpenAutomatically_Checked" Unchecked="CheckboxWindowsOpenAutomatically_Unchecked"/>
@@ -277,7 +277,7 @@
                                         <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Checked="CheckboxWindowCardToolTips_Checked" Unchecked="CheckboxWindowCardToolTips_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="240" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="288" Width="235" Margin="5,0,0,0">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide in menu" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOverlayInBackground" Content="Hide if HS in background" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInBackground_Checked" Unchecked="CheckboxHideOverlayInBackground_Unchecked"/>
@@ -290,44 +290,21 @@
                                         <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="Hide card-marks" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardMarks_Checked" Unchecked="CheckboxHideOpponentCardMarks_Unchecked" HorizontalAlignment="Left" Width="114"/>
                                         <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="Card tooltips" Margin="10,148,0,0" VerticalAlignment="Top" Checked="CheckboxOverlayCardToolTips_Checked" Unchecked="CheckboxOverlayCardToolTips_Unchecked" HorizontalAlignment="Left" Width="114"/>
                                         <CheckBox x:Name="CheckboxHideSecrets" Content="Hide secrets" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked" Unchecked="CheckboxHideSecrets_Unchecked" Margin="128,102,0,0"/>
+                                        <Button Name="BtnUnlockOverlay" Content="Unlock" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" Width="98" Click="BtnUnlockOverlay_Click"/>
+                                        <Button x:Name="BtnResetOverlay" Content="Reset" HorizontalAlignment="Left" Margin="115,214,0,0" VerticalAlignment="Top" Width="98" Click="BtnResetOverlay_Click"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="538" Width="235" Margin="10,0,0,0" Grid.RowSpan="2">
+                                <GroupBox Header="Other" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="245" Width="235" Margin="5,10,0,0">
                                     <Grid>
                                         <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxFlashHs_Checked" Unchecked="CheckboxFlashHs_Unchecked"/>
                                         <CheckBox x:Name="CheckboxBringHsToForegorund" Content="Popup Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Checked="CheckboxBringHsToForegorund_Checked" Unchecked="CheckboxBringHsToForegorund_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
-                                        <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,125,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="89,230,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxAccent_SelectionChanged">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Name}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="89,199,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxTheme_SelectionChanged">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Name}"/>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Label Content="Theme:" HorizontalAlignment="Left" Margin="5,199,0,0" VerticalAlignment="Top"/>
-                                        <Label Content="Accent:" HorizontalAlignment="Left" Margin="5,230,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="89,261,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
-                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="5,261,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,171,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
-                                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Left" Margin="119,292,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged"/>
-                                        <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="5,292,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="119,323,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
-                                        <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="5,323,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData" HorizontalAlignment="Left" Margin="10,471,0,0" VerticalAlignment="Top" Checked="CheckboxAppData_Checked" Unchecked="CheckboxAppData_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideManaCurveMyDecks" Content="Manacurve in My Decks" HorizontalAlignment="Left" Margin="10,359,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveMyDecks_Checked" Unchecked="CheckboxManaCurveMyDecks_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideManaCurveNewDeck" Content="Manacurve in New Deck" HorizontalAlignment="Left" Margin="10,382,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveNewDeck_Checked" Unchecked="CheckboxManaCurveNewDeck_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,405,0,0" VerticalAlignment="Top" Checked="CheckboxTrackerCardToolTips_Checked" Unchecked="CheckboxTrackerCardToolTips_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="29,102,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
+
+                                        <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,125,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,171,0,0" VerticalAlignment="Top" Checked="CheckboxTrackerCardToolTips_Checked" Unchecked="CheckboxTrackerCardToolTips_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>
@@ -346,80 +323,42 @@
                                 <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
                                 <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="280" Width="235">
                                     <Grid>
-                                        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,116,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-                                        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,139,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
-                                        <CheckBox x:Name="CheckboxHidePlayerCards" Content="Hide cards" HorizontalAlignment="Left" Margin="31,162,0,0" VerticalAlignment="Top" Checked="CheckboxHidePlayerCards_Checked" Unchecked="CheckboxHidePlayerCards_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="31,185,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
-                                        <controls:RangeSlider x:Name="RangeSliderPlayer" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderPlayer_UpperValueChanged" LowerValueChanged="RangeSliderPlayer_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" CentralThumbDragCompleted="RangeSliderPlayer_CentralThumbDragCompleted" LowerThumbDragCompleted="RangeSliderPlayer_LowerThumbDragCompleted" UpperThumbDragCompleted="RangeSliderPlayer_UpperThumbDragCompleted"/>
-                                        <Slider x:Name="SliderPlayer" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderPlayer_ValueChanged" LargeChange="0.1"/>
-                                        <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged" Minimum="0.0001"/>
-                                        <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
-                                        <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderPlayerOpacity_ValueChanged"/>
-                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxTextLocationPlayer" HorizontalAlignment="Left" Margin="86,85,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationPlayer_SelectionChanged">
+                                        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
+                                        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
+                                        <CheckBox x:Name="CheckboxHidePlayerCards" Content="Hide cards" HorizontalAlignment="Left" Margin="10,139,0,0" VerticalAlignment="Top" Checked="CheckboxHidePlayerCards_Checked" Unchecked="CheckboxHidePlayerCards_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
+                                        <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Left" Margin="65,15,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayPlayerScaling_ValueChanged" Minimum="0.0001"/>
+                                        <Label Content="Scaling:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                        <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Left" Margin="65,41,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderPlayerOpacity_ValueChanged"/>
+                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox Name="ComboboxTextLocationPlayer" HorizontalAlignment="Left" Margin="65,62,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationPlayer_SelectionChanged">
                                             <system:String>Top</system:String>
                                             <system:String>Bottom</system:String>
                                         </ComboBox>
-                                        <Label Content="Text:" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Text:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="280" Width="235" HorizontalAlignment="Center">
                                     <Grid>
-                                        <CheckBox x:Name="CheckboxHideOpponentCards" Content="Hide cards" HorizontalAlignment="Left" Margin="31,162,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCards_Checked" Unchecked="CheckboxHideOpponentCards_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="31,116,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardCounter_Checked" Unchecked="CheckboxHideOpponentCardCounter_Unchecked"/>
-                                        <controls:RangeSlider x:Name="RangeSliderOpponent" ToolTip="Range in which the deck is displayed" Margin="10,33,0,0" Orientation="Vertical" Maximum="100" UpperValue="85" LowerValue="15" UpperValueChanged="RangeSliderOpponent_UpperValueChanged" LowerValueChanged="RangeSliderOpponent_LowerValueChanged" MinRange="30" HorizontalAlignment="Left" VerticalAlignment="Top" Height="200" UpperThumbDragCompleted="RangeSliderOpponent_UpperThumbDragCompleted" LowerThumbDragCompleted="RangeSliderOpponent_LowerThumbDragCompleted" CentralThumbDragCompleted="RangeSliderOpponent_CentralThumbDragCompleted"/>
-                                        <Slider x:Name="SliderOpponent" ToolTip="Horizontal Position of the deck" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ValueChanged="SliderOpponent_ValueChanged" LargeChange="0.1"/>
-                                        <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="86,38,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged" Minimum="0.0001"/>
-                                        <Label Content="Scaling:" HorizontalAlignment="Left" Margin="31,33,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="31,139,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
-                                        <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Left" Margin="86,64,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOpponentOpacity_ValueChanged"/>
-                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="31,59,0,0" VerticalAlignment="Top"/>
-                                        <ComboBox Name="ComboboxTextLocationOpponent" HorizontalAlignment="Left" Margin="86,85,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationOpponent_SelectionChanged">
+                                        <CheckBox x:Name="CheckboxHideOpponentCards" Content="Hide cards" HorizontalAlignment="Left" Margin="10,139,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCards_Checked" Unchecked="CheckboxHideOpponentCards_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideOpponentCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardCounter_Checked" Unchecked="CheckboxHideOpponentCardCounter_Unchecked"/>
+                                        <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Left" Margin="65,15,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOverlayOpponentScaling_ValueChanged" Minimum="0.0001"/>
+                                        <Label Content="Scaling:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="10,116,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
+                                        <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Left" Margin="65,41,0,0" VerticalAlignment="Top" Width="125" Value="100" ValueChanged="SliderOpponentOpacity_ValueChanged"/>
+                                        <Label Content="Opacity:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox Name="ComboboxTextLocationOpponent" HorizontalAlignment="Left" Margin="65,62,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationOpponent_SelectionChanged">
                                             <system:String>Top</system:String>
                                             <system:String>Bottom</system:String>
                                         </ComboBox>
-                                        <Label Content="Text:" HorizontalAlignment="Left" Margin="31,85,0,0" VerticalAlignment="Top"/>
-                                        <CheckBox x:Name="CheckboxHighlightDiscarded" Content="Highlight discarded from deck" HorizontalAlignment="Left" Margin="31,185,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightDiscarded_Checked" Unchecked="CheckboxHighlightDiscarded_Unchecked"/>
+                                        <Label Content="Text:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                                        <CheckBox x:Name="CheckboxHighlightDiscarded" Content="Highlight discarded from deck" HorizontalAlignment="Left" Margin="10,162,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightDiscarded_Checked" Unchecked="CheckboxHighlightDiscarded_Unchecked"/>
                                     </Grid>
                                 </GroupBox>
                                 <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Height="216" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
                                     <Grid>
                                         <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxDeckSortingClassFirst_Checked" Unchecked="CheckboxDeckSortingClassFirst_Unchecked"/>
                                         <Label Content="More to come" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                    </Grid>
-                                </GroupBox>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Timer/Secrets" HorizontalAlignment="Right" Width="auto">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <GroupBox Header="Timer Position" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Width="235" Height="280" Margin="5,5,5,0">
-                                    <Grid>
-                                        <Slider x:Name="SliderTimersVertical" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="16" ToolTip="Vertical position of the timers" Orientation="Vertical" Height="200" ValueChanged="SliderTimersVertical_ValueChanged" LargeChange="0.1" Value="50" IsDirectionReversed="True"/>
-                                        <Slider x:Name="SliderTimersHorizontal" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ToolTip="Horizontal position of the timers" Value="80" ValueChanged="SliderTimersHorizontal_ValueChanged" LargeChange="0.1" Maximum="90"/>
-
-                                    </Grid>
-                                </GroupBox>
-                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="235" Height="280" Margin="5,5,5,0">
-                                    <Grid>
-                                        <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200" LargeChange="0.1" Margin="10,10,0,0"/>
-                                        <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="16" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Vertical" Height="200" LargeChange="0.1" Margin="10,33,0,0"/>
-
-                                    </Grid>
-                                </GroupBox>
-                                <GroupBox Header="Secrets Position" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Width="235" Height="243" Margin="5,5,5,0">
-                                    <Grid>
-                                        <Slider x:Name="SliderSecretsVertical" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="16" ToolTip="Vertical position of the timers" Orientation="Vertical" Height="150" ValueChanged="SliderSecretsVertical_ValueChanged" LargeChange="0.1" Value="5" IsDirectionReversed="True"/>
-                                        <Slider x:Name="SliderSecretsHorizontal" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" ToolTip="Horizontal position of the timers" Value="20" ValueChanged="SliderSecretsHorizontal_ValueChanged" LargeChange="0.1" Maximum="90"/>
-                                        <Button Name="BtnShowSecrets" Content="Show" HorizontalAlignment="Left" Margin="50,50,0,0" VerticalAlignment="Top" Width="75" Click="BtnShowSecrets_Click"/>
 
                                     </Grid>
                                 </GroupBox>
@@ -435,11 +374,54 @@
                                     <RowDefinition Height="auto" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Game Logging" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="133" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="235" Height="135" Margin="10,0,0,0">
+                                    <Grid>
+                                        <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200" LargeChange="0.1" Margin="83,10,0,0"/>
+                                        <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="133" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Horizontal" LargeChange="0.1" Margin="83,37,0,0"/>
+                                        <Label Content="Horizontal:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Vertical:" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top"/>
+
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Game Logging" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="135" Width="235" Margin="5,10,0,0">
                                     <Grid>
                                         <CheckBox Name="CheckboxLogGames" Content="Log Games" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="CheckboxLogGames_Checked" Unchecked="CheckboxLogGames_Unchecked"/>
                                         <TextBox Name="TextboxLogGamesPath" controls:TextboxHelper.Watermark="Save to" IsEnabled="False"  HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="203" IsReadOnly="True"/>
                                         <Button Name="BtnLogGamesSelectDir" Content="Select Directory" IsEnabled="False" HorizontalAlignment="Left" Margin="93,64,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogGamesSelectDir_Click"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Header="Tracker" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="235" Margin="5,0,0,0">
+                                    <Grid>
+                                        <CheckBox x:Name="CheckboxHideManaCurveMyDecks" Content="Manacurve in My Decks" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveMyDecks_Checked" Unchecked="CheckboxManaCurveMyDecks_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHideManaCurveNewDeck" Content="Manacurve in New Deck" HorizontalAlignment="Left" Margin="10,188,0,0" VerticalAlignment="Top" Checked="CheckboxManaCurveNewDeck_Checked" Unchecked="CheckboxManaCurveNewDeck_Unchecked"/>
+
+                                        <Label Content="Theme:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                        <Label Content="Accent:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Left" Margin="94,72,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxLanguages_SelectionChanged"/>
+                                        <Label Content="Language:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Left" Margin="94,41,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxAccent_SelectionChanged">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboboxTheme_SelectionChanged">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+
+                                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Left" Margin="124,134,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged"/>
+                                        <Label Content="Key on game start:" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
+                                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Left" Margin="123,103,0,0" VerticalAlignment="Top" Width="90" SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged"/>
+                                        <Label Content="Key on game end:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+
+                                        <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData" HorizontalAlignment="Left" Margin="10,234,0,0" VerticalAlignment="Top" Checked="CheckboxAppData_Checked" Unchecked="CheckboxAppData_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" RenderTransformOrigin="1.518,2.778"/>
+
                                     </Grid>
                                 </GroupBox>
                             </Grid>

@@ -156,13 +156,16 @@ namespace Hearthstone_Deck_Tracker
 
 
         public class MouseInput : IDisposable
-        {
-            public event EventHandler<EventArgs> Click;
+		{
+			public event EventHandler<EventArgs> LmbDown;
+			public event EventHandler<EventArgs> LmbUp;
+			public event EventHandler<EventArgs> MouseMoved;
 
             private WindowsHookHelper.HookDelegate mouseDelegate;
             private IntPtr mouseHandle;
             private const Int32 WH_MOUSE_LL = 14;
-            private const Int32 WM_LBUTTONDOWN = 0x201;
+			private const Int32 WM_LBUTTONDOWN = 0x201;
+			private const Int32 WM_LBUTTONUP = 0x0202;
 
             private bool disposed;
 
@@ -177,13 +180,24 @@ namespace Hearthstone_Deck_Tracker
                 if (code < 0)
                     return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
 
-                if(wParam.ToInt32() == WM_LBUTTONDOWN)
-                {
-                    if (Click != null)
-                        Click(this, new EventArgs());
-                }
 
-                return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
+	            switch (wParam.ToInt32())
+	            {
+		            case WM_LBUTTONDOWN:
+			            if (LmbDown != null)
+				            LmbDown(this, new EventArgs());
+			            break;
+		            case WM_LBUTTONUP:
+			            if (LmbUp != null)
+				            LmbUp(this, new EventArgs());
+			            break;
+		            default:
+			            if (MouseMoved != null)
+				            MouseMoved(this, new EventArgs());
+			            break;
+	            }
+
+	            return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
             }
 
             public void Dispose()

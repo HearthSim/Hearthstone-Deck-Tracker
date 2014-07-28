@@ -153,6 +153,10 @@ namespace Hearthstone_Deck_Tracker
 		private static Config _Config = new Config();
 		public static Config Instance { get { return _Config; } }
 
+		public static void Save()
+		{
+			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
+		}
 
 		//public static string Load(XmlManager<Config> _xmlManagerConfig)
 		public static string Load()
