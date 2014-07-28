@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
@@ -206,5 +208,67 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return deck.Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 		}
+
+		public static Bitmap CaptureHearthstone(IntPtr wndHandle, Point point, int width, int height)
+		{
+			User32.ClientToScreen(wndHandle, ref point);
+			if (!User32.IsForegroundWindow("Hearthstone")) return null;
+
+			var bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			Graphics graphics = Graphics.FromImage(bmp);
+			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+			return bmp;
+		}
+
+		public static async Task<bool> FriendsListOpen()
+		{
+			//wait for friendslist to open/close
+			await Task.Delay(300);
+
+			var rect = User32.GetHearthstoneRect(false);
+			var capture = CaptureHearthstone(User32.GetHearthstoneWindow(), new Point(0, (int)(rect.Height*0.85)), (int)(rect.Width*0.1), (int)(rect.Height*0.15));
+			if (capture == null) return false;
+
+			for (int y = 0; y < capture.Height; y++)
+			{
+				for (int x = 0; x < capture.Width; x++)
+				{
+					
+					if (IsYellowPixel(capture.GetPixel(x, y)))
+					{
+						bool foundFriendsList = true;
+
+						//check for a straight yellow line (left side of add button)
+						for (int i = 0; i < 5; i++)
+						{
+							if (x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x+i, y)))
+							{
+								foundFriendsList = false;
+							}
+						}
+
+						if (foundFriendsList)
+						{
+							Logger.WriteLine("Found Friendslist");
+							return true;
+						}
+					}
+					
+				}
+			}
+		
+			return false;
+		}
+
+		private static bool IsYellowPixel(System.Drawing.Color pixel)
+		{
+			const int red = 216;
+			const int green = 174;
+			const int blue = 10;
+			const int deviation = 10;
+			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation && Math.Abs(pixel.B - blue) <= deviation;
+			
+		}
+
 	}
 }

@@ -86,11 +86,14 @@ namespace Hearthstone_Deck_Tracker
             GetCursorPos(out p);
             return new Point(p.X, p.Y);
         }
-        
+        public static IntPtr GetHearthstoneWindow()
+        {
+	        return FindWindow("UnityWndClass", "Hearthstone");
+        }
         public static Rectangle GetHearthstoneRect(bool dpiScaling)
         {
         	// Returns the co-ordinates of Hearthstone's client area in screen co-ordinates
-            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+            var hsHandle = GetHearthstoneWindow();
         	var rect = new Rect();
             var ptUL = new Point();
             var ptLR = new Point();
@@ -119,13 +122,13 @@ namespace Hearthstone_Deck_Tracker
 
         public static void BringHsToForeground()
         {
-            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+			var hsHandle = GetHearthstoneWindow();
             SetForegroundWindow(hsHandle);
         }
 
         public static void FlashHs()
         {
-            var hsHandle = FindWindow("UnityWndClass", "Hearthstone");
+			var hsHandle = GetHearthstoneWindow();
             FlashWindow(hsHandle, false);
         }
 

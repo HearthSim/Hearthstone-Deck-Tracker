@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,6 +40,8 @@ namespace Hearthstone_Deck_Tracker
 		private int _opponentCardCount;
 		private string _lastSecretsClass;
 		private bool _needToRefreshSecrets;
+		private bool _playerCardsHidden;
+		private bool _opponentCardsHidden;
 
 		public OverlayWindow(Config config)
 		{
@@ -109,6 +112,52 @@ namespace Hearthstone_Deck_Tracker
 		private void MouseInputOnClick(object sender, EventArgs eventArgs)
 		{
 			if (!User32.IsForegroundWindow("Hearthstone")) return;
+
+			HideCardsWhenFriendsListOpen();
+
+			GrayOutSecrets();
+
+		}
+
+		private async void HideCardsWhenFriendsListOpen()
+		{
+			var leftPanel = Canvas.GetLeft(StackPanelOpponent) < 200 ? StackPanelOpponent : StackPanelPlayer;
+			if (leftPanel != null && !Config.Instance.HideDecksInOverlay)
+			{
+				var checkForFriendsList = true;
+				if (leftPanel.Equals(StackPanelPlayer) && Config.Instance.HidePlayerCards)
+					checkForFriendsList = false;
+				else if (leftPanel.Equals(StackPanelOpponent) && Config.Instance.HideOpponentCards)
+					checkForFriendsList = false;
+
+				if (checkForFriendsList)
+				{
+					if (await Helper.FriendsListOpen())
+					{
+						var needToHide = Canvas.GetTop(leftPanel) + leftPanel.ActualHeight > Height*0.3;
+						if (needToHide)
+						{
+							leftPanel.Visibility = Visibility.Collapsed;
+							if (leftPanel.Equals(StackPanelPlayer))
+								_playerCardsHidden = true;
+							else
+								_opponentCardsHidden = true;
+						}
+					}
+					else if (leftPanel.Visibility == Visibility.Collapsed)
+					{
+						leftPanel.Visibility = Visibility.Visible;
+						if (leftPanel.Equals(StackPanelPlayer))
+							_playerCardsHidden = false;
+						else
+							_opponentCardsHidden = false;
+					}
+				}
+			}
+		}
+
+		private void GrayOutSecrets()
+		{
 			if (ToolTipCard.Visibility == Visibility.Visible)
 			{
 				var card = ToolTipCard.DataContext as Card;
@@ -132,7 +181,6 @@ namespace Hearthstone_Deck_Tracker
 				//reset secrets when new secret is played
 				_needToRefreshSecrets = true;
 			}
-
 		}
 
 		public static double Scaling { get; set; }
@@ -361,8 +409,11 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelOpponent.Opacity = _config.OpponentOpacity / 100;
 			Opacity = _config.OverlayOpacity / 100;
 
-			StackPanelPlayer.Visibility = _config.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelOpponent.Visibility = _config.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
+			if(!_playerCardsHidden)
+				StackPanelPlayer.Visibility = _config.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
+
+			if(!_opponentCardsHidden)
+				StackPanelOpponent.Visibility = _config.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
 
 			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
