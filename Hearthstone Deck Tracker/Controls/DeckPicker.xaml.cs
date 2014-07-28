@@ -387,19 +387,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Try_To_Sort()
 		{
-			//TODO: Figure out how to make this work
-
-			var Lists = _hsClasses.OrderBy(x => x.Name).ToList();
-			_hsClasses.Clear();
-			_hsClasses.AddRange(Lists);
-
+			var Button1 = ListboxPicker.Items.GetItemAt(0);
+			var Ordered_Decks = ListboxPicker.Items.OfType<Deck>().OrderBy(x => x.Name).ToList();
 			ListboxPicker.Items.Clear();
-			foreach (var hsClass in _hsClasses)
+
+
+			ListboxPicker.Items.Add(Button1);
+			foreach (var Deck in Ordered_Decks)
 			{
-				ListboxPicker.Items.Add(hsClass);
+				ListboxPicker.Items.Add(Deck);
 			}
 		}
-
-
 	}
 }
