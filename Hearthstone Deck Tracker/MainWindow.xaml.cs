@@ -188,7 +188,7 @@ namespace Hearthstone_Deck_Tracker
 			var tabItem = TabControlTracker.SelectedItem as TabItem;
 			if (tabItem == null) return;
 			SelectedTabMarker.Width = tabItem.ActualWidth;
-			var offset = TabControlTracker.Items.Cast<object>().TakeWhile(t => t != tabItem).Sum(t => ((TabItem)t).ActualWidth);
+			var offset = TabControlTracker.Items.Cast<TabItem>().TakeWhile(t => t != tabItem).Sum(t => t.ActualWidth);
 			SelectedTabMarker.Margin = new Thickness(offset, 40, 0, 0);
 		}
 		#endregion
