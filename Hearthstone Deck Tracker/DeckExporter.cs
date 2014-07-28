@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker
 			const float targetSat = 0.38f;
 			var avgHue = 0.0f;
 			var avgSat = 0.0f;
-			var capture = Helper.CaptureHearthstone(wndHandle, point, width, height);
+			var capture = Helper.CaptureHearthstone(point, width, height, wndHandle);
 
 			if (capture == null)
 				return false;

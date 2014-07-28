@@ -209,8 +209,11 @@ namespace Hearthstone_Deck_Tracker
 			return deck.Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 		}
 
-		public static Bitmap CaptureHearthstone(IntPtr wndHandle, Point point, int width, int height)
+		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))
 		{
+			if (wndHandle == default(IntPtr))
+				wndHandle = User32.GetHearthstoneWindow();
+
 			User32.ClientToScreen(wndHandle, ref point);
 			if (!User32.IsForegroundWindow("Hearthstone")) return null;
 
@@ -226,7 +229,7 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(300);
 
 			var rect = User32.GetHearthstoneRect(false);
-			var capture = CaptureHearthstone(User32.GetHearthstoneWindow(), new Point(0, (int)(rect.Height*0.85)), (int)(rect.Width*0.1), (int)(rect.Height*0.15));
+			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height*0.85)), (int)(rect.Width*0.1), (int)(rect.Height*0.15));
 			if (capture == null) return false;
 
 			for (int y = 0; y < capture.Height; y++)
