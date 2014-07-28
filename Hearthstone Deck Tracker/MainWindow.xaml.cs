@@ -182,6 +182,15 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.TrackerWindowLeft = (int)Left;
 		}
 
+		private void TabControlTracker_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized) return;
+			var tabItem = TabControlTracker.SelectedItem as TabItem;
+			if (tabItem == null) return;
+			SelectedTabMarker.Width = tabItem.ActualWidth;
+			var offset = TabControlTracker.Items.Cast<object>().TakeWhile(t => t != tabItem).Sum(t => ((TabItem)t).ActualWidth);
+			SelectedTabMarker.Margin = new Thickness(offset, 40, 0, 0);
+		}
 		#endregion
 
 		#region GENERAL METHODS
@@ -791,6 +800,11 @@ namespace Hearthstone_Deck_Tracker
 		private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			UpdateDbListView();
+		}
+
+		private void BtnClear_Click(object sender, RoutedEventArgs e)
+		{
+			ShowClearNewDeckMessage();
 		}
 
 		#endregion
@@ -2002,6 +2016,22 @@ namespace Hearthstone_Deck_Tracker
 				BtnShowSecrets.Content = "Show";
 			}
 		}
+
+		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.HighlightDiscarded = true;
+			Game.HighlightDiscarded = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxHighlightDiscarded_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.HighlightDiscarded = false;
+			Game.HighlightDiscarded = false;
+			SaveConfig(true);
+		}
 		#endregion
 
 		#region Constructor
@@ -2261,25 +2291,6 @@ namespace Hearthstone_Deck_Tracker
 		#endregion
 
 
-		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.HighlightDiscarded = true;
-			Game.HighlightDiscarded = true;
-			SaveConfig(true);
-		}
 
-		private void CheckboxHighlightDiscarded_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.HighlightDiscarded = false;
-			Game.HighlightDiscarded = false;
-			SaveConfig(true);
-		}
-
-		private void BtnClear_Click(object sender, RoutedEventArgs e)
-		{
-			ShowClearNewDeckMessage();
-		}
 	}
 }

@@ -9,7 +9,7 @@
         StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
-        <TabControl Name="TabControlTracker" Height="auto" Width="auto">
+        <TabControl Name="TabControlTracker" Height="auto" Width="auto" SelectionChanged="TabControlTracker_SelectionChanged" >
             <TabItem Header="My Decks">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -517,5 +517,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Rectangle Height="2" VerticalAlignment="Top" Margin="0,40,0,0" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"></Rectangle>
+        <Rectangle Name="SelectedTabMarker" Width="120" Height="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40,0,0"  Fill="{DynamicResource AccentColorBrush}"></Rectangle>
     </Grid>
 </controls:MetroWindow>
