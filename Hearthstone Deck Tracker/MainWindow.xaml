@@ -517,7 +517,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Rectangle Height="2" VerticalAlignment="Top" Margin="0,40,0,0" Fill="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"></Rectangle>
+        <Rectangle Height="2" VerticalAlignment="Top" Margin="0,40,0,0" Fill="{DynamicResource GrayNormalBrush}"></Rectangle>
         <Rectangle Name="SelectedTabMarker" Width="120" Height="2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,40,0,0"  Fill="{DynamicResource AccentColorBrush}"></Rectangle>
     </Grid>
 </controls:MetroWindow>
