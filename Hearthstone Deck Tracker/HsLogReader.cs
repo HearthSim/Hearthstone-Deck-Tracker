@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Linq;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -119,7 +121,7 @@ namespace Hearthstone_Deck_Tracker
 	public class HsLogReader
 	{
 		#region Delegates
-
+		/*
 		public delegate void AnalyzingHandler(HsLogReader sender, AnalyzingArgs args);
 
 		public delegate void CardMovementHandler(HsLogReader sender, CardMovementArgs args);
@@ -131,17 +133,17 @@ namespace Hearthstone_Deck_Tracker
 		public delegate void TurnStartHandler(HsLogReader sender, TurnStartArgs args);
 
 		public delegate void SecretPlayedHandler(HsLogReader sender);
-
+		*/
 		#endregion
 
 		#region Events
 
-		public event CardMovementHandler CardMovement;
-		public event GameStateHandler GameStateChange;
-		public event AnalyzingHandler Analyzing;
-		public event TurnStartHandler TurnStart;
-		public event CardPosChangeHandler CardPosChange;
-		public event SecretPlayedHandler SecretPlayed;
+		//public event CardMovementHandler CardMovement;
+		//public event GameStateHandler GameStateChange;
+		//public event AnalyzingHandler Analyzing;
+		//public event TurnStartHandler TurnStart;
+		//public event CardPosChangeHandler CardPosChange;
+		//public event SecretPlayedHandler SecretPlayed;
 
 		#endregion
 
@@ -154,17 +156,17 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _fullOutputPath;
 
 		private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>
-            {
-                {"HERO_01", "Warrior"},
-                {"HERO_02", "Shaman"},
-                {"HERO_03", "Rogue"},
-                {"HERO_04", "Paladin"},
-                {"HERO_05", "Hunter"},
-                {"HERO_06", "Druid"},
-                {"HERO_07", "Warlock"},
-                {"HERO_08", "Mage"},
-                {"HERO_09", "Priest"}
-            };
+			{
+				{"HERO_01", "Warrior"},
+				{"HERO_02", "Shaman"},
+				{"HERO_03", "Rogue"},
+				{"HERO_04", "Paladin"},
+				{"HERO_05", "Hunter"},
+				{"HERO_06", "Druid"},
+				{"HERO_07", "Warlock"},
+				{"HERO_08", "Mage"},
+				{"HERO_09", "Priest"}
+			};
 
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d))).*(zone\ from\ OPPOSING\ HAND).*");
 
@@ -183,8 +185,351 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		public HsLogReader(string hsDirPath, int updateDelay)
+
+
+
+		#region Moved Events
+
+		private void CardMovement(HsLogReader sender, CardMovementArgs args)
 		{
+			Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", args.MovementType.ToString(), args.CardId, sender.GetTurnNumber(), args.From), "LogReader");
+
+			switch (args.MovementType)
+			{
+				case CardMovementType.PlayerGet:
+					HandlePlayerGet(args.CardId);
+					break;
+				case CardMovementType.PlayerDraw:
+					HandlePlayerDraw(args.CardId);
+					break;
+				case CardMovementType.PlayerMulligan:
+					HandlePlayerMulligan(args.CardId);
+					break;
+				case CardMovementType.PlayerHandDiscard:
+					HandlePlayerHandDiscard(args.CardId);
+					break;
+				case CardMovementType.PlayerPlay:
+					HandlePlayerPlay(args.CardId);
+					break;
+				case CardMovementType.PlayerDeckDiscard:
+					HandlePlayerDeckDiscard(args.CardId);
+					break;
+				case CardMovementType.OpponentSecretTrigger:
+					HandleOpponentSecretTrigger(args.CardId);
+					break;
+				case CardMovementType.OpponentPlay:
+					//moved to CardPosChange
+					break;
+				case CardMovementType.OpponentHandDiscard:
+					//moved to CardPosChange (included in play)
+					break;
+				case CardMovementType.OpponentDeckDiscard:
+					HandleOpponentDeckDiscard(args.CardId);
+					break;
+				case CardMovementType.OpponentPlayToHand:
+					HandleOpponentPlayToHand(args.CardId, sender.GetTurnNumber());
+					break;
+				default:
+					Logger.WriteLine("Invalid card movement");
+					break;
+			}
+		}
+
+		private void GameStateChange(HsLogReader sender, GameStateArgs args)
+		{
+			if (!string.IsNullOrEmpty(args.PlayerHero))
+			{
+				Game.PlayingAs = args.PlayerHero;
+				Logger.WriteLine("Playing as " + args.PlayerHero, "Hearthstone");
+
+			}
+			if (!string.IsNullOrEmpty(args.OpponentHero))
+			{
+				Game.PlayingAgainst = args.OpponentHero;
+				Logger.WriteLine("Playing against " + args.OpponentHero, "Hearthstone");
+			}
+
+			if (args.State != null)
+			{
+				switch (args.State)
+				{
+					case GameState.GameBegin:
+						HandleGameStart();
+						break;
+					case GameState.GameEnd:
+						HandleGameEnd();
+						break;
+				}
+			}
+		}
+
+		private void Analyzing(HsLogReader sender, AnalyzingArgs args)
+		{
+			if (args.State == AnalyzingState.Start)
+			{
+
+			}
+			else if (args.State == AnalyzingState.End)
+			{
+				//reader done analyzing new stuff, update things
+				if (Helper.MainWindow._overlay.IsVisible)
+					Helper.MainWindow._overlay.Update(false);
+
+				if (Helper.MainWindow._playerWindow.IsVisible)
+					Helper.MainWindow._playerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
+
+				if (Helper.MainWindow._opponentWindow.IsVisible)
+					Helper.MainWindow._opponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+
+
+				if (Helper.MainWindow._showIncorrectDeckMessage && !Helper.MainWindow._showingIncorrectDeckMessage)
+				{
+					Helper.MainWindow._showingIncorrectDeckMessage = true;
+					Helper.MainWindow.ShowIncorrectDeckMessage();
+				}
+
+			}
+		}
+
+		private void TurnStart(HsLogReader sender, TurnStartArgs args)
+		{
+			Logger.WriteLine(string.Format("{0}-turn ({1})", args.Turn, sender.GetTurnNumber() + 1), "LogReader");
+			//doesn't really matter whose turn it is for now, just restart timer
+			//maybe add timer to player/opponent windows
+			TurnTimer.Instance.SetCurrentPlayer(args.Turn);
+			TurnTimer.Instance.Restart();
+			if (args.Turn == Turn.Player && !Game.IsInMenu)
+			{
+				if (Config.Instance.FlashHs)
+					User32.FlashHs();
+
+				if (Config.Instance.BringHsToForeground)
+					User32.BringHsToForeground();
+			}
+
+		}
+
+		private void CardPosChange(HsLogReader sender, CardPosChangeArgs args)
+		{
+			Logger.WriteLine(string.Format("Opponent{0} (id:{1} turn:{2} from:{3})", args.Action.ToString(), args.Id, args.Turn, args.From), "LogReader");
+			switch (args.Action)
+			{
+				case OpponentHandMovement.Draw:
+					Game.OpponentDraw(args);
+					break;
+				case OpponentHandMovement.Play:
+					Game.OpponentPlay(args);
+					break;
+				case OpponentHandMovement.Mulligan:
+					HandleOpponentMulligan(args.From);
+					break;
+				case OpponentHandMovement.FromPlayerDeck:
+					Game.OpponentGet(args.Turn);
+					break;
+			}
+		}
+
+		private void SecretPlayed(HsLogReader sender)
+		{
+			Game.OpponentSecretCount++;
+			Helper.MainWindow._overlay.ShowSecrets(Game.PlayingAgainst);
+		}
+
+		/****************************************************************************************/
+		/****************************************************************************************/
+
+		private void HandleGameStart()
+		{
+			//avoid new game being started when jaraxxus is played
+			if (!Game.IsInMenu) return;
+
+			Logger.WriteLine("Game start");
+
+			if (Config.Instance.FlashHs)
+				User32.FlashHs();
+			if (Config.Instance.BringHsToForeground)
+				User32.BringHsToForeground();
+
+			if (Config.Instance.KeyPressOnGameStart != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+			{
+				System.Windows.Forms.SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
+				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
+			}
+
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if (selectedDeck != null)
+				Game.SetPremadeDeck((Hearthstone_Deck_Tracker.Hearthstone.Deck)selectedDeck.Clone());
+
+			Game.IsInMenu = false;
+			Game.Reset();
+
+			//select deck based on hero
+			if (!string.IsNullOrEmpty(Game.PlayingAs))
+			{
+				if (!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection) return;
+
+				if (selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
+				{
+					var classDecks = Helper.MainWindow._deckList.DecksList.Where(d => d.Class == Game.PlayingAs).ToList();
+					if (classDecks.Count == 0)
+					{
+						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
+					}
+					else if (classDecks.Count == 1)
+					{
+						Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
+						Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
+					}
+					else if (Helper.MainWindow._deckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
+					{
+						var lastDeckName = Helper.MainWindow._deckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs).Name;
+						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
+
+						var deck = Helper.MainWindow._deckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
+
+						if (deck != null)
+						{
+							Helper.MainWindow.DeckPickerList.SelectDeck(deck);
+							Helper.MainWindow.UpdateDeckList(deck);
+							Helper.MainWindow.UseDeck(deck);
+						}
+					}
+				}
+			}
+		}
+
+		private void HandleGameEnd()
+		{
+			Logger.WriteLine("Game end");
+			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			{
+				System.Windows.Forms.SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
+				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
+			}
+			TurnTimer.Instance.Stop();
+			Helper.MainWindow._overlay.HideTimers();
+			Helper.MainWindow._overlay.HideSecrets();
+			if (Config.Instance.SavePlayedGames && !Game.IsInMenu)
+			{
+				Helper.MainWindow.SavePlayedCards();
+			}
+			if (!Config.Instance.KeepDecksVisible)
+			{
+				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+				if (deck != null)
+					Game.SetPremadeDeck((Hearthstone_Deck_Tracker.Hearthstone.Deck)deck.Clone());
+
+				Game.Reset();
+			}
+			Game.IsInMenu = true;
+		}
+
+		public void HandleOpponentPlayToHand(string cardId, int turn)
+		{
+			Game.OpponentBackToHand(cardId, turn);
+		}
+
+		private void HandlePlayerGet(string cardId)
+		{
+			Game.PlayerGet(cardId);
+		}
+
+		private void HandlePlayerDraw(string cardId)
+		{
+			var correctDeck = Game.PlayerDraw(cardId);
+
+			if (!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow._showIncorrectDeckMessage &&
+				!Helper.MainWindow._showingIncorrectDeckMessage && Game.IsUsingPremade)
+			{
+				Helper.MainWindow._showIncorrectDeckMessage = true;
+				Logger.WriteLine("Found incorrect deck");
+			}
+		}
+
+		private void HandlePlayerMulligan(string cardId)
+		{
+			TurnTimer.Instance.MulliganDone(Turn.Player);
+			Game.Mulligan(cardId);
+
+			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
+			Helper.MainWindow._overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow._playerWindow.ListViewPlayer.Items.Refresh();
+		}
+
+		private void HandlePlayerHandDiscard(string cardId)
+		{
+			Game.PlayerHandDiscard(cardId);
+			Helper.MainWindow._overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow._playerWindow.ListViewPlayer.Items.Refresh();
+		}
+
+		private void HandlePlayerPlay(string cardId)
+		{
+			Game.PlayerPlayed(cardId);
+			Helper.MainWindow._overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow._playerWindow.ListViewPlayer.Items.Refresh();
+		}
+
+		private void HandlePlayerDeckDiscard(string cardId)
+		{
+			var correctDeck = Game.PlayerDeckDiscard(cardId);
+
+			//don't think this will ever detect an incorrect deck but who knows...
+			if (!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow._showIncorrectDeckMessage &&
+				!Helper.MainWindow._showingIncorrectDeckMessage && Game.IsUsingPremade)
+			{
+				Helper.MainWindow._showIncorrectDeckMessage = true;
+				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
+			}
+		}
+
+		private void HandleOpponentSecretTrigger(string cardId)
+		{
+			Game.OpponentSecretTriggered(cardId);
+			Game.OpponentSecretCount--;
+			if (Game.OpponentSecretCount <= 0)
+			{
+				Helper.MainWindow._overlay.HideSecrets();
+			}
+		}
+
+		private void HandleOpponentMulligan(int pos)
+		{
+			TurnTimer.Instance.MulliganDone(Turn.Opponent);
+			Game.OpponentMulligan(pos);
+		}
+
+		private void HandleOpponentDeckDiscard(string cardId)
+		{
+			Game.OpponentDeckDiscard(cardId);
+
+			//there seems to be an issue with the overlay not updating here.
+			//possibly a problem with order of logs?
+			Helper.MainWindow._overlay.ListViewOpponent.Items.Refresh();
+			Helper.MainWindow._opponentWindow.ListViewOpponent.Items.Refresh();
+		}
+
+		#endregion
+
+
+
+		public static HsLogReader Instance { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="hsDirPath"></param>
+		/// <param name="updateDelay"></param>
+		public static void Create()
+		{
+			Instance = new HsLogReader();
+		}
+
+		private HsLogReader()
+		{
+			var hsDirPath = Config.Instance.HearthstoneDirectory;
+			var updateDelay = Config.Instance.UpdateDelay;
+
 			_updateDelay = updateDelay == 0 ? 100 : updateDelay;
 			while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
 			{
@@ -370,7 +715,8 @@ namespace Hearthstone_Deck_Tracker
 								else
 								{
 									if (to == "OPPOSING SECRET")
-										if (SecretPlayed != null) SecretPlayed(this);
+										SecretPlayed(this);
+									//if (SecretPlayed != null) SecretPlayed(this);
 
 									CardPosChange(this, new CardPosChangeArgs(OpponentHandMovement.Play, zonePos, GetTurnNumber(), id));
 								}

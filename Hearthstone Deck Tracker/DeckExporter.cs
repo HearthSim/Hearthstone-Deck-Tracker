@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker
 			const float targetSat = 0.38f;
 			var avgHue = 0.0f;
 			var avgSat = 0.0f;
-			var capture = CaptureHearthstone(wndHandle, point, width, height);
+			var capture = Helper.CaptureHearthstone(point, width, height, wndHandle);
 
 			if (capture == null)
 				return false;
@@ -193,15 +193,6 @@ namespace Hearthstone_Deck_Tracker
 			return avgHue <= targetHue && avgSat <= targetSat;
 		}
 
-		private static Bitmap CaptureHearthstone(IntPtr wndHandle, Point point, int width, int height)
-		{
-			User32.ClientToScreen(wndHandle, ref point);
-			if (!User32.IsForegroundWindow("Hearthstone")) return null;
-
-			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-			Graphics graphics = Graphics.FromImage(bmp);
-			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(50, 50), CopyPixelOperation.SourceCopy);
-			return bmp;
-		}
+		
 	}
 }

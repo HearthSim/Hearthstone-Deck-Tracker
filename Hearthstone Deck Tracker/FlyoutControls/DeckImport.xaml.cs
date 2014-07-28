@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		//TODO: Convert this into a Flyout with a user control inside of it!!!
 
-		public MainWindow Window;
+		//public MainWindow Window;
 
 
 		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
@@ -57,34 +57,34 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			//import dialog
-			var url = await Window.ShowInputAsync("Import deck", "", settings);
+			var url = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
 			if (string.IsNullOrEmpty(url))
 				return;
 
-			var controller = await Window.ShowProgressAsync("Loading Deck...", "please wait");
+			var controller = await Helper.MainWindow.ShowProgressAsync("Loading Deck...", "please wait");
 
-			//var deck = await Window._deckImporter.Import(url);
+			//var deck = await Helper.MainWindow._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
 
 			await controller.CloseAsync();
 
 			if (deck != null)
 			{
-				var reimport = Window._editingDeck && Window._newDeck != null && Window._newDeck.Url == url;
+				var reimport = Helper.MainWindow._editingDeck && Helper.MainWindow._newDeck != null && Helper.MainWindow._newDeck.Url == url;
 
 				deck.Url = url;
 
 				if (reimport) //keep old notes
-					deck.Note = Window._newDeck.Note;
+					deck.Note = Helper.MainWindow._newDeck.Note;
 
 				if (!deck.Note.Contains(url))
 					deck.Note = url + "\n" + deck.Note;
 
-				Window.SetNewDeck(deck, reimport);
+				Helper.MainWindow.SetNewDeck(deck, reimport);
 			}
 			else
 			{
-				await Window.ShowMessageAsync("Error", "Could not load deck from specified url");
+				await Helper.MainWindow.ShowMessageAsync("Error", "Could not load deck from specified url");
 			}
 
 			After_Click();
@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 						while (name.Length > 0 && Helper.IsNumeric(name[0]))
 							name = name.Remove(0, 1);
 
-						var card = Window._game.GetCardFromName(name);
+						var card = Game.GetCardFromName(name);
 						if (card.Id == "UNKNOWN")
 							continue;
 
@@ -125,14 +125,14 @@ namespace Hearthstone_Deck_Tracker
 						deck.Cards.Add(card);
 					}
 
-					Window.SetNewDeck(deck);
+					Helper.MainWindow.SetNewDeck(deck);
 					if (deck == null)
-						Window.ShowMessage("Error loading deck", "");
+						Helper.MainWindow.ShowMessage("Error loading deck", "");
 				}
 				catch (Exception ex)
 				{
 					Logger.WriteLine("Error importing from arenavalue: " + ex.StackTrace);
-					Window.ShowMessage("Error loading deck", "");
+					Helper.MainWindow.ShowMessage("Error loading deck", "");
 				}
 			}
 
@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			//import dialog
-			var idString = await Window.ShowInputAsync("Import deck", "", settings);
+			var idString = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
 			if (string.IsNullOrEmpty(idString))
 				return;
 			var deck = new Deck();
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker
 
 				deck.Cards.Add(card);
 			}
-			Window.SetNewDeck(deck);
+			Helper.MainWindow.SetNewDeck(deck);
 
 			After_Click();
 		}
@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker
 							var lines = sr.ReadToEnd().Split('\n');
 							foreach (var line in lines)
 							{
-								var card = Window._game.GetCardFromName(line.Trim());
+								var card = Game.GetCardFromName(line.Trim());
 								if (card.Name == "") continue;
 
 								if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -227,10 +227,10 @@ namespace Hearthstone_Deck_Tracker
 						{
 							card.Load();
 						}
-						Window.TagControlNewDeck.SetSelectedTags(deck.Tags);
+						Helper.MainWindow.TagControlNewDeck.SetSelectedTags(deck.Tags);
 
 					}
-					Window.SetNewDeck(deck);
+					Helper.MainWindow.SetNewDeck(deck);
 				}
 				catch (Exception ex)
 				{

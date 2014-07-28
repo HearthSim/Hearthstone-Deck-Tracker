@@ -23,11 +23,11 @@ namespace Hearthstone_Deck_Tracker
 		//}
 
 
-		public static Game _game;
+		//public static Game _game;
 
 		public static async Task<Deck> Import(string url)
 		{
-			if (_game == null) throw new Exception("_game is null");
+			//if (_game == null) throw new Exception("_game is null");
 
 			if (url.Contains("hearthstats") || url.Contains("hss.io"))
 			{
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
 				foreach (var info in cardInfo)
 				{
-					var card = _game.GetCardFromName(info.Name);
+					var card = Game.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 					var nameRaw = cardNode.SelectSingleNode(".//a").InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
 					var count = cardNode.InnerText.Remove(0, nameRaw.Length - 1).Contains("2") ? 2 : 1;
-					var card = _game.GetCardFromName(name);
+					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker
 					if (countNode != null)
 						count = int.Parse(countNode.InnerText);
 
-					var card = _game.GetCardFromName(name);
+					var card = Game.GetCardFromName(name);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 					{
 						deck.Class = card.PlayerClass;
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
 				foreach (var info in cardInfo)
 				{
-					var card = _game.GetCardFromName(info.Name);
+					var card = Game.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker
 					var nameRaw = cardNode.SelectSingleNode(".//span[@class='card-name']").InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
 					var count = cardNode.SelectSingleNode(".//div").Attributes[0].Value.EndsWith("2") ? 2 : 1;
-					var card = _game.GetCardFromName(name);
+					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -268,7 +268,7 @@ namespace Hearthstone_Deck_Tracker
 					var count = int.Parse(text[0].Trim());
 					var name = string.Join(" ", text.Skip(1));
 
-					var card = _game.GetCardFromName(name);
+					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
