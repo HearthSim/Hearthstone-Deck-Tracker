@@ -291,14 +291,6 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 
-			RangeSliderPlayer.UpperValue = 100 - Config.Instance.PlayerDeckTop;
-			RangeSliderPlayer.LowerValue = (100 - Config.Instance.PlayerDeckTop) - Config.Instance.PlayerDeckHeight;
-			SliderPlayer.Value = Config.Instance.PlayerDeckLeft;
-
-			RangeSliderOpponent.UpperValue = 100 - Config.Instance.OpponentDeckTop;
-			RangeSliderOpponent.LowerValue = (100 - Config.Instance.OpponentDeckTop) - Config.Instance.OpponentDeckHeight;
-			SliderOpponent.Value = Config.Instance.OpponentDeckLeft;
-
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
@@ -309,13 +301,8 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 			CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
-			SliderTimersHorizontal.Value = Config.Instance.TimersHorizontalPosition;
 			SliderTimersHorizontalSpacing.Value = Config.Instance.TimersHorizontalSpacing;
-			SliderTimersVertical.Value = Config.Instance.TimersVerticalPosition;
 			SliderTimersVerticalSpacing.Value = Config.Instance.TimersVerticalSpacing;
-
-			SliderSecretsHorizontal.Value = Config.Instance.SecretsLeft;
-			SliderSecretsVertical.Value = Config.Instance.SecretsTop;
 
 
 			TagControlFilter.LoadTags(_deckList.AllTags);
@@ -1358,45 +1345,6 @@ namespace Hearthstone_Deck_Tracker
 				_overlay.Update(true);
 		}
 
-		private void RangeSliderPlayer_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.PlayerDeckTop = 100 - RangeSliderPlayer.UpperValue;
-			Config.Instance.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-		}
-
-		private void RangeSliderPlayer_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.PlayerDeckHeight = RangeSliderPlayer.UpperValue - RangeSliderPlayer.LowerValue;
-		}
-
-		private void SliderPlayer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.PlayerDeckLeft = SliderPlayer.Value;
-			SaveConfig(true);
-		}
-
-		private void RangeSliderOpponent_UpperValueChanged(object sender, RangeParameterChangedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.OpponentDeckTop = 100 - RangeSliderOpponent.UpperValue;
-			Config.Instance.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-		}
-
-		private void RangeSliderOpponent_LowerValueChanged(object sender, RangeParameterChangedEventArgs e)
-		{
-			if (!_initialized) return;
-			Config.Instance.OpponentDeckHeight = RangeSliderOpponent.UpperValue - RangeSliderOpponent.LowerValue;
-		}
-
-		private void SliderOpponent_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.OpponentDeckLeft = SliderOpponent.Value;
-			SaveConfig(true);
-		}
 
 		private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
@@ -1492,37 +1440,6 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		private void RangeSliderPlayer_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-			SaveConfig(true);
-		}
-
-		private void RangeSliderPlayer_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-			SaveConfig(true);
-		}
-
-		private void RangeSliderPlayer_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-			SaveConfig(true);
-		}
-
-		private void RangeSliderOpponent_UpperThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-
-			SaveConfig(true);
-		}
-
-		private void RangeSliderOpponent_LowerThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-			SaveConfig(true);
-		}
-
-		private void RangeSliderOpponent_CentralThumbDragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-		{
-			SaveConfig(true);
-		}
-
 		private void SliderOverlayPlayerScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			if (!_initialized) return;
@@ -1569,25 +1486,11 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HideTimers = false;
 			SaveConfig(true);
 		}
-
-		private void SliderTimersHorizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.TimersHorizontalPosition = SliderTimersHorizontal.Value;
-			SaveConfig(true);
-		}
-
+		
 		private void SliderTimersHorizontalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			if (!_initialized) return;
 			Config.Instance.TimersHorizontalSpacing = SliderTimersHorizontalSpacing.Value;
-			SaveConfig(true);
-		}
-
-		private void SliderTimersVertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.TimersVerticalPosition = SliderTimersVertical.Value;
 			SaveConfig(true);
 		}
 
@@ -1971,21 +1874,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.FlashHs = false;
 			SaveConfig(false);
 		}
-
-		private void SliderSecretsHorizontal_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.SecretsLeft = SliderSecretsHorizontal.Value;
-			SaveConfig(true);
-		}
-
-		private void SliderSecretsVertical_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_initialized) return;
-			Config.Instance.SecretsTop = SliderSecretsVertical.Value;
-			SaveConfig(true);
-		}
-
+		
 		private void CheckboxHideSecrets_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
@@ -2002,21 +1891,7 @@ namespace Hearthstone_Deck_Tracker
 			if (!Game.IsInMenu)
 				_overlay.ShowSecrets(Game.PlayingAgainst);
 		}
-
-		private void BtnShowSecrets_Click(object sender, RoutedEventArgs e)
-		{
-			if (BtnShowSecrets.Content.Equals("Show"))
-			{
-				_overlay.ShowSecrets("Mage");
-				BtnShowSecrets.Content = "Hide";
-			}
-			else
-			{
-				_overlay.HideSecrets();
-				BtnShowSecrets.Content = "Show";
-			}
-		}
-
+		
 		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
@@ -2032,6 +1907,44 @@ namespace Hearthstone_Deck_Tracker
 			Game.HighlightDiscarded = false;
 			SaveConfig(true);
 		}
+
+		private async void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
+		{
+			if (User32.GetHearthstoneWindow() == IntPtr.Zero) return;
+			BtnUnlockOverlay.Content = await _overlay.UnlockUI() ? "Lock" : "Unlock";
+		}
+
+		private async void BtnResetOverlay_Click(object sender, RoutedEventArgs e)
+		{
+			var result = await this.ShowMessageAsync("Resetting overlay to default", "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?", MessageDialogStyle.AffirmativeAndNegative);
+			if (result != MessageDialogResult.Affirmative)
+				return;
+
+			if (BtnUnlockOverlay.Content == "Lock")
+			{
+				await _overlay.UnlockUI();
+				BtnUnlockOverlay.Content = "Unlock";
+			}
+
+			var defaultConfig = new Config();
+
+			Config.Instance.PlayerDeckTop = defaultConfig.PlayerDeckTop;
+			Config.Instance.PlayerDeckLeft = defaultConfig.PlayerDeckLeft;
+			Config.Instance.PlayerDeckHeight = defaultConfig.PlayerDeckHeight;
+
+			Config.Instance.OpponentDeckTop = defaultConfig.OpponentDeckTop;
+			Config.Instance.OpponentDeckLeft = defaultConfig.OpponentDeckLeft;
+			Config.Instance.OpponentDeckHeight = defaultConfig.OpponentDeckHeight;
+
+			Config.Instance.TimersHorizontalPosition = defaultConfig.TimersHorizontalPosition;
+			Config.Instance.TimersHorizontalSpacing = defaultConfig.TimersHorizontalSpacing;
+
+			Config.Instance.SecretsTop = defaultConfig.SecretsTop;
+			Config.Instance.SecretsLeft = defaultConfig.SecretsLeft;
+
+			SaveConfig(true);
+		}
+
 		#endregion
 
 		#region Constructor
@@ -2096,7 +2009,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewNewDeck.ItemsSource = _newDeck.Cards;
 
 			//create overlay
-			_overlay = new OverlayWindow(Config.Instance) { Topmost = true };
+			_overlay = new OverlayWindow() { Topmost = true };
 			if (_foundHsDirectory)
 				_overlay.Show();
 
@@ -2302,12 +2215,6 @@ namespace Hearthstone_Deck_Tracker
 		#endregion
 
 
-
-		private void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
-		{
-			BtnUnlockOverlay.Content = _overlay.UnlockUI() ? "Lock" : "Unlock";
-
-		}
 
 	}
 }

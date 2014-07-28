@@ -63,7 +63,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Hidden"/>
+            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed"/>
 
             <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
                 <StackPanel Name="Marks0">
