@@ -398,5 +398,19 @@ namespace Hearthstone_Deck_Tracker
 				get { return FontWeights.Bold; }
 			}
 		}
+
+		public void SortDecks()
+		{
+			//TODO: sorting
+			switch (Config.Instance.SelectedDeckSorting)
+			{
+				case "Name":
+					break;
+				case "Last Edited":
+					break;
+				case "Tag":
+					break;
+			}
+		}
 	}
 }

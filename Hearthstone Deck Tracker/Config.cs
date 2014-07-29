@@ -85,6 +85,7 @@ namespace Hearthstone_Deck_Tracker
 		public int SearchDelay = 100;
 		public double SecretsLeft = 15;
 		public double SecretsTop = 5;
+		public string SelectedDeckSorting = "Name";
 		public string SelectedLanguage = "enUS";
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -141,7 +142,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _config; }
 		}
-
+		
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;

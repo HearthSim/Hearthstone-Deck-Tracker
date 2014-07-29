@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for TagControl.xaml
 	/// </summary>
-	public partial class TagControl
+	public partial class SortFilterDecks
 	{
 		#region Tag
 
@@ -48,13 +48,13 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Delegates/Events/Properties
 
-		public delegate void DeleteTagHandler(TagControl sender, string tag);
+		public delegate void DeleteTagHandler(SortFilterDecks sender, string tag);
 
-		public delegate void NewTagHandler(TagControl sender, string tag);
+		public delegate void NewTagHandler(SortFilterDecks sender, string tag);
 
-		public delegate void OperationChangedHandler(TagControl sender, Operation operation);
+		public delegate void OperationChangedHandler(SortFilterDecks sender, Operation operation);
 
-		public delegate void SelectedTagsChangedHandler(TagControl sender, List<string> tags);
+		public delegate void SelectedTagsChangedHandler(SortFilterDecks sender, List<string> tags);
 
 		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
 
@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		public TagControl()
+		public SortFilterDecks()
 		{
 			InitializeComponent();
 
@@ -243,19 +243,19 @@ namespace Hearthstone_Deck_Tracker
 
 		//public MainWindow Window;
 
-		private void TagControlOnNewTag(TagControl sender, string tag)
+		private void TagControlOnNewTag(SortFilterDecks sender, string tag)
 		{
 			if (!Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
 				Helper.MainWindow.DeckList.AllTags.Add(tag);
 				Helper.MainWindow.WriteDecks();
-				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow.DeckList.AllTags);
+				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
 				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 			}
 		}
 
-		private void TagControlOnSelectedTagsChanged(TagControl sender, List<string> tags)
+		private void TagControlOnSelectedTagsChanged(SortFilterDecks sender, List<string> tags)
 		{
 			if (Helper.MainWindow.NewDeck == null) return;
 			if (sender.Name == "TagControlNewDeck")
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void TagControlOnDeleteTag(TagControl sender, string tag)
+		private void TagControlOnDeleteTag(SortFilterDecks sender, string tag)
 		{
 			if (Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
@@ -284,11 +284,22 @@ namespace Hearthstone_Deck_Tracker
 					Helper.MainWindow.NewDeck.Tags.Remove(tag);
 
 				Helper.MainWindow.WriteDecks();
-				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow.DeckList.AllTags);
+				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
 				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
+		}
+
+		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
+			if (selectedValue == null) return;
+
+			Config.Instance.SelectedDeckSorting = selectedValue;
+			Config.Save();
+
+			Helper.MainWindow.DeckPickerList.SortDecks();
 		}
 	}
 }

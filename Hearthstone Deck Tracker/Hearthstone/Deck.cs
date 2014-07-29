@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore] public bool IsSelectedInGui;
 		public string Name;
 		public string Note;
+		public DateTime LastEdited;
 
 		[XmlArray(ElementName = "Tags")] 
 		[XmlArrayItem(ElementName = "Tag")] 
@@ -31,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = string.Empty;
 		}
 
-		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url)
+		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url, DateTime lastEdited)
 		{
 			Name = name;
 			Class = className;
@@ -43,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Tags = new List<string>(tags);
 			Note = note;
 			Url = url;
+			LastEdited = lastEdited;
 		}
 
 		[XmlIgnore]
@@ -117,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited);
 		}
 
 		public override string ToString()

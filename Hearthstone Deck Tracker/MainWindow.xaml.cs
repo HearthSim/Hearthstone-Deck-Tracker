@@ -133,12 +133,12 @@ namespace Hearthstone_Deck_Tracker
 			Activate();
 		}
 
-		private void BtnFilterTag_Click(object sender, RoutedEventArgs e)
+		private void BtnSortFilter_Click(object sender, RoutedEventArgs e)
 		{
-			FlyoutFilterTags.IsOpen = !FlyoutFilterTags.IsOpen;
+			FlyoutSortFilter.IsOpen = !FlyoutSortFilter.IsOpen;
 		}
 
-		private void TagControlFilterOnSelectedTagsChanged(TagControl sender, List<string> tags)
+		private void SortFilterDecksFlyoutOnSelectedTagsChanged(SortFilterDecks sender, List<string> tags)
 		{
 			DeckPickerList.SetSelectedTags(tags);
 			Config.Instance.SelectedTags = tags;
@@ -306,9 +306,9 @@ namespace Hearthstone_Deck_Tracker
 			SliderTimersVerticalSpacing.Value = Config.Instance.TimersVerticalSpacing;
 
 
-			TagControlFilter.LoadTags(DeckList.AllTags);
+			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
 
-			TagControlFilter.SetSelectedTags(Config.Instance.SelectedTags);
+			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 			var tags = new List<string>(DeckList.AllTags);
@@ -316,7 +316,9 @@ namespace Hearthstone_Deck_Tracker
 			TagControlNewDeck.LoadTags(tags);
 			TagControlMyDecks.LoadTags(tags);
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
-			TagControlFilter.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
+			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
+
+			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 
 			ComboboxWindowBackground.SelectedItem = Config.Instance.SelectedWindowBackground;
 			TextboxCustomBackground.IsEnabled = Config.Instance.SelectedWindowBackground == "Custom";
@@ -598,7 +600,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void TagControlFilterOnOperationChanged(TagControl sender, Operation operation)
+		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, Operation operation)
 		{
 			Config.Instance.TagOperation = operation;
 			DeckPickerList.SetTagOperation(operation);
@@ -892,6 +894,8 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.DecksList.Add(newDeckClone);
 			DeckPickerList.AddAndSelectDeck(newDeckClone);
 
+			newDeckClone.LastEdited = DateTime.Now;
+
 			WriteDecks();
 			BtnSaveDeck.Content = "Save";
 
@@ -905,7 +909,7 @@ namespace Hearthstone_Deck_Tracker
 
 			foreach (var tag in NewDeck.Tags)
 			{
-				TagControlFilter.AddSelectedTag(tag);
+				SortFilterDecksFlyout.AddSelectedTag(tag);
 			}
 
 			DeckPickerList.UpdateList();
@@ -2047,12 +2051,12 @@ namespace Hearthstone_Deck_Tracker
 
 			TurnTimer.Create(90);
 
-			TagControlFilter.HideStuffToCreateNewTag();
+			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
 			TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
 
-			TagControlFilter.SelectedTagsChanged += TagControlFilterOnSelectedTagsChanged;
-			TagControlFilter.OperationChanged += TagControlFilterOnOperationChanged;
+			SortFilterDecksFlyout.SelectedTagsChanged += SortFilterDecksFlyoutOnSelectedTagsChanged;
+			SortFilterDecksFlyout.OperationChanged += SortFilterDecksFlyoutOnOperationChanged;
 
 			UpdateDbListView();
 
@@ -2075,6 +2079,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			DeckPickerList.SortDecks();
 		}
 
 		private bool FindHearthstoneDir()

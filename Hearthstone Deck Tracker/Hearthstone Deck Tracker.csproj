@@ -129,8 +129,8 @@
       <DependentUpon>ManaCostBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OutlinedTextBlock.cs" />
-    <Compile Include="FlyoutControls\TagControl.xaml.cs">
-      <DependentUpon>TagControl.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\SortFilterDecks.xaml.cs">
+      <DependentUpon>SortFilterDecks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
@@ -204,7 +204,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\TagControl.xaml">
+    <Page Include="FlyoutControls\SortFilterDecks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

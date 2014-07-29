@@ -17,8 +17,8 @@
                         </ColumnDefinition>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:Flyout x:Name="FlyoutFilterTags" Header="Filter decks by tag" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlFilter"/>
+                    <controls:Flyout x:Name="FlyoutSortFilter" Header="Filter decks by tag" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout"/>
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
@@ -27,7 +27,7 @@
                         <local:DeckOptions Width="auto" Height="auto" x:Name="DeckOptionsFlyout" Margin="3,0,0,0"></local:DeckOptions>
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlMyDecks" />
+                        <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
                     </controls:Flyout>
 
                     <Grid Grid.Column="1" Margin="-1,0,0,0">
@@ -81,7 +81,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
                             <Button x:Name="ButtonNoDeck" Content="Use no Deck" Width="117" Margin="0,0,3,0" Height="26" Click="ButtonNoDeck_Click" />
-                            <Button x:Name="BtnFilterTag" Content="Filter by Tag"  Width="117" Margin="3,0,0,0" Height="26" Click="BtnFilterTag_Click" />
+                            <Button x:Name="BtnSortFilter" Content="Sort / Filter"  Width="117" Margin="3,0,0,0" Height="26" Click="BtnSortFilter_Click" />
                         </StackPanel>
                         <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Center" Margin="0,6,0,6" Height="auto" Width="240" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                     </Grid>
@@ -96,7 +96,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:TagControl Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+                        <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
