@@ -70,12 +70,12 @@ namespace Hearthstone_Deck_Tracker
 
 			if (deck != null)
 			{
-				var reimport = Helper.MainWindow._editingDeck && Helper.MainWindow._newDeck != null && Helper.MainWindow._newDeck.Url == url;
+				var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null && Helper.MainWindow.NewDeck.Url == url;
 
 				deck.Url = url;
 
 				if (reimport) //keep old notes
-					deck.Note = Helper.MainWindow._newDeck.Note;
+					deck.Note = Helper.MainWindow.NewDeck.Note;
 
 				if (!deck.Note.Contains(url))
 					deck.Note = url + "\n" + deck.Note;

@@ -90,7 +90,7 @@
                 </Grid>
             </TabItem>
             <TabItem Name="TabItemNewDeck" Header="New Deck">
-                <Grid AllowDrop="True" Drop="Grid_Drop">
+                <Grid AllowDrop="True">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>

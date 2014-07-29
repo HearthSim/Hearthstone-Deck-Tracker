@@ -274,19 +274,19 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//todo: move this somewhere else
 			//reader done analyzing new stuff, update things
-			if (MainWindow._overlay.IsVisible)
-				MainWindow._overlay.Update(false);
+			if (MainWindow.Overlay.IsVisible)
+				MainWindow.Overlay.Update(false);
 
-			if (MainWindow._playerWindow.IsVisible)
-				MainWindow._playerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
+			if (MainWindow.PlayerWindow.IsVisible)
+				MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
 
-			if (MainWindow._opponentWindow.IsVisible)
-				MainWindow._opponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+			if (MainWindow.OpponentWindow.IsVisible)
+				MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
 
 
-			if (MainWindow._showIncorrectDeckMessage && !MainWindow._showingIncorrectDeckMessage)
+			if (MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage)
 			{
-				MainWindow._showingIncorrectDeckMessage = true;
+				MainWindow.IsShowingIncorrectDeckMessage = true;
 				MainWindow.ShowIncorrectDeckMessage();
 			}
 		}

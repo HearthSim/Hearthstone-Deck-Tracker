@@ -121,10 +121,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{
-			Helper.MainWindow._overlay.Dispatcher.BeginInvoke(
-				new Action(() => Helper.MainWindow._overlay.UpdateTurnTimer(timerEventArgs)));
-			Helper.MainWindow._timerWindow.Dispatcher.BeginInvoke(
-				new Action(() => Helper.MainWindow._timerWindow.Update(timerEventArgs)));
+			Helper.MainWindow.Overlay.Dispatcher.BeginInvoke(
+				new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
+			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(
+				new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
 		}
 	}
 }

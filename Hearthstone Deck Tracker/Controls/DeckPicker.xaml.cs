@@ -348,10 +348,10 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.FlyoutDeckOptions.Header = flyoutHeader;
 
 				//change player deck itemsource
-				if (Helper.MainWindow._overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
+				if (Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
 				{
-					Helper.MainWindow._overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					Helper.MainWindow._playerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					Helper.MainWindow.PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
 					Logger.WriteLine("Set player itemsource as playerdeck");
 				}
 				Game.IsUsingPremade = true;
@@ -360,19 +360,19 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Switched to deck: " + deck.Name);
 
 				//set and save last used deck for class
-				while (Helper.MainWindow._deckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+				while (Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
 				{
-					var lastSelected = Helper.MainWindow._deckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
+					var lastSelected = Helper.MainWindow.DeckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
 					if (lastSelected != null)
 					{
-						Helper.MainWindow._deckList.LastDeckClass.Remove(lastSelected);
+						Helper.MainWindow.DeckList.LastDeckClass.Remove(lastSelected);
 					}
 					else
 					{
 						break;
 					}
 				}
-				Helper.MainWindow._deckList.LastDeckClass.Add(new DeckInfo() { Class = deck.Class, Name = deck.Name });
+				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo() { Class = deck.Class, Name = deck.Name });
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.EnableDeckButtons(true);
 				Helper.MainWindow.ManaCurveMyDecks.SetDeck(deck);

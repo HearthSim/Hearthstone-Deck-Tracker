@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					try
 					{
-						Helper.MainWindow._deckList.DecksList.Remove(deck);
+						Helper.MainWindow.DeckList.DecksList.Remove(deck);
 						Helper.MainWindow.WriteDecks();
 						Helper.MainWindow.DeckPickerList.RemoveDeck(deck);
 						Helper.MainWindow.ListViewDeck.ItemsSource = null;
@@ -132,7 +132,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var clone = (Deck)Helper.MainWindow.DeckPickerList.SelectedDeck.Clone();
 
-			while (Helper.MainWindow._deckList.DecksList.Any(d => d.Name == clone.Name))
+			while (Helper.MainWindow.DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
 				var settings = new MetroDialogSettings();
 				settings.AffirmativeButtonText = "Set";
@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker
 				clone.Name = name;
 			}
 
-			Helper.MainWindow._deckList.DecksList.Add(clone);
+			Helper.MainWindow.DeckList.DecksList.Add(clone);
 			Helper.MainWindow.DeckPickerList.AddAndSelectDeck(clone);
 
 			Helper.MainWindow.WriteDecks();

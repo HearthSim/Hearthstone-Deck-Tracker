@@ -256,19 +256,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TagControlOnNewTag(TagControl sender, string tag)
 		{
-			if (!Helper.MainWindow._deckList.AllTags.Contains(tag))
+			if (!Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
-				Helper.MainWindow._deckList.AllTags.Add(tag);
+				Helper.MainWindow.DeckList.AllTags.Add(tag);
 				Helper.MainWindow.WriteDecks();
-				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow._deckList.AllTags);
-				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow._deckList.AllTags.Where(t => t != "All").ToList());
-				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow._deckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow.DeckList.AllTags);
+				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 			}
 		}
 
 		private void TagControlOnSelectedTagsChanged(TagControl sender, List<string> tags)
 		{
-			if (Helper.MainWindow._newDeck == null) return;
+			if (Helper.MainWindow.NewDeck == null) return;
 			if (sender.Name == "TagControlNewDeck")
 				Helper.MainWindow.BtnSaveDeck.Content = "Save*";
 			else if (sender.Name == "TagControlMyDecks")
@@ -282,22 +282,22 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TagControlOnDeleteTag(TagControl sender, string tag)
 		{
-			if (Helper.MainWindow._deckList.AllTags.Contains(tag))
+			if (Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
-				Helper.MainWindow._deckList.AllTags.Remove(tag);
-				foreach (var deck in Helper.MainWindow._deckList.DecksList)
+				Helper.MainWindow.DeckList.AllTags.Remove(tag);
+				foreach (var deck in Helper.MainWindow.DeckList.DecksList)
 				{
 					if (deck.Tags.Contains(tag))
 						deck.Tags.Remove(tag);
 				}
 
-				if (Helper.MainWindow._newDeck.Tags.Contains(tag))
-					Helper.MainWindow._newDeck.Tags.Remove(tag);
+				if (Helper.MainWindow.NewDeck.Tags.Contains(tag))
+					Helper.MainWindow.NewDeck.Tags.Remove(tag);
 
 				Helper.MainWindow.WriteDecks();
-				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow._deckList.AllTags);
-				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow._deckList.AllTags.Where(t => t != "All").ToList());
-				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow._deckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlFilter.LoadTags(Helper.MainWindow.DeckList.AllTags);
+				Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
 				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
 		}
