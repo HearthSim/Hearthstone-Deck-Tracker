@@ -309,13 +309,13 @@ namespace Hearthstone_Deck_Tracker
 		private void Try_To_Sort()
 		{
 			//todo: don't want to mess your stuf up - please rename vars to lower camel Case
-			var Button1 = ListboxPicker.Items.GetItemAt(0);
-			var Ordered_Decks = ListboxPicker.Items.OfType<Deck>().OrderBy(x => x.Name).ToList();
+			var button1 = ListboxPicker.Items.GetItemAt(0);
+			var ordered_Decks = ListboxPicker.Items.OfType<Deck>().OrderBy(x => x.Name).ToList();
 			ListboxPicker.Items.Clear();
 
 
-			ListboxPicker.Items.Add(Button1);
-			foreach (var Deck in Ordered_Decks)
+			ListboxPicker.Items.Add(button1);
+			foreach (var Deck in ordered_Decks)
 			{
 				ListboxPicker.Items.Add(Deck);
 			}
