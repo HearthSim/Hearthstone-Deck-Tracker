@@ -484,7 +484,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHasCoin = true;
 		}
 
-		public static void OpponentDraw(CardPosChangeArgs args)
+		public static void OpponentDraw(int turn)
 		{
 			OpponentHandCount++;
 			OpponentDeckCount--;
@@ -500,26 +500,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 			}
 
-			Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, args.Turn), "Hearthstone");
+			Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
 
-			OpponentHandAge[OpponentHandCount - 1] = args.Turn;
+			OpponentHandAge[OpponentHandCount - 1] = turn;
 			OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
 
 			LogOpponentHand();
 		}
 
-		public static void OpponentPlay(CardPosChangeArgs args)
+		public static void OpponentPlay(string id, int from, int turn)
 		{
 			OpponentHandCount--;
 
-			if (args.Id == "GAME_005")
+			if (id == "GAME_005")
 			{
 				OpponentHasCoin = false;
 			}
-			if (!string.IsNullOrEmpty(args.Id))
+			if (!string.IsNullOrEmpty(id))
 			{
-				var stolen = args.From != -1 && OpponentHandMarks[args.From - 1] == CardMark.Stolen;
-				var card = OpponentCards.FirstOrDefault(c => c.Id == args.Id && c.IsStolen == stolen && !c.WasDiscarded);
+				var stolen = from != -1 && OpponentHandMarks[from - 1] == CardMark.Stolen;
+				var card = OpponentCards.FirstOrDefault(c => c.Id == id && c.IsStolen == stolen && !c.WasDiscarded);
 
 				if (card != null)
 				{
@@ -527,7 +527,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				else
 				{
-					card = GetCardFromId(args.Id);
+					card = GetCardFromId(id);
 					card.IsStolen = stolen;
 					OpponentCards.Add(card);
 				}
@@ -535,10 +535,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				LogDeckChange(true, card, false);
 
 				if (card.IsStolen)
-					Logger.WriteLine("Opponent played stolen card from " + args.From);
+					Logger.WriteLine("Opponent played stolen card from " + from);
 			}
 
-			for (int i = args.From - 1; i < MaxHandSize - 1; i++)
+			for (int i = from - 1; i < MaxHandSize - 1; i++)
 			{
 				OpponentHandAge[i] = OpponentHandAge[i + 1];
 				OpponentHandMarks[i] = OpponentHandMarks[i + 1];
@@ -577,5 +577,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			Logger.WriteLine("Opponent Hand after draw: " + string.Join(",", zipped), "Hearthstone");
 		}
+
 	}
 }

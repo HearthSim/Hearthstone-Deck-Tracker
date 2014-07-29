@@ -273,5 +273,25 @@ namespace Hearthstone_Deck_Tracker
 			
 		}
 
+		public static void UpdateEverything()
+		{
+			//todo: move this somewhere else
+			//reader done analyzing new stuff, update things
+			if (MainWindow._overlay.IsVisible)
+				MainWindow._overlay.Update(false);
+
+			if (MainWindow._playerWindow.IsVisible)
+				MainWindow._playerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
+
+			if (MainWindow._opponentWindow.IsVisible)
+				MainWindow._opponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+
+
+			if (MainWindow._showIncorrectDeckMessage && !MainWindow._showingIncorrectDeckMessage)
+			{
+				MainWindow._showingIncorrectDeckMessage = true;
+				MainWindow.ShowIncorrectDeckMessage();
+			}
+		}
 	}
 }

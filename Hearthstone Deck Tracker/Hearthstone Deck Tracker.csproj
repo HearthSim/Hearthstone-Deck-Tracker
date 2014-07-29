@@ -105,6 +105,7 @@
     <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
       <DependentUpon>DeckOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
