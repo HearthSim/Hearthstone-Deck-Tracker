@@ -1,39 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 
 namespace Hearthstone_Deck_Tracker
 {
 	/// <summary>
 	/// Interaction logic for DeckImport.xaml
 	/// </summary>
-	public partial class DeckImport : UserControl
+	public partial class DeckImport
 	{
 		//TODO: Convert this into a Flyout with a user control inside of it!!!
 
 		//public MainWindow Window;
 
 
-		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
 		public delegate void DeckOptionsButtonClickedEvent(DeckImport sender);
 
 		public DeckImport()
 		{
 			InitializeComponent();
 		}
+
+		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
 
 
 		public void After_Click()
@@ -70,7 +62,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if (deck != null)
 			{
-				var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null && Helper.MainWindow.NewDeck.Url == url;
+				var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null &&
+				               Helper.MainWindow.NewDeck.Url == url;
 
 				deck.Url = url;
 
@@ -100,7 +93,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					foreach (var line in clipboardLines)
 					{
-						var parts = line.Split(new[] { " x " }, StringSplitOptions.RemoveEmptyEntries);
+						var parts = line.Split(new[] {" x "}, StringSplitOptions.RemoveEmptyEntries);
 						if (parts.Length == 0) continue;
 						var name = parts[0].Trim();
 						while (name.Length > 0 && Helper.IsNumeric(name[0]))
@@ -153,7 +146,7 @@ namespace Hearthstone_Deck_Tracker
 			if (string.IsNullOrEmpty(idString))
 				return;
 			var deck = new Deck();
-			foreach (var entry in idString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+			foreach (var entry in idString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries))
 			{
 				var splitEntry = entry.Split(':');
 				if (splitEntry.Length != 2)
@@ -177,10 +170,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
-			var dialog = new Microsoft.Win32.OpenFileDialog();
-			dialog.Title = "Select Deck File";
-			dialog.DefaultExt = "*.xml;*.txt";
-			dialog.Filter = "Deck Files|*.txt;*.xml";
+			var dialog = new OpenFileDialog
+				{
+					Title = "Select Deck File",
+					DefaultExt = "*.xml;*.txt",
+					Filter = "Deck Files|*.txt;*.xml"
+				};
 			var dialogResult = dialog.ShowDialog();
 			if (dialogResult == true)
 			{
@@ -190,7 +185,7 @@ namespace Hearthstone_Deck_Tracker
 
 					if (dialog.FileName.EndsWith(".txt"))
 					{
-						using (var sr = new System.IO.StreamReader(dialog.FileName))
+						using (var sr = new StreamReader(dialog.FileName))
 						{
 							deck = new Deck();
 							var lines = sr.ReadToEnd().Split('\n');
@@ -216,7 +211,6 @@ namespace Hearthstone_Deck_Tracker
 									deck.Cards.Add(card);
 								}
 							}
-
 						}
 					}
 					else if (dialog.FileName.EndsWith(".xml"))
@@ -228,7 +222,6 @@ namespace Hearthstone_Deck_Tracker
 							card.Load();
 						}
 						Helper.MainWindow.TagControlNewDeck.SetSelectedTags(deck.Tags);
-
 					}
 					Helper.MainWindow.SetNewDeck(deck);
 				}

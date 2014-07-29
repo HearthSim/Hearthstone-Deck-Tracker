@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
@@ -20,99 +10,32 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for DeckPicker.xaml
 	/// </summary>
-	public partial class DeckPicker : ListBox
+	public partial class DeckPicker
 	{
-		public class HsClass
-		{
-			public List<Deck> Decks;
-			public List<string> SelectedTags;
-			public Operation TagOperation;
-			public string Name;
-
-			public string TagList
-			{
-				get
-				{
-					return "";
-				}
-			}
-
-			public string GetName
-			{
-				get
-				{
-					return (Name == "Back" || Name == "All")
-							   ? Name
-							   : Name + " (" +
-								 Decks.Count(
-									 d =>
-									 SelectedTags.Any(t => t == "All") ||
-									 (TagOperation == Operation.Or
-										  ? SelectedTags.Any(t => d.Tags.Contains(t))
-										  : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
-				}
-			}
-
-			public Color ClassColor
-			{
-				get
-				{
-					switch (Name)
-					{
-						case "Druid":
-							return (Color)ColorConverter.ConvertFromString("#FF7D0A");
-						case "Death Knight":
-							return (Color)ColorConverter.ConvertFromString("#C41F3B");
-						case "Hunter":
-							return (Color)ColorConverter.ConvertFromString("#ABD473");
-						case "Mage":
-							return (Color)ColorConverter.ConvertFromString("#69CCF0");
-						case "Monk":
-							return (Color)ColorConverter.ConvertFromString("#00FF96");
-						case "Paladin":
-							return (Color)ColorConverter.ConvertFromString("#F58CBA");
-						case "Priest":
-							return (Color)ColorConverter.ConvertFromString("#FFFFFF");
-						case "Rogue":
-							return (Color)ColorConverter.ConvertFromString("#FFF569");
-						case "Shaman":
-							return (Color)ColorConverter.ConvertFromString("#0070DE");
-						case "Warlock":
-							return (Color)ColorConverter.ConvertFromString("#9482C9");
-						case "Warrior":
-							return (Color)ColorConverter.ConvertFromString("#C79C6E");
-						default:
-							return Colors.Gray;
-					}
-				}
-			}
-			public FontWeight GetFontWeight
-			{
-				get { return FontWeights.Bold; }
-			}
-
-			public HsClass(string name)
-			{
-				Name = name;
-				Decks = new List<Deck>();
-				SelectedTags = new List<string>();
-			}
-		}
-
-		private readonly List<string> _classNames = new List<string> { "Druid", "Hunter", "Mage", "Paladin", "Priest", "Rogue", "Shaman", "Warlock", "Warrior" };
-		private readonly List<HsClass> _hsClasses;
-		private readonly bool _initialized;
-		private bool _inClassSelect;
-		public bool ShowAll;
-		public List<string> SelectedTags;
-		private HsClass _selectedClass;
-		public Operation TagOperation;
-
-		public Deck SelectedDeck;
-
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
-		//public event SelectedDeckHandler SelectedDeckChanged;
+		private readonly List<string> _classNames = new List<string>
+			{
+				"Druid",
+				"Hunter",
+				"Mage",
+				"Paladin",
+				"Priest",
+				"Rogue",
+				"Shaman",
+				"Warlock",
+				"Warrior"
+			};
+
+		private readonly List<HsClass> _hsClasses;
+		private readonly bool _initialized;
+		public Deck SelectedDeck;
+		public List<string> SelectedTags;
+		public bool ShowAll;
+		public Operation TagOperation;
+		private bool _inClassSelect;
+		private HsClass _selectedClass;
+
 
 		public DeckPicker()
 		{
@@ -150,13 +73,13 @@ namespace Hearthstone_Deck_Tracker
 			if (deck == null) return;
 			AddDeck(deck);
 			SelectDeck(deck);
-
 		}
+
 		public void SelectDeck(Deck deck)
 		{
 			if (deck == null) return;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ??
-						  _hsClasses.First(c => c.Name == "Undefined");
+			              _hsClasses.First(c => c.Name == "Undefined");
 
 			if (hsClass != null)
 			{
@@ -189,9 +112,9 @@ namespace Hearthstone_Deck_Tracker
 		private bool DeckMatchesSelectedTags(Deck deck)
 		{
 			return SelectedTags.Any(t => t == "All") ||
-				   (TagOperation == Operation.Or
-						? SelectedTags.Any(t => deck.Tags.Contains(t))
-						: SelectedTags.All(t => deck.Tags.Contains(t)));
+			       (TagOperation == Operation.Or
+				        ? SelectedTags.Any(t => deck.Tags.Contains(t))
+				        : SelectedTags.All(t => deck.Tags.Contains(t)));
 		}
 
 		public void RemoveDeck(Deck deck)
@@ -201,7 +124,6 @@ namespace Hearthstone_Deck_Tracker
 			if (hsClass != null)
 			{
 				hsClass.Decks.Remove(deck);
-
 			}
 			if (ListboxPicker.Items.Contains(deck))
 			{
@@ -291,7 +213,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UpdateList()
 		{
-
 			if (!_inClassSelect)
 			{
 				ListboxPicker.Items.Clear();
@@ -372,7 +293,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					}
 				}
-				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo() { Class = deck.Class, Name = deck.Name });
+				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.EnableDeckButtons(true);
 				Helper.MainWindow.ManaCurveMyDecks.SetDeck(deck);
@@ -387,6 +308,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Try_To_Sort()
 		{
+			//todo: don't want to mess your stuf up - please rename vars to lower camel Case
 			var Button1 = ListboxPicker.Items.GetItemAt(0);
 			var Ordered_Decks = ListboxPicker.Items.OfType<Deck>().OrderBy(x => x.Name).ToList();
 			ListboxPicker.Items.Clear();
@@ -396,6 +318,84 @@ namespace Hearthstone_Deck_Tracker
 			foreach (var Deck in Ordered_Decks)
 			{
 				ListboxPicker.Items.Add(Deck);
+			}
+		}
+
+		public class HsClass
+		{
+			public List<Deck> Decks;
+			public string Name;
+			public List<string> SelectedTags;
+			public Operation TagOperation;
+
+			public HsClass(string name)
+			{
+				Name = name;
+				Decks = new List<Deck>();
+				SelectedTags = new List<string>();
+			}
+
+			public string TagList
+			{
+				get { return ""; }
+			}
+
+			public string GetName
+			{
+				get
+				{
+					return (Name == "Back" || Name == "All")
+						       ? Name
+						       : Name + " (" +
+						         Decks.Count(
+							         d =>
+							         SelectedTags.Any(t => t == "All") ||
+							         (TagOperation == Operation.Or
+								          ? SelectedTags.Any(t => d.Tags.Contains(t))
+								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
+				}
+			}
+
+			// ReSharper disable PossibleNullReferenceException
+			public Color ClassColor
+			{
+				get
+				{
+					switch (Name)
+					{
+						case "Druid":
+							return (Color) ColorConverter.ConvertFromString("#FF7D0A");
+						case "Death Knight":
+							return (Color) ColorConverter.ConvertFromString("#C41F3B");
+						case "Hunter":
+							return (Color) ColorConverter.ConvertFromString("#ABD473");
+						case "Mage":
+							return (Color) ColorConverter.ConvertFromString("#69CCF0");
+						case "Monk":
+							return (Color) ColorConverter.ConvertFromString("#00FF96");
+						case "Paladin":
+							return (Color) ColorConverter.ConvertFromString("#F58CBA");
+						case "Priest":
+							return (Color) ColorConverter.ConvertFromString("#FFFFFF");
+						case "Rogue":
+							return (Color) ColorConverter.ConvertFromString("#FFF569");
+						case "Shaman":
+							return (Color) ColorConverter.ConvertFromString("#0070DE");
+						case "Warlock":
+							return (Color) ColorConverter.ConvertFromString("#9482C9");
+						case "Warrior":
+							return (Color) ColorConverter.ConvertFromString("#C79C6E");
+						default:
+							return Colors.Gray;
+					}
+				}
+			}
+
+			// ReSharper restore PossibleNullReferenceException
+
+			public FontWeight GetFontWeight
+			{
+				get { return FontWeights.Bold; }
 			}
 		}
 	}

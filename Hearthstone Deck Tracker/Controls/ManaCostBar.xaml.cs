@@ -1,147 +1,145 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
 
 namespace Hearthstone_Deck_Tracker
 {
-    /// <summary>
-    /// Interaction logic for MultiProgressBar.xaml
-    /// </summary>
-    public partial class ManaCostBar
-    {
-        private readonly double[] _previousBarHeights;
-        private readonly Rectangle[] _bars;
-        private double[] _nextAnimation;
-        private bool _isAnimationRunning;
-        private bool _cancelCurrentAnimation;
-        public int AnimationDuration { get; set; }
-        public int FrameDelay { get; set; }
+	/// <summary>
+	/// Interaction logic for MultiProgressBar.xaml
+	/// </summary>
+	public partial class ManaCostBar
+	{
+		private readonly Rectangle[] _bars;
+		private readonly double[] _previousBarHeights;
+		private bool _cancelCurrentAnimation;
+		private bool _isAnimationRunning;
+		private double[] _nextAnimation;
 
-        public ManaCostBar()
-        {
-            InitializeComponent();
-            _previousBarHeights = new double[] {0.0, 0.0, 0.0};
-            _bars = new Rectangle[] { WeaponsRect, SpellsRect, MinionsRect };
-            AnimationDuration = 300;
-            FrameDelay = 20;
-            _nextAnimation = new double[3];
-            _isAnimationRunning = false;
-            McbToolTip.SetValue(DataContextProperty, this);
-        }
+		public ManaCostBar()
+		{
+			InitializeComponent();
+			_previousBarHeights = new[] {0.0, 0.0, 0.0};
+			_bars = new[] {WeaponsRect, SpellsRect, MinionsRect};
+			AnimationDuration = 300;
+			FrameDelay = 20;
+			_nextAnimation = new double[3];
+			_isAnimationRunning = false;
+			McbToolTip.SetValue(DataContextProperty, this);
+		}
 
-        public void SetTooltipValues(int weapons, int spells, int minions)
-        {
-            McbToolTip.TextblockWeapons.Text = "Weapons: " + weapons;
-            McbToolTip.TextblockSpells.Text = "Spells: " + spells;
-            McbToolTip.TextblockMinions.Text = "Minions: " + minions;
-        }
+		public int AnimationDuration { get; set; }
+		public int FrameDelay { get; set; }
 
-        public void SetValues(double weapons, double spells, double minions, int count)
-        {
-            LabelCount.Content = count;
+		public void SetTooltipValues(int weapons, int spells, int minions)
+		{
+			McbToolTip.TextblockWeapons.Text = "Weapons: " + weapons;
+			McbToolTip.TextblockSpells.Text = "Spells: " + spells;
+			McbToolTip.TextblockMinions.Text = "Minions: " + minions;
+		}
 
-            _nextAnimation = new double[] {ActualHeight*weapons/100, ActualHeight*spells/100, ActualHeight*minions/100};
+		public void SetValues(double weapons, double spells, double minions, int count)
+		{
+			LabelCount.Content = count;
 
-            if (!_isAnimationRunning)
-                Animate();
-            else
-                _cancelCurrentAnimation = true;
-        }
+			_nextAnimation = new[] {ActualHeight*weapons/100, ActualHeight*spells/100, ActualHeight*minions/100};
 
-        private bool AnimateBar(Rectangle bar, double from, double to)
-        {
-            if (to > from)
-            {
-                if (bar.Height < to)
-                {
-                    bar.Height +=  (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
-                    if (bar.Height > to)
-                    {
-                        bar.Height = to;
-                        return true;
-                    }
-                }
-                else
-                {
-                    bar.Height = to;
-                    return true;
-                }
-            }
-            else if (to < from)
-            {
-                if (bar.Height > to)
-                {
-                    var newHeight = bar.Height - (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
-                    if (newHeight < to || newHeight < 0)
-                    {
-                        bar.Height = to;
-                        return true;
-                    }
+			if (!_isAnimationRunning)
+				Animate();
+			else
+				_cancelCurrentAnimation = true;
+		}
 
-                    bar.Height -= (Math.Abs(from - to)  * FrameDelay) / AnimationDuration;
-                }
-                else
-                {
-                    bar.Height = to;
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
-            }
-            return false;
-        }
+		private bool AnimateBar(Rectangle bar, double from, double to)
+		{
+			if (to > from)
+			{
+				if (bar.Height < to)
+				{
+					bar.Height += (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
+					if (bar.Height > to)
+					{
+						bar.Height = to;
+						return true;
+					}
+				}
+				else
+				{
+					bar.Height = to;
+					return true;
+				}
+			}
+			else if (to < from)
+			{
+				if (bar.Height > to)
+				{
+					var newHeight = bar.Height - (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
+					if (newHeight < to || newHeight < 0)
+					{
+						bar.Height = to;
+						return true;
+					}
 
-        private async void Animate()
-        {
-            _isAnimationRunning = true;
+					bar.Height -= (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
+				}
+				else
+				{
+					bar.Height = to;
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+			return false;
+		}
 
-            while(_nextAnimation != null)
-            {
-                var targetValues = _nextAnimation;
-                _nextAnimation = null;
+		private async void Animate()
+		{
+			_isAnimationRunning = true;
 
-                bool[] done = {false, false, false};
+			while (_nextAnimation != null)
+			{
+				var targetValues = _nextAnimation;
+				_nextAnimation = null;
 
-                if (double.IsNaN(targetValues[0]) || targetValues[0] < 0)
-                    targetValues[0] = 0.0;
-                if (double.IsNaN(targetValues[1]) || targetValues[1] < 0)
-                    targetValues[1] = 0.0;
-                if (double.IsNaN(targetValues[2]) || targetValues[2] < 0)
-                    targetValues[2] = 0.0;
+				bool[] done = {false, false, false};
 
-                while (!done[0] || !done[1] || !done[2])
-                {
-                    if (_cancelCurrentAnimation)
-                        break;
-                    //minions first, weapons last
-                    if (!done[2])
-                        done[2] = AnimateBar(_bars[2], _previousBarHeights[2], targetValues[2]);
+				if (double.IsNaN(targetValues[0]) || targetValues[0] < 0)
+					targetValues[0] = 0.0;
+				if (double.IsNaN(targetValues[1]) || targetValues[1] < 0)
+					targetValues[1] = 0.0;
+				if (double.IsNaN(targetValues[2]) || targetValues[2] < 0)
+					targetValues[2] = 0.0;
 
-                    if (!done[1])
-                        done[1] = AnimateBar(_bars[1], _previousBarHeights[1], targetValues[1]);
+				while (!done[0] || !done[1] || !done[2])
+				{
+					if (_cancelCurrentAnimation)
+						break;
+					//minions first, weapons last
+					if (!done[2])
+						done[2] = AnimateBar(_bars[2], _previousBarHeights[2], targetValues[2]);
 
-                    if (!done[0])
-                        done[0] = AnimateBar(_bars[0], _previousBarHeights[0], targetValues[0]);
+					if (!done[1])
+						done[1] = AnimateBar(_bars[1], _previousBarHeights[1], targetValues[1]);
 
-                    var offset = _bars[0].ActualHeight + _bars[1].ActualHeight + _bars[2].ActualHeight - 24;
-                    if (offset < -4) offset = -4;
-                    LabelCount.Margin = new Thickness(0, 0, 0, offset);
-                
-                    await Task.Delay(FrameDelay);
-                }
-                _cancelCurrentAnimation = false;
-                _previousBarHeights[0] = _bars[0].Height;
-                _previousBarHeights[1] = _bars[1].Height;
-                _previousBarHeights[2] = _bars[2].Height;
+					if (!done[0])
+						done[0] = AnimateBar(_bars[0], _previousBarHeights[0], targetValues[0]);
 
-            }
+					var offset = _bars[0].ActualHeight + _bars[1].ActualHeight + _bars[2].ActualHeight - 24;
+					if (offset < -4) offset = -4;
+					LabelCount.Margin = new Thickness(0, 0, 0, offset);
 
-            _isAnimationRunning = false;
-        }
+					await Task.Delay(FrameDelay);
+				}
+				_cancelCurrentAnimation = false;
+				_previousBarHeights[0] = _bars[0].Height;
+				_previousBarHeights[1] = _bars[1].Height;
+				_previousBarHeights[2] = _bars[2].Height;
+			}
 
-    }
+			_isAnimationRunning = false;
+		}
+	}
 }

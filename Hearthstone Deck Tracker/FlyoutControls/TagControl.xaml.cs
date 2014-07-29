@@ -1,41 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Hearthstone_Deck_Tracker
 {
 	public enum Operation
 	{
-		And, Or
+		And,
+		Or
 	}
+
 	/// <summary>
 	/// Interaction logic for TagControl.xaml
 	/// </summary>
-	public partial class TagControl : UserControl
+	public partial class TagControl
 	{
 		#region Tag
 
 		private new class Tag
 		{
-			public string Name { get; set; }
-			public bool Selected { get; set; }
 			public Tag(string name, bool selected = false)
 			{
 				Name = name;
 				Selected = selected;
 			}
+
+			public string Name { get; set; }
+			public bool Selected { get; set; }
 
 			public override bool Equals(object obj)
 			{
@@ -54,22 +48,25 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Delegates/Events/Properties
 
-		public delegate void SelectedTagsChangedHandler(TagControl sender, List<string> tags);
-		public delegate void NewTagHandler(TagControl sender, string tag);
 		public delegate void DeleteTagHandler(TagControl sender, string tag);
 
+		public delegate void NewTagHandler(TagControl sender, string tag);
+
 		public delegate void OperationChangedHandler(TagControl sender, Operation operation);
+
+		public delegate void SelectedTagsChangedHandler(TagControl sender, List<string> tags);
+
+		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
 
 		public event SelectedTagsChangedHandler SelectedTagsChanged;
 		public event NewTagHandler NewTag;
 		public event DeleteTagHandler DeleteTag;
 		public event OperationChangedHandler OperationChanged;
 
-		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
-
 		#endregion
 
 		#region Methods
+
 		public void HideStuffToCreateNewTag()
 		{
 			TextboxNewTag.Visibility = Visibility.Hidden;
@@ -83,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
 			_tags.Clear();
 			foreach (var tag in tags)
 			{
-				bool isSelected = false;
+				var isSelected = false;
 
 				var old = oldTag.FirstOrDefault(t => t.Name == tag);
 				if (old != null)
@@ -106,12 +103,11 @@ namespace Hearthstone_Deck_Tracker
 				tag.Selected = tags.Contains(tag.Name);
 			}
 			ListboxTags.Items.Refresh();
-
 		}
 
 		public void AddSelectedTag(string tag)
 		{
-			if (!_tags.Any(t => t.Name == tag)) return;
+			if (_tags.All(t => t.Name != tag)) return;
 			if (_tags.First(t => t.Name == "All").Selected) return;
 
 			_tags.First(t => t.Name == tag).Selected = true;
@@ -129,7 +125,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs e)
 		{
-			var originalSource = (DependencyObject)e.OriginalSource;
+			var originalSource = (DependencyObject) e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is CheckBox))
 			{
 				originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -138,31 +134,23 @@ namespace Hearthstone_Deck_Tracker
 			if (originalSource != null)
 			{
 				var checkBox = originalSource as CheckBox;
-				var selectedValue = checkBox.Content.ToString();
-
-				_tags.First(t => t.Name == selectedValue).Selected = true;
-				if (_tags.Any(t => t.Name == "All"))
+				if (checkBox != null)
 				{
-					if (selectedValue == "All")
-					{
-						foreach (var tag in _tags.Where(tag => tag.Name != "All"))
-						{
-							tag.Selected = false;
-						}
+					var selectedValue = checkBox.Content.ToString();
 
-						/*
-						foreach (var tag in _tags)
+					_tags.First(t => t.Name == selectedValue).Selected = true;
+					if (_tags.Any(t => t.Name == "All"))
+					{
+						if (selectedValue == "All")
 						{
-							if (tag.Name != "All")
+							foreach (var tag in _tags.Where(tag => tag.Name != "All"))
 							{
 								tag.Selected = false;
 							}
 						}
-						*/
+						else
+							_tags.First(t => t.Name == "All").Selected = false;
 					}
-					else
-						_tags.First(t => t.Name == "All").Selected = false;
-
 				}
 				ListboxTags.Items.Refresh();
 
@@ -171,13 +159,12 @@ namespace Hearthstone_Deck_Tracker
 					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 					SelectedTagsChanged(this, tagNames);
 				}
-
 			}
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			var originalSource = (DependencyObject)e.OriginalSource;
+			var originalSource = (DependencyObject) e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is CheckBox))
 			{
 				originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -186,16 +173,17 @@ namespace Hearthstone_Deck_Tracker
 			if (originalSource != null)
 			{
 				var checkBox = originalSource as CheckBox;
-				var selectedValue = checkBox.Content.ToString();
-
-				_tags.First(t => t.Name == selectedValue).Selected = false;
+				if (checkBox != null)
+				{
+					var selectedValue = checkBox.Content.ToString();
+					_tags.First(t => t.Name == selectedValue).Selected = false;
+				}
 
 				if (SelectedTagsChanged != null)
 				{
 					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 					SelectedTagsChanged(this, tagNames);
 				}
-
 			}
 		}
 
@@ -212,7 +200,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
 		{
-			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo,
+			                                   MessageBoxImage.Exclamation);
 			if (msgbxoResult != MessageBoxResult.Yes)
 				return;
 
@@ -246,9 +235,9 @@ namespace Hearthstone_Deck_Tracker
 
 			ListboxTags.ItemsSource = _tags;
 
-			this.NewTag += TagControlOnNewTag;
-			this.SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			this.DeleteTag += TagControlOnDeleteTag;
+			NewTag += TagControlOnNewTag;
+			SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+			DeleteTag += TagControlOnDeleteTag;
 		}
 
 
@@ -301,6 +290,5 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
 		}
-
 	}
 }

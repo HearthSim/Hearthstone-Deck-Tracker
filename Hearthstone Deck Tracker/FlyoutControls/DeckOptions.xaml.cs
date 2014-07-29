@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -20,19 +10,18 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for DeckOptions.xaml
 	/// </summary>
-	public partial class DeckOptions : UserControl
+	public partial class DeckOptions
 	{
 		//TODO: Convert this into a Flyout with a user control inside of it!!!
-
-		//public MainWindow Window
-
-
-		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
+		
 		public delegate void DeckOptionsButtonClickedEvent(DeckOptions sender);
+
 		public DeckOptions()
 		{
 			InitializeComponent();
 		}
+
+		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
 
 		private void After_Click()
 		{
@@ -47,12 +36,14 @@ namespace Hearthstone_Deck_Tracker
 			if (deck == null) return;
 
 			var result = await Helper.MainWindow.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
-											   "Please create a new, empty " + deck.Class + "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
-											   MessageDialogStyle.AffirmativeAndNegative);
+			                                                      "Please create a new, empty " + deck.Class +
+			                                                      "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
+			                                                      MessageDialogStyle.AffirmativeAndNegative);
 
 			if (result == MessageDialogResult.Affirmative)
 			{
-				var controller = await Helper.MainWindow.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+				var controller =
+					await Helper.MainWindow.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
 				Helper.MainWindow.Topmost = false;
 				await Task.Delay(500);
 				await DeckExporter.Export(Helper.MainWindow.DeckPickerList.SelectedDeck);
@@ -65,18 +56,19 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			if (Helper.MainWindow.DeckPickerList.SelectedDeck == null) return;
-			PlayerWindow screenShotWindow = new PlayerWindow(Config.Instance, Helper.MainWindow.DeckPickerList.SelectedDeck.Cards, true);
+			var screenShotWindow = new PlayerWindow(Config.Instance, Helper.MainWindow.DeckPickerList.SelectedDeck.Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
 			await Task.Delay(100);
-			PresentationSource source = PresentationSource.FromVisual(screenShotWindow);
+			var source = PresentationSource.FromVisual(screenShotWindow);
 			if (source == null) return;
 
-			double dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
-			double dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
+			var dpiX = 96.0*source.CompositionTarget.TransformToDevice.M11;
+			var dpiY = 96.0*source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, Helper.MainWindow.DeckPickerList.SelectedDeck.Name);
+			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY,
+			                                     Helper.MainWindow.DeckPickerList.SelectedDeck.Name);
 
 			screenShotWindow.Shutdown();
 			if (fileName == null)
@@ -107,7 +99,10 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings();
 				settings.AffirmativeButtonText = "Yes";
 				settings.NegativeButtonText = "No";
-				var result = await Helper.MainWindow.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?", MessageDialogStyle.AffirmativeAndNegative, settings);
+				var result =
+					await
+					Helper.MainWindow.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?",
+					                                   MessageDialogStyle.AffirmativeAndNegative, settings);
 				if (result == MessageDialogResult.Affirmative)
 				{
 					try
@@ -130,14 +125,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var clone = (Deck)Helper.MainWindow.DeckPickerList.SelectedDeck.Clone();
+			var clone = (Deck) Helper.MainWindow.DeckPickerList.SelectedDeck.Clone();
 
 			while (Helper.MainWindow.DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
 				var settings = new MetroDialogSettings();
 				settings.AffirmativeButtonText = "Set";
 				settings.DefaultText = clone.Name;
-				string name = await Helper.MainWindow.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+				var name =
+					await
+					Helper.MainWindow.ShowInputAsync("Name already exists",
+					                                 "You already have a deck with that name, please select a different one.", settings);
 
 				if (String.IsNullOrEmpty(name))
 					return;
