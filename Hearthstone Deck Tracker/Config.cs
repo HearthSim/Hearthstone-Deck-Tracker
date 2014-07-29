@@ -1,18 +1,17 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
 
-#endregion
-
 namespace Hearthstone_Deck_Tracker
 {
 	public class Config
 	{
-		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
+		private static Config _config = new Config();
+
+		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+		                                     @"\HearthstoneDeckTracker";
 
 		public string AccentName;
 		public bool AlwaysOverwriteLogConfig = true;
@@ -26,8 +25,7 @@ namespace Hearthstone_Deck_Tracker
 		public int ClickDelay = 50;
 		public int CustomHeight = -1;
 		public int CustomWidth = -1;
-		[XmlIgnore]
-		public bool Debug = false;
+		[XmlIgnore] public bool Debug = false;
 		public bool ExportSetDeckName = true;
 		public bool FlashHs = true;
 		public bool GenerateLog = false;
@@ -82,8 +80,8 @@ namespace Hearthstone_Deck_Tracker
 		public bool SavePlayedGames = false;
 		public string SavePlayedGamesName = "Game";
 		public string SavePlayedGamesPath = "";
-		public double SearchBoxX = 0.5;
 		public double SearchBoxPosY = 0.92;
+		public double SearchBoxX = 0.5;
 		public int SearchDelay = 100;
 		public double SecretsLeft = 15;
 		public double SecretsTop = 5;
@@ -139,101 +137,95 @@ namespace Hearthstone_Deck_Tracker
 			get { return _currentLogFile ?? GetLogFileName(); }
 		}
 
+		public static Config Instance
+		{
+			get { return _config; }
+		}
 
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;
 			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-											date.Hour,
-											date.Minute, date.Second);
+			                                date.Hour,
+			                                date.Minute, date.Second);
 			return _currentLogFile;
 		}
-
-
-		private static Config _Config = new Config();
-		public static Config Instance { get { return _Config; } }
 
 		public static void Save()
 		{
 			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
 		}
 
-		//public static string Load(XmlManager<Config> _xmlManagerConfig)
 		public static string Load()
 		{
-			string _configPath;
-			//var _Config = new Config();
-			//var _xmlManagerConfig = new XmlManager<Config> { Type = typeof(Config) };
-
-			bool foundConfig = false;
+			var foundConfig = false;
 			try
 			{
 				if (File.Exists("config.xml"))
 				{
-					_Config = XmlManager<Config>.Load("config.xml");
+					_config = XmlManager<Config>.Load("config.xml");
 					foundConfig = true;
 				}
-				else if (File.Exists(_Config.AppDataPath + @"\config.xml"))
+				else if (File.Exists(_config.AppDataPath + @"\config.xml"))
 				{
-					_Config = XmlManager<Config>.Load(_Config.AppDataPath + @"\config.xml");
+					_config = XmlManager<Config>.Load(_config.AppDataPath + @"\config.xml");
 					foundConfig = true;
 				}
 				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
 				{
 					//save locally if appdata doesn't exist (when e.g. not on C)
-					_Config.SaveInAppData = false;
+					_config.SaveInAppData = false;
 				}
 			}
 			catch (Exception e)
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please delete " + _Config.ConfigPath,
+					"\n\n If you don't know how to fix this, please delete " + _config.ConfigPath,
 					"Error loading config.xml");
 				Application.Current.Shutdown();
 			}
 
-			_configPath = _Config.ConfigPath;
+			var configPath = _config.ConfigPath;
+
 			if (!foundConfig)
 			{
-				if (_Config.HomeDir != string.Empty)
-					Directory.CreateDirectory(_Config.HomeDir);
-				using (var sr = new StreamWriter(_Config.ConfigPath, false))
+				if (_config.HomeDir != string.Empty)
+					Directory.CreateDirectory(_config.HomeDir);
+				using (var sr = new StreamWriter(_config.ConfigPath, false))
 				{
 					sr.WriteLine("<Config></Config>");
 				}
 			}
-			else if (_Config.SaveInAppData) //check if config needs to be moved
+			else if (_config.SaveInAppData) //check if config needs to be moved
 			{
 				if (File.Exists("config.xml"))
 				{
-					Directory.CreateDirectory(_Config.HomeDir);
-					if (File.Exists(_Config.ConfigPath))
+					Directory.CreateDirectory(_config.HomeDir);
+					if (File.Exists(_config.ConfigPath))
 					{
 						//backup in case the file already exists
-						File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
 					}
-					File.Move("config.xml", _Config.ConfigPath);
+					File.Move("config.xml", _config.ConfigPath);
 					Logger.WriteLine("Moved config to appdata");
 				}
 			}
 			else
 			{
-				if (File.Exists(_Config.AppDataPath + @"\config.xml"))
+				if (File.Exists(_config.AppDataPath + @"\config.xml"))
 				{
-					if (File.Exists(_Config.ConfigPath))
+					if (File.Exists(_config.ConfigPath))
 					{
 						//backup in case the file already exists
-						File.Move(_configPath, _configPath + DateTime.Now.ToFileTime());
+						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
 					}
-					File.Move(_Config.AppDataPath + @"\config.xml", _Config.ConfigPath);
+					File.Move(_config.AppDataPath + @"\config.xml", _config.ConfigPath);
 					Logger.WriteLine("Moved config to local");
 				}
 			}
 
-			return _configPath;
+			return configPath;
 		}
-
-
 	}
 }

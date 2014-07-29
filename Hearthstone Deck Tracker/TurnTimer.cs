@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace Hearthstone_Deck_Tracker
@@ -17,6 +13,7 @@ namespace Hearthstone_Deck_Tracker
 			OpponentSeconds = opponentSeconds;
 			CurrentTurn = turn;
 		}
+
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
@@ -24,21 +21,21 @@ namespace Hearthstone_Deck_Tracker
 		public Turn CurrentTurn { get; private set; }
 	}
 
-	class TurnTimer
+	internal class TurnTimer
 	{
+		public Turn CurrentTurn;
+		private bool _opponentMulliganed;
+		private bool _playerMulliganed;
 		private Timer _timer;
 		private int _turnTime;
+
+		private TurnTimer()
+		{
+		}
+
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
-		//public event TimerTickHandler TimerTick;
-		//public delegate void TimerTickHandler(TurnTimer sender, TimerEventArgs e);
-
-		public Turn _currentTurn;
-		private bool _playerMulliganed = false;
-		private bool _opponentMulliganed = false;
-
-
 
 
 		public static TurnTimer Instance { get; private set; }
@@ -61,29 +58,13 @@ namespace Hearthstone_Deck_Tracker
 			Instance._timer.Stop();
 		}
 
-		private TurnTimer() { }
-		/*
-		public TurnTimer(int turnTime)
-		{
-			Seconds = turnTime;
-			PlayerSeconds = 0;
-			OpponentSeconds = 0;
-			_turnTime = turnTime;
-			_timer = new Timer(1000);
-			_timer.AutoReset = true;
-			_timer.Enabled = true;
-			_timer.Elapsed += TimerOnElapsed;
-			_timer.Stop();
-		}
-		*/
-
 		private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
 		{
 			if (Seconds > 0)
 				Seconds--;
 			if (_playerMulliganed && _opponentMulliganed)
 			{
-				if (_currentTurn == Turn.Player)
+				if (CurrentTurn == Turn.Player)
 				{
 					PlayerSeconds++;
 				}
@@ -92,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
 					OpponentSeconds++;
 				}
 			}
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, _currentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentTurn));
 		}
 
 		public void Restart()
@@ -101,14 +82,15 @@ namespace Hearthstone_Deck_Tracker
 			_timer.Stop();
 			_timer.Start();
 			if ((!_playerMulliganed && _opponentMulliganed)
-				|| (!_opponentMulliganed && _playerMulliganed)
-				|| (!_opponentMulliganed && !_playerMulliganed && Seconds < 85))
+			    || (!_opponentMulliganed && _playerMulliganed)
+			    || (!_opponentMulliganed && !_playerMulliganed && Seconds < 85))
 			{
 				_playerMulliganed = _opponentMulliganed = true;
 			}
 
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, _currentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentTurn));
 		}
+
 		public void Stop()
 		{
 			_timer.Stop();
@@ -116,12 +98,12 @@ namespace Hearthstone_Deck_Tracker
 			OpponentSeconds = 0;
 			_playerMulliganed = false;
 			_opponentMulliganed = false;
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, false, _currentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, false, CurrentTurn));
 		}
 
 		public void SetCurrentPlayer(Turn turn)
 		{
-			_currentTurn = turn;
+			CurrentTurn = turn;
 		}
 
 		public void MulliganDone(Turn turn)
@@ -137,12 +119,12 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{
-			Helper.MainWindow._overlay.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow._overlay.UpdateTurnTimer(timerEventArgs)));
-			Helper.MainWindow._timerWindow.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow._timerWindow.Update(timerEventArgs)));
+			Helper.MainWindow._overlay.Dispatcher.BeginInvoke(
+				new Action(() => Helper.MainWindow._overlay.UpdateTurnTimer(timerEventArgs)));
+			Helper.MainWindow._timerWindow.Dispatcher.BeginInvoke(
+				new Action(() => Helper.MainWindow._timerWindow.Update(timerEventArgs)));
 		}
-
 	}
 }

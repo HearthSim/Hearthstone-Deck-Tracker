@@ -2,34 +2,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Color = System.Drawing.Color;
 using MessageBox = System.Windows.MessageBox;
+using PixelFormat = System.Drawing.Imaging.PixelFormat;
+using Point = System.Drawing.Point;
 
 namespace Hearthstone_Deck_Tracker
 {
 	public static class Helper
 	{
-		public static MainWindow MainWindow { get; set; }
-
-
-		//private static XmlManager<SerializableVersion> _xmlManager;
 
 		public static double DpiScalingX = 1.0;
 
 		public static double DpiScalingY = 1.0;
+
+		public static Dictionary<string, string> LanguageDict = new Dictionary<string, string>
+			{
+				{"English", "enUS"},
+				{"Chinese (China)", "zhCN"},
+				{"Chinese (Taiwan)", "zhTW"},
+				{"French", "frFR"},
+				{"German", "deDE"},
+				{"Italian", "itIT"},
+				{"Korean", "koKR"},
+				{"Polish", "plPL"},
+				{"Portuguese", "ptBR"},
+				{"Russian", "ruRU"},
+				{"Spanish (Mexico)", "esMX"},
+				{"Spanish (Spain)", "esES"}
+			};
+
+		public static MainWindow MainWindow { get; set; }
 
 		public static Version CheckForUpdates(out Version newVersionOut)
 		{
@@ -46,7 +60,9 @@ namespace Hearthstone_Deck_Tracker
 			catch (Exception e)
 			{
 				MessageBox.Show(
-					e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please verwrite Version.xml with the default file.", "Error loading Version.xml");
+					e.Message + "\n\n" + e.InnerException +
+					"\n\n If you don't know how to fix this, please verwrite Version.xml with the default file.",
+					"Error loading Version.xml");
 
 				return null;
 			}
@@ -97,8 +113,8 @@ namespace Hearthstone_Deck_Tracker
 			foreach (var c in chars)
 			{
 				isHex = ((c >= '0' && c <= '9') ||
-						 (c >= 'a' && c <= 'f') ||
-						 (c >= 'A' && c <= 'F'));
+				         (c >= 'a' && c <= 'f') ||
+				         (c >= 'A' && c <= 'F'));
 
 				if (!isHex)
 					return false;
@@ -108,7 +124,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static double DrawProbability(int copies, int deck, int draw)
 		{
-			return 1 - (BinomialCoefficient(deck - copies, draw) / BinomialCoefficient(deck, draw));
+			return 1 - (BinomialCoefficient(deck - copies, draw)/BinomialCoefficient(deck, draw));
 		}
 
 		public static double BinomialCoefficient(int n, int k)
@@ -122,28 +138,11 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static Dictionary<string, string> LanguageDict = new Dictionary<string, string>()
-            {
-                {"English", "enUS"},
-                {"Chinese (China)", "zhCN"},
-                {"Chinese (Taiwan)", "zhTW"},
-                {"French", "frFR"},
-                {"German", "deDE"},
-                {"Italian", "itIT"},
-                {"Korean", "koKR"},
-                {"Polish", "plPL"},
-                {"Portuguese", "ptBR"},
-                {"Russian", "ruRU"},
-                {"Spanish (Mexico)", "esMX"},
-                {"Spanish (Spain)", "esES"}
-            };
-
-
 		public static string ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
 		{
 			try
 			{
-				var rtb = new RenderTargetBitmap((int)dlv.ActualWidth, (int)dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
+				var rtb = new RenderTargetBitmap((int) dlv.ActualWidth, (int) dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
 				rtb.Render(dlv);
 				var encoder = new PngBitmapEncoder();
 				encoder.Frames.Add(BitmapFrame.Create(rtb));
@@ -159,7 +158,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return null;
 			}
-
 		}
 
 		public static string GetValidFilePath(string dir, string name, string extension)
@@ -193,7 +191,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
 			if (collection == null) return;
-			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
+			var view1 = (CollectionView) CollectionViewSource.GetDefaultView(collection);
 			view1.SortDescriptions.Clear();
 
 			if (classFirst)
@@ -217,7 +215,7 @@ namespace Hearthstone_Deck_Tracker
 			User32.ClientToScreen(wndHandle, ref point);
 			if (!User32.IsForegroundWindow("Hearthstone")) return null;
 
-			var bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 			Graphics graphics = Graphics.FromImage(bmp);
 			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
 			return bmp;
@@ -229,14 +227,14 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(300);
 
 			var rect = User32.GetHearthstoneRect(false);
-			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height*0.85)), (int)(rect.Width*0.1), (int)(rect.Height*0.15));
+			var capture = CaptureHearthstone(new Point(0, (int) (rect.Height*0.85)), (int) (rect.Width*0.1),
+			                                 (int) (rect.Height*0.15));
 			if (capture == null) return false;
 
 			for (int y = 0; y < capture.Height; y++)
 			{
 				for (int x = 0; x < capture.Width; x++)
 				{
-					
 					if (IsYellowPixel(capture.GetPixel(x, y)))
 					{
 						bool foundFriendsList = true;
@@ -244,7 +242,7 @@ namespace Hearthstone_Deck_Tracker
 						//check for a straight yellow line (left side of add button)
 						for (int i = 0; i < 5; i++)
 						{
-							if (x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x+i, y)))
+							if (x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
 							{
 								foundFriendsList = false;
 							}
@@ -256,21 +254,20 @@ namespace Hearthstone_Deck_Tracker
 							return true;
 						}
 					}
-					
 				}
 			}
-		
+
 			return false;
 		}
 
-		private static bool IsYellowPixel(System.Drawing.Color pixel)
+		private static bool IsYellowPixel(Color pixel)
 		{
 			const int red = 216;
 			const int green = 174;
 			const int blue = 10;
 			const int deviation = 10;
-			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation && Math.Abs(pixel.B - blue) <= deviation;
-			
+			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation &&
+			       Math.Abs(pixel.B - blue) <= deviation;
 		}
 
 		public static void UpdateEverything()

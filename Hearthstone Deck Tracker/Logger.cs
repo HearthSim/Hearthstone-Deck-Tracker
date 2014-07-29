@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker
 {
 	static class Logger
 	{
-		public static int _logLevel { private get; set; }
+		public static int LogLevel { private get; set; }
 
 
 		/// <summary>
@@ -25,7 +21,7 @@ namespace Hearthstone_Deck_Tracker
 		/// </summary>
 		public static void WriteLine(string line, string category, int logLevel = 0)
 		{
-			if (logLevel <= _logLevel)
+			if (logLevel <= LogLevel)
 				Trace.WriteLine(string.Format("[{0}]{1}: {2}", DateTime.Now.ToLongTimeString(), category, line));
 		}
 	}

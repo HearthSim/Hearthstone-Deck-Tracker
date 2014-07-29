@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Cache;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,19 +14,8 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class DeckImporter
 	{
-		//private Game _game;
-		//public DeckImporter(Game game)
-		//{
-		//	_game = game;
-		//}
-
-
-		//public static Game _game;
-
 		public static async Task<Deck> Import(string url)
 		{
-			//if (_game == null) throw new Exception("_game is null");
-
 			if (url.Contains("hearthstats") || url.Contains("hss.io"))
 			{
 				return await ImportHearthStats(url);
@@ -63,7 +50,9 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck();
 
-				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//h1[contains(@class,'page-title')]").FirstChild.InnerText);
+				var deckName =
+					HttpUtility.HtmlDecode(
+						doc.DocumentNode.SelectSingleNode("//h1[contains(@class,'page-title')]").FirstChild.InnerText);
 				deck.Name = deckName;
 
 				var cardNameNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'name')]");
@@ -73,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardCosts =
 					cardCountNodes.Select(countNode => int.Parse(countNode.InnerText));
 
-				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
+				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach (var info in cardInfo)
 				{
 					var card = Game.GetCardFromName(info.Name);
@@ -145,8 +134,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//silly names contain right-single quotation mark
 					var cardName = cardNode.SelectSingleNode(".//span[contains(@class, 'card-title')]")
-											   .InnerText.Replace("&#8217", "&#39")
-											   .Replace("&#8216", "&#39");
+					                       .InnerText.Replace("&#8217", "&#39")
+					                       .Replace("&#8216", "&#39");
 
 					var name = HttpUtility.HtmlDecode(cardName);
 
@@ -163,7 +152,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 					card.Count = count;
 					deck.Cards.Add(card);
-
 				}
 				return deck;
 			}
@@ -181,17 +169,20 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck();
 
-				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header/h2[contains(@class,'t-deck-title')]").InnerText);
+				var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header/h2[contains(@class,'t-deck-title')]").InnerText);
 				deck.Name = deckName;
 
-				var cardNameNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
+				var cardNameNodes =
+					doc.DocumentNode.SelectNodes(
+						"//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
 				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
 
 				var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
 				var cardCosts =
 					cardCountNodes.Select(countNode => int.Parse(Regex.Match(countNode.LastChild.InnerText, @"\d+").Value));
 
-				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new { Name = n, Count = c });
+				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach (var info in cardInfo)
 				{
 					var card = Game.GetCardFromName(info.Name);
@@ -256,7 +247,8 @@ namespace Hearthstone_Deck_Tracker
 
 				var deck = new Deck();
 
-				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+				var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
 				deck.Name = deckName;
 
 

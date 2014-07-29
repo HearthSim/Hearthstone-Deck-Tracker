@@ -1,14 +1,10 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-#endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -32,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static Dictionary<string, Card> _cardDb;
 
-		private static readonly List<string> _invalidCardIds = new List<string>
+		private static readonly List<string> InvalidCardIds = new List<string>
 			{
 				"EX1_tk34",
 				"EX1_tk29",
@@ -64,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"EX1_609", //snipe
 				"EX1_554" //snake trap
 			};
+
 		public static readonly List<string> SecretIdsMage = new List<string>
 			{
 				"EX1_287", //counterspell
@@ -74,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"tt_010", //spellbender
 				"EX1_594" //vaporize
 			};
+
 		public static readonly List<string> SecretIdsPaladin = new List<string>
 			{
 				"FP1_020", //avenge
@@ -90,8 +88,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int OpponentDeckCount;
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
-		public static int[] OpponentHandAge { get; private set; }
-		public static CardMark[] OpponentHandMarks { get; private set; }
 
 
 		public static ObservableCollection<Card> PlayerDeck;
@@ -99,7 +95,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int PlayerHandCount;
 		public static string PlayingAgainst;
 		public static string PlayingAs;
-		private static readonly List<string> _validCardSets = new List<string>
+
+		private static readonly List<string> ValidCardSets = new List<string>
 			{
 				"Basic",
 				"Reward",
@@ -107,6 +104,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"Promotion",
 				"Curse of Naxxramas"
 			};
+
+		public static int[] OpponentHandAge { get; private set; }
+		public static CardMark[] OpponentHandMarks { get; private set; }
 
 		#endregion
 
@@ -125,124 +125,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHandMarks[i] = CardMark.None;
 			}
 
-			LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage) ? Config.Instance.SelectedLanguage : "enUS");
+			LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage)
+				           ? Config.Instance.SelectedLanguage
+				           : "enUS");
 		}
 
-		/*
-		public static Game Instance { get; private set; }
-
-		public static void Create()
+		public static void Reset()
 		{
-			//Instance = new Game(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage) ? Config.Instance.SelectedLanguage : "enUS");
-		}
+			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
 
-		private Game(string languageTag)
-		{
-			IsInMenu = true;
-			PlayerDeck = new ObservableCollection<Card>();
-			PlayerDrawn = new ObservableCollection<Card>();
-			OpponentCards = new ObservableCollection<Card>();
-			_cardDb = new Dictionary<string, Card>();
+			PlayerDrawn.Clear();
+			PlayerHandCount = 0;
+			OpponentSecretCount = 0;
+			OpponentCards.Clear();
+			OpponentHandCount = 0;
+			OpponentDeckCount = 30;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+
 			for (int i = 0; i < MaxHandSize; i++)
 			{
 				OpponentHandAge[i] = -1;
 				OpponentHandMarks[i] = CardMark.None;
 			}
 
-			LoadCardDb(languageTag);
-		}
-		*/
-
-		private static void LoadCardDb(string languageTag)
-		{
-			try
-			{
-				var localizedCards = new Dictionary<string, Card>();
-				if (languageTag != "enUS")
-				{
-					var file = string.Format("Files/cardsDB.{0}.json", languageTag);
-					if (File.Exists(file))
-					{
-						var localized = JObject.Parse(File.ReadAllText(file));
-						foreach (var cardType in localized)
-						{
-							if (!_validCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
-							foreach (var card in cardType.Value)
-							{
-								var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-								localizedCards.Add(tmp.Id, tmp);
-							}
-						}
-					}
-				}
-
-
-				//load engish db (needed for importing, etc)
-				var fileEng = "Files/cardsDB.enUS.json";
-				var tempDb = new Dictionary<string, Card>();
-				if (File.Exists(fileEng))
-				{
-					var obj = JObject.Parse(File.ReadAllText(fileEng));
-					foreach (var cardType in obj)
-					{
-						if (!_validCardSets.Any(cs => cs.Equals(cardType.Key))) continue; ;
-						foreach (var card in cardType.Value)
-						{
-							var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-							if (languageTag != "enUS")
-							{
-								var localizedCard = localizedCards[tmp.Id];
-								tmp.LocalizedName = localizedCard.Name;
-								tmp.Text = localizedCard.Text;
-							}
-							tempDb.Add(tmp.Id, tmp);
-						}
-					}
-				}
-				_cardDb = new Dictionary<string, Card>(tempDb);
-
-				Logger.WriteLine("Done loading card database (" + languageTag + ")", "Hearthstone");
-			}
-			catch (Exception e)
-			{
-				Logger.WriteLine("Error loading db: \n" + e);
-			}
-		}
-
-		public static Card GetCardFromId(string cardId)
-		{
-			if (cardId == null) return null;
-			if (cardId == "") return new Card();
-			if (_cardDb.ContainsKey(cardId))
-			{
-				return (Card)_cardDb[cardId].Clone();
-			}
-			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
-			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", 0);
-		}
-
-		public static Card GetCardFromName(string name)
-		{
-			if (GetActualCards().Any(c => c.Name.Equals(name)))
-			{
-				return (Card)GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Clone();
-			}
-
-			//not sure with all the values here
-			Logger.WriteLine("Could not get card from name: " + name);
-			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0, "UNKNOWN", 0);
-		}
-
-		public static List<Card> GetActualCards()
-		{
-			return (from card in _cardDb.Values
-					where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
-					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
-					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-					where !_invalidCardIds.Any(id => card.Id.Contains(id))
-					select card).ToList();
+			// Assuming opponent has coin, corrected if we draw it
+			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
+			OpponentHandAge[DefaultCoinPosition] = 0;
+			OpponentHasCoin = true;
 		}
 
 		public static void SetPremadeDeck(Deck deck)
@@ -250,10 +160,42 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PlayerDeck.Clear();
 			foreach (var card in deck.Cards)
 			{
-				PlayerDeck.Add((Card)card.Clone());
+				PlayerDeck.Add((Card) card.Clone());
 			}
 			IsUsingPremade = true;
 		}
+
+		private static void LogDeckChange(bool opponent, Card card, bool decrease)
+		{
+			int previous = decrease ? card.Count + 1 : card.Count - 1;
+
+			Logger.WriteLine(
+				string.Format("({0} deck) {1} count {2} -> {3}", opponent ? "opponent" : "player", card.Name, previous, card.Count),
+				"Hearthstone");
+		}
+
+		private static bool ValidateOpponentHandCount()
+		{
+			if (OpponentHandCount - 1 < 0 || OpponentHandCount - 1 > 9)
+			{
+				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(),
+				                 "Hearthstone");
+				return false;
+			}
+
+			return true;
+		}
+
+		private static void LogOpponentHand()
+		{
+			var zipped = OpponentHandAge.Zip(OpponentHandMarks.Select(mark => (char) mark),
+			                                 (age, mark) =>
+			                                 string.Format("{0}{1}", (age == -1 ? " " : age.ToString()), mark));
+
+			Logger.WriteLine("Opponent Hand after draw: " + string.Join(",", zipped), "Hearthstone");
+		}
+
+		#region Player
 
 		public static bool PlayerDraw(string cardId)
 		{
@@ -311,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.InHandCount--;
 		}
 
-		public static void Mulligan(string cardId)
+		public static void PlayerMulligan(string cardId)
 		{
 			PlayerHandCount--;
 
@@ -332,19 +274,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				deckCard.Count++;
 				deckCard.InHandCount--;
 				LogDeckChange(false, deckCard, false);
-			}
-		}
-
-		public static void OpponentMulligan(int pos)
-		{
-			OpponentHandCount--;
-			OpponentDeckCount++;
-			OpponentHandMarks[pos - 1] = CardMark.Mulliganed;
-			if (OpponentHandCount < OpponentHandAge.Count(x => x != -1))
-			{
-				OpponentHandAge[OpponentHandCount] = -1;
-				Logger.WriteLine(string.Format("Fixed hand ages after mulligan (removed {0})", OpponentHandCount), "Hearthstone");
-				LogOpponentHand();
 			}
 		}
 
@@ -380,6 +309,90 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			return true;
 		}
+
+		#endregion
+
+		#region Opponent
+
+		public static void OpponentDraw(int turn)
+		{
+			OpponentHandCount++;
+			OpponentDeckCount--;
+
+			if (!ValidateOpponentHandCount())
+				return;
+
+			if (OpponentHandAge[OpponentHandCount - 1] != -1)
+			{
+				Logger.WriteLine(string.Format("Card {0} is already set to {1}", OpponentHandCount - 1,
+				                               OpponentHandAge[OpponentHandCount - 1]), "Hearthstone");
+
+				return;
+			}
+
+			Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
+
+			OpponentHandAge[OpponentHandCount - 1] = turn;
+			OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
+
+			LogOpponentHand();
+		}
+
+		public static void OpponentPlay(string id, int from, int turn)
+		{
+			OpponentHandCount--;
+
+			if (id == "GAME_005")
+			{
+				OpponentHasCoin = false;
+			}
+			if (!string.IsNullOrEmpty(id))
+			{
+				var stolen = from != -1 && OpponentHandMarks[from - 1] == CardMark.Stolen;
+				var card = OpponentCards.FirstOrDefault(c => c.Id == id && c.IsStolen == stolen && !c.WasDiscarded);
+
+				if (card != null)
+				{
+					card.Count++;
+				}
+				else
+				{
+					card = GetCardFromId(id);
+					card.IsStolen = stolen;
+					OpponentCards.Add(card);
+				}
+
+				LogDeckChange(true, card, false);
+
+				if (card.IsStolen)
+					Logger.WriteLine("Opponent played stolen card from " + from);
+			}
+
+			for (int i = from - 1; i < MaxHandSize - 1; i++)
+			{
+				OpponentHandAge[i] = OpponentHandAge[i + 1];
+				OpponentHandMarks[i] = OpponentHandMarks[i + 1];
+			}
+
+			OpponentHandAge[MaxHandSize - 1] = -1;
+			OpponentHandMarks[MaxHandSize - 1] = CardMark.None;
+
+			LogOpponentHand();
+		}
+
+		public static void OpponentMulligan(int pos)
+		{
+			OpponentHandCount--;
+			OpponentDeckCount++;
+			OpponentHandMarks[pos - 1] = CardMark.Mulliganed;
+			if (OpponentHandCount < OpponentHandAge.Count(x => x != -1))
+			{
+				OpponentHandAge[OpponentHandCount] = -1;
+				Logger.WriteLine(string.Format("Fixed hand ages after mulligan (removed {0})", OpponentHandCount), "Hearthstone");
+				LogOpponentHand();
+			}
+		}
+
 
 		public static void OpponentBackToHand(string cardId, int turn)
 		{
@@ -459,124 +472,103 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LogOpponentHand();
 		}
 
-		public static void Reset()
+		#endregion
+
+		#region Database
+
+		private static void LoadCardDb(string languageTag)
 		{
-			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
-
-			PlayerDrawn.Clear();
-			PlayerHandCount = 0;
-			OpponentSecretCount = 0;
-			OpponentCards.Clear();
-			OpponentHandCount = 0;
-			OpponentDeckCount = 30;
-			OpponentHandAge = new int[MaxHandSize];
-			OpponentHandMarks = new CardMark[MaxHandSize];
-
-			for (int i = 0; i < MaxHandSize; i++)
+			try
 			{
-				OpponentHandAge[i] = -1;
-				OpponentHandMarks[i] = CardMark.None;
-			}
-
-			// Assuming opponent has coin, corrected if we draw it
-			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
-			OpponentHandAge[DefaultCoinPosition] = 0;
-			OpponentHasCoin = true;
-		}
-
-		public static void OpponentDraw(int turn)
-		{
-			OpponentHandCount++;
-			OpponentDeckCount--;
-
-			if (!ValidateOpponentHandCount())
-				return;
-
-			if (OpponentHandAge[OpponentHandCount - 1] != -1)
-			{
-				Logger.WriteLine(string.Format("Card {0} is already set to {1}", OpponentHandCount - 1,
-											  OpponentHandAge[OpponentHandCount - 1]), "Hearthstone");
-
-				return;
-			}
-
-			Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
-
-			OpponentHandAge[OpponentHandCount - 1] = turn;
-			OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
-
-			LogOpponentHand();
-		}
-
-		public static void OpponentPlay(string id, int from, int turn)
-		{
-			OpponentHandCount--;
-
-			if (id == "GAME_005")
-			{
-				OpponentHasCoin = false;
-			}
-			if (!string.IsNullOrEmpty(id))
-			{
-				var stolen = from != -1 && OpponentHandMarks[from - 1] == CardMark.Stolen;
-				var card = OpponentCards.FirstOrDefault(c => c.Id == id && c.IsStolen == stolen && !c.WasDiscarded);
-
-				if (card != null)
+				var localizedCards = new Dictionary<string, Card>();
+				if (languageTag != "enUS")
 				{
-					card.Count++;
-				}
-				else
-				{
-					card = GetCardFromId(id);
-					card.IsStolen = stolen;
-					OpponentCards.Add(card);
+					var file = string.Format("Files/cardsDB.{0}.json", languageTag);
+					if (File.Exists(file))
+					{
+						var localized = JObject.Parse(File.ReadAllText(file));
+						foreach (var cardType in localized)
+						{
+							if (!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
+							foreach (var card in cardType.Value)
+							{
+								var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+								localizedCards.Add(tmp.Id, tmp);
+							}
+						}
+					}
 				}
 
-				LogDeckChange(true, card, false);
 
-				if (card.IsStolen)
-					Logger.WriteLine("Opponent played stolen card from " + from);
+				//load engish db (needed for importing, etc)
+				var fileEng = "Files/cardsDB.enUS.json";
+				var tempDb = new Dictionary<string, Card>();
+				if (File.Exists(fileEng))
+				{
+					var obj = JObject.Parse(File.ReadAllText(fileEng));
+					foreach (var cardType in obj)
+					{
+						if (!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
+						;
+						foreach (var card in cardType.Value)
+						{
+							var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
+							if (languageTag != "enUS")
+							{
+								var localizedCard = localizedCards[tmp.Id];
+								tmp.LocalizedName = localizedCard.Name;
+								tmp.Text = localizedCard.Text;
+							}
+							tempDb.Add(tmp.Id, tmp);
+						}
+					}
+				}
+				_cardDb = new Dictionary<string, Card>(tempDb);
+
+				Logger.WriteLine("Done loading card database (" + languageTag + ")", "Hearthstone");
 			}
-
-			for (int i = from - 1; i < MaxHandSize - 1; i++)
+			catch (Exception e)
 			{
-				OpponentHandAge[i] = OpponentHandAge[i + 1];
-				OpponentHandMarks[i] = OpponentHandMarks[i + 1];
+				Logger.WriteLine("Error loading db: \n" + e);
 			}
-
-			OpponentHandAge[MaxHandSize - 1] = -1;
-			OpponentHandMarks[MaxHandSize - 1] = CardMark.None;
-
-			LogOpponentHand();
 		}
 
-		private static void LogDeckChange(bool opponent, Card card, bool decrease)
+		public static Card GetCardFromId(string cardId)
 		{
-			int previous = decrease ? card.Count + 1 : card.Count - 1;
-
-			Logger.WriteLine(string.Format("({0} deck) {1} count {2} -> {3}", opponent ? "opponent" : "player", card.Name, previous, card.Count),
-							 "Hearthstone");
-		}
-
-		private static bool ValidateOpponentHandCount()
-		{
-			if (OpponentHandCount - 1 < 0 || OpponentHandCount - 1 > 9)
+			if (cardId == null) return null;
+			if (cardId == "") return new Card();
+			if (_cardDb.ContainsKey(cardId))
 			{
-				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(), "Hearthstone");
-				return false;
+				return (Card) _cardDb[cardId].Clone();
+			}
+			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
+			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", 0);
+		}
+
+		public static Card GetCardFromName(string name)
+		{
+			if (GetActualCards().Any(c => c.Name.Equals(name)))
+			{
+				return
+					(Card)
+					GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase)).Clone();
 			}
 
-			return true;
+			//not sure with all the values here
+			Logger.WriteLine("Could not get card from name: " + name);
+			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0, "UNKNOWN", 0);
 		}
 
-		private static void LogOpponentHand()
+		public static List<Card> GetActualCards()
 		{
-			var zipped = OpponentHandAge.Zip(OpponentHandMarks.Select(mark => (char)mark),
-											 (age, mark) =>
-											 string.Format("{0}{1}", (age == -1 ? " " : age.ToString()), mark));
-
-			Logger.WriteLine("Opponent Hand after draw: " + string.Join(",", zipped), "Hearthstone");
+			return (from card in _cardDb.Values
+			        where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
+			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
+			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+			        where !InvalidCardIds.Any(id => card.Id.Contains(id))
+			        select card).ToList();
 		}
 
+		#endregion
 	}
 }

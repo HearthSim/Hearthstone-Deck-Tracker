@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("PlayerMulligan", cardId);
 			TurnTimer.Instance.MulliganDone(Turn.Player);
-			Game.Mulligan(cardId);
+			Game.PlayerMulligan(cardId);
 
 			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
 			Helper.MainWindow._overlay.ListViewPlayer.Items.Refresh();
@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker
 			//avoid new game being started when jaraxxus is played
 			if (!Game.IsInMenu) return;
 
-			Game.PlayingAs = hero;
+			Game.PlayingAs = playerHero;
 
 			Logger.WriteLine("Game start");
 
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.Reset();
 
 			//select deck based on hero
-			if (!string.IsNullOrEmpty(hero))
+			if (!string.IsNullOrEmpty(playerHero))
 			{
 				if (!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection) return;
 

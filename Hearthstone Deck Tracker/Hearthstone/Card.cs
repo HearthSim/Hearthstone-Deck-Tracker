@@ -10,331 +10,336 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-    public class Card : ICloneable, INotifyPropertyChanged
-    {
-        public Card()
-        {
-            Count = 1;
-        }
+	public class Card : ICloneable, INotifyPropertyChanged
+	{
+		public string Id;
+		[XmlIgnore] public string PlayerClass;
+		[XmlIgnore] public string Rarity;
+		private int _count;
+		private int _inHandCount;
+		private bool _isStolen;
+		private string _localizedName;
+		private string _name;
+		private string _text;
+		private bool _wasDiscarded;
 
-        public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
-                    int inHandCount, int count, string text, int attack, int health, string race, int? durability)
-        {
-            Id = id;
-            PlayerClass = playerClass;
-            Rarity = rarity;
-            Type = type;
-            Name = name;
-            Cost = cost;
-            LocalizedName = localizedName;
-            InHandCount = inHandCount;
-            Count = count;
-            Text = text;
-            Attack = attack;
-            Health = health;
-            Race = race;
-            Durability = durability;
-        }
-        
+		public Card()
+		{
+			Count = 1;
+		}
 
-        private string _localizedName;
-        private string _name;
+		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
+		            int inHandCount, int count, string text, int attack, int health, string race, int? durability)
+		{
+			Id = id;
+			PlayerClass = playerClass;
+			Rarity = rarity;
+			Type = type;
+			Name = name;
+			Cost = cost;
+			LocalizedName = localizedName;
+			InHandCount = inHandCount;
+			Count = count;
+			Text = text;
+			Attack = attack;
+			Health = health;
+			Race = race;
+			Durability = durability;
+		}
 
-        public int Count
-        {
-            get { return _count; }
-            set
-            {
-                _count = value;
-                OnPropertyChanged();
-            }
-        }
+		public int Count
+		{
+			get { return _count; }
+			set
+			{
+				_count = value;
+				OnPropertyChanged();
+			}
+		}
 
-        public string Id;
+		[XmlIgnore]
+		public int Attack { get; set; }
 
-        [XmlIgnore]
-        public int Attack { get; set; }
-        [XmlIgnore]
-        public int Health { get; set; }
+		[XmlIgnore]
+		public int Health { get; set; }
 
-        [XmlIgnore]
-        public string Text
-        {
-            get { return _text; }
-            set
-            {
-                _text = value != null
-                            ? value.Replace("<b>", "")
-                                   .Replace("</b>", "")
-                                   .Replace("<i>", "")
-                                   .Replace("</i>", "")
-                                   .Replace("$", "")
-                                   .Replace("#", "")
-                                   .Replace("\\n", "\n")
-                            : null;
-            }
-        }
+		[XmlIgnore]
+		public string Text
+		{
+			get { return _text; }
+			set
+			{
+				_text = value != null
+					        ? value.Replace("<b>", "")
+					               .Replace("</b>", "")
+					               .Replace("<i>", "")
+					               .Replace("</i>", "")
+					               .Replace("$", "")
+					               .Replace("#", "")
+					               .Replace("\\n", "\n")
+					        : null;
+			}
+		}
 
-        [XmlIgnore]
-        public Visibility ShowIconsInTooltip
-        {
-            get { return Type == "Spell" || Type == "Enchantment" ? Visibility.Hidden : Visibility.Visible; }
-        }
+		[XmlIgnore]
+		public Visibility ShowIconsInTooltip
+		{
+			get { return Type == "Spell" || Type == "Enchantment" ? Visibility.Hidden : Visibility.Visible; }
+		}
 
-        [XmlIgnore]
-        public string Race { get; set; }
+		[XmlIgnore]
+		public string Race { get; set; }
 
-        [XmlIgnore]
-        public string RaceOrType
-        {
-            get { return Race ?? Type; }
-        }
+		[XmlIgnore]
+		public string RaceOrType
+		{
+			get { return Race ?? Type; }
+		}
 
-        [XmlIgnore]
-        public int? Durability { get; set; }
+		[XmlIgnore]
+		public int? Durability { get; set; }
 
-        [XmlIgnore]
-        public int DurabilityOrHealth
-        {
-            get { return Durability ?? Health; }
-        }
+		[XmlIgnore]
+		public int DurabilityOrHealth
+		{
+			get { return Durability ?? Health; }
+		}
 
-        private string _text;
+		[XmlIgnore]
+		public string Type { get; set; }
 
-        [XmlIgnore]
-        public string PlayerClass;
+		[XmlIgnore]
+		public string Name
+		{
+			get
+			{
+				if (_name == null)
+				{
+					Load();
+				}
+				return _name;
+			}
+			set { _name = value; }
+		}
 
-        [XmlIgnore]
-        public string Rarity;
+		[XmlIgnore]
+		public int Cost { get; set; }
 
-        [XmlIgnore]
-        public string Type { get; set; }
+		[XmlIgnore]
+		public string LocalizedName
+		{
+			get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
+			set { _localizedName = value; }
+		}
 
-        [XmlIgnore]
-        public string Name
-        {
-            get
-            {
-                if (_name == null)
-                {
-                    Load();
-                }
-                return _name;
-            }
-            set { _name = value; }
-        }
+		[XmlIgnore]
+		public int InHandCount
+		{
+			get { return _inHandCount; }
+			set
+			{
+				_inHandCount = value;
+				OnPropertyChanged();
+			}
+		}
 
-        [XmlIgnore]
-        public int Cost { get; set; }
+		[XmlIgnore]
+		public bool IsClassCard
+		{
+			get { return GetPlayerClass != "Neutral"; }
+		}
 
-        [XmlIgnore]
-        public string LocalizedName
-        {
-            get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
-            set { _localizedName = value; }
-        }
+		[XmlIgnore]
+		public bool IsStolen
+		{
+			get { return _isStolen; }
+			set
+			{
+				_isStolen = value;
+				OnPropertyChanged();
+			}
+		}
 
-        [XmlIgnore]
-        public int InHandCount
-        {
-            get { return _inHandCount; }
-            set
-            {
-                _inHandCount = value;
-                OnPropertyChanged();
-            }
-        }
+		public bool WasDiscarded
+		{
+			get { return _wasDiscarded; }
+			set
+			{
+				_wasDiscarded = value;
+				OnPropertyChanged();
+			}
+		}
 
-        [XmlIgnore]
-        public bool IsClassCard { get { return GetPlayerClass != "Neutral"; } }
+		public int Height
+		{
+			get { return (int) (OverlayWindow.Scaling*35); }
+		}
 
-        [XmlIgnore]
-        public bool IsStolen
-        {
-            get { return _isStolen; }
-            set
-            {
-                _isStolen = value;
-                OnPropertyChanged();
-            }
-        }
+		public int OpponentHeight
+		{
+			get { return (int) (OverlayWindow.OpponentScaling*35); }
+		}
 
-        public bool WasDiscarded
-        {
-            get { return _wasDiscarded; }
-            set
-            {
-                _wasDiscarded = value;
-                OnPropertyChanged();
-            }
-        }
+		public int PlayerWindowHeight
+		{
+			get { return (int) (PlayerWindow.Scaling*35); }
+		}
 
-        private bool _wasDiscarded;
-        private bool _isStolen;
-        private int _inHandCount;
-        private int _count;
-
-        public int Height
-        {
-            get { return (int)(OverlayWindow.Scaling * 35); }
-        }
-        public int OpponentHeight
-        {
-            get { return (int)(OverlayWindow.OpponentScaling * 35); }
-        }
-        public int PlayerWindowHeight
-        {
-            get { return (int)(PlayerWindow.Scaling * 35); }
-        }
-
-        public int OpponentWindowHeight
-        {
-            get { return (int)(OpponentWindow.Scaling * 35); }
-        }
+		public int OpponentWindowHeight
+		{
+			get { return (int) (OpponentWindow.Scaling*35); }
+		}
 
 
-        public string GetPlayerClass
-        {
-            get { return PlayerClass ?? "Neutral"; }
-        }
+		public string GetPlayerClass
+		{
+			get { return PlayerClass ?? "Neutral"; }
+		}
 
-        public SolidColorBrush ColorPlayer
-        {
-            get
-            {
-                Color color;
-                if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
-                    color = Colors.GreenYellow;
-                else if (Count == 0)
-                    color = Colors.Gray;
-                else if (WasDiscarded && Game.HighlightDiscarded)
-                    color = Colors.IndianRed;
-                else 
-                    color = Colors.White;
-                return
-                    new SolidColorBrush(color);
-            }
-        }
+		public SolidColorBrush ColorPlayer
+		{
+			get
+			{
+				Color color;
+				if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
+					color = Colors.GreenYellow;
+				else if (Count == 0)
+					color = Colors.Gray;
+				else if (WasDiscarded && Game.HighlightDiscarded)
+					color = Colors.IndianRed;
+				else
+					color = Colors.White;
+				return
+					new SolidColorBrush(color);
+			}
+		}
 
-       
-        public SolidColorBrush ColorOpponent
-        {
-            get { return new SolidColorBrush(Colors.White); }
-        }
 
-        public ImageBrush Background
-        {
-            get
-            {
-                if (Id == null || Name == null)
-                {
-                    return new ImageBrush();
-                }
-                try
-                {
-                    string cardFileName = Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") + ".png";
+		public SolidColorBrush ColorOpponent
+		{
+			get { return new SolidColorBrush(Colors.White); }
+		}
 
-                    
-                   //card graphic
-                    var group = new DrawingGroup();
+		public ImageBrush Background
+		{
+			get
+			{
+				if (Id == null || Name == null)
+				{
+					return new ImageBrush();
+				}
+				try
+				{
+					var cardFileName =
+						Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "") +
+						".png";
 
-                    if (File.Exists("Images/" + cardFileName))
-                    {
-                        group.Children.Add(
-                            new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
-                                             new Rect(104, 0, 110, 35)));
-                    }
 
-                    //frame
-                    group.Children.Add(
-                        new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)),
-                            new Rect(0, 0, 218, 35)));
+					//card graphic
+					var group = new DrawingGroup();
 
-                    //extra info?
-                    if (Count >= 2 || Rarity == "Legendary")
-                    {
-                        group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)), new Rect(189, 6, 25, 24)));
+					if (File.Exists("Images/" + cardFileName))
+					{
+						group.Children.Add(
+							new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
+							                 new Rect(104, 0, 110, 35)));
+					}
 
-                        if (Count >= 2 && Count <= 9)
-                        {
-                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
-                        }
-                        else
-                        {
-                            group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)), new Rect(194, 8, 18, 21)));
-                        }
-                    }
+					//frame
+					group.Children.Add(
+						new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)),
+						                 new Rect(0, 0, 218, 35)));
 
-                    //dark overlay
-                    if (Count == 0)
-                    {
-                        group.Children.Add(
-                            new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
-                                             new Rect(0, 0, 218, 35)));
-                    }
+					//extra info?
+					if (Count >= 2 || Rarity == "Legendary")
+					{
+						group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
+						                                    new Rect(189, 6, 25, 24)));
 
-                    var brush = new ImageBrush();
-                    brush.ImageSource = new DrawingImage(group);
-                    return brush;
-                }
-                catch (Exception)
-                {
-                    return new ImageBrush();
-                }
-            }
-        }
-        
-        public override string ToString()
-        {
-            return Name + " (" + Count + ")";
-        }
+						if (Count >= 2 && Count <= 9)
+						{
+							group.Children.Add(new ImageDrawing(
+								                   new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)),
+								                   new Rect(194, 8, 18, 21)));
+						}
+						else
+						{
+							group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
+							                                    new Rect(194, 8, 18, 21)));
+						}
+					}
 
-        public override bool Equals(object card)
-        {
-            if (!(card is Card))
-                return false;
-            var c = (Card)card;
-            return c.Name == Name;
-        }
+					//dark overlay
+					if (Count == 0)
+					{
+						group.Children.Add(
+							new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
+							                 new Rect(0, 0, 218, 35)));
+					}
 
-        public override int GetHashCode()
-        {
-            return Name.GetHashCode();
-        }
+					var brush = new ImageBrush();
+					brush.ImageSource = new DrawingImage(group);
+					return brush;
+				}
+				catch (Exception)
+				{
+					return new ImageBrush();
+				}
+			}
+		}
 
-        public object Clone()
-        {
-            return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race, Durability);
-        }
+		public object Clone()
+		{
+			return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health,
+			                Race, Durability);
+		}
 
-        public void Load()
-        {
-            Debug.Assert(Id != null);
+		public event PropertyChangedEventHandler PropertyChanged;
 
-            var stats = Game.GetCardFromId(Id);
-            PlayerClass = stats.PlayerClass;
-            Rarity = stats.Rarity;
-            Type = stats.Type;
-            Name = stats.Name;
-            Cost = stats.Cost;
-            LocalizedName = stats.LocalizedName;
-            InHandCount = stats.InHandCount;
-            Text = stats.Text;
-            Attack = stats.Attack;
-            Health = stats.Health;
-            Race = stats.Race;
-            Durability = stats.Durability;
-            _wasDiscarded = false;
-            OnPropertyChanged();
-        }
+		public override string ToString()
+		{
+			return Name + " (" + Count + ")";
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public override bool Equals(object card)
+		{
+			if (!(card is Card))
+				return false;
+			var c = (Card) card;
+			return c.Name == Name;
+		}
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode();
+		}
+
+		public void Load()
+		{
+			Debug.Assert(Id != null);
+
+			var stats = Game.GetCardFromId(Id);
+			PlayerClass = stats.PlayerClass;
+			Rarity = stats.Rarity;
+			Type = stats.Type;
+			Name = stats.Name;
+			Cost = stats.Cost;
+			LocalizedName = stats.LocalizedName;
+			InHandCount = stats.InHandCount;
+			Text = stats.Text;
+			Attack = stats.Attack;
+			Health = stats.Health;
+			Race = stats.Race;
+			Durability = stats.Durability;
+			_wasDiscarded = false;
+			OnPropertyChanged();
+		}
+
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if (handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
 }
