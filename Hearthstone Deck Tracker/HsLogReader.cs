@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker
 				{"HERO_09", "Priest"}
 			};
 
-		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d))).*(zone\ from\ OPPOSING\ HAND).*");
+		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 
 		private readonly int _updateDelay;
 
