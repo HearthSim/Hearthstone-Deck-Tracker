@@ -40,7 +40,47 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return await ImportHsTopdeck(url);
 			}
+			if (url.Contains("hearthnews.fr"))
+			{
+				return await ImportHearthNewsFr(url);
+			}
 			return null;
+		}
+
+		private static async Task<Deck> ImportHearthNewsFr(string url)
+		{
+			try
+			{
+				var doc = await GetHtmlDoc(url);
+				var deck = new Deck();
+
+				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//span[contains(@class, 'deckName')]").InnerText).Trim();
+				deck.Name = deckName;
+
+				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td[3]/a");
+
+				foreach (var cardNode in cardNodes)
+				{
+					var id = cardNode.Attributes["real_id"].Value;
+					var count = int.Parse(cardNode.Attributes["nb_card"].Value);
+
+					var card = Game.GetCardFromId(id);
+					card.Count = count;
+
+					deck.Cards.Add(card);
+					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+					{
+						deck.Class = card.PlayerClass;
+					}
+				}
+
+				return deck;
+			}
+			catch (Exception e)
+			{
+				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
+				return null;
+			}
 		}
 
 		private static async Task<Deck> ImportHearthStats(string url)

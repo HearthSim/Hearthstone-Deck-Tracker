@@ -12,7 +12,7 @@
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap" >
                 <Bold>Supported websites:</Bold> <LineBreak />
-                hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck
+                hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck, hearthnews.fr
                         </TextBlock>
                         <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0" Click="BtnWeb_Click" />
                         <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,6,0,0" >

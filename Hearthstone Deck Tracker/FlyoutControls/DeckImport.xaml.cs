@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker
 			var validUrls = new[]
 				{
 					"hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-					"hearthstonetopdeck"
+					"hearthstonetopdeck", "hearthnews.fr"
 				};
 			if (validUrls.Any(clipboard.Contains))
 			{
