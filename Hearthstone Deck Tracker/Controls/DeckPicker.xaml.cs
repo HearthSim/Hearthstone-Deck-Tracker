@@ -12,20 +12,103 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckPicker
 	{
+
+		#region HsClass
+
+		public class HsClass
+		{
+			public List<Deck> Decks;
+			public string Name;
+			public List<string> SelectedTags;
+			public Operation TagOperation;
+
+			public HsClass(string name)
+			{
+				Name = name;
+				Decks = new List<Deck>();
+				SelectedTags = new List<string>();
+			}
+
+			[System.Obsolete("Never used and always empty")]
+			public string TagList
+			{
+				get { return ""; }
+			}
+
+			public string GetName
+			{
+				get
+				{
+					return (Name == "Back" || Name == "All")
+							   ? Name
+							   : Name + " (" +
+								 Decks.Count(
+									d =>
+										SelectedTags.Any(t => t == "All") ||
+										(TagOperation == Operation.Or ? SelectedTags.Any(t => d.Tags.Contains(t)) : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
+				}
+			}
+
+			// ReSharper disable PossibleNullReferenceException
+			public Color ClassColor
+			{
+				get
+				{
+					switch (Name)
+					{
+						case "Druid":
+							return (Color)ColorConverter.ConvertFromString("#FF7D0A");
+						case "Death Knight":
+							return (Color)ColorConverter.ConvertFromString("#C41F3B");
+						case "Hunter":
+							return (Color)ColorConverter.ConvertFromString("#ABD473");
+						case "Mage":
+							return (Color)ColorConverter.ConvertFromString("#69CCF0");
+						case "Monk":
+							return (Color)ColorConverter.ConvertFromString("#00FF96");
+						case "Paladin":
+							return (Color)ColorConverter.ConvertFromString("#F58CBA");
+						case "Priest":
+							return (Color)ColorConverter.ConvertFromString("#FFFFFF");
+						case "Rogue":
+							return (Color)ColorConverter.ConvertFromString("#FFF569");
+						case "Shaman":
+							return (Color)ColorConverter.ConvertFromString("#0070DE");
+						case "Warlock":
+							return (Color)ColorConverter.ConvertFromString("#9482C9");
+						case "Warrior":
+							return (Color)ColorConverter.ConvertFromString("#C79C6E");
+						default:
+							return Colors.Gray;
+					}
+				}
+			}
+
+			// ReSharper restore PossibleNullReferenceException
+
+			public FontWeight GetFontWeight
+			{
+				get { return FontWeights.Bold; }
+			}
+		}
+
+		#endregion
+
+		#region Properties
+
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
-		private readonly List<string> _classNames = new List<string>
-			{
-				"Druid",
-				"Hunter",
-				"Mage",
-				"Paladin",
-				"Priest",
-				"Rogue",
-				"Shaman",
-				"Warlock",
-				"Warrior"
-			};
+		private readonly List<string> _classNames = new List<string> {
+			"Druid",
+			"Hunter",
+			"Mage",
+			"Paladin",
+			"Priest",
+			"Rogue",
+			"Shaman",
+			"Warlock",
+			"Warrior"
+		};
 
 		private readonly List<HsClass> _hsClasses;
 		private readonly bool _initialized;
@@ -36,6 +119,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool _inClassSelect;
 		private HsClass _selectedClass;
 
+		#endregion
 
 		public DeckPicker()
 		{
@@ -79,7 +163,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (deck == null) return;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ??
-			              _hsClasses.First(c => c.Name == "Undefined");
+						  _hsClasses.First(c => c.Name == "Undefined");
 
 			if (hsClass != null)
 			{
@@ -112,9 +196,9 @@ namespace Hearthstone_Deck_Tracker
 		private bool DeckMatchesSelectedTags(Deck deck)
 		{
 			return SelectedTags.Any(t => t == "All") ||
-			       (TagOperation == Operation.Or
-				        ? SelectedTags.Any(t => deck.Tags.Contains(t))
-				        : SelectedTags.All(t => deck.Tags.Contains(t)));
+				   (TagOperation == Operation.Or
+						? SelectedTags.Any(t => deck.Tags.Contains(t))
+						: SelectedTags.All(t => deck.Tags.Contains(t)));
 		}
 
 		public void RemoveDeck(Deck deck)
@@ -256,7 +340,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-
 		private void SelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
 			if (!_initialized) return;
@@ -293,7 +376,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					}
 				}
-				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
+				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name });
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.EnableDeckButtons(true);
 				Helper.MainWindow.ManaCurveMyDecks.SetDeck(deck);
@@ -305,111 +388,30 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-
-		private void Try_To_Sort()
-		{
-			//todo: don't want to mess your stuf up - please rename vars to lower camel Case
-			var button1 = ListboxPicker.Items.GetItemAt(0);
-			var ordered_Decks = ListboxPicker.Items.OfType<Deck>().OrderBy(x => x.Name).ToList();
-			ListboxPicker.Items.Clear();
-
-
-			ListboxPicker.Items.Add(button1);
-			foreach (var Deck in ordered_Decks)
-			{
-				ListboxPicker.Items.Add(Deck);
-			}
-		}
-
-		public class HsClass
-		{
-			public List<Deck> Decks;
-			public string Name;
-			public List<string> SelectedTags;
-			public Operation TagOperation;
-
-			public HsClass(string name)
-			{
-				Name = name;
-				Decks = new List<Deck>();
-				SelectedTags = new List<string>();
-			}
-
-			public string TagList
-			{
-				get { return ""; }
-			}
-
-			public string GetName
-			{
-				get
-				{
-					return (Name == "Back" || Name == "All")
-						       ? Name
-						       : Name + " (" +
-						         Decks.Count(
-							         d =>
-							         SelectedTags.Any(t => t == "All") ||
-							         (TagOperation == Operation.Or
-								          ? SelectedTags.Any(t => d.Tags.Contains(t))
-								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
-				}
-			}
-
-			// ReSharper disable PossibleNullReferenceException
-			public Color ClassColor
-			{
-				get
-				{
-					switch (Name)
-					{
-						case "Druid":
-							return (Color) ColorConverter.ConvertFromString("#FF7D0A");
-						case "Death Knight":
-							return (Color) ColorConverter.ConvertFromString("#C41F3B");
-						case "Hunter":
-							return (Color) ColorConverter.ConvertFromString("#ABD473");
-						case "Mage":
-							return (Color) ColorConverter.ConvertFromString("#69CCF0");
-						case "Monk":
-							return (Color) ColorConverter.ConvertFromString("#00FF96");
-						case "Paladin":
-							return (Color) ColorConverter.ConvertFromString("#F58CBA");
-						case "Priest":
-							return (Color) ColorConverter.ConvertFromString("#FFFFFF");
-						case "Rogue":
-							return (Color) ColorConverter.ConvertFromString("#FFF569");
-						case "Shaman":
-							return (Color) ColorConverter.ConvertFromString("#0070DE");
-						case "Warlock":
-							return (Color) ColorConverter.ConvertFromString("#9482C9");
-						case "Warrior":
-							return (Color) ColorConverter.ConvertFromString("#C79C6E");
-						default:
-							return Colors.Gray;
-					}
-				}
-			}
-
-			// ReSharper restore PossibleNullReferenceException
-
-			public FontWeight GetFontWeight
-			{
-				get { return FontWeights.Bold; }
-			}
-		}
-
 		public void SortDecks()
 		{
-			//TODO: sorting
+			if (_inClassSelect) return;
+			var returnButton = ListboxPicker.Items.GetItemAt(0);
+			var ordered_Decks = ListboxPicker.Items.OfType<Deck>().ToList();
+			ListboxPicker.Items.Clear();
+			ListboxPicker.Items.Add(returnButton);
+
 			switch (Config.Instance.SelectedDeckSorting)
 			{
 				case "Name":
+					ordered_Decks = ordered_Decks.OrderBy(x => x.Name).ToList();
 					break;
 				case "Last Edited":
+					ordered_Decks = ordered_Decks.OrderByDescending(x => x.LastEdited).ToList();
 					break;
 				case "Tag":
+					ordered_Decks = ordered_Decks.OrderBy(x => x.TagList).ToList();
 					break;
+			}
+
+			foreach (var Deck in ordered_Decks)
+			{
+				ListboxPicker.Items.Add(Deck);
 			}
 		}
 	}
