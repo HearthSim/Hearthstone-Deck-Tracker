@@ -17,7 +17,7 @@
                         </ColumnDefinition>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:Flyout x:Name="FlyoutSortFilter" Header="Filter decks by tag" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                    <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout"/>
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">

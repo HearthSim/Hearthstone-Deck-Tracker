@@ -1967,7 +1967,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.Reset();
 
 			_decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
-			Setup_Deck_List_File();
+			SetupDeckListFile();
 			try
 			{
 				DeckList = XmlManager<Decks>.Load(_decksPath);
@@ -2155,7 +2155,7 @@ namespace Hearthstone_Deck_Tracker
 			return updated;
 		}
 
-		private void Setup_Deck_List_File()
+		private void SetupDeckListFile()
 		{
 			var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
 			const string localPath = "PlayerDecks.xml";

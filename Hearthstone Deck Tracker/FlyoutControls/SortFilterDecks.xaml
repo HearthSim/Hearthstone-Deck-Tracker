@@ -10,14 +10,14 @@
     <Grid>
         <StackPanel Margin="6,0,6,0">
             <DockPanel>
-                <Label Content="Sort Decks by:" FontSize="14"/>
+                <Label Content="Sort decks by:" FontSize="14"/>
                 <ComboBox Name="ComboboxDeckSorting" Width="120" HorizontalAlignment="Right" SelectionChanged="Selector_OnSelectionChanged">
                     <system:String>Name</system:String>
                     <system:String>Last Edited</system:String>
                     <system:String>Tag</system:String>
                 </ComboBox>
             </DockPanel>
-            <Label Content="Tags:" FontSize="14"/>
+            <Label Content="Filter by tags:" FontSize="14"/>
             <ListBox Name="ListboxTags" Height="auto" Width="auto">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -25,7 +25,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <controls:ToggleSwitch Name="OperationSwitch" Header="Tag operation" OnLabel="And" OffLabel="Or" Width="100" HorizontalAlignment="Right" Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked"/>
+        <controls:ToggleSwitch Name="OperationSwitch" Header="Filter operation" OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right" Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked"/>
             <Grid Margin="0,3,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
