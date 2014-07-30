@@ -23,8 +23,6 @@ using Microsoft.Win32;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
-using DataFormats = System.Windows.DataFormats;
-using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
@@ -50,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 		public readonly PlayerWindow PlayerWindow;
 		public readonly TimerWindow TimerWindow;
 		private readonly string _configPath;
-		private readonly string _decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
+		private readonly string _decksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
 
@@ -116,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
 				TimerWindow.Shutdown();
 				PlayerWindow.Shutdown();
 				OpponentWindow.Shutdown();
-				WriteConfig();
+				Config.Save();
 				WriteDecks();
 			}
 			catch (Exception)
@@ -142,7 +140,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			DeckPickerList.SetSelectedTags(tags);
 			Config.Instance.SelectedTags = tags;
-			WriteConfig();
+			Config.Save();
 		}
 
 		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -457,7 +455,7 @@ namespace Hearthstone_Deck_Tracker
 				if (dialogResult == true)
 				{
 					Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
-					WriteConfig();
+					Config.Save();
 					await Restart();
 				}
 			}
@@ -468,11 +466,6 @@ namespace Hearthstone_Deck_Tracker
 			await this.ShowMessageAsync("Restarting tracker", "");
 			Process.Start(Application.ResourceAssembly.Location);
 			Application.Current.Shutdown();
-		}
-
-		private void WriteConfig()
-		{
-			XmlManager<Config>.Save(_configPath, Config.Instance);
 		}
 
 		public void WriteDecks()
@@ -634,14 +627,14 @@ namespace Hearthstone_Deck_Tracker
 			if (selected == null)
 			{
 				Config.Instance.LastDeck = string.Empty;
-				WriteConfig();
+				Config.Save();
 				return;
 			}
 			ListViewDeck.ItemsSource = selected.Cards;
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			Config.Instance.LastDeck = selected.Name;
-			WriteConfig();
+			Config.Save();
 		}
 
 		#endregion
@@ -773,7 +766,7 @@ namespace Hearthstone_Deck_Tracker
 				AddCardToDeck((Card) card.Clone());
 			}
 		}
-		
+
 		private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			UpdateDbListView();
@@ -1325,7 +1318,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SaveConfig(bool updateOverlay)
 		{
-			WriteConfig();
+			Config.Save();
 			if (updateOverlay)
 				Overlay.Update(true);
 		}
@@ -1687,16 +1680,18 @@ namespace Hearthstone_Deck_Tracker
 		private async void CheckboxAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
+			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveInAppData = true;
-			SaveConfig(false);
+			XmlManager<Config>.Save(path, Config.Instance);
 			await Restart();
 		}
 
 		private async void CheckboxAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
+			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveInAppData = false;
-			SaveConfig(false);
+			XmlManager<Config>.Save(path, Config.Instance);
 			await Restart();
 		}
 
@@ -1971,6 +1966,7 @@ namespace Hearthstone_Deck_Tracker
 			//Game.Create();
 			Game.Reset();
 
+			_decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
 			Setup_Deck_List_File();
 			try
 			{
@@ -2100,7 +2096,7 @@ namespace Hearthstone_Deck_Tracker
 						if (File.Exists(hsDir + @"\Hearthstone.exe"))
 						{
 							Config.Instance.HearthstoneDirectory = hsDir;
-							WriteConfig();
+							Config.Save();
 							found = true;
 						}
 					}
@@ -2161,30 +2157,31 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Setup_Deck_List_File()
 		{
+			var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
+			const string localPath = "PlayerDecks.xml";
 			if (Config.Instance.SaveInAppData)
 			{
-				if (File.Exists("PlayerDecks.xml"))
+				if (File.Exists(localPath))
 				{
-					if (File.Exists(_decksPath))
+					if (File.Exists(appDataPath))
 					{
 						//backup in case the file already exists
-						File.Move(_decksPath, _decksPath + DateTime.Now.ToFileTime());
+						File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
 					}
-					File.Move("PlayerDecks.xml", _decksPath);
+					File.Move(localPath, appDataPath);
 					Logger.WriteLine("Moved decks to appdata");
 				}
 			}
 			else
 			{
-				var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
 				if (File.Exists(appDataPath))
 				{
-					if (File.Exists(_decksPath))
+					if (File.Exists(localPath))
 					{
 						//backup in case the file already exists
-						File.Move(_decksPath, _decksPath + DateTime.Now.ToFileTime());
+						File.Move(localPath, localPath + DateTime.Now.ToFileTime());
 					}
-					File.Move(appDataPath, _decksPath);
+					File.Move(appDataPath, localPath);
 					Logger.WriteLine("Moved decks to local");
 				}
 			}

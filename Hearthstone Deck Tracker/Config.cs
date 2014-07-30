@@ -167,61 +167,61 @@ namespace Hearthstone_Deck_Tracker
 					_config = XmlManager<Config>.Load("config.xml");
 					foundConfig = true;
 				}
-				else if (File.Exists(_config.AppDataPath + @"\config.xml"))
+				else if (File.Exists(Instance.AppDataPath + @"\config.xml"))
 				{
-					_config = XmlManager<Config>.Load(_config.AppDataPath + @"\config.xml");
+					_config = XmlManager<Config>.Load(Instance.AppDataPath + @"\config.xml");
 					foundConfig = true;
 				}
 				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
 				{
 					//save locally if appdata doesn't exist (when e.g. not on C)
-					_config.SaveInAppData = false;
+					Instance.SaveInAppData = false;
 				}
 			}
 			catch (Exception e)
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please delete " + _config.ConfigPath,
+					"\n\n If you don't know how to fix this, please delete " + Instance.ConfigPath,
 					"Error loading config.xml");
 				Application.Current.Shutdown();
 			}
 
-			var configPath = _config.ConfigPath;
+			var configPath = Instance.ConfigPath;
 
 			if (!foundConfig)
 			{
-				if (_config.HomeDir != string.Empty)
-					Directory.CreateDirectory(_config.HomeDir);
-				using (var sr = new StreamWriter(_config.ConfigPath, false))
+				if (Instance.HomeDir != string.Empty)
+					Directory.CreateDirectory(Instance.HomeDir);
+				using (var sr = new StreamWriter(Instance.ConfigPath, false))
 				{
 					sr.WriteLine("<Config></Config>");
 				}
 			}
-			else if (_config.SaveInAppData) //check if config needs to be moved
+			else if (Instance.SaveInAppData) //check if config needs to be moved
 			{
 				if (File.Exists("config.xml"))
 				{
-					Directory.CreateDirectory(_config.HomeDir);
-					if (File.Exists(_config.ConfigPath))
+					Directory.CreateDirectory(Instance.HomeDir);
+					if (File.Exists(Instance.ConfigPath))
 					{
 						//backup in case the file already exists
 						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
 					}
-					File.Move("config.xml", _config.ConfigPath);
+					File.Move("config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to appdata");
 				}
 			}
 			else
 			{
-				if (File.Exists(_config.AppDataPath + @"\config.xml"))
+				if (File.Exists(Instance.AppDataPath + @"\config.xml"))
 				{
-					if (File.Exists(_config.ConfigPath))
+					if (File.Exists(Instance.ConfigPath))
 					{
 						//backup in case the file already exists
 						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
 					}
-					File.Move(_config.AppDataPath + @"\config.xml", _config.ConfigPath);
+					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to local");
 				}
 			}
