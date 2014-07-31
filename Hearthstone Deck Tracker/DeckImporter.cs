@@ -84,6 +84,8 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
+				else
+					return null;
 
 				return deck;
 			}
