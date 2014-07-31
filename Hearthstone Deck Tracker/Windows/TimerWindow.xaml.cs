@@ -17,13 +17,16 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 			_config = config;
 
-			if (_config.TimerWindowLeft >= 0)
+			// Must handle special window positions of -32000 because users' legacy config files
+			// may still have this value stored. For example, if they have used the older version
+			// of this application where -32000 was default, and have not yet opened this window
+			if (_config.TimerWindowLeft.HasValue && config.TimerWindowLeft.Value != -32000)
 			{
-				Left = config.TimerWindowLeft;
+				Left = config.TimerWindowLeft.Value;
 			}
-			if (_config.TimerWindowTop >= 0)
+			if (_config.TimerWindowTop.HasValue && config.TimerWindowTop.Value != -32000)
 			{
-				Top = config.TimerWindowTop;
+				Top = config.TimerWindowTop.Value;
 			}
 			Topmost = _config.TimerWindowTopmost;
 		}

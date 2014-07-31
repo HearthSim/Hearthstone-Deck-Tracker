@@ -259,10 +259,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if (Config.Instance.TrackerWindowTop >= 0)
-					Top = Config.Instance.TrackerWindowTop;
-				if (Config.Instance.TrackerWindowLeft >= 0)
-					Left = Config.Instance.TrackerWindowLeft;
+				if (Config.Instance.TrackerWindowTop.HasValue)
+					Top = Config.Instance.TrackerWindowTop.Value;
+				if (Config.Instance.TrackerWindowLeft.HasValue)
+					Left = Config.Instance.TrackerWindowLeft.Value;
 			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)

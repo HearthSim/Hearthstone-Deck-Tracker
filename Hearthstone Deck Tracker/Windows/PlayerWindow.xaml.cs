@@ -25,13 +25,17 @@ namespace Hearthstone_Deck_Tracker
 			ListViewPlayer.ItemsSource = playerDeck;
 			playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
 			Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
-			if (_config.PlayerWindowLeft >= 0)
+
+			// Must handle special window positions of -32000 because users' legacy config files
+			// may still have this value stored. For example, if they have used the older version
+			// of this application where -32000 was default, and have not yet opened this window
+			if (_config.PlayerWindowLeft.HasValue && config.PlayerWindowLeft.Value != -32000)
 			{
-				Left = _config.PlayerWindowLeft;
+				Left = _config.PlayerWindowLeft.Value;
 			}
-			if (_config.PlayerWindowTop >= 0)
+			if (_config.PlayerWindowTop.HasValue && config.PlayerWindowTop.Value != -32000)
 			{
-				Top = _config.PlayerWindowTop;
+				Top = _config.PlayerWindowTop.Value;
 			}
 			Topmost = _config.WindowsTopmost;
 

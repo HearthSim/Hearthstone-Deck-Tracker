@@ -64,8 +64,8 @@ namespace Hearthstone_Deck_Tracker
 		public double OpponentDeckTop = 17;
 		public double OpponentOpacity = 100;
 		public int OpponentWindowHeight = 0;
-		public int OpponentWindowLeft = -32000;
-		public int OpponentWindowTop = -32000;
+		public int? OpponentWindowLeft = null;
+		public int? OpponentWindowTop = null;
 		public bool OverlayCardToolTips = true;
 		public double OverlayOpacity = 100;
 		public double OverlayOpponentScaling = 100;
@@ -75,8 +75,8 @@ namespace Hearthstone_Deck_Tracker
 		public double PlayerDeckTop = 17;
 		public double PlayerOpacity = 100;
 		public int PlayerWindowHeight = 0;
-		public int PlayerWindowLeft = -32000;
-		public int PlayerWindowTop = -32000;
+		public int? PlayerWindowLeft = null;
+		public int? PlayerWindowTop = null;
 		public bool PrioritizeGolden = true;
 		public bool RemoveCardsFromDeck = false;
 		public bool SaveInAppData = true;
@@ -103,9 +103,9 @@ namespace Hearthstone_Deck_Tracker
 		public string ThemeName;
 		public double TimerLeft = 75;
 		public int TimerWindowHeight = 130;
-		public int TimerWindowLeft = -32000;
+		public int? TimerWindowLeft = null;
 		public bool TimerWindowOnStartup = false;
-		public int TimerWindowTop = -32000;
+		public int? TimerWindowTop = null;
 		public bool TimerWindowTopmost = false;
 		public bool TimerWindowTopmostIfHsForeground = false;
 		public int TimerWindowWidth = 150;
@@ -114,8 +114,8 @@ namespace Hearthstone_Deck_Tracker
 		public double TimersVerticalPosition = 43.5;
 		public double TimersVerticalSpacing = 50;
 		public bool TrackerCardToolTips = true;
-		public int TrackerWindowLeft = -1;
-		public int TrackerWindowTop = -1;
+		public int? TrackerWindowLeft = null;
+		public int? TrackerWindowTop = null;
 		public int UpdateDelay = 100;
 		public bool UseSameScaling = true;
 		public bool VisibleOverlay = false;
