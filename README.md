@@ -7,37 +7,53 @@ The ingame overlay:
 
 ![Overlay](http://i.imgur.com/EWd6Ung.jpg "The overlay")
 
-The tracker: 
+The app: 
 
 ![Overlay](http://i.imgur.com/T7beWjm.png "The tracker")
 
 
-**Features:**  
-- Tracking:
+Features:
+=========
+- **Tracks**:
   - Cards left in your deck or cards drawn from your deck.
   - Your handcount, deckcount and draw chances.
   - Cards played by your opponent.
   - Your opponent's handcount, deckcount and probablities of him having/drawing cards.
   - How long your opponent had each card in his hand and what cards have been mulliganed, stolen or returned.
-- Importing decks from hearthpwn and hearthstats.
-- Exporting saved decks to hearthstone (this pretty much avoids the 9 deck limit).
-- Timer for current turn and total time spent for you and your opponent.
-- The tracker tries to automatically select the deck you are playing. (This starts working less well, the more similar decks you have saved)
+- **Timer** for the current turn and total time spent for you and your opponent.
+- The tracker tries to **automatically select the deck you are playing**.
+- The cards and timer can either be displayed in an overlay (see screenshot) or in **extra windows** (Options > General > Additional Windows)
 
-**How it works:**  
+- **Deck Manager**:
+  - **Import** decks from websites: arenavalue, hearthstats, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck and hearthnews 
+  - Circumvent the 9 deck limit: Saved decks can be **exported to Hearthstone**. (My Decks > More...)   
+  - Decks can be filtered by custom **tags** and sorted by name, date and tags.  
+  - Set **notes** for each deck (My Decks > More...)  
+  - Create **screenshots** of decks (My Decks > More...)  
+  - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.
+- **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up) 
+- **Customization**: Almost every feature can be turned on/off seperately.
+
+
+How to use: 
+===========
+1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
+2) Extract file (using e.g. [WinRAR](http://www.win-rar.com/))  
+3) Run "Hearthstone Deck Tracker.exe"  
+4) Create your decks under "New Deck" (or import from any of the supported websites), click save.
+5) Play!
+
+
+How it works:
+=============
 The automated tracking is done my reading out Hearthstone logfile.  
 More information on that  here: http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
 
-**What you need to run this:**
-- Windows Vista or higher (I have not actually tested it on vista but anything above XP should work fine)
+Requirements:
+=============
+- Windows Vista or higher
 - .NET Framework 4.5
-- If you run this for the first time you will have to restart Hearthstone once for it start logging the way required for this tracker.
 
-**FAQ:**
-- Nothing happens
-  - Try restarting Hearthstone, the Tracker, and try starting the Tracker as Administrator.
-  - If that does not help, go into the config.xml file and delete what's in <HearthstoneDirectory>.
-  - Do you have .NET 4.5 installed?
 
-Donations are much appreciated
+Donations are always appreciated
 [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ)
