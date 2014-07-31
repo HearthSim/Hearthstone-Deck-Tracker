@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker
 		public double TimerWindowWidth = 150;
 		public double TimersHorizontalPosition = 80;
 		public double TimersHorizontalSpacing = 0;
-		public double TimersVerticalPosition = 50;
+		public double TimersVerticalPosition = 43.5;
 		public double TimersVerticalSpacing = 50;
 		public bool TrackerCardToolTips = true;
 		public int TrackerWindowLeft = -1;
