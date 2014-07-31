@@ -53,8 +53,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_LocationChanged(object sender, EventArgs e)
 		{
-			_config.TimerWindowLeft = Left;
-			_config.TimerWindowTop = Top;
+			_config.TimerWindowLeft = (int) Left;
+			_config.TimerWindowTop = (int) Top;
 		}
 
 		private void MetroWindow_Activated(object sender, EventArgs e)

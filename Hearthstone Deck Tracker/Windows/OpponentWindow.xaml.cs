@@ -124,8 +124,8 @@ namespace Hearthstone_Deck_Tracker
 		private void MetroWindow_LocationChanged(object sender, EventArgs e)
 		{
 			if (WindowState == WindowState.Minimized) return;
-			_config.OpponentWindowLeft = Left;
-			_config.OpponentWindowTop = Top;
+			_config.OpponentWindowLeft = (int) Left;
+			_config.OpponentWindowTop = (int) Top;
 		}
 
 		public void SetTextLocation(bool top)

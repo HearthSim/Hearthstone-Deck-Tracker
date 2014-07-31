@@ -127,8 +127,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (_forScreenshot) return;
 			if (WindowState == WindowState.Minimized) return;
-			_config.PlayerWindowLeft = Left;
-			_config.PlayerWindowTop = Top;
+			_config.PlayerWindowLeft = (int) Left;
+			_config.PlayerWindowTop = (int) Top;
 		}
 
 		public void SetTextLocation(bool top)
