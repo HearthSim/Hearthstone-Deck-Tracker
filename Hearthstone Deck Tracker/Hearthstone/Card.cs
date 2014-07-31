@@ -242,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						group.Children.Add(
 							new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
-							                 new Rect(104, 0, 110, 35)));
+							                 new Rect(104, 1, 110, 34)));
 					}
 
 					//frame
