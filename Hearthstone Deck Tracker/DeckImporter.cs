@@ -44,8 +44,56 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return await ImportHearthNewsFr(url);
 			}
+			if (url.Contains("arenavalue"))
+			{
+				return await ImportArenaValue(url);
+			}
 			return null;
 		}
+
+		private static async Task<Deck> ImportArenaValue(string url)
+		{
+			try
+			{
+				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM hh:mm")};
+
+				const string baseUrl = @"http://www.arenavalue.com/helper/getdata.php?deck=";
+				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
+
+				var doc = await GetHtmlDoc(newUrl, "X-Requested-With", "XMLHttpRequest");
+
+				var idRegex = new Regex(@"\w*(""(?<id1>(\w*))_(?<id2>(\w*))"")\w*");
+				if (idRegex.IsMatch(doc.DocumentNode.InnerText))
+				{
+					var matches = idRegex.Matches(doc.DocumentNode.InnerText);
+					foreach (Match match in matches)
+					{
+						var cardId = match.Groups["id1"] + "_" + match.Groups["id2"];
+						var card = deck.Cards.FirstOrDefault(c => c.Id == cardId);
+						if (card != null)
+							card.Count++;
+						else
+						{
+							card = Game.GetCardFromId(cardId);
+							deck.Cards.Add(card);
+						}
+
+						if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+						{
+							deck.Class = card.PlayerClass;
+						}
+					}
+				}
+
+				return deck;
+			}
+			catch (Exception e)
+			{
+				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
+				return null;
+			}
+		}
+
 
 		private static async Task<Deck> ImportHearthNewsFr(string url)
 		{
@@ -54,7 +102,8 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck();
 
-				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//span[contains(@class, 'deckName')]").InnerText).Trim();
+				var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//span[contains(@class, 'deckName')]").InnerText).Trim();
 				deck.Name = deckName;
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td[3]/a");
@@ -181,7 +230,7 @@ namespace Hearthstone_Deck_Tracker
 
 					//no count there if count == 1
 					var countNode = cardNode.SelectSingleNode(".//span[contains(@class, 'card-count')]");
-					int count = 1;
+					var count = 1;
 					if (countNode != null)
 						count = int.Parse(countNode.InnerText);
 
@@ -320,8 +369,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<HtmlDocument> GetHtmlDoc(string url)
 		{
+			return await GetHtmlDoc(url, null, null);
+		}
+
+		public static async Task<HtmlDocument> GetHtmlDoc(string url, string header, string headerValue)
+		{
 			using (var wc = new WebClient())
 			{
+				if (header != null)
+					wc.Headers.Add(header, headerValue);
+
 				var websiteContent = await wc.DownloadStringTaskAsync(new Uri(url));
 				using (var reader = new StringReader(websiteContent))
 				{
@@ -355,7 +412,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<List<string>> GetPopularDeckLists()
 		{
-			string url = @"http://hearthstats.net/decks/public?class=&items=500&sort=num_users&order=desc";
+			var url = @"http://hearthstats.net/decks/public?class=&items=500&sort=num_users&order=desc";
 
 			var doc = await GetHtmlDoc(url);
 

@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker
 			var validUrls = new[]
 				{
 					"hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-					"hearthstonetopdeck", "hearthnews.fr"
+					"hearthstonetopdeck", "hearthnews.fr", "arenavalue"
 				};
 			if (validUrls.Any(clipboard.Contains))
 			{
@@ -82,56 +82,7 @@ namespace Hearthstone_Deck_Tracker
 
 			After_Click();
 		}
-
-		private void BtnArenavalue_Click(object sender, RoutedEventArgs e)
-		{
-			Deck deck = null;
-			var clipboardLines = Clipboard.GetText().Split('\n');
-			if (clipboardLines.Length >= 1 && clipboardLines.Length <= 100)
-			{
-				try
-				{
-					foreach (var line in clipboardLines)
-					{
-						var parts = line.Split(new[] {" x "}, StringSplitOptions.RemoveEmptyEntries);
-						if (parts.Length == 0) continue;
-						var name = parts[0].Trim();
-						while (name.Length > 0 && Helper.IsNumeric(name[0]))
-							name = name.Remove(0, 1);
-
-						var card = Game.GetCardFromName(name);
-						if (card.Id == "UNKNOWN")
-							continue;
-
-						var count = 1;
-						if (parts.Length > 1)
-							int.TryParse(parts[1], out count);
-
-						card.Count = count;
-
-						if (deck == null)
-							deck = new Deck();
-
-						if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-							deck.Class = card.PlayerClass;
-
-						deck.Cards.Add(card);
-					}
-
-					Helper.MainWindow.SetNewDeck(deck);
-					if (deck == null)
-						Helper.MainWindow.ShowMessage("Error loading deck", "");
-				}
-				catch (Exception ex)
-				{
-					Logger.WriteLine("Error importing from arenavalue: " + ex.StackTrace);
-					Helper.MainWindow.ShowMessage("Error loading deck", "");
-				}
-			}
-
-			After_Click();
-		}
-
+		
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)
 		{
 			var settings = new MetroDialogSettings();

@@ -12,17 +12,9 @@
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap" >
                 <Bold>Supported websites:</Bold> <LineBreak />
-                hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck, hearthnews.fr
+                arenavalue, hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck, hearthnews.fr 
                         </TextBlock>
                         <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0" Click="BtnWeb_Click" />
-                        <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,6,0,0" >
-                <Bold>arenavalue.com:</Bold> <LineBreak />
-                Can't get the normal import method to work currently, so this is how you do it: <LineBreak />
-                1) Highlight the list on the right of the website (from the first manacrystal to the end of the last card) <LineBreak />
-                2) Copy (rightclick > copy or ctrl-c)<LineBreak />
-                3) Click button below
-                        </TextBlock>
-                        <Button Name="BtnArenavalue" Content="Import from arenavalue" Height="26" Margin="0,6,0,0" Click="BtnArenavalue_Click" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="From File">
