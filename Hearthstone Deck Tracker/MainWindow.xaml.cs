@@ -184,8 +184,14 @@ namespace Hearthstone_Deck_Tracker
 		private void TabControlTracker_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (!_initialized) return;
+			UpdateTabMarker();
+		}
+
+		private void UpdateTabMarker()
+		{
 			var tabItem = TabControlTracker.SelectedItem as TabItem;
 			if (tabItem == null) return;
+			SelectedTabMarker.UpdateLayout();
 			SelectedTabMarker.Width = tabItem.ActualWidth;
 			var offset = TabControlTracker.Items.Cast<TabItem>().TakeWhile(t => t != tabItem).Sum(t => t.ActualWidth);
 			SelectedTabMarker.Margin = new Thickness(offset, 40, 0, 0);
@@ -949,6 +955,7 @@ namespace Hearthstone_Deck_Tracker
 			const string headerText = "New Deck";
 			var cardCount = NewDeck.Cards.Sum(c => c.Count);
 			TabItemNewDeck.Header = show ? string.Format("{0} ({1})", headerText, cardCount) : headerText;
+			UpdateTabMarker();
 		}
 
 		private void AddCardToDeck(Card card)
@@ -997,6 +1004,7 @@ namespace Hearthstone_Deck_Tracker
 			if (result == MessageDialogResult.Affirmative)
 			{
 				ClearNewDeckSection();
+				UpdateTabMarker();
 			}
 		}
 
