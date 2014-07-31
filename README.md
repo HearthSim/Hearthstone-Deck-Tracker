@@ -32,7 +32,7 @@ Features:
   - Create **screenshots** of decks (My Decks > More...)  
   - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.
 - **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up) 
-- **Customization**: Almost every feature can be turned on/off seperately.
+- **Customization**: Almost every feature can be turned on/off separately.
 
 
 How to use: 
@@ -40,14 +40,14 @@ How to use:
 1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
 2) Extract file (using e.g. [WinRAR](http://www.win-rar.com/))  
 3) Run "Hearthstone Deck Tracker.exe"  
-4) Create your decks under "New Deck" (or import from any of the supported websites), click save.
+4) Create your decks under "New Deck" (or import from any of the supported websites), click save.  
 5) Play!
 
 
 How it works:
 =============
 The automated tracking is done my reading out Hearthstone logfile.  
-More information on that  here: http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
+More information on that here:  http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
 
 Requirements:
 =============
