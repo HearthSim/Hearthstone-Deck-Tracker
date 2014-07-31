@@ -938,9 +938,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			if (card.Count > 1)
 			{
-				NewDeck.Cards.Remove(card);
 				card.Count--;
-				NewDeck.Cards.Add(card);
+				ManaCurveNewDeck.UpdateValues();
 			}
 			else
 				NewDeck.Cards.Remove(card);
@@ -966,6 +965,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var cardInDeck = NewDeck.Cards.First(c => c.Name == card.Name);
 				cardInDeck.Count++;
+				ManaCurveNewDeck.UpdateValues();
 			}
 			else
 			{
