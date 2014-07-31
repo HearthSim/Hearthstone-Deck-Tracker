@@ -19,19 +19,18 @@ Features:
   - Your handcount, deckcount and draw chances.
   - Cards played by your opponent.
   - Your opponent's handcount, deckcount and probablities of him having/drawing cards.
-  - How long your opponent had each card in his hand and what cards have been mulliganed, stolen or returned.
-- **Timer** for the current turn and total time spent for you and your opponent.
-- The tracker tries to **automatically select the deck you are playing**.
-- The cards and timer can either be displayed in an overlay (see screenshot) or in **extra windows** (Options > General > Additional Windows)
-
+  - How long your opponent had each card in his hand and what cards have been mulliganed, stolen or returned.  
+- **Timer** for the current turn and total time spent for you and your opponent.  
+- The tracker tries to **automatically select the deck you are playing**.  
+- The cards and timer can either be displayed in an overlay (see screenshot) or in **extra windows** (Options > General > Additional Windows)  
 - **Deck Manager**:
-  - **Import** decks from websites: arenavalue, hearthstats, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck and hearthnews 
+  - **Import** decks from websites: arenavalue, hearthstats, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck and hearthnews  
   - Circumvent the 9 deck limit: Saved decks can be **exported to Hearthstone**. (My Decks > More...)   
   - Decks can be filtered by custom **tags** and sorted by name, date and tags.  
   - Set **notes** for each deck (My Decks > More...)  
   - Create **screenshots** of decks (My Decks > More...)  
-  - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.
-- **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up) 
+  - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.  
+- **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up)  
 - **Customization**: Almost every feature can be turned on/off separately.
 
 
