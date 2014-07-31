@@ -378,6 +378,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			using (var wc = new WebClient())
 			{
+				wc.Encoding = System.Text.Encoding.UTF8;
+
 				if (header != null)
 					wc.Headers.Add(header, headerValue);
 
