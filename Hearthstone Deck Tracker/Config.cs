@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker
 		public double PlayerWindowLeft = -32000;
 		public double PlayerWindowTop = -32000;
 		public bool PrioritizeGolden = true;
+		public bool RemoveCardsFromDeck = false;
 		public bool SaveInAppData = true;
 		public bool SavePlayedGames = false;
 		public string SavePlayedGamesName = "Game";

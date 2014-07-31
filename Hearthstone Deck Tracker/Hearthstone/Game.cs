@@ -220,6 +220,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				deckCard.Count--;
 				deckCard.InHandCount++;
 				LogDeckChange(false, deckCard, true);
+				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck)
+				{
+					PlayerDeck.Remove(deckCard);
+					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
+				}
 			}
 			else
 			{
@@ -275,6 +280,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				deckCard.InHandCount--;
 				LogDeckChange(false, deckCard, false);
 			}
+			else if(Config.Instance.RemoveCardsFromDeck)
+			{
+				deckCard = GetCardFromId(cardId);
+				PlayerDeck.Add(deckCard);
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)");
+			}
 		}
 
 		public static void PlayerHandDiscard(string cardId)
@@ -302,6 +313,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				deckCard.Count--;
 				LogDeckChange(false, deckCard, true);
+				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck)
+				{
+					PlayerDeck.Remove(deckCard);
+					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
+				}
 			}
 			else
 			{

@@ -289,6 +289,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxFlashHs.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
+			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1930,6 +1931,24 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(true);
 		}
 
+		private void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized || !Game.IsUsingPremade) return;
+			Config.Instance.RemoveCardsFromDeck = true;
+			SaveConfig(false);
+			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
+			HsLogReader.Instance.Reset(false);
+		}
+
+		private void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized || !Game.IsUsingPremade) return;
+			Config.Instance.RemoveCardsFromDeck = false;
+			SaveConfig(false);
+			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
+			HsLogReader.Instance.Reset(false);
+		}
+
 		#endregion
 
 		#region Constructor
@@ -2203,5 +2222,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
 	}
 }
