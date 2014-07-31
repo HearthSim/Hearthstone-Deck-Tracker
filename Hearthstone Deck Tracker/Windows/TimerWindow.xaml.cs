@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 			_config = config;
 
+			Height = _config.TimerWindowHeight;
+			Width = _config.TimerWindowWidth;
 			if (_config.TimerWindowLeft >= 0)
 			{
 				Left = config.TimerWindowLeft;
@@ -66,7 +68,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (WindowState == WindowState.Minimized) return;
 			_config.TimerWindowHeight = (int) Height;
-			_config.TimerWindowWidth = (int) Height;
+			_config.TimerWindowWidth = (int) Width;
 		}
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
