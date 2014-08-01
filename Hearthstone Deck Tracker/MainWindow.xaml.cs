@@ -101,7 +101,7 @@ namespace Hearthstone_Deck_Tracker
 		private void MinimizeToTray()
 		{
 			_notifyIcon.Visible = true;
-			_notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray", ToolTipIcon.Info);
+			//_notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray", ToolTipIcon.Info);
 			Hide();
 		}
 
