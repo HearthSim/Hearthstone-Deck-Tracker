@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker
 		public double CardPosX = 0.15;
 		public double CardPosY = 0.3;
 		public bool CardSortingClassFirst = false;
+		public bool ClearLogFileAfterGame = true;
 		public int ClickDelay = 50;
 		public int CustomHeight = -1;
 		public int CustomWidth = -1;

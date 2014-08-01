@@ -41,7 +41,8 @@ namespace Hearthstone_Deck_Tracker
 				{"HERO_09", "Priest"}
 			};
 
-		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
+		private readonly Regex _opponentPlayRegex =
+			new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 
 		private readonly int _updateDelay;
 
@@ -182,12 +183,26 @@ namespace Hearthstone_Deck_Tracker
 					GameEventHandler.HandleGameEnd();
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
+					if (Config.Instance.ClearLogFileAfterGame)
+					{
+						try
+						{
+							using (var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+							using (var sw = new StreamWriter(fs))
+								sw.Write("");
+							Logger.WriteLine("Cleared log file");
+						}
+						catch (Exception e)
+						{
+							Logger.WriteLine("Error cleared log file: " + e.Message);
+						}
+					}
 				}
 				else if (logLine.StartsWith("[Zone]"))
 				{
 					if (_cardMovementRegex.IsMatch(logLine))
 					{
-						Match match = _cardMovementRegex.Match(logLine);
+						var match = _cardMovementRegex.Match(logLine);
 
 						var id = match.Groups["Id"].Value.Trim();
 						var from = match.Groups["from"].Value.Trim();
@@ -198,7 +213,7 @@ namespace Hearthstone_Deck_Tracker
 						// Only for some log lines, should be valid in every action where we need it
 						if (_opponentPlayRegex.IsMatch(logLine))
 						{
-							Match match2 = _opponentPlayRegex.Match(logLine);
+							var match2 = _opponentPlayRegex.Match(logLine);
 							zonePos = Int32.Parse(match2.Groups["zonePos"].Value.Trim());
 						}
 
