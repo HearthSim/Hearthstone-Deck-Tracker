@@ -92,13 +92,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
-			if (!Config.Instance.MinimizeToTray) return;
-			if (WindowState == WindowState.Minimized)
+			if (Config.Instance.MinimizeToTray && WindowState == WindowState.Minimized)
 			{
-				_notifyIcon.Visible = true;
-				_notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray", ToolTipIcon.Info);
-				Hide();
+				MinimizeToTray();
 			}
+		}
+
+		private void MinimizeToTray()
+		{
+			_notifyIcon.Visible = true;
+			_notifyIcon.ShowBalloonTip(2000, "Hearthstone Deck Tracker", "Minimized to tray", ToolTipIcon.Info);
+			Hide();
 		}
 
 		private void Window_Closing(object sender, CancelEventArgs e)
@@ -243,10 +247,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private void LoadConfig()
 		{
-			if (Config.Instance.TrackerWindowTop >= 0)
-				Top = Config.Instance.TrackerWindowTop;
-			if (Config.Instance.TrackerWindowLeft >= 0)
-				Left = Config.Instance.TrackerWindowLeft;
+			if (Config.Instance.StartMinimized)
+			{
+				WindowState = WindowState.Minimized;
+				if (Config.Instance.MinimizeToTray)
+					MinimizeToTray();
+			}
+			else
+			{
+				if (Config.Instance.TrackerWindowTop >= 0)
+					Top = Config.Instance.TrackerWindowTop;
+				if (Config.Instance.TrackerWindowLeft >= 0)
+					Left = Config.Instance.TrackerWindowLeft;
+			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
 				            ? ThemeManager.DetectAppStyle().Item1
@@ -297,6 +310,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
 			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
+			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1972,6 +1986,20 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+		private void CheckboxStartMinimized_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.StartMinimized = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxStartMinimized_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.StartMinimized = false;
+			SaveConfig(false);
+		}
+
 		#endregion
 
 		#region Constructor
@@ -2245,6 +2273,5 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
 	}
 }

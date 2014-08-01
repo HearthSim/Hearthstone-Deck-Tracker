@@ -95,6 +95,7 @@ namespace Hearthstone_Deck_Tracker
 		public string SelectedWindowBackground = "Theme";
 		public bool ShowAllDecks = false;
 		public bool ShowInTaskbar = false;
+		public bool StartMinimized = false;
 		public Operation TagOperation = Operation.Or;
 		public bool TextOnTopOpponent = false;
 		public bool TextOnTopPlayer = false;
