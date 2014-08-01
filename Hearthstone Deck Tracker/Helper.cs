@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please verwrite Version.xml with the default file.",
+					"\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
 					"Error loading Version.xml");
 
 				return null;
