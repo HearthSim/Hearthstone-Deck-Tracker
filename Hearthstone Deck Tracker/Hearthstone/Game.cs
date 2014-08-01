@@ -110,6 +110,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
 
+		public static List<Card> DrawnLastGame;
+
 		#endregion
 
 		static Game()

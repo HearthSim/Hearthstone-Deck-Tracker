@@ -731,6 +731,7 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnImport_OnClick(object sender, RoutedEventArgs e)
 		{
 			FlyoutDeckImport.IsOpen = true;
+			DeckImportFlyout.BtnLastGame.IsEnabled = Game.DrawnLastGame != null;
 		}
 
 		private void ListViewDB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

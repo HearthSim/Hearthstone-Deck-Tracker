@@ -17,6 +17,14 @@
                         <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0" Click="BtnWeb_Click" />
                     </StackPanel>
                 </GroupBox>
+                <GroupBox Header="From Last Game">
+                    <StackPanel>
+                        <TextBlock Height="auto" TextWrapping="Wrap">
+                        If the last game was played in "No Deck"-mode, the played cards can be imported as a new deck.
+                        </TextBlock>
+                        <Button Name="BtnLastGame" Content="Import from last game" Height="26" Margin="0,6,0,0" Click="BtnLastGame_Click" />
+                    </StackPanel>
+                </GroupBox>
                 <GroupBox Header="From File">
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap">

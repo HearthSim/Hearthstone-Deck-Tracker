@@ -184,5 +184,22 @@ namespace Hearthstone_Deck_Tracker
 
 			After_Click();
 		}
+
+		private void BtnLastGame_Click(object sender, RoutedEventArgs e)
+		{
+			if (Game.DrawnLastGame == null) return;
+			var deck = new Deck();
+			foreach (var card in Game.DrawnLastGame)
+			{
+				deck.Cards.Add(card);
+
+				if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+				{
+					deck.Class = card.PlayerClass;
+				}
+			}
+
+			Helper.MainWindow.SetNewDeck(deck);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -236,6 +237,10 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.Stop();
 			Helper.MainWindow.Overlay.HideTimers();
 			Helper.MainWindow.Overlay.HideSecrets();
+			if (!Game.IsUsingPremade)
+			{
+				Game.DrawnLastGame = new List<Card>(Game.PlayerDrawn);
+			}
 			if (Config.Instance.SavePlayedGames && !Game.IsInMenu)
 			{
 				Helper.MainWindow.SavePlayedCards();
