@@ -209,11 +209,13 @@ namespace Hearthstone_Deck_Tracker
 		private void MouseInputOnLmbDown(object sender, EventArgs eventArgs)
 		{
 			if (!User32.IsForegroundWindow("Hearthstone")) return;
+
+			var pos = User32.GetMousePos();
+			_mousePos = new Point(pos.X, pos.Y);
+
 			if (_uiMovable)
 			{
 				_lmbDown = true;
-				var pos = User32.GetMousePos();
-				_mousePos = new Point(pos.X, pos.Y);
 				foreach (var movableElement in _movableElements)
 				{
 					var relativePos = movableElement.Value.PointFromScreen(_mousePos);
@@ -246,7 +248,10 @@ namespace Hearthstone_Deck_Tracker
 
 				}
 			}
-			HideCardsWhenFriendsListOpen();
+
+			var relativeToOverlay = PointFromScreen(_mousePos);
+			if (relativeToOverlay.X < 150 && relativeToOverlay.Y > Height - 100)
+				HideCardsWhenFriendsListOpen();
 
 			GrayOutSecrets();
 
