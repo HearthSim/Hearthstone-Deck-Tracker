@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool HighlightDiscarded;
 
 		private static Dictionary<string, Card> _cardDb;
+		private static int _logResets;
 
 		private static readonly List<string> InvalidCardIds = new List<string>
 			{
@@ -181,6 +182,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(),
 				                 "Hearthstone");
+
+				//avoid infinite loop, only do this 3 times while app is running
+				if(_logResets < 3)
+				{
+					Logger.WriteLine("Reloading logs...");
+					SetPremadeDeck(Helper.MainWindow.DeckPickerList.SelectedDeck);
+					HsLogReader.Instance.Reset(false);
+					_logResets++;
+				}
 				return false;
 			}
 
