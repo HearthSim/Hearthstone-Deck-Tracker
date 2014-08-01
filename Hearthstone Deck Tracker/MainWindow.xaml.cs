@@ -80,6 +80,8 @@ namespace Hearthstone_Deck_Tracker
 
 		#region GENERAL GUI
 
+		private int _lastSelectedTab;
+
 		private void MetroWindow_Activated(object sender, EventArgs e)
 		{
 			Topmost = true;
@@ -188,14 +190,16 @@ namespace Hearthstone_Deck_Tracker
 		private void TabControlTracker_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (!_initialized) return;
+			if (_lastSelectedTab == TabControlTracker.SelectedIndex) return;
+			_lastSelectedTab = TabControlTracker.SelectedIndex;
 			UpdateTabMarker();
 		}
 
-		private void UpdateTabMarker()
+		private async void UpdateTabMarker()
 		{
 			var tabItem = TabControlTracker.SelectedItem as TabItem;
 			if (tabItem == null) return;
-			SelectedTabMarker.UpdateLayout();
+			await Task.Delay(50);
 			SelectedTabMarker.Width = tabItem.ActualWidth;
 			var offset = TabControlTracker.Items.Cast<TabItem>().TakeWhile(t => t != tabItem).Sum(t => t.ActualWidth);
 			SelectedTabMarker.Margin = new Thickness(offset, 40, 0, 0);
