@@ -296,6 +296,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
+			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1955,6 +1956,20 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
 			HsLogReader.Instance.Reset(false);
+		}
+
+		private void CheckboxHighlightLastDrawn_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.HighlightLastDrawn = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxHighlightLastDrawn_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.HighlightLastDrawn = false;
+			SaveConfig(false);
 		}
 
 		#endregion

@@ -18,12 +18,12 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayerGet(cardId);
 		}
 
-		public static void HandlePlayerDraw(string cardId)
+		public async static void HandlePlayerDraw(string cardId)
 		{
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
 
-			if (!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
+			if (!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
 			    !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;

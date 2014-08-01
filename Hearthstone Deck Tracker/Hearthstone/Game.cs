@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -197,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		#region Player
 
-		public static bool PlayerDraw(string cardId)
+		public async static Task<bool> PlayerDraw(string cardId)
 		{
 			PlayerHandCount++;
 
@@ -220,15 +221,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
 			if (deckCard != null)
 			{
-				deckCard.JustDrawn();
 				deckCard.Count--;
 				deckCard.InHandCount++;
 				LogDeckChange(false, deckCard, true);
 				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck)
 				{
+					//wait for just-drawn highlight to be over, then remove
+					await deckCard.JustDrawn();
 					PlayerDeck.Remove(deckCard);
 					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
 				}
+				else
+					deckCard.JustDrawn();
 			}
 			else
 			{
@@ -250,7 +254,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PlayerHandCount++;
 			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
 			if (card != null)
+			{
 				card.InHandCount++;
+				card.JustDrawn();
+			}
 		}
 
 		public static void PlayerPlayed(string cardId)

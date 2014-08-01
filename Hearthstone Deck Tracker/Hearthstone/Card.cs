@@ -339,11 +339,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged();
 		}
 
-		public async void JustDrawn()
+		public async Task JustDrawn()
 		{
+			if (!Config.Instance.HighlightLastDrawn) 
+				return;
+
 			_justDrawn = true;
 			OnPropertyChanged("ColorPlayer");
-			await Task.Delay(3000);
+			await Task.Delay(4000);
 			_justDrawn = false;
 			OnPropertyChanged("ColorPlayer");
 		}

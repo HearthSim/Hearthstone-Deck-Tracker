@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideTimers = false;
 		public bool HighlightCardsInHand = false;
 		public bool HighlightDiscarded = false;
+		public bool HighlightLastDrawn = true;
 		public bool KeepDecksVisible = true;
 		public string KeyPressOnGameEnd = "None";
 		public string KeyPressOnGameStart = "None";
