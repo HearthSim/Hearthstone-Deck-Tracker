@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.Restart();
 			if (player == Turn.Player && !Game.IsInMenu)
 			{
-				if (Config.Instance.FlashHs)
+				if (Config.Instance.FlashHsOnTurnStart)
 					User32.FlashHs();
 
 				if (Config.Instance.BringHsToForeground)
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Logger.WriteLine("Game start");
 
-			if (Config.Instance.FlashHs)
+			if (Config.Instance.FlashHsOnTurnStart)
 				User32.FlashHs();
 			if (Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();

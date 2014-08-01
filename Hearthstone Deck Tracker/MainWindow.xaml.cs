@@ -305,7 +305,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxExportName.IsChecked = Config.Instance.ExportSetDeckName;
 			CheckboxPrioGolden.IsChecked = Config.Instance.PrioritizeGolden;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
-			CheckboxFlashHs.IsChecked = Config.Instance.FlashHs;
+			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
@@ -1869,14 +1869,14 @@ namespace Hearthstone_Deck_Tracker
 		private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
-			Config.Instance.FlashHs = true;
+			Config.Instance.FlashHsOnTurnStart = true;
 			SaveConfig(false);
 		}
 
 		private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
-			Config.Instance.FlashHs = false;
+			Config.Instance.FlashHsOnTurnStart = false;
 			SaveConfig(false);
 		}
 

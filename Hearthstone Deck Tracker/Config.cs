@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 		public int CustomWidth = -1;
 		[XmlIgnore] public bool Debug = false;
 		public bool ExportSetDeckName = true;
-		public bool FlashHs = true;
+		public bool FlashHsOnTurnStart = true;
 		public bool GenerateLog = false;
 		public string HearthstoneDirectory = "";
 		public bool HideDecksInOverlay = false;
