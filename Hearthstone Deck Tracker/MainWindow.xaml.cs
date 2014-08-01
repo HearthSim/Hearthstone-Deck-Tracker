@@ -2028,45 +2028,65 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if (config.TrackerWindowLeft.HasValue && config.TrackerWindowLeft.Value < 0)
 					{
-						config.TrackerWindowLeft = null;
+						config.TrackerWindowLeft = Config.Defaults.TrackerWindowLeft;
 						converted = true;
 					}
 					if (config.TrackerWindowTop.HasValue && config.TrackerWindowTop.Value < 0)
 					{
-						config.TrackerWindowTop = null;
+						config.TrackerWindowTop = Config.Defaults.TrackerWindowTop;
 						converted = true;
 					}
 
 					if (config.PlayerWindowLeft.HasValue && config.PlayerWindowLeft.Value < 0)
 					{
-						config.PlayerWindowLeft = null;
+						config.PlayerWindowLeft = Config.Defaults.PlayerWindowLeft;
 						converted = true;
 					}
 					if (config.PlayerWindowTop.HasValue && config.PlayerWindowTop.Value < 0)
 					{
-						config.PlayerWindowTop = null;
+						config.PlayerWindowTop = Config.Defaults.PlayerWindowTop;
 						converted = true;
 					}
 
 					if (config.OpponentWindowLeft.HasValue && config.OpponentWindowLeft.Value < 0)
 					{
-						config.OpponentWindowLeft = null;
+						config.OpponentWindowLeft = Config.Defaults.OpponentWindowLeft;
 						converted = true;
 					}
 					if (config.OpponentWindowTop.HasValue && config.OpponentWindowTop.Value < 0)
 					{
-						config.OpponentWindowTop = null;
+						config.OpponentWindowTop = Config.Defaults.OpponentWindowTop;
 						converted = true;
 					}
 
 					if (config.TimerWindowLeft.HasValue && config.TimerWindowLeft.Value < 0)
 					{
-						config.TimerWindowLeft = null;
+						config.TimerWindowLeft = Config.Defaults.TimerWindowLeft;
 						converted = true;
 					}
 					if (config.TimerWindowTop.HasValue && config.TimerWindowTop.Value < 0)
 					{
-						config.TimerWindowTop = null;
+						config.TimerWindowTop = Config.Defaults.TimerWindowTop;
+						converted = true;
+					}
+				}
+
+				// Player and opponent window heights were previously set to zero as a default, and then
+				// a bit of logic was used when creating the windows: if height == 0, then set height to 400.
+				// This was a little pointless and also inconsistent with the way the default timer window
+				// dimensions were implemented. Unfortunately we cannot make this consistent without
+				// breaking legacy config files, where the height will still be stored as zero. So
+				// we handle the changed semantics here.
+				{
+					if (config.PlayerWindowHeight == 0)
+					{
+						config.PlayerWindowHeight = Config.Defaults.PlayerWindowHeight;
+						converted = true;
+					}
+
+					if (config.OpponentWindowHeight == 0)
+					{
+						config.OpponentWindowHeight = Config.Defaults.OpponentWindowHeight;
 						converted = true;
 					}
 				}

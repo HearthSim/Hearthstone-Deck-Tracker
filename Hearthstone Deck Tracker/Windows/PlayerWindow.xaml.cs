@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker
 			_config = config;
 			ListViewPlayer.ItemsSource = playerDeck;
 			playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
-			Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
+			Height = _config.PlayerWindowHeight;
 			if (_config.PlayerWindowLeft.HasValue)
 			{
 				Left = _config.PlayerWindowLeft.Value;
