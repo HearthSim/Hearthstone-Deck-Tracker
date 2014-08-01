@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -22,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _name;
 		private string _text;
 		private bool _wasDiscarded;
+		private bool _justDrawn;
 
 		public Card()
 		{
@@ -201,7 +203,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				Color color;
-				if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
+				if (_justDrawn) //todo add config check
+					color = Colors.Orange;
+				else if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
 				else if (Count == 0)
 					color = Colors.Gray;
@@ -333,6 +337,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Durability = stats.Durability;
 			_wasDiscarded = false;
 			OnPropertyChanged();
+		}
+
+		public async void JustDrawn()
+		{
+			_justDrawn = true;
+			OnPropertyChanged("ColorPlayer");
+			await Task.Delay(3000);
+			_justDrawn = false;
+			OnPropertyChanged("ColorPlayer");
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

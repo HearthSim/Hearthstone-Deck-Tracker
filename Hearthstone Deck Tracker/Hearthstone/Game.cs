@@ -211,12 +211,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			else
 			{
-				PlayerDrawn.Add(GetCardFromId(cardId));
+				drawnCard = GetCardFromId(cardId);
+				PlayerDrawn.Add(drawnCard);
 			}
+			drawnCard.JustDrawn();
+
 
 			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
 			if (deckCard != null)
 			{
+				deckCard.JustDrawn();
 				deckCard.Count--;
 				deckCard.InHandCount++;
 				LogDeckChange(false, deckCard, true);

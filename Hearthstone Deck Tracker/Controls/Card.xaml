@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="{Binding Background}" Height="35" Width="215">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32"></ColumnDefinition>
+            <ColumnDefinition Width="35"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Cost}" Fill="{Binding ColorPlayer}" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" Grid.Column="0"/>
