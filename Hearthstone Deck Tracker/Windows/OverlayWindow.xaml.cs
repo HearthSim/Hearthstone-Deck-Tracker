@@ -249,19 +249,21 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
-			var relativeToOverlay = PointFromScreen(_mousePos);
-			if (relativeToOverlay.X < 150 && relativeToOverlay.Y > Height - 100)
-				HideCardsWhenFriendsListOpen();
+			HideCardsWhenFriendsListOpen(PointFromScreen(_mousePos));
 
 			GrayOutSecrets();
 
 		}
 
-		private async void HideCardsWhenFriendsListOpen()
+		private async void HideCardsWhenFriendsListOpen(Point clickPos)
 		{
 			var leftPanel = Canvas.GetLeft(StackPanelOpponent) < 200 ? StackPanelOpponent : StackPanelPlayer;
 			if (leftPanel != null && !Config.Instance.HideDecksInOverlay)
 			{
+				//if panel visible, only continue of click was in the button left corner
+				if (!(clickPos.X < 150 && clickPos.Y > Height - 100) && leftPanel.Visibility == Visibility.Visible) 
+					return;
+
 				var checkForFriendsList = true;
 				if (leftPanel.Equals(StackPanelPlayer) && Config.Instance.HidePlayerCards)
 					checkForFriendsList = false;
