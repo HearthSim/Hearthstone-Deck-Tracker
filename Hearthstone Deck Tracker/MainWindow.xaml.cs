@@ -2013,6 +2013,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 
+			User32.SetPriorityClass(Process.GetCurrentProcess().Handle, User32.PriorityClass.REALTIME_PRIORITY_CLASS);
+
 			Helper.MainWindow = this;
 			_configPath = Config.Load();
 			HsLogReader.Create();
