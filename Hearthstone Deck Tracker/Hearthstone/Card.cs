@@ -203,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				Color color;
-				if (_justDrawn) //todo add config check
+				if (_justDrawn)
 					color = Colors.Orange;
 				else if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
