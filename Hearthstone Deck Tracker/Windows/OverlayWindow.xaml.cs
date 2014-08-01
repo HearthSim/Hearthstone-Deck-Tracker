@@ -251,7 +251,7 @@ namespace Hearthstone_Deck_Tracker
 
 			HideCardsWhenFriendsListOpen(PointFromScreen(_mousePos));
 
-			GrayOutSecrets();
+			GrayOutSecrets(_mousePos);
 
 		}
 
@@ -296,10 +296,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void GrayOutSecrets()
+		private void GrayOutSecrets(Point mousePos)
 		{
-			if (ToolTipCard.Visibility == Visibility.Visible)
-			{
+			if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
+				return;
+
 				var card = ToolTipCard.DataContext as Card;
 				if (card == null) return;
 
@@ -320,7 +321,6 @@ namespace Hearthstone_Deck_Tracker
 
 				//reset secrets when new secret is played
 				_needToRefreshSecrets = true;
-			}
 		}
 
 		public void SortViews()
@@ -601,6 +601,7 @@ namespace Hearthstone_Deck_Tracker
 			var relativePlayerDeckPos = StackPanelPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
+			var visibility = Config.Instance.OverlayCardToolTips ? Visibility.Visible : Visibility.Hidden;
 
 			//player card tooltips
 			if (PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
@@ -622,7 +623,7 @@ namespace Hearthstone_Deck_Tracker
 
 				SetTooltipPosition(topOffset, StackPanelPlayer);
 
-				ToolTipCard.Visibility = Visibility.Visible;
+				ToolTipCard.Visibility = visibility;
 			}
 			//opponent card tooltips
 			else if (PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
@@ -644,7 +645,7 @@ namespace Hearthstone_Deck_Tracker
 
 				SetTooltipPosition(topOffset, StackPanelOpponent);
 
-				ToolTipCard.Visibility = Visibility.Visible;
+				ToolTipCard.Visibility = visibility;
 			}
 			else if (PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 			{
@@ -665,7 +666,7 @@ namespace Hearthstone_Deck_Tracker
 
 				SetTooltipPosition(topOffset, StackPanelSecrets);
 
-				ToolTipCard.Visibility = Visibility.Visible;
+				ToolTipCard.Visibility = visibility;
 			}
 			else
 			{
@@ -708,8 +709,7 @@ namespace Hearthstone_Deck_Tracker
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
 			ReSizePosLists();
 
-			if (Config.Instance.OverlayCardToolTips)
-				UpdateCardTooltip();
+			UpdateCardTooltip();
 		}
 
 		internal void UpdateTurnTimer(TimerEventArgs timerEventArgs)
