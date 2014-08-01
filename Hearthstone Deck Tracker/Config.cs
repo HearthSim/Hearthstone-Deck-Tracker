@@ -126,7 +126,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
-			public static int? PlayerWindowL;
 		}
 
 		public string CreatedByVersion = Defaults.CreatedByVersion;
