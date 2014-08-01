@@ -1007,6 +1007,7 @@ namespace Hearthstone_Deck_Tracker
 
 				NewDeck = (Deck) deck.Clone();
 				ListViewNewDeck.ItemsSource = NewDeck.Cards;
+				Helper.SortCardCollection(ListViewNewDeck.ItemsSource, false);
 
 				if (ComboBoxSelectClass.Items.Contains(NewDeck.Class))
 					ComboBoxSelectClass.SelectedValue = NewDeck.Class;
