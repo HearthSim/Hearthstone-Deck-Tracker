@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
 		                                     @"\HearthstoneDeckTracker";
 
+		public string CreatedByVersion;
 		public string AccentName;
 		public bool AlwaysOverwriteLogConfig = true;
 		public bool AutoDeckDetection = true;
@@ -161,6 +162,19 @@ namespace Hearthstone_Deck_Tracker
 			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
 		}
 
+		public static void SaveBackup(bool deleteOriginal = false)
+		{
+			string configPath = Instance.ConfigPath;
+
+			if (File.Exists(configPath))
+			{
+				File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
+
+				if (deleteOriginal)
+					File.Delete(configPath);
+			}
+		}
+
 		public static string Load()
 		{
 			var foundConfig = false;
@@ -207,11 +221,7 @@ namespace Hearthstone_Deck_Tracker
 				if (File.Exists("config.xml"))
 				{
 					Directory.CreateDirectory(Instance.HomeDir);
-					if (File.Exists(Instance.ConfigPath))
-					{
-						//backup in case the file already exists
-						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
-					}
+					SaveBackup(true); //backup in case the file already exists
 					File.Move("config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to appdata");
 				}
@@ -220,11 +230,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if (File.Exists(Instance.AppDataPath + @"\config.xml"))
 				{
-					if (File.Exists(Instance.ConfigPath))
-					{
-						//backup in case the file already exists
-						File.Move(configPath, configPath + DateTime.Now.ToFileTime());
-					}
+					SaveBackup(true); //backup in case the file already exists
 					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to local");
 				}
