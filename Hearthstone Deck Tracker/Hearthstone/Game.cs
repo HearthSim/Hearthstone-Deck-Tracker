@@ -157,6 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		#region Player
 
+#pragma warning disable 4014
 		public static async Task<bool> PlayerDraw(string cardId)
 		{
 			PlayerHandCount++;
@@ -199,7 +200,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			return true;
 		}
+#pragma warning restore 4014
 
+#pragma warning disable 4014
 		public static void PlayerGet(string cardId)
 		{
 			PlayerHandCount++;
@@ -248,6 +251,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 		}
+#pragma warning restore 4014
 
 		public static void PlayerPlayed(string cardId)
 		{
