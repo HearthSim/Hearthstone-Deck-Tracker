@@ -846,8 +846,6 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				if (NewDeck != null)
-					ManaCurveNewDeck.SetDeck(NewDeck);
 
 				Helper.SortCardCollection(ListViewDB.Items, Config.Instance.CardSortingClassFirst);
 			}
@@ -963,7 +961,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				NewDeck.Cards.Remove(card);
-
+			
+			ManaCurveNewDeck.SetDeck(NewDeck);
 			Helper.SortCardCollection(ListViewNewDeck.Items, Config.Instance.CardSortingClassFirst);
 			BtnSaveDeck.Content = "Save*";
 			UpdateNewDeckHeader(true);
@@ -992,6 +991,7 @@ namespace Hearthstone_Deck_Tracker
 				NewDeck.Cards.Add(card);
 			}
 
+			ManaCurveNewDeck.SetDeck(NewDeck);
 			Helper.SortCardCollection(ListViewNewDeck.Items, Config.Instance.CardSortingClassFirst);
 			BtnSaveDeck.Content = "Save*";
 			UpdateNewDeckHeader(true);
