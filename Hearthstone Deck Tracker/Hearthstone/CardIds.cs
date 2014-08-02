@@ -79,20 +79,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						}
 				},
 				{
-					//Ancient of Lore
-					"NEW1_008", new[]
-						{
-							"NEW1_008a",
-							"NEW1_008b"
-						}
+					//Gelbin Mekkatorque
+					"EX1_112", new[] {"Mekka1", "Mekka2", "Mekka3", "Mekka4"}
 				},
 				{
-					//Tirion Fordring
-					"EX1_383", new[] {"EX1_383t"}
-				},
-				{
-					//Wild Growth
-					"CS2_013", new[] {"CS2_013t"}
+					//Animal Companion
+					"NEW1_031", new[] {"NEW1_032", "NEW1_033", "NEW1_034"}
 				}
 
 			};
