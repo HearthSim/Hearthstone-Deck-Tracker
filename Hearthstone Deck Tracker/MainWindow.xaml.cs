@@ -1974,8 +1974,9 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
 			Game.Reset();
-			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
-			HsLogReader.Instance.Reset(false);
+			Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+			HsLogReader.Instance.Reset(true);
+			Overlay.Update(true);
 		}
 
 		private void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
@@ -1984,8 +1985,9 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
 			Game.Reset();
-			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
-			HsLogReader.Instance.Reset(false);
+			Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+			HsLogReader.Instance.Reset(true);
+			Overlay.Update(true);
 		}
 
 		private void CheckboxHighlightLastDrawn_Checked(object sender, RoutedEventArgs e)
