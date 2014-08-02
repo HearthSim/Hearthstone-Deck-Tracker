@@ -108,6 +108,7 @@
                 </StackPanel>
             </UniformGrid>
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Visibility="Hidden"/>
+            <StackPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed"></StackPanel>
         </Canvas>
 
     </Grid>

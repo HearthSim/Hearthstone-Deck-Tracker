@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			public static readonly string CreatedByVersion;
 			public static readonly string AccentName;
+			public static readonly bool AdditionalOverlayTooltips = true;
 			public static readonly bool AlwaysOverwriteLogConfig = true;
 			public static readonly bool AutoDeckDetection = true;
 			public static readonly bool AutoSelectDetectedDeck = true;
@@ -212,6 +213,7 @@ namespace Hearthstone_Deck_Tracker
 		[XmlArrayItem(ElementName = "Tag")]
 		public List<string> SelectedTags = Defaults.SelectedTags;
 		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
+		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
 		public bool ShowAllDecks = Defaults.ShowAllDecks;
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
 		public bool ShowPlayerGet = Defaults.ShowPlayerGet;

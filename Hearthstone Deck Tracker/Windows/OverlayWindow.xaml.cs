@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool _secretsTempVisible;
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
+		private string _lastToolTipCardId;
 
 		public OverlayWindow()
 		{
@@ -660,7 +661,33 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				ToolTipCard.Visibility = Visibility.Hidden;
+				HideAdditionalToolTips();
 			}
+
+			if (ToolTipCard.Visibility == Visibility.Visible)
+			{
+				var card = ToolTipCard.GetValue(DataContextProperty) as Card;
+				if (card != null)
+				{
+					if (_lastToolTipCardId != card.Id)
+					{
+						_lastToolTipCardId = card.Id;
+						ShowAdditionalToolTips();
+					}
+				}
+				else
+					HideAdditionalToolTips();
+			}
+			else
+			{
+				HideAdditionalToolTips();
+				_lastToolTipCardId = string.Empty;
+			}
+		}
+
+		private void HideAdditionalToolTips()
+		{
+			StackPanelAdditionalTooltips.Visibility = Visibility.Hidden;
 		}
 
 		private void SetTooltipPosition(double yOffset, StackPanel stackpanel)
@@ -795,13 +822,13 @@ namespace Hearthstone_Deck_Tracker
 				switch (hsClass)
 				{
 					case "Hunter":
-						ids = Game.SecretIdsHunter;
+						ids = CardIds.SecretIdsHunter;
 						break;
 					case "Mage":
-						ids = Game.SecretIdsMage;
+						ids = CardIds.SecretIdsMage;
 						break;
 					case "Paladin":
-						ids = Game.SecretIdsPaladin;
+						ids = CardIds.SecretIdsPaladin;
 						break;
 					default:
 						return;
@@ -817,6 +844,44 @@ namespace Hearthstone_Deck_Tracker
 				_needToRefreshSecrets = false;
 			}
 			StackPanelSecrets.Visibility = Visibility.Visible;
+		}
+
+		public void ShowAdditionalToolTips()
+		{
+			if (!Config.Instance.AdditionalOverlayTooltips) return;
+			var card = ToolTipCard.DataContext as Card;
+			if (card == null) return;
+			if (!CardIds.SubCardIds.Keys.Contains(card.Id))
+			{
+				HideAdditionalToolTips();
+				return;
+			}
+
+			StackPanelAdditionalTooltips.Children.Clear();
+			foreach (var id in CardIds.SubCardIds[card.Id])
+			{
+				var tooltip = new CardToolTip();
+				tooltip.SetValue(DataContextProperty, Game.GetCardFromId(id));
+				StackPanelAdditionalTooltips.Children.Add(tooltip);
+			}
+
+			StackPanelAdditionalTooltips.UpdateLayout();
+
+			//set position
+			var tooltipLeft = Canvas.GetLeft(ToolTipCard);
+			var left = tooltipLeft < Width/2
+				              ? tooltipLeft + ToolTipCard.ActualWidth
+							  : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
+
+			Canvas.SetLeft(StackPanelAdditionalTooltips, left);
+			var top = Canvas.GetTop(ToolTipCard) - (StackPanelAdditionalTooltips.ActualHeight/2 - ToolTipCard.ActualHeight/2);
+			if (top < 0) 
+				top = 0;
+			else if (top + StackPanelAdditionalTooltips.ActualHeight > Height)
+				top = Height - StackPanelAdditionalTooltips.ActualHeight;
+			Canvas.SetTop(StackPanelAdditionalTooltips, top);
+
+			StackPanelAdditionalTooltips.Visibility = Visibility.Visible;
 		}
 
 		public void HideSecrets()

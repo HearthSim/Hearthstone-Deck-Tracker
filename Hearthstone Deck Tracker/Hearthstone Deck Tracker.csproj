@@ -132,6 +132,7 @@
     <Compile Include="FlyoutControls\SortFilterDecks.xaml.cs">
       <DependentUpon>SortFilterDecks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\CardIds.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />

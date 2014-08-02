@@ -384,6 +384,8 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxWindowCardToolTips.IsChecked = Config.Instance.WindowCardToolTips;
 			CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
+			CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
+			CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
 			CheckboxLogGames.IsChecked = Config.Instance.SavePlayedGames;
 			TextboxLogGamesPath.IsEnabled = Config.Instance.SavePlayedGames;
@@ -1808,6 +1810,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!_initialized) return;
 			Config.Instance.OverlayCardToolTips = true;
+			CheckboxOverlayAdditionalCardToolTips.IsEnabled = true;
 			SaveConfig(true);
 		}
 
@@ -1815,6 +1818,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!_initialized) return;
 			Config.Instance.OverlayCardToolTips = false;
+			CheckboxOverlayAdditionalCardToolTips.IsChecked = false;
+			CheckboxOverlayAdditionalCardToolTips.IsEnabled = false;
 			SaveConfig(true);
 		}
 
@@ -2033,6 +2038,20 @@ namespace Hearthstone_Deck_Tracker
 			if (!_initialized) return;
 			Config.Instance.ShowPlayerGet = false;
 			Overlay.Update(true);
+		}
+
+		private void CheckboxOverlayAdditionalCardToolTips_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.AdditionalOverlayTooltips = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxOverlayAdditionalCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.AdditionalOverlayTooltips = false;
+			SaveConfig(false);
 		}
 		#endregion
 
