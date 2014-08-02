@@ -649,7 +649,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if (!Game.IsInMenu)
 			{
-				HsLogReader.Instance.Reset(false);
+				//needs to be true for automatic deck detection to work
+				HsLogReader.Instance.Reset(true);
 				Overlay.Update(false);
 			}
 
