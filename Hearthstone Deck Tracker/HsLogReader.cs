@@ -23,26 +23,24 @@ namespace Hearthstone_Deck_Tracker
 		private const int PowerCountTreshold = 14;
 		private const int MaxFileLength = 3000000;
 
-		private readonly Regex _cardMovementRegex =
-			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
 		private readonly string _fullOutputPath;
 
 		private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>
-			{
-				{"HERO_01", "Warrior"},
-				{"HERO_02", "Shaman"},
-				{"HERO_03", "Rogue"},
-				{"HERO_04", "Paladin"},
-				{"HERO_05", "Hunter"},
-				{"HERO_06", "Druid"},
-				{"HERO_07", "Warlock"},
-				{"HERO_08", "Mage"},
-				{"HERO_09", "Priest"}
-			};
+		{
+			{"HERO_01", "Warrior"},
+			{"HERO_02", "Shaman"},
+			{"HERO_03", "Rogue"},
+			{"HERO_04", "Paladin"},
+			{"HERO_05", "Hunter"},
+			{"HERO_06", "Druid"},
+			{"HERO_07", "Warlock"},
+			{"HERO_08", "Mage"},
+			{"HERO_09", "Priest"}
+		};
 
-		private readonly Regex _opponentPlayRegex =
-			new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
+		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 
 		private readonly int _updateDelay;
 
@@ -80,7 +78,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public int GetTurnNumber()
 		{
-			return (_turnCount)/2;
+			return (_turnCount) / 2;
 		}
 
 		public void Start()
@@ -254,7 +252,7 @@ namespace Hearthstone_Deck_Tracker
 									GameEventHandler.HandlePlayerMulligan(id);
 								else if (to == "FRIENDLY PLAY")
 									GameEventHandler.HandlePlayerPlay(id);
-								else 
+								else
 									//player discard from hand and spells
 									GameEventHandler.HandlePlayerHandDiscard(id);
 

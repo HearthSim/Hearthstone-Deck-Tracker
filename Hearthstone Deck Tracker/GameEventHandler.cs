@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
 			var correctDeck = Game.PlayerDraw(cardId);
 
 			if (!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			    !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+				!Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//don't think this will ever detect an incorrect deck but who knows...
 			if (!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			    !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+				!Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -121,9 +121,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
 			if (Game.OpponentSecretCount <= 0)
-			{
 				Helper.MainWindow.Overlay.HideSecrets();
-			}
 		}
 
 		public static void HandleOpponentDeckDiscard(string cardId)
@@ -177,7 +175,7 @@ namespace Hearthstone_Deck_Tracker
 				User32.BringHsToForeground();
 
 			if (Config.Instance.KeyPressOnGameStart != "None" &&
-			    Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+				Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
@@ -185,7 +183,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 			if (selectedDeck != null)
-				Game.SetPremadeDeck((Deck) selectedDeck.Clone());
+				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			Game.IsInMenu = false;
 			Game.Reset();
@@ -228,8 +226,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandleGameEnd()
 		{
 			Logger.WriteLine("Game end");
-			if (Config.Instance.KeyPressOnGameEnd != "None" &&
-			    Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
@@ -249,7 +246,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if (deck != null)
-					Game.SetPremadeDeck((Deck) deck.Clone());
+					Game.SetPremadeDeck((Deck)deck.Clone());
 
 				Game.Reset();
 			}

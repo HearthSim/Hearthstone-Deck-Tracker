@@ -738,13 +738,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TextBoxDBFilter_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Key == Key.Enter)
+			if (e.Key == Key.Enter && ListViewDB.Items.Count == 1)
 			{
-				if (ListViewDB.Items.Count == 1)
-				{
-					var card = (Card)ListViewDB.Items[0];
-					AddCardToDeck((Card)card.Clone());
-				}
+				var card = (Card)ListViewDB.Items[0];
+				AddCardToDeck((Card)card.Clone());
 			}
 		}
 
@@ -843,7 +840,7 @@ namespace Hearthstone_Deck_Tracker
 					// mana filter
 					if (ComboBoxFilterMana.SelectedItem.ToString() == "All"
 						|| ((ComboBoxFilterMana.SelectedItem.ToString() == "9+" && card.Cost >= 9)
-							|| (ComboBoxFilterMana.SelectedItem.ToString() == card.Cost.ToString())))
+						|| (ComboBoxFilterMana.SelectedItem.ToString() == card.Cost.ToString())))
 					{
 						switch (selectedNeutral)
 						{
@@ -906,9 +903,8 @@ namespace Hearthstone_Deck_Tracker
 				var result =
 					await
 					this.ShowMessageAsync("Not 30 cards",
-										  string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
-														NewDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative,
-										  settings);
+										  string.Format("Deck contains {0} cards. Is this what you want to save anyway?", NewDeck.Cards.Sum(c => c.Count)),
+										  MessageDialogStyle.AffirmativeAndNegative, settings);
 				if (result != MessageDialogResult.Affirmative)
 					return;
 			}

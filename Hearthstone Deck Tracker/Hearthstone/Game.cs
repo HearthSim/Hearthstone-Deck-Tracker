@@ -77,8 +77,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage)
-				           ? Config.Instance.SelectedLanguage
-				           : "enUS");
+						   ? Config.Instance.SelectedLanguage
+						   : "enUS");
 		}
 
 		public static void Reset()
@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PlayerDeck.Clear();
 			foreach (var card in deck.Cards)
 			{
-				PlayerDeck.Add((Card) card.Clone());
+				PlayerDeck.Add((Card)card.Clone());
 			}
 			IsUsingPremade = true;
 		}
@@ -121,16 +121,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var previous = decrease ? card.Count + 1 : card.Count - 1;
 
 			Logger.WriteLine(
-				string.Format("({0} deck) {1} count {2} -> {3}", opponent ? "opponent" : "player", card.Name, previous, card.Count),
-				"Hearthstone");
+				string.Format("({0} deck) {1} count {2} -> {3}", opponent ? "opponent" : "player", card.Name, previous, card.Count), "Hearthstone");
 		}
 
 		private static bool ValidateOpponentHandCount()
 		{
 			if (OpponentHandCount - 1 < 0 || OpponentHandCount - 1 > 9)
 			{
-				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(),
-				                 "Hearthstone");
+				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(), "Hearthstone");
 
 				//avoid infinite loop, only do this 3 times while app is running
 				if (_logResets < 3)
@@ -148,9 +146,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static void LogOpponentHand()
 		{
-			var zipped = OpponentHandAge.Zip(OpponentHandMarks.Select(mark => (char) mark),
-			                                 (age, mark) =>
-			                                 string.Format("{0}{1}", (age == -1 ? " " : age.ToString()), mark));
+			var zipped = OpponentHandAge.Zip(OpponentHandMarks.Select(mark => (char)mark),
+											 (age, mark) =>
+											 string.Format("{0}{1}", (age == -1 ? " " : age.ToString()), mark));
 
 			Logger.WriteLine("Opponent Hand after draw: " + string.Join(",", zipped), "Hearthstone");
 		}
@@ -179,7 +177,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
-			if (deckCard != null)
+			if (deckCard == null)
+				return false;
+			else
 			{
 				deckCard.Count--;
 				deckCard.InHandCount++;
@@ -193,12 +193,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				else
 					deckCard.JustDrawn();
+
+				return true;
 			}
-			else
-			{
-				return false;
-			}
-			return true;
 		}
 #pragma warning restore 4014
 
@@ -262,9 +259,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				card.InHandCount--;
 				if ((card.IsStolen || Config.Instance.HighlightCardsInHand) && card.InHandCount < 1)
-				{
 					PlayerDeck.Remove(card);
-				}
 			}
 		}
 
@@ -309,17 +304,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return true;
 
 			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
-			if (drawnCard != null)
-			{
-				drawnCard.Count++;
-			}
-			else
-			{
+			if (drawnCard == null)
 				PlayerDrawn.Add(GetCardFromId(cardId));
-			}
+			else
+				drawnCard.Count++;
 
 			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
-			if (deckCard != null)
+			if (deckCard == null)
+				return false;
+			else
 			{
 				deckCard.Count--;
 				LogDeckChange(false, deckCard, true);
@@ -328,12 +321,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					PlayerDeck.Remove(deckCard);
 					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
 				}
+
+				return true;
 			}
-			else
-			{
-				return false;
-			}
-			return true;
 		}
 
 		#endregion
@@ -347,21 +337,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if (!ValidateOpponentHandCount())
 				return;
-
-			if (OpponentHandAge[OpponentHandCount - 1] != -1)
+			else if (OpponentHandAge[OpponentHandCount - 1] != -1)
 			{
-				Logger.WriteLine(string.Format("Card {0} is already set to {1}", OpponentHandCount - 1,
-				                               OpponentHandAge[OpponentHandCount - 1]), "Hearthstone");
-
-				return;
+				Logger.WriteLine(string.Format("Card {0} is already set to {1}", OpponentHandCount - 1, OpponentHandAge[OpponentHandCount - 1]), "Hearthstone");
 			}
+			else
+			{
+				Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
 
-			Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
+				OpponentHandAge[OpponentHandCount - 1] = turn;
+				OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
 
-			OpponentHandAge[OpponentHandCount - 1] = turn;
-			OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
-
-			LogOpponentHand();
+				LogOpponentHand();
+			}
 		}
 
 		public static void OpponentPlay(string id, int from, int turn)
@@ -437,11 +425,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 
-			if (!ValidateOpponentHandCount())
-				return;
-
-			OpponentHandAge[OpponentHandCount - 1] = turn;
-			OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
+			if (ValidateOpponentHandCount())
+			{
+				OpponentHandAge[OpponentHandCount - 1] = turn;
+				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
+			}
 		}
 
 		public static void OpponentDeckDiscard(string cardId)
@@ -565,7 +553,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (cardId == "") return new Card();
 			if (_cardDb.ContainsKey(cardId))
 			{
-				return (Card) _cardDb[cardId].Clone();
+				return (Card)_cardDb[cardId].Clone();
 			}
 			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
 			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", 0);
@@ -588,11 +576,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static List<Card> GetActualCards()
 		{
 			return (from card in _cardDb.Values
-			        where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
-			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
-			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-			        where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
-			        select card).ToList();
+					where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
+					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
+					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+					where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
+					select card).ToList();
 		}
 
 		#endregion
