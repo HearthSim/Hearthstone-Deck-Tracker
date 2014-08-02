@@ -19,13 +19,14 @@ namespace Hearthstone_Deck_Tracker
 
 			Height = _config.TimerWindowHeight;
 			Width = _config.TimerWindowWidth;
-			if (_config.TimerWindowLeft >= 0)
+
+			if (_config.TimerWindowLeft.HasValue)
 			{
-				Left = config.TimerWindowLeft;
+				Left = config.TimerWindowLeft.Value;
 			}
-			if (_config.TimerWindowTop >= 0)
+			if (_config.TimerWindowTop.HasValue)
 			{
-				Top = config.TimerWindowTop;
+				Top = config.TimerWindowTop.Value;
 			}
 			Topmost = _config.TimerWindowTopmost;
 		}
@@ -55,8 +56,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_LocationChanged(object sender, EventArgs e)
 		{
-			_config.TimerWindowLeft = Left;
-			_config.TimerWindowTop = Top;
+			_config.TimerWindowLeft = (int) Left;
+			_config.TimerWindowTop = (int) Top;
 		}
 
 		private void MetroWindow_Activated(object sender, EventArgs e)

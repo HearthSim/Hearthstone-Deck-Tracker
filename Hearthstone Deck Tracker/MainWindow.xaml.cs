@@ -259,10 +259,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if (Config.Instance.TrackerWindowTop >= 0)
-					Top = Config.Instance.TrackerWindowTop;
-				if (Config.Instance.TrackerWindowLeft >= 0)
-					Left = Config.Instance.TrackerWindowLeft;
+				if (Config.Instance.TrackerWindowTop.HasValue)
+					Top = Config.Instance.TrackerWindowTop.Value;
+				if (Config.Instance.TrackerWindowLeft.HasValue)
+					Left = Config.Instance.TrackerWindowLeft.Value;
 			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
@@ -2010,6 +2010,95 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Constructor
 
+		// Logic for dealing with legacy config file semantics
+		// Use difference of versions to determine what should be done
+		private static void ConvertLegacyConfig(Version currentVersion, Version configVersion)
+		{
+			var config = Config.Instance;
+			bool converted = false;
+
+			if (configVersion == null)	// Here we assume config file was created prior to version tracking
+			{
+				// We previously assumed negative pixel coordinates were invalid, but in fact they can go negative
+				// with multi-screen setups. Negative positions were being used to represent 'no specific position'
+				// as a default. That means that when the windows are created for the first time, we let the operating
+				// system decide where to place them. As we should not be using negative positions for this purpose, since
+				// they are in fact a valid range of pixel positions, we now use nullable types instead. The default
+				// 'no specific position' is now expressed when the positions are null.
+				{
+					if (config.TrackerWindowLeft.HasValue && config.TrackerWindowLeft.Value < 0)
+					{
+						config.TrackerWindowLeft = Config.Defaults.TrackerWindowLeft;
+						converted = true;
+					}
+					if (config.TrackerWindowTop.HasValue && config.TrackerWindowTop.Value < 0)
+					{
+						config.TrackerWindowTop = Config.Defaults.TrackerWindowTop;
+						converted = true;
+					}
+
+					if (config.PlayerWindowLeft.HasValue && config.PlayerWindowLeft.Value < 0)
+					{
+						config.PlayerWindowLeft = Config.Defaults.PlayerWindowLeft;
+						converted = true;
+					}
+					if (config.PlayerWindowTop.HasValue && config.PlayerWindowTop.Value < 0)
+					{
+						config.PlayerWindowTop = Config.Defaults.PlayerWindowTop;
+						converted = true;
+					}
+
+					if (config.OpponentWindowLeft.HasValue && config.OpponentWindowLeft.Value < 0)
+					{
+						config.OpponentWindowLeft = Config.Defaults.OpponentWindowLeft;
+						converted = true;
+					}
+					if (config.OpponentWindowTop.HasValue && config.OpponentWindowTop.Value < 0)
+					{
+						config.OpponentWindowTop = Config.Defaults.OpponentWindowTop;
+						converted = true;
+					}
+
+					if (config.TimerWindowLeft.HasValue && config.TimerWindowLeft.Value < 0)
+					{
+						config.TimerWindowLeft = Config.Defaults.TimerWindowLeft;
+						converted = true;
+					}
+					if (config.TimerWindowTop.HasValue && config.TimerWindowTop.Value < 0)
+					{
+						config.TimerWindowTop = Config.Defaults.TimerWindowTop;
+						converted = true;
+					}
+				}
+
+				// Player and opponent window heights were previously set to zero as a default, and then
+				// a bit of logic was used when creating the windows: if height == 0, then set height to 400.
+				// This was a little pointless and also inconsistent with the way the default timer window
+				// dimensions were implemented. Unfortunately we cannot make this consistent without
+				// breaking legacy config files, where the height will still be stored as zero. So
+				// we handle the changed semantics here.
+				{
+					if (config.PlayerWindowHeight == 0)
+					{
+						config.PlayerWindowHeight = Config.Defaults.PlayerWindowHeight;
+						converted = true;
+					}
+
+					if (config.OpponentWindowHeight == 0)
+					{
+						config.OpponentWindowHeight = Config.Defaults.OpponentWindowHeight;
+						converted = true;
+					}
+				}
+			}
+
+			if (converted)
+			{
+				Config.SaveBackup();
+				Config.Save();
+			}
+		}
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -2020,9 +2109,20 @@ namespace Hearthstone_Deck_Tracker
 			_configPath = Config.Load();
 			HsLogReader.Create();
 
-			var version = Helper.CheckForUpdates(out NewVersion);
-			if (version != null)
-				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+			Version configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null 
+				: new Version(Config.Instance.CreatedByVersion);
+
+			var currentVersion = Helper.CheckForUpdates(out NewVersion);
+			if (currentVersion != null)
+			{
+				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", currentVersion.Major, currentVersion.Minor, currentVersion.Build);
+
+				// Assign current version to the config instance so that it will be saved when the config
+				// is rewritten to disk, thereby telling us what version of the application created it
+				Config.Instance.CreatedByVersion = currentVersion.ToString();
+			}
+
+			ConvertLegacyConfig(currentVersion, configVersion);
 
 			if (Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");

@@ -24,14 +24,14 @@ namespace Hearthstone_Deck_Tracker
 			_config = config;
 			ListViewPlayer.ItemsSource = playerDeck;
 			playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
-			Height = (_config.PlayerWindowHeight == 0) ? 400 : _config.PlayerWindowHeight;
-			if (_config.PlayerWindowLeft >= 0)
+			Height = _config.PlayerWindowHeight;
+			if (_config.PlayerWindowLeft.HasValue)
 			{
-				Left = _config.PlayerWindowLeft;
+				Left = _config.PlayerWindowLeft.Value;
 			}
-			if (_config.PlayerWindowTop >= 0)
+			if (_config.PlayerWindowTop.HasValue)
 			{
-				Top = _config.PlayerWindowTop;
+				Top = _config.PlayerWindowTop.Value;
 			}
 			Topmost = _config.WindowsTopmost;
 
@@ -127,8 +127,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (_forScreenshot) return;
 			if (WindowState == WindowState.Minimized) return;
-			_config.PlayerWindowLeft = Left;
-			_config.PlayerWindowTop = Top;
+			_config.PlayerWindowLeft = (int) Left;
+			_config.PlayerWindowTop = (int) Top;
 		}
 
 		public void SetTextLocation(bool top)
