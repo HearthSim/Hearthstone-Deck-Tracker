@@ -13,6 +13,236 @@ namespace Hearthstone_Deck_Tracker
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
 		                                     @"\HearthstoneDeckTracker";
 
+		public string AccentName = Defaults.AccentName;
+		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
+		public bool AlwaysOverwriteLogConfig = Defaults.AlwaysOverwriteLogConfig;
+		public bool AutoDeckDetection = Defaults.AutoDeckDetection;
+		public bool AutoSelectDetectedDeck = Defaults.AutoSelectDetectedDeck;
+		public bool BringHsToForeground = Defaults.BringHsToForeground;
+		public double Card2PosX = Defaults.Card2PosX;
+		public double CardPosX = Defaults.CardPosX;
+		public double CardPosY = Defaults.CardPosY;
+		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
+		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
+		public int ClickDelay = Defaults.ClickDelay;
+		public string CreatedByVersion = Defaults.CreatedByVersion;
+		public int CustomHeight = Defaults.CustomHeight;
+		public int CustomWidth = Defaults.CustomWidth;
+		[XmlIgnore] public bool Debug = Defaults.Debug;
+		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
+		public bool ExtraFeatures = Defaults.ExtraFeatures;
+		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
+		public bool GenerateLog = Defaults.GenerateLog;
+		public string HearthstoneDirectory = Defaults.HearthstoneDirectory;
+		public bool HideDecksInOverlay = Defaults.HideDecksInOverlay;
+		public bool HideDrawChances = Defaults.HideDrawChances;
+		public bool HideInBackground = Defaults.HideInBackground;
+		public bool HideInMenu = Defaults.HideInMenu;
+		public bool HideOpponentCardAge = Defaults.HideOpponentCardAge;
+		public bool HideOpponentCardCount = Defaults.HideOpponentCardCount;
+		public bool HideOpponentCardMarks = Defaults.HideOpponentCardMarks;
+		public bool HideOpponentCards = Defaults.HideOpponentCards;
+		public bool HideOpponentDrawChances = Defaults.HideOpponentDrawChances;
+		public bool HideOverlay = Defaults.HideOverlay;
+		public bool HidePlayerCardCount = Defaults.HidePlayerCardCount;
+		public bool HidePlayerCards = Defaults.HidePlayerCards;
+		public bool HideSecrets = Defaults.HideSecrets;
+		public bool HideTimers = Defaults.HideTimers;
+		public bool HighlightCardsInHand = Defaults.HighlightCardsInHand;
+		public bool HighlightDiscarded = Defaults.HighlightDiscarded;
+		public bool HighlightLastDrawn = Defaults.HighlightLastDrawn;
+		public bool KeepDecksVisible = Defaults.KeepDecksVisible;
+		public string KeyPressOnGameEnd = Defaults.KeyPressOnGameEnd;
+		public string KeyPressOnGameStart = Defaults.KeyPressOnGameStart;
+		public string LastDeck = Defaults.LastDeck;
+		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
+		public bool ManaCurveNewDeck = Defaults.ManaCurveNewDeck;
+		public bool MinimizeToTray = Defaults.MinimizeToTray;
+		public double NameDeckX = Defaults.NameDeckX;
+		public double NameDeckY = Defaults.NameDeckY;
+		public int OffsetX = Defaults.OffsetX;
+		public int OffsetY = Defaults.OffsetY;
+		public double OpponentDeckHeight = Defaults.OpponentDeckHeight;
+		public double OpponentDeckLeft = Defaults.OpponentDeckLeft;
+		public double OpponentDeckTop = Defaults.OpponentDeckTop;
+		public double OpponentOpacity = Defaults.OpponentOpacity;
+		public int OpponentWindowHeight = Defaults.OpponentWindowHeight;
+		public int? OpponentWindowLeft = Defaults.OpponentWindowLeft;
+		public int? OpponentWindowTop = Defaults.OpponentWindowTop;
+		public bool OverlayCardToolTips = Defaults.OverlayCardToolTips;
+		public double OverlayOpacity = Defaults.OverlayOpacity;
+		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
+		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
+		public double PlayerDeckHeight = Defaults.PlayerDeckHeight;
+		public double PlayerDeckLeft = Defaults.PlayerDeckLeft;
+		public double PlayerDeckTop = Defaults.PlayerDeckTop;
+		public double PlayerOpacity = Defaults.PlayerOpacity;
+		public int PlayerWindowHeight = Defaults.PlayerWindowHeight;
+		public int? PlayerWindowLeft = Defaults.PlayerWindowLeft;
+		public int? PlayerWindowTop = Defaults.PlayerWindowTop;
+		public bool PrioritizeGolden = Defaults.PrioritizeGolden;
+		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
+		public bool SaveInAppData = Defaults.SaveInAppData;
+		public bool SavePlayedGames = Defaults.SavePlayedGames;
+		public string SavePlayedGamesName = Defaults.SavePlayedGamesName;
+		public string SavePlayedGamesPath = Defaults.SavePlayedGamesPath;
+		public double SearchBoxPosY = Defaults.SearchBoxPosY;
+		public double SearchBoxX = Defaults.SearchBoxX;
+		public int SearchDelay = Defaults.SearchDelay;
+		public double SecretsLeft = Defaults.SecretsLeft;
+		public double SecretsTop = Defaults.SecretsTop;
+		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
+		public string SelectedLanguage = Defaults.SelectedLanguage;
+
+		[XmlArray(ElementName = "SelectedTags")] [XmlArrayItem(ElementName = "Tag")] public List<string> SelectedTags =
+			Defaults.SelectedTags;
+
+		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
+		public bool ShowAllDecks = Defaults.ShowAllDecks;
+		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
+		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
+		public bool StartMinimized = Defaults.StartMinimized;
+		public Operation TagOperation = Defaults.TagOperation;
+		public bool TextOnTopOpponent = Defaults.TextOnTopOpponent;
+		public bool TextOnTopPlayer = Defaults.TextOnTopPlayer;
+		public string ThemeName = Defaults.ThemeName;
+		public double TimerLeft = Defaults.TimerLeft;
+		public int TimerWindowHeight = Defaults.TimerWindowHeight;
+		public int? TimerWindowLeft = Defaults.TimerWindowLeft;
+		public bool TimerWindowOnStartup = Defaults.TimerWindowOnStartup;
+		public int? TimerWindowTop = Defaults.TimerWindowTop;
+		public bool TimerWindowTopmost = Defaults.TimerWindowTopmost;
+		public bool TimerWindowTopmostIfHsForeground = Defaults.TimerWindowTopmostIfHsForeground;
+		public int TimerWindowWidth = Defaults.TimerWindowWidth;
+		public double TimersHorizontalPosition = Defaults.TimersHorizontalPosition;
+		public double TimersHorizontalSpacing = Defaults.TimersHorizontalSpacing;
+		public double TimersVerticalPosition = Defaults.TimersVerticalPosition;
+		public double TimersVerticalSpacing = Defaults.TimersVerticalSpacing;
+		public bool TrackerCardToolTips = Defaults.TrackerCardToolTips;
+		public int? TrackerWindowLeft = Defaults.TrackerWindowLeft;
+		public int? TrackerWindowTop = Defaults.TrackerWindowTop;
+		public int UpdateDelay = Defaults.UpdateDelay;
+		public bool UseSameScaling = Defaults.UseSameScaling;
+		public bool VisibleOverlay = Defaults.VisibleOverlay;
+		public bool WindowCardToolTips = Defaults.WindowCardToolTips;
+		public int WindowHeight = Defaults.WindowHeight;
+		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
+		public bool WindowsOnStartup = Defaults.WindowsOnStartup;
+		public bool WindowsTopmost = Defaults.WindowsTopmost;
+		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
+		private string _currentLogFile;
+
+		public string HomeDir
+		{
+			get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
+		}
+
+		public string ConfigPath
+		{
+			get { return HomeDir + "config.xml"; }
+		}
+
+		public string LogFilePath
+		{
+			get { return _currentLogFile ?? GetLogFileName(); }
+		}
+
+		public static Config Instance
+		{
+			get { return _config; }
+		}
+
+		private string GetLogFileName()
+		{
+			var date = DateTime.Now;
+			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
+			                                date.Hour,
+			                                date.Minute, date.Second);
+			return _currentLogFile;
+		}
+
+		public static void Save()
+		{
+			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
+		}
+
+		public static void SaveBackup(bool deleteOriginal = false)
+		{
+			var configPath = Instance.ConfigPath;
+
+			if (File.Exists(configPath))
+			{
+				File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
+
+				if (deleteOriginal)
+					File.Delete(configPath);
+			}
+		}
+
+		public static string Load()
+		{
+			var foundConfig = false;
+			try
+			{
+				if (File.Exists("config.xml"))
+				{
+					_config = XmlManager<Config>.Load("config.xml");
+					foundConfig = true;
+				}
+				else if (File.Exists(Instance.AppDataPath + @"\config.xml"))
+				{
+					_config = XmlManager<Config>.Load(Instance.AppDataPath + @"\config.xml");
+					foundConfig = true;
+				}
+				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
+				{
+					//save locally if appdata doesn't exist (when e.g. not on C)
+					Instance.SaveInAppData = false;
+				}
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(
+					e.Message + "\n\n" + e.InnerException +
+					"\n\n If you don't know how to fix this, please delete " + Instance.ConfigPath,
+					"Error loading config.xml");
+				Application.Current.Shutdown();
+			}
+
+			var configPath = Instance.ConfigPath;
+
+			if (!foundConfig)
+			{
+				if (Instance.HomeDir != string.Empty)
+					Directory.CreateDirectory(Instance.HomeDir);
+				using (var sr = new StreamWriter(Instance.ConfigPath, false))
+				{
+					sr.WriteLine("<Config></Config>");
+				}
+			}
+			else if (Instance.SaveInAppData) //check if config needs to be moved
+			{
+				if (File.Exists("config.xml"))
+				{
+					Directory.CreateDirectory(Instance.HomeDir);
+					SaveBackup(true); //backup in case the file already exists
+					File.Move("config.xml", Instance.ConfigPath);
+					Logger.WriteLine("Moved config to appdata");
+				}
+			}
+			else
+			{
+				if (File.Exists(Instance.AppDataPath + @"\config.xml"))
+				{
+					SaveBackup(true); //backup in case the file already exists
+					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
+					Logger.WriteLine("Moved config to local");
+				}
+			}
+
+			return configPath;
+		}
+
 		public class Defaults
 		{
 			public static readonly string CreatedByVersion;
@@ -129,237 +359,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
-
 		}
-
-		public string CreatedByVersion = Defaults.CreatedByVersion;
-		public string AccentName = Defaults.AccentName;
-		public bool AlwaysOverwriteLogConfig = Defaults.AlwaysOverwriteLogConfig;
-		public bool AutoDeckDetection = Defaults.AutoDeckDetection;
-		public bool AutoSelectDetectedDeck = Defaults.AutoSelectDetectedDeck;
-		public bool BringHsToForeground = Defaults.BringHsToForeground;
-		public double Card2PosX = Defaults.Card2PosX;
-		public double CardPosX = Defaults.CardPosX;
-		public double CardPosY = Defaults.CardPosY;
-		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
-		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
-		public int ClickDelay = Defaults.ClickDelay;
-		public int CustomHeight = Defaults.CustomHeight;
-		public int CustomWidth = Defaults.CustomWidth;
-		[XmlIgnore] public bool Debug = Defaults.Debug;
-		public bool ExtraFeatures = Defaults.ExtraFeatures;
-		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
-		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
-		public bool GenerateLog = Defaults.GenerateLog;
-		public string HearthstoneDirectory = Defaults.HearthstoneDirectory;
-		public bool HideDecksInOverlay = Defaults.HideDecksInOverlay;
-		public bool HideDrawChances = Defaults.HideDrawChances;
-		public bool HideInBackground = Defaults.HideInBackground;
-		public bool HideInMenu = Defaults.HideInMenu;
-		public bool HideOpponentCardAge = Defaults.HideOpponentCardAge;
-		public bool HideOpponentCardCount = Defaults.HideOpponentCardCount;
-		public bool HideOpponentCardMarks = Defaults.HideOpponentCardMarks;
-		public bool HideOpponentCards = Defaults.HideOpponentCards;
-		public bool HideOpponentDrawChances = Defaults.HideOpponentDrawChances;
-		public bool HideOverlay = Defaults.HideOverlay;
-		public bool HidePlayerCardCount = Defaults.HidePlayerCardCount;
-		public bool HidePlayerCards = Defaults.HidePlayerCards;
-		public bool HideSecrets = Defaults.HideSecrets;
-		public bool HideTimers = Defaults.HideTimers;
-		public bool HighlightCardsInHand = Defaults.HighlightCardsInHand;
-		public bool HighlightDiscarded = Defaults.HighlightDiscarded;
-		public bool HighlightLastDrawn = Defaults.HighlightLastDrawn;
-		public bool KeepDecksVisible = Defaults.KeepDecksVisible;
-		public string KeyPressOnGameEnd = Defaults.KeyPressOnGameEnd;
-		public string KeyPressOnGameStart = Defaults.KeyPressOnGameStart;
-		public string LastDeck = Defaults.LastDeck;
-		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
-		public bool ManaCurveNewDeck = Defaults.ManaCurveNewDeck;
-		public bool MinimizeToTray = Defaults.MinimizeToTray;
-		public double NameDeckX = Defaults.NameDeckX;
-		public double NameDeckY = Defaults.NameDeckY;
-		public int OffsetX = Defaults.OffsetX;
-		public int OffsetY = Defaults.OffsetY;
-		public double OpponentDeckHeight = Defaults.OpponentDeckHeight;
-		public double OpponentDeckLeft = Defaults.OpponentDeckLeft;
-		public double OpponentDeckTop = Defaults.OpponentDeckTop;
-		public double OpponentOpacity = Defaults.OpponentOpacity;
-		public int OpponentWindowHeight = Defaults.OpponentWindowHeight;
-		public int? OpponentWindowLeft = Defaults.OpponentWindowLeft;
-		public int? OpponentWindowTop = Defaults.OpponentWindowTop;
-		public bool OverlayCardToolTips = Defaults.OverlayCardToolTips;
-		public double OverlayOpacity = Defaults.OverlayOpacity;
-		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
-		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
-		public double PlayerDeckHeight = Defaults.PlayerDeckHeight;
-		public double PlayerDeckLeft = Defaults.PlayerDeckLeft;
-		public double PlayerDeckTop = Defaults.PlayerDeckTop;
-		public double PlayerOpacity = Defaults.PlayerOpacity;
-		public int PlayerWindowHeight = Defaults.PlayerWindowHeight;
-		public int? PlayerWindowLeft = Defaults.PlayerWindowLeft;
-		public int? PlayerWindowTop = Defaults.PlayerWindowTop;
-		public bool PrioritizeGolden = Defaults.PrioritizeGolden;
-		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
-		public bool SaveInAppData = Defaults.SaveInAppData;
-		public bool SavePlayedGames = Defaults.SavePlayedGames;
-		public string SavePlayedGamesName = Defaults.SavePlayedGamesName;
-		public string SavePlayedGamesPath = Defaults.SavePlayedGamesPath;
-		public double SearchBoxPosY = Defaults.SearchBoxPosY;
-		public double SearchBoxX = Defaults.SearchBoxX;
-		public int SearchDelay = Defaults.SearchDelay;
-		public double SecretsLeft = Defaults.SecretsLeft;
-		public double SecretsTop = Defaults.SecretsTop;
-		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
-		public string SelectedLanguage = Defaults.SelectedLanguage;
-		[XmlArray(ElementName = "SelectedTags")]
-		[XmlArrayItem(ElementName = "Tag")]
-		public List<string> SelectedTags = Defaults.SelectedTags;
-		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
-		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
-		public bool ShowAllDecks = Defaults.ShowAllDecks;
-		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
-		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
-		public bool StartMinimized = Defaults.StartMinimized;
-		public Operation TagOperation = Defaults.TagOperation;
-		public bool TextOnTopOpponent = Defaults.TextOnTopOpponent;
-		public bool TextOnTopPlayer = Defaults.TextOnTopPlayer;
-		public string ThemeName = Defaults.ThemeName;
-		public double TimerLeft = Defaults.TimerLeft;
-		public int TimerWindowHeight = Defaults.TimerWindowHeight;
-		public int? TimerWindowLeft = Defaults.TimerWindowLeft;
-		public bool TimerWindowOnStartup = Defaults.TimerWindowOnStartup;
-		public int? TimerWindowTop = Defaults.TimerWindowTop;
-		public bool TimerWindowTopmost = Defaults.TimerWindowTopmost;
-		public bool TimerWindowTopmostIfHsForeground = Defaults.TimerWindowTopmostIfHsForeground;
-		public int TimerWindowWidth = Defaults.TimerWindowWidth;
-		public double TimersHorizontalPosition = Defaults.TimersHorizontalPosition;
-		public double TimersHorizontalSpacing = Defaults.TimersHorizontalSpacing;
-		public double TimersVerticalPosition = Defaults.TimersVerticalPosition;
-		public double TimersVerticalSpacing = Defaults.TimersVerticalSpacing;
-		public bool TrackerCardToolTips = Defaults.TrackerCardToolTips;
-		public int? TrackerWindowLeft = Defaults.TrackerWindowLeft;
-		public int? TrackerWindowTop = Defaults.TrackerWindowTop;
-		public int UpdateDelay = Defaults.UpdateDelay;
-		public bool UseSameScaling = Defaults.UseSameScaling;
-		public bool VisibleOverlay = Defaults.VisibleOverlay;
-		public bool WindowCardToolTips = Defaults.WindowCardToolTips;
-		public int WindowHeight = Defaults.WindowHeight;
-		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
-		public bool WindowsOnStartup = Defaults.WindowsOnStartup;
-		public bool WindowsTopmost = Defaults.WindowsTopmost;
-		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
-		private string _currentLogFile;
-
-		public string HomeDir
-		{
-			get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
-		}
-
-		public string ConfigPath
-		{
-			get { return HomeDir + "config.xml"; }
-		}
-
-		public string LogFilePath
-		{
-			get { return _currentLogFile ?? GetLogFileName(); }
-		}
-
-		public static Config Instance
-		{
-			get { return _config; }
-		}
-		
-		private string GetLogFileName()
-		{
-			var date = DateTime.Now;
-			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-			                                date.Hour,
-			                                date.Minute, date.Second);
-			return _currentLogFile;
-		}
-
-		public static void Save()
-		{
-			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
-		}
-
-		public static void SaveBackup(bool deleteOriginal = false)
-		{
-			string configPath = Instance.ConfigPath;
-
-			if (File.Exists(configPath))
-			{
-				File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
-
-				if (deleteOriginal)
-					File.Delete(configPath);
-			}
-		}
-
-		public static string Load()
-		{
-			var foundConfig = false;
-			try
-			{
-				if (File.Exists("config.xml"))
-				{
-					_config = XmlManager<Config>.Load("config.xml");
-					foundConfig = true;
-				}
-				else if (File.Exists(Instance.AppDataPath + @"\config.xml"))
-				{
-					_config = XmlManager<Config>.Load(Instance.AppDataPath + @"\config.xml");
-					foundConfig = true;
-				}
-				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
-				{
-					//save locally if appdata doesn't exist (when e.g. not on C)
-					Instance.SaveInAppData = false;
-				}
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(
-					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please delete " + Instance.ConfigPath,
-					"Error loading config.xml");
-				Application.Current.Shutdown();
-			}
-
-			var configPath = Instance.ConfigPath;
-
-			if (!foundConfig)
-			{
-				if (Instance.HomeDir != string.Empty)
-					Directory.CreateDirectory(Instance.HomeDir);
-				using (var sr = new StreamWriter(Instance.ConfigPath, false))
-				{
-					sr.WriteLine("<Config></Config>");
-				}
-			}
-			else if (Instance.SaveInAppData) //check if config needs to be moved
-			{
-				if (File.Exists("config.xml"))
-				{
-					Directory.CreateDirectory(Instance.HomeDir);
-					SaveBackup(true); //backup in case the file already exists
-					File.Move("config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to appdata");
-				}
-			}
-			else
-			{
-				if (File.Exists(Instance.AppDataPath + @"\config.xml"))
-				{
-					SaveBackup(true); //backup in case the file already exists
-					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to local");
-				}
-			}
-
-			return configPath;
-		}
-
 	}
 }

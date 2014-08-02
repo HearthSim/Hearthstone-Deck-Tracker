@@ -10,18 +10,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable
 	{
-		[XmlArray(ElementName = "Cards")] 
-		[XmlArrayItem(ElementName = "Card")] 
-		public ObservableCollection<Card> Cards;
+		[XmlArray(ElementName = "Cards")] [XmlArrayItem(ElementName = "Card")] public ObservableCollection<Card> Cards;
 		public string Class;
 		[XmlIgnore] public bool IsSelectedInGui;
+		public DateTime LastEdited;
 		public string Name;
 		public string Note;
-		public DateTime LastEdited;
 
-		[XmlArray(ElementName = "Tags")] 
-		[XmlArrayItem(ElementName = "Tag")] 
-		public List<string> Tags;
+		[XmlArray(ElementName = "Tags")] [XmlArrayItem(ElementName = "Tag")] public List<string> Tags;
 		public string Url;
 
 		public Deck()
@@ -32,7 +28,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = string.Empty;
 		}
 
-		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url, DateTime lastEdited)
+		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
+		            DateTime lastEdited)
 		{
 			Name = name;
 			Class = className;

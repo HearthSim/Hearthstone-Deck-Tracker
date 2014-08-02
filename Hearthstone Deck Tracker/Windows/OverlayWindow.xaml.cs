@@ -10,7 +10,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
-
 namespace Hearthstone_Deck_Tracker
 {
 	/// <summary>
@@ -22,14 +21,15 @@ namespace Hearthstone_Deck_Tracker
 		private readonly List<HearthstoneTextBlock> _cardMarkLabels;
 		private readonly int _customHeight;
 		private readonly int _customWidth;
-		private User32.MouseInput _mouseInput;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements;
 		private readonly int _offsetX;
 		private readonly int _offsetY;
 		private readonly List<StackPanel> _stackPanelsMarks;
 		private int _cardCount;
 		private string _lastSecretsClass;
+		private string _lastToolTipCardId;
 		private bool _lmbDown;
+		private User32.MouseInput _mouseInput;
 		private Point _mousePos;
 		private bool _needToRefreshSecrets;
 		private int _opponentCardCount;
@@ -39,13 +39,12 @@ namespace Hearthstone_Deck_Tracker
 		private bool _secretsTempVisible;
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
-		private string _lastToolTipCardId;
 
 		public OverlayWindow()
 		{
 			InitializeComponent();
 
-			if(Config.Instance.ExtraFeatures)
+			if (Config.Instance.ExtraFeatures)
 				HookMouse();
 
 			ListViewPlayer.ItemsSource = Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn;
@@ -865,12 +864,12 @@ namespace Hearthstone_Deck_Tracker
 			//set position
 			var tooltipLeft = Canvas.GetLeft(ToolTipCard);
 			var left = tooltipLeft < Width/2
-				              ? tooltipLeft + ToolTipCard.ActualWidth
-							  : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
+				           ? tooltipLeft + ToolTipCard.ActualWidth
+				           : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
 
 			Canvas.SetLeft(StackPanelAdditionalTooltips, left);
 			var top = Canvas.GetTop(ToolTipCard) - (StackPanelAdditionalTooltips.ActualHeight/2 - ToolTipCard.ActualHeight/2);
-			if (top < 0) 
+			if (top < 0)
 				top = 0;
 			else if (top + StackPanelAdditionalTooltips.ActualHeight > Height)
 				top = Height - StackPanelAdditionalTooltips.ActualHeight;
@@ -886,7 +885,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-			if(_mouseInput != null)
+			if (_mouseInput != null)
 				UnHookMouse();
 		}
 
@@ -895,7 +894,7 @@ namespace Hearthstone_Deck_Tracker
 			_uiMovable = !_uiMovable;
 			if (_uiMovable)
 			{
-				if(!Config.Instance.ExtraFeatures)
+				if (!Config.Instance.ExtraFeatures)
 					HookMouse();
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
@@ -939,7 +938,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if(!Config.Instance.ExtraFeatures)
+				if (!Config.Instance.ExtraFeatures)
 					UnHookMouse();
 				if (_secretsTempVisible)
 					HideSecrets();
@@ -973,6 +972,7 @@ namespace Hearthstone_Deck_Tracker
 			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
 			Logger.WriteLine("Enabled mouse hook");
 		}
+
 		public void UnHookMouse()
 		{
 			_mouseInput.Dispose();

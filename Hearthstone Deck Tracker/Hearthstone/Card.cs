@@ -19,11 +19,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private int _count;
 		private int _inHandCount;
 		private bool _isStolen;
+		private bool _justDrawn;
 		private string _localizedName;
 		private string _name;
 		private string _text;
 		private bool _wasDiscarded;
-		private bool _justDrawn;
 
 		public Card()
 		{
@@ -341,7 +341,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public async Task JustDrawn()
 		{
-			if (!Config.Instance.HighlightLastDrawn) 
+			if (!Config.Instance.HighlightLastDrawn)
 				return;
 
 			_justDrawn = true;

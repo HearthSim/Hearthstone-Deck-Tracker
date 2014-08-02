@@ -54,10 +54,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"Curse of Naxxramas"
 			};
 
+		public static List<Card> DrawnLastGame;
+
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
-
-		public static List<Card> DrawnLastGame;
 
 		#endregion
 
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
-			for (int i = 0; i < MaxHandSize; i++)
+			for (var i = 0; i < MaxHandSize; i++)
 			{
 				OpponentHandAge[i] = -1;
 				OpponentHandMarks[i] = CardMark.None;
@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
 
-			for (int i = 0; i < MaxHandSize; i++)
+			for (var i = 0; i < MaxHandSize; i++)
 			{
 				OpponentHandAge[i] = -1;
 				OpponentHandMarks[i] = CardMark.None;
@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static void LogDeckChange(bool opponent, Card card, bool decrease)
 		{
-			int previous = decrease ? card.Count + 1 : card.Count - 1;
+			var previous = decrease ? card.Count + 1 : card.Count - 1;
 
 			Logger.WriteLine(
 				string.Format("({0} deck) {1} count {2} -> {3}", opponent ? "opponent" : "player", card.Name, previous, card.Count),
@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				                 "Hearthstone");
 
 				//avoid infinite loop, only do this 3 times while app is running
-				if(_logResets < 3)
+				if (_logResets < 3)
 				{
 					Logger.WriteLine("Reloading logs...");
 					SetPremadeDeck(Helper.MainWindow.DeckPickerList.SelectedDeck);
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		#region Player
 
-		public async static Task<bool> PlayerDraw(string cardId)
+		public static async Task<bool> PlayerDraw(string cardId)
 		{
 			PlayerHandCount++;
 
@@ -218,7 +218,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.InHandCount++;
 				card.JustDrawn();
 			}
-			else if(Config.Instance.ShowPlayerGet)
+			else if (Config.Instance.ShowPlayerGet)
 			{
 				var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
 				if (drawnCard != null)
@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				deckCard.InHandCount--;
 				LogDeckChange(false, deckCard, false);
 			}
-			else if(Config.Instance.RemoveCardsFromDeck)
+			else if (Config.Instance.RemoveCardsFromDeck)
 			{
 				deckCard = GetCardFromId(cardId);
 				PlayerDeck.Add(deckCard);
@@ -390,7 +390,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Logger.WriteLine("Opponent played stolen card from " + from);
 			}
 
-			for (int i = from - 1; i < MaxHandSize - 1; i++)
+			for (var i = from - 1; i < MaxHandSize - 1; i++)
 			{
 				OpponentHandAge[i] = OpponentHandAge[i + 1];
 				OpponentHandMarks[i] = OpponentHandMarks[i + 1];

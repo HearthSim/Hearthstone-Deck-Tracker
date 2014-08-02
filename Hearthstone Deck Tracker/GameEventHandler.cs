@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayerGet(cardId);
 		}
 
-		public async static void HandlePlayerDraw(string cardId)
+		public static async void HandlePlayerDraw(string cardId)
 		{
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
