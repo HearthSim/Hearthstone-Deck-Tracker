@@ -191,6 +191,8 @@ namespace Hearthstone_Deck_Tracker
 			var deck = new Deck();
 			foreach (var card in Game.DrawnLastGame)
 			{
+				if (card.IsStolen) continue;
+
 				deck.Cards.Add(card);
 
 				if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")

@@ -330,7 +330,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
-                                <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Height="280" Width="235">
+                                <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="300" Width="235">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Scaling:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -354,9 +354,10 @@
                                         <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHighlightLastDrawn" Content="Highlight last drawn hand" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightLastDrawn_Checked" Unchecked="CheckboxHighlightLastDrawn_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRemoveCards" Content="Remove cards if count is 0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRemoveCards_Checked" Unchecked="CheckboxRemoveCards_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxShowPlayerGet" Content="Include obtained cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxShowPlayerGet_Checked" Unchecked="CheckboxShowPlayerGet_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="280" Width="235" HorizontalAlignment="Center">
+                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="230" Width="235" HorizontalAlignment="Center">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Scaling:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>

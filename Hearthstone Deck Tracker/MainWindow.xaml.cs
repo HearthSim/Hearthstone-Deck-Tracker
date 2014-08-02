@@ -315,6 +315,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
 			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
+			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1151,8 +1152,7 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(true);
 			PlayerWindow.ListViewPlayer.Visibility = Visibility.Visible;
 		}
-
-
+		
 		private void CheckboxHideOpponentCardCounter_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized) return;
@@ -2011,6 +2011,19 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+		private void CheckboxShowPlayerGet_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.ShowPlayerGet = true;
+			Overlay.Update(true);
+		}
+
+		private void CheckboxShowPlayerGet_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.ShowPlayerGet = false;
+			Overlay.Update(true);
+		}
 		#endregion
 
 		#region Constructor
@@ -2388,5 +2401,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
 	}
 }

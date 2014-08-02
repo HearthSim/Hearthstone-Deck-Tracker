@@ -97,6 +97,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly string SelectedWindowBackground = "Theme";
 			public static readonly bool ShowAllDecks = false;
 			public static readonly bool ShowInTaskbar = false;
+			public static readonly bool ShowPlayerGet = false;
 			public static readonly bool StartMinimized = false;
 			public static readonly Operation TagOperation = Operation.Or;
 			public static readonly bool TextOnTopOpponent = false;
@@ -126,6 +127,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
+
 		}
 
 		public string CreatedByVersion = Defaults.CreatedByVersion;
@@ -212,6 +214,7 @@ namespace Hearthstone_Deck_Tracker
 		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
 		public bool ShowAllDecks = Defaults.ShowAllDecks;
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
+		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
 		public bool StartMinimized = Defaults.StartMinimized;
 		public Operation TagOperation = Defaults.TagOperation;
 		public bool TextOnTopOpponent = Defaults.TextOnTopOpponent;
@@ -353,5 +356,6 @@ namespace Hearthstone_Deck_Tracker
 
 			return configPath;
 		}
+
 	}
 }

@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				deckCard.Count--;
 				deckCard.InHandCount++;
 				LogDeckChange(false, deckCard, true);
-				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck)
+				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck && !Config.Instance.HighlightCardsInHand)
 				{
 					//wait for just-drawn highlight to be over, then remove
 					await deckCard.JustDrawn();
@@ -255,6 +255,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static void PlayerGet(string cardId)
 		{
+			PlayerHandCount++;
+
 			if (cardId == "GAME_005")
 			{
 				OpponentHasCoin = false;
@@ -263,12 +265,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Logger.WriteLine("Player got the coin", "Hearthstone");
 			}
 
-			PlayerHandCount++;
-			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId && !c.IsStolen);
 			if (card != null)
 			{
 				card.InHandCount++;
 				card.JustDrawn();
+			}
+			else if(Config.Instance.ShowPlayerGet)
+			{
+				var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
+				if (drawnCard != null)
+					drawnCard.Count++;
+				else
+				{
+					drawnCard = GetCardFromId(cardId);
+					drawnCard.IsStolen = true;
+					PlayerDrawn.Add(drawnCard);
+				}
+				drawnCard.JustDrawn();
+
+				var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
+				if (deckCard != null)
+				{
+					deckCard.Count++;
+					deckCard.InHandCount++;
+					LogDeckChange(false, deckCard, false);
+				}
+				else
+				{
+					deckCard = GetCardFromId(cardId);
+					deckCard.InHandCount++;
+					deckCard.IsStolen = true;
+					PlayerDeck.Add(deckCard);
+					deckCard.JustDrawn();
+				}
 			}
 		}
 
@@ -278,7 +308,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
 			if (card != null)
+			{
 				card.InHandCount--;
+				if ((card.IsStolen || Config.Instance.HighlightCardsInHand) && card.InHandCount < 1)
+				{
+					PlayerDeck.Remove(card);
+				}
+			}
 		}
 
 		public static void PlayerMulligan(string cardId)
