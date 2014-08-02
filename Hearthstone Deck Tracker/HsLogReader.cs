@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int MaxFileLength = 3000000;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
 
 		private readonly string _fullOutputPath;
 
@@ -208,12 +209,19 @@ namespace Hearthstone_Deck_Tracker
 						var to = match.Groups["to"].Value.Trim();
 
 						var zonePos = -1;
+						var zone = string.Empty;
 
 						// Only for some log lines, should be valid in every action where we need it
 						if (_opponentPlayRegex.IsMatch(logLine))
 						{
 							var match2 = _opponentPlayRegex.Match(logLine);
 							zonePos = Int32.Parse(match2.Groups["zonePos"].Value.Trim());
+						}
+						if (_zoneRegex.IsMatch(logLine))
+						{
+							var match3 = _zoneRegex.Match(logLine);
+							zone = match3.Groups["zone"].Value.Trim();
+							GameEventHandler.PlayerSetAside(id);
 						}
 
 						//game start/end

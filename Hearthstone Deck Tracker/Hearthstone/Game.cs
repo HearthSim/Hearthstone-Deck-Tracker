@@ -45,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static string PlayingAgainst;
 		public static string PlayingAs;
 
+		public static List<string> SetAsideCards; 
+
 		private static readonly List<string> ValidCardSets = new List<string>
 			{
 				"Basic",
@@ -64,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		static Game()
 		{
 			IsInMenu = true;
+			SetAsideCards = new List<string>();
 			PlayerDeck = new ObservableCollection<Card>();
 			PlayerDrawn = new ObservableCollection<Card>();
 			OpponentCards = new ObservableCollection<Card>();
@@ -212,7 +215,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Logger.WriteLine("Player got the coin", "Hearthstone");
 			}
 
-			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId && !c.IsStolen);
+			var fromSetAside = SetAsideCards.Any(id => cardId == id);
+			if (fromSetAside)
+			{
+				Logger.WriteLine("Got card from setaside: " + cardId);
+				SetAsideCards.Clear();
+			}
+
+			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId && (!c.IsStolen || fromSetAside));
 			if (card != null)
 			{
 				card.InHandCount++;

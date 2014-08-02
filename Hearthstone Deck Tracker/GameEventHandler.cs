@@ -257,5 +257,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", type, id, turn, from), "LogReader");
 		}
+
+		public static void PlayerSetAside(string id)
+		{
+			Game.SetAsideCards.Add(id);
+			Logger.WriteLine("set aside: " + id);
+		}
+
 	}
 }
