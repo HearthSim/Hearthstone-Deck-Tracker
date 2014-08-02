@@ -1973,6 +1973,7 @@ namespace Hearthstone_Deck_Tracker
 			if (!_initialized || !Game.IsUsingPremade) return;
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
+			Game.Reset();
 			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
 			HsLogReader.Instance.Reset(false);
 		}
@@ -1982,6 +1983,7 @@ namespace Hearthstone_Deck_Tracker
 			if (!_initialized || !Game.IsUsingPremade) return;
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
+			Game.Reset();
 			Game.SetPremadeDeck(DeckPickerList.SelectedDeck);
 			HsLogReader.Instance.Reset(false);
 		}
