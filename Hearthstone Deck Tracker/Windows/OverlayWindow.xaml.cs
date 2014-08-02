@@ -559,7 +559,7 @@ namespace Hearthstone_Deck_Tracker
 			DebugViewer.Width = (Width*Config.Instance.TimerLeft/100);
 
 			SetCardCount(Game.PlayerHandCount,
-			             Game.IsUsingPremade ? Game.PlayerDeck.Sum(c => c.Count) : 30 - Game.PlayerDrawn.Sum(c => c.Count));
+			             30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
