@@ -683,9 +683,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
 		{
-			NewDeck.Cards =
-				new ObservableCollection<Card>(
-					NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
+			NewDeck.Cards = new ObservableCollection<Card>(NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
 
 			var deckName = TextBoxDeckName.Text;
@@ -694,8 +692,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings { AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new" };
 				var result =
 					await
-					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?",
-										  MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative, settings);
 				if (result == MessageDialogResult.Affirmative)
 					SaveDeck(true);
 				else if (result == MessageDialogResult.Negative)
@@ -706,8 +703,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings { AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name" };
 				var result =
 					await
-					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
-										  MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!", MessageDialogStyle.AffirmativeAndNegative, settings);
 				if (result == MessageDialogResult.Affirmative)
 				{
 					Deck oldDeck;

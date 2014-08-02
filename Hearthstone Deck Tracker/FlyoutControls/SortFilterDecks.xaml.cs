@@ -80,13 +80,11 @@ namespace Hearthstone_Deck_Tracker
 			_tags.Clear();
 			foreach (var tag in tags)
 			{
-				var isSelected = false;
-
 				var old = oldTag.FirstOrDefault(t => t.Name == tag);
 				if (old != null)
-					isSelected = old.Selected;
-
-				_tags.Add(new Tag(tag, isSelected));
+					_tags.Add(new Tag(tag, old.Selected));
+				else
+					_tags.Add(new Tag(tag, false));
 			}
 		}
 
