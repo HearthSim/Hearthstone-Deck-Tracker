@@ -2228,6 +2228,8 @@ namespace Hearthstone_Deck_Tracker
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
 			TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
+			TagControlNewDeck.PnlSortDecks.Visibility = Visibility.Collapsed;
+			TagControlMyDecks.PnlSortDecks.Visibility = Visibility.Collapsed;
 
 			SortFilterDecksFlyout.SelectedTagsChanged += SortFilterDecksFlyoutOnSelectedTagsChanged;
 			SortFilterDecksFlyout.OperationChanged += SortFilterDecksFlyoutOnOperationChanged;

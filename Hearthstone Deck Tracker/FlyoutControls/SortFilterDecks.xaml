@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel Margin="6,0,6,0">
-            <DockPanel>
+            <DockPanel x:Name="PnlSortDecks">
                 <Label Content="Sort decks by:" FontSize="14"/>
                 <ComboBox Name="ComboboxDeckSorting" Width="120" HorizontalAlignment="Right" SelectionChanged="Selector_OnSelectionChanged">
                     <system:String>Name</system:String>
