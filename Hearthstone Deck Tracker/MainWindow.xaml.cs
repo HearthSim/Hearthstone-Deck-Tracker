@@ -690,6 +690,7 @@ namespace Hearthstone_Deck_Tracker
 					NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
 
+			var deckName = TextBoxDeckName.Text;
 			if (EditingDeck)
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
@@ -698,18 +699,33 @@ namespace Hearthstone_Deck_Tracker
 					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?",
 					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 				if (result == MessageDialogResult.Affirmative)
+					SaveDeck(true);
+				else if (result == MessageDialogResult.Negative)
+					SaveDeck(false);
+			}
+			else if (DeckList.DecksList.Any(d => d.Name == deckName))
+			{
+				var settings = new MetroDialogSettings { AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name" };
+				var result =
+					await
+					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
+										  MessageDialogStyle.AffirmativeAndNegative, settings);
+				if (result == MessageDialogResult.Affirmative)
 				{
+					Deck oldDeck;
+					while ((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
+					{
+						DeckList.DecksList.Remove(oldDeck);
+						DeckPickerList.RemoveDeck(oldDeck);
+					}
+					
 					SaveDeck(true);
 				}
 				else if (result == MessageDialogResult.Negative)
-				{
 					SaveDeck(false);
-				}
 			}
 			else
-			{
 				SaveDeck(false);
-			}
 
 			FlyoutNewDeckSetTags.IsOpen = false;
 		}
@@ -900,9 +916,7 @@ namespace Hearthstone_Deck_Tracker
 					                                    NewDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative,
 					                      settings);
 				if (result != MessageDialogResult.Affirmative)
-				{
 					return;
-				}
 			}
 
 			if (EditingDeck && overwrite)
@@ -924,17 +938,13 @@ namespace Hearthstone_Deck_Tracker
 			BtnSaveDeck.Content = "Save";
 
 			if (EditingDeck)
-			{
 				TagControlNewDeck.SetSelectedTags(new List<string>());
-			}
 
 			TabControlTracker.SelectedIndex = 0;
 			EditingDeck = false;
 
 			foreach (var tag in NewDeck.Tags)
-			{
 				SortFilterDecksFlyout.AddSelectedTag(tag);
-			}
 
 			DeckPickerList.UpdateList();
 			DeckPickerList.SelectDeck(newDeckClone);
