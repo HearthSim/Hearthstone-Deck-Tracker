@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -189,10 +190,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				LogDeckChange(false, deckCard, true);
 				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck && !Config.Instance.HighlightCardsInHand)
 				{
-					//wait for just-drawn highlight to be over, then remove
+					//wait for just-drawn highlight to be over, then doublecheck (coule be back in deck after e.g.) -> remove
 					await deckCard.JustDrawn();
-					PlayerDeck.Remove(deckCard);
-					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
+					if (deckCard.Count == 0)
+					{
+						PlayerDeck.Remove(deckCard);
+						Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
+					}
 				}
 				else
 					deckCard.JustDrawn();
@@ -268,11 +272,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (card != null)
 			{
 				card.InHandCount--;
-				if (card.IsStolen && card.InHandCount < 1 
-					|| Config.Instance.RemoveCardsFromDeck && card.Count < 1  && (card.InHandCount < 1 && HighlightCardsInHand))
+				if (CanRemoveCard(card))
 					PlayerDeck.Remove(card);
+
 			}
 		}
+		
+		private static bool CanRemoveCard(Card card)
+		{
+			if (card.IsStolen && card.InHandCount < 1)
+				return true;
+			if (Config.Instance.RemoveCardsFromDeck && card.Count < 1)
+				if ((Config.Instance.HighlightCardsInHand && card.InHandCount < 1) || !Config.Instance.HighlightCardsInHand)
+					return true;
+			return false;
+		}
+
 
 		public static void PlayerMulligan(string cardId)
 		{
@@ -327,11 +342,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				deckCard.Count--;
 				LogDeckChange(false, deckCard, true);
-				if (deckCard.Count == 0 && Config.Instance.RemoveCardsFromDeck)
-				{
-					PlayerDeck.Remove(deckCard);
-					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
-				}
+				if (CanRemoveCard(deckCard))
+						PlayerDeck.Remove(deckCard);
 
 				return true;
 			}
