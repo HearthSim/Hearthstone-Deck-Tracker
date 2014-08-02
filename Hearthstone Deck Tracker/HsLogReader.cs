@@ -191,6 +191,7 @@ namespace Hearthstone_Deck_Tracker
 							using (var sw = new StreamWriter(fs))
 								sw.Write("");
 							Logger.WriteLine("Cleared log file");
+							Reset(true);
 						}
 						catch (Exception e)
 						{
