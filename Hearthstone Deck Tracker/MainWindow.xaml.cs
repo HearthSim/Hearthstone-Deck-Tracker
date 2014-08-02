@@ -638,14 +638,16 @@ namespace Hearthstone_Deck_Tracker
 		public void UseDeck(Deck selected)
 		{
 			if (!Game.IsInMenu)
-			{
 				Game.Reset();
-				HsLogReader.Instance.Reset(false);
-			}
 
 			if (selected != null)
 				Game.SetPremadeDeck((Deck) selected.Clone());
 
+			if (!Game.IsInMenu)
+			{
+				HsLogReader.Instance.Reset(false);
+				Overlay.Update(false);
+			}
 
 			Overlay.SortViews();
 		}
