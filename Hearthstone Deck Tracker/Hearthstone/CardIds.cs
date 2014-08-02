@@ -56,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"EX1_136", //redemption
 				"EX1_379" //repentance
 			};
+
 		public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
 			{
 				{
@@ -80,11 +81,46 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				},
 				{
 					//Gelbin Mekkatorque
-					"EX1_112", new[] {"Mekka1", "Mekka2", "Mekka3", "Mekka4"}
+					"EX1_112", new[]
+						{
+							"Mekka1", 
+							"Mekka2", 
+							"Mekka3", 
+							"Mekka4"
+						}
 				},
 				{
 					//Animal Companion
-					"NEW1_031", new[] {"NEW1_032", "NEW1_033", "NEW1_034"}
+					"NEW1_031", new[]
+						{
+							"NEW1_032", 
+							"NEW1_033", 
+							"NEW1_034"
+						}
+				},
+				{
+					//Bane of Doom
+					"EX1_320", new []
+						{
+							"EX1_306",
+							"CS2_065",
+							"EX1_319",
+							"EX1_301",
+							"CS2_059",
+							"CS2_064"
+						}
+				},
+				{
+					//Power of the Horde
+					"PRO_001c", new []
+						{
+							"CS2_121",
+							"EX1_021",
+							"EX1_023",
+							"EX1_110",
+							"EX1_390",
+							"CS2_179"
+						}
 				}
 
 			};
