@@ -258,7 +258,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (card != null)
 			{
 				card.InHandCount--;
-				if ((card.IsStolen || Config.Instance.HighlightCardsInHand) && card.InHandCount < 1)
+				if (card.IsStolen && card.InHandCount < 1 
+					|| Config.Instance.RemoveCardsFromDeck && card.Count < 1  && (card.InHandCount < 1 && HighlightCardsInHand))
 					PlayerDeck.Remove(card);
 			}
 		}
