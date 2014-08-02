@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly List<HearthstoneTextBlock> _cardMarkLabels;
 		private readonly int _customHeight;
 		private readonly int _customWidth;
-		private readonly User32.MouseInput _mouseInput;
+		private User32.MouseInput _mouseInput;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements;
 		private readonly int _offsetX;
 		private readonly int _offsetY;
@@ -44,14 +44,9 @@ namespace Hearthstone_Deck_Tracker
 		public OverlayWindow()
 		{
 			InitializeComponent();
-			//_game = game;
 
-			_mouseInput = new User32.MouseInput();
-			_mouseInput.LmbDown += MouseInputOnLmbDown;
-
-			_mouseInput.LmbUp += MouseInputOnLmbUp;
-
-			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
+			if(Config.Instance.ExtraFeatures)
+				HookMouse();
 
 			ListViewPlayer.ItemsSource = Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn;
 			ListViewOpponent.ItemsSource = Game.OpponentCards;
@@ -891,7 +886,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-			_mouseInput.Dispose();
+			if(_mouseInput != null)
+				UnHookMouse();
 		}
 
 		public async Task<bool> UnlockUI()
@@ -899,6 +895,8 @@ namespace Hearthstone_Deck_Tracker
 			_uiMovable = !_uiMovable;
 			if (_uiMovable)
 			{
+				if(!Config.Instance.ExtraFeatures)
+					HookMouse();
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
 					_secretsTempVisible = true;
@@ -941,6 +939,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
+				if(!Config.Instance.ExtraFeatures)
+					UnHookMouse();
 				if (_secretsTempVisible)
 					HideSecrets();
 				if (Game.IsInMenu)
@@ -963,6 +963,21 @@ namespace Hearthstone_Deck_Tracker
 			if (element is HearthstoneTextBlock)
 				return new Size(((HearthstoneTextBlock) element).ActualWidth, ((HearthstoneTextBlock) element).ActualHeight);
 			return new Size();
+		}
+
+		public void HookMouse()
+		{
+			_mouseInput = new User32.MouseInput();
+			_mouseInput.LmbDown += MouseInputOnLmbDown;
+			_mouseInput.LmbUp += MouseInputOnLmbUp;
+			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
+			Logger.WriteLine("Enabled mouse hook");
+		}
+		public void UnHookMouse()
+		{
+			_mouseInput.Dispose();
+			_mouseInput = null;
+			Logger.WriteLine("Disabled mouse hook");
 		}
 	}
 }

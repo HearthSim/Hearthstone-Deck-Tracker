@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly int CustomHeight = -1;
 			public static readonly int CustomWidth = -1;
 			public static readonly bool Debug = false;
+			public static readonly bool ExtraFeatures = false;
 			public static readonly bool ExportSetDeckName = true;
 			public static readonly bool FlashHsOnTurnStart = true;
 			public static readonly bool GenerateLog = false;
@@ -146,6 +147,7 @@ namespace Hearthstone_Deck_Tracker
 		public int CustomHeight = Defaults.CustomHeight;
 		public int CustomWidth = Defaults.CustomWidth;
 		[XmlIgnore] public bool Debug = Defaults.Debug;
+		public bool ExtraFeatures = Defaults.ExtraFeatures;
 		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
 		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
 		public bool GenerateLog = Defaults.GenerateLog;

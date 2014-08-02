@@ -281,7 +281,7 @@
                                         <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxWindowCardToolTips_Checked" Unchecked="CheckboxWindowCardToolTips_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="310" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="424" Width="235" Margin="5,0,0,0">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide in menu" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
@@ -303,6 +303,14 @@
                                             <Button Name="BtnUnlockOverlay" Content="Unlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Click="BtnUnlockOverlay_Click"/>
                                             <Button x:Name="BtnResetOverlay" Content="Reset" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="98" Click="BtnResetOverlay_Click"/>
                                         </DockPanel>
+                                        <GroupBox Header="Extra Features - may cause lag">
+                                            <StackPanel>
+                                            <TextBlock TextWrapping="Wrap">
+                                                1) Gray out secrets when clicked<LineBreak/>
+                                                2) Hide leftmost cards when friendslist is open</TextBlock>
+                                                <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures"  OnLabel="Enabled" OffLabel="Disabled" Checked="ToggleSwitchExtraFeatures_Checked" Unchecked="ToggleSwitchExtraFeatures_Unchecked"></controls:ToggleSwitch>
+                                            </StackPanel>
+                                        </GroupBox>
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="230" Width="235" Margin="10,10,0,0">

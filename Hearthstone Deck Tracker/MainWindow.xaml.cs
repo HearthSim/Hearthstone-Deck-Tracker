@@ -316,6 +316,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
+			ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -2051,6 +2052,23 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!_initialized) return;
 			Config.Instance.AdditionalOverlayTooltips = false;
+			SaveConfig(false);
+		}
+
+		private void ToggleSwitchExtraFeatures_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.ExtraFeatures = true;
+			Overlay.HookMouse();
+			SaveConfig(false);
+		}
+
+		private void ToggleSwitchExtraFeatures_Unchecked(object sender, RoutedEventArgs e)
+		{
+
+			if (!_initialized) return;
+			Config.Instance.ExtraFeatures = false;
+			Overlay.HookMouse();
 			SaveConfig(false);
 		}
 		#endregion
