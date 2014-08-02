@@ -22,14 +22,14 @@ namespace Hearthstone_Deck_Tracker
 
 		private new class Tag
 		{
+			public string Name { get; set; }
+			public bool Selected { get; set; }
+
 			public Tag(string name, bool selected = false)
 			{
 				Name = name;
 				Selected = selected;
 			}
-
-			public string Name { get; set; }
-			public bool Selected { get; set; }
 
 			public override bool Equals(object obj)
 			{
@@ -48,20 +48,20 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Delegates/Events/Properties
 
-		public delegate void DeleteTagHandler(SortFilterDecks sender, string tag);
+		//private delegate void DeleteTagHandler(SortFilterDecks sender, string tag);
 
-		public delegate void NewTagHandler(SortFilterDecks sender, string tag);
+		//private delegate void NewTagHandler(SortFilterDecks sender, string tag);
 
-		public delegate void OperationChangedHandler(SortFilterDecks sender, Operation operation);
+		//public delegate void OperationChangedHandler(SortFilterDecks sender, Operation operation);
 
-		public delegate void SelectedTagsChangedHandler(SortFilterDecks sender, List<string> tags);
+		//public delegate void SelectedTagsChangedHandler(SortFilterDecks sender, List<string> tags);
 
 		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
 
-		public event SelectedTagsChangedHandler SelectedTagsChanged;
-		public event NewTagHandler NewTag;
-		public event DeleteTagHandler DeleteTag;
-		public event OperationChangedHandler OperationChanged;
+		//public event SelectedTagsChangedHandler SelectedTagsChanged;
+		//private event NewTagHandler TagControlOnNewTag;
+		//private event DeleteTagHandler DeleteTag;
+		//public event OperationChangedHandler OperationChanged;
 
 		#endregion
 
@@ -112,11 +112,11 @@ namespace Hearthstone_Deck_Tracker
 
 			_tags.First(t => t.Name == tag).Selected = true;
 
-			if (SelectedTagsChanged != null)
-			{
-				var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
-				SelectedTagsChanged(this, tagNames);
-			}
+			//if (SelectedTagsChanged != null)
+			//{
+			//var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+			SortFilterDecksFlyoutOnSelectedTagsChanged();
+			//}
 		}
 
 		#endregion
@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs e)
 		{
-			var originalSource = (DependencyObject) e.OriginalSource;
+			var originalSource = (DependencyObject)e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is CheckBox))
 			{
 				originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -154,17 +154,17 @@ namespace Hearthstone_Deck_Tracker
 				}
 				ListboxTags.Items.Refresh();
 
-				if (SelectedTagsChanged != null)
-				{
-					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-					SelectedTagsChanged(this, tagNames);
-				}
+				//if (SelectedTagsChanged != null)
+				//{
+				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				SortFilterDecksFlyoutOnSelectedTagsChanged();
+				//}
 			}
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			var originalSource = (DependencyObject) e.OriginalSource;
+			var originalSource = (DependencyObject)e.OriginalSource;
 			while ((originalSource != null) && !(originalSource is CheckBox))
 			{
 				originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -179,11 +179,11 @@ namespace Hearthstone_Deck_Tracker
 					_tags.First(t => t.Name == selectedValue).Selected = false;
 				}
 
-				if (SelectedTagsChanged != null)
-				{
-					var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-					SelectedTagsChanged(this, tagNames);
-				}
+				//if (SelectedTagsChanged != null)
+				//{
+				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				SortFilterDecksFlyoutOnSelectedTagsChanged();
+				//}
 			}
 		}
 
@@ -194,14 +194,13 @@ namespace Hearthstone_Deck_Tracker
 
 			_tags.Add(new Tag(tag));
 
-			if (NewTag != null)
-				NewTag(this, tag);
+			//if (TagControlOnNewTag != null)
+			TagControlOnNewTag(this, tag);
 		}
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
 		{
-			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo,
-			                                   MessageBoxImage.Exclamation);
+			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
 			if (msgbxoResult != MessageBoxResult.Yes)
 				return;
 
@@ -211,20 +210,20 @@ namespace Hearthstone_Deck_Tracker
 
 			_tags.Remove(_tags.First(t => t.Equals(tag)));
 
-			if (DeleteTag != null)
-				DeleteTag(this, tag.Name);
+			//if (DeleteTag != null)
+			TagControlOnDeleteTag(this, tag.Name);
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
-			if (OperationChanged != null)
-				OperationChanged(this, Operation.And);
+			//if (OperationChanged != null)
+			SortFilterDecksFlyoutOnOperationChanged(this, Operation.And);
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-			if (OperationChanged != null)
-				OperationChanged(this, Operation.Or);
+			//if (OperationChanged != null)
+			SortFilterDecksFlyoutOnOperationChanged(this, Operation.Or);
 		}
 
 		#endregion
@@ -235,9 +234,9 @@ namespace Hearthstone_Deck_Tracker
 
 			ListboxTags.ItemsSource = _tags;
 
-			NewTag += TagControlOnNewTag;
-			SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			DeleteTag += TagControlOnDeleteTag;
+			//TagControlOnNewTag += TagControlOnNewTag;
+			//SelectedTagsChanged += TagControlOnSelectedTagsChanged;
+			//DeleteTag += TagControlOnDeleteTag;
 		}
 
 
@@ -300,6 +299,21 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 
 			Helper.MainWindow.DeckPickerList.SortDecks();
+		}
+
+		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, Operation operation)
+		{
+			Config.Instance.TagOperation = operation;
+			Helper.MainWindow.DeckPickerList.SetTagOperation(operation);
+			Helper.MainWindow.DeckPickerList.UpdateList();
+		}
+
+		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
+		{
+			var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+			Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
+			Config.Instance.SelectedTags = tags;
+			Config.Save();
 		}
 	}
 }
