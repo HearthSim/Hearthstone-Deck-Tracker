@@ -2068,7 +2068,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if (!_initialized) return;
 			Config.Instance.ExtraFeatures = false;
-			Overlay.HookMouse();
+			Overlay.UnHookMouse();
 			SaveConfig(false);
 		}
 		#endregion
