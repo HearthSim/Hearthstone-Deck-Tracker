@@ -2205,7 +2205,7 @@ namespace Hearthstone_Deck_Tracker
 			TagControlNewDeck.PnlSortDecks.Visibility = Visibility.Collapsed;
 			TagControlMyDecks.PnlSortDecks.Visibility = Visibility.Collapsed;
 
-			SortFilterDecksFlyout.SelectedTagsChanged += SortFilterDecksFlyoutOnSelectedTagsChanged;
+			//SortFilterDecksFlyout.SelectedTagsChanged += SortFilterDecksFlyoutOnSelectedTagsChanged;
 			//SortFilterDecksFlyout.OperationChanged += SortFilterDecksFlyoutOnOperationChanged;
 
 			UpdateDbListView();
