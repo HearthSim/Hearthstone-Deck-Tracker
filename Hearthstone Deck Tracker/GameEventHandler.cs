@@ -16,7 +16,13 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandlePlayerGet(string cardId)
 		{
 			LogEvent("PlayerGet", cardId);
-			Game.PlayerGet(cardId);
+			Game.PlayerGet(cardId, false);
+		}
+
+		public static void HandlePlayerBackToHand(string cardId)
+		{
+			LogEvent("PlayerBackToHand", cardId);
+			Game.PlayerGet(cardId, true);
 		}
 
 		public static async void HandlePlayerDraw(string cardId)
@@ -263,6 +269,5 @@ namespace Hearthstone_Deck_Tracker
 			Game.SetAsideCards.Add(id);
 			Logger.WriteLine("set aside: " + id);
 		}
-
 	}
 }

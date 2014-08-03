@@ -265,6 +265,10 @@ namespace Hearthstone_Deck_Tracker
 									GameEventHandler.HandlePlayerHandDiscard(id);
 
 								break;
+							case "FRIENDLY PLAY":
+								if(to == "FRIENDLY HAND")
+									GameEventHandler.HandlePlayerBackToHand(id);
+								break;
 							case "OPPOSING HAND":
 								if (to == "OPPOSING DECK")
 									//opponent mulligan

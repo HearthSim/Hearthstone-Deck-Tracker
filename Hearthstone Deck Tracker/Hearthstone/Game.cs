@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static string PlayingAgainst;
 		public static string PlayingAs;
 
-		public static List<string> SetAsideCards; 
+		public static List<string> SetAsideCards;
 
 		private static readonly List<string> ValidCardSets = new List<string>
 			{
@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 #pragma warning restore 4014
 
 #pragma warning disable 4014
-		public static void PlayerGet(string cardId)
+		public static void PlayerGet(string cardId, bool fromPlay)
 		{
 			PlayerHandCount++;
 
@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.InHandCount++;
 				card.JustDrawn();
 			}
-			else if (Config.Instance.ShowPlayerGet)
+			else if (Config.Instance.ShowPlayerGet && !fromPlay)
 			{
 				var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
 				if (drawnCard != null)
@@ -263,11 +263,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 #pragma warning restore 4014
-
 		public static void PlayerPlayed(string cardId)
 		{
 			PlayerHandCount--;
-
 			var card = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
 			if (card != null)
 			{
