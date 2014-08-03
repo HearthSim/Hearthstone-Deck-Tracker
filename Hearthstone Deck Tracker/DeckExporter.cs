@@ -45,14 +45,13 @@ namespace Hearthstone_Deck_Tracker
 
 			var hsRect = User32.GetHearthstoneRect(false);
 			var bounds = Screen.FromHandle(hsHandle).Bounds;
-			bool isFullscreen = bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
 
 			if (Config.Instance.ExportSetDeckName)
 				await SetDeckName(deck.Name, hsRect.Width, hsRect.Height, hsHandle);
 
 			foreach (var card in deck.Cards)
 			{
-				await AddCardToDeck(card, hsRect.Width, hsRect.Height, hsHandle, isFullscreen);
+				await AddCardToDeck(card, hsRect.Width, hsRect.Height, hsHandle);
 			}
 		}
 
@@ -64,7 +63,7 @@ namespace Hearthstone_Deck_Tracker
 			SendKeys.SendWait("{ENTER}");
 		}
 
-		private static async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle, bool isFullscreen)
+		private static async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle)
 		{
 			var ratio = (double)width / height;
 			var cardPosX = ratio < 1.5 ? width * Config.Instance.CardPosX : width * Config.Instance.CardPosX * (ratio / 1.33);
@@ -110,6 +109,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 			}
+			
+			// Clear search field now all cards have been entered
+            await ClickOnPoint(hsHandle, searchBoxPos);
+            SendKeys.SendWait("{DELETE}");
+            SendKeys.SendWait("{ENTER}");
 		}
 
 		private static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)
