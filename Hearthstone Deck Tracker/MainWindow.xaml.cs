@@ -260,18 +260,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void LoadConfig()
 		{
+			if (Config.Instance.TrackerWindowTop.HasValue)
+				Top = Config.Instance.TrackerWindowTop.Value;
+			if (Config.Instance.TrackerWindowLeft.HasValue)
+				Left = Config.Instance.TrackerWindowLeft.Value;
+
 			if (Config.Instance.StartMinimized)
 			{
 				WindowState = WindowState.Minimized;
 				if (Config.Instance.MinimizeToTray)
 					MinimizeToTray();
-			}
-			else
-			{
-				if (Config.Instance.TrackerWindowTop.HasValue)
-					Top = Config.Instance.TrackerWindowTop.Value;
-				if (Config.Instance.TrackerWindowLeft.HasValue)
-					Left = Config.Instance.TrackerWindowLeft.Value;
 			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
