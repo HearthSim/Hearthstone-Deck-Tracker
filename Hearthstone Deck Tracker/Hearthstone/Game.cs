@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int OpponentDeckCount;
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
+		public static bool IsRunning;
 
 
 		public static ObservableCollection<Card> PlayerDeck;

@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker
 		public double CardPosX = Defaults.CardPosX;
 		public double CardPosY = Defaults.CardPosY;
 		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
+		public bool CheckForUpdates = Defaults.CheckForUpdates;
 		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
 		public int ClickDelay = Defaults.ClickDelay;
 		public string CreatedByVersion = Defaults.CreatedByVersion;
@@ -151,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _config; }
 		}
-
+		
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;
@@ -256,6 +257,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double CardPosX = 0.15;
 			public static readonly double CardPosY = 0.3;
 			public static readonly bool CardSortingClassFirst = false;
+			public static readonly bool CheckForUpdates = true;
 			public static readonly bool ClearLogFileAfterGame = true;
 			public static readonly int ClickDelay = 50;
 			public static readonly int CustomHeight = -1;
@@ -359,6 +361,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
+
 		}
 	}
 }

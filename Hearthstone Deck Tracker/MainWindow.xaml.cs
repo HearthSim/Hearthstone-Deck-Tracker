@@ -316,6 +316,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 			ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
+			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -398,6 +399,10 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 		}
 
+
+		private DateTime _lastUpdateCheck;
+		private bool _tempUpdateCheckDisabled;
+
 		private async void UpdateOverlayAsync()
 		{
 			var hsForegroundChanged = false;
@@ -407,6 +412,19 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Overlay.UpdatePosition();
 
+					if (!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)//todo
+						if (!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 0, 0))
+						{
+							Version newVersion;
+							var currentVersion = Helper.CheckForUpdates(out newVersion);
+							if (currentVersion != null && newVersion != null)
+							{
+								ShowNewUpdateMessage(newVersion);
+							}
+							_lastUpdateCheck = DateTime.Now;
+						}
+
+					Game.IsRunning = true;
 					if (!User32.IsForegroundWindow("Hearthstone") && !hsForegroundChanged)
 					{
 						if (Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
@@ -435,26 +453,31 @@ namespace Hearthstone_Deck_Tracker
 				else
 				{
 					Overlay.ShowOverlay(false);
+					Game.IsRunning = false;
 				}
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
 		}
 
-		private async void ShowNewUpdateMessage()
+		private async void ShowNewUpdateMessage(Version newVersion = null)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings { AffirmativeButtonText = "Download", NegativeButtonText = "Not now" };
-
+			var version = newVersion ?? NewVersion;
 			var result =
 				await
 				this.ShowMessageAsync("New Update available!",
-									  "Download version " + string.Format("{0}.{1}.{2}", NewVersion.Major, NewVersion.Minor,
-																		  NewVersion.Build) + " at\n" + releaseDownloadUrl,
+									  "Download version " + string.Format("{0}.{1}.{2}", version.Major, version.Minor,
+																		  version.Build) + " at\n" + releaseDownloadUrl,
 									  MessageDialogStyle.AffirmativeAndNegative, settings);
 
 			if (result == MessageDialogResult.Affirmative)
 			{
 				Process.Start(releaseDownloadUrl);
+			}
+			else
+			{
+				_tempUpdateCheckDisabled = true;
 			}
 		}
 
@@ -2062,6 +2085,20 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+		private void CheckboxCheckForUpdates_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.CheckForUpdates = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxCheckForUpdates_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.CheckForUpdates = false;
+			SaveConfig(false);
+		}
+
 		#endregion
 
 		#region Constructor
@@ -2078,10 +2115,18 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReader.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion)
-									? null
-									: new Version(Config.Instance.CreatedByVersion);
+				                    ? null
+				                    : new Version(Config.Instance.CreatedByVersion);
 
-			var currentVersion = Helper.CheckForUpdates(out NewVersion);
+			Version currentVersion;
+			if (Config.Instance.CheckForUpdates)
+			{
+				currentVersion = Helper.CheckForUpdates(out NewVersion);
+				_lastUpdateCheck = DateTime.Now;
+			}
+			else
+				currentVersion = Helper.GetCurrentVersion();
+
 			if (currentVersion != null)
 			{
 				TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", currentVersion.Major, currentVersion.Minor,
@@ -2440,5 +2485,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
 	}
 }

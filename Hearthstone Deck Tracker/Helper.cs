@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Version CheckForUpdates(out Version newVersionOut)
 		{
+			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
 			SerializableVersion version;
@@ -88,6 +89,25 @@ namespace Hearthstone_Deck_Tracker
 				MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
 			}
 			return currentVersion;
+		}
+
+		public static Version GetCurrentVersion()
+		{
+
+			try
+			{
+				return new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString());
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(
+					e.Message + "\n\n" + e.InnerException +
+					"\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
+					"Error loading Version.xml");
+
+				return null;
+			}
+
 		}
 
 		public static bool IsNumeric(char c)
