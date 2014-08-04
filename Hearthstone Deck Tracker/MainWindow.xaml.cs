@@ -182,8 +182,12 @@ namespace Hearthstone_Deck_Tracker
 		private void MetroWindow_LocationChanged(object sender, EventArgs e)
 		{
 			if (WindowState == WindowState.Minimized) return;
-			Config.Instance.TrackerWindowTop = (int)Top;
-			Config.Instance.TrackerWindowLeft = (int)Left;
+
+			if (Top != -32000)
+				Config.Instance.TrackerWindowTop = (int)Top;
+
+			if (Left != -32000)
+				Config.Instance.TrackerWindowLeft = (int)Left;
 		}
 
 		private void TabControlTracker_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -258,9 +262,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if (Config.Instance.TrackerWindowTop.HasValue)
+				if (Config.Instance.TrackerWindowTop.HasValue && Config.Instance.TrackerWindowTop != -32000)
 					Top = Config.Instance.TrackerWindowTop.Value;
-				if (Config.Instance.TrackerWindowLeft.HasValue)
+				if (Config.Instance.TrackerWindowLeft.HasValue && Config.Instance.TrackerWindowLeft != -32000)
 					Left = Config.Instance.TrackerWindowLeft.Value;
 			}
 

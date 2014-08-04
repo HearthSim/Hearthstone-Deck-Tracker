@@ -23,11 +23,11 @@ namespace Hearthstone_Deck_Tracker
 			ListViewOpponent.ItemsSource = opponentDeck;
 			opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
 			Height = _config.OpponentWindowHeight;
-			if (_config.OpponentWindowLeft.HasValue)
+			if (_config.OpponentWindowLeft.HasValue && _config.OpponentWindowLeft != -32000)
 			{
 				Left = _config.OpponentWindowLeft.Value;
 			}
-			if (_config.OpponentWindowTop.HasValue)
+			if (_config.OpponentWindowTop.HasValue && _config.OpponentWindowTop != -32000)
 			{
 				Top = _config.OpponentWindowTop.Value;
 			}
@@ -124,8 +124,12 @@ namespace Hearthstone_Deck_Tracker
 		private void MetroWindow_LocationChanged(object sender, EventArgs e)
 		{
 			if (WindowState == WindowState.Minimized) return;
-			_config.OpponentWindowLeft = (int) Left;
-			_config.OpponentWindowTop = (int) Top;
+
+			if (Left != -32000)
+				_config.OpponentWindowLeft = (int) Left;
+
+			if (Top != -32000)
+				_config.OpponentWindowTop = (int) Top;
 		}
 
 		public void SetTextLocation(bool top)
