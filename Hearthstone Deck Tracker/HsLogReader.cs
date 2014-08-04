@@ -176,7 +176,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_powerCount++;
 				}
-				else if (logLine.StartsWith("[Bob] legend rank"))
+				else if (logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
 					GameEventHandler.HandleGameEnd();
