@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated" LocationChanged="MetroWindow_LocationChanged">
+        Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated" >
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
         <local:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">

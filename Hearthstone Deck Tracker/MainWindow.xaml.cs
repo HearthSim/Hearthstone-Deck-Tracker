@@ -113,7 +113,24 @@ namespace Hearthstone_Deck_Tracker
 				_doUpdate = false;
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
+
 				Config.Instance.WindowHeight = (int)Height;
+				Config.Instance.TrackerWindowTop = (int)Top;
+				Config.Instance.TrackerWindowLeft = (int)Left;
+
+				Config.Instance.PlayerWindowLeft = (int)PlayerWindow.Left;
+				Config.Instance.PlayerWindowTop = (int)PlayerWindow.Top;
+				Config.Instance.PlayerWindowHeight = (int)PlayerWindow.Height;
+
+				Config.Instance.OpponentWindowLeft = (int)OpponentWindow.Left;
+				Config.Instance.OpponentWindowTop = (int)OpponentWindow.Top;
+				Config.Instance.OpponentWindowHeight = (int)OpponentWindow.Height;
+
+				Config.Instance.TimerWindowLeft = (int)TimerWindow.Left;
+				Config.Instance.TimerWindowTop = (int)TimerWindow.Top;
+				Config.Instance.TimerWindowHeight = (int)TimerWindow.Height;
+				Config.Instance.TimerWindowWidth = (int)TimerWindow.Width;
+
 				Overlay.Close();
 				HsLogReader.Instance.Stop();
 				TimerWindow.Shutdown();
@@ -178,18 +195,7 @@ namespace Hearthstone_Deck_Tracker
 
 			ManaCurveMyDecks.UpdateValues();
 		}
-
-		private void MetroWindow_LocationChanged(object sender, EventArgs e)
-		{
-			if (WindowState == WindowState.Minimized) return;
-
-			if (Top != -32000)
-				Config.Instance.TrackerWindowTop = (int)Top;
-
-			if (Left != -32000)
-				Config.Instance.TrackerWindowLeft = (int)Left;
-		}
-
+		
 		private void TabControlTracker_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (!_initialized) return;

@@ -6,7 +6,7 @@
         Title="Hearthstone Deck Tracker" Height="670" Width="510" MinWidth="510" MaxWidth="510" MinHeight="525" 
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing" 
         Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" 
-        StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" LocationChanged="MetroWindow_LocationChanged"
+        StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" 
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
         <TabControl Name="TabControlTracker" Height="auto" Width="auto" SelectionChanged="TabControlTracker_SelectionChanged" >
