@@ -115,19 +115,19 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 
 				Config.Instance.WindowHeight = (int)Height;
-				Config.Instance.TrackerWindowTop = (int)Top;
-				Config.Instance.TrackerWindowLeft = (int)Left;
+				Config.Instance.MainWndTop = (int)Top;
+				Config.Instance.MainWndLeft = (int)Left;
 
-				Config.Instance.PlayerWindowLeft = (int)PlayerWindow.Left;
-				Config.Instance.PlayerWindowTop = (int)PlayerWindow.Top;
+				Config.Instance.PlayerWndLeft = (int)PlayerWindow.Left;
+				Config.Instance.PlayerWndTop = (int)PlayerWindow.Top;
 				Config.Instance.PlayerWindowHeight = (int)PlayerWindow.Height;
 
-				Config.Instance.OpponentWindowLeft = (int)OpponentWindow.Left;
-				Config.Instance.OpponentWindowTop = (int)OpponentWindow.Top;
+				Config.Instance.OpponentWndLeft = (int)OpponentWindow.Left;
+				Config.Instance.OpponentWndTop = (int)OpponentWindow.Top;
 				Config.Instance.OpponentWindowHeight = (int)OpponentWindow.Height;
 
-				Config.Instance.TimerWindowLeft = (int)TimerWindow.Left;
-				Config.Instance.TimerWindowTop = (int)TimerWindow.Top;
+				Config.Instance.TimerWndLeft = (int)TimerWindow.Left;
+				Config.Instance.TimerWndTop = (int)TimerWindow.Top;
 				Config.Instance.TimerWindowHeight = (int)TimerWindow.Height;
 				Config.Instance.TimerWindowWidth = (int)TimerWindow.Width;
 
@@ -268,10 +268,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if (Config.Instance.TrackerWindowTop.HasValue && Config.Instance.TrackerWindowTop != -32000)
-					Top = Config.Instance.TrackerWindowTop.Value;
-				if (Config.Instance.TrackerWindowLeft.HasValue && Config.Instance.TrackerWindowLeft != -32000)
-					Left = Config.Instance.TrackerWindowLeft.Value;
+				if (Config.Instance.MainWndTop.HasValue)
+					Top = Config.Instance.MainWndTop.Value;
+				if (Config.Instance.MainWndLeft.HasValue)
+					Left = Config.Instance.MainWndLeft.Value;
 			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
@@ -2297,47 +2297,47 @@ namespace Hearthstone_Deck_Tracker
 				// they are in fact a valid range of pixel positions, we now use nullable types instead. The default
 				// 'no specific position' is now expressed when the positions are null.
 				{
-					if (config.TrackerWindowLeft.HasValue && config.TrackerWindowLeft.Value < 0)
+					if (config.MainWndLeft.HasValue && config.MainWndLeft.Value < 0)
 					{
-						config.TrackerWindowLeft = Config.Defaults.TrackerWindowLeft;
+						config.MainWndLeft = Config.Defaults.MainWndLeft;
 						converted = true;
 					}
-					if (config.TrackerWindowTop.HasValue && config.TrackerWindowTop.Value < 0)
+					if (config.MainWndTop.HasValue && config.MainWndTop.Value < 0)
 					{
-						config.TrackerWindowTop = Config.Defaults.TrackerWindowTop;
-						converted = true;
-					}
-
-					if (config.PlayerWindowLeft.HasValue && config.PlayerWindowLeft.Value < 0)
-					{
-						config.PlayerWindowLeft = Config.Defaults.PlayerWindowLeft;
-						converted = true;
-					}
-					if (config.PlayerWindowTop.HasValue && config.PlayerWindowTop.Value < 0)
-					{
-						config.PlayerWindowTop = Config.Defaults.PlayerWindowTop;
+						config.MainWndTop = Config.Defaults.MainWndTop;
 						converted = true;
 					}
 
-					if (config.OpponentWindowLeft.HasValue && config.OpponentWindowLeft.Value < 0)
+					if (config.PlayerWndLeft.HasValue && config.PlayerWndLeft.Value < 0)
 					{
-						config.OpponentWindowLeft = Config.Defaults.OpponentWindowLeft;
+						config.PlayerWndLeft = Config.Defaults.PlayerWndLeft;
 						converted = true;
 					}
-					if (config.OpponentWindowTop.HasValue && config.OpponentWindowTop.Value < 0)
+					if (config.PlayerWndTop.HasValue && config.PlayerWndTop.Value < 0)
 					{
-						config.OpponentWindowTop = Config.Defaults.OpponentWindowTop;
+						config.PlayerWndTop = Config.Defaults.PlayerWndTop;
 						converted = true;
 					}
 
-					if (config.TimerWindowLeft.HasValue && config.TimerWindowLeft.Value < 0)
+					if (config.OpponentWndLeft.HasValue && config.OpponentWndLeft.Value < 0)
 					{
-						config.TimerWindowLeft = Config.Defaults.TimerWindowLeft;
+						config.OpponentWndLeft = Config.Defaults.OpponentWndLeft;
 						converted = true;
 					}
-					if (config.TimerWindowTop.HasValue && config.TimerWindowTop.Value < 0)
+					if (config.OpponentWndTop.HasValue && config.OpponentWndTop.Value < 0)
 					{
-						config.TimerWindowTop = Config.Defaults.TimerWindowTop;
+						config.OpponentWndTop = Config.Defaults.OpponentWndTop;
+						converted = true;
+					}
+
+					if (config.TimerWndLeft.HasValue && config.TimerWndLeft.Value < 0)
+					{
+						config.TimerWndLeft = Config.Defaults.TimerWndLeft;
+						converted = true;
+					}
+					if (config.TimerWndTop.HasValue && config.TimerWndTop.Value < 0)
+					{
+						config.TimerWndTop = Config.Defaults.TimerWndTop;
 						converted = true;
 					}
 				}
