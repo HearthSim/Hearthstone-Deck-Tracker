@@ -412,8 +412,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Overlay.UpdatePosition();
 
-					if (!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)//todo
-						if (!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 0, 0))
+					if (!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)
+						if (!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
 						{
 							Version newVersion;
 							var currentVersion = Helper.CheckForUpdates(out newVersion);
