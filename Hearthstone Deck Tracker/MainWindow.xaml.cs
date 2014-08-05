@@ -118,16 +118,23 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.TrackerWindowTop = (int)Top;
 				Config.Instance.TrackerWindowLeft = (int)Left;
 
-				Config.Instance.PlayerWindowLeft = (int)PlayerWindow.Left;
-				Config.Instance.PlayerWindowTop = (int)PlayerWindow.Top;
+				//position of add. windows is NaN if they were never opened.
+				if (!double.IsNaN(PlayerWindow.Left))
+					Config.Instance.PlayerWindowLeft = (int)PlayerWindow.Left;
+				if (!double.IsNaN(PlayerWindow.Top))
+					Config.Instance.PlayerWindowTop = (int)PlayerWindow.Top;
 				Config.Instance.PlayerWindowHeight = (int)PlayerWindow.Height;
 
-				Config.Instance.OpponentWindowLeft = (int)OpponentWindow.Left;
-				Config.Instance.OpponentWindowTop = (int)OpponentWindow.Top;
+				if (!double.IsNaN(OpponentWindow.Left))
+					Config.Instance.OpponentWindowLeft = (int)OpponentWindow.Left;
+				if (!double.IsNaN(OpponentWindow.Top))
+					Config.Instance.OpponentWindowTop = (int)OpponentWindow.Top;
 				Config.Instance.OpponentWindowHeight = (int)OpponentWindow.Height;
 
-				Config.Instance.TimerWindowLeft = (int)TimerWindow.Left;
-				Config.Instance.TimerWindowTop = (int)TimerWindow.Top;
+				if (!double.IsNaN(TimerWindow.Left))
+					Config.Instance.TimerWindowLeft = (int)TimerWindow.Left;
+				if (!double.IsNaN(TimerWindow.Top))
+					Config.Instance.TimerWindowTop = (int)TimerWindow.Top;
 				Config.Instance.TimerWindowHeight = (int)TimerWindow.Height;
 				Config.Instance.TimerWindowWidth = (int)TimerWindow.Width;
 
