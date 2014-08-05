@@ -50,50 +50,37 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			SerializableVersion version;
-			//_xmlManager = new XmlManager<SerializableVersion>() { Type = typeof(SerializableVersion) };
-
-			try
-			{
-				// version = _xmlManager.Load("Version.xml");
-				version = XmlManager<SerializableVersion>.Load("Version.xml");
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(
-					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
-					"Error loading Version.xml");
-
-				return null;
-			}
-
-
 			var versionXmlUrl =
 				@"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
-			var currentVersion = new Version(version.ToString());
-			try
+			var currentVersion = GetCurrentVersion();
+
+			if (currentVersion != null)
 			{
-				var xml = new WebClient().DownloadString(versionXmlUrl);
-
-				var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
-
-				if (newVersion > currentVersion)
+				try
 				{
-					newVersionOut = newVersion;
+					var xml = new WebClient().DownloadString(versionXmlUrl);
+
+					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
+
+					if (newVersion > currentVersion)
+					{
+						newVersionOut = newVersion;
+					}
+				}
+				catch (Exception e)
+				{
+					MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
 				}
 			}
-			catch (Exception e)
-			{
-				MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
-			}
+
 			return currentVersion;
 		}
 
+		// A bug in the SerializableVersion.ToString() method causes this to load Version.xml incorrectly.
+		// The build and revision numbers are swapped (i.e. a Revision of 21 in Version.xml loads to Version.Build == 21).
 		public static Version GetCurrentVersion()
 		{
-
 			try
 			{
 				return new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString());
@@ -107,7 +94,6 @@ namespace Hearthstone_Deck_Tracker
 
 				return null;
 			}
-
 		}
 
 		public static bool IsNumeric(char c)
