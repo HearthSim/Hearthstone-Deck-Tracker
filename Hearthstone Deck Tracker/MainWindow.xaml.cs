@@ -2121,6 +2121,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public MainWindow()
 		{
+			// Set working directory to path of executable
+			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
 			InitializeComponent();
 
 			Helper.MainWindow = this;
