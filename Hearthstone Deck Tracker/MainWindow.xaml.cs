@@ -800,6 +800,7 @@ namespace Hearthstone_Deck_Tracker
 			if (originalSource != null)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
+				if (card == null) return;
 				AddCardToDeck((Card)card.Clone());
 				_newContainsDeck = true;
 			}
