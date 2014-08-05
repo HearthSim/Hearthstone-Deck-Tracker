@@ -2285,9 +2285,7 @@ namespace Hearthstone_Deck_Tracker
 			var config = Config.Instance;
 			var converted = false;
 
-			// Swap the build and revision numbers from what might be expected by looking at Version.xml,
-			// because unfortunately Helper.GetCurrentVersion() loads Version.xml incorrectly
-			var v0_3_21 = new Version(0, 3, 21);
+			var v0_3_21 = new Version(0, 3, 21, 0);
 
 			if (configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
 			{
