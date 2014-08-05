@@ -260,18 +260,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void LoadConfig()
 		{
+			if (Config.Instance.TrackerWindowTop.HasValue)
+				Top = Config.Instance.TrackerWindowTop.Value;
+			if (Config.Instance.TrackerWindowLeft.HasValue)
+				Left = Config.Instance.TrackerWindowLeft.Value;
+
 			if (Config.Instance.StartMinimized)
 			{
 				WindowState = WindowState.Minimized;
 				if (Config.Instance.MinimizeToTray)
 					MinimizeToTray();
-			}
-			else
-			{
-				if (Config.Instance.TrackerWindowTop.HasValue && Config.Instance.TrackerWindowTop != -32000)
-					Top = Config.Instance.TrackerWindowTop.Value;
-				if (Config.Instance.TrackerWindowLeft.HasValue && Config.Instance.TrackerWindowLeft != -32000)
-					Left = Config.Instance.TrackerWindowLeft.Value;
 			}
 
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
@@ -2113,9 +2111,6 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Constructor
 
-		// Logic for dealing with legacy config file semantics
-		// Use difference of versions to determine what should be done
-
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -2283,12 +2278,18 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SortDecks();
 		}
 
+		// Logic for dealing with legacy config file semantics
+		// Use difference of versions to determine what should be done
 		private static void ConvertLegacyConfig(Version currentVersion, Version configVersion)
 		{
 			var config = Config.Instance;
 			var converted = false;
 
-			if (configVersion == null) // Here we assume config file was created prior to version tracking
+			// Swap the build and revision numbers from what might be expected by looking at Version.xml,
+			// because unfortunately Helper.GetCurrentVersion() loads Version.xml incorrectly
+			var v0_3_21 = new Version(0, 3, 21);
+
+			if (configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
 			{
 				// We previously assumed negative pixel coordinates were invalid, but in fact they can go negative
 				// with multi-screen setups. Negative positions were being used to represent 'no specific position'
@@ -2358,6 +2359,56 @@ namespace Hearthstone_Deck_Tracker
 					if (config.OpponentWindowHeight == 0)
 					{
 						config.OpponentWindowHeight = Config.Defaults.OpponentWindowHeight;
+						converted = true;
+					}
+				}
+			}
+			else if (configVersion <= v0_3_21) // Config must be between v0.3.20 and v0.3.21 inclusive
+			{
+				// It was still possible in 0.3.21 to see (-32000, -32000) window positions
+				// under certain circumstances (GitHub issue #135).
+				{
+					if (config.TrackerWindowLeft == -32000)
+					{
+						config.TrackerWindowLeft = Config.Defaults.TrackerWindowLeft;
+						converted = true;
+					}
+					if (config.TrackerWindowTop == -32000)
+					{
+						config.TrackerWindowTop = Config.Defaults.TrackerWindowTop;
+						converted = true;
+					}
+
+					if (config.PlayerWindowLeft == -32000)
+					{
+						config.PlayerWindowLeft = Config.Defaults.PlayerWindowLeft;
+						converted = true;
+					}
+					if (config.PlayerWindowTop == -32000)
+					{
+						config.PlayerWindowTop = Config.Defaults.PlayerWindowTop;
+						converted = true;
+					}
+
+					if (config.OpponentWindowLeft == -32000)
+					{
+						config.OpponentWindowLeft = Config.Defaults.OpponentWindowLeft;
+						converted = true;
+					}
+					if (config.OpponentWindowTop == -32000)
+					{
+						config.OpponentWindowTop = Config.Defaults.OpponentWindowTop;
+						converted = true;
+					}
+
+					if (config.TimerWindowLeft == -32000)
+					{
+						config.TimerWindowLeft = Config.Defaults.TimerWindowLeft;
+						converted = true;
+					}
+					if (config.TimerWindowTop == -32000)
+					{
+						config.TimerWindowTop = Config.Defaults.TimerWindowTop;
 						converted = true;
 					}
 				}

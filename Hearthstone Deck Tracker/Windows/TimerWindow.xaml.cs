@@ -20,11 +20,11 @@ namespace Hearthstone_Deck_Tracker
 			Height = _config.TimerWindowHeight;
 			Width = _config.TimerWindowWidth;
 
-			if (_config.TimerWindowLeft.HasValue && _config.TimerWindowLeft != -32000)
+			if (_config.TimerWindowLeft.HasValue)
 			{
 				Left = config.TimerWindowLeft.Value;
 			}
-			if (_config.TimerWindowTop.HasValue && _config.TimerWindowTop != -32000)
+			if (_config.TimerWindowTop.HasValue)
 			{
 				Top = config.TimerWindowTop.Value;
 			}
