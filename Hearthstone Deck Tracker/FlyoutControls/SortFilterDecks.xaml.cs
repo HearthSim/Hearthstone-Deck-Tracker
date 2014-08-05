@@ -308,6 +308,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
 		{
+			//only set tags if tags were changed in "My Decks"
+			if (Helper.MainWindow.TabControlTracker.SelectedIndex != 0) return;
 			var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 			Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 			Config.Instance.SelectedTags = tags;
