@@ -105,6 +105,9 @@
     <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
       <DependentUpon>DeckOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
+      <DependentUpon>DeckStatsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
@@ -204,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCostBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckStatsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

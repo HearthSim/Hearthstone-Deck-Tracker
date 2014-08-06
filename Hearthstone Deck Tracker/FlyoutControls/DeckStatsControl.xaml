@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.DeckStatsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Overview" VerticalAlignment="Top" Height="auto" Grid.Row="0" Grid.ColumnSpan="2" >
+            <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+                <DataGrid Name="DataGridWinLoss" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="77" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Total" Binding="{Binding Total}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Druid" Binding="{Binding Druid}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Hunter" Binding="{Binding Hunter}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Mage" Binding="{Binding Mage}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Paladin" Binding="{Binding Paladin}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Priest" Binding="{Binding Priest}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Rogue" Binding="{Binding Rogue}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Shaman" Binding="{Binding Shaman}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Warlock" Binding="{Binding Warlock}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Warrior" Binding="{Binding Warrior}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+        </GroupBox>
+        <GroupBox Header="Games" Grid.Row="1" Width="auto">
+            <Grid>
+                <ScrollViewer>
+                <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" IsReadOnly="True"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+                <Button Name="BtnDelete" Content="Delete selected" HorizontalAlignment="Right" Margin="0,0,20,5" VerticalAlignment="Bottom" Width="117" Click="BtnDelete_Click"/>
+
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

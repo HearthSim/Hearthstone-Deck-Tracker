@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
-		public string OpponentHero;
-		public bool Coin;
-		public GameResult Result;
-		public int Turns;
-		public DateTime StartTime;
-		public DateTime EndTime;
+		public string OpponentHero { get; set; }
+		public bool Coin { get; set; }
+		public GameResult Result { get; set; }
+		public int Turns { get; set; }
+		public DateTime StartTime { get; set; }
+		public DateTime EndTime { get; set; }
+
+		[XmlIgnore]
+		public string Duration { get { return (EndTime - StartTime).Minutes + " min"; } }
+
+		[XmlIgnore]
+		public string GotCoin { get { return Coin ? "Yes" : "No"; } set { Coin = value.ToLower() == "Yes"; } }
 
 		public GameStats() { }
 		

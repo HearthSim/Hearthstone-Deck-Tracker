@@ -303,8 +303,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Logger.WriteLine("Game was won! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
-			DeckStatsList.Save();
-			Game.CurrentGameStats = null;
+			SaveAndUpdateStats();
 		}
 
 		public static void HandleLoss()
@@ -313,8 +312,15 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Logger.WriteLine("Game was lost! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
+			SaveAndUpdateStats();
+		}
+
+		private static void SaveAndUpdateStats()
+		{
 			DeckStatsList.Save();
 			Game.CurrentGameStats = null;
+			Helper.MainWindow.DeckPickerList.Items.Refresh();
+			Helper.MainWindow.DeckStatsFlyout.Refresh();
 		}
 	}
 }

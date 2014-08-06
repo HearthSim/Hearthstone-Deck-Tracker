@@ -2610,5 +2610,21 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
+		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
+		{
+			FlyoutDeckStats.IsOpen = true;
+			var deck = DeckPickerList.SelectedDeck;
+			if(deck != null)
+				DeckStatsFlyout.SetDeck(deck);
+		}
+
+		public async Task<MessageDialogResult> ShowDeleteGameStatsMessage(GameStats stats)
+		{
+			var settings = new MetroDialogSettings() {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			return
+				await
+				this.ShowMessageAsync("Delete Game", stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
+				                      MessageDialogStyle.AffirmativeAndNegative, settings);
+		}
 	}
 }

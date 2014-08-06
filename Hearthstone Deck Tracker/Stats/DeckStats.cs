@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Games.Add(gameStats);
 		}
 	}
+
 	public class DeckStatsList
 	{
 		[XmlArray(ElementName = "DeckStats")]

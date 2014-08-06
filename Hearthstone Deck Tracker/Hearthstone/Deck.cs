@@ -46,6 +46,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public string WinsPercent
+		{
+			get
+			{
+				if (DeckStats.Games.Count == 0) return "-%";
+				return Math.Round(100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count, 0) + "%";
+			}
+		}
+
+		[XmlIgnore]
 		public string GetClass
 		{
 			get { return string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")"; }
@@ -56,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var charCount = IsSelectedInGui ? 20 : 25;
+				var charCount = IsSelectedInGui ? 15 : 17;
 				var tmpName = Name.Length > charCount ? string.Join("", Name.Take(charCount)) + "..." : Name;
 				return IsSelectedInGui ? string.Format("> {0} <", tmpName) : tmpName;
 			}

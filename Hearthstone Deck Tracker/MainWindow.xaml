@@ -29,6 +29,9 @@
                     <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
                     </controls:Flyout>
+                    <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="100">
+                        <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
+                    </controls:Flyout>
 
                     <Grid Grid.Column="1" Margin="-1,0,0,0">
                         <Grid.RowDefinitions>
@@ -80,8 +83,9 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
-                            <Button x:Name="ButtonNoDeck" Content="Use no Deck" Width="117" Margin="0,0,3,0" Height="26" Click="ButtonNoDeck_Click" />
-                            <Button x:Name="BtnSortFilter" Content="Sort / Filter"  Width="117" Margin="3,0,0,0" Height="26" Click="BtnSortFilter_Click" />
+                            <Button x:Name="ButtonNoDeck" Content="No Deck" Width="70" Margin="0,0,3,0" Height="26" Click="ButtonNoDeck_Click" />
+                            <Button x:Name="BtnSortFilter" Content="Sort / Filter"  Width="86" Margin="3,0,3,0" Height="26" Click="BtnSortFilter_Click" />
+                            <Button x:Name="BtnDeckStats" Content="Stats"  Width="70" Margin="3,0,0,0" Height="26" Click="BtnDeckStats_Click" />
                         </StackPanel>
                         <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Center" Margin="0,6,0,6" Height="auto" Width="240" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
                     </Grid>
