@@ -1,11 +1,8 @@
-﻿#region
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
-
-#endregion
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -146,6 +143,10 @@ namespace Hearthstone_Deck_Tracker
 		public static void SetOpponentHero(string hero)
 		{
 			Game.PlayingAgainst = hero;
+
+			if (Game.CurrentGameStats != null)
+				Game.CurrentGameStats.OpponentHero = hero;
+
 			Logger.WriteLine("Playing against " + hero, "Hearthstone");
 		}
 
@@ -171,6 +172,9 @@ namespace Hearthstone_Deck_Tracker
 			//avoid new game being started when jaraxxus is played
 			if (!Game.IsInMenu) return;
 
+			if (Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
+				Helper.MainWindow.PrepareNoGameResultDialog();
+
 			Game.PlayingAs = playerHero;
 
 			Logger.WriteLine("Game start");
@@ -193,6 +197,8 @@ namespace Hearthstone_Deck_Tracker
 
 			Game.IsInMenu = false;
 			Game.Reset();
+			Game.CurrentGameStats = new GameStats(GameResult.None, Game.PlayingAgainst);
+			
 
 			//select deck based on hero
 			if (!string.IsNullOrEmpty(playerHero))
@@ -227,10 +233,19 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 			}
+
+
 		}
 
-		public static void HandleGameEnd()
+#pragma warning disable 4014
+		public static void HandleGameEnd(bool backInMenu)
 		{
+			if(!backInMenu)
+			{
+				Helper.MainWindow.Overlay.HideTimers();
+				Game.CurrentGameStats.GameEnd();
+				return;
+			}
 			Logger.WriteLine("Game end");
 			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
@@ -257,7 +272,11 @@ namespace Hearthstone_Deck_Tracker
 				Game.Reset();
 			}
 			Game.IsInMenu = true;
+
+			if(Game.CurrentGameStats != null)
+				Helper.MainWindow.PrepareNoGameResultDialogDelayed();
 		}
+#pragma warning restore 4014
 
 		private static void LogEvent(string type, string id = "", int turn = 0, int from = -1)
 		{
@@ -268,6 +287,28 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Game.SetAsideCards.Add(id);
 			Logger.WriteLine("set aside: " + id);
+		}
+
+		public static void HandleWin()
+		{
+			if (!Game.IsInMenu || Game.CurrentGameStats == null)
+				return;
+			Logger.WriteLine("Game was won!");
+			Game.CurrentGameStats.Result = GameResult.Win;
+			Helper.MainWindow.DeckPickerList.SelectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+			DeckStatsList.Save();
+			Game.CurrentGameStats = null;
+		}
+
+		public static void HandleLoss()
+		{
+			if (!Game.IsInMenu || Game.CurrentGameStats == null)
+				return;
+			Logger.WriteLine("Game was lost!");
+			Game.CurrentGameStats.Result = GameResult.Loss;
+			Helper.MainWindow.DeckPickerList.SelectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+			DeckStatsList.Save();
+			Game.CurrentGameStats = null;
 		}
 	}
 }

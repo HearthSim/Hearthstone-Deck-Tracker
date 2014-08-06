@@ -144,6 +144,8 @@
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="Stats\DeckStats.cs" />
+    <Compile Include="Stats\GameStats.cs" />
     <Compile Include="TurnTimer.cs" />
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>

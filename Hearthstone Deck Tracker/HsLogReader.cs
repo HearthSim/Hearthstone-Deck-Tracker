@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -21,7 +22,9 @@ namespace Hearthstone_Deck_Tracker
 		#region Properties
 
 		private const int PowerCountTreshold = 14;
-		private const int MaxFileLength = 3000000;
+
+		//should be about 180,000 lines
+		private const int MaxFileLength = 6000000;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
@@ -45,7 +48,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private readonly int _updateDelay;
 
-		//should be about 90,000 lines
 
 		private long _currentOffset;
 		private bool _doUpdate;
@@ -176,10 +178,22 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_powerCount++;
 				}
+				else if (logLine.StartsWith("[Asset"))
+				{
+					if (logLine.ToLower().Contains("victory"))
+						GameEventHandler.HandleWin();
+					else if(logLine.ToLower().Contains("defeat"))
+						GameEventHandler.HandleLoss();
+				}
+				else if (logLine.StartsWith("[Bob] legend rank"))
+				{
+					if (!Game.IsInMenu)
+						GameEventHandler.HandleGameEnd(false);
+				}
 				else if (logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
-					GameEventHandler.HandleGameEnd();
+					GameEventHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
 					if (Config.Instance.ClearLogFileAfterGame)

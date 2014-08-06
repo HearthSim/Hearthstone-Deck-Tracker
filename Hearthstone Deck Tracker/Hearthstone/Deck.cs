@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -111,6 +112,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					default:
 						return Colors.Gray;
 				}
+			}
+		}
+
+		public DeckStats DeckStats
+		{
+			get
+			{
+				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == Name);
+				if (deckStats == null)
+				{
+					deckStats = new DeckStats(Name);
+					DeckStatsList.Instance.DeckStats.Add(deckStats);
+				}
+				return deckStats;
 			}
 		}
 
