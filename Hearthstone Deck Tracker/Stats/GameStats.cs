@@ -9,7 +9,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 	public class GameStats
 	{
 		public string OpponentHero;
+		public bool Coin;
 		public GameResult Result;
+		public int Turns;
 		public DateTime StartTime;
 		public DateTime EndTime;
 
@@ -17,19 +19,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 		
 		public GameStats(GameResult result, string opponentHero)
 		{
+			Coin = false;
 			Result = result;
 			OpponentHero = opponentHero;
 			StartTime = DateTime.Now;
+			Logger.WriteLine("Started new game", "Gamestats");
 		}
 
 		public void GameEnd()
 		{
 			EndTime = DateTime.Now;
-		}
-
-		public bool AllFieldsSet()
-		{
-			return Result != GameResult.None && EndTime != default(DateTime);
+			Logger.WriteLine("Current Game ended after " + Turns + " turns", "Gamestats");
 		}
 	}
 

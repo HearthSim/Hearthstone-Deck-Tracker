@@ -14,6 +14,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("PlayerGet", cardId);
 			Game.PlayerGet(cardId, false);
+
+			if (cardId != "GAME_005")
+			{
+				Game.CurrentGameStats.Coin = true;
+				Logger.WriteLine("Got coin", "GameStats");
+			}
 		}
 
 		public static void HandlePlayerBackToHand(string cardId)
@@ -237,10 +243,18 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
-			if(!backInMenu)
+			if (!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
+				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				Game.CurrentGameStats.GameEnd();
+
+				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+				if (selectedDeck != null)
+				{
+					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
+				}
 				return;
 			}
 			Logger.WriteLine("Game end");
@@ -287,9 +301,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was won!");
+			Logger.WriteLine("Game was won! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
-			Helper.MainWindow.DeckPickerList.SelectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 			DeckStatsList.Save();
 			Game.CurrentGameStats = null;
 		}
@@ -298,9 +311,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if (!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was lost!");
+			Logger.WriteLine("Game was lost! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
-			Helper.MainWindow.DeckPickerList.SelectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 			DeckStatsList.Save();
 			Game.CurrentGameStats = null;
 		}
