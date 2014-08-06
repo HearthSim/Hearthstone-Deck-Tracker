@@ -151,7 +151,15 @@ namespace Hearthstone_Deck_Tracker
 				case "Slam":
 					return cardName + " Draw";
 				case "Silence":
-					return cardName + " minion.";
+					switch (Config.Instance.SelectedLanguage)
+					{
+						case "enUS":
+							return cardName + " common";
+						case "frFR":
+							return cardName + " commune";
+						default:
+							return cardName;
+					}
 
 				//german
 				case "Feuerball":
