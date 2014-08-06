@@ -2226,8 +2226,6 @@ namespace Hearthstone_Deck_Tracker
 
 			//create overlay
 			Overlay = new OverlayWindow { Topmost = true };
-			if (_foundHsDirectory)
-				Overlay.Show();
 
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
