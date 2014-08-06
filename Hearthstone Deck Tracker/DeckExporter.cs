@@ -153,12 +153,16 @@ namespace Hearthstone_Deck_Tracker
 				case "Silence":
 					return cardName + " minion.";
 
-
 				//german
 				case "Feuerball":
 				case "Windzorn":
 				case "Klaue":
 					return cardName + " Zauber";
+
+				//french
+				case "Éclair":
+					return cardName + " 3";
+
 				default:
 					return cardName;
 			}
