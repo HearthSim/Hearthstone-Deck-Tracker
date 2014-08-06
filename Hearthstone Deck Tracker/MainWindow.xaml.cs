@@ -955,6 +955,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.DecksList.Remove(NewDeck);
 				DeckPickerList.RemoveDeck(NewDeck);
 			}
+
+			var oldDeckName = NewDeck.Name;
+
 			NewDeck.Name = deckName;
 			NewDeck.Class = ComboBoxSelectClass.SelectedValue.ToString();
 			NewDeck.Tags = TagControlNewDeck.GetTags();
@@ -966,10 +969,23 @@ namespace Hearthstone_Deck_Tracker
 			newDeckClone.LastEdited = DateTime.Now;
 
 			WriteDecks();
+			Logger.WriteLine("Saved Decks");
 			BtnSaveDeck.Content = "Save";
 
 			if (EditingDeck)
+			{
 				TagControlNewDeck.SetSelectedTags(new List<string>());
+				if (deckName != oldDeckName)
+				{
+					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == oldDeckName);
+					if (statsEntry != null)
+					{
+						statsEntry.Name = deckName;
+						DeckStatsList.Save();
+						Logger.WriteLine("Deck has new name, updated deckstats");
+					}
+				}
+			}
 
 			TabControlTracker.SelectedIndex = 0;
 			EditingDeck = false;
