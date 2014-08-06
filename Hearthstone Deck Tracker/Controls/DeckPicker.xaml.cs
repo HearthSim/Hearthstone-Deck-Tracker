@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -49,7 +50,17 @@ namespace Hearthstone_Deck_Tracker
 								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
 				}
 			}
-
+			
+			public string WinsPercent
+			{
+				get
+				{
+					if (Name == "Back" || Name == "All") return string.Empty;
+					var total = Decks.Sum(d => d.DeckStats.Games.Count);
+					if (total == 0) return "-%";
+					return Math.Round(100.0 * Decks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
+				}
+			}
 			// ReSharper disable PossibleNullReferenceException
 			public Color ClassColor
 			{
@@ -358,6 +369,8 @@ namespace Hearthstone_Deck_Tracker
 				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
 				Helper.MainWindow.FlyoutNotes.Header = flyoutHeader;
 				Helper.MainWindow.FlyoutDeckOptions.Header = flyoutHeader;
+				Helper.MainWindow.FlyoutDeckStats.Header = "Stats: " + deck.Name;
+				Helper.MainWindow.DeckStatsFlyout.SetDeck(deck);
 
 				//change player deck itemsource
 				if (Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)

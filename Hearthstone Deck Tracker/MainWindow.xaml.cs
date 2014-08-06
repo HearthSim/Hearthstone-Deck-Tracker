@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -41,6 +42,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
+		public readonly DeckStatsList AllDeckStats;
 		public readonly Decks DeckList;
 		public readonly Version NewVersion;
 		public readonly OpponentWindow OpponentWindow;
@@ -2196,6 +2198,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckPickerList.AddDeck(deck);
 			}
 
+			SetupDeckStatsFile();
+			DeckStatsList.Load();
+
 			_notifyIcon = new NotifyIcon { Icon = new Icon(@"Images/HearthstoneDeckTracker.ico") };
 			_notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
 			_notifyIcon.Visible = false;
@@ -2264,6 +2269,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//SortFilterDecksFlyout.SelectedTagsChanged += SortFilterDecksFlyoutOnSelectedTagsChanged;
 			//SortFilterDecksFlyout.OperationChanged += SortFilterDecksFlyoutOnOperationChanged;
+			
 
 			UpdateDbListView();
 
@@ -2287,6 +2293,54 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.SortDecks();
+		}
+
+		private void SetupDeckStatsFile()
+		{
+			var appDataPath = Config.Instance.AppDataPath + @"\DeckStats.xml";
+			const string localPath = "DeckStats.xml";
+			if (Config.Instance.SaveInAppData)
+			{
+				if (File.Exists(localPath))
+				{
+					if (File.Exists(appDataPath))
+					{
+						//backup in case the file already exists
+						File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
+					}
+					File.Move(localPath, appDataPath);
+					Logger.WriteLine("Moved DeckStats to appdata");
+				}
+			}
+			else
+			{
+				if (File.Exists(appDataPath))
+				{
+					if (File.Exists(localPath))
+					{
+						//backup in case the file already exists
+						File.Move(localPath, localPath + DateTime.Now.ToFileTime());
+					}
+					File.Move(appDataPath, localPath);
+					Logger.WriteLine("Moved DeckStats to local");
+				}
+			}
+
+			var filePath = Config.Instance.HomeDir + "DeckStats.xml";
+			//load saved decks
+			if (!File.Exists(filePath))
+			{
+				//avoid overwriting decks file with new releases.
+				using (var sr = new StreamWriter(filePath, false))
+				{
+					sr.WriteLine("<DeckStatsList></DeckStatsList>");
+				}
+			}
+			else if (!File.Exists(filePath + ".old"))
+			{
+				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
+				File.Copy(_decksPath, filePath + ".old");
+			}
 		}
 
 		// Logic for dealing with legacy config file semantics
@@ -2556,5 +2610,21 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
+		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
+		{
+			FlyoutDeckStats.IsOpen = true;
+			var deck = DeckPickerList.SelectedDeck;
+			if(deck != null)
+				DeckStatsFlyout.SetDeck(deck);
+		}
+
+		public async Task<MessageDialogResult> ShowDeleteGameStatsMessage(GameStats stats)
+		{
+			var settings = new MetroDialogSettings() {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			return
+				await
+				this.ShowMessageAsync("Delete Game", stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
+				                      MessageDialogStyle.AffirmativeAndNegative, settings);
+		}
 	}
 }

@@ -105,6 +105,9 @@
     <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
       <DependentUpon>DeckOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
+      <DependentUpon>DeckStatsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
@@ -144,6 +147,8 @@
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="Stats\DeckStats.cs" />
+    <Compile Include="Stats\GameStats.cs" />
     <Compile Include="TurnTimer.cs" />
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
@@ -202,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCostBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckStatsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

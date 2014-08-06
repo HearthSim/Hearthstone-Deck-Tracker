@@ -17,11 +17,12 @@
                 </Grid.Background>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Grid>
-                    <Label Content="{Binding GetName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="{Binding GetFontWeight}" FontSize="14" Foreground="Black"></Label>
-                    <Label Content="{Binding TagList}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,22, 0, 0" Foreground="Black"></Label>
-                </Grid>
+                    <Label Content="{Binding WinsPercent}"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="Medium" Foreground="Black" />
+                    <Rectangle Width="2" Height="auto" Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.Column="1" HorizontalAlignment="Left" />
+                    <Label Content="{Binding GetName}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="{Binding GetFontWeight}" FontSize="14" Foreground="Black"></Label>
+                    <Label Content="{Binding TagList}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,22, 0, 0" Foreground="Black"></Label>
             </Grid>
         </DataTemplate>
     </ListBox.ItemTemplate>

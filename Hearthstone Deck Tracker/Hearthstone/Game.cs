@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -39,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
 		public static bool IsRunning;
+		public static GameStats CurrentGameStats;
 
 
 		public static ObservableCollection<Card> PlayerDeck;

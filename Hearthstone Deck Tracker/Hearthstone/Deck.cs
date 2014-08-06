@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -45,6 +46,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public string WinsPercent
+		{
+			get
+			{
+				if (DeckStats.Games.Count == 0) return "-%";
+				return Math.Round(100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count, 0) + "%";
+			}
+		}
+
+		[XmlIgnore]
 		public string GetClass
 		{
 			get { return string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")"; }
@@ -55,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var charCount = IsSelectedInGui ? 20 : 25;
+				var charCount = IsSelectedInGui ? 15 : 17;
 				var tmpName = Name.Length > charCount ? string.Join("", Name.Take(charCount)) + "..." : Name;
 				return IsSelectedInGui ? string.Format("> {0} <", tmpName) : tmpName;
 			}
@@ -111,6 +122,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					default:
 						return Colors.Gray;
 				}
+			}
+		}
+
+		public DeckStats DeckStats
+		{
+			get
+			{
+				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == Name);
+				if (deckStats == null)
+				{
+					deckStats = new DeckStats(Name);
+					DeckStatsList.Instance.DeckStats.Add(deckStats);
+				}
+				return deckStats;
 			}
 		}
 
