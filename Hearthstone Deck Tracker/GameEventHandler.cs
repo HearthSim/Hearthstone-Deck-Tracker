@@ -172,9 +172,6 @@ namespace Hearthstone_Deck_Tracker
 			//avoid new game being started when jaraxxus is played
 			if (!Game.IsInMenu) return;
 
-			if (Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
-				Helper.MainWindow.PrepareNoGameResultDialog();
-
 			Game.PlayingAs = playerHero;
 
 			Logger.WriteLine("Game start");
@@ -272,9 +269,6 @@ namespace Hearthstone_Deck_Tracker
 				Game.Reset();
 			}
 			Game.IsInMenu = true;
-
-			if(Game.CurrentGameStats != null)
-				Helper.MainWindow.PrepareNoGameResultDialogDelayed();
 		}
 #pragma warning restore 4014
 
