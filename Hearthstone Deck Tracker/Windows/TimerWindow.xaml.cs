@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -20,29 +19,25 @@ namespace Hearthstone_Deck_Tracker
 			Height = _config.TimerWindowHeight;
 			Width = _config.TimerWindowWidth;
 
-			if (_config.TimerWindowLeft.HasValue)
-			{
+			if(_config.TimerWindowLeft.HasValue)
 				Left = config.TimerWindowLeft.Value;
-			}
-			if (_config.TimerWindowTop.HasValue)
-			{
+			if(_config.TimerWindowTop.HasValue)
 				Top = config.TimerWindowTop.Value;
-			}
 			Topmost = _config.TimerWindowTopmost;
 		}
 
 		public void Update(TimerEventArgs timerEventArgs)
 		{
-			LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds/60)%60, timerEventArgs.Seconds%60);
-			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds/60)%60,
-			                                       timerEventArgs.PlayerSeconds%60);
-			LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds/60)%60,
-			                                         timerEventArgs.OpponentSeconds%60);
+			LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds / 60) % 60, timerEventArgs.Seconds % 60);
+			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60,
+			                                       timerEventArgs.PlayerSeconds % 60);
+			LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds / 60) % 60,
+			                                         timerEventArgs.OpponentSeconds % 60);
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if (_appIsClosing) return;
+			if(_appIsClosing) return;
 			e.Cancel = true;
 			Hide();
 		}
@@ -53,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			_appIsClosing = true;
 			Close();
 		}
-		
+
 		private void MetroWindow_Activated(object sender, EventArgs e)
 		{
 			Topmost = true;
@@ -61,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{
-			if (!_config.TimerWindowTopmost)
+			if(!_config.TimerWindowTopmost)
 				Topmost = false;
 		}
 	}

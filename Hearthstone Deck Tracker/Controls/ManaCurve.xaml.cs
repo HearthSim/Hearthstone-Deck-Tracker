@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 		public void ClearDeck()
 		{
 			_deck = null;
-			for (var i = 0; i < 8; i++)
+			for(var i = 0; i < 8; i++)
 			{
 				_manaCostBars[i].SetValues(0, 0, 0, 0);
 				_manaCostBars[i].SetTooltipValues(0, 0, 0);
@@ -46,17 +46,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UpdateValues()
 		{
-			if (_deck == null) return;
+			if(_deck == null) return;
 
 			var counts = new int[8];
 			var weapons = new int[8];
 			var spells = new int[8];
 			var minions = new int[8];
-			foreach (var card in _deck.Cards)
+			foreach(var card in _deck.Cards)
 			{
-				if (card.Cost >= 7)
+				if(card.Cost >= 7)
 				{
-					switch (card.Type)
+					switch(card.Type)
 					{
 						case "Weapon":
 							weapons[7] += card.Count;
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					switch (card.Type)
+					switch(card.Type)
 					{
 						case "Weapon":
 							weapons[card.Cost] += card.Count;
@@ -90,23 +90,23 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			var max = 0;
-			for (var i = 0; i < 8; i++)
+			for(var i = 0; i < 8; i++)
 			{
 				var sum = weapons[i] + spells[i] + minions[i];
-				if (sum > max)
+				if(sum > max)
 					max = sum;
 			}
 
-			for (var i = 0; i < 8; i++)
+			for(var i = 0; i < 8; i++)
 			{
-				if (max == 0)
+				if(max == 0)
 				{
 					_manaCostBars[i].SetValues(0, 0, 0, 0);
 					_manaCostBars[i].SetTooltipValues(0, 0, 0);
 				}
 				else
 				{
-					_manaCostBars[i].SetValues(100d*weapons[i]/max, 100d*spells[i]/max, 100d*minions[i]/max, counts[i]);
+					_manaCostBars[i].SetValues(100d * weapons[i] / max, 100d * spells[i] / max, 100d * minions[i] / max, counts[i]);
 					_manaCostBars[i].SetTooltipValues(weapons[i], spells[i], minions[i]);
 				}
 			}

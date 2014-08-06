@@ -29,7 +29,8 @@ namespace Hearthstone_Deck_Tracker
 		public string CreatedByVersion = Defaults.CreatedByVersion;
 		public int CustomHeight = Defaults.CustomHeight;
 		public int CustomWidth = Defaults.CustomWidth;
-		[XmlIgnore] public bool Debug = Defaults.Debug;
+		[XmlIgnore]
+		public bool Debug = Defaults.Debug;
 		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
 		public bool ExtraFeatures = Defaults.ExtraFeatures;
 		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
@@ -94,10 +95,9 @@ namespace Hearthstone_Deck_Tracker
 		public double SecretsTop = Defaults.SecretsTop;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
 		public string SelectedLanguage = Defaults.SelectedLanguage;
-
-		[XmlArray(ElementName = "SelectedTags")] [XmlArrayItem(ElementName = "Tag")] public List<string> SelectedTags =
-			Defaults.SelectedTags;
-
+		[XmlArray(ElementName = "SelectedTags")]
+		[XmlArrayItem(ElementName = "Tag")]
+		public List<string> SelectedTags = Defaults.SelectedTags;
 		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
 		public bool ShowAllDecks = Defaults.ShowAllDecks;
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _config; }
 		}
-		
+
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;
@@ -171,11 +171,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var configPath = Instance.ConfigPath;
 
-			if (File.Exists(configPath))
+			if(File.Exists(configPath))
 			{
 				File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
 
-				if (deleteOriginal)
+				if(deleteOriginal)
 					File.Delete(configPath);
 			}
 		}
@@ -185,23 +185,21 @@ namespace Hearthstone_Deck_Tracker
 			var foundConfig = false;
 			try
 			{
-				if (File.Exists("config.xml"))
+				if(File.Exists("config.xml"))
 				{
 					_config = XmlManager<Config>.Load("config.xml");
 					foundConfig = true;
 				}
-				else if (File.Exists(Instance.AppDataPath + @"\config.xml"))
+				else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
 				{
 					_config = XmlManager<Config>.Load(Instance.AppDataPath + @"\config.xml");
 					foundConfig = true;
 				}
-				else if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
-				{
+				else if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
 					//save locally if appdata doesn't exist (when e.g. not on C)
 					Instance.SaveInAppData = false;
-				}
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
@@ -212,18 +210,16 @@ namespace Hearthstone_Deck_Tracker
 
 			var configPath = Instance.ConfigPath;
 
-			if (!foundConfig)
+			if(!foundConfig)
 			{
-				if (Instance.HomeDir != string.Empty)
+				if(Instance.HomeDir != string.Empty)
 					Directory.CreateDirectory(Instance.HomeDir);
-				using (var sr = new StreamWriter(Instance.ConfigPath, false))
-				{
+				using(var sr = new StreamWriter(Instance.ConfigPath, false))
 					sr.WriteLine("<Config></Config>");
-				}
 			}
-			else if (Instance.SaveInAppData) //check if config needs to be moved
+			else if(Instance.SaveInAppData) //check if config needs to be moved
 			{
-				if (File.Exists("config.xml"))
+				if(File.Exists("config.xml"))
 				{
 					Directory.CreateDirectory(Instance.HomeDir);
 					SaveBackup(true); //backup in case the file already exists
@@ -231,14 +227,11 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Moved config to appdata");
 				}
 			}
-			else
+			else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
 			{
-				if (File.Exists(Instance.AppDataPath + @"\config.xml"))
-				{
-					SaveBackup(true); //backup in case the file already exists
-					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to local");
-				}
+				SaveBackup(true); //backup in case the file already exists
+				File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
+				Logger.WriteLine("Moved config to local");
 			}
 
 			return configPath;
@@ -361,7 +354,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
-
 		}
 	}
 }

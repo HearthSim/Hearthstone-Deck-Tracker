@@ -83,9 +83,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					//Gelbin Mekkatorque
 					"EX1_112", new[]
 						{
-							"Mekka1", 
-							"Mekka2", 
-							"Mekka3", 
+							"Mekka1",
+							"Mekka2",
+							"Mekka3",
 							"Mekka4"
 						}
 				},
@@ -93,14 +93,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					//Animal Companion
 					"NEW1_031", new[]
 						{
-							"NEW1_032", 
-							"NEW1_033", 
+							"NEW1_032",
+							"NEW1_033",
 							"NEW1_034"
 						}
 				},
 				{
 					//Bane of Doom
-					"EX1_320", new []
+					"EX1_320", new[]
 						{
 							"EX1_306",
 							"CS2_065",
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				},
 				{
 					//Power of the Horde
-					"PRO_001c", new []
+					"PRO_001c", new[]
 						{
 							"CS2_121",
 							"EX1_021",
@@ -122,7 +122,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							"CS2_179"
 						}
 				}
-
 			};
 	}
 }

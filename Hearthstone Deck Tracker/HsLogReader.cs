@@ -27,26 +27,26 @@ namespace Hearthstone_Deck_Tracker
 		private const int MaxFileLength = 6000000;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
-		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
 
 		private readonly string _fullOutputPath;
 
 		private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>
-		{
-			{"HERO_01", "Warrior"},
-			{"HERO_02", "Shaman"},
-			{"HERO_03", "Rogue"},
-			{"HERO_04", "Paladin"},
-			{"HERO_05", "Hunter"},
-			{"HERO_06", "Druid"},
-			{"HERO_07", "Warlock"},
-			{"HERO_08", "Mage"},
-			{"HERO_09", "Priest"}
-		};
+			{
+				{"HERO_01", "Warrior"},
+				{"HERO_02", "Shaman"},
+				{"HERO_03", "Rogue"},
+				{"HERO_04", "Paladin"},
+				{"HERO_05", "Hunter"},
+				{"HERO_06", "Druid"},
+				{"HERO_07", "Warlock"},
+				{"HERO_08", "Mage"},
+				{"HERO_09", "Priest"}
+			};
 
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 
 		private readonly int _updateDelay;
+		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
 
 
 		private long _currentOffset;
@@ -65,10 +65,8 @@ namespace Hearthstone_Deck_Tracker
 			var updateDelay = Config.Instance.UpdateDelay;
 
 			_updateDelay = updateDelay == 0 ? 100 : updateDelay;
-			while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
-			{
+			while(hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
 				hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
-			}
 			_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
 		}
 
@@ -98,17 +96,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void ReadFileAsync()
 		{
-			while (_doUpdate)
+			while(_doUpdate)
 			{
-				if (File.Exists(_fullOutputPath))
+				if(File.Exists(_fullOutputPath))
 				{
 					//find end of last game (avoids reading the full log on start)
-					if (_first)
+					if(_first)
 					{
-						using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+						using(var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 						{
 							var fileOffset = 0L;
-							if (fs.Length > MaxFileLength)
+							if(fs.Length > MaxFileLength)
 							{
 								fileOffset = fs.Length - MaxFileLength;
 								fs.Seek(fs.Length - MaxFileLength, SeekOrigin.Begin);
@@ -119,20 +117,20 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 
-					using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+					using(var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 					{
 						fs.Seek(_previousSize, SeekOrigin.Begin);
-						if (fs.Length == _previousSize)
+						if(fs.Length == _previousSize)
 						{
 							await Task.Delay(_updateDelay);
 							continue;
 						}
 						var newLength = fs.Length;
 
-						using (var sr = new StreamReader(fs))
+						using(var sr = new StreamReader(fs))
 						{
 							var newLines = sr.ReadToEnd();
-							if (!newLines.EndsWith("\n"))
+							if(!newLines.EndsWith("\n"))
 							{
 								//hearthstone log apparently does not append full lines
 								await Task.Delay(_updateDelay);
@@ -152,15 +150,15 @@ namespace Hearthstone_Deck_Tracker
 
 		private long FindLastGameEnd(FileStream fs)
 		{
-			using (var sr = new StreamReader(fs))
+			using(var sr = new StreamReader(fs))
 			{
 				long offset = 0, tempOffset = 0;
 				var lines = sr.ReadToEnd().Split('\n');
 
-				foreach (var line in lines)
+				foreach(var line in lines)
 				{
 					tempOffset += line.Length + 1;
-					if (line.StartsWith("[Bob] legend rank"))
+					if(line.StartsWith("[Bob] legend rank"))
 						offset = tempOffset;
 				}
 
@@ -171,50 +169,48 @@ namespace Hearthstone_Deck_Tracker
 		private void Analyze(string log)
 		{
 			var logLines = log.Split('\n');
-			foreach (var logLine in logLines)
+			foreach(var logLine in logLines)
 			{
 				_currentOffset += logLine.Length + 1;
-				if (logLine.StartsWith("[Power]"))
-				{
+				if(logLine.StartsWith("[Power]"))
 					_powerCount++;
-				}
-				else if (logLine.StartsWith("[Asset"))
+				else if(logLine.StartsWith("[Asset"))
 				{
-					if (logLine.ToLower().Contains("victory"))
+					if(logLine.ToLower().Contains("victory"))
 						GameEventHandler.HandleWin();
 					else if(logLine.ToLower().Contains("defeat"))
 						GameEventHandler.HandleLoss();
 				}
-				else if (logLine.StartsWith("[Bob] legend rank"))
+				else if(logLine.StartsWith("[Bob] legend rank"))
 				{
-					if (!Game.IsInMenu)
+					if(!Game.IsInMenu)
 						GameEventHandler.HandleGameEnd(false);
 				}
-				else if (logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
 					GameEventHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
-					if (Config.Instance.ClearLogFileAfterGame)
+					if(Config.Instance.ClearLogFileAfterGame)
 					{
 						try
 						{
-							using (var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-							using (var sw = new StreamWriter(fs))
+							using(var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+							using(var sw = new StreamWriter(fs))
 								sw.Write("");
 							Logger.WriteLine("Cleared log file");
 							Reset(true);
 						}
-						catch (Exception e)
+						catch(Exception e)
 						{
 							Logger.WriteLine("Error cleared log file: " + e.Message);
 						}
 					}
 				}
-				else if (logLine.StartsWith("[Zone]"))
+				else if(logLine.StartsWith("[Zone]"))
 				{
-					if (_cardMovementRegex.IsMatch(logLine))
+					if(_cardMovementRegex.IsMatch(logLine))
 					{
 						var match = _cardMovementRegex.Match(logLine);
 
@@ -226,12 +222,12 @@ namespace Hearthstone_Deck_Tracker
 						var zone = string.Empty;
 
 						// Only for some log lines, should be valid in every action where we need it
-						if (_opponentPlayRegex.IsMatch(logLine))
+						if(_opponentPlayRegex.IsMatch(logLine))
 						{
 							var match2 = _opponentPlayRegex.Match(logLine);
 							zonePos = Int32.Parse(match2.Groups["zonePos"].Value.Trim());
 						}
-						if (_zoneRegex.IsMatch(logLine))
+						if(_zoneRegex.IsMatch(logLine))
 						{
 							var match3 = _zoneRegex.Match(logLine);
 							zone = match3.Groups["zone"].Value.Trim();
@@ -239,26 +235,26 @@ namespace Hearthstone_Deck_Tracker
 						}
 
 						//game start/end
-						if (id.Contains("HERO"))
+						if(id.Contains("HERO"))
 						{
-							if (!from.Contains("PLAY"))
+							if(!from.Contains("PLAY"))
 							{
-								if (to.Contains("FRIENDLY"))
+								if(to.Contains("FRIENDLY"))
 									GameEventHandler.HandleGameStart(_heroIdDict[id]);
-								else if (to.Contains("OPPOSING"))
+								else if(to.Contains("OPPOSING"))
 									GameEventHandler.SetOpponentHero(_heroIdDict[id]);
 							}
 							_powerCount = 0;
 							continue;
 						}
 
-						switch (from)
+						switch(from)
 						{
 							case "FRIENDLY DECK":
-								if (to == "FRIENDLY HAND")
+								if(to == "FRIENDLY HAND")
 								{
 									//player draw
-									if (_powerCount >= PowerCountTreshold)
+									if(_powerCount >= PowerCountTreshold)
 									{
 										_turnCount++;
 										GameEventHandler.TurnStart(Turn.Player, GetTurnNumber());
@@ -270,9 +266,9 @@ namespace Hearthstone_Deck_Tracker
 									GameEventHandler.HandlePlayerDeckDiscard(id);
 								break;
 							case "FRIENDLY HAND":
-								if (to == "FRIENDLY DECK")
+								if(to == "FRIENDLY DECK")
 									GameEventHandler.HandlePlayerMulligan(id);
-								else if (to == "FRIENDLY PLAY")
+								else if(to == "FRIENDLY PLAY")
 									GameEventHandler.HandlePlayerPlay(id);
 								else
 									//player discard from hand and spells
@@ -284,21 +280,21 @@ namespace Hearthstone_Deck_Tracker
 									GameEventHandler.HandlePlayerBackToHand(id);
 								break;
 							case "OPPOSING HAND":
-								if (to == "OPPOSING DECK")
+								if(to == "OPPOSING DECK")
 									//opponent mulligan
 									GameEventHandler.HandleOpponentMulligan(zonePos);
 								else
 								{
-									if (to == "OPPOSING SECRET")
+									if(to == "OPPOSING SECRET")
 										GameEventHandler.HandleOpponentSecretPlayed();
 
 									GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
 								}
 								break;
 							case "OPPOSING DECK":
-								if (to == "OPPOSING HAND")
+								if(to == "OPPOSING HAND")
 								{
-									if (_powerCount >= PowerCountTreshold)
+									if(_powerCount >= PowerCountTreshold)
 									{
 										_turnCount++;
 										GameEventHandler.TurnStart(Turn.Opponent, GetTurnNumber());
@@ -316,22 +312,22 @@ namespace Hearthstone_Deck_Tracker
 								GameEventHandler.HandleOpponentSecretTrigger(id);
 								break;
 							case "OPPOSING PLAY":
-								if (to == "OPPOSING HAND") //card from play back to hand (sap/brew)
+								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
 									GameEventHandler.HandleOpponentPlayToHand(id, GetTurnNumber());
 								break;
 							default:
-								if (to == "OPPOSING HAND")
+								if(to == "OPPOSING HAND")
 									//coin, thoughtsteal etc
 									GameEventHandler.HandleOpponentGet(GetTurnNumber());
-								else if (to == "FRIENDLY HAND")
+								else if(to == "FRIENDLY HAND")
 									//coin, thoughtsteal etc
 									GameEventHandler.HandlePlayerGet(id);
-								else if (to == "OPPOSING GRAVEYARD" && from == "" && id != "")
+								else if(to == "OPPOSING GRAVEYARD" && from == "" && id != "")
 								{
 									//todo: not sure why those two are here
 									//CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
 								}
-								else if (to == "FRIENDLY GRAVEYARD" && from == "")
+								else if(to == "FRIENDLY GRAVEYARD" && from == "")
 								{
 									// CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
 								}
@@ -345,7 +341,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void Reset(bool full)
 		{
-			if (full)
+			if(full)
 			{
 				_previousSize = 0;
 				_first = true;

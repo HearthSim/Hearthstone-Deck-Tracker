@@ -14,8 +14,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
 		public string Id;
-		[XmlIgnore] public string PlayerClass;
-		[XmlIgnore] public string Rarity;
+
+		[XmlIgnore]
+		public string PlayerClass;
+
+		[XmlIgnore]
+		public string Rarity;
+
 		private int _count;
 		private int _inHandCount;
 		private bool _isStolen;
@@ -115,10 +120,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if (_name == null)
-				{
+				if(_name == null)
 					Load();
-				}
 				return _name;
 			}
 			set { _name = value; }
@@ -174,22 +177,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int Height
 		{
-			get { return (int) (OverlayWindow.Scaling*35); }
+			get { return (int)(OverlayWindow.Scaling * 35); }
 		}
 
 		public int OpponentHeight
 		{
-			get { return (int) (OverlayWindow.OpponentScaling*35); }
+			get { return (int)(OverlayWindow.OpponentScaling * 35); }
 		}
 
 		public int PlayerWindowHeight
 		{
-			get { return (int) (PlayerWindow.Scaling*35); }
+			get { return (int)(PlayerWindow.Scaling * 35); }
 		}
 
 		public int OpponentWindowHeight
 		{
-			get { return (int) (OpponentWindow.Scaling*35); }
+			get { return (int)(OpponentWindow.Scaling * 35); }
 		}
 
 
@@ -203,13 +206,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				Color color;
-				if (_justDrawn)
+				if(_justDrawn)
 					color = Colors.Orange;
-				else if (InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
+				else if(InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
-				else if (Count == 0)
+				else if(Count == 0)
 					color = Colors.Gray;
-				else if (WasDiscarded && Game.HighlightDiscarded)
+				else if(WasDiscarded && Game.HighlightDiscarded)
 					color = Colors.IndianRed;
 				else
 					color = Colors.White;
@@ -228,10 +231,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if (Id == null || Name == null)
-				{
+				if(Id == null || Name == null)
 					return new ImageBrush();
-				}
 				try
 				{
 					var cardFileName =
@@ -242,7 +243,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					//card graphic
 					var group = new DrawingGroup();
 
-					if (File.Exists("Images/" + cardFileName))
+					if(File.Exists("Images/" + cardFileName))
 					{
 						group.Children.Add(
 							new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
@@ -255,12 +256,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						                 new Rect(0, 0, 218, 35)));
 
 					//extra info?
-					if (Count >= 2 || Rarity == "Legendary")
+					if(Count >= 2 || Rarity == "Legendary")
 					{
 						group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
 						                                    new Rect(189, 6, 25, 24)));
 
-						if (Count >= 2 && Count <= 9)
+						if(Count >= 2 && Count <= 9)
 						{
 							group.Children.Add(new ImageDrawing(
 								                   new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)),
@@ -274,7 +275,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 					//dark overlay
-					if (Count == 0)
+					if(Count == 0)
 					{
 						group.Children.Add(
 							new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
@@ -285,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					brush.ImageSource = new DrawingImage(group);
 					return brush;
 				}
-				catch (Exception)
+				catch(Exception)
 				{
 					return new ImageBrush();
 				}
@@ -307,9 +308,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override bool Equals(object card)
 		{
-			if (!(card is Card))
+			if(!(card is Card))
 				return false;
-			var c = (Card) card;
+			var c = (Card)card;
 			return c.Name == Name;
 		}
 
@@ -341,7 +342,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public async Task JustDrawn()
 		{
-			if (!Config.Instance.HighlightLastDrawn)
+			if(!Config.Instance.HighlightLastDrawn)
 				return;
 
 			_justDrawn = true;
@@ -354,7 +355,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if (handler != null)
+			if(handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}

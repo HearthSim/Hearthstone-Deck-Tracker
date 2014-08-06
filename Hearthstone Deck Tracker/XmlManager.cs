@@ -8,9 +8,9 @@ namespace Hearthstone_Deck_Tracker
 		public static T Load(string path)
 		{
 			T instance;
-			using (TextReader reader = new StreamReader(path))
+			using(TextReader reader = new StreamReader(path))
 			{
-				XmlSerializer xml = new XmlSerializer(typeof(T));
+				var xml = new XmlSerializer(typeof(T));
 				instance = (T)xml.Deserialize(reader);
 			}
 			return instance;
@@ -19,9 +19,9 @@ namespace Hearthstone_Deck_Tracker
 		public static T LoadFromString(string xmlString)
 		{
 			T instance;
-			using (TextReader reader = new StringReader(xmlString))
+			using(TextReader reader = new StringReader(xmlString))
 			{
-				XmlSerializer xml = new XmlSerializer(typeof(T));
+				var xml = new XmlSerializer(typeof(T));
 				instance = (T)xml.Deserialize(reader);
 			}
 			return instance;
@@ -29,9 +29,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void Save(string path, object obj)
 		{
-			using (TextWriter writer = new StreamWriter(path))
+			using(TextWriter writer = new StreamWriter(path))
 			{
-				XmlSerializer xml = new XmlSerializer(typeof(T));
+				var xml = new XmlSerializer(typeof(T));
 				xml.Serialize(writer, obj);
 			}
 		}

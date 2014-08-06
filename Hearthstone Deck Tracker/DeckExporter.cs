@@ -1,11 +1,7 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -25,11 +21,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task Export(Deck deck)
 		{
-			if (deck == null) return;
+			if(deck == null) return;
 
 			var hsHandle = User32.FindWindow("UnityWndClass", "Hearthstone");
 
-			if (!User32.IsForegroundWindow("Hearthstone"))
+			if(!User32.IsForegroundWindow("Hearthstone"))
 			{
 				//restore window and bring to foreground
 				User32.ShowWindow(hsHandle, User32.SwRestore);
@@ -37,7 +33,7 @@ namespace Hearthstone_Deck_Tracker
 				//wait it to actually be in foreground, else the rect might be wrong
 				await Task.Delay(500);
 			}
-			if (!User32.IsForegroundWindow("Hearthstone"))
+			if(!User32.IsForegroundWindow("Hearthstone"))
 			{
 				MessageBox.Show("Can't find Heartstone window.");
 				return;
@@ -46,13 +42,11 @@ namespace Hearthstone_Deck_Tracker
 			var hsRect = User32.GetHearthstoneRect(false);
 			var bounds = Screen.FromHandle(hsHandle).Bounds;
 
-			if (Config.Instance.ExportSetDeckName)
+			if(Config.Instance.ExportSetDeckName)
 				await SetDeckName(deck.Name, hsRect.Width, hsRect.Height, hsHandle);
 
-			foreach (var card in deck.Cards)
-			{
+			foreach(var card in deck.Cards)
 				await AddCardToDeck(card, hsRect.Width, hsRect.Height, hsHandle);
-			}
 		}
 
 		private static async Task SetDeckName(string name, int width, int height, IntPtr hsHandle)
@@ -78,42 +72,37 @@ namespace Hearthstone_Deck_Tracker
 
 			var card2PosX = ratio < 1.5 ? width * Config.Instance.Card2PosX : width * Config.Instance.Card2PosX * (ratio / 1.33);
 			var cardPosY = Config.Instance.CardPosY * height;
-			for (int i = 0; i < card.Count; i++)
+			for(var i = 0; i < card.Count; i++)
 			{
-				if (Config.Instance.PrioritizeGolden)
+				if(Config.Instance.PrioritizeGolden)
 				{
-					if (card.Count == 2)
+					if(card.Count == 2)
 						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-					else if (CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05))))
+					else if(CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05))))
 						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 					else
 						await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				}
 				else
-				{
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-				}
 			}
 
-			if (card.Count == 2)
+			if(card.Count == 2)
 			{
 				//click again to make sure we get 2 cards 
-				if (Config.Instance.PrioritizeGolden)
+				if(Config.Instance.PrioritizeGolden)
 				{
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				}
 				else
-				{
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-				}
-
 			}
-			
+
 			// Clear search field now all cards have been entered
-            await ClickOnPoint(hsHandle, searchBoxPos);
-            SendKeys.SendWait("{DELETE}");
-            SendKeys.SendWait("{ENTER}");
+			await ClickOnPoint(hsHandle, searchBoxPos);
+			SendKeys.SendWait("{DELETE}");
+			SendKeys.SendWait("{ENTER}");
 		}
 
 		private static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)
@@ -123,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
 
 			//mouse down
-			if (SystemInformation.MouseButtonsSwapped)
+			if(SystemInformation.MouseButtonsSwapped)
 				User32.mouse_event((uint)User32.MouseEventFlags.RightDown, 0, 0, 0, UIntPtr.Zero);
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
@@ -131,7 +120,7 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(Config.Instance.ClickDelay);
 
 			//mouse up
-			if (SystemInformation.MouseButtonsSwapped)
+			if(SystemInformation.MouseButtonsSwapped)
 				User32.mouse_event((uint)User32.MouseEventFlags.RightUp, 0, 0, 0, UIntPtr.Zero);
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
@@ -141,9 +130,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private static string FixCardName(string cardName)
 		{
-			switch (cardName)
+			switch(cardName)
 			{
-				//english
+					//english
 				case "Fireball":
 				case "Windfury":
 				case "Claw":
@@ -151,7 +140,7 @@ namespace Hearthstone_Deck_Tracker
 				case "Slam":
 					return cardName + " Draw";
 				case "Silence":
-					switch (Config.Instance.SelectedLanguage)
+					switch(Config.Instance.SelectedLanguage)
 					{
 						case "enUS":
 							return cardName + " common";
@@ -161,13 +150,13 @@ namespace Hearthstone_Deck_Tracker
 							return cardName;
 					}
 
-				//german
+					//german
 				case "Feuerball":
 				case "Windzorn":
 				case "Klaue":
 					return cardName + " Zauber";
 
-				//french
+					//french
 				case "Éclair":
 					return cardName + " 3";
 
@@ -184,18 +173,18 @@ namespace Hearthstone_Deck_Tracker
 			var avgSat = 0.0f;
 			var capture = Helper.CaptureHearthstone(point, width, height, wndHandle);
 
-			if (capture == null)
+			if(capture == null)
 				return false;
 
 			var validPixels = 0;
-			for (int i = 0; i < width; i++)
+			for(var i = 0; i < width; i++)
 			{
-				for (int j = 0; j < height; j++)
+				for(var j = 0; j < height; j++)
 				{
 					var pixel = capture.GetPixel(i, j);
 
 					//ignore sparkle
-					if (pixel.GetSaturation() > 0.05)
+					if(pixel.GetSaturation() > 0.05)
 					{
 						avgHue += pixel.GetHue();
 						avgSat += pixel.GetSaturation();
@@ -208,7 +197,5 @@ namespace Hearthstone_Deck_Tracker
 
 			return avgHue <= targetHue && avgSat <= targetSat;
 		}
-
-		
 	}
 }

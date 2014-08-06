@@ -1,18 +1,15 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Threading;
 
 namespace Hearthstone_Deck_Tracker
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-        void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-        {
+	/// <summary>
+	/// Interaction logic for App.xaml
+	/// </summary>
+	public partial class App : Application
+	{
+		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+		{
 #if (!DEBUG)
             var date = DateTime.Now;
             var fileName = "Crash Reports/" + string.Format("Crash report {0}{1}{2}-{3}{4}", date.Day, date.Month, date.Year, date.Hour, date.Minute);
@@ -30,6 +27,6 @@ namespace Hearthstone_Deck_Tracker
             e.Handled = true;
             Shutdown();
 #endif
-        }
-    }
+		}
+	}
 }

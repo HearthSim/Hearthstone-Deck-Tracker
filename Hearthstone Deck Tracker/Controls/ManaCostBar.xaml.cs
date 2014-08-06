@@ -42,9 +42,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LabelCount.Content = count;
 
-			_nextAnimation = new[] {ActualHeight*weapons/100, ActualHeight*spells/100, ActualHeight*minions/100};
+			_nextAnimation = new[] {ActualHeight * weapons / 100, ActualHeight * spells / 100, ActualHeight * minions / 100};
 
-			if (!_isAnimationRunning)
+			if(!_isAnimationRunning)
 				Animate();
 			else
 				_cancelCurrentAnimation = true;
@@ -52,12 +52,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private bool AnimateBar(Rectangle bar, double from, double to)
 		{
-			if (to > from)
+			if(to > from)
 			{
-				if (bar.Height < to)
+				if(bar.Height < to)
 				{
-					bar.Height += (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
-					if (bar.Height > to)
+					bar.Height += (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
+					if(bar.Height > to)
 					{
 						bar.Height = to;
 						return true;
@@ -69,18 +69,18 @@ namespace Hearthstone_Deck_Tracker
 					return true;
 				}
 			}
-			else if (to < from)
+			else if(to < from)
 			{
-				if (bar.Height > to)
+				if(bar.Height > to)
 				{
-					var newHeight = bar.Height - (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
-					if (newHeight < to || newHeight < 0)
+					var newHeight = bar.Height - (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
+					if(newHeight < to || newHeight < 0)
 					{
 						bar.Height = to;
 						return true;
 					}
 
-					bar.Height -= (Math.Abs(from - to)*FrameDelay)/AnimationDuration;
+					bar.Height -= (Math.Abs(from - to) * FrameDelay) / AnimationDuration;
 				}
 				else
 				{
@@ -89,9 +89,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else
-			{
 				return true;
-			}
 			return false;
 		}
 
@@ -99,36 +97,36 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_isAnimationRunning = true;
 
-			while (_nextAnimation != null)
+			while(_nextAnimation != null)
 			{
 				var targetValues = _nextAnimation;
 				_nextAnimation = null;
 
 				bool[] done = {false, false, false};
 
-				if (double.IsNaN(targetValues[0]) || targetValues[0] < 0)
+				if(double.IsNaN(targetValues[0]) || targetValues[0] < 0)
 					targetValues[0] = 0.0;
-				if (double.IsNaN(targetValues[1]) || targetValues[1] < 0)
+				if(double.IsNaN(targetValues[1]) || targetValues[1] < 0)
 					targetValues[1] = 0.0;
-				if (double.IsNaN(targetValues[2]) || targetValues[2] < 0)
+				if(double.IsNaN(targetValues[2]) || targetValues[2] < 0)
 					targetValues[2] = 0.0;
 
-				while (!done[0] || !done[1] || !done[2])
+				while(!done[0] || !done[1] || !done[2])
 				{
-					if (_cancelCurrentAnimation)
+					if(_cancelCurrentAnimation)
 						break;
 					//minions first, weapons last
-					if (!done[2])
+					if(!done[2])
 						done[2] = AnimateBar(_bars[2], _previousBarHeights[2], targetValues[2]);
 
-					if (!done[1])
+					if(!done[1])
 						done[1] = AnimateBar(_bars[1], _previousBarHeights[1], targetValues[1]);
 
-					if (!done[0])
+					if(!done[0])
 						done[0] = AnimateBar(_bars[0], _previousBarHeights[0], targetValues[0]);
 
 					var offset = _bars[0].ActualHeight + _bars[1].ActualHeight + _bars[2].ActualHeight - 24;
-					if (offset < -4) offset = -4;
+					if(offset < -4) offset = -4;
 					LabelCount.Margin = new Thickness(0, 0, 0, offset);
 
 					await Task.Delay(FrameDelay);

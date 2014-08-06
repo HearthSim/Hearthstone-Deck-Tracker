@@ -50,46 +50,47 @@ namespace Hearthstone_Deck_Tracker
 								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
 				}
 			}
-			
+
 			public string WinsPercent
 			{
 				get
 				{
-					if (Name == "Back" || Name == "All") return string.Empty;
+					if(Name == "Back" || Name == "All") return string.Empty;
 					var total = Decks.Sum(d => d.DeckStats.Games.Count);
-					if (total == 0) return "-%";
+					if(total == 0) return "-%";
 					return Math.Round(100.0 * Decks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
 				}
 			}
+
 			// ReSharper disable PossibleNullReferenceException
 			public Color ClassColor
 			{
 				get
 				{
-					switch (Name)
+					switch(Name)
 					{
 						case "Druid":
-							return (Color) ColorConverter.ConvertFromString("#FF7D0A");
+							return (Color)ColorConverter.ConvertFromString("#FF7D0A");
 						case "Death Knight":
-							return (Color) ColorConverter.ConvertFromString("#C41F3B");
+							return (Color)ColorConverter.ConvertFromString("#C41F3B");
 						case "Hunter":
-							return (Color) ColorConverter.ConvertFromString("#ABD473");
+							return (Color)ColorConverter.ConvertFromString("#ABD473");
 						case "Mage":
-							return (Color) ColorConverter.ConvertFromString("#69CCF0");
+							return (Color)ColorConverter.ConvertFromString("#69CCF0");
 						case "Monk":
-							return (Color) ColorConverter.ConvertFromString("#00FF96");
+							return (Color)ColorConverter.ConvertFromString("#00FF96");
 						case "Paladin":
-							return (Color) ColorConverter.ConvertFromString("#F58CBA");
+							return (Color)ColorConverter.ConvertFromString("#F58CBA");
 						case "Priest":
-							return (Color) ColorConverter.ConvertFromString("#FFFFFF");
+							return (Color)ColorConverter.ConvertFromString("#FFFFFF");
 						case "Rogue":
-							return (Color) ColorConverter.ConvertFromString("#FFF569");
+							return (Color)ColorConverter.ConvertFromString("#FFF569");
 						case "Shaman":
-							return (Color) ColorConverter.ConvertFromString("#0070DE");
+							return (Color)ColorConverter.ConvertFromString("#0070DE");
 						case "Warlock":
-							return (Color) ColorConverter.ConvertFromString("#9482C9");
+							return (Color)ColorConverter.ConvertFromString("#9482C9");
 						case "Warrior":
-							return (Color) ColorConverter.ConvertFromString("#C79C6E");
+							return (Color)ColorConverter.ConvertFromString("#C79C6E");
 						default:
 							return Colors.Gray;
 					}
@@ -142,17 +143,13 @@ namespace Hearthstone_Deck_Tracker
 
 			SelectedDeck = null;
 			_hsClasses = new List<HsClass>();
-			foreach (var className in _classNames)
-			{
+			foreach(var className in _classNames)
 				_hsClasses.Add(new HsClass(className));
-			}
 			_hsClasses.Add(new HsClass("Undefined"));
 
 			ListboxPicker.Items.Add(new HsClass("All"));
-			foreach (var hsClass in _hsClasses)
-			{
+			foreach(var hsClass in _hsClasses)
 				ListboxPicker.Items.Add(hsClass);
-			}
 			_inClassSelect = true;
 			_initialized = true;
 			ShowAll = false;
@@ -160,42 +157,42 @@ namespace Hearthstone_Deck_Tracker
 
 		public void AddDeck(Deck deck)
 		{
-			if (deck == null) return;
+			if(deck == null) return;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ?? _hsClasses.First(c => c.Name == "Undefined");
 			hsClass.Decks.Add(deck);
 		}
 
 		public void AddAndSelectDeck(Deck deck)
 		{
-			if (deck == null) return;
+			if(deck == null) return;
 			AddDeck(deck);
 			SelectDeck(deck);
 		}
 
 		public void SelectDeck(Deck deck)
 		{
-			if (deck == null) return;
+			if(deck == null) return;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ??
 			              _hsClasses.First(c => c.Name == "Undefined");
 
-			if (hsClass != null)
+			if(hsClass != null)
 			{
 				_selectedClass = hsClass;
 				ListboxPicker.Items.Clear();
 				ListboxPicker.Items.Add(new HsClass("Back"));
-				if (ShowAll)
+				if(ShowAll)
 				{
-					foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
+					foreach(var d in _hsClasses.SelectMany(hsc => hsc.Decks))
 					{
-						if (DeckMatchesSelectedTags(d))
+						if(DeckMatchesSelectedTags(d))
 							ListboxPicker.Items.Add(d);
 					}
 				}
 				else
 				{
-					foreach (var d in hsClass.Decks)
+					foreach(var d in hsClass.Decks)
 					{
-						if (DeckMatchesSelectedTags(d))
+						if(DeckMatchesSelectedTags(d))
 							ListboxPicker.Items.Add(d);
 					}
 				}
@@ -218,27 +215,23 @@ namespace Hearthstone_Deck_Tracker
 
 		public void RemoveDeck(Deck deck)
 		{
-			if (deck == null) return;
+			if(deck == null) return;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Decks.Contains(deck));
-			if (hsClass != null)
-			{
+			if(hsClass != null)
 				hsClass.Decks.Remove(deck);
-			}
-			if (ListboxPicker.Items.Contains(deck))
-			{
+			if(ListboxPicker.Items.Contains(deck))
 				ListboxPicker.Items.Remove(deck);
-			}
 		}
 
 		private void ListboxPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (ListboxPicker.SelectedIndex == -1) return;
-			if (!_initialized) return;
+			if(ListboxPicker.SelectedIndex == -1) return;
+			if(!_initialized) return;
 
 			var selectedClass = ListboxPicker.SelectedItem as HsClass;
-			if (selectedClass != null)
+			if(selectedClass != null)
 			{
-				if (_inClassSelect)
+				if(_inClassSelect)
 				{
 					ShowAll = selectedClass.Name == "All";
 
@@ -247,19 +240,19 @@ namespace Hearthstone_Deck_Tracker
 					ListboxPicker.Items.Clear();
 					ListboxPicker.Items.Add(new HsClass("Back"));
 
-					if (ShowAll)
+					if(ShowAll)
 					{
-						foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
+						foreach(var d in _hsClasses.SelectMany(hsc => hsc.Decks))
 						{
-							if (DeckMatchesSelectedTags(d))
+							if(DeckMatchesSelectedTags(d))
 								ListboxPicker.Items.Add(d);
 						}
 					}
 					else
 					{
-						foreach (var d in selectedClass.Decks)
+						foreach(var d in selectedClass.Decks)
 						{
-							if (DeckMatchesSelectedTags(d))
+							if(DeckMatchesSelectedTags(d))
 								ListboxPicker.Items.Add(d);
 						}
 					}
@@ -267,27 +260,22 @@ namespace Hearthstone_Deck_Tracker
 					SortDecks();
 					Console.WriteLine("SELECTION CHANGED - SORT");
 				}
-				else
+				else if(selectedClass.Name == "Back")
 				{
-					if (selectedClass.Name == "Back")
-					{
-						_selectedClass = null;
-						ListboxPicker.Items.Clear();
-						ListboxPicker.Items.Add(new HsClass("All"));
-						foreach (var hsClass in _hsClasses)
-						{
-							ListboxPicker.Items.Add(hsClass);
-						}
-						_inClassSelect = true;
-					}
+					_selectedClass = null;
+					ListboxPicker.Items.Clear();
+					ListboxPicker.Items.Add(new HsClass("All"));
+					foreach(var hsClass in _hsClasses)
+						ListboxPicker.Items.Add(hsClass);
+					_inClassSelect = true;
 				}
 			}
 			else
 			{
 				var newSelectedDeck = ListboxPicker.SelectedItem as Deck;
-				if (newSelectedDeck != null)
+				if(newSelectedDeck != null)
 				{
-					if (SelectedDeck != null)
+					if(SelectedDeck != null)
 						SelectedDeck.IsSelectedInGui = false;
 					newSelectedDeck.IsSelectedInGui = true;
 					ListboxPicker.Items.Refresh();
@@ -304,33 +292,31 @@ namespace Hearthstone_Deck_Tracker
 		{
 			SelectedTags = tags;
 
-			foreach (var hsClass in _hsClasses)
-			{
+			foreach(var hsClass in _hsClasses)
 				hsClass.SelectedTags = tags;
-			}
 
 			UpdateList();
 		}
 
 		public void UpdateList()
 		{
-			if (!_inClassSelect)
+			if(!_inClassSelect)
 			{
 				ListboxPicker.Items.Clear();
 				ListboxPicker.Items.Add(new HsClass("Back"));
-				if (ShowAll)
+				if(ShowAll)
 				{
-					foreach (var d in _hsClasses.SelectMany(hsc => hsc.Decks))
+					foreach(var d in _hsClasses.SelectMany(hsc => hsc.Decks))
 					{
-						if (DeckMatchesSelectedTags(d))
+						if(DeckMatchesSelectedTags(d))
 							ListboxPicker.Items.Add(d);
 					}
 				}
 				else
 				{
-					foreach (var d in _selectedClass.Decks)
+					foreach(var d in _selectedClass.Decks)
 					{
-						if (DeckMatchesSelectedTags(d))
+						if(DeckMatchesSelectedTags(d))
 							ListboxPicker.Items.Add(d);
 					}
 				}
@@ -342,10 +328,8 @@ namespace Hearthstone_Deck_Tracker
 				_selectedClass = null;
 				ListboxPicker.Items.Clear();
 				ListboxPicker.Items.Add(new HsClass("All"));
-				foreach (var hsClass in _hsClasses)
-				{
+				foreach(var hsClass in _hsClasses)
 					ListboxPicker.Items.Add(hsClass);
-				}
 				_inClassSelect = true;
 			}
 		}
@@ -353,16 +337,14 @@ namespace Hearthstone_Deck_Tracker
 		public void SetTagOperation(Operation o)
 		{
 			TagOperation = o;
-			foreach (var hsClass in _hsClasses)
-			{
+			foreach(var hsClass in _hsClasses)
 				hsClass.TagOperation = o;
-			}
 		}
 
 		private void SelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
-			if (!_initialized) return;
-			if (deck != null)
+			if(!_initialized) return;
+			if(deck != null)
 			{
 				//set up notes
 				Helper.MainWindow.DeckNotesEditor.SetDeck(deck);
@@ -373,7 +355,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckStatsFlyout.SetDeck(deck);
 
 				//change player deck itemsource
-				if (Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
+				if(Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
 				{
 					Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
 					Helper.MainWindow.PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
@@ -385,17 +367,13 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Switched to deck: " + deck.Name);
 
 				//set and save last used deck for class
-				while (Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+				while(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
 				{
 					var lastSelected = Helper.MainWindow.DeckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
-					if (lastSelected != null)
-					{
+					if(lastSelected != null)
 						Helper.MainWindow.DeckList.LastDeckClass.Remove(lastSelected);
-					}
 					else
-					{
 						break;
-					}
 				}
 				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
 				Helper.MainWindow.WriteDecks();
@@ -404,21 +382,19 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.TagControlMyDecks.SetSelectedTags(deck.Tags);
 			}
 			else
-			{
 				Helper.MainWindow.EnableDeckButtons(false);
-			}
 		}
 
 		public void SortDecks()
 		{
-			if (_inClassSelect) return;
+			if(_inClassSelect) return;
 			var returnButton = ListboxPicker.Items.GetItemAt(0);
 			var orderedDecks = ListboxPicker.Items.OfType<Deck>().ToList();
 
 			ListboxPicker.Items.Clear();
 			ListboxPicker.Items.Add(returnButton);
 
-			switch (Config.Instance.SelectedDeckSorting)
+			switch(Config.Instance.SelectedDeckSorting)
 			{
 				case "Name":
 					orderedDecks = orderedDecks.OrderBy(x => x.Name).ToList();
@@ -432,13 +408,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			//sort by class if in "All"
-			if (ShowAll)
+			if(ShowAll)
 				orderedDecks = orderedDecks.OrderBy(x => x.GetClass).ToList();
 
-			foreach (var deck in orderedDecks)
-			{
+			foreach(var deck in orderedDecks)
 				ListboxPicker.Items.Add(deck);
-			}
 		}
 	}
 }

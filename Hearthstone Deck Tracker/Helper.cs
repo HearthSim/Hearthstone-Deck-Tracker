@@ -22,7 +22,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Helper
 	{
-
 		public static double DpiScalingX = 1.0;
 
 		public static double DpiScalingY = 1.0;
@@ -55,7 +54,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var currentVersion = GetCurrentVersion();
 
-			if (currentVersion != null)
+			if(currentVersion != null)
 			{
 				try
 				{
@@ -63,12 +62,10 @@ namespace Hearthstone_Deck_Tracker
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 
-					if (newVersion > currentVersion)
-					{
+					if(newVersion > currentVersion)
 						newVersionOut = newVersion;
-					}
 				}
-				catch (Exception e)
+				catch(Exception e)
 				{
 					MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
 				}
@@ -85,7 +82,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString());
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
@@ -116,13 +113,13 @@ namespace Hearthstone_Deck_Tracker
 		public static bool IsHex(IEnumerable<char> chars)
 		{
 			bool isHex;
-			foreach (var c in chars)
+			foreach(var c in chars)
 			{
 				isHex = ((c >= '0' && c <= '9') ||
 				         (c >= 'a' && c <= 'f') ||
 				         (c >= 'A' && c <= 'F'));
 
-				if (!isHex)
+				if(!isHex)
 					return false;
 			}
 			return true;
@@ -130,13 +127,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public static double DrawProbability(int copies, int deck, int draw)
 		{
-			return 1 - (BinomialCoefficient(deck - copies, draw)/BinomialCoefficient(deck, draw));
+			return 1 - (BinomialCoefficient(deck - copies, draw) / BinomialCoefficient(deck, draw));
 		}
 
 		public static double BinomialCoefficient(int n, int k)
 		{
 			double result = 1;
-			for (int i = 1; i <= k; i++)
+			for(var i = 1; i <= k; i++)
 			{
 				result *= n - (k - i);
 				result /= i;
@@ -148,19 +145,17 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var rtb = new RenderTargetBitmap((int) dlv.ActualWidth, (int) dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
+				var rtb = new RenderTargetBitmap((int)dlv.ActualWidth, (int)dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
 				rtb.Render(dlv);
 				var encoder = new PngBitmapEncoder();
 				encoder.Frames.Add(BitmapFrame.Create(rtb));
 
 				var path = GetValidFilePath("Screenshots", name, ".png");
-				using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-				{
+				using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
 					encoder.Save(stream);
-				}
 				return path;
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				return null;
 			}
@@ -169,17 +164,17 @@ namespace Hearthstone_Deck_Tracker
 		public static string GetValidFilePath(string dir, string name, string extension)
 		{
 			var validDir = RemoveInvalidChars(dir);
-			if (!Directory.Exists(validDir))
+			if(!Directory.Exists(validDir))
 				Directory.CreateDirectory(validDir);
 
-			if (!extension.StartsWith("."))
+			if(!extension.StartsWith("."))
 				extension = "." + extension;
 
 			var path = validDir + "\\" + RemoveInvalidChars(name);
-			if (File.Exists(path + extension))
+			if(File.Exists(path + extension))
 			{
-				int num = 1;
-				while (File.Exists(path + "_" + num + extension))
+				var num = 1;
+				while(File.Exists(path + "_" + num + extension))
 					num++;
 				path += "_" + num;
 			}
@@ -196,11 +191,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
-			if (collection == null) return;
-			var view1 = (CollectionView) CollectionViewSource.GetDefaultView(collection);
+			if(collection == null) return;
+			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
 			view1.SortDescriptions.Clear();
 
-			if (classFirst)
+			if(classFirst)
 				view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
 
 			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
@@ -215,14 +210,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))
 		{
-			if (wndHandle == default(IntPtr))
+			if(wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if (!User32.IsForegroundWindow("Hearthstone")) return null;
+			if(!User32.IsForegroundWindow("Hearthstone")) return null;
 
 			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-			Graphics graphics = Graphics.FromImage(bmp);
+			var graphics = Graphics.FromImage(bmp);
 			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
 			return bmp;
 		}
@@ -233,28 +228,26 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(300);
 
 			var rect = User32.GetHearthstoneRect(false);
-			var capture = CaptureHearthstone(new Point(0, (int) (rect.Height*0.85)), (int) (rect.Width*0.1),
-			                                 (int) (rect.Height*0.15));
-			if (capture == null) return false;
+			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1),
+			                                 (int)(rect.Height * 0.15));
+			if(capture == null) return false;
 
-			for (int y = 0; y < capture.Height; y++)
+			for(var y = 0; y < capture.Height; y++)
 			{
-				for (int x = 0; x < capture.Width; x++)
+				for(var x = 0; x < capture.Width; x++)
 				{
-					if (IsYellowPixel(capture.GetPixel(x, y)))
+					if(IsYellowPixel(capture.GetPixel(x, y)))
 					{
-						bool foundFriendsList = true;
+						var foundFriendsList = true;
 
 						//check for a straight yellow line (left side of add button)
-						for (int i = 0; i < 5; i++)
+						for(var i = 0; i < 5; i++)
 						{
-							if (x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
-							{
+							if(x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
 								foundFriendsList = false;
-							}
 						}
 
-						if (foundFriendsList)
+						if(foundFriendsList)
 						{
 							Logger.WriteLine("Found Friendslist");
 							return true;
@@ -280,17 +273,17 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//todo: move this somewhere else
 			//reader done analyzing new stuff, update things
-			if (MainWindow.Overlay.IsVisible)
+			if(MainWindow.Overlay.IsVisible)
 				MainWindow.Overlay.Update(false);
 
-			if (MainWindow.PlayerWindow.IsVisible)
+			if(MainWindow.PlayerWindow.IsVisible)
 				MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
 
-			if (MainWindow.OpponentWindow.IsVisible)
+			if(MainWindow.OpponentWindow.IsVisible)
 				MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
 
 
-			if (MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage)
+			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage)
 			{
 				MainWindow.IsShowingIncorrectDeckMessage = true;
 				MainWindow.ShowIncorrectDeckMessage();

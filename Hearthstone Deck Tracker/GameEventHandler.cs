@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("PlayerGet", cardId);
 			Game.PlayerGet(cardId, false);
 
-			if (cardId != "GAME_005")
+			if(cardId != "GAME_005")
 			{
 				Game.CurrentGameStats.Coin = true;
 				Logger.WriteLine("Got coin", "GameStats");
@@ -33,8 +33,8 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
 
-			if (!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-				!Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+			if(!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
+			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
@@ -74,8 +74,8 @@ namespace Hearthstone_Deck_Tracker
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
 
 			//don't think this will ever detect an incorrect deck but who knows...
-			if (!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-				!Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+			if(!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
+			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
-			if (Game.OpponentSecretCount <= 0)
+			if(Game.OpponentSecretCount <= 0)
 				Helper.MainWindow.Overlay.HideSecrets();
 		}
 
@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Game.PlayingAgainst = hero;
 
-			if (Game.CurrentGameStats != null)
+			if(Game.CurrentGameStats != null)
 				Game.CurrentGameStats.OpponentHero = hero;
 
 			Logger.WriteLine("Playing against " + hero, "Hearthstone");
@@ -163,12 +163,12 @@ namespace Hearthstone_Deck_Tracker
 			//maybe add timer to player/opponent windows
 			TurnTimer.Instance.SetCurrentPlayer(player);
 			TurnTimer.Instance.Restart();
-			if (player == Turn.Player && !Game.IsInMenu)
+			if(player == Turn.Player && !Game.IsInMenu)
 			{
-				if (Config.Instance.FlashHsOnTurnStart)
+				if(Config.Instance.FlashHsOnTurnStart)
 					User32.FlashHs();
 
-				if (Config.Instance.BringHsToForeground)
+				if(Config.Instance.BringHsToForeground)
 					User32.BringHsToForeground();
 			}
 		}
@@ -176,58 +176,56 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandleGameStart(string playerHero)
 		{
 			//avoid new game being started when jaraxxus is played
-			if (!Game.IsInMenu) return;
+			if(!Game.IsInMenu) return;
 
 			Game.PlayingAs = playerHero;
 
 			Logger.WriteLine("Game start");
 
-			if (Config.Instance.FlashHsOnTurnStart)
+			if(Config.Instance.FlashHsOnTurnStart)
 				User32.FlashHs();
-			if (Config.Instance.BringHsToForeground)
+			if(Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
 
-			if (Config.Instance.KeyPressOnGameStart != "None" &&
-				Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+			if(Config.Instance.KeyPressOnGameStart != "None" &&
+			   Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
 			}
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-			if (selectedDeck != null)
+			if(selectedDeck != null)
 				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			Game.IsInMenu = false;
 			Game.Reset();
 			Game.CurrentGameStats = new GameStats(GameResult.None, Game.PlayingAgainst);
-			
+
 
 			//select deck based on hero
-			if (!string.IsNullOrEmpty(playerHero))
+			if(!string.IsNullOrEmpty(playerHero))
 			{
-				if (!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection) return;
+				if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection) return;
 
-				if (selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
+				if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
 				{
 					var classDecks = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == Game.PlayingAs).ToList();
-					if (classDecks.Count == 0)
-					{
+					if(classDecks.Count == 0)
 						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
-					}
-					else if (classDecks.Count == 1)
+					else if(classDecks.Count == 1)
 					{
 						Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
 						Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
 					}
-					else if (Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
+					else if(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
 					{
 						var lastDeckName = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs).Name;
 						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
 
 						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
 
-						if (deck != null)
+						if(deck != null)
 						{
 							Helper.MainWindow.DeckPickerList.SelectDeck(deck);
 							Helper.MainWindow.UpdateDeckList(deck);
@@ -236,21 +234,19 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 			}
-
-
 		}
 
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
-			if (!backInMenu)
+			if(!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				Game.CurrentGameStats.GameEnd();
 
 				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-				if (selectedDeck != null)
+				if(selectedDeck != null)
 				{
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
@@ -258,7 +254,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			Logger.WriteLine("Game end");
-			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
@@ -266,18 +262,14 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.Stop();
 			Helper.MainWindow.Overlay.HideTimers();
 			Helper.MainWindow.Overlay.HideSecrets();
-			if (!Game.IsUsingPremade)
-			{
+			if(!Game.IsUsingPremade)
 				Game.DrawnLastGame = new List<Card>(Game.PlayerDrawn);
-			}
-			if (Config.Instance.SavePlayedGames && !Game.IsInMenu)
-			{
+			if(Config.Instance.SavePlayedGames && !Game.IsInMenu)
 				Helper.MainWindow.SavePlayedCards();
-			}
-			if (!Config.Instance.KeepDecksVisible)
+			if(!Config.Instance.KeepDecksVisible)
 			{
 				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-				if (deck != null)
+				if(deck != null)
 					Game.SetPremadeDeck((Deck)deck.Clone());
 
 				Game.Reset();
@@ -299,7 +291,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleWin()
 		{
-			if (!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was won! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
@@ -308,7 +300,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleLoss()
 		{
-			if (!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was lost! - saving", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;

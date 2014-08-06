@@ -165,7 +165,6 @@
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="XmlManager.cs" />
-    <Compile Include="_MainMenu\MainWindow_Seperate_One.cs" />
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

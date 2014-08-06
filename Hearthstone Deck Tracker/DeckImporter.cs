@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,38 +17,22 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static async Task<Deck> Import(string url)
 		{
-			if (url.Contains("hearthstats") || url.Contains("hss.io"))
-			{
+			if(url.Contains("hearthstats") || url.Contains("hss.io"))
 				return await ImportHearthStats(url);
-			}
-			if (url.Contains("hearthpwn"))
-			{
+			if(url.Contains("hearthpwn"))
 				return await ImportHearthPwn(url);
-			}
-			if (url.Contains("hearthhead"))
-			{
+			if(url.Contains("hearthhead"))
 				return await ImportHearthHead(url);
-			}
-			if (url.Contains("hearthstoneplayers"))
-			{
+			if(url.Contains("hearthstoneplayers"))
 				return await ImportHearthstonePlayers(url);
-			}
-			if (url.Contains("tempostorm"))
-			{
+			if(url.Contains("tempostorm"))
 				return await ImportTempostorm(url);
-			}
-			if (url.Contains("hearthstonetopdeck"))
-			{
+			if(url.Contains("hearthstonetopdeck"))
 				return await ImportHsTopdeck(url);
-			}
-			if (url.Contains("hearthnews.fr"))
-			{
+			if(url.Contains("hearthnews.fr"))
 				return await ImportHearthNewsFr(url);
-			}
-			if (url.Contains("arenavalue"))
-			{
+			if(url.Contains("arenavalue"))
 				return await ImportArenaValue(url);
-			}
 			return null;
 		}
 
@@ -63,14 +48,14 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(newUrl, "X-Requested-With", "XMLHttpRequest");
 
 				var idRegex = new Regex(@"\w*(""(?<id1>(\w*))_(?<id2>(\w*))"")\w*");
-				if (idRegex.IsMatch(doc.DocumentNode.InnerText))
+				if(idRegex.IsMatch(doc.DocumentNode.InnerText))
 				{
 					var matches = idRegex.Matches(doc.DocumentNode.InnerText);
-					foreach (Match match in matches)
+					foreach(Match match in matches)
 					{
 						var cardId = match.Groups["id1"] + "_" + match.Groups["id2"];
 						var card = deck.Cards.FirstOrDefault(c => c.Id == cardId);
-						if (card != null)
+						if(card != null)
 							card.Count++;
 						else
 						{
@@ -78,10 +63,8 @@ namespace Hearthstone_Deck_Tracker
 							deck.Cards.Add(card);
 						}
 
-						if (string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
-						{
+						if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 							deck.Class = card.PlayerClass;
-						}
 					}
 				}
 				else
@@ -89,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -110,7 +93,7 @@ namespace Hearthstone_Deck_Tracker
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td[3]/a");
 
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					var id = cardNode.Attributes["real_id"].Value;
 					var count = int.Parse(cardNode.Attributes["nb_card"].Value);
@@ -119,15 +102,13 @@ namespace Hearthstone_Deck_Tracker
 					card.Count = count;
 
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -154,20 +135,18 @@ namespace Hearthstone_Deck_Tracker
 					cardCountNodes.Select(countNode => int.Parse(countNode.InnerText));
 
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
-				foreach (var info in cardInfo)
+				foreach(var info in cardInfo)
 				{
 					var card = Game.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -187,7 +166,7 @@ namespace Hearthstone_Deck_Tracker
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//*[contains(@class,'deckguide-cards-type')]//ul//li");
 
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					var nameRaw = cardNode.SelectSingleNode(".//a").InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
@@ -195,15 +174,13 @@ namespace Hearthstone_Deck_Tracker
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -221,7 +198,7 @@ namespace Hearthstone_Deck_Tracker
 				deck.Name = deckName;
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'deck-list')]/div[contains(@class,'card')]");
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					//silly names contain right-single quotation mark
 					var cardName = cardNode.SelectSingleNode(".//span[contains(@class, 'card-title')]")
@@ -233,20 +210,18 @@ namespace Hearthstone_Deck_Tracker
 					//no count there if count == 1
 					var countNode = cardNode.SelectSingleNode(".//span[contains(@class, 'card-count')]");
 					var count = 1;
-					if (countNode != null)
+					if(countNode != null)
 						count = int.Parse(countNode.InnerText);
 
 					var card = Game.GetCardFromName(name);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 					card.Count = count;
 					deck.Cards.Add(card);
 				}
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -274,20 +249,18 @@ namespace Hearthstone_Deck_Tracker
 					cardCountNodes.Select(countNode => int.Parse(Regex.Match(countNode.LastChild.InnerText, @"\d+").Value));
 
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
-				foreach (var info in cardInfo)
+				foreach(var info in cardInfo)
 				{
 					var card = Game.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -307,7 +280,7 @@ namespace Hearthstone_Deck_Tracker
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='card card-over']");
 
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					var nameRaw = cardNode.SelectSingleNode(".//span[@class='card-name']").InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
@@ -315,15 +288,13 @@ namespace Hearthstone_Deck_Tracker
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -345,7 +316,7 @@ namespace Hearthstone_Deck_Tracker
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='cardname']");
 
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
 					var count = int.Parse(text[0].Trim());
@@ -354,15 +325,13 @@ namespace Hearthstone_Deck_Tracker
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-					{
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
-					}
 				}
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
 				return null;
@@ -376,15 +345,15 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<HtmlDocument> GetHtmlDoc(string url, string header, string headerValue)
 		{
-			using (var wc = new WebClient())
+			using(var wc = new WebClient())
 			{
-				wc.Encoding = System.Text.Encoding.UTF8;
+				wc.Encoding = Encoding.UTF8;
 
-				if (header != null)
+				if(header != null)
 					wc.Headers.Add(header, headerValue);
 
 				var websiteContent = await wc.DownloadStringTaskAsync(new Uri(url));
-				using (var reader = new StringReader(websiteContent))
+				using(var reader = new StringReader(websiteContent))
 				{
 					var doc = new HtmlDocument();
 					doc.Load(reader);
@@ -395,7 +364,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<HtmlDocument> GetHtmlDocJs(string url)
 		{
-			using (var wb = new WebBrowser())
+			using(var wb = new WebBrowser())
 			{
 				var done = false;
 				var doc = new HtmlDocument();
@@ -406,10 +375,8 @@ namespace Hearthstone_Deck_Tracker
 						doc.Load(wb.DocumentStream);
 						done = true;
 					};
-				while (!done)
-				{
+				while(!done)
 					await Task.Delay(50);
-				}
 				return doc;
 			}
 		}
@@ -421,10 +388,10 @@ namespace Hearthstone_Deck_Tracker
 			var doc = await GetHtmlDoc(url);
 
 			var deckUrls = new List<string>();
-			foreach (var node in doc.DocumentNode.SelectNodes("//td[contains(@class,'name')]"))
+			foreach(var node in doc.DocumentNode.SelectNodes("//td[contains(@class,'name')]"))
 			{
 				var hrefAttr = node.ChildNodes[0].Attributes.FirstOrDefault(a => a.Name == "href");
-				if (hrefAttr != null)
+				if(hrefAttr != null)
 					deckUrls.Add(@"http://www.hearthstats.net/" + hrefAttr.Value);
 			}
 

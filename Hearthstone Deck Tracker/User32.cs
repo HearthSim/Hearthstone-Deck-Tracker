@@ -95,12 +95,12 @@ namespace Hearthstone_Deck_Tracker
 			ClientToScreen(hsHandle, ref ptUL);
 			ClientToScreen(hsHandle, ref ptLR);
 
-			if (dpiScaling)
+			if(dpiScaling)
 			{
-				ptUL.X = (int) (ptUL.X/Helper.DpiScalingX);
-				ptUL.Y = (int) (ptUL.Y/Helper.DpiScalingY);
-				ptLR.X = (int) (ptLR.X/Helper.DpiScalingX);
-				ptLR.Y = (int) (ptLR.Y/Helper.DpiScalingY);
+				ptUL.X = (int)(ptUL.X / Helper.DpiScalingX);
+				ptUL.Y = (int)(ptUL.Y / Helper.DpiScalingY);
+				ptLR.X = (int)(ptLR.X / Helper.DpiScalingX);
+				ptLR.Y = (int)(ptLR.Y / Helper.DpiScalingY);
 			}
 
 			return new Rectangle(ptUL.X, ptUL.Y, ptLR.X - ptUL.X, ptLR.Y - ptUL.Y);
@@ -149,22 +149,22 @@ namespace Hearthstone_Deck_Tracker
 
 			private IntPtr MouseHookDelegate(Int32 code, IntPtr wParam, IntPtr lParam)
 			{
-				if (code < 0)
+				if(code < 0)
 					return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
 
 
-				switch (wParam.ToInt32())
+				switch(wParam.ToInt32())
 				{
 					case WM_LBUTTONDOWN:
-						if (LmbDown != null)
+						if(LmbDown != null)
 							LmbDown(this, new EventArgs());
 						break;
 					case WM_LBUTTONUP:
-						if (LmbUp != null)
+						if(LmbUp != null)
 							LmbUp(this, new EventArgs());
 						break;
 					default:
-						if (MouseMoved != null)
+						if(MouseMoved != null)
 							MouseMoved(this, new EventArgs());
 						break;
 				}
@@ -174,9 +174,9 @@ namespace Hearthstone_Deck_Tracker
 
 			protected virtual void Dispose(bool disposing)
 			{
-				if (!disposed)
+				if(!disposed)
 				{
-					if (mouseHandle != IntPtr.Zero)
+					if(mouseHandle != IntPtr.Zero)
 						WindowsHookHelper.UnhookWindowsHookEx(mouseHandle);
 
 					disposed = true;

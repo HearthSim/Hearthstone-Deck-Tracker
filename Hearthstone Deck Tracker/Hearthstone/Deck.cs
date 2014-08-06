@@ -11,14 +11,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable
 	{
-		[XmlArray(ElementName = "Cards")] [XmlArrayItem(ElementName = "Card")] public ObservableCollection<Card> Cards;
+		[XmlArray(ElementName = "Cards")]
+		[XmlArrayItem(ElementName = "Card")]
+		public ObservableCollection<Card> Cards;
+
 		public string Class;
-		[XmlIgnore] public bool IsSelectedInGui;
+
+		[XmlIgnore]
+		public bool IsSelectedInGui;
+
 		public DateTime LastEdited;
 		public string Name;
 		public string Note;
 
-		[XmlArray(ElementName = "Tags")] [XmlArrayItem(ElementName = "Tag")] public List<string> Tags;
+		[XmlArray(ElementName = "Tags")]
+		[XmlArrayItem(ElementName = "Tag")]
+		public List<string> Tags;
+
 		public string Url;
 
 		public Deck()
@@ -35,10 +44,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Name = name;
 			Class = className;
 			Cards = new ObservableCollection<Card>();
-			foreach (var card in cards)
-			{
-				Cards.Add((Card) card.Clone());
-			}
+			foreach(var card in cards)
+				Cards.Add((Card)card.Clone());
 			Tags = new List<string>(tags);
 			Note = note;
 			Url = url;
@@ -50,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if (DeckStats.Games.Count == 0) return "-%";
+				if(DeckStats.Games.Count == 0) return "-%";
 				return Math.Round(100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count, 0) + "%";
 			}
 		}
@@ -95,30 +102,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				switch (Class)
+				switch(Class)
 				{
 					case "Druid":
-						return (Color) ColorConverter.ConvertFromString("#FF7D0A");
+						return (Color)ColorConverter.ConvertFromString("#FF7D0A");
 					case "Death Knight":
-						return (Color) ColorConverter.ConvertFromString("#C41F3B");
+						return (Color)ColorConverter.ConvertFromString("#C41F3B");
 					case "Hunter":
-						return (Color) ColorConverter.ConvertFromString("#ABD473");
+						return (Color)ColorConverter.ConvertFromString("#ABD473");
 					case "Mage":
-						return (Color) ColorConverter.ConvertFromString("#69CCF0");
+						return (Color)ColorConverter.ConvertFromString("#69CCF0");
 					case "Monk":
-						return (Color) ColorConverter.ConvertFromString("#00FF96");
+						return (Color)ColorConverter.ConvertFromString("#00FF96");
 					case "Paladin":
-						return (Color) ColorConverter.ConvertFromString("#F58CBA");
+						return (Color)ColorConverter.ConvertFromString("#F58CBA");
 					case "Priest":
-						return (Color) ColorConverter.ConvertFromString("#FFFFFF");
+						return (Color)ColorConverter.ConvertFromString("#FFFFFF");
 					case "Rogue":
-						return (Color) ColorConverter.ConvertFromString("#FFF569");
+						return (Color)ColorConverter.ConvertFromString("#FFF569");
 					case "Shaman":
-						return (Color) ColorConverter.ConvertFromString("#0070DE");
+						return (Color)ColorConverter.ConvertFromString("#0070DE");
 					case "Warlock":
-						return (Color) ColorConverter.ConvertFromString("#9482C9");
+						return (Color)ColorConverter.ConvertFromString("#9482C9");
 					case "Warrior":
-						return (Color) ColorConverter.ConvertFromString("#C79C6E");
+						return (Color)ColorConverter.ConvertFromString("#C79C6E");
 					default:
 						return Colors.Gray;
 				}
@@ -130,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == Name);
-				if (deckStats == null)
+				if(deckStats == null)
 				{
 					deckStats = new DeckStats(Name);
 					DeckStatsList.Instance.DeckStats.Add(deckStats);
@@ -152,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public override bool Equals(object obj)
 		{
 			var deck = obj as Deck;
-			if (deck == null) return false;
+			if(deck == null) return false;
 			return Name == deck.Name;
 		}
 

@@ -1,14 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
+		public GameStats()
+		{
+		}
+
+		public GameStats(GameResult result, string opponentHero)
+		{
+			Coin = false;
+			Result = result;
+			OpponentHero = opponentHero;
+			StartTime = DateTime.Now;
+			Logger.WriteLine("Started new game", "Gamestats");
+		}
+
 		public string OpponentHero { get; set; }
 		public bool Coin { get; set; }
 		public GameResult Result { get; set; }
@@ -17,20 +26,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime EndTime { get; set; }
 
 		[XmlIgnore]
-		public string Duration { get { return (EndTime - StartTime).Minutes + " min"; } }
+		public string Duration
+		{
+			get { return (EndTime - StartTime).Minutes + " min"; }
+		}
 
 		[XmlIgnore]
-		public string GotCoin { get { return Coin ? "Yes" : "No"; } set { Coin = value.ToLower() == "Yes"; } }
-
-		public GameStats() { }
-		
-		public GameStats(GameResult result, string opponentHero)
+		public string GotCoin
 		{
-			Coin = false;
-			Result = result;
-			OpponentHero = opponentHero;
-			StartTime = DateTime.Now;
-			Logger.WriteLine("Started new game", "Gamestats");
+			get { return Coin ? "Yes" : "No"; }
+			set { Coin = value.ToLower() == "Yes"; }
 		}
 
 		public void GameEnd()
@@ -42,6 +47,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 	public enum GameResult
 	{
-		None, Win, Loss
+		None,
+		Win,
+		Loss
 	}
 }

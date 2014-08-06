@@ -23,14 +23,10 @@ namespace Hearthstone_Deck_Tracker
 			ListViewOpponent.ItemsSource = opponentDeck;
 			opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
 			Height = _config.OpponentWindowHeight;
-			if (_config.OpponentWindowLeft.HasValue)
-			{
+			if(_config.OpponentWindowLeft.HasValue)
 				Left = _config.OpponentWindowLeft.Value;
-			}
-			if (_config.OpponentWindowTop.HasValue)
-			{
+			if(_config.OpponentWindowTop.HasValue)
 				Top = _config.OpponentWindowTop.Value;
-			}
 			Topmost = _config.WindowsTopmost;
 
 			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
@@ -50,18 +46,18 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Text = "Hand: " + cardCount;
 			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-			if (cardsLeftInDeck <= 0) return;
+			if(cardsLeftInDeck <= 0) return;
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
 			var holdingNextTurn2 =
-				Math.Round(100.0f*Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn2 = Math.Round(200.0f/cardsLeftInDeck, 2);
+				Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
+			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
 			LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
 
 			var holdingNextTurn =
-				Math.Round(100.0f*Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn = Math.Round(100.0f/cardsLeftInDeck, 2);
+				Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
+			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
 			LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
 		}
 
@@ -75,14 +71,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var allLabelsHeight = LblOpponentCardCount.ActualHeight + LblOpponentDrawChance1.ActualHeight +
 			                      LblOpponentDrawChance2.ActualHeight;
-			if (((Height - allLabelsHeight) - (ListViewOpponent.Items.Count*35*Scaling)) < 1 || Scaling < 1)
+			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
-				Scaling = (Height - allLabelsHeight)/(ListViewOpponent.Items.Count*35);
-				if (Scaling > 1)
+				Scaling = (Height - allLabelsHeight) / (ListViewOpponent.Items.Count * 35);
+				if(Scaling > 1)
 					Scaling = 1;
 
-				if (previousScaling != Scaling)
+				if(previousScaling != Scaling)
 					ListViewOpponent.Items.Refresh();
 			}
 		}
@@ -95,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if (_appIsClosing) return;
+			if(_appIsClosing) return;
 			e.Cancel = true;
 			Hide();
 		}
@@ -116,14 +112,14 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{
-			if (!_config.WindowsTopmost)
+			if(!_config.WindowsTopmost)
 				Topmost = false;
 		}
 
 		public void SetTextLocation(bool top)
 		{
 			StackPanelMain.Children.Clear();
-			if (top)
+			if(top)
 			{
 				StackPanelMain.Children.Add(LblOpponentDrawChance2);
 				StackPanelMain.Children.Add(LblOpponentDrawChance1);

@@ -20,10 +20,8 @@ namespace Hearthstone_Deck_Tracker
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
 			DeckPickerList.Items.Clear();
-			foreach (var deck in decks)
-			{
+			foreach(var deck in decks)
 				DeckPickerList.Items.Add(deck);
-			}
 		}
 
 		private void DeckPickerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,7 +32,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-			if (SelectedDeck == null)
+			if(SelectedDeck == null)
 				MessageBox.Show("Deck detection disabled for now. You can reenable it in the options.");
 		}
 	}

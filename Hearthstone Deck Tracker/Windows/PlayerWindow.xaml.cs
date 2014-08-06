@@ -25,14 +25,10 @@ namespace Hearthstone_Deck_Tracker
 			ListViewPlayer.ItemsSource = playerDeck;
 			playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
 			Height = _config.PlayerWindowHeight;
-			if (_config.PlayerWindowLeft.HasValue)
-			{
+			if(_config.PlayerWindowLeft.HasValue)
 				Left = _config.PlayerWindowLeft.Value;
-			}
-			if (_config.PlayerWindowTop.HasValue)
-			{
+			if(_config.PlayerWindowTop.HasValue)
 				Top = _config.PlayerWindowTop.Value;
-			}
 			Topmost = _config.WindowsTopmost;
 
 			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
@@ -41,12 +37,12 @@ namespace Hearthstone_Deck_Tracker
 			LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 
-			if (forScreenshot)
+			if(forScreenshot)
 			{
 				StackPanelDraw.Visibility = Visibility.Collapsed;
 				StackPanelCount.Visibility = Visibility.Collapsed;
 
-				Height = 34*ListViewPlayer.Items.Count;
+				Height = 34 * ListViewPlayer.Items.Count;
 				Scale();
 			}
 		}
@@ -61,10 +57,10 @@ namespace Hearthstone_Deck_Tracker
 			LblCardCount.Text = "Hand: " + cardCount;
 			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-			if (cardsLeftInDeck <= 0) return;
+			if(cardsLeftInDeck <= 0) return;
 
-			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f/cardsLeftInDeck, 2) + "%";
-			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f/cardsLeftInDeck, 2) + "%";
+			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
+			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
 		}
 
 		private void PlayerDeckOnCollectionChanged(object sender,
@@ -75,29 +71,29 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			if (((Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight) - (ListViewPlayer.Items.Count*35*Scaling)) <
-			    1 || Scaling < 1)
+			if(((Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) <
+			   1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
-				Scaling = (Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight)/(ListViewPlayer.Items.Count*35);
-				if (Scaling > 1)
+				Scaling = (Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight) / (ListViewPlayer.Items.Count * 35);
+				if(Scaling > 1)
 					Scaling = 1;
 
-				if (previousScaling != Scaling)
+				if(previousScaling != Scaling)
 					ListViewPlayer.Items.Refresh();
 			}
 		}
 
 		private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
 		{
-			if (_forScreenshot) return;
+			if(_forScreenshot) return;
 			Scale();
 			ListViewPlayer.Items.Refresh();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if (_appIsClosing) return;
+			if(_appIsClosing) return;
 			e.Cancel = true;
 			Hide();
 		}
@@ -118,14 +114,14 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{
-			if (!_config.WindowsTopmost)
+			if(!_config.WindowsTopmost)
 				Topmost = false;
 		}
 
 		public void SetTextLocation(bool top)
 		{
 			StackPanelMain.Children.Clear();
-			if (top)
+			if(top)
 			{
 				StackPanelMain.Children.Add(StackPanelDraw);
 				StackPanelMain.Children.Add(StackPanelCount);
