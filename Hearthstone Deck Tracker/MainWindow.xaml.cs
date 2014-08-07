@@ -251,25 +251,41 @@ namespace Hearthstone_Deck_Tracker
 		private void SetupDeckStatsFile()
 		{
 			var appDataPath = Config.Instance.AppDataPath + @"\DeckStats.xml";
+			var appDataGamesDirPath = Config.Instance.AppDataPath + @"\Games";
 			const string localPath = "DeckStats.xml";
+			const string localGamesDirPath = "Games";
 			if(Config.Instance.SaveInAppData)
 			{
 				if(File.Exists(localPath))
 				{
 					if(File.Exists(appDataPath))
+					{
 						//backup in case the file already exists
-						File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
+						var time = DateTime.Now.ToFileTime();
+						File.Move(appDataPath, appDataPath + time);
+						Directory.Move(appDataGamesDirPath, appDataGamesDirPath + time);
+						Logger.WriteLine("Created backups of deckstats and games in appdata");
+					}
 					File.Move(localPath, appDataPath);
 					Logger.WriteLine("Moved DeckStats to appdata");
+					Directory.Move(localGamesDirPath, appDataGamesDirPath);
+					Logger.WriteLine("Moved Games to appdata");
 				}
 			}
 			else if(File.Exists(appDataPath))
 			{
 				if(File.Exists(localPath))
+				{
 					//backup in case the file already exists
-					File.Move(localPath, localPath + DateTime.Now.ToFileTime());
+					var time = DateTime.Now.ToFileTime();
+					File.Move(localPath, localPath + time);
+					Directory.Move(localGamesDirPath, localGamesDirPath + time);
+					Logger.WriteLine("Created backups of deckstats and games locally");
+				}
 				File.Move(appDataPath, localPath);
 				Logger.WriteLine("Moved DeckStats to local");
+				Directory.Move(appDataGamesDirPath, localGamesDirPath);
+				Logger.WriteLine("Moved Games to appdata");
 			}
 
 			var filePath = Config.Instance.HomeDir + "DeckStats.xml";

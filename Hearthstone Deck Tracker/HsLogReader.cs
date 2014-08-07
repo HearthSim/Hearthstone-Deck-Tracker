@@ -59,6 +59,11 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
+		private readonly Regex _heroPowerRegex = new Regex(@".*(cardId=(?<Id>(\w*))).*");
+		private Turn _currentPlayer;
+		private bool _opponentUsedHeroPower;
+		private bool _playerUsedHeroPower;
+
 		private HsLogReader()
 		{
 			var hsDirPath = Config.Instance.HearthstoneDirectory;
@@ -98,7 +103,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			while(_doUpdate)
 			{
-				if(File.Exists(_fullOutputPath))
+				if(File.Exists(_fullOutputPath) && Game.IsRunning)
 				{
 					//find end of last game (avoids reading the full log on start)
 					if(_first)
@@ -173,7 +178,34 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_currentOffset += logLine.Length + 1;
 				if(logLine.StartsWith("[Power]"))
+				{
 					_powerCount++;
+
+					if((_currentPlayer == Turn.Player && !_playerUsedHeroPower) || _currentPlayer == Turn.Opponent && !_opponentUsedHeroPower)
+					{
+						if(_heroPowerRegex.IsMatch(logLine))
+						{
+							var id = _heroPowerRegex.Match(logLine).Groups["Id"].Value.Trim();
+							if(!string.IsNullOrEmpty(id))
+							{
+								var heroPower = Game.GetCardFromId(id);
+								if(heroPower.Type == "Hero Power")
+								{
+									if(_currentPlayer == Turn.Player)
+									{
+										GameEventHandler.HandlePlayerHeroPower(id, GetTurnNumber());
+										_playerUsedHeroPower = true;
+									}
+									else
+									{
+										GameEventHandler.HandleOpponentHeroPower(id, GetTurnNumber());
+										_opponentUsedHeroPower = true;
+									}
+								}
+							}
+						}
+					}
+				}
 				else if(logLine.StartsWith("[Asset"))
 				{
 					if(logLine.ToLower().Contains("victory"))
@@ -258,26 +290,28 @@ namespace Hearthstone_Deck_Tracker
 									{
 										_turnCount++;
 										GameEventHandler.TurnStart(Turn.Player, GetTurnNumber());
+										_currentPlayer = Turn.Player;
+										_playerUsedHeroPower = false;
 									}
-									GameEventHandler.HandlePlayerDraw(id);
+									GameEventHandler.HandlePlayerDraw(id, GetTurnNumber());
 								}
 								else
 									//player discard from deck
-									GameEventHandler.HandlePlayerDeckDiscard(id);
+									GameEventHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
 								break;
 							case "FRIENDLY HAND":
 								if(to == "FRIENDLY DECK")
 									GameEventHandler.HandlePlayerMulligan(id);
 								else if(to == "FRIENDLY PLAY")
-									GameEventHandler.HandlePlayerPlay(id);
+									GameEventHandler.HandlePlayerPlay(id, GetTurnNumber());
 								else
 									//player discard from hand and spells
-									GameEventHandler.HandlePlayerHandDiscard(id);
+									GameEventHandler.HandlePlayerHandDiscard(id, GetTurnNumber());
 
 								break;
 							case "FRIENDLY PLAY":
 								if(to == "FRIENDLY HAND")
-									GameEventHandler.HandlePlayerBackToHand(id);
+									GameEventHandler.HandlePlayerBackToHand(id, GetTurnNumber());
 								break;
 							case "OPPOSING HAND":
 								if(to == "OPPOSING DECK")
@@ -287,8 +321,10 @@ namespace Hearthstone_Deck_Tracker
 								{
 									if(to == "OPPOSING SECRET")
 										GameEventHandler.HandleOpponentSecretPlayed();
-
-									GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
+									else if(to == "OPPOSING PLAY")
+										GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
+									else
+										GameEventHandler.HandleOpponentHandDiscard(id, zonePos, GetTurnNumber());
 								}
 								break;
 							case "OPPOSING DECK":
@@ -298,6 +334,8 @@ namespace Hearthstone_Deck_Tracker
 									{
 										_turnCount++;
 										GameEventHandler.TurnStart(Turn.Opponent, GetTurnNumber());
+										_currentPlayer = Turn.Opponent;
+										_opponentUsedHeroPower = false;
 									}
 
 									//opponent draw
@@ -305,11 +343,11 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else
 									//opponent discard from deck
-									GameEventHandler.HandleOpponentDeckDiscard(id);
+									GameEventHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 								break;
 							case "OPPOSING SECRET":
 								//opponent secret triggered
-								GameEventHandler.HandleOpponentSecretTrigger(id);
+								GameEventHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
 								break;
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
@@ -321,7 +359,7 @@ namespace Hearthstone_Deck_Tracker
 									GameEventHandler.HandleOpponentGet(GetTurnNumber());
 								else if(to == "FRIENDLY HAND")
 									//coin, thoughtsteal etc
-									GameEventHandler.HandlePlayerGet(id);
+									GameEventHandler.HandlePlayerGet(id, GetTurnNumber());
 								else if(to == "OPPOSING GRAVEYARD" && from == "" && id != "")
 								{
 									//todo: not sure why those two are here

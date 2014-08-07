@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.GameHistoryItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="400" Width="auto">
+    <UserControl.Resources>
+        <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Label Name="LblItem" Width="150" VerticalAlignment="Center"></Label>
+        <Grid Name="GridCard" Height="35" Width="215">
+            <Grid.ToolTip>
+                <local:CardToolTip x:Name="CardTooltip"></local:CardToolTip>
+            </Grid.ToolTip>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <local:OutlinedTextBlock x:Name="TxtCardCost" Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Center" FontSize="20" Grid.Column="0"/>
+            <local:OutlinedTextBlock x:Name="TxtCardName" Height="16" VerticalAlignment="Center" FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" TextAlignment="Left" FontSize="13" Grid.Column="1"/>
+        </Grid>
+    </StackPanel>
+
+</UserControl>

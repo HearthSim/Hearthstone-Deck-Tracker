@@ -32,7 +32,7 @@
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
                 <ScrollViewer>
-                <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" IsReadOnly="True"></DataGridTextColumn>
@@ -44,6 +44,7 @@
                     </DataGrid>
                 </ScrollViewer>
                 <Button Name="BtnDelete" Content="Delete selected" HorizontalAlignment="Right" Margin="0,0,20,5" VerticalAlignment="Bottom" Width="117" Click="BtnDelete_Click"/>
+                <Button x:Name="BtnDetails" Content="Show game details" HorizontalAlignment="Right" Margin="0,0,157,5" VerticalAlignment="Bottom" Width="117" Click="BtnDetails_Click"/>
 
             </Grid>
         </GroupBox>

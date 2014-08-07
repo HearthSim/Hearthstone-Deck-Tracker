@@ -29,11 +29,14 @@ namespace Hearthstone_Deck_Tracker
 		public string CreatedByVersion = Defaults.CreatedByVersion;
 		public int CustomHeight = Defaults.CustomHeight;
 		public int CustomWidth = Defaults.CustomWidth;
+
 		[XmlIgnore]
 		public bool Debug = Defaults.Debug;
+
 		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
 		public bool ExtraFeatures = Defaults.ExtraFeatures;
 		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
+		public GameDetailsConfig GameDetails = Defaults.GameDetails;
 		public bool GenerateLog = Defaults.GenerateLog;
 		public string HearthstoneDirectory = Defaults.HearthstoneDirectory;
 		public bool HideDecksInOverlay = Defaults.HideDecksInOverlay;
@@ -57,6 +60,7 @@ namespace Hearthstone_Deck_Tracker
 		public string KeyPressOnGameEnd = Defaults.KeyPressOnGameEnd;
 		public string KeyPressOnGameStart = Defaults.KeyPressOnGameStart;
 		public string LastDeck = Defaults.LastDeck;
+		public int LogLevel = Defaults.LogLevel;
 		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
 		public bool ManaCurveNewDeck = Defaults.ManaCurveNewDeck;
 		public bool MinimizeToTray = Defaults.MinimizeToTray;
@@ -95,9 +99,11 @@ namespace Hearthstone_Deck_Tracker
 		public double SecretsTop = Defaults.SecretsTop;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
 		public string SelectedLanguage = Defaults.SelectedLanguage;
+
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
 		public List<string> SelectedTags = Defaults.SelectedTags;
+
 		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
 		public bool ShowAllDecks = Defaults.ShowAllDecks;
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
@@ -259,6 +265,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool ExtraFeatures = false;
 			public static readonly bool ExportSetDeckName = true;
 			public static readonly bool FlashHsOnTurnStart = true;
+			public static readonly GameDetailsConfig GameDetails = new GameDetailsConfig();
 			public static readonly bool GenerateLog = false;
 			public static readonly string HearthstoneDirectory = "";
 			public static readonly bool HideDecksInOverlay = false;
@@ -282,6 +289,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly string KeyPressOnGameEnd = "None";
 			public static readonly string KeyPressOnGameStart = "None";
 			public static readonly string LastDeck = "";
+			public static readonly int LogLevel = 0;
 			public static readonly bool ManaCurveMyDecks = true;
 			public static readonly bool ManaCurveNewDeck = true;
 			public static readonly bool MinimizeToTray = false;
@@ -354,6 +362,16 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsOnStartup = false;
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
+		}
+
+		public class GameDetailsConfig
+		{
+			public bool ShowOpponentDraw = false;
+			public bool ShowOpponentMulligan = false;
+			public bool ShowOpponentPlay = true;
+			public bool ShowPlayerDraw = false;
+			public bool ShowPlayerMulligan = false;
+			public bool ShowPlayerPlay = true;
 		}
 	}
 }

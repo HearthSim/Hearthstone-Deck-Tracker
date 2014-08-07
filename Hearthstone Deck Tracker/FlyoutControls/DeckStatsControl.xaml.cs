@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -35,8 +36,10 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_deck.DeckStats.Games.Contains(selectedGame))
 			{
+				selectedGame.DeleteGameFile();
 				_deck.DeckStats.Games.Remove(selectedGame);
 				DeckStatsList.Save();
+				Logger.WriteLine("Deleted game: " + selectedGame);
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Refresh();
 			}
@@ -64,6 +67,28 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_deck != null)
 				SetDeck(_deck, false);
+		}
+
+		private void BtnDetails_Click(object sender, RoutedEventArgs e)
+		{
+			OpenGameDetails();
+		}
+
+		private void DGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			OpenGameDetails();
+		}
+
+		private void OpenGameDetails()
+		{
+			var selected = DGrid.SelectedItem as GameStats;
+			if(selected != null)
+			{
+				Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
+				Helper.MainWindow.FlyoutGameDetails.Header = selected.ToString();
+				Helper.MainWindow.FlyoutGameDetails.Width = Helper.MainWindow.FlyoutDeckStats.ActualWidth;
+				Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
+			}
 		}
 
 		private class WinLoss

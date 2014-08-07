@@ -592,5 +592,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		#endregion
+
+		public static void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
+		{
+			if(CurrentGameStats == null) return;
+			CurrentGameStats.AddPlay(play, turn, cardId);
+		}
+
+		public static bool IsActualCard(Card card)
+		{
+			return (card.Type == "Minion"
+			        || card.Type == "Spell"
+			        || card.Type == "Weapon")
+			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
+			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+			       && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
+		}
 	}
 }

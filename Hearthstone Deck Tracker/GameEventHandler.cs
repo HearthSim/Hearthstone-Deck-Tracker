@@ -10,25 +10,28 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Player
 
-		public static void HandlePlayerGet(string cardId)
+		public static void HandlePlayerGet(string cardId, int turn)
 		{
 			LogEvent("PlayerGet", cardId);
 			Game.PlayerGet(cardId, false);
 
-			if(cardId != "GAME_005")
+			if(cardId == "GAME_005")
 			{
 				Game.CurrentGameStats.Coin = true;
 				Logger.WriteLine("Got coin", "GameStats");
 			}
+
+			Game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
 		}
 
-		public static void HandlePlayerBackToHand(string cardId)
+		public static void HandlePlayerBackToHand(string cardId, int turn)
 		{
 			LogEvent("PlayerBackToHand", cardId);
 			Game.PlayerGet(cardId, true);
+			Game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
 		}
 
-		public static async void HandlePlayerDraw(string cardId)
+		public static async void HandlePlayerDraw(string cardId, int turn)
 		{
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
@@ -39,6 +42,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
 			}
+			Game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
 		}
 
 		public static void HandlePlayerMulligan(string cardId)
@@ -50,25 +54,30 @@ namespace Hearthstone_Deck_Tracker
 			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
+
+			Game.AddPlayToCurrentGame(PlayType.PlayerMulligan, 0, cardId);
 		}
 
-		public static void HandlePlayerHandDiscard(string cardId)
+		public static void HandlePlayerHandDiscard(string cardId, int turn)
 		{
 			LogEvent("PlayerHandDiscard", cardId);
 			Game.PlayerHandDiscard(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
+			Game.AddPlayToCurrentGame(PlayType.PlayerHandDiscard, turn, cardId);
 		}
 
-		public static void HandlePlayerPlay(string cardId)
+		public static void HandlePlayerPlay(string cardId, int turn)
 		{
 			LogEvent("PlayerPlay", cardId);
 			Game.PlayerPlayed(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
+
+			Game.AddPlayToCurrentGame(PlayType.PlayerPlay, turn, cardId);
 		}
 
-		public static void HandlePlayerDeckDiscard(string cardId)
+		public static void HandlePlayerDeckDiscard(string cardId, int turn)
 		{
 			LogEvent("PlayerDeckDiscard", cardId);
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
@@ -80,22 +89,32 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
 			}
+			Game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
 		}
 
 		#endregion
 
 		#region Opponent
 
-		public static void HandleOpponentPlay(string id, int from, int turn)
+		public static void HandleOpponentPlay(string cardId, int from, int turn)
 		{
-			LogEvent("OpponentPlay", id, turn, from);
-			Game.OpponentPlay(id, from, turn);
+			LogEvent("OpponentPlay", cardId, turn, from);
+			Game.OpponentPlay(cardId, from, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
+		}
+
+		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
+		{
+			LogEvent("OpponentHandDiscard", cardId, turn, from);
+			Game.OpponentPlay(cardId, from, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
 		}
 
 		public static void HandlOpponentDraw(int turn)
 		{
 			LogEvent("OpponentDraw", turn: turn);
 			Game.OpponentDraw(turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentDraw, turn, string.Empty);
 		}
 
 		public static void HandleOpponentMulligan(int from)
@@ -103,12 +122,14 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("OpponentMulligan", from: from);
 			Game.OpponentMulligan(from);
 			TurnTimer.Instance.MulliganDone(Turn.Opponent);
+			Game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 		}
 
 		public static void HandleOpponentGet(int turn)
 		{
 			LogEvent("OpponentGet", turn: turn);
 			Game.OpponentGet(turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 		}
 
 		public static void HandleOpponentSecretPlayed()
@@ -122,18 +143,20 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentBackToHand", cardId, turn);
 			Game.OpponentBackToHand(cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
 		}
 
-		public static void HandleOpponentSecretTrigger(string cardId)
+		public static void HandleOpponentSecretTrigger(string cardId, int turn)
 		{
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
 			if(Game.OpponentSecretCount <= 0)
 				Helper.MainWindow.Overlay.HideSecrets();
+			Game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 		}
 
-		public static void HandleOpponentDeckDiscard(string cardId)
+		public static void HandleOpponentDeckDiscard(string cardId, int turn)
 		{
 			LogEvent("OpponentDeckDiscard", cardId);
 			Game.OpponentDeckDiscard(cardId);
@@ -142,6 +165,7 @@ namespace Hearthstone_Deck_Tracker
 			//possibly a problem with order of logs?
 			Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
+			Game.AddPlayToCurrentGame(PlayType.OpponentDeckDiscard, turn, cardId);
 		}
 
 		#endregion
@@ -313,6 +337,18 @@ namespace Hearthstone_Deck_Tracker
 			Game.CurrentGameStats = null;
 			Helper.MainWindow.DeckPickerList.Items.Refresh();
 			Helper.MainWindow.DeckStatsFlyout.Refresh();
+		}
+
+		public static void HandlePlayerHeroPower(string cardId, int turn)
+		{
+			LogEvent("PlayerHeroPower", cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.PlayerHeroPower, turn, cardId);
+		}
+
+		public static void HandleOpponentHeroPower(string cardId, int turn)
+		{
+			LogEvent("OpponentHeroPower", cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentHeroPower, turn, cardId);
 		}
 	}
 }
