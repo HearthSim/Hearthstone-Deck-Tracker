@@ -14,7 +14,13 @@
             <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
                 <DataGrid Name="DataGridWinLoss" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="77" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTextColumn Header="Total" Binding="{Binding Total}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Druid" Binding="{Binding Druid}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Hunter" Binding="{Binding Hunter}"></DataGridTextColumn>
@@ -32,15 +38,58 @@
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
                 <ScrollViewer>
-                <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Result" Binding="{Binding Result}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" IsReadOnly="True"></DataGridTextColumn>
-                    </DataGrid.Columns>
+                    <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" IsReadOnly="True">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
                 </ScrollViewer>
                 <Button Name="BtnDelete" Content="Delete selected" HorizontalAlignment="Right" Margin="0,0,20,5" VerticalAlignment="Bottom" Width="117" Click="BtnDelete_Click"/>

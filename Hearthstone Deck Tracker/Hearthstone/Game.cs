@@ -21,6 +21,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Stolen = 'S'
 		}
 
+		public enum GameMode
+		{
+			None,
+			Practice,
+			Casual,
+			Arena,
+			Friendly,
+			Ranked
+		}
+
 		#region Properties
 
 		private const int DefaultCoinPosition = 4;
@@ -39,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
 		public static bool IsRunning;
+		public static GameMode CurrentGameMode;
 		public static GameStats CurrentGameStats;
 
 
@@ -68,6 +79,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		static Game()
 		{
+			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			SetAsideCards = new List<string>();
 			PlayerDeck = new ObservableCollection<Card>();

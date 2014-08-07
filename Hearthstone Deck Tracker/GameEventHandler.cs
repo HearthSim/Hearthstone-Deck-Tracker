@@ -260,6 +260,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private static Deck _assignedDeck;
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
@@ -274,6 +275,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
+					_assignedDeck = selectedDeck;
 				}
 				return;
 			}
@@ -317,7 +319,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was won! - saving", "GameStats");
+			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
 			SaveAndUpdateStats();
 		}
@@ -326,17 +328,35 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was lost! - saving", "GameStats");
+			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
 			SaveAndUpdateStats();
 		}
 
 		private static void SaveAndUpdateStats()
 		{
-			DeckStatsList.Save();
-			Game.CurrentGameStats = null;
-			Helper.MainWindow.DeckPickerList.Items.Refresh();
-			Helper.MainWindow.DeckStatsFlyout.Refresh();
+			if(Game.CurrentGameMode == Game.GameMode.None && Config.Instance.RecordOther
+			   || Game.CurrentGameMode == Game.GameMode.Practice && Config.Instance.RecordPractice
+			   || Game.CurrentGameMode == Game.GameMode.Arena && Config.Instance.RecordArena
+			   || Game.CurrentGameMode == Game.GameMode.Ranked && Config.Instance.RecordRanked
+			   || Game.CurrentGameMode == Game.GameMode.Friendly && Config.Instance.RecordFriendly
+			   || Game.CurrentGameMode == Game.GameMode.Casual && Config.Instance.RecordCasual)
+			{
+				Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
+				Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
+				Logger.WriteLine("Saving deckstats", "GameStats");
+				DeckStatsList.Save();
+				Game.CurrentGameStats = null;
+				Helper.MainWindow.DeckPickerList.Items.Refresh();
+				Helper.MainWindow.DeckStatsFlyout.Refresh();
+			}
+			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(Game.CurrentGameStats))
+			{
+				//game was supposed to be recorded, remove from deck again.
+				_assignedDeck.DeckStats.Games.Remove(Game.CurrentGameStats);
+				Helper.MainWindow.DeckStatsFlyout.Refresh();
+			}
+
 		}
 
 		public static void HandlePlayerHeroPower(string cardId, int turn)

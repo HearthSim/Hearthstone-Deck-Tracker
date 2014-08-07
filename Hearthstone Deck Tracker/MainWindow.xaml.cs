@@ -801,6 +801,12 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 			ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
+			CheckboxRecordArena.IsChecked = Config.Instance.RecordArena;
+			CheckboxRecordCasual.IsChecked = Config.Instance.RecordCasual;
+			CheckboxRecordFriendly.IsChecked = Config.Instance.RecordFriendly;
+			CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
+			CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
+			CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -2591,6 +2597,90 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.CheckForUpdates = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordRanked_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordRanked = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordRanked_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordRanked = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordArena_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordArena = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordArena_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordArena = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordCasual_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordCasual = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordCasual_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordCasual = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordFriendly_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordFriendly = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordFriendly_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordFriendly = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordPractice_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordPractice = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordPractice_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordPractice = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordOther_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordOther = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxRecordOther_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordOther = false;
 			SaveConfig(false);
 		}
 

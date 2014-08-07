@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
-		public Guid GameId;
+		public readonly Guid GameId;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()
@@ -37,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string OpponentHero { get; set; }
 		public bool Coin { get; set; }
+		public Game.GameMode GameMode { get; set; }
 		public GameResult Result { get; set; }
 		public int Turns { get; set; }
 		public DateTime StartTime { get; set; }
@@ -61,6 +63,24 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get { return Coin ? "Yes" : "No"; }
 			set { Coin = value.ToLower() == "Yes"; }
+		}
+
+		protected bool Equals(GameStats other)
+		{
+			return GameId.Equals(other.GameId);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if(ReferenceEquals(null, obj)) return false;
+			if(ReferenceEquals(this, obj)) return true;
+			if(obj.GetType() != this.GetType()) return false;
+			return Equals((GameStats)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return GameId.GetHashCode();
 		}
 
 		private List<TurnStats> LoadTurnStats()

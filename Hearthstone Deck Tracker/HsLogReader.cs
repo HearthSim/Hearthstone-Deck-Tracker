@@ -206,21 +206,50 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				else if(logLine.StartsWith("[Asset"))
+				else if(logLine.StartsWith("[Asset]"))
 				{
-					if(logLine.ToLower().Contains("victory"))
+					if(logLine.ToLower().Contains("victory_screen_start"))
 						GameEventHandler.HandleWin();
-					else if(logLine.ToLower().Contains("defeat"))
+					else if(logLine.ToLower().Contains("defeat_screen_start"))
 						GameEventHandler.HandleLoss();
+					else if(logLine.Contains("rank_window"))
+					{
+						Game.CurrentGameMode = Game.GameMode.Ranked;
+						Logger.WriteLine(">>> GAME MODE: RANKED");
+					}
 				}
 				else if(logLine.StartsWith("[Bob] legend rank"))
 				{
 					if(!Game.IsInMenu)
 						GameEventHandler.HandleGameEnd(false);
 				}
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
+				{
+					Game.CurrentGameMode = Game.GameMode.Practice;
+					Logger.WriteLine(">>> GAME MODE: PRACTICE");
+				}
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
+				{
+					Game.CurrentGameMode = Game.GameMode.Casual;
+					Logger.WriteLine(">>> GAME MODE: CASUAL (RANKED)");
+				}
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
+				{
+					Game.CurrentGameMode = Game.GameMode.Arena;
+					Logger.WriteLine(">>> GAME MODE: ARENA");
+				}
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
+				{
+					Game.CurrentGameMode = Game.GameMode.Friendly;
+					Logger.WriteLine(">>> GAME MODE: FRIENDLY");
+				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
+
+					Game.CurrentGameMode = Game.GameMode.None;
+					Logger.WriteLine(">>> GAME MODE: NONE");
+
 					GameEventHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;

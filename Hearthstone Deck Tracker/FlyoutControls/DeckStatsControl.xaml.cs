@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void SetDeck(Deck deck, bool refreshSort = true)
+		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
 
@@ -56,17 +56,14 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLoss.Items.Add(new WinLoss(deck.DeckStats.Games, "Win"));
 			DataGridWinLoss.Items.Add(new WinLoss(deck.DeckStats.Games, "Loss"));
 
-			if(refreshSort)
-			{
-				DGrid.Items.SortDescriptions.Clear();
-				DGrid.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
-			}
+			DGrid.Items.SortDescriptions.Clear();
+			DGrid.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 		}
 
 		public void Refresh()
 		{
 			if(_deck != null)
-				SetDeck(_deck, false);
+				SetDeck(_deck);
 		}
 
 		private void BtnDetails_Click(object sender, RoutedEventArgs e)

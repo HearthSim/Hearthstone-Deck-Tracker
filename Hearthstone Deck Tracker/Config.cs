@@ -87,6 +87,12 @@ namespace Hearthstone_Deck_Tracker
 		public int? PlayerWindowLeft = Defaults.PlayerWindowLeft;
 		public int? PlayerWindowTop = Defaults.PlayerWindowTop;
 		public bool PrioritizeGolden = Defaults.PrioritizeGolden;
+		public bool RecordArena = Defaults.RecordArena;
+		public bool RecordCasual = Defaults.RecordCasual;
+		public bool RecordFriendly = Defaults.RecordFriendly;
+		public bool RecordOther = Defaults.RecordOther;
+		public bool RecordPractice = Defaults.RecordPractice;
+		public bool RecordRanked = Defaults.RecordRanked;
 		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
 		public bool SaveInAppData = Defaults.SaveInAppData;
 		public bool SavePlayedGames = Defaults.SavePlayedGames;
@@ -316,6 +322,12 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly int? PlayerWindowLeft = null;
 			public static readonly int? PlayerWindowTop = null;
 			public static readonly bool PrioritizeGolden = true;
+			public static readonly bool RecordArena = true;
+			public static readonly bool RecordCasual = true;
+			public static readonly bool RecordFriendly = true;
+			public static readonly bool RecordOther = false;
+			public static readonly bool RecordPractice = false;
+			public static readonly bool RecordRanked = true;
 			public static readonly bool RemoveCardsFromDeck = false;
 			public static readonly bool SaveInAppData = true;
 			public static readonly bool SavePlayedGames = false;
