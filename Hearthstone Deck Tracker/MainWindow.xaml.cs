@@ -24,10 +24,10 @@ using Microsoft.Win32;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
+using ContextMenu = System.Windows.Forms.ContextMenu;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
-using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SystemColors = System.Windows.SystemColors;
 
@@ -159,9 +159,10 @@ namespace Hearthstone_Deck_Tracker
 			SetupDeckStatsFile();
 			DeckStatsList.Load();
 
-			_notifyIcon = new NotifyIcon {Icon = new Icon(@"Images/HearthstoneDeckTracker.ico")};
-			_notifyIcon.MouseDoubleClick += NotifyIconOnMouseDoubleClick;
-			_notifyIcon.Visible = false;
+			_notifyIcon = new NotifyIcon {Icon = new Icon(@"Images/HearthstoneDeckTracker.ico"), Visible = true, ContextMenu = new ContextMenu()};
+			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
+			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
+			_notifyIcon.MouseClick += (sender, args) => { if(args.Button == MouseButtons.Left) ActivateWindow(); };
 
 			NewDeck = new Deck();
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
@@ -595,6 +596,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.TimerWindowHeight = (int)TimerWindow.Height;
 				Config.Instance.TimerWindowWidth = (int)TimerWindow.Width;
 
+				_notifyIcon.Visible = false;
 				Overlay.Close();
 				HsLogReader.Instance.Stop();
 				TimerWindow.Shutdown();
@@ -609,13 +611,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void NotifyIconOnMouseDoubleClick(object sender, MouseEventArgs mouseEventArgs)
-		{
-			_notifyIcon.Visible = false;
-			Show();
-			WindowState = WindowState.Normal;
-			Activate();
-		}
 
 		private void BtnSortFilter_Click(object sender, RoutedEventArgs e)
 		{
@@ -1016,6 +1011,13 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Logger.WriteLine("Error saving game\n" + e.StackTrace);
 			}
+		}
+
+		public void ActivateWindow()
+		{
+			Show();
+			WindowState = WindowState.Normal;
+			Activate();
 		}
 
 		#endregion
