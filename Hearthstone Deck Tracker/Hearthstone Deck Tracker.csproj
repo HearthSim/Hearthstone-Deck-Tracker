@@ -96,9 +96,6 @@
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GameHistoryItem.xaml.cs">
-      <DependentUpon>GameHistoryItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
@@ -181,10 +178,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\GameHistoryItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

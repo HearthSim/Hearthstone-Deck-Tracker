@@ -559,8 +559,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromId(string cardId)
 		{
-			if(cardId == null) return null;
-			if(cardId == "") return new Card();
+			if(string.IsNullOrEmpty(cardId)) return null;
 			if(_cardDb.ContainsKey(cardId))
 				return (Card)_cardDb[cardId].Clone();
 			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);

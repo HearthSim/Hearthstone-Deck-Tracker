@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 
@@ -26,25 +24,22 @@ namespace Hearthstone_Deck_Tracker
 		public void SetGame(GameStats gameStats)
 		{
 			_gameStats = gameStats;
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
-		private void ReloadTreeView()
+
+		private void ReloadGameStats()
 		{
 			if(_gameStats != null)
 			{
-				var tvItemSource = new List<TreeViewItem>();
+				var needSeparator = false;
+				DataGridDetails.Items.Clear();
 				foreach(var turn in _gameStats.TurnStats)
 				{
-					var treeViewTurn = new TreeViewItem();
-					treeViewTurn.Header = "Turn " + turn.Turn;
-					foreach(TreeViewItem item in TreeviewGameDetail.Items)
+					if(needSeparator)
 					{
-						if(item.Header.Equals(treeViewTurn.Header))
-						{
-							treeViewTurn.IsExpanded = item.IsExpanded;
-							break;
-						}
+						DataGridDetails.Items.Add(new GameDetailItem());
+						needSeparator = false;
 					}
 					foreach(var play in turn.Plays)
 					{
@@ -55,13 +50,10 @@ namespace Hearthstone_Deck_Tracker
 						   || (play.Type == PlayType.OpponentDraw || play.Type == PlayType.OpponentGet || play.Type == PlayType.OpponentBackToHand || play.Type == PlayType.OpponentDeckDiscard) && !Config.Instance.GameDetails.ShowOpponentDraw
 						   || play.Type == PlayType.OpponentMulligan && !Config.Instance.GameDetails.ShowOpponentMulligan)
 							continue;
-
-						treeViewTurn.Items.Add(new GameHistoryItem(play));
-						treeViewTurn.IsExpanded = true;
+						needSeparator = true;
+						DataGridDetails.Items.Add(new GameDetailItem(play, turn.Turn));
 					}
-					tvItemSource.Add(treeViewTurn);
 				}
-				TreeviewGameDetail.ItemsSource = tvItemSource;
 			}
 		}
 
@@ -80,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerPlay = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxPlayerPlay_Unchecked(object sender, RoutedEventArgs e)
@@ -88,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerPlay = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentPlay_Checked(object sender, RoutedEventArgs e)
@@ -96,7 +88,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentPlay = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentPlay_Unchecked(object sender, RoutedEventArgs e)
@@ -104,7 +96,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentPlay = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxPlayerDraw_Checked(object sender, RoutedEventArgs e)
@@ -112,7 +104,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerDraw = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxPlayerDraw_Unchecked(object sender, RoutedEventArgs e)
@@ -120,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerDraw = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentDraw_Checked(object sender, RoutedEventArgs e)
@@ -128,7 +120,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentDraw = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentDraw_Unchecked(object sender, RoutedEventArgs e)
@@ -136,7 +128,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentDraw = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxPlayerMulligan_Checked(object sender, RoutedEventArgs e)
@@ -144,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerMulligan = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxPlayerMulligan_Unchecked(object sender, RoutedEventArgs e)
@@ -152,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowPlayerMulligan = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentMulligan_Checked(object sender, RoutedEventArgs e)
@@ -160,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentMulligan = true;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void CheckboxOpponentMulligan_Unchecked(object sender, RoutedEventArgs e)
@@ -168,7 +160,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.GameDetails.ShowOpponentMulligan = false;
 			Config.Save();
-			ReloadTreeView();
+			ReloadGameStats();
 		}
 
 		private void BtnImportDeck_Click(object sender, RoutedEventArgs e)
@@ -196,6 +188,29 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.TabControlTracker.SelectedIndex = 1;
 			Helper.MainWindow.FlyoutGameDetails.IsOpen = false;
 			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
+		}
+
+		public class GameDetailItem
+		{
+			public GameDetailItem(TurnStats.Play play, int turn)
+			{
+				Turn = turn.ToString();
+				Player = play.Type.ToString().StartsWith("Player") ? "Player" : "Opponent";
+				Action = play.Type.ToString().Replace("Player", string.Empty).Replace("Opponent", string.Empty);
+				Card = Game.GetCardFromId(play.CardId);
+
+				if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && Card.Type == "Spell")
+					Action = "Play/Discard";
+			}
+
+			public GameDetailItem()
+			{
+			}
+
+			public string Turn { get; set; }
+			public string Player { get; set; }
+			public string Action { get; set; }
+			public Card Card { get; set; }
 		}
 	}
 }
