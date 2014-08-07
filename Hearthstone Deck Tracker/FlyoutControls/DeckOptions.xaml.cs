@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker
@@ -103,10 +104,18 @@ namespace Hearthstone_Deck_Tracker
 				{
 					try
 					{
+						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
+						if(deckStats != null)
+						{
+							DeckStatsList.Instance.DeckStats.Remove(deckStats);
+							DeckStatsList.Save();
+							Logger.WriteLine("Deleted deckstats for deck: " + deck.Name);
+						}
 						Helper.MainWindow.DeckList.DecksList.Remove(deck);
 						Helper.MainWindow.WriteDecks();
 						Helper.MainWindow.DeckPickerList.RemoveDeck(deck);
 						Helper.MainWindow.ListViewDeck.ItemsSource = null;
+						Logger.WriteLine("Deleted deck: " + deck.Name);
 					}
 					catch(Exception)
 					{
