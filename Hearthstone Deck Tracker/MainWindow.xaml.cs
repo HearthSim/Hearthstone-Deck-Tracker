@@ -431,6 +431,19 @@ namespace Hearthstone_Deck_Tracker
 					config.TimerWindowTop = Config.Defaults.TimerWindowTop;
 					converted = true;
 				}
+
+				//player scaling used to beincreased by a very minimal about to curcumvent some problem,
+				//should no longer be required. not sure is the increment is actually noticable, but resetting can't hurt
+				if (config.OverlayOpponentScaling > 100)
+				{
+					config.OverlayOpponentScaling = 100;
+					converted = true;
+				}
+				if (config.OverlayPlayerScaling > 100)
+				{
+					config.OverlayPlayerScaling = 100;
+					converted = true;
+				}
 			}
 
 			if(converted)

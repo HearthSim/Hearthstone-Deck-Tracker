@@ -727,8 +727,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UpdateScaling()
 		{
-			Config.Instance.OverlayPlayerScaling += 0.00001;
-			Config.Instance.OverlayOpponentScaling += 0.00001;
 			StackPanelPlayer.RenderTransform = new ScaleTransform(Config.Instance.OverlayPlayerScaling / 100,
 			                                                      Config.Instance.OverlayPlayerScaling / 100);
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
