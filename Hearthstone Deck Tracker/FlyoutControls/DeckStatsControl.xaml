@@ -38,8 +38,8 @@
         </GroupBox>
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
-                <ScrollViewer>
-                    <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" SelectionMode="Single" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
+                <ScrollViewer Margin="0,0,0,40">
+                    <DataGrid CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                 <DataGridTextColumn.ElementStyle>

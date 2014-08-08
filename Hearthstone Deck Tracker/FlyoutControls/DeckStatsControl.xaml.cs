@@ -37,19 +37,40 @@ namespace Hearthstone_Deck_Tracker
 			if(_deck == null)
 				return;
 
-			var selectedGame = DGrid.SelectedItem as GameStats;
-			if(selectedGame == null)
-				return;
-
-			if(await Helper.MainWindow.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
-				return;
-
-			if(_deck.DeckStats.Games.Contains(selectedGame))
+			var count = DataGridGames.SelectedItems.Count;
+			if(count == 1)
 			{
-				selectedGame.DeleteGameFile();
-				_deck.DeckStats.Games.Remove(selectedGame);
+				var selectedGame = DataGridGames.SelectedItem as GameStats;
+				if(selectedGame == null)
+					return;
+
+				if(await Helper.MainWindow.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
+					return;
+
+				if(_deck.DeckStats.Games.Contains(selectedGame))
+				{
+					selectedGame.DeleteGameFile();
+					_deck.DeckStats.Games.Remove(selectedGame);
+					DeckStatsList.Save();
+					Logger.WriteLine("Deleted game: " + selectedGame);
+					Helper.MainWindow.DeckPickerList.Items.Refresh();
+					Refresh();
+				}
+			}
+			else if(count > 1)
+			{
+				if (await Helper.MainWindow.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
+					return;
+				foreach(var selectedItem in DataGridGames.SelectedItems)
+				{
+					var selectedGame = selectedItem as GameStats;
+					if (selectedGame == null) continue;
+					if(!_deck.DeckStats.Games.Contains(selectedGame)) continue;
+					selectedGame.DeleteGameFile();
+					_deck.DeckStats.Games.Remove(selectedGame);
+				}
 				DeckStatsList.Save();
-				Logger.WriteLine("Deleted game: " + selectedGame);
+				Logger.WriteLine("Deleted " + count + " games");
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Refresh();
 			}
@@ -79,19 +100,19 @@ namespace Hearthstone_Deck_Tracker
 					timeFrame = new DateTime();
 					break;
 			}
-			DGrid.Items.Clear();
+			DataGridGames.Items.Clear();
 			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
 			                                                     || selectedGameMode == Game.GameMode.All)
 			                                                    && g.StartTime > timeFrame).ToList();
 
 			foreach(var game in filteredGames)
-				DGrid.Items.Add(game);
+				DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Loss"));
 
-			DGrid.Items.SortDescriptions.Clear();
-			DGrid.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+			DataGridGames.Items.SortDescriptions.Clear();
+			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 		}
 
 		public void Refresh()
@@ -112,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OpenGameDetails()
 		{
-			var selected = DGrid.SelectedItem as GameStats;
+			var selected = DataGridGames.SelectedItem as GameStats;
 			if(selected != null)
 			{
 				Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
@@ -221,7 +242,7 @@ namespace Hearthstone_Deck_Tracker
 		private void DGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 
-			if (DGrid.SelectedItems.Count > 0)
+			if (DataGridGames.SelectedItems.Count > 0)
 			{
 				BtnDelete.IsEnabled = true;
 				BtnDetails.IsEnabled = true;

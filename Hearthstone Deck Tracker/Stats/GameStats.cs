@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Coin = false;
 			Result = result;
+			GameMode = Game.GameMode.None;
 			OpponentHero = opponentHero;
 			StartTime = DateTime.Now;
 			Logger.WriteLine("Started new game", "Gamestats");

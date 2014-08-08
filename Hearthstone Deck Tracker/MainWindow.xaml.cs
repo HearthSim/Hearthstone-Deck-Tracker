@@ -1158,6 +1158,15 @@ namespace Hearthstone_Deck_Tracker
 				                      stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
 				                      MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
+		public async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(int count)
+		{
+			var settings = new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" };
+			return
+				await
+				this.ShowMessageAsync("Delete Games",
+									  "This will delete the selected games (" + count + ").\n\nAre you sure?",
+									  MessageDialogStyle.AffirmativeAndNegative, settings);
+		}
 
 		#endregion
 
