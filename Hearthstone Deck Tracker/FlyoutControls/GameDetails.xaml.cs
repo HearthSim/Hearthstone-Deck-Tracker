@@ -16,9 +16,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public GameDetails()
 		{
-			_initialized = false;
 			InitializeComponent();
-			LoadConfig();
 			_initialized = true;
 		}
 
@@ -58,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void LoadConfig()
+		public void LoadConfig()
 		{
 			CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
 			CheckboxOpponentDraw.IsChecked = Config.Instance.GameDetails.ShowOpponentDraw;

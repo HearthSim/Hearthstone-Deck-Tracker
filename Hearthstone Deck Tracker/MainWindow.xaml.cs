@@ -887,6 +887,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 
 			DeckStatsFlyout.LoadConfig();
+			GameDetailsFlyout.LoadConfig();
 		}
 
 		private async void UpdateOverlayAsync()
