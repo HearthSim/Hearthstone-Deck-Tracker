@@ -290,8 +290,6 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.HideSecrets();
 			if(!Game.IsUsingPremade)
 				Game.DrawnLastGame = new List<Card>(Game.PlayerDrawn);
-			if(Config.Instance.SavePlayedGames && !Game.IsInMenu)
-				Helper.MainWindow.SavePlayedCards();
 			if(!Config.Instance.KeepDecksVisible)
 			{
 				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;

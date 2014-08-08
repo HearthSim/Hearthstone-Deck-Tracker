@@ -288,7 +288,7 @@
                                         <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxWindowCardToolTips_Checked" Unchecked="CheckboxWindowCardToolTips_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="424" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="435" Width="235" Margin="5,0,0,0">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlay_Checked" Unchecked="CheckboxHideOverlay_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide in menu" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOverlayInMenu_Checked" Unchecked="CheckboxHideOverlayInMenu_Unchecked"/>
@@ -310,7 +310,7 @@
                                             <Button Name="BtnUnlockOverlay" Content="Unlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Click="BtnUnlockOverlay_Click"/>
                                             <Button x:Name="BtnResetOverlay" Content="Reset" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="98" Click="BtnResetOverlay_Click"/>
                                         </DockPanel>
-                                        <GroupBox Header="Extra Features - may cause lag">
+                                        <GroupBox Header="Extra Features - may cause lag" Margin="5,10,5,0">
                                             <StackPanel>
                                                 <TextBlock TextWrapping="Wrap">
                                                 1) Gray out secrets when clicked<LineBreak/>
@@ -406,27 +406,6 @@
                                 </GroupBox>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Stats">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <GroupBox Header="Record" Height="186" VerticalAlignment="Top" Margin="5,5,5,0">
-                                    <StackPanel>
-                                        <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked" Unchecked="CheckboxRecordRanked_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked" Unchecked="CheckboxRecordArena_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked" Unchecked="CheckboxRecordCasual_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked" Unchecked="CheckboxRecordFriendly_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked" Unchecked="CheckboxRecordPractice_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxRecordOther" Content="Record Other" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked" Unchecked="CheckboxRecordOther_Unchecked"/>
-                                    </StackPanel>
-                                </GroupBox>
-                            </Grid>
-                        </TabItem>
                         <TabItem Header="Other">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -437,7 +416,7 @@
                                     <RowDefinition Height="auto" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="235" Height="135" Margin="10,0,0,0">
+                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="234" Height="103" Margin="11,0,1,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Horizontal:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -449,14 +428,7 @@
                                         </DockPanel>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Game Recording" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="135" Width="235" Margin="5,10,0,0">
-                                    <StackPanel>
-                                        <CheckBox Name="CheckboxLogGames" Content="Log Games" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxLogGames_Checked" Unchecked="CheckboxLogGames_Unchecked"/>
-                                        <TextBox Name="TextboxLogGamesPath" controls:TextboxHelper.Watermark="Save to" IsEnabled="False"  HorizontalAlignment="Left" Height="23" Margin="10,5,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="203" IsReadOnly="True"/>
-                                        <Button Name="BtnLogGamesSelectDir" Content="Select Directory" IsEnabled="False" HorizontalAlignment="Left" Margin="93,5,0,0" VerticalAlignment="Top" Width="120" Click="BtnLogGamesSelectDir_Click"/>
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="Tracker" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="335" Width="235" Margin="5,0,0,0">
+                                <GroupBox Header="Tracker" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="338" Width="235" Margin="5,0,0,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Theme:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -497,6 +469,16 @@
                                         <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked" Unchecked="CheckboxMinimizeTray_Unchecked" />
                                         <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked" Unchecked="CheckboxStartMinimized_Unchecked" />
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Record Games" Height="184" Width="235" VerticalAlignment="Top" Margin="11,10,1,0" Grid.Column="1" Grid.Row="1">
+                                    <StackPanel>
+                                        <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked" Unchecked="CheckboxRecordRanked_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked" Unchecked="CheckboxRecordArena_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked" Unchecked="CheckboxRecordCasual_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked" Unchecked="CheckboxRecordFriendly_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked" Unchecked="CheckboxRecordPractice_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxRecordOther" Content="Record Other" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked" Unchecked="CheckboxRecordOther_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>

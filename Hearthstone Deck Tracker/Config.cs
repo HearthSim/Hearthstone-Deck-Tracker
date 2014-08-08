@@ -96,9 +96,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool RecordRanked = Defaults.RecordRanked;
 		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
 		public bool SaveInAppData = Defaults.SaveInAppData;
-		public bool SavePlayedGames = Defaults.SavePlayedGames;
-		public string SavePlayedGamesName = Defaults.SavePlayedGamesName;
-		public string SavePlayedGamesPath = Defaults.SavePlayedGamesPath;
 		public double SearchBoxPosY = Defaults.SearchBoxPosY;
 		public double SearchBoxX = Defaults.SearchBoxX;
 		public int SearchDelay = Defaults.SearchDelay;
@@ -333,9 +330,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool RecordRanked = true;
 			public static readonly bool RemoveCardsFromDeck = false;
 			public static readonly bool SaveInAppData = true;
-			public static readonly bool SavePlayedGames = false;
-			public static readonly string SavePlayedGamesName = "Game";
-			public static readonly string SavePlayedGamesPath = "";
 			public static readonly double SearchBoxPosY = 0.92;
 			public static readonly double SearchBoxX = 0.5;
 			public static readonly int SearchDelay = 100;

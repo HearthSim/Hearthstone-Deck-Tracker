@@ -15,7 +15,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro;
@@ -885,14 +884,6 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
 			CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
-			CheckboxLogGames.IsChecked = Config.Instance.SavePlayedGames;
-			TextboxLogGamesPath.IsEnabled = Config.Instance.SavePlayedGames;
-			BtnLogGamesSelectDir.IsEnabled = Config.Instance.SavePlayedGames;
-			TextboxLogGamesPath.Text = Config.Instance.SavePlayedGamesPath;
-
-			if(Config.Instance.SavePlayedGames && TextboxLogGamesPath.Text.Length == 0)
-				TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
-
 			CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 
 			DeckStatsFlyout.LoadConfig();
@@ -1014,40 +1005,6 @@ namespace Hearthstone_Deck_Tracker
 		public void WriteDecks()
 		{
 			XmlManager<Decks>.Save(_decksPath, DeckList);
-		}
-
-		public void SavePlayedCards()
-		{
-			try
-			{
-				if(Game.PlayerDrawn != null && Game.PlayerDrawn.Count > 0)
-				{
-					var serializer = new XmlSerializer(typeof(Card[]));
-
-					if(string.IsNullOrEmpty(Config.Instance.SavePlayedGamesPath))
-						return;
-
-					Directory.CreateDirectory(Config.Instance.SavePlayedGamesPath);
-					var path = Config.Instance.SavePlayedGamesPath + "\\" + DateTime.Now.ToString("ddMMyyyyHHmmss");
-					Directory.CreateDirectory(path);
-					Logger.WriteLine("Saving games to: " + path);
-					using(var sw = new StreamWriter(path + "\\Player.xml"))
-					{
-						serializer.Serialize(sw, Game.PlayerDrawn.ToArray());
-						Logger.WriteLine("Success saving Player.xml");
-					}
-					using(var sw = new StreamWriter(path + "\\Opponent.xml"))
-					{
-						if(Game.OpponentCards != null)
-							serializer.Serialize(sw, Game.OpponentCards.ToArray());
-						Logger.WriteLine("Success saving Opponent.xml");
-					}
-				}
-			}
-			catch(Exception e)
-			{
-				Logger.WriteLine("Error saving game\n" + e.StackTrace);
-			}
 		}
 
 		public void ActivateWindow()
@@ -2348,43 +2305,6 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxOverlayAdditionalCardToolTips.IsChecked = false;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = false;
 			SaveConfig(true);
-		}
-
-		private void CheckboxLogGames_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			TextboxLogGamesPath.IsEnabled = true;
-			BtnLogGamesSelectDir.IsEnabled = true;
-			Config.Instance.SavePlayedGames = true;
-			if(TextboxLogGamesPath.Text.Length == 0)
-				TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
-			SaveConfig(false);
-		}
-
-		private void CheckboxLogGames_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			TextboxLogGamesPath.IsEnabled = false;
-			BtnLogGamesSelectDir.IsEnabled = false;
-			Config.Instance.SavePlayedGames = false;
-			SaveConfig(false);
-		}
-
-		private void BtnLogGamesSelectDir_Click(object sender, RoutedEventArgs e)
-		{
-			var folderDialog = new FolderBrowserDialog();
-			var result = folderDialog.ShowDialog();
-			if(result == System.Windows.Forms.DialogResult.OK)
-			{
-				TextboxLogGamesPath.Text = folderDialog.SelectedPath;
-				Config.Instance.SavePlayedGamesPath = folderDialog.SelectedPath;
-
-				TextboxLogGamesPath.BorderBrush =
-					new SolidColorBrush(TextboxLogGamesPath.Text.Length == 0
-						                    ? Colors.Red
-						                    : SystemColors.ActiveBorderColor);
-				SaveConfig(false);
-			}
 		}
 
 		private void CheckboxDeckSortingClassFirst_Checked(object sender, RoutedEventArgs e)
