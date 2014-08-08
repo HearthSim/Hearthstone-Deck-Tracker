@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -165,6 +166,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnImportDeck_Click(object sender, RoutedEventArgs e)
 		{
+			var ignoreCards = new List<Card>();
 			var deck = new Deck();
 			deck.Class = _gameStats.OpponentHero;
 			foreach(var turn in _gameStats.TurnStats)
@@ -176,11 +178,22 @@ namespace Hearthstone_Deck_Tracker
 						var card = Game.GetCardFromId(play.CardId);
 						if(Game.IsActualCard(card))
 						{
+							if(ignoreCards.Contains(card))
+							{
+								ignoreCards.Remove(card);
+								continue;
+							}
 							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
 							if(deckCard != null)
 								deckCard.Count++;
 							else deck.Cards.Add(card);
 						}
+					}
+					else if(play.Type == PlayType.OpponentBackToHand)
+					{
+						var card = Game.GetCardFromId(play.CardId);
+						if(Game.IsActualCard(card))
+							ignoreCards.Add(card);
 					}
 				}
 			}
