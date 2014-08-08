@@ -217,5 +217,21 @@ namespace Hearthstone_Deck_Tracker
 				return string.Format("{0} ({1}%)", num, percent);
 			}
 		}
+
+		private void DGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+			if (DGrid.SelectedItems.Count > 0)
+			{
+				BtnDelete.IsEnabled = true;
+				BtnDetails.IsEnabled = true;
+			}
+			else
+			{
+
+				BtnDelete.IsEnabled = false;
+				BtnDetails.IsEnabled = false;
+			}
+		}
 	}
 }

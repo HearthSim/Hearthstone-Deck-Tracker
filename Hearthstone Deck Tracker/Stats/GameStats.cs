@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
-		public readonly Guid GameId;
+		public Guid GameId;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()

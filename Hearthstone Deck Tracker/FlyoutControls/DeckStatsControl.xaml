@@ -39,7 +39,7 @@
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
                 <ScrollViewer>
-                    <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick">
+                    <DataGrid CanUserAddRows="False" Name="DGrid" Margin="0,0,0,40" AlternationCount="2" SelectionMode="Single" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                 <DataGridTextColumn.ElementStyle>
@@ -102,8 +102,8 @@
                         <system:String>All Time</system:String>
                     </ComboBox>
                     <ComboBox Name="ComboboxGameMode" Margin="5,0,0,0" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxGameMode_SelectionChanged"/>
-                    <Button x:Name="BtnDetails" Content="Show game details" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
-                    <Button x:Name="BtnDelete" Content="Delete selected" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
+                    <Button x:Name="BtnDetails" IsEnabled="False" Content="Show game details" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
+                    <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete selected" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
                 </StackPanel>
 
             </Grid>
