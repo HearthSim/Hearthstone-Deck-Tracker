@@ -23,12 +23,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public enum GameMode
 		{
-			None,
-			Practice,
+			All, //for filtering @ deck stats
+			Ranked,
 			Casual,
 			Arena,
 			Friendly,
-			Ranked
+			Practice,
+			None
 		}
 
 		#region Properties

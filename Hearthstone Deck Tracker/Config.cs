@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -105,6 +106,8 @@ namespace Hearthstone_Deck_Tracker
 		public double SecretsTop = Defaults.SecretsTop;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
 		public string SelectedLanguage = Defaults.SelectedLanguage;
+		public Game.GameMode SelectedStatsFilterGameMode = Defaults.SelectedStatsFilterGameMode;
+		public string SelectedStatsFilterTime = Defaults.SelectedStatsFilterTime;
 
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -338,6 +341,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly int SearchDelay = 100;
 			public static readonly double SecretsLeft = 15;
 			public static readonly double SecretsTop = 5;
+			public static readonly Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;
+			public static readonly string SelectedStatsFilterTime = "All Time";
 			public static readonly string SelectedDeckSorting = "Name";
 			public static readonly string SelectedLanguage = "enUS";
 			public static readonly List<string> SelectedTags = new List<string>();

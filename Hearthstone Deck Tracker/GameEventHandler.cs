@@ -356,7 +356,6 @@ namespace Hearthstone_Deck_Tracker
 				_assignedDeck.DeckStats.Games.Remove(Game.CurrentGameStats);
 				Helper.MainWindow.DeckStatsFlyout.Refresh();
 			}
-
 		}
 
 		public static void HandlePlayerHeroPower(string cardId, int turn)

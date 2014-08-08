@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -16,10 +17,19 @@ namespace Hearthstone_Deck_Tracker
 	public partial class DeckStatsControl
 	{
 		private Deck _deck;
+		private bool _initialized;
 
 		public DeckStatsControl()
 		{
 			InitializeComponent();
+			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(Game.GameMode));
+		}
+
+		public void LoadConfig()
+		{
+			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
+			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
+			_initialized = true;
 		}
 
 		private async void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -48,13 +58,37 @@ namespace Hearthstone_Deck_Tracker
 		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
-
+			var selectedGameMode = (Game.GameMode)ComboboxGameMode.SelectedItem;
+			var comboboxString = ComboboxTime.SelectedValue.ToString();
+			var timeFrame = DateTime.Now.Date;
+			switch(comboboxString)
+			{
+				case "Today":
+					//timeFrame -= new TimeSpan(0, 0, 0, 0);
+					break;
+				case "Last Week":
+					timeFrame -= new TimeSpan(7, 0, 0, 0);
+					break;
+				case "Last Month":
+					timeFrame -= new TimeSpan(30, 0, 0, 0);
+					break;
+				case "Last Year":
+					timeFrame -= new TimeSpan(365, 0, 0, 0);
+					break;
+				case "All Time":
+					timeFrame = new DateTime();
+					break;
+			}
 			DGrid.Items.Clear();
-			foreach(var game in deck.DeckStats.Games)
+			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
+			                                                     || selectedGameMode == Game.GameMode.All)
+			                                                    && g.StartTime > timeFrame).ToList();
+
+			foreach(var game in filteredGames)
 				DGrid.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
-			DataGridWinLoss.Items.Add(new WinLoss(deck.DeckStats.Games, "Win"));
-			DataGridWinLoss.Items.Add(new WinLoss(deck.DeckStats.Games, "Loss"));
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win"));
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Loss"));
 
 			DGrid.Items.SortDescriptions.Clear();
 			DGrid.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
@@ -86,6 +120,22 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.FlyoutGameDetails.Width = Helper.MainWindow.FlyoutDeckStats.ActualWidth;
 				Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
 			}
+		}
+
+		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.SelectedStatsFilterGameMode = (Game.GameMode)ComboboxGameMode.SelectedValue;
+			Config.Save();
+			Refresh();
+		}
+
+		private void ComboboxTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.SelectedStatsFilterTime = (string)ComboboxTime.SelectedValue;
+			Config.Save();
+			Refresh();
 		}
 
 		private class WinLoss

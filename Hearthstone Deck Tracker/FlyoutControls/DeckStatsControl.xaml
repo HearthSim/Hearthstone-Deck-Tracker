@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="500">
     <Grid>
@@ -92,8 +93,18 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </ScrollViewer>
-                <Button Name="BtnDelete" Content="Delete selected" HorizontalAlignment="Right" Margin="0,0,20,5" VerticalAlignment="Bottom" Width="117" Click="BtnDelete_Click"/>
-                <Button x:Name="BtnDetails" Content="Show game details" HorizontalAlignment="Right" Margin="0,0,157,5" VerticalAlignment="Bottom" Width="117" Click="BtnDetails_Click"/>
+                <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+                    <ComboBox x:Name="ComboboxTime" Margin="5,0,0,0" SelectedIndex="4" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxTime_SelectionChanged">
+                        <system:String>Today</system:String>
+                        <system:String>Last Week</system:String>
+                        <system:String>Last Month</system:String>
+                        <system:String>Last Year</system:String>
+                        <system:String>All Time</system:String>
+                    </ComboBox>
+                    <ComboBox Name="ComboboxGameMode" Margin="5,0,0,0" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxGameMode_SelectionChanged"/>
+                    <Button x:Name="BtnDetails" Content="Show game details" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
+                    <Button x:Name="BtnDelete" Content="Delete selected" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
+                </StackPanel>
 
             </Grid>
         </GroupBox>

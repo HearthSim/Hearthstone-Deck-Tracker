@@ -434,12 +434,12 @@ namespace Hearthstone_Deck_Tracker
 
 				//player scaling used to beincreased by a very minimal about to curcumvent some problem,
 				//should no longer be required. not sure is the increment is actually noticable, but resetting can't hurt
-				if (config.OverlayOpponentScaling > 100)
+				if(config.OverlayOpponentScaling > 100)
 				{
 					config.OverlayOpponentScaling = 100;
 					converted = true;
 				}
-				if (config.OverlayPlayerScaling > 100)
+				if(config.OverlayPlayerScaling > 100)
 				{
 					config.OverlayPlayerScaling = 100;
 					converted = true;
@@ -894,6 +894,8 @@ namespace Hearthstone_Deck_Tracker
 				TextboxLogGamesPath.BorderBrush = new SolidColorBrush(Colors.Red);
 
 			CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
+
+			DeckStatsFlyout.LoadConfig();
 		}
 
 		private async void UpdateOverlayAsync()
