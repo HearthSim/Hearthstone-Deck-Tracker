@@ -53,6 +53,8 @@ namespace Hearthstone_Deck_Tracker
 		private bool _doUpdate;
 		private bool _first;
 		private long _lastGameEnd;
+		private bool _lastOpponentDrawIncrementedTurn;
+		private bool _lastPlayerDrawIncrementedTurn;
 		private int _powerCount;
 		private long _previousSize;
 		private int _turnCount;
@@ -252,7 +254,9 @@ namespace Hearthstone_Deck_Tracker
 
 					GameEventHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
-					_turnCount = 0;
+					_turnCount = 1;
+					_lastOpponentDrawIncrementedTurn = false;
+					_lastPlayerDrawIncrementedTurn = false;
 					if(Config.Instance.ClearLogFileAfterGame)
 					{
 						try
@@ -321,7 +325,10 @@ namespace Hearthstone_Deck_Tracker
 										GameEventHandler.TurnStart(Turn.Player, GetTurnNumber());
 										_currentPlayer = Turn.Player;
 										_playerUsedHeroPower = false;
+										_lastPlayerDrawIncrementedTurn = true;
 									}
+									else
+										_lastPlayerDrawIncrementedTurn = false;
 									GameEventHandler.HandlePlayerDraw(id, GetTurnNumber());
 								}
 								else
@@ -330,7 +337,11 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							case "FRIENDLY HAND":
 								if(to == "FRIENDLY DECK")
+								{
+									if(_lastPlayerDrawIncrementedTurn)
+										_turnCount--;
 									GameEventHandler.HandlePlayerMulligan(id);
+								}
 								else if(to == "FRIENDLY PLAY")
 									GameEventHandler.HandlePlayerPlay(id, GetTurnNumber());
 								else
@@ -344,8 +355,12 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							case "OPPOSING HAND":
 								if(to == "OPPOSING DECK")
+								{
+									if(_lastOpponentDrawIncrementedTurn)
+										_turnCount--;
 									//opponent mulligan
 									GameEventHandler.HandleOpponentMulligan(zonePos);
+								}
 								else
 								{
 									if(to == "OPPOSING SECRET")
@@ -365,7 +380,10 @@ namespace Hearthstone_Deck_Tracker
 										GameEventHandler.TurnStart(Turn.Opponent, GetTurnNumber());
 										_currentPlayer = Turn.Opponent;
 										_opponentUsedHeroPower = false;
+										_lastOpponentDrawIncrementedTurn = true;
 									}
+									else
+										_lastOpponentDrawIncrementedTurn = false;
 
 									//opponent draw
 									GameEventHandler.HandlOpponentDraw(GetTurnNumber());
@@ -419,6 +437,9 @@ namespace Hearthstone_Deck_Tracker
 				_previousSize = _lastGameEnd;
 			}
 			_turnCount = 0;
+			_lastOpponentDrawIncrementedTurn = false;
+			_lastPlayerDrawIncrementedTurn = false;
+			_first = true;
 		}
 	}
 }
