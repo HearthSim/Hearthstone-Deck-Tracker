@@ -895,7 +895,7 @@ namespace Hearthstone_Deck_Tracker
 			var hsForegroundChanged = false;
 			while(_doUpdate)
 			{
-				if(Process.GetProcessesByName("Hearthstone").Length == 1)
+				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
 					Overlay.UpdatePosition();
 

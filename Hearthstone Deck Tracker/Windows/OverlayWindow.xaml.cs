@@ -114,6 +114,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MouseInputOnLmbUp(object sender, EventArgs eventArgs)
 		{
+			if(Visibility != Visibility.Visible)
+				return;
 			if(_selectedUIElement != null)
 				Config.Save();
 			_selectedUIElement = null;
@@ -123,7 +125,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MouseInputOnMouseMoved(object sender, EventArgs eventArgs)
 		{
-			if(!_lmbDown) return;
+			if(!_lmbDown || Visibility != Visibility.Visible) return;
 
 			var pos = User32.GetMousePos();
 			var newPos = new Point(pos.X, pos.Y);
@@ -189,7 +191,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MouseInputOnLmbDown(object sender, EventArgs eventArgs)
 		{
-			if(!User32.IsForegroundWindow("Hearthstone")) return;
+			if(!User32.IsForegroundWindow("Hearthstone") || Visibility != Visibility.Visible) return;
 
 			var pos = User32.GetMousePos();
 			_mousePos = new Point(pos.X, pos.Y);
@@ -692,13 +694,18 @@ namespace Hearthstone_Deck_Tracker
 
 			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is. 
 			//this prevents that from happening. 
-			if(hsRect.Height == 0)
+			if(hsRect.Height == 0 || Visibility != Visibility.Visible)
 				return;
 
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
 			ReSizePosLists();
-
-			UpdateCardTooltip();
+			try
+			{
+				UpdateCardTooltip();
+			}
+			catch(Exception)
+			{
+			}
 		}
 
 		internal void UpdateTurnTimer(TimerEventArgs timerEventArgs)
