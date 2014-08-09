@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <GroupBox Header="Overview" VerticalAlignment="Top" Height="auto" Grid.Row="0" Grid.ColumnSpan="2" >
             <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
-                <DataGrid Name="DataGridWinLoss" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="77" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
+                <DataGrid IsReadOnly="True" Name="DataGridWinLoss" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="77" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                             <DataGridTextColumn.ElementStyle>
@@ -39,7 +39,7 @@
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
                 <ScrollViewer Margin="0,0,0,40">
-                    <DataGrid CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
+                    <DataGrid IsReadOnly="True" CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                 <DataGridTextColumn.ElementStyle>
@@ -48,42 +48,42 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" IsReadOnly="True">
+                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
