@@ -9,7 +9,7 @@ The ingame overlay:
 
 The app: 
 
-![Overlay](http://i.imgur.com/T7beWjm.png "The tracker")
+![Tracker](http://i.imgur.com/cU4qTBC.png "The tracker")
 
 
 Features:
@@ -32,6 +32,14 @@ Features:
   - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.  
 - **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up)  
 - **Customization**: Almost every feature can be turned on/off separately.
+- **Stats per deck**:
+  - Track the result of each game (win/loss), opponents, game mode and more
+  - Win/loss rate vs each class.
+  - Details for each game (cards drawn, played, etc.).
+  - Select which game modes to track (Options > Other).  
+  - Import your opponent's (partial) deck from a tracked game as a new deck.
+
+![Stats](http://i.imgur.com/O1kMsHD.png "Deck stats")
 
 
 How to use: 
