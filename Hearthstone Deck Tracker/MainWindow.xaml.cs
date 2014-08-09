@@ -1159,14 +1159,15 @@ namespace Hearthstone_Deck_Tracker
 				                      stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
 				                      MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
+
 		public async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(int count)
 		{
-			var settings = new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" };
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 			return
 				await
 				this.ShowMessageAsync("Delete Games",
-									  "This will delete the selected games (" + count + ").\n\nAre you sure?",
-									  MessageDialogStyle.AffirmativeAndNegative, settings);
+				                      "This will delete the selected games (" + count + ").\n\nAre you sure?",
+				                      MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
 
 		#endregion
@@ -1423,7 +1424,6 @@ namespace Hearthstone_Deck_Tracker
 
 			var newDeckClone = (Deck)NewDeck.Clone();
 			DeckList.DecksList.Add(newDeckClone);
-			DeckPickerList.AddAndSelectDeck(newDeckClone);
 
 			newDeckClone.LastEdited = DateTime.Now;
 
@@ -1439,12 +1439,30 @@ namespace Hearthstone_Deck_Tracker
 					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == oldDeckName);
 					if(statsEntry != null)
 					{
-						statsEntry.Name = deckName;
+						if(overwrite)
+						{
+							statsEntry.Name = deckName;
+							Logger.WriteLine("Deck has new name, updated deckstats");
+						}
+						else
+						{
+							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == deckName);
+							if(newStatsEntry == null)
+							{
+								newStatsEntry = new DeckStats(deckName);
+								DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+							}
+							foreach(var game in statsEntry.Games)
+								newStatsEntry.AddGameResult(game.CloneWithNewId());
+							Logger.WriteLine("cloned gamestats for \"Set as new\"");
+						}
 						DeckStatsList.Save();
-						Logger.WriteLine("Deck has new name, updated deckstats");
 					}
 				}
 			}
+
+			//after cloning the stats, otherwise new stats will be generated
+			DeckPickerList.AddAndSelectDeck(newDeckClone);
 
 			TabControlTracker.SelectedIndex = 0;
 			EditingDeck = false;

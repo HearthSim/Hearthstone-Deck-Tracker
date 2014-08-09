@@ -66,6 +66,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { Coin = value.ToLower() == "Yes"; }
 		}
 
+		public GameStats CloneWithNewId()
+		{
+			var newGame = new GameStats(Result, OpponentHero);
+			newGame.StartTime = StartTime;
+			newGame.EndTime = EndTime;
+			newGame.Coin = Coin;
+			newGame.GameMode = GameMode;
+			newGame.Turns = Turns;
+			newGame._turnStats = LoadTurnStats();
+			newGame.Save();
+			return newGame;
+		}
+
 		protected bool Equals(GameStats other)
 		{
 			return GameId.Equals(other.GameId);
@@ -112,6 +125,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			EndTime = DateTime.Now;
 			Logger.WriteLine("Current Game ended after " + Turns + " turns", "Gamestats");
+			Save();
+		}
+
+		private void Save()
+		{
 			XmlManager<List<TurnStats>>.Save(_gameFile, TurnStats);
 		}
 

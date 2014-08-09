@@ -59,12 +59,12 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(count > 1)
 			{
-				if (await Helper.MainWindow.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
+				if(await Helper.MainWindow.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
 					return;
 				foreach(var selectedItem in DataGridGames.SelectedItems)
 				{
 					var selectedGame = selectedItem as GameStats;
-					if (selectedGame == null) continue;
+					if(selectedGame == null) continue;
 					if(!_deck.DeckStats.Games.Contains(selectedGame)) continue;
 					selectedGame.DeleteGameFile();
 					_deck.DeckStats.Games.Remove(selectedGame);
@@ -159,6 +159,20 @@ namespace Hearthstone_Deck_Tracker
 			Refresh();
 		}
 
+		private void DGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(DataGridGames.SelectedItems.Count > 0)
+			{
+				BtnDelete.IsEnabled = true;
+				BtnDetails.IsEnabled = true;
+			}
+			else
+			{
+				BtnDelete.IsEnabled = false;
+				BtnDetails.IsEnabled = false;
+			}
+		}
+
 		private class WinLoss
 		{
 			private readonly List<GameStats> _stats;
@@ -236,22 +250,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var percent = total > 0 ? Math.Round(100.0 * num / total, 2).ToString() : "-";
 				return string.Format("{0} ({1}%)", num, percent);
-			}
-		}
-
-		private void DGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-
-			if (DataGridGames.SelectedItems.Count > 0)
-			{
-				BtnDelete.IsEnabled = true;
-				BtnDetails.IsEnabled = true;
-			}
-			else
-			{
-
-				BtnDelete.IsEnabled = false;
-				BtnDetails.IsEnabled = false;
 			}
 		}
 	}

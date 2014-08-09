@@ -13,9 +13,27 @@
                 <Separator Margin="0,58,0,0" VerticalAlignment="Top"></Separator>
                 <DataGrid Name="DataGridDetails" Margin="0,60,0,0" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Turn" Binding="{Binding Turn}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Player" Binding="{Binding Player}" IsReadOnly="True"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" IsReadOnly="True"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Turn" Binding="{Binding Turn}" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Player" Binding="{Binding Player}" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" IsReadOnly="True">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
                         <DataGridTemplateColumn Header="Card" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

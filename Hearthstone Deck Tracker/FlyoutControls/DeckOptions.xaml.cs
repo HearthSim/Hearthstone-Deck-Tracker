@@ -107,6 +107,8 @@ namespace Hearthstone_Deck_Tracker
 						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
 						if(deckStats != null)
 						{
+							foreach(var game in deckStats.Games)
+								game.DeleteGameFile();
 							DeckStatsList.Instance.DeckStats.Remove(deckStats);
 							DeckStatsList.Save();
 							Logger.WriteLine("Deleted deckstats for deck: " + deck.Name);
@@ -131,6 +133,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var clone = (Deck)Helper.MainWindow.DeckPickerList.SelectedDeck.Clone();
+			var originalStatsEntry = clone.DeckStats;
 
 			while(Helper.MainWindow.DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
@@ -150,8 +153,21 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.MainWindow.DeckList.DecksList.Add(clone);
 			Helper.MainWindow.DeckPickerList.AddAndSelectDeck(clone);
-
 			Helper.MainWindow.WriteDecks();
+
+			//clone game stats
+			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
+			if(newStatsEntry == null)
+			{
+				newStatsEntry = new DeckStats(clone.Name);
+				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+			}
+			foreach(var game in originalStatsEntry.Games)
+				newStatsEntry.AddGameResult(game.CloneWithNewId());
+			Logger.WriteLine("cloned gamestats");
+
+			DeckStatsList.Save();
+			Helper.MainWindow.DeckPickerList.UpdateList();
 
 			After_Click();
 		}
