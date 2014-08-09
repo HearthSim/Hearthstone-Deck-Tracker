@@ -224,7 +224,6 @@ namespace Hearthstone_Deck_Tracker
 
 			Game.IsInMenu = false;
 			Game.Reset();
-			Game.CurrentGameStats = new GameStats(GameResult.None, Game.PlayingAgainst);
 
 
 			//select deck based on hero
