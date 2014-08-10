@@ -15,6 +15,7 @@
                     <system:String>Name</system:String>
                     <system:String>Last Edited</system:String>
                     <system:String>Tag</system:String>
+                    <system:String>Win Rate</system:String>
                 </ComboBox>
             </DockPanel>
             <Label Content="Filter by tags:" FontSize="14"/>

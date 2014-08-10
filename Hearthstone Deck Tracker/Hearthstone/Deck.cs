@@ -53,12 +53,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string WinsPercent
+		public string WinPercentString
 		{
 			get
 			{
 				if(DeckStats.Games.Count == 0) return "-%";
-				return Math.Round(100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count, 0) + "%";
+				return Math.Round(WinPercent, 0) + "%";
+			}
+		}
+		[XmlIgnore]
+		public double WinPercent
+		{
+			get
+			{
+				if (DeckStats.Games.Count == 0) return 0.0;
+				return 100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count;
 			}
 		}
 
