@@ -473,7 +473,7 @@
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Record Games" Height="184" Width="235" VerticalAlignment="Top" Margin="11,10,1,0" Grid.Column="1" Grid.Row="1">
+                                <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top" Margin="11,10,1,0" Grid.Column="1" Grid.Row="1">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked" Unchecked="CheckboxRecordRanked_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked" Unchecked="CheckboxRecordArena_Unchecked"/>
@@ -481,6 +481,7 @@
                                         <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked" Unchecked="CheckboxRecordFriendly_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked" Unchecked="CheckboxRecordPractice_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRecordOther" Content="Record Other" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked" Unchecked="CheckboxRecordOther_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxDiscardGame" Content="Discard game if incorrect deck" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked" Unchecked="CheckboxDiscardGame_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>

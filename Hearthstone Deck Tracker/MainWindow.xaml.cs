@@ -841,6 +841,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
 			CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
+			CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1392,9 +1393,9 @@ namespace Hearthstone_Deck_Tracker
 					if(!Config.Instance.UseFullTextSearch && !card.LocalizedName.ToLowerInvariant().Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
 						continue;
 					if(Config.Instance.UseFullTextSearch && words.Any(w => !card.LocalizedName.ToLowerInvariant().Contains(w)
-					                                     && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                                     && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-														 && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
+					                                                       && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+					                                                       && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
+					                                                       && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
 					// mana filter
 					if(ComboBoxFilterMana.SelectedItem.ToString() == "All"
@@ -2717,6 +2718,20 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.UseFullTextSearch = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxDiscardGame_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.DiscardGameIfIncorrectDeck = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxDiscardGame_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.DiscardGameIfIncorrectDeck = false;
 			SaveConfig(false);
 		}
 
