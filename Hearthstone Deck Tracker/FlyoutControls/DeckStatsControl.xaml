@@ -38,8 +38,7 @@
         </GroupBox>
         <GroupBox Header="Games" Grid.Row="1" Width="auto">
             <Grid>
-                <ScrollViewer Margin="0,0,0,40">
-                    <DataGrid IsReadOnly="True" CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
+                    <DataGrid IsReadOnly="True" Margin="0,0,0,40" CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                 <DataGridTextColumn.ElementStyle>
@@ -92,7 +91,6 @@
                             </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                </ScrollViewer>
                 <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
                     <ComboBox x:Name="ComboboxTime" Margin="5,0,0,0" SelectedIndex="4" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxTime_SelectionChanged">
                         <system:String>Today</system:String>
