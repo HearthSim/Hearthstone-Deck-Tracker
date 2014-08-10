@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _decksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
+		private Version _updatedVersion;
 
 		private readonly string _logConfigPath =
 			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
@@ -86,6 +87,20 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			InitializeComponent();
+
+			try
+			{
+				if(File.Exists("Updater_new.exe"))
+				{
+					if(File.Exists("Updater.exe"))
+						File.Delete("Updater.exe");
+					File.Move("Updater_new.exe", "Updater.exe");
+				}
+			}
+			catch
+			{
+				Logger.WriteLine("Error updating updater");
+			}
 
 			Helper.MainWindow = this;
 			_configPath = Config.Load();
@@ -302,7 +317,7 @@ namespace Hearthstone_Deck_Tracker
 
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
-		private static void ConvertLegacyConfig(Version currentVersion, Version configVersion)
+		private void ConvertLegacyConfig(Version currentVersion, Version configVersion)
 		{
 			var config = Config.Instance;
 			var converted = false;
@@ -450,6 +465,12 @@ namespace Hearthstone_Deck_Tracker
 				Config.SaveBackup();
 				Config.Save();
 			}
+
+			if(configVersion != null && currentVersion > configVersion)
+			{
+				_updatedVersion = currentVersion;
+			}
+
 		}
 
 		private bool FindHearthstoneDir()
@@ -667,6 +688,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(NewVersion != null)
 				ShowNewUpdateMessage();
+			if(_updatedVersion != null)
+				ShowUpdateNotesMessage(_updatedVersion);
+
 			if(_updatedLogConfig && Game.IsRunning)
 			{
 				ShowMessage("Restart Hearthstone",
@@ -951,17 +975,39 @@ namespace Hearthstone_Deck_Tracker
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
 			var version = newVersion ?? NewVersion;
+			var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
+			                                     version.Build);
 			var result =
 				await
 				this.ShowMessageAsync("New Update available!",
-				                      "Download version " + string.Format("{0}.{1}.{2}", version.Major, version.Minor,
-				                                                          version.Build) + " at\n" + releaseDownloadUrl,
+				                      "Press \"Download\" to automatically download.",
 				                      MessageDialogStyle.AffirmativeAndNegative, settings);
 
 			if(result == MessageDialogResult.Affirmative)
-				Process.Start(releaseDownloadUrl);
+			{
+				try
+				{
+					Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
+					Application.Current.Shutdown();
+				}
+				catch
+				{
+					Logger.WriteLine("Error starting updater");
+					Process.Start(releaseDownloadUrl);
+				}
+			}
 			else
 				_tempUpdateCheckDisabled = true;
+		}
+
+		private async void ShowUpdateNotesMessage(Version current)
+		{
+			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
+			var settings = new MetroDialogSettings { AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close" };
+
+			var result = await this.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Affirmative)
+				Process.Start(releaseDownloadUrl);
 		}
 
 		public async void ShowMessage(string title, string message)
