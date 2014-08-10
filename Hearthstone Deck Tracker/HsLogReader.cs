@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public int GetTurnNumber()
 		{
-			return (_turnCount) / 2;
+			return (_turnCount + 1) / 2;
 		}
 
 		public void Start()
@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker
 
 					GameEventHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
-					_turnCount = 1;
+					_turnCount = 0;
 					_lastOpponentDrawIncrementedTurn = false;
 					_lastPlayerDrawIncrementedTurn = false;
 					if(Config.Instance.ClearLogFileAfterGame)
