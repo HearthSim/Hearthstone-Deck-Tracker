@@ -135,6 +135,7 @@ namespace Hearthstone_Deck_Tracker
 		public int? TrackerWindowLeft = Defaults.TrackerWindowLeft;
 		public int? TrackerWindowTop = Defaults.TrackerWindowTop;
 		public int UpdateDelay = Defaults.UpdateDelay;
+		public bool UseFullTextSearch = Defaults.UseFullTextSearch;
 		public bool UseSameScaling = Defaults.UseSameScaling;
 		public bool VisibleOverlay = Defaults.VisibleOverlay;
 		public bool WindowCardToolTips = Defaults.WindowCardToolTips;
@@ -365,6 +366,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly int? TrackerWindowLeft = null;
 			public static readonly int? TrackerWindowTop = null;
 			public static readonly int UpdateDelay = 100;
+			public static readonly bool UseFullTextSearch = false;
 			public static readonly bool UseSameScaling = true;
 			public static readonly bool VisibleOverlay = false;
 			public static readonly bool WindowCardToolTips = true;

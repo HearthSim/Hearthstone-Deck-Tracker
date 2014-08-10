@@ -840,6 +840,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
 			CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
 			CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
+			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1260,9 +1261,9 @@ namespace Hearthstone_Deck_Tracker
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
 					{
 						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == oldDeck.Name);
-						if (deckStats != null)
+						if(deckStats != null)
 						{
-							foreach (var game in deckStats.Games)
+							foreach(var game in deckStats.Games)
 								game.DeleteGameFile();
 							DeckStatsList.Instance.DeckStats.Remove(deckStats);
 							DeckStatsList.Save();
@@ -1387,7 +1388,12 @@ namespace Hearthstone_Deck_Tracker
 
 				foreach(var card in Game.GetActualCards())
 				{
-					if(!card.LocalizedName.ToLowerInvariant().Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
+					var words = TextBoxDBFilter.Text.ToLowerInvariant().Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+					if(!Config.Instance.UseFullTextSearch && !card.LocalizedName.ToLowerInvariant().Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
+						continue;
+					if(Config.Instance.UseFullTextSearch && words.Any(w => !card.LocalizedName.ToLowerInvariant().Contains(w)
+					                                     && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+					                                     && (card.RaceOrType != null && w != card.RaceOrType.ToLowerInvariant())))
 						continue;
 					// mana filter
 					if(ComboBoxFilterMana.SelectedItem.ToString() == "All"
@@ -2696,6 +2702,20 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.RecordOther = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.UseFullTextSearch = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxFullTextSearch_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.UseFullTextSearch = false;
 			SaveConfig(false);
 		}
 

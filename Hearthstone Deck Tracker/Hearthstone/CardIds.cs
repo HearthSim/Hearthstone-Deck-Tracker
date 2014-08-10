@@ -25,7 +25,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"GAME",
 				"DREAM",
 				"NEW1_006",
-				"NAX"
+				"NAX",
+				"FP1_006"
 			};
 
 		public static readonly List<string> SecretIdsHunter = new List<string>

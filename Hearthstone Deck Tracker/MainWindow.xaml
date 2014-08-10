@@ -320,7 +320,7 @@
                                         </GroupBox>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="230" Width="235" Margin="10,10,0,0">
+                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="258" Width="235" Margin="10,10,0,0">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxFlashHs_Checked" Unchecked="CheckboxFlashHs_Unchecked"/>
                                         <CheckBox x:Name="CheckboxBringHsToForegorund" Content="Popup Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxBringHsToForegorund_Checked" Unchecked="CheckboxBringHsToForegorund_Unchecked"/>
@@ -329,6 +329,8 @@
                                         <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxFullTextSearch" Content="Full text search in New Deck" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxFullTextSearch_Checked" Unchecked="CheckboxFullTextSearch_Unchecked"/>
+
                                         <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxTrackerCardToolTips_Checked" Unchecked="CheckboxTrackerCardToolTips_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
