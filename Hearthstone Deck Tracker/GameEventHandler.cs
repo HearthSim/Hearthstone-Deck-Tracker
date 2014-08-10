@@ -272,6 +272,12 @@ namespace Hearthstone_Deck_Tracker
 				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if(selectedDeck != null)
 				{
+					if(!Game.PlayerDrawn.All(c => selectedDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+					{
+						Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
+						_assignedDeck = null;
+						return;
+					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 					_assignedDeck = selectedDeck;
@@ -343,13 +349,14 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
 				Logger.WriteLine("Saving deckstats", "GameStats");
 				DeckStatsList.Save();
+				//todo: may not want to set current to null - allow for later reassigning of games?
 				Game.CurrentGameStats = null;
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Helper.MainWindow.DeckStatsFlyout.Refresh();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(Game.CurrentGameStats))
 			{
-				//game was supposed to be recorded, remove from deck again.
+				//game was not supposed to be recorded, remove from deck again.
 				_assignedDeck.DeckStats.Games.Remove(Game.CurrentGameStats);
 				Helper.MainWindow.DeckStatsFlyout.Refresh();
 			}
