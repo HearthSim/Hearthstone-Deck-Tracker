@@ -1259,6 +1259,15 @@ namespace Hearthstone_Deck_Tracker
 					Deck oldDeck;
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
 					{
+						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == oldDeck.Name);
+						if (deckStats != null)
+						{
+							foreach (var game in deckStats.Games)
+								game.DeleteGameFile();
+							DeckStatsList.Instance.DeckStats.Remove(deckStats);
+							DeckStatsList.Save();
+							Logger.WriteLine("Deleted deckstats for deck: " + oldDeck.Name);
+						}
 						DeckList.DecksList.Remove(oldDeck);
 						DeckPickerList.RemoveDeck(oldDeck);
 					}
