@@ -1393,7 +1393,8 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					if(Config.Instance.UseFullTextSearch && words.Any(w => !card.LocalizedName.ToLowerInvariant().Contains(w)
 					                                     && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                                     && (card.RaceOrType != null && w != card.RaceOrType.ToLowerInvariant())))
+					                                     && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
+														 && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
 					// mana filter
 					if(ComboBoxFilterMana.SelectedItem.ToString() == "All"
