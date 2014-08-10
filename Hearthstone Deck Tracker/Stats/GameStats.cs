@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats()
 		{
+
 		}
 
 		public GameStats(GameResult result, string opponentHero)
@@ -44,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int Turns { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
+		public string Note { get; set; }
 
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]

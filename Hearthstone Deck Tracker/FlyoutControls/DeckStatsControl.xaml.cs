@@ -104,7 +104,6 @@ namespace Hearthstone_Deck_Tracker
 			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
 			                                                     || selectedGameMode == Game.GameMode.All)
 			                                                    && g.StartTime > timeFrame).ToList();
-
 			foreach(var game in filteredGames)
 				DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
@@ -117,8 +116,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Refresh()
 		{
-			if(_deck != null)
-				SetDeck(_deck);
+			if(_deck == null) return;
+			var oldSelection = DataGridGames.SelectedItem;
+			SetDeck(_deck);
+			if(oldSelection != null)
+				DataGridGames.SelectedItem = oldSelection;
 		}
 
 		private void BtnDetails_Click(object sender, RoutedEventArgs e)
@@ -165,12 +167,28 @@ namespace Hearthstone_Deck_Tracker
 			{
 				BtnDelete.IsEnabled = true;
 				BtnDetails.IsEnabled = true;
+				BtnNote.IsEnabled = true;
 			}
 			else
 			{
 				BtnDelete.IsEnabled = false;
 				BtnDetails.IsEnabled = false;
+				BtnNote.IsEnabled = false;
 			}
+		}
+
+		private async void BtnEditNote_Click(object sender, RoutedEventArgs e)
+		{
+			var selected = DataGridGames.SelectedItem as GameStats;
+			if(selected == null) return;
+			var settings = new MetroDialogSettings();
+			settings.DefaultText = selected.Note;
+			var newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
+			if(newNote == null)
+				return;
+			selected.Note = newNote;
+			DeckStatsList.Save();
+			Refresh();
 		}
 
 		private class WinLoss

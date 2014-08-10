@@ -47,7 +47,7 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Opponent" Binding="{Binding OpponentHero}" >
+                            <DataGridTextColumn Header="VS" Binding="{Binding OpponentHero}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -75,33 +75,35 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" >
+                            <DataGridTextColumn Header="Time" Binding="{Binding Duration}" >
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                        </DataGrid.Columns>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Started" Binding="{Binding StartTime}" >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>
+                    </DataGrid.Columns>
                     </DataGrid>
                 <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
-                    <ComboBox x:Name="ComboboxTime" Margin="5,0,0,0" SelectedIndex="4" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxTime_SelectionChanged">
+                    <ComboBox x:Name="ComboboxTime" Margin="5,0,0,0" SelectedIndex="4" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboboxTime_SelectionChanged">
                         <system:String>Today</system:String>
                         <system:String>Last Week</system:String>
                         <system:String>Last Month</system:String>
                         <system:String>Last Year</system:String>
                         <system:String>All Time</system:String>
                     </ComboBox>
-                    <ComboBox Name="ComboboxGameMode" Margin="5,0,0,0" VerticalAlignment="Bottom" Width="101" SelectionChanged="ComboboxGameMode_SelectionChanged"/>
+                    <ComboBox Name="ComboboxGameMode" Margin="5,0,0,0" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboboxGameMode_SelectionChanged"/>
                     <Button x:Name="BtnDetails" IsEnabled="False" Content="Show game details" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
-                    <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete selected" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
+                    <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0" Width="75" VerticalAlignment="Bottom" Click="BtnEditNote_Click" />
+                    <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete" Margin="5,0,0,0" Width="75" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
                 </StackPanel>
 
             </Grid>
