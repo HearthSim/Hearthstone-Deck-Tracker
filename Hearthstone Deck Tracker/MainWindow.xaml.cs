@@ -1299,10 +1299,35 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TextBoxDBFilter_KeyDown(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.Enter && ListViewDB.Items.Count == 1)
+			Card card = null;
+			switch(e.Key)
 			{
-				var card = (Card)ListViewDB.Items[0];
+				case Key.Enter:
+				case Key.D1:
+					if(ListViewDB.Items.Count > 0)
+						card = (Card)ListViewDB.Items[0];
+					break;
+				case Key.D2:
+					if (ListViewDB.Items.Count > 1)
+					card = (Card)ListViewDB.Items[1];
+					break;
+				case Key.D3:
+					if (ListViewDB.Items.Count > 2)
+					card = (Card)ListViewDB.Items[2];
+					break;
+				case Key.D4:
+					if (ListViewDB.Items.Count > 3)
+					card = (Card)ListViewDB.Items[3];
+					break;
+				case Key.D5:
+					if (ListViewDB.Items.Count > 4)
+					card = (Card)ListViewDB.Items[4];
+					break;
+			}
+			if(card != null)
+			{
 				AddCardToDeck((Card)card.Clone());
+				e.Handled = true;
 			}
 		}
 
