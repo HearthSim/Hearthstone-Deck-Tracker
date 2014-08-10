@@ -301,11 +301,20 @@ namespace Hearthstone_Deck_Tracker
 		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
 		{
 			//only set tags if tags were changed in "My Decks"
-			if(Helper.MainWindow.TabControlTracker.SelectedIndex != 0) return;
-			var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-			Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
-			Config.Instance.SelectedTags = tags;
-			Config.Save();
+			if(Name == "SortFilterDecksFlyout")
+			{
+				var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
+				Config.Instance.SelectedTags = tags;
+				Config.Save();
+			}
+			else if(Name == "TagControlMyDecks")
+			{
+				var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				Helper.MainWindow.DeckPickerList.SelectedDeck.Tags = new List<string>(tags);
+				Helper.MainWindow.DeckPickerList.UpdateList();
+				Helper.MainWindow.WriteDecks();
+			}
 		}
 	}
 }

@@ -51,7 +51,6 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _decksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
-		private Version _updatedVersion;
 
 		private readonly string _logConfigPath =
 			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
@@ -71,6 +70,7 @@ namespace Hearthstone_Deck_Tracker
 		public Deck NewDeck;
 		private bool _doUpdate;
 		private bool _newContainsDeck;
+		private Version _updatedVersion;
 
 		public bool ShowToolTip
 		{
@@ -467,10 +467,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			if(configVersion != null && currentVersion > configVersion)
-			{
 				_updatedVersion = currentVersion;
-			}
-
 		}
 
 		private bool FindHearthstoneDir()
@@ -1003,7 +1000,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void ShowUpdateNotesMessage(Version current)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new MetroDialogSettings { AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close" };
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"};
 
 			var result = await this.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
