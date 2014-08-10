@@ -239,40 +239,53 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)
 		{
-			var leftPanel = Canvas.GetLeft(StackPanelOpponent) < 200 ? StackPanelOpponent : StackPanelPlayer;
-			if(leftPanel != null && !Config.Instance.HideDecksInOverlay)
+			var panels = new List<StackPanel>();
+			if(Canvas.GetLeft(StackPanelPlayer) + 200 < 500)
+				panels.Add(StackPanelPlayer);
+			if(Canvas.GetLeft(StackPanelOpponent) < 500)
+				panels.Add(StackPanelOpponent);
+
+			bool? isFriendsListOpen = null;
+			if(panels.Count > 0 && !Config.Instance.HideDecksInOverlay)
 			{
-				//if panel visible, only continue of click was in the button left corner
-				if(!(clickPos.X < 150 && clickPos.Y > Height - 100) && leftPanel.Visibility == Visibility.Visible)
-					return;
-
-				var checkForFriendsList = true;
-				if(leftPanel.Equals(StackPanelPlayer) && Config.Instance.HidePlayerCards)
-					checkForFriendsList = false;
-				else if(leftPanel.Equals(StackPanelOpponent) && Config.Instance.HideOpponentCards)
-					checkForFriendsList = false;
-
-				if(checkForFriendsList)
+				foreach(var panel in panels)
 				{
-					if(await Helper.FriendsListOpen())
+					//if panel visible, only continue of click was in the button left corner
+					if(!(clickPos.X < 150 && clickPos.Y > Height - 100) && panel.Visibility == Visibility.Visible)
+						continue;
+
+					var checkForFriendsList = true;
+					if(panel.Equals(StackPanelPlayer) && Config.Instance.HidePlayerCards)
+						checkForFriendsList = false;
+					else if(panel.Equals(StackPanelOpponent) && Config.Instance.HideOpponentCards)
+						checkForFriendsList = false;
+
+					if(checkForFriendsList)
 					{
-						var needToHide = Canvas.GetTop(leftPanel) + leftPanel.ActualHeight > Height * 0.3;
-						if(needToHide)
+						if(isFriendsListOpen == null)
+							isFriendsListOpen = await Helper.FriendsListOpen();
+						if(isFriendsListOpen.Value)
 						{
-							leftPanel.Visibility = Visibility.Collapsed;
-							if(leftPanel.Equals(StackPanelPlayer))
-								_playerCardsHidden = true;
-							else
-								_opponentCardsHidden = true;
+							var needToHide = Canvas.GetTop(panel) + panel.ActualHeight > Height * 0.3;
+							if(needToHide)
+							{
+								Logger.WriteLine("set " + panel.Name + "to collapsed");
+								panel.Visibility = Visibility.Collapsed;
+								if(panel.Equals(StackPanelPlayer))
+									_playerCardsHidden = true;
+								else
+									_opponentCardsHidden = true;
+							}
 						}
-					}
-					else if(leftPanel.Visibility == Visibility.Collapsed)
-					{
-						leftPanel.Visibility = Visibility.Visible;
-						if(leftPanel.Equals(StackPanelPlayer))
-							_playerCardsHidden = false;
-						else
-							_opponentCardsHidden = false;
+						else if(panel.Visibility == Visibility.Collapsed)
+						{
+							Logger.WriteLine("set " + panel.Name + "to visible");
+							panel.Visibility = Visibility.Visible;
+							if(panel.Equals(StackPanelPlayer))
+								_playerCardsHidden = false;
+							else
+								_opponentCardsHidden = false;
+						}
 					}
 				}
 			}
