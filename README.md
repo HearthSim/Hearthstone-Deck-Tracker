@@ -45,7 +45,7 @@ Features:
 How to use: 
 ===========
 1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
-2) Extract file (using e.g. [WinRAR](http://www.win-rar.com/))  
+2) Extract file 
 3) Run "Hearthstone Deck Tracker.exe"  
 4) Create your decks under "New Deck" (or import from any of the supported websites), click save.  
 5) Play!
