@@ -1729,6 +1729,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Rebracer.xml" />
+    <Resource Include="Resources\druid_small.png" />
+    <Resource Include="Resources\hunter_small.png" />
+    <Resource Include="Resources\mage_small.png" />
+    <Resource Include="Resources\paladin_small.png" />
+    <Resource Include="Resources\priest_small.png" />
+    <Resource Include="Resources\rogue_small.png" />
+    <Resource Include="Resources\shaman_small.png" />
+    <Resource Include="Resources\warlock_small.png" />
+    <Resource Include="Resources\warrior_small.png" />
     <Content Include="Updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

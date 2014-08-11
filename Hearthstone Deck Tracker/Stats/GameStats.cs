@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -9,12 +10,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
+		private readonly string[] _hsClasses = new[] {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
 		public Guid GameId;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()
 		{
-
 		}
 
 		public GameStats(GameResult result, string opponentHero)
@@ -46,6 +47,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public string Note { get; set; }
+
+		[XmlIgnore]
+		public BitmapImage HeroImage
+		{
+			get
+			{
+				if(!_hsClasses.Contains(OpponentHero))
+					return new BitmapImage();
+				var uri = new Uri(string.Format("../Resources/{0}_small.png", OpponentHero.ToLower()), UriKind.Relative);
+				return new BitmapImage(uri);
+			}
+		}
 
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]

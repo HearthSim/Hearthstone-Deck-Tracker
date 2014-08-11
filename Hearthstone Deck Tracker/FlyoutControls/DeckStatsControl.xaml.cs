@@ -107,8 +107,8 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var game in filteredGames)
 				DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
-			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win"));
-			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Loss"));
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
 
 			DataGridGames.Items.SortDescriptions.Clear();
 			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
@@ -193,23 +193,21 @@ namespace Hearthstone_Deck_Tracker
 
 		private class WinLoss
 		{
+			private readonly bool _percent;
 			private readonly List<GameStats> _stats;
 
-			public WinLoss(List<GameStats> stats, string result)
+			public WinLoss(List<GameStats> stats, string text)
 			{
+				_percent = text == "%";
 				_stats = stats;
-				Result = result;
+				Text = text;
 			}
 
-			public string Result { get; private set; }
+			public string Text { get; private set; }
 
 			public string Total
 			{
-				get
-				{
-					var numGames = _stats.Count(s => s.Result.ToString() == Result);
-					return GetDisplayString(numGames, _stats.Count);
-				}
+				get { return _percent ? GetPercent() : GetWinLoss(); }
 			}
 
 			public string Druid
@@ -257,17 +255,24 @@ namespace Hearthstone_Deck_Tracker
 				get { return GetClassDisplayString("Warlock"); }
 			}
 
-			private string GetClassDisplayString(string hsClass)
+			private string GetWinLoss(string hsClass = null)
 			{
-				var numGames = _stats.Count(s => s.Result.ToString() == Result && s.OpponentHero == hsClass);
-				var total = _stats.Count(s => s.OpponentHero == hsClass);
-				return GetDisplayString(numGames, total);
+				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
+				var losses = _stats.Count(s => s.Result.ToString() == "Loss" && (hsClass == null || s.OpponentHero == hsClass));
+				return wins + " - " + losses;
 			}
 
-			private string GetDisplayString(int num, int total)
+			private string GetPercent(string hsClass = null)
 			{
-				var percent = total > 0 ? Math.Round(100.0 * num / total, 2).ToString() : "-";
-				return string.Format("{0} ({1}%)", num, percent);
+				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
+				var total = _stats.Count(s => (hsClass == null || s.OpponentHero == hsClass));
+				var percent = total > 0 ? Math.Round(100.0 * wins / total, 1).ToString() : "-";
+				return string.Format("{0}%", percent);
+			}
+
+			private string GetClassDisplayString(string hsClass)
+			{
+				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
 		}
 	}
