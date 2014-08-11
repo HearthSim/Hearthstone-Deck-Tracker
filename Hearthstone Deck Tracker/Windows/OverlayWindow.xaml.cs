@@ -240,7 +240,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)
 		{
 			var panels = new List<StackPanel>();
-			if(Canvas.GetLeft(StackPanelPlayer) + 200 < 500)
+			if(Canvas.GetLeft(StackPanelPlayer) - 200 < 500)
 				panels.Add(StackPanelPlayer);
 			if(Canvas.GetLeft(StackPanelOpponent) < 500)
 				panels.Add(StackPanelOpponent);
@@ -585,7 +585,7 @@ namespace Hearthstone_Deck_Tracker
 			var visibility = Config.Instance.OverlayCardToolTips ? Visibility.Visible : Visibility.Hidden;
 
 			//player card tooltips
-			if(PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
+			if(StackPanelPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewPlayer.ActualHeight / ListViewPlayer.Items.Count;
@@ -607,7 +607,7 @@ namespace Hearthstone_Deck_Tracker
 				ToolTipCard.Visibility = visibility;
 			}
 				//opponent card tooltips
-			else if(PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
+			else if( StackPanelOpponent.Visibility == Visibility.Visible && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewOpponent.ActualHeight / ListViewOpponent.Items.Count;
@@ -628,7 +628,7 @@ namespace Hearthstone_Deck_Tracker
 
 				ToolTipCard.Visibility = visibility;
 			}
-			else if(PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
+			else if(StackPanelSecrets.Visibility == Visibility.Visible && PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = StackPanelSecrets.ActualHeight / StackPanelSecrets.Children.Count;
