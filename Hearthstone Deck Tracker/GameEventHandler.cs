@@ -12,12 +12,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerGet", cardId);
 			Game.PlayerGet(cardId, false);
 
-			if(cardId == "GAME_005")
+			if(cardId == "GAME_005" && Game.CurrentGameStats != null)
 			{
 				Game.CurrentGameStats.Coin = true;
 				Logger.WriteLine("Got coin", "GameStats");
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerBackToHand(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerBackToHand", cardId);
 			Game.PlayerGet(cardId, true);
@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async void HandlePlayerDraw(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerMulligan(string cardId)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerMulligan", cardId);
 			TurnTimer.Instance.MulliganDone(Turn.Player);
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerHandDiscard(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerHandDiscard", cardId);
 			Game.PlayerHandDiscard(cardId);
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerPlay(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerPlay", cardId);
 			Game.PlayerPlayed(cardId);
@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerDeckDiscard(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerDeckDiscard", cardId);
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentPlay(string cardId, int from, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
@@ -121,7 +121,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentPlayToHand(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("OpponentBackToHand", cardId, turn);
 			Game.OpponentBackToHand(cardId, turn);
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentSecretTrigger(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
@@ -180,7 +180,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentDeckDiscard(string cardId, int turn)
 		{
-			if (string.IsNullOrEmpty(cardId))
+			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("OpponentDeckDiscard", cardId);
 			Game.OpponentDeckDiscard(cardId);
@@ -290,6 +290,8 @@ namespace Hearthstone_Deck_Tracker
 			if(!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
+				if(Game.CurrentGameStats == null)
+					return;
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				Game.CurrentGameStats.GameEnd();
 
@@ -369,7 +371,8 @@ namespace Hearthstone_Deck_Tracker
 			   || Game.CurrentGameMode == Game.GameMode.Friendly && Config.Instance.RecordFriendly
 			   || Game.CurrentGameMode == Game.GameMode.Casual && Config.Instance.RecordCasual)
 			{
-				Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
+				if(Game.CurrentGameStats != null)
+					Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
 				Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
 				Logger.WriteLine("Saving deckstats", "GameStats");
 				DeckStatsList.Save();
