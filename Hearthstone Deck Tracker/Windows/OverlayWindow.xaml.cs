@@ -337,7 +337,12 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
 
-			if(cardsLeftInDeck <= 0) return;
+			if(cardsLeftInDeck <= 0)
+			{
+				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
+				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
+				return;
+			}
 
 			var handWithoutCoin = cardCount - (Game.OpponentHasCoin ? 1 : 0);
 
@@ -362,7 +367,12 @@ namespace Hearthstone_Deck_Tracker
 			LblCardCount.Text = "Hand: " + cardCount;
 			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-			if(cardsLeftInDeck <= 0) return;
+			if(cardsLeftInDeck <= 0)
+			{
+				LblDrawChance2.Text = "[2]: -%";
+				LblDrawChance1.Text = "[1]: -%";
+				return;
+			}
 
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
@@ -607,7 +617,7 @@ namespace Hearthstone_Deck_Tracker
 				ToolTipCard.Visibility = visibility;
 			}
 				//opponent card tooltips
-			else if( StackPanelOpponent.Visibility == Visibility.Visible && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
+			else if(StackPanelOpponent.Visibility == Visibility.Visible && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewOpponent.ActualHeight / ListViewOpponent.Items.Count;

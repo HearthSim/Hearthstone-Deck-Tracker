@@ -46,7 +46,13 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Text = "Hand: " + cardCount;
 			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-			if(cardsLeftInDeck <= 0) return;
+
+			if (cardsLeftInDeck <= 0)
+			{
+				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
+				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
+				return;
+			}
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 

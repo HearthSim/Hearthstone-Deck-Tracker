@@ -57,7 +57,12 @@ namespace Hearthstone_Deck_Tracker
 			LblCardCount.Text = "Hand: " + cardCount;
 			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-			if(cardsLeftInDeck <= 0) return;
+			if (cardsLeftInDeck <= 0)
+			{
+				LblDrawChance2.Text = "[2]: -%";
+				LblDrawChance1.Text = "[1]: -%";
+				return;
+			}
 
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
