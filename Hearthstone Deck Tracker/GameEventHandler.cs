@@ -12,6 +12,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerGet", cardId);
 			Game.PlayerGet(cardId, false);
 
@@ -26,6 +28,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerBackToHand(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerBackToHand", cardId);
 			Game.PlayerGet(cardId, true);
 			Game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
@@ -33,6 +37,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async void HandlePlayerDraw(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
 
@@ -47,6 +53,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerMulligan(string cardId)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerMulligan", cardId);
 			TurnTimer.Instance.MulliganDone(Turn.Player);
 			Game.PlayerMulligan(cardId);
@@ -60,6 +68,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerHandDiscard(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerHandDiscard", cardId);
 			Game.PlayerHandDiscard(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
@@ -69,6 +79,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerPlay(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerPlay", cardId);
 			Game.PlayerPlayed(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
@@ -79,6 +91,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandlePlayerDeckDiscard(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("PlayerDeckDiscard", cardId);
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
 
@@ -98,6 +112,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentPlay(string cardId, int from, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
@@ -105,6 +121,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
@@ -141,6 +159,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentPlayToHand(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("OpponentBackToHand", cardId, turn);
 			Game.OpponentBackToHand(cardId, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
@@ -148,6 +168,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentSecretTrigger(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
@@ -158,6 +180,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentDeckDiscard(string cardId, int turn)
 		{
+			if (string.IsNullOrEmpty(cardId))
+				return;
 			LogEvent("OpponentDeckDiscard", cardId);
 			Game.OpponentDeckDiscard(cardId);
 
