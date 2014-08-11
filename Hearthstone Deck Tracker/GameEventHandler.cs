@@ -301,7 +301,7 @@ namespace Hearthstone_Deck_Tracker
 				if(deck != null)
 					Game.SetPremadeDeck((Deck)deck.Clone());
 
-				Game.Reset();
+				Game.Reset(false);
 			}
 			Game.IsInMenu = true;
 		}

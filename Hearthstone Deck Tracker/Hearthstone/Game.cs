@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				           : "enUS");
 		}
 
-		public static void Reset()
+		public static void Reset(bool resetStats = true)
 		{
 			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
 
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
 			OpponentHandAge[DefaultCoinPosition] = 0;
 			OpponentHasCoin = true;
-			if(!IsInMenu)
+			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst);
 		}
 
