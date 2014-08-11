@@ -192,7 +192,7 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1"  Width="240">
-                            <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="134" TextChanged="TextBoxDBFilter_TextChanged" KeyDown="TextBoxDBFilter_KeyDown"/>
+                            <TextBox controls:TextboxHelper.Watermark="Search by name" controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter" ToolTip="If the list is down to one card ENTER will add it to the deck (or just doubleclick on any card)" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26" Margin="0,0,3,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="134" TextChanged="TextBoxDBFilter_TextChanged" PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"/>
                             <Label Content="Mana:" Margin="3,0,3,0"/>
                             <ComboBox x:Name="ComboBoxFilterMana" Width="55" SelectedIndex="0" SelectionChanged="ComboBoxFilterMana_SelectionChanged">
                                 <system:String>All</system:String>

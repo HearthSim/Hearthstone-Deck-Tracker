@@ -1297,31 +1297,45 @@ namespace Hearthstone_Deck_Tracker
 			UpdateDbListView();
 		}
 
-		private void TextBoxDBFilter_KeyDown(object sender, KeyEventArgs e)
+		private void TextBoxDBFilter_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
+			var index = ListViewDB.SelectedIndex;
 			Card card = null;
 			switch(e.Key)
 			{
 				case Key.Enter:
+					if(ListViewDB.SelectedItem != null)
+						card = (Card)ListViewDB.SelectedItem;
+					else if(ListViewDB.Items.Count > 0)
+						card = (Card)ListViewDB.Items[0];
+					break;
 				case Key.D1:
 					if(ListViewDB.Items.Count > 0)
 						card = (Card)ListViewDB.Items[0];
 					break;
 				case Key.D2:
-					if (ListViewDB.Items.Count > 1)
-					card = (Card)ListViewDB.Items[1];
+					if(ListViewDB.Items.Count > 1)
+						card = (Card)ListViewDB.Items[1];
 					break;
 				case Key.D3:
-					if (ListViewDB.Items.Count > 2)
-					card = (Card)ListViewDB.Items[2];
+					if(ListViewDB.Items.Count > 2)
+						card = (Card)ListViewDB.Items[2];
 					break;
 				case Key.D4:
-					if (ListViewDB.Items.Count > 3)
-					card = (Card)ListViewDB.Items[3];
+					if(ListViewDB.Items.Count > 3)
+						card = (Card)ListViewDB.Items[3];
 					break;
 				case Key.D5:
-					if (ListViewDB.Items.Count > 4)
-					card = (Card)ListViewDB.Items[4];
+					if(ListViewDB.Items.Count > 4)
+						card = (Card)ListViewDB.Items[4];
+					break;
+				case Key.Down:
+					if(index < ListViewDB.Items.Count - 1)
+						ListViewDB.SelectedIndex += 1;
+					break;
+				case Key.Up:
+					if(index > 0)
+						ListViewDB.SelectedIndex -= 1;
 					break;
 			}
 			if(card != null)
