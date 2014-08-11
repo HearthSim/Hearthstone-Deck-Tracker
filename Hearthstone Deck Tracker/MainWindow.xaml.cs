@@ -310,9 +310,6 @@ namespace Hearthstone_Deck_Tracker
 				using(var sr = new StreamWriter(filePath, false))
 					sr.WriteLine("<DeckStatsList></DeckStatsList>");
 			}
-			else if(!File.Exists(filePath + ".old"))
-				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
-				File.Copy(_decksPath, filePath + ".old");
 		}
 
 		// Logic for dealing with legacy config file semantics
