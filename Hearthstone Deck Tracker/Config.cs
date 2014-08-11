@@ -20,13 +20,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoDeckDetection = Defaults.AutoDeckDetection;
 		public bool AutoSelectDetectedDeck = Defaults.AutoSelectDetectedDeck;
 		public bool BringHsToForeground = Defaults.BringHsToForeground;
-		public double Card2PosX = Defaults.Card2PosX;
-		public double CardPosX = Defaults.CardPosX;
-		public double CardPosY = Defaults.CardPosY;
 		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
 		public bool CheckForUpdates = Defaults.CheckForUpdates;
 		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
-		public int ClickDelay = Defaults.ClickDelay;
 		public string CreatedByVersion = Defaults.CreatedByVersion;
 		public int CustomHeight = Defaults.CustomHeight;
 		public int CustomWidth = Defaults.CustomWidth;
@@ -34,9 +30,18 @@ namespace Hearthstone_Deck_Tracker
 		[XmlIgnore]
 		public bool Debug = Defaults.Debug;
 
+		public int DeckExportDelay = Defaults.DeckExportDelay;
 		public bool DiscardGameIfIncorrectDeck = Defaults.DiscardGameIfIncorrectDeck;
-
 		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
+		public double ExportAllButtonX = Defaults.ExportAllButtonX;
+		public double ExportAllButtonY = Defaults.ExportAllButtonY;
+		public double ExportCard1X = Defaults.ExportCard1X;
+		public double ExportCard2X = Defaults.ExportCard2X;
+		public double ExportCardsY = Defaults.ExportCardsY;
+		public double ExportNameDeckX = Defaults.ExportNameDeckX;
+		public double ExportNameDeckY = Defaults.ExportNameDeckY;
+		public double ExportSearchBoxY = Defaults.ExportSearchBoxY;
+		public double ExportSearchBoxX = Defaults.ExportSearchBoxX;
 		public bool ExtraFeatures = Defaults.ExtraFeatures;
 		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
 		public GameDetailsConfig GameDetails = Defaults.GameDetails;
@@ -67,8 +72,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
 		public bool ManaCurveNewDeck = Defaults.ManaCurveNewDeck;
 		public bool MinimizeToTray = Defaults.MinimizeToTray;
-		public double NameDeckX = Defaults.NameDeckX;
-		public double NameDeckY = Defaults.NameDeckY;
 		public int OffsetX = Defaults.OffsetX;
 		public int OffsetY = Defaults.OffsetY;
 		public double OpponentDeckHeight = Defaults.OpponentDeckHeight;
@@ -98,9 +101,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool RecordRanked = Defaults.RecordRanked;
 		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
 		public bool SaveInAppData = Defaults.SaveInAppData;
-		public double SearchBoxPosY = Defaults.SearchBoxPosY;
-		public double SearchBoxX = Defaults.SearchBoxX;
-		public int SearchDelay = Defaults.SearchDelay;
 		public double SecretsLeft = Defaults.SecretsLeft;
 		public double SecretsTop = Defaults.SecretsTop;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
@@ -167,6 +167,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _config; }
 		}
+
 
 		private string GetLogFileName()
 		{
@@ -261,18 +262,24 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool AutoDeckDetection = true;
 			public static readonly bool AutoSelectDetectedDeck = true;
 			public static readonly bool BringHsToForeground = false;
-			public static readonly double Card2PosX = 0.25;
-			public static readonly double CardPosX = 0.15;
-			public static readonly double CardPosY = 0.3;
 			public static readonly bool CardSortingClassFirst = false;
 			public static readonly bool CheckForUpdates = true;
 			public static readonly bool ClearLogFileAfterGame = true;
-			public static readonly int ClickDelay = 50;
 			public static readonly int CustomHeight = -1;
 			public static readonly int CustomWidth = -1;
 			public static readonly bool Debug = false;
+			public static int DeckExportDelay = 50;
 			public static readonly bool DiscardGameIfIncorrectDeck = false;
 			public static readonly bool ExtraFeatures = false;
+			public static readonly double ExportAllButtonX = 0.06;
+			public static readonly double ExportAllButtonY = 0.915;
+			public static readonly double ExportCard2X = 0.285;
+			public static readonly double ExportCard1X = 0.12;
+			public static readonly double ExportCardsY = 0.32;
+			public static readonly double ExportNameDeckX = 0.85;
+			public static readonly double ExportNameDeckY = 0.075;
+			public static readonly double ExportSearchBoxY = 0.915;
+			public static readonly double ExportSearchBoxX = 0.5;
 			public static readonly bool ExportSetDeckName = true;
 			public static readonly bool FlashHsOnTurnStart = true;
 			public static readonly GameDetailsConfig GameDetails = new GameDetailsConfig();
@@ -303,8 +310,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool ManaCurveMyDecks = true;
 			public static readonly bool ManaCurveNewDeck = true;
 			public static readonly bool MinimizeToTray = false;
-			public static readonly double NameDeckX = 0.8;
-			public static readonly double NameDeckY = 0.05;
 			public static readonly int OffsetX = 0;
 			public static readonly int OffsetY = 0;
 			public static readonly double OpponentDeckHeight = 65;
@@ -334,9 +339,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool RecordRanked = true;
 			public static readonly bool RemoveCardsFromDeck = false;
 			public static readonly bool SaveInAppData = true;
-			public static readonly double SearchBoxPosY = 0.92;
-			public static readonly double SearchBoxX = 0.5;
-			public static readonly int SearchDelay = 100;
 			public static readonly double SecretsLeft = 15;
 			public static readonly double SecretsTop = 5;
 			public static readonly Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;

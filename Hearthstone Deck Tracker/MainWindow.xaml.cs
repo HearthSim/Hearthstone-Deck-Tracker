@@ -853,6 +853,8 @@ namespace Hearthstone_Deck_Tracker
 			SliderTimersHorizontalSpacing.Value = Config.Instance.TimersHorizontalSpacing;
 			SliderTimersVerticalSpacing.Value = Config.Instance.TimersVerticalSpacing;
 
+			var delay = Config.Instance.DeckExportDelay;
+			ComboboxExportSpeed.SelectedIndex = delay < 50 ? 0 : delay < 75 ? 1 : delay < 125 ? 2 : delay < 250 ? 3 : 4;
 
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
 
@@ -2772,5 +2774,34 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void ComboboxExportSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			var selected = ComboboxExportSpeed.SelectedValue.ToString();
+			
+			switch(selected)
+			{
+				case "Very Fast (30ms)":
+					Config.Instance.DeckExportDelay = 30;
+					break;
+				case "Fast (50ms)":
+					Config.Instance.DeckExportDelay = 50;
+					break;
+				case "Normal (75ms)":
+					Config.Instance.DeckExportDelay = 75;
+					break;
+				case "Slow (125ms)":
+					Config.Instance.DeckExportDelay = 125;
+					break;
+				case "Very Slow (250ms)":
+					Config.Instance.DeckExportDelay = 250;
+					break;
+				default:
+					return;
+			}
+			SaveConfig(false);
+		}
 	}
 }

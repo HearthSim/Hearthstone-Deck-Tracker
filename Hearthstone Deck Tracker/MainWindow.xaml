@@ -320,15 +320,13 @@
                                         </GroupBox>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="258" Width="235" Margin="10,10,0,0">
+                                <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="209" Width="235" Margin="10,10,0,0">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxFlashHs_Checked" Unchecked="CheckboxFlashHs_Unchecked"/>
                                         <CheckBox x:Name="CheckboxBringHsToForegorund" Content="Popup Hearthstone on turn start" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxBringHsToForegorund_Checked" Unchecked="CheckboxBringHsToForegorund_Unchecked"/>
                                         <CheckBox x:Name="CheckboxKeepDecksVisible" Content="Don't reset decks after game" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="200" Checked="CheckboxKeepDecksVisible_Checked" Unchecked="CheckboxKeepDecksVisible_Unchecked"/>
                                         <CheckBox x:Name="CheckboxDeckDetection" Content="Automatic deck detection" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxDeckDetection_Checked" Unchecked="CheckboxDeckDetection_Unchecked"/>
                                         <CheckBox x:Name="CheckboxAutoSelectDeck" Content="Autoselect if 1 possible deck" HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top" Checked="CheckboxAutoSelectDeck_Checked" Unchecked="CheckboxAutoSelectDeck_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxExportName" Content="Set name when exporting to HS" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden when exporting" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
                                         <CheckBox x:Name="CheckboxFullTextSearch" Content="Full text search in New Deck" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxFullTextSearch_Checked" Unchecked="CheckboxFullTextSearch_Unchecked"/>
 
                                         <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxTrackerCardToolTips_Checked" Unchecked="CheckboxTrackerCardToolTips_Unchecked"/>
@@ -416,9 +414,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto" ></RowDefinition>
+                                    <RowDefinition Height="auto" ></RowDefinition>
                                     <RowDefinition Height="*" ></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="234" Height="103" Margin="11,0,1,0">
+                                <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" Grid.Column="1" Width="234" Height="108" Margin="11,0,1,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Horizontal:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -473,7 +472,24 @@
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top" Margin="11,10,1,0" Grid.Column="1" Grid.Row="1">
+                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" Width="235" Margin="6,10,1,71">
+                                    <StackPanel>
+                                        <DockPanel Margin="10,5,10,0">
+                                            <Label Content="Speed:" />
+                                            <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1" HorizontalAlignment="Right" Width="120" SelectionChanged="ComboboxExportSpeed_SelectionChanged">
+                                                <system:String>Very Fast (30ms)</system:String>
+                                                <system:String>Fast (50ms)</system:String>
+                                                <system:String>Normal (75ms)</system:String>
+                                                <system:String>Slow (125ms)</system:String>
+                                                <system:String>Very Slow (250ms)</system:String>
+                                            </ComboBox>
+                                        </DockPanel>
+                                        <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxExportName" Content="Set deck name" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
+
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked" Unchecked="CheckboxRecordRanked_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked" Unchecked="CheckboxRecordArena_Unchecked"/>

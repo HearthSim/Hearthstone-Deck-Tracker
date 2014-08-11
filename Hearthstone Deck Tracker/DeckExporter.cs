@@ -12,13 +12,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	internal static class DeckExporter
 	{
-		//private readonly Config _config;
-
-		//public DeckExporter(Config config)
-		//{
-		//	_config = config;
-		//}
-
 		public static async Task Export(Deck deck)
 		{
 			if(deck == null) return;
@@ -41,37 +34,54 @@ namespace Hearthstone_Deck_Tracker
 
 			var hsRect = User32.GetHearthstoneRect(false);
 			var bounds = Screen.FromHandle(hsHandle).Bounds;
+			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 
 			if(Config.Instance.ExportSetDeckName)
-				await SetDeckName(deck.Name, hsRect.Width, hsRect.Height, hsHandle);
+				await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
+
+			await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 			foreach(var card in deck.Cards)
-				await AddCardToDeck(card, hsRect.Width, hsRect.Height, hsHandle);
+				await AddCardToDeck(card, ratio, hsRect.Width, hsRect.Height, hsHandle);
 		}
 
-		private static async Task SetDeckName(string name, int width, int height, IntPtr hsHandle)
+		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
-			var nameDeckPos = new Point((int)(Config.Instance.NameDeckX * width), (int)(Config.Instance.NameDeckY * height));
+			await ClickOnPoint(hsHandle, new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio), (int)(Config.Instance.ExportAllButtonY * height)));
+		}
+
+		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
+		{
+			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			SendKeys.SendWait(name);
 			SendKeys.SendWait("{ENTER}");
 		}
 
-		private static async Task AddCardToDeck(Card card, int width, int height, IntPtr hsHandle)
+		private static double GetXPos(double left, int width, double ratio)
 		{
-			var ratio = (double)width / height;
-			var cardPosX = ratio < 1.5 ? width * Config.Instance.CardPosX : width * Config.Instance.CardPosX * (ratio / 1.33);
-			var searchBoxPos = new Point((int)(Config.Instance.SearchBoxX * width), (int)(Config.Instance.SearchBoxPosY * height));
-			var cardPos = new Point((int)cardPosX, (int)(Config.Instance.CardPosY * height));
+			return (width * ratio * left) + ((width - width * ratio) / 2);
+		}
+
+		private static async Task AddCardToDeck(Card card, double ratio, int width, int height, IntPtr hsHandle)
+		{
+			if(!User32.IsForegroundWindow("Hearthstone"))
+			{
+				Helper.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
+				return;
+			}
+			var cardPosX = GetXPos(Config.Instance.ExportCard1X, width, ratio);
+
+			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, width, ratio)), (int)(Config.Instance.ExportSearchBoxY * height));
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 			SendKeys.SendWait(FixCardName(card.LocalizedName).ToLowerInvariant());
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(Config.Instance.SearchDelay);
+			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			var card2PosX = ratio < 1.5 ? width * Config.Instance.Card2PosX : width * Config.Instance.Card2PosX * (ratio / 1.33);
-			var cardPosY = Config.Instance.CardPosY * height;
+			var card2PosX = GetXPos(Config.Instance.ExportCard2X, width, ratio);
+			var cardPosY = Config.Instance.ExportCardsY * height;
 			for(var i = 0; i < card.Count; i++)
 			{
 				if(Config.Instance.PrioritizeGolden)
@@ -117,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
 
-			await Task.Delay(Config.Instance.ClickDelay);
+			await Task.Delay(Config.Instance.DeckExportDelay);
 
 			//mouse up
 			if(SystemInformation.MouseButtonsSwapped)
@@ -125,7 +135,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
 
-			await Task.Delay(Config.Instance.ClickDelay);
+			await Task.Delay(Config.Instance.DeckExportDelay);
 		}
 
 		private static string FixCardName(string cardName)
