@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerGet", cardId);
-			Game.PlayerGet(cardId, false);
+			Game.PlayerGet(cardId, false, turn);
 
 			if(cardId == "GAME_005" && Game.CurrentGameStats != null)
 			{
@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerBackToHand", cardId);
-			Game.PlayerGet(cardId, true);
+			Game.PlayerGet(cardId, true, turn);
 			Game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
 		}
 

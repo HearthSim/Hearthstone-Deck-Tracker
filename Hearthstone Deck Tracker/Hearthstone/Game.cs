@@ -220,11 +220,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 #pragma warning restore 4014
 
 #pragma warning disable 4014
-		public static void PlayerGet(string cardId, bool fromPlay)
+		public static void PlayerGet(string cardId, bool fromPlay, int turn)
 		{
 			PlayerHandCount++;
 
-			if(cardId == "GAME_005")
+			if(cardId == "GAME_005" && turn == 0)
 			{
 				OpponentHasCoin = false;
 				OpponentHandMarks[DefaultCoinPosition] = CardMark.None;
