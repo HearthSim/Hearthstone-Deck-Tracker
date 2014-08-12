@@ -40,7 +40,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool HighlightDiscarded;
 
 		private static Dictionary<string, Card> _cardDb;
-		private static int _logResets;
 
 		public static ObservableCollection<Card> OpponentCards;
 		public static int OpponentHandCount;
@@ -146,19 +145,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private static bool ValidateOpponentHandCount()
 		{
 			if(OpponentHandCount - 1 < 0 || OpponentHandCount - 1 > 9)
-			{
 				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(), "Hearthstone");
-
-				//avoid infinite loop, only do this 3 times while app is running
-				if(_logResets < 3)
-				{
-					Logger.WriteLine("Reloading logs...");
-					SetPremadeDeck(Helper.MainWindow.DeckPickerList.SelectedDeck);
-					HsLogReader.Instance.Reset(false);
-					_logResets++;
-				}
-				return false;
-			}
 
 			return true;
 		}
