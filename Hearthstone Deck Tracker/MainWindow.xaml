@@ -508,20 +508,20 @@
 
             </TabItem>
             <TabItem Header="Help">
+               
                 <Grid>
-                    <TextBlock Margin="10,10,7,0" VerticalAlignment="Top">
-                        <Bold>
-                            <Run Text="What are all these percentages?"/>
-                        </Bold>
-                    </TextBlock>
-                    <TextBlock Margin="20,31,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                    <ScrollViewer Margin="0,0,0,33">
+                        <StackPanel>
+                            <GroupBox Header="What are all these percentages?">
+                                <StackPanel Margin="10,0,10,0">
+                                    <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Bold>
                             <Run Text="Player: "/>
                         </Bold>
                         <LineBreak />
                         <Run Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
-                    </TextBlock>
-                    <TextBlock Margin="20,68,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                                    </TextBlock>
+                                    <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Bold>
                             <Run Text="Opponent: "/>
                         </Bold>
@@ -549,29 +549,40 @@
                         <Run Text="a card next turn."></Run>
                         <LineBreak />
                         <Run Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)"></Run>
-                    </TextBlock>
-                    <TextBlock Margin="10,291,7,0" VerticalAlignment="Top">
-                        <Bold>
-                            <Run Text="I found a bug, what do I do?"/>
-                        </Bold>
-                    </TextBlock>
-                    <TextBlock Margin="20,312,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                        <Run Text="Two options here for now:"/>
-                        <LineBreak/>
-                        <Run Text="1) You may be able to find a solution/it already being reported in my"/>
-                        <Hyperlink NavigateUri="http://www.reddit.com/r/hearthstone/comments/27rvsq/updated_automatic_hearthstone_deck_tracker/" RequestNavigate="Hyperlink_RequestNavigate">reddit post.</Hyperlink>
-                        <Run Text="If you can't/it's not leave a comment in the post or send me a PM."/>
-                        <LineBreak/>
-                        <Run Text="2) Check out the"/>
-                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on github.</Hyperlink>
-                        <Run Text="If it's not already there, feel free to open and new issue and/or even fix it yourself and create a pull request."/>
-                    </TextBlock>
+                                    </TextBlock>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Header="Card Marks">
+                                <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
+                            </GroupBox>
+                            <GroupBox Header="I found a bug, what do I do?">
+                                    <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
+                                    <Run Text="Two options here:"/>
+                                    <LineBreak/>
+                                    <Run Text="1) Check out the"/>
+                                    <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on GitHub.</Hyperlink>
+                                    <Run Text="If there's no issue on the topic feel free to open create new one and/or even fix it yourself and create a pull request."/>
+                                    <LineBreak/>
+                                    <Run Text="2) Send me an email: epik37@gmail.com"/>
+                                    </TextBlock>
+                            </GroupBox>
+                            <GroupBox Header="GitHub Project">
+                                <StackPanel>
+                                    <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
+                                        <Run Text="The project can be found" />
+                                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/" RequestNavigate="Hyperlink_RequestNavigate">here.</Hyperlink>
+                                        <LineBreak />
+                                        <Run Text="The"/> <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/blob/master/README.md" RequestNavigate="Hyperlink_RequestNavigate">readme</Hyperlink> <Run Text="contains a brief overview of all the features." />
+                                    </TextBlock>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
                     <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom"/>
                     <TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                         <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ" RequestNavigate="Hyperlink_RequestNavigate">Just in case you would like to buy me a coffee/beer</Hyperlink>
                     </TextBlock>
-                    <TextBlock Margin="10,249,7,0" VerticalAlignment="Top"><Bold><Run Text="Card Marks:"/></Bold></TextBlock>
-                    <TextBlock Margin="20,270,34,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>
