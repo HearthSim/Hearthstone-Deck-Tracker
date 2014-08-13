@@ -44,14 +44,26 @@ namespace Hearthstone_Deck_Tracker
 			{
 			}
 
+
+			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)), (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
+			var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
+			var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
+			var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
+
 			if(Config.Instance.ExportSetDeckName)
 				await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 			await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 			foreach(var card in deck.Cards)
-				await AddCardToDeck(card, ratio, hsRect.Width, hsRect.Height, hsHandle);
+				await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
 
+
+			// Clear search field now all cards have been entered
+
+			await ClickOnPoint(hsHandle, searchBoxPos);
+			SendKeys.SendWait("{DELETE}");
+			SendKeys.SendWait("{ENTER}");
 			try
 			{
 				if(oldClipboardContent != null)
@@ -86,18 +98,16 @@ namespace Hearthstone_Deck_Tracker
 			return (width * ratio * left) + ((width - width * ratio) / 2);
 		}
 
-		private static async Task AddCardToDeck(Card card, double ratio, int width, int height, IntPtr hsHandle)
+		private static async Task AddCardToDeck(Card card, Point searchBoxPos, double cardPosX, double card2PosX, double cardPosY, int height, IntPtr hsHandle)
 		{
 			if(!User32.IsHearthstoneInForeground())
 			{
 				Helper.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
 				return;
 			}
-			var cardPosX = GetXPos(Config.Instance.ExportCard1X, width, ratio);
-
-			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, width, ratio)), (int)(Config.Instance.ExportSearchBoxY * height));
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
+
 			var fixedName = FixCardName(card.LocalizedName).ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
@@ -110,8 +120,17 @@ namespace Hearthstone_Deck_Tracker
 
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			var card2PosX = GetXPos(Config.Instance.ExportCard2X, width, ratio);
-			var cardPosY = Config.Instance.ExportCardsY * height;
+			if(card.Name == "Feugen")
+			{
+				await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
+				return;
+			}
+			if(card.Name == "Stalagg")
+			{
+				await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+				return;
+			}
+
 			for(var i = 0; i < card.Count; i++)
 			{
 				if(Config.Instance.PrioritizeGolden)
@@ -138,11 +157,6 @@ namespace Hearthstone_Deck_Tracker
 				else
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 			}
-
-			// Clear search field now all cards have been entered
-			await ClickOnPoint(hsHandle, searchBoxPos);
-			SendKeys.SendWait("{DELETE}");
-			SendKeys.SendWait("{ENTER}");
 		}
 
 		private static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)

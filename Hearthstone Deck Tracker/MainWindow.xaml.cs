@@ -2781,20 +2781,20 @@ namespace Hearthstone_Deck_Tracker
 
 			switch(selected)
 			{
-				case "Very Fast (30ms)":
-					Config.Instance.DeckExportDelay = 30;
+				case "Very Fast (20ms)":
+					Config.Instance.DeckExportDelay = 20;
 					break;
-				case "Fast (50ms)":
-					Config.Instance.DeckExportDelay = 50;
+				case "Fast (40ms)":
+					Config.Instance.DeckExportDelay = 40;
 					break;
-				case "Normal (75ms)":
-					Config.Instance.DeckExportDelay = 75;
+				case "Normal (60ms)":
+					Config.Instance.DeckExportDelay = 60;
 					break;
-				case "Slow (125ms)":
-					Config.Instance.DeckExportDelay = 125;
+				case "Slow (100ms)":
+					Config.Instance.DeckExportDelay = 100;
 					break;
-				case "Very Slow (250ms)":
-					Config.Instance.DeckExportDelay = 250;
+				case "Very Slow (150ms)":
+					Config.Instance.DeckExportDelay = 150;
 					break;
 				default:
 					return;

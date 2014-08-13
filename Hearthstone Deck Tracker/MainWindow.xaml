@@ -477,11 +477,11 @@
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Speed:" />
                                             <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1" HorizontalAlignment="Right" Width="120" SelectionChanged="ComboboxExportSpeed_SelectionChanged">
-                                                <system:String>Very Fast (30ms)</system:String>
-                                                <system:String>Fast (50ms)</system:String>
-                                                <system:String>Normal (75ms)</system:String>
-                                                <system:String>Slow (125ms)</system:String>
-                                                <system:String>Very Slow (250ms)</system:String>
+                                                <system:String>Very Fast (20ms)</system:String>
+                                                <system:String>Fast (40ms)</system:String>
+                                                <system:String>Normal (60ms)</system:String>
+                                                <system:String>Slow (100ms)</system:String>
+                                                <system:String>Very Slow (150ms)</system:String>
                                             </ComboBox>
                                         </DockPanel>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
