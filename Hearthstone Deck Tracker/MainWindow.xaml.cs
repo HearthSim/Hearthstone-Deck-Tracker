@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
 
 			//create overlay
-			Overlay = new OverlayWindow { Topmost = true }; 
+			Overlay = new OverlayWindow {Topmost = true};
 
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
@@ -277,12 +277,14 @@ namespace Hearthstone_Deck_Tracker
 						//backup in case the file already exists
 						var time = DateTime.Now.ToFileTime();
 						File.Move(appDataPath, appDataPath + time);
-						Directory.Move(appDataGamesDirPath, appDataGamesDirPath + time);
+						Helper.CopyFolder(appDataGamesDirPath, appDataGamesDirPath + time);
+						Directory.Delete(appDataGamesDirPath, true);
 						Logger.WriteLine("Created backups of deckstats and games in appdata");
 					}
 					File.Move(localPath, appDataPath);
 					Logger.WriteLine("Moved DeckStats to appdata");
-					Directory.Move(localGamesDirPath, appDataGamesDirPath);
+					Helper.CopyFolder(localGamesDirPath, appDataGamesDirPath);
+					Directory.Delete(localGamesDirPath, true);
 					Logger.WriteLine("Moved Games to appdata");
 				}
 			}
@@ -293,12 +295,14 @@ namespace Hearthstone_Deck_Tracker
 					//backup in case the file already exists
 					var time = DateTime.Now.ToFileTime();
 					File.Move(localPath, localPath + time);
-					Directory.Move(localGamesDirPath, localGamesDirPath + time);
+					Helper.CopyFolder(localGamesDirPath, localGamesDirPath + time);
+					Directory.Delete(localGamesDirPath, true);
 					Logger.WriteLine("Created backups of deckstats and games locally");
 				}
 				File.Move(appDataPath, localPath);
 				Logger.WriteLine("Moved DeckStats to local");
-				Directory.Move(appDataGamesDirPath, localGamesDirPath);
+				Helper.CopyFolder(appDataGamesDirPath, localGamesDirPath);
+				Directory.Delete(appDataGamesDirPath, true);
 				Logger.WriteLine("Moved Games to appdata");
 			}
 
@@ -1172,7 +1176,6 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
-
 		}
 
 		public void UpdateDeckList(Deck selected)
