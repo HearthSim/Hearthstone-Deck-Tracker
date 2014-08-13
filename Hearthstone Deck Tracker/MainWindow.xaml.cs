@@ -839,6 +839,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
 			CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
+			CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

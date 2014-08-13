@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double ExportSearchBoxY = 0.915;
 			public static readonly double ExportSearchBoxX = 0.5;
 			public static readonly bool ExportSetDeckName = true;
-			public static readonly bool ExportPasteClipboard = true;
+			public static readonly bool ExportPasteClipboard = false;
 			public static readonly bool FlashHsOnTurnStart = true;
 			public static readonly GameDetailsConfig GameDetails = new GameDetailsConfig();
 			public static readonly bool GenerateLog = false;
