@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -18,12 +22,11 @@ namespace Hearthstone_Deck_Tracker
 		private const int WsExTransparent = 0x00000020;
 		private const int GwlExstyle = (-20);
 		public const int SwRestore = 9;
+		private static DateTime _lastCheck;
+		private static IntPtr _hsWindow;
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
-
-		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-		public static extern IntPtr FindWindow(String lpClassName, String lpWindowName);
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetForegroundWindow();
@@ -49,15 +52,21 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		private static extern bool FlashWindow(IntPtr hwnd, bool bInvert);
 
+		[DllImport("user32.dll")]
+		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+		[DllImport("user32.dll")]
+		public static extern bool IsWindow(IntPtr hWnd);
+
 		public static void SetWindowExTransparent(IntPtr hwnd)
 		{
 			var extendedStyle = GetWindowLong(hwnd, GwlExstyle);
 			SetWindowLong(hwnd, GwlExstyle, extendedStyle | WsExTransparent);
 		}
 
-		public static bool IsForegroundWindow(String lpWindowName)
+		public static bool IsHearthstoneInForeground()
 		{
-			return GetForegroundWindow() == FindWindow("UnityWndClass", lpWindowName);
+			return GetForegroundWindow() == GetHearthstoneWindow();
 		}
 
 		[DllImport("user32.dll")]
@@ -71,10 +80,30 @@ namespace Hearthstone_Deck_Tracker
 			return new Point(p.X, p.Y);
 		}
 
+
 		public static IntPtr GetHearthstoneWindow()
 		{
-			return FindWindow("UnityWndClass", "Hearthstone");
+			if(!Game.IsRunning && DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5))
+			    return _hsWindow;
+			if(IsWindow(_hsWindow) && _hsWindow != IntPtr.Zero)
+					return _hsWindow;
+
+			_hsWindow = IntPtr.Zero;
+
+			Parallel.ForEach(Process.GetProcesses(), (process, state) =>
+				{
+					var sb = new StringBuilder(200);
+					GetClassName(process.MainWindowHandle, sb, 200);
+					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
+					{
+						_hsWindow = process.MainWindowHandle;
+						state.Break();
+					}
+				});
+			_lastCheck = DateTime.Now;
+			return _hsWindow;
 		}
+
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling)
 		{

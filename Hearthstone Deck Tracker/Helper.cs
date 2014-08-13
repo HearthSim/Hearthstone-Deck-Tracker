@@ -99,17 +99,6 @@ namespace Hearthstone_Deck_Tracker
 			return Int32.TryParse(c.ToString(), out output);
 		}
 
-		public static bool IsFullscreen(string windowName)
-		{
-			var hsHandle = User32.FindWindow("UnityWndClass", windowName);
-
-			var hsRect = User32.GetHearthstoneRect(false);
-
-			var bounds = Screen.FromHandle(hsHandle).Bounds;
-
-			return bounds.Width == hsRect.Width && bounds.Height == hsRect.Height;
-		}
-
 		public static bool IsHex(IEnumerable<char> chars)
 		{
 			bool isHex;
@@ -214,7 +203,7 @@ namespace Hearthstone_Deck_Tracker
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if(!User32.IsForegroundWindow("Hearthstone")) return null;
+			if(!User32.IsHearthstoneInForeground()) return null;
 
 			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 			var graphics = Graphics.FromImage(bmp);

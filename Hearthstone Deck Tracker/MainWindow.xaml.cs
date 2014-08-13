@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
 
 			//create overlay
-			Overlay = new OverlayWindow {Topmost = true};
+			Overlay = new OverlayWindow { Topmost = true }; 
 
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
@@ -935,7 +935,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 
 					Game.IsRunning = true;
-					if(!User32.IsForegroundWindow("Hearthstone") && !hsForegroundChanged)
+					if(!User32.IsHearthstoneInForeground() && !hsForegroundChanged)
 					{
 						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 						{
@@ -945,7 +945,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						hsForegroundChanged = true;
 					}
-					else if(hsForegroundChanged && User32.IsForegroundWindow("Hearthstone"))
+					else if(hsForegroundChanged && User32.IsHearthstoneInForeground())
 					{
 						Overlay.Update(true);
 						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)

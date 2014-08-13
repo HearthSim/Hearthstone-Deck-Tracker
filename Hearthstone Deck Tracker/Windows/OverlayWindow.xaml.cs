@@ -191,7 +191,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MouseInputOnLmbDown(object sender, EventArgs eventArgs)
 		{
-			if(!User32.IsForegroundWindow("Hearthstone") || Visibility != Visibility.Visible) return;
+			if(!User32.IsHearthstoneInForeground() || Visibility != Visibility.Visible) return;
 
 			var pos = User32.GetMousePos();
 			_mousePos = new Point(pos.X, pos.Y);
@@ -708,7 +708,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//hide the overlay depenting on options
 			ShowOverlay(!(
-				             (Config.Instance.HideInBackground && !User32.IsForegroundWindow("Hearthstone"))
+				             (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 				             || (Config.Instance.HideInMenu && Game.IsInMenu)
 				             || Config.Instance.HideOverlay));
 

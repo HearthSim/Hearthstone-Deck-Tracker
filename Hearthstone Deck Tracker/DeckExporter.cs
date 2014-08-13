@@ -16,9 +16,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null) return;
 
-			var hsHandle = User32.FindWindow("UnityWndClass", "Hearthstone");
+			var hsHandle = User32.GetHearthstoneWindow();
 
-			if(!User32.IsForegroundWindow("Hearthstone"))
+			if(!User32.IsHearthstoneInForeground())
 			{
 				//restore window and bring to foreground
 				User32.ShowWindow(hsHandle, User32.SwRestore);
@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker
 				//wait it to actually be in foreground, else the rect might be wrong
 				await Task.Delay(500);
 			}
-			if(!User32.IsForegroundWindow("Hearthstone"))
+			if(!User32.IsHearthstoneInForeground())
 			{
 				MessageBox.Show("Can't find Heartstone window.");
 				return;
@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task AddCardToDeck(Card card, double ratio, int width, int height, IntPtr hsHandle)
 		{
-			if(!User32.IsForegroundWindow("Hearthstone"))
+			if(!User32.IsHearthstoneInForeground())
 			{
 				Helper.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
 				return;
