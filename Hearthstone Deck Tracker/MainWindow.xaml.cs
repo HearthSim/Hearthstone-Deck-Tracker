@@ -2773,14 +2773,12 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		#endregion
-
 		private void ComboboxExportSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var selected = ComboboxExportSpeed.SelectedValue.ToString();
-			
+
 			switch(selected)
 			{
 				case "Very Fast (30ms)":
@@ -2803,5 +2801,21 @@ namespace Hearthstone_Deck_Tracker
 			}
 			SaveConfig(false);
 		}
+
+		private void CheckboxExportPasteClipboard_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.ExportPasteClipboard = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxExportPasteClipboard_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.ExportPasteClipboard = false;
+			SaveConfig(false);
+		}
+
+		#endregion
 	}
 }

@@ -472,7 +472,7 @@
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" Width="235" Margin="6,10,1,71">
+                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" Width="235" Margin="5,10,0,45">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Speed:" />
@@ -486,7 +486,7 @@
                                         </DockPanel>
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set deck name" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
-
+                                        <CheckBox x:Name="CheckboxExportPasteClipboard" Content="Paste names from clipboard" ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportPasteClipboard_Checked" Unchecked="CheckboxExportPasteClipboard_Unchecked"/>
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1">

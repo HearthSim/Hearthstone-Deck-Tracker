@@ -33,8 +33,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var hsRect = User32.GetHearthstoneRect(false);
-			var bounds = Screen.FromHandle(hsHandle).Bounds;
 			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
+
+			string oldClipboardContent = null;
+			try
+			{
+				oldClipboardContent = Clipboard.GetText();
+			}
+			catch
+			{
+			}
 
 			if(Config.Instance.ExportSetDeckName)
 				await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
@@ -43,6 +51,15 @@ namespace Hearthstone_Deck_Tracker
 
 			foreach(var card in deck.Cards)
 				await AddCardToDeck(card, ratio, hsRect.Width, hsRect.Height, hsHandle);
+
+			try
+			{
+				if(oldClipboardContent != null)
+					Clipboard.SetText(oldClipboardContent);
+			}
+			catch
+			{
+			}
 		}
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
@@ -54,7 +71,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
-			SendKeys.SendWait(name);
+			if(Config.Instance.ExportPasteClipboard)
+			{
+				Clipboard.SetText(name);
+				SendKeys.SendWait("^v");
+			}
+			else
+				SendKeys.SendWait(name);
 			SendKeys.SendWait("{ENTER}");
 		}
 
@@ -75,7 +98,14 @@ namespace Hearthstone_Deck_Tracker
 			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, width, ratio)), (int)(Config.Instance.ExportSearchBoxY * height));
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
-			SendKeys.SendWait(FixCardName(card.LocalizedName).ToLowerInvariant());
+			var fixedName = FixCardName(card.LocalizedName).ToLowerInvariant();
+			if(Config.Instance.ExportPasteClipboard)
+			{
+				Clipboard.SetText(fixedName);
+				SendKeys.SendWait("^v");
+			}
+			else
+				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
