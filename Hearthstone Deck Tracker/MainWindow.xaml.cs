@@ -1163,20 +1163,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UseDeck(Deck selected)
 		{
-			if(Game.IsRunning)
-				Game.Reset();
+			Game.Reset();
 
 			if(selected != null)
 				Game.SetPremadeDeck((Deck)selected.Clone());
 
-			if(Game.IsRunning)
-			{
-				//needs to be true for automatic deck detection to work
-				HsLogReader.Instance.Reset(true);
-				Overlay.Update(false);
-			}
-
+			//needs to be true for automatic deck detection to work
+			HsLogReader.Instance.Reset(true);
+			Overlay.Update(false);
 			Overlay.SortViews();
+
 		}
 
 		public void UpdateDeckList(Deck selected)
