@@ -8,15 +8,15 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Color = System.Drawing.Color;
-using MessageBox = System.Windows.MessageBox;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -280,22 +280,22 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		//http://stackoverflow.com/questions/23927702/move-a-folder-from-one-drive-to-another-in-c-sharp
-		static public void CopyFolder(string sourceFolder, string destFolder)
+		public static void CopyFolder(string sourceFolder, string destFolder)
 		{
-			if (!Directory.Exists(destFolder))
+			if(!Directory.Exists(destFolder))
 				Directory.CreateDirectory(destFolder);
-			string[] files = Directory.GetFiles(sourceFolder);
-			foreach (string file in files)
+			var files = Directory.GetFiles(sourceFolder);
+			foreach(var file in files)
 			{
-				string name = Path.GetFileName(file);
-				string dest = Path.Combine(destFolder, name);
+				var name = Path.GetFileName(file);
+				var dest = Path.Combine(destFolder, name);
 				File.Copy(file, dest);
 			}
-			string[] folders = Directory.GetDirectories(sourceFolder);
-			foreach (string folder in folders)
+			var folders = Directory.GetDirectories(sourceFolder);
+			foreach(var folder in folders)
 			{
-				string name = Path.GetFileName(folder);
-				string dest = Path.Combine(destFolder, name);
+				var name = Path.GetFileName(folder);
+				var dest = Path.Combine(destFolder, name);
 				CopyFolder(folder, dest);
 			}
 		}

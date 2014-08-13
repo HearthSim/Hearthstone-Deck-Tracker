@@ -22,7 +22,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Druid}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Druid}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/druid_small.png" Width="24" Height="24"></Image>
@@ -34,7 +34,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Hunter}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Hunter}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/hunter_small.png" Width="24" Height="24"></Image>
@@ -46,7 +46,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Mage}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Mage}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/mage_small.png" Width="24" Height="24"></Image>
@@ -58,7 +58,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Paladin}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Paladin}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/paladin_small.png" Width="24" Height="24"></Image>
@@ -70,7 +70,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Priest}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Priest}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/priest_small.png" Width="24" Height="24"></Image>
@@ -82,7 +82,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Rogue}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Rogue}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/rogue_small.png" Width="24" Height="24"></Image>
@@ -94,7 +94,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Shaman}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Shaman}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/shaman_small.png" Width="24" Height="24"></Image>
@@ -106,7 +106,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Warlock}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Warlock}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/warlock_small.png" Width="24" Height="24"></Image>
@@ -118,7 +118,7 @@
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Binding="{Binding Warrior}" MinWidth="48" Width="auto">
+                        <DataGridTextColumn Binding="{Binding Warrior}" MinWidth="47" Width="auto">
                             <DataGridTextColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <Image Source="../Resources/warrior_small.png" Width="24" Height="24"></Image>
