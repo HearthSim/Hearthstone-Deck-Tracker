@@ -1163,13 +1163,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UseDeck(Deck selected)
 		{
-			if(!Game.IsInMenu)
+			if(Game.IsRunning)
 				Game.Reset();
 
 			if(selected != null)
 				Game.SetPremadeDeck((Deck)selected.Clone());
 
-			if(!Game.IsInMenu)
+			if(Game.IsRunning)
 			{
 				//needs to be true for automatic deck detection to work
 				HsLogReader.Instance.Reset(true);
