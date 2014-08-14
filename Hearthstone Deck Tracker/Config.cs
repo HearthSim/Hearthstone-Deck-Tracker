@@ -363,7 +363,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool ShowDeckWins = false;
 			public static readonly bool ShowInTaskbar = false;
 			public static readonly bool ShowPlayerGet = false;
-			public static readonly bool ShowWinRateAgainst = true;
+			public static readonly bool ShowWinRateAgainst = false;
 			public static readonly bool StartMinimized = false;
 			public static readonly bool StatsClassOverviewIsExpanded = false;
 			public static readonly bool StatsDeckOverviewIsExpanded = true;
