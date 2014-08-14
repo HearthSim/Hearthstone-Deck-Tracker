@@ -351,16 +351,16 @@ namespace Hearthstone_Deck_Tracker
 								{
 									if(to == "OPPOSING SECRET")
 										GameEventHandler.HandleOpponentSecretPlayed();
-									else if(to == "OPPOSING PLAY")
+									if(to == "OPPOSING PLAY")
 										GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
 									else
 										GameEventHandler.HandleOpponentHandDiscard(id, zonePos, GetTurnNumber());
 								}
 								break;
 							case "OPPOSING DECK":
-								if(to == "OPPOSING HAND")
+								if (to == "OPPOSING HAND")
 								{
-									if(_powerCount >= PowerCountTreshold)
+									if (_powerCount >= PowerCountTreshold)
 									{
 										_turnCount++;
 										GameEventHandler.TurnStart(Turn.Opponent, GetTurnNumber());
@@ -377,6 +377,9 @@ namespace Hearthstone_Deck_Tracker
 								else
 									//opponent discard from deck
 									GameEventHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
+
+								if (to == "OPPOSING SECRET")
+									GameEventHandler.HandleOpponentSecretPlayed();
 								break;
 							case "OPPOSING SECRET":
 								//opponent secret triggered

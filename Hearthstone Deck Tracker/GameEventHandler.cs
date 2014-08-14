@@ -121,8 +121,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
 		{
-			if(string.IsNullOrEmpty(cardId))
-				return;
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
