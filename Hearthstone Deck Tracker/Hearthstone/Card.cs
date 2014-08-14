@@ -165,6 +165,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
 		public bool WasDiscarded
 		{
 			get { return _wasDiscarded; }
