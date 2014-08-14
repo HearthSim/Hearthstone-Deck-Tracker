@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(Config.Instance.DeckExportDelay*2);
+			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
 			if(card.Name == "Feugen")
 			{
@@ -176,13 +176,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			switch(cardName)
 			{
-					//english
-				case "Fireball":
-				case "Windfury":
-				case "Claw":
-					return cardName + " Spell";
-				case "Slam":
-					return cardName + " Draw";
+					//multilanguage
 				case "Silence":
 					switch(Config.Instance.SelectedLanguage)
 					{
@@ -193,6 +187,17 @@ namespace Hearthstone_Deck_Tracker
 						default:
 							return cardName;
 					}
+				case "Blizzard":
+					return cardName + " 2";
+
+
+					//english
+				case "Fireball":
+				case "Windfury":
+				case "Claw":
+					return cardName + " Spell";
+				case "Slam":
+					return cardName + " Draw";
 
 					//german
 				case "Feuerball":
