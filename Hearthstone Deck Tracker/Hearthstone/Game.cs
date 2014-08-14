@@ -145,7 +145,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private static bool ValidateOpponentHandCount()
 		{
 			if(OpponentHandCount - 1 < 0 || OpponentHandCount - 1 > 9)
+			{
 				Logger.WriteLine("ValidateOpponentHandCount failed! OpponentHandCount = " + OpponentHandCount.ToString(), "Hearthstone");
+				return false;
+			}
 
 			return true;
 		}
