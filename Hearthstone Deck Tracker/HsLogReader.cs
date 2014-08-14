@@ -257,21 +257,7 @@ namespace Hearthstone_Deck_Tracker
 					_turnCount = 0;
 					_lastOpponentDrawIncrementedTurn = false;
 					_lastPlayerDrawIncrementedTurn = false;
-					if(Config.Instance.ClearLogFileAfterGame)
-					{
-						try
-						{
-							using(var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
-							using(var sw = new StreamWriter(fs))
-								sw.Write("");
-							Logger.WriteLine("Cleared log file");
-							Reset(true);
-						}
-						catch(Exception e)
-						{
-							Logger.WriteLine("Error cleared log file: " + e.Message);
-						}
-					}
+					ClearLog();
 				}
 				else if(logLine.StartsWith("[Zone]"))
 				{
@@ -420,6 +406,25 @@ namespace Hearthstone_Deck_Tracker
 						}
 						_powerCount = 0;
 					}
+				}
+			}
+		}
+
+		public void ClearLog()
+		{
+			if(Config.Instance.ClearLogFileAfterGame)
+			{
+				try
+				{
+					using(var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+					using(var sw = new StreamWriter(fs))
+						sw.Write("");
+					Logger.WriteLine("Cleared log file");
+					Reset(true);
+				}
+				catch(Exception e)
+				{
+					Logger.WriteLine("Error cleared log file: " + e.Message);
 				}
 			}
 		}

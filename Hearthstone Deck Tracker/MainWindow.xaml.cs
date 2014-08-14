@@ -967,6 +967,15 @@ namespace Hearthstone_Deck_Tracker
 				else
 				{
 					Overlay.ShowOverlay(false);
+					if(Game.IsRunning)
+					{
+						//game was closed
+						HsLogReader.Instance.ClearLog();
+						Game.Reset();
+						Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+						HsLogReader.Instance.Reset(true);
+
+					}
 					Game.IsRunning = false;
 				}
 				await Task.Delay(Config.Instance.UpdateDelay);

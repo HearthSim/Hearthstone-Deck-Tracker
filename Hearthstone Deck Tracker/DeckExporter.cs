@@ -44,7 +44,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 			}
 
-
 			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)), (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
 			var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
 			var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
@@ -118,7 +117,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(Config.Instance.DeckExportDelay * 2);
+			await Task.Delay(Config.Instance.DeckExportDelay);
 
 			if(card.Name == "Feugen")
 			{
@@ -131,29 +130,20 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
+			var golden = CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05)));
 			for(var i = 0; i < card.Count; i++)
 			{
-				if(Config.Instance.PrioritizeGolden)
-				{
-					if(card.Count == 2)
-						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-					else if(CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05))))
-						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-					else
-						await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-				}
+				if(Config.Instance.PrioritizeGolden && golden)
+					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 				else
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 			}
 
-			if(card.Count == 2)
+			if(card.Count == 2 && golden)
 			{
 				//click again to make sure we get 2 cards 
 				if(Config.Instance.PrioritizeGolden)
-				{
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-				}
 				else
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 			}

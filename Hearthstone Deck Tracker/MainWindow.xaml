@@ -472,7 +472,7 @@
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" Width="235" Margin="5,10,0,45">
+                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" VerticalAlignment="Top" Width="235" Height="150" Margin="5,10,0,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Speed:" />
