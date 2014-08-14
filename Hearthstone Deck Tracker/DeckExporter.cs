@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(Config.Instance.DeckExportDelay);
+			await Task.Delay(Config.Instance.DeckExportDelay*2);
 
 			if(card.Name == "Feugen")
 			{
