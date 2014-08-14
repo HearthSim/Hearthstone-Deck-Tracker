@@ -58,6 +58,9 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern bool IsWindow(IntPtr hWnd);
 
+		[DllImport("user32.dll")]
+		static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
 		public static void SetWindowExTransparent(IntPtr hwnd)
 		{
 			var extendedStyle = GetWindowLong(hwnd, GwlExstyle);
@@ -87,8 +90,10 @@ namespace Hearthstone_Deck_Tracker
 				return _hsWindow;
 			if(IsWindow(_hsWindow) && _hsWindow != IntPtr.Zero)
 				return _hsWindow;
+			_hsWindow = FindWindow("UnityWndClass", "Hearthstone");
+			if(_hsWindow != IntPtr.Zero)
+				return _hsWindow;
 
-			_hsWindow = IntPtr.Zero;
 
 			Parallel.ForEach(Process.GetProcesses(), (process, state) =>
 				{
