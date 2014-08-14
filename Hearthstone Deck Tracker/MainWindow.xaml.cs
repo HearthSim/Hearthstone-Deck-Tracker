@@ -28,6 +28,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using MessageBox = System.Windows.MessageBox;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using Point = System.Drawing.Point;
 using SystemColors = System.Windows.SystemColors;
 
 #endregion
@@ -774,6 +775,19 @@ namespace Hearthstone_Deck_Tracker
 				Top = Config.Instance.TrackerWindowTop.Value;
 			if(Config.Instance.TrackerWindowLeft.HasValue)
 				Left = Config.Instance.TrackerWindowLeft.Value;
+
+			var titleBarCorners = new[]
+				{
+					new Point((int)Left + 5, (int)Top + 5),
+					new Point((int)(Left + Width) - 5, (int)Top + 5),
+					new Point((int)Left + 5, (int)(Top+TitlebarHeight) - 5),
+					new Point((int)(Left + Width) - 5, (int)(Top+TitlebarHeight) - 5)
+				};
+			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
+			{
+				Top = 100;
+				Left = 100;
+			}
 
 			if(Config.Instance.StartMinimized)
 			{

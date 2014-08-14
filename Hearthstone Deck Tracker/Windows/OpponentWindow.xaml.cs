@@ -2,8 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Point = System.Drawing.Point;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -28,6 +31,19 @@ namespace Hearthstone_Deck_Tracker
 			if(_config.OpponentWindowTop.HasValue)
 				Top = _config.OpponentWindowTop.Value;
 			Topmost = _config.WindowsTopmost;
+
+			var titleBarCorners = new[]
+				{
+					new Point((int)Left + 5, (int)Top + 5),
+					new Point((int)(Left + Width) - 5, (int)Top + 5),
+					new Point((int)Left + 5, (int)(Top+TitlebarHeight) - 5),
+					new Point((int)(Left + Width) - 5, (int)(Top+TitlebarHeight) - 5)
+				};
+			if (!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
+			{
+				Top = 100;
+				Left = 100;
+			}
 
 			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
