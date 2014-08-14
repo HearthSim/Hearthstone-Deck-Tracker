@@ -221,6 +221,8 @@ namespace Hearthstone_Deck_Tracker
 
 			LoadConfig();
 
+			FillElementSorters();
+
 			//this has to happen before reader starts
 			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
 			DeckPickerList.SelectDeck(lastDeck);
@@ -261,6 +263,56 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.SortDecks();
+		}
+
+		private void FillElementSorters()
+		{
+			ElementSorterPlayer.IsPlayer = true;
+			foreach(var itemName in Config.Instance.PanelOrderPlayer)
+			{
+				switch(itemName)
+				{
+					case "Deck Title":
+						ElementSorterPlayer.AddItem(new ElementSorterItem("Deck Title", Config.Instance.ShowDeckTitle, (value) => Config.Instance.ShowDeckTitle = value, true));
+						break;
+					case "Cards":
+						ElementSorterPlayer.AddItem(new ElementSorterItem("Cards", !Config.Instance.HidePlayerCards, (value) => Config.Instance.HidePlayerCards = !value, true));
+						break;
+					case "Card Counter":
+						ElementSorterPlayer.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HidePlayerCardCount, (value) => Config.Instance.HidePlayerCardCount = !value, true));
+						break;
+					case "Draw Chances":
+						ElementSorterPlayer.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideDrawChances, (value) => Config.Instance.HideDrawChances = !value, true));
+						break;
+					case "Wins":
+						ElementSorterPlayer.AddItem(new ElementSorterItem("Wins", Config.Instance.ShowDeckWins, (value) => Config.Instance.ShowDeckWins = value, true));
+						break;
+				}
+			}
+			Overlay.UpdatePlayerLayout();
+			PlayerWindow.UpdatePlayerLayout();
+
+			ElementSorterOpponent.IsPlayer = false;
+			foreach(var itemName in Config.Instance.PanelOrderOpponent)
+			{
+				switch(itemName)
+				{
+					case "Cards":
+						ElementSorterOpponent.AddItem(new ElementSorterItem("Cards", !Config.Instance.HideOpponentCards, (value) => Config.Instance.HideOpponentCards = !value, false));
+						break;
+					case "Card Counter":
+						ElementSorterOpponent.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HideOpponentCardCount, (value) => Config.Instance.HideOpponentCardCount = !value, false));
+						break;
+					case "Draw Chances":
+						ElementSorterOpponent.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideOpponentDrawChances, (value) => Config.Instance.HideOpponentDrawChances = !value, false));
+						break;
+					case "Win Rate":
+						ElementSorterOpponent.AddItem(new ElementSorterItem("Win Rate", Config.Instance.ShowWinRateAgainst, (value) => Config.Instance.ShowWinRateAgainst = value, false));
+						break;
+				}
+			}
+			Overlay.UpdateOpponentLayout();
+			OpponentWindow.UpdateOpponentLayout();
 		}
 
 		private void SetupDeckStatsFile()
@@ -812,13 +864,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
 			Game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
 			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
-			CheckboxHideDrawChances.IsChecked = Config.Instance.HideDrawChances;
-			CheckboxHideOpponentDrawChances.IsChecked = Config.Instance.HideOpponentDrawChances;
-			CheckboxHideOpponentCards.IsChecked = Config.Instance.HideOpponentCards;
-			CheckboxHideOpponentCardCounter.IsChecked = Config.Instance.HideOpponentCardCount;
 			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
-			CheckboxHidePlayerCardCounter.IsChecked = Config.Instance.HidePlayerCardCount;
-			CheckboxHidePlayerCards.IsChecked = Config.Instance.HidePlayerCards;
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
 			CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
 			CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
@@ -896,8 +942,6 @@ namespace Hearthstone_Deck_Tracker
 				                               : Config.Instance.WindowsBackgroundHex;
 			UpdateAdditionalWindowsBackground();
 
-			ComboboxTextLocationPlayer.SelectedIndex = Config.Instance.TextOnTopPlayer ? 0 : 1;
-			ComboboxTextLocationOpponent.SelectedIndex = Config.Instance.TextOnTopOpponent ? 0 : 1;
 			Overlay.SetOpponentTextLocation(Config.Instance.TextOnTopOpponent);
 			OpponentWindow.SetTextLocation(Config.Instance.TextOnTopOpponent);
 			Overlay.SetPlayerTextLocation(Config.Instance.TextOnTopPlayer);
@@ -1771,40 +1815,6 @@ namespace Hearthstone_Deck_Tracker
 			OpponentWindow.LblOpponentDrawChance1.Visibility = Visibility.Visible;
 		}
 
-		private void CheckboxHidePlayerCardCounter_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HidePlayerCardCount = true;
-			SaveConfig(true);
-			PlayerWindow.LblCardCount.Visibility = Visibility.Collapsed;
-			PlayerWindow.LblDeckCount.Visibility = Visibility.Collapsed;
-		}
-
-		private void CheckboxHidePlayerCardCounter_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HidePlayerCardCount = false;
-			SaveConfig(true);
-			PlayerWindow.LblCardCount.Visibility = Visibility.Visible;
-			PlayerWindow.LblDeckCount.Visibility = Visibility.Visible;
-		}
-
-		private void CheckboxHidePlayerCards_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HidePlayerCards = true;
-			SaveConfig(true);
-			PlayerWindow.ListViewPlayer.Visibility = Visibility.Collapsed;
-		}
-
-		private void CheckboxHidePlayerCards_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HidePlayerCards = false;
-			SaveConfig(true);
-			PlayerWindow.ListViewPlayer.Visibility = Visibility.Visible;
-		}
-
 		private void CheckboxHideOpponentCardCounter_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
@@ -1821,22 +1831,6 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(true);
 			OpponentWindow.LblOpponentCardCount.Visibility = Visibility.Visible;
 			OpponentWindow.LblOpponentDeckCount.Visibility = Visibility.Visible;
-		}
-
-		private void CheckboxHideOpponentCards_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HideOpponentCards = true;
-			SaveConfig(true);
-			OpponentWindow.ListViewOpponent.Visibility = Visibility.Collapsed;
-		}
-
-		private void CheckboxHideOpponentCards_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.HideOpponentCards = false;
-			SaveConfig(true);
-			OpponentWindow.ListViewOpponent.Visibility = Visibility.Visible;
 		}
 
 		private void CheckboxHideOpponentCardAge_Unchecked(object sender, RoutedEventArgs e)
@@ -2251,27 +2245,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.WindowsBackgroundHex = TextboxCustomBackground.Text;
 				SaveConfig(false);
 			}
-		}
-
-		private void ComboboxTextLocationOpponent_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.TextOnTopOpponent = ComboboxTextLocationOpponent.SelectedItem.ToString() == "Top";
-
-			SaveConfig(false);
-			Overlay.SetOpponentTextLocation(Config.Instance.TextOnTopOpponent);
-			OpponentWindow.SetTextLocation(Config.Instance.TextOnTopOpponent);
-		}
-
-		private void ComboboxTextLocationPlayer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized) return;
-
-			Config.Instance.TextOnTopPlayer = ComboboxTextLocationPlayer.SelectedItem.ToString() == "Top";
-			SaveConfig(false);
-
-			Overlay.SetPlayerTextLocation(Config.Instance.TextOnTopPlayer);
-			PlayerWindow.SetTextLocation(Config.Instance.TextOnTopPlayer);
 		}
 
 		private async void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)

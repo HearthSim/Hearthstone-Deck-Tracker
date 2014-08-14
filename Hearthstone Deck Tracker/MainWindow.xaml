@@ -346,7 +346,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0" Content="Use same scaling for player/opponent" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True" Checked="CheckboxSameScaling_Checked" Unchecked="CheckboxSameScaling_Unchecked"/>
-                                <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="300" Width="235">
+                                <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Top" Height="auto" Width="235" Margin="5,5,5,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Scaling:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -357,23 +357,14 @@
                                             <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" Value="100" ValueChanged="SliderPlayerOpacity_ValueChanged"/>
 
                                         </DockPanel>
-                                        <DockPanel Margin="10,5,10,0">
-                                            <Label Content="Text:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                            <ComboBox Name="ComboboxTextLocationPlayer" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationPlayer_SelectionChanged">
-                                                <system:String>Top</system:String>
-                                                <system:String>Bottom</system:String>
-                                            </ComboBox>
-                                        </DockPanel>
-                                        <CheckBox x:Name="CheckboxHidePlayerCards" Content="Hide cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHidePlayerCards_Checked" Unchecked="CheckboxHidePlayerCards_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHidePlayerCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Unchecked="CheckboxHidePlayerCardCounter_Unchecked" Checked="CheckboxHidePlayerCardCounter_Checked"/>
-                                        <CheckBox x:Name="CheckboxHideDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideDrawChances_Unchecked" Checked="CheckboxHideDrawChances_Checked"/>
                                         <CheckBox x:Name="CheckboxHighlightCardsInHand" Content="Highlight cards in hand" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightCardsInHand_Checked" Unchecked="CheckboxHighlightCardsInHand_Unchecked"/>
                                         <CheckBox x:Name="CheckboxHighlightLastDrawn" Content="Highlight last drawn card" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightLastDrawn_Checked" Unchecked="CheckboxHighlightLastDrawn_Unchecked"/>
                                         <CheckBox x:Name="CheckboxRemoveCards" Content="Remove cards if count is 0" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxRemoveCards_Checked" Unchecked="CheckboxRemoveCards_Unchecked"/>
                                         <CheckBox x:Name="CheckboxShowPlayerGet" Content="Include obtained cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxShowPlayerGet_Checked" Unchecked="CheckboxShowPlayerGet_Unchecked"/>
+                                        <local:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10" Height="auto"></local:ElementSorter>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="230" Width="235" HorizontalAlignment="Center">
+                                <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Height="Auto" Width="235" HorizontalAlignment="Center">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Scaling:" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
@@ -384,24 +375,13 @@
                                             <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" Value="100" ValueChanged="SliderOpponentOpacity_ValueChanged"/>
 
                                         </DockPanel>
-                                        <DockPanel Margin="10,5,10,0">
-                                            <Label Content="Text:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                            <ComboBox Name="ComboboxTextLocationOpponent" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" SelectedIndex="1" SelectionChanged="ComboboxTextLocationOpponent_SelectionChanged">
-                                                <system:String>Top</system:String>
-                                                <system:String>Bottom</system:String>
-                                            </ComboBox>
-                                        </DockPanel>
-                                        <CheckBox x:Name="CheckboxHideOpponentCards" Content="Hide cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCards_Checked" Unchecked="CheckboxHideOpponentCards_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentCardCounter" Content="Hide card counter" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHideOpponentCardCounter_Checked" Unchecked="CheckboxHideOpponentCardCounter_Unchecked"/>
-                                        <CheckBox x:Name="CheckboxHideOpponentDrawChances" Content="Hide draw chances" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Unchecked="CheckboxHideOpponentDrawChances_Unchecked" Checked="CheckboxHideOpponentDrawChances_Checked"/>
-                                        <CheckBox x:Name="CheckboxHighlightDiscarded" Content="Highlight discarded from deck" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxHighlightDiscarded_Checked" Unchecked="CheckboxHighlightDiscarded_Unchecked"/>
+                                        <CheckBox x:Name="CheckboxHighlightDiscarded" Content="Highlight discarded from deck" HorizontalAlignment="Left" Margin="10,5,0,10" VerticalAlignment="Top" Checked="CheckboxHighlightDiscarded_Checked" Unchecked="CheckboxHighlightDiscarded_Unchecked"/>
+                                        <local:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10" Height="auto"></local:ElementSorter>
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Height="216" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
+                                <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top" Height="72" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
                                     <StackPanel>
                                         <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxDeckSortingClassFirst_Checked" Unchecked="CheckboxDeckSortingClassFirst_Unchecked"/>
-                                        <Label Content="More to come" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0"/>
-
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>

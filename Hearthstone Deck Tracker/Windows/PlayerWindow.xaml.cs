@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Point = System.Drawing.Point;
 
 namespace Hearthstone_Deck_Tracker
@@ -47,25 +48,81 @@ namespace Hearthstone_Deck_Tracker
 				Left = 100;
 			}
 
-			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
-			LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
-			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 
 			if(forScreenshot)
 			{
 				StackPanelDraw.Visibility = Visibility.Collapsed;
 				StackPanelCount.Visibility = Visibility.Collapsed;
+				LblWins.Visibility = Visibility.Collapsed;
+				LblDeckTitle.Visibility = Visibility.Collapsed;
 
 				Height = 34 * ListViewPlayer.Items.Count;
 				Scale();
 			}
+			else
+				Update();
 		}
 
 		public bool ShowToolTip
 		{
 			get { return _config.WindowCardToolTips; }
+		}
+
+		public void Update()
+		{
+			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
+			LblWins.Visibility = Config.Instance.ShowDeckWins ? Visibility.Visible : Visibility.Collapsed;
+			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle ? Visibility.Visible : Visibility.Collapsed;
+
+			SetDeckTitle();
+			SetWinRates();
+		}
+
+		private void SetWinRates()
+		{
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if(selectedDeck == null)
+				return;
+
+			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, selectedDeck.WinPercentString);
+		}
+
+		private void SetDeckTitle()
+		{
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			LblDeckTitle.Text = selectedDeck != null ? selectedDeck.Name : string.Empty;
+		}
+
+		public void UpdatePlayerLayout()
+		{
+			StackPanelMain.Children.Clear();
+			foreach(var item in Config.Instance.PanelOrderPlayer)
+			{
+				switch(item)
+				{
+					case "Cards":
+						StackPanelMain.Children.Add(ListViewPlayer);
+						break;
+					case "Draw Chances":
+						StackPanelMain.Children.Add(StackPanelDraw);
+						break;
+					case "Card Counter":
+						StackPanelMain.Children.Add(StackPanelCount);
+						break;
+					case "Deck Title":
+						StackPanelMain.Children.Add(LblDeckTitle);
+						break;
+					case "Wins":
+						StackPanelMain.Children.Add(LblWins);
+						break;
+				}
+			}
 		}
 
 		public void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -92,11 +149,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			if(((Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) <
+			var allLabelsHeight = LblDrawChance1.ActualHeight + LblDeckCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight;
+			if (((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) <
 			   1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
-				Scaling = (Height - LblDrawChance1.ActualHeight - LblDeckCount.ActualHeight) / (ListViewPlayer.Items.Count * 35);
+				Scaling = (Height - allLabelsHeight) / (ListViewPlayer.Items.Count * 35);
 				if(Scaling > 1)
 					Scaling = 1;
 

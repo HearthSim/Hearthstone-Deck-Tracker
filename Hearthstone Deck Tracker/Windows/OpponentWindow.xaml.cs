@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Point = System.Drawing.Point;
 
 namespace Hearthstone_Deck_Tracker
@@ -44,17 +45,57 @@ namespace Hearthstone_Deck_Tracker
 				Top = 100;
 				Left = 100;
 			}
-
-			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
+			Update();
 		}
 
 		public bool ShowToolTip
 		{
 			get { return _config.WindowCardToolTips; }
+		}
+
+		public void Update()
+		{
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst ? Visibility.Visible : Visibility.Collapsed;
+			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
+
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if(selectedDeck == null)
+				return;
+			if(Game.PlayingAgainst != string.Empty)
+			{
+				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
+				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
+			}
+		}
+
+		public void UpdateOpponentLayout()
+		{
+			StackPanelMain.Children.Clear();
+			foreach(var item in Config.Instance.PanelOrderOpponent)
+			{
+				switch(item)
+				{
+					case "Cards":
+						StackPanelMain.Children.Add(ListViewOpponent);
+						break;
+					case "Draw Chances":
+						StackPanelMain.Children.Add(LblOpponentDrawChance1);
+						StackPanelMain.Children.Add(LblOpponentDrawChance2);
+						break;
+					case "Card Counter":
+						StackPanelMain.Children.Add(StackPanelCount);
+						break;
+					case "Win Rate":
+						StackPanelMain.Children.Add(LblWinRateAgainst);
+						break;
+				}
+			}
 		}
 
 		public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
@@ -92,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 		private void Scale()
 		{
 			var allLabelsHeight = LblOpponentCardCount.ActualHeight + LblOpponentDrawChance1.ActualHeight +
-			                      LblOpponentDrawChance2.ActualHeight;
+			                      LblOpponentDrawChance2.ActualHeight + LblWinRateAgainst.ActualHeight;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;

@@ -9,6 +9,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -572,7 +573,45 @@ namespace Hearthstone_Deck_Tracker
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
+
+			LblWins.Visibility = Config.Instance.ShowDeckWins ? Visibility.Visible : Visibility.Collapsed;
+			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle ? Visibility.Visible : Visibility.Collapsed;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst ? Visibility.Visible : Visibility.Collapsed;
+
+			SetDeckTitle();
+			SetWinRates();
+
 			ReSizePosLists();
+
+			if (Helper.MainWindow.PlayerWindow.Visibility == Visibility.Visible)
+				Helper.MainWindow.PlayerWindow.Update();
+			if (Helper.MainWindow.OpponentWindow.Visibility == Visibility.Visible)
+				Helper.MainWindow.OpponentWindow.Update();
+		}
+
+		private void SetWinRates()
+		{
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if(selectedDeck == null)
+				return;
+
+			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, selectedDeck.WinPercentString);
+
+			if(Game.PlayingAgainst != string.Empty)
+			{
+				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
+				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
+			}
+		}
+
+		private void SetDeckTitle()
+		{
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			LblDeckTitle.Text = selectedDeck != null ? selectedDeck.Name : string.Empty;
 		}
 
 		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight)
@@ -810,6 +849,56 @@ namespace Hearthstone_Deck_Tracker
 				StackPanelPlayer.Children.Add(ListViewPlayer);
 				StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
 				StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+			}
+		}
+
+		public void UpdatePlayerLayout()
+		{
+			StackPanelPlayer.Children.Clear();
+			foreach(var item in Config.Instance.PanelOrderPlayer)
+			{
+				switch(item)
+				{
+					case "Cards":
+						StackPanelPlayer.Children.Add(ListViewPlayer);
+						break;
+					case "Draw Chances":
+						StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
+						break;
+					case "Card Counter":
+						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+						break;
+					case "Deck Title":
+						StackPanelPlayer.Children.Add(LblDeckTitle);
+						break;
+					case "Wins":
+						StackPanelPlayer.Children.Add(LblWins);
+						break;
+				}
+			}
+		}
+
+		public void UpdateOpponentLayout()
+		{
+			StackPanelOpponent.Children.Clear();
+			foreach(var item in Config.Instance.PanelOrderOpponent)
+			{
+				switch(item)
+				{
+					case "Cards":
+						StackPanelOpponent.Children.Add(ListViewOpponent);
+						break;
+					case "Draw Chances":
+						StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
+						StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
+						break;
+					case "Card Counter":
+						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+						break;
+					case "Win Rate":
+						StackPanelOpponent.Children.Add(LblWinRateAgainst);
+						break;
+				}
 			}
 		}
 

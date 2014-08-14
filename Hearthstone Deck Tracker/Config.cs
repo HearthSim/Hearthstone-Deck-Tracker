@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker
 		public double OverlayOpacity = Defaults.OverlayOpacity;
 		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
 		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
+		public string[] PanelOrderOpponent = Defaults.PanelOrderOpponent;
+		public string[] PanelOrderPlayer = Defaults.PanelOrderPlayer;
 		public double PlayerDeckHeight = Defaults.PlayerDeckHeight;
 		public double PlayerDeckLeft = Defaults.PlayerDeckLeft;
 		public double PlayerDeckTop = Defaults.PlayerDeckTop;
@@ -115,8 +117,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
 		public bool ShowAllDecks = Defaults.ShowAllDecks;
+		public bool ShowDeckTitle = Defaults.ShowDeckTitle;
+		public bool ShowDeckWins = Defaults.ShowDeckWins;
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
 		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
+		public bool ShowWinRateAgainst = Defaults.ShowWinRateAgainst;
 		public bool StartMinimized = Defaults.StartMinimized;
 		public bool StatsClassOverviewIsExpanded = Defaults.StatsClassOverviewIsExpanded;
 		public bool StatsDeckOverviewIsExpanded = Defaults.StatsDeckOverviewIsExpanded;
@@ -331,6 +336,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double PlayerDeckLeft = 99.5;
 			public static readonly double PlayerDeckTop = 17;
 			public static readonly double PlayerOpacity = 100;
+			public static readonly string[] PanelOrderPlayer = new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"};
+			public static readonly string[] PanelOrderOpponent = new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter"};
 			public static readonly int PlayerWindowHeight = 400;
 			public static readonly int? PlayerWindowLeft = null;
 			public static readonly int? PlayerWindowTop = null;
@@ -352,8 +359,11 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly List<string> SelectedTags = new List<string>();
 			public static readonly string SelectedWindowBackground = "Theme";
 			public static readonly bool ShowAllDecks = false;
+			public static readonly bool ShowDeckTitle = false;
+			public static readonly bool ShowDeckWins = false;
 			public static readonly bool ShowInTaskbar = false;
 			public static readonly bool ShowPlayerGet = false;
+			public static readonly bool ShowWinRateAgainst = true;
 			public static readonly bool StartMinimized = false;
 			public static readonly bool StatsClassOverviewIsExpanded = false;
 			public static readonly bool StatsDeckOverviewIsExpanded = true;
