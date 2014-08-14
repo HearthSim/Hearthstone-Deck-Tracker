@@ -472,7 +472,7 @@
                                         <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked" Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" VerticalAlignment="Top" Width="235" Height="150" Margin="5,10,0,0">
+                                <GroupBox Header="Exporting to Hearthstone" Grid.Row="2" VerticalAlignment="Top" Width="235" Height="185" Margin="6,10,1,0">
                                     <StackPanel>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Speed:" />
@@ -487,6 +487,7 @@
                                         <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked" Unchecked="CheckboxPrioGolden_Unchecked"/>
                                         <CheckBox x:Name="CheckboxExportName" Content="Set deck name" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportName_Checked" Unchecked="CheckboxExportName_Unchecked"/>
                                         <CheckBox x:Name="CheckboxExportPasteClipboard" Content="Paste names from clipboard" ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Checked="CheckboxExportPasteClipboard_Checked" Unchecked="CheckboxExportPasteClipboard_Unchecked"/>
+                                        <TextBlock Margin="10,5,10,0" Text="(Note: Golden Feugen and Stalagg can not be exported reliably.)" TextWrapping="Wrap"></TextBlock>
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top" Margin="10,0,0,0" Grid.Column="1" Grid.Row="1">
@@ -508,7 +509,7 @@
 
             </TabItem>
             <TabItem Header="Help">
-               
+
                 <Grid>
                     <ScrollViewer Margin="0,0,0,33">
                         <StackPanel>
@@ -557,7 +558,7 @@
                                 <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
                             </GroupBox>
                             <GroupBox Header="I found a bug, what do I do?">
-                                    <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
+                                <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
                                     <Run Text="Two options here:"/>
                                     <LineBreak/>
                                     <Run Text="1) Check out the"/>
@@ -565,7 +566,7 @@
                                     <Run Text="If there's no issue on the topic feel free to open create new one and/or even fix it yourself and create a pull request."/>
                                     <LineBreak/>
                                     <Run Text="2) Send me an email: epik37@gmail.com"/>
-                                    </TextBlock>
+                                </TextBlock>
                             </GroupBox>
                             <GroupBox Header="GitHub Project">
                                 <StackPanel>
