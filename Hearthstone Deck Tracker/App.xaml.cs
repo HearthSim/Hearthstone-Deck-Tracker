@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
 #if(DEBUG)
-	//Just so resharper codecleanup does not remove using system and system.io when in debug
+			//Just so resharper codecleanup does not remove using system and system.io when in debug
 			if(File.Exists("HearthstoneDeckTracker.exe"))
 				Console.WriteLine("Ignore this");
 #endif

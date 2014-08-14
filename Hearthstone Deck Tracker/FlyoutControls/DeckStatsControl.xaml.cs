@@ -16,6 +16,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckStatsControl
 	{
+		private const int GroupBoxHeaderHeight = 28;
+		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
 		private Deck _deck;
 		private bool _initialized;
 
@@ -23,6 +25,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(Game.GameMode));
+			_isGroupBoxExpanded = new Dictionary<GroupBox, bool>();
+			_isGroupBoxExpanded.Add(GroupboxDeckOverview, true);
+			_isGroupBoxExpanded.Add(GroupboxClassOverview, true);
 		}
 
 		public void LoadConfig()
@@ -30,6 +35,8 @@ namespace Hearthstone_Deck_Tracker
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
 			_initialized = true;
+			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
+			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
 		}
 
 		private async void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -110,6 +117,15 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
 
+			DataGridWinLossClass.Items.Clear();
+			var allGames = Helper.MainWindow.DeckList.DecksList
+			                     .Where(d => d.GetClass == _deck.GetClass)
+			                     .SelectMany(d => d.DeckStats.Games
+			                                       .Where(g => (g.GameMode == selectedGameMode
+			                                                    || selectedGameMode == Game.GameMode.All)
+			                                                   && g.StartTime > timeFrame)).ToList();
+			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
+			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
 			DataGridGames.Items.SortDescriptions.Clear();
 			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 		}
@@ -140,7 +156,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
 				Helper.MainWindow.FlyoutGameDetails.Header = selected.ToString();
-				Helper.MainWindow.FlyoutGameDetails.Width = Helper.MainWindow.FlyoutDeckStats.ActualWidth;
 				Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
 			}
 		}
@@ -189,6 +204,36 @@ namespace Hearthstone_Deck_Tracker
 			selected.Note = newNote;
 			DeckStatsList.Save();
 			Refresh();
+		}
+
+
+		private void GroupBoxDeckOverview_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
+			{
+				Config.Instance.StatsDeckOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxDeckOverview);
+				Config.Save();
+			}
+		}
+
+		private void GroupboxClassOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if(e.GetPosition(GroupboxClassOverview).Y < GroupBoxHeaderHeight)
+			{
+				Config.Instance.StatsClassOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxClassOverview);
+				Config.Save();
+			}
+		}
+
+		private bool ExpandCollapseGroupBox(GroupBox groupBox, bool? expand = null)
+		{
+			_isGroupBoxExpanded[groupBox] = expand ?? !_isGroupBoxExpanded[groupBox];
+			groupBox.Height = _isGroupBoxExpanded[groupBox] ? double.NaN : GroupBoxHeaderHeight;
+			if(_isGroupBoxExpanded[groupBox])
+				groupBox.Header = groupBox.Header.ToString().Replace("> ", string.Empty);
+			else
+				groupBox.Header = "> " + groupBox.Header;
+			return _isGroupBoxExpanded[groupBox];
 		}
 
 		private class WinLoss

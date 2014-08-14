@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker
 		public static extern bool IsWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll")]
-		static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
 		public static void SetWindowExTransparent(IntPtr hwnd)
 		{

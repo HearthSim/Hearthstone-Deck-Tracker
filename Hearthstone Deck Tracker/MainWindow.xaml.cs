@@ -780,8 +780,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					new Point((int)Left + 5, (int)Top + 5),
 					new Point((int)(Left + Width) - 5, (int)Top + 5),
-					new Point((int)Left + 5, (int)(Top+TitlebarHeight) - 5),
-					new Point((int)(Left + Width) - 5, (int)(Top+TitlebarHeight) - 5)
+					new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+					new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
 				};
 			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
 			{
@@ -988,7 +988,6 @@ namespace Hearthstone_Deck_Tracker
 						Game.Reset();
 						Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
 						HsLogReader.Instance.Reset(true);
-
 					}
 					Game.IsRunning = false;
 				}

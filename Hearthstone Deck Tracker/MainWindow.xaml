@@ -9,6 +9,12 @@
         StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" 
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
+        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100" Width="510">
+            <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101" Width="510">
+            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
+        </controls:Flyout>
         <TabControl Name="TabControlTracker" Height="auto" Width="auto" SelectionChanged="TabControlTracker_SelectionChanged" >
             <TabItem Header="My Decks">
                 <Grid>
@@ -28,12 +34,6 @@
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
-                    </controls:Flyout>
-                    <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="100">
-                        <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
-                    </controls:Flyout>
-                    <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Grid.Column="0" Grid.ColumnSpan="2" Panel.ZIndex="101">
-                        <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
                     </controls:Flyout>
 
                     <Grid Grid.Column="1" Margin="-1,0,0,0">

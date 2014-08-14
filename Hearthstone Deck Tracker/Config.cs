@@ -118,6 +118,8 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
 		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
 		public bool StartMinimized = Defaults.StartMinimized;
+		public bool StatsClassOverviewIsExpanded = Defaults.StatsClassOverviewIsExpanded;
+		public bool StatsDeckOverviewIsExpanded = Defaults.StatsDeckOverviewIsExpanded;
 		public Operation TagOperation = Defaults.TagOperation;
 		public bool TextOnTopOpponent = Defaults.TextOnTopOpponent;
 		public bool TextOnTopPlayer = Defaults.TextOnTopPlayer;
@@ -353,6 +355,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool ShowInTaskbar = false;
 			public static readonly bool ShowPlayerGet = false;
 			public static readonly bool StartMinimized = false;
+			public static readonly bool StatsClassOverviewIsExpanded = false;
+			public static readonly bool StatsDeckOverviewIsExpanded = true;
 			public static readonly Operation TagOperation = Operation.Or;
 			public static readonly bool TextOnTopOpponent = false;
 			public static readonly bool TextOnTopPlayer = false;
