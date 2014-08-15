@@ -62,7 +62,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//restore backup
 					File.Delete(path);
-					File.Move(backupPath, path);
+					if(File.Exists(backupPath))
+						File.Move(backupPath, path);
 				}
 				catch(Exception e2)
 				{
@@ -74,9 +75,7 @@ namespace Hearthstone_Deck_Tracker
 			finally
 			{
 				if(deleteBackup && File.Exists(backupPath))
-				{
 					File.Delete(backupPath);
-				}
 			}
 			
 		}
