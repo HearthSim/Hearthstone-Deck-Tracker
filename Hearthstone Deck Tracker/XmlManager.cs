@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker
@@ -31,13 +32,53 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void Save(string path, object obj)
 		{
+			var i = 0;
+			var deleteBackup = true;
+			var backupPath = path.Replace(".xml", "_backup.xml");
+
+			//make sure not to overwrite backups that could not be restored (were not deleted)
+			while(File.Exists(backupPath))
+				backupPath = path.Replace(".xml", "_backup" + i++ + ".xml");
+
 			Logger.WriteLine("Saving file: " + path, "XmlManager", 1);
-			using(TextWriter writer = new StreamWriter(path))
+
+			//create backup
+			if(File.Exists(path))
+				File.Copy(path, backupPath);
+			try
 			{
-				var xml = new XmlSerializer(typeof(T));
-				xml.Serialize(writer, obj);
+				//standard serialization
+				using(TextWriter writer = new StreamWriter(path))
+				{
+					var xml = new XmlSerializer(typeof(T));
+					xml.Serialize(writer, obj);
+				}
+				Logger.WriteLine("File saved: " + path, "XmlManager", 1);
 			}
-			Logger.WriteLine("File saved: " + path, "XmlManager", 1);
+			catch(Exception e)
+			{
+				Logger.WriteLine("Error saving file: " + path + "\n" + e.Message, "XmlManager", 1);
+				try
+				{
+					//restore backup
+					File.Delete(path);
+					File.Move(backupPath, path);
+				}
+				catch(Exception e2)
+				{
+					//restoring failed 
+					deleteBackup = false;
+					Logger.WriteLine("Error restoring backup for: " + path + "\n" + e2.Message, "XmlManager", 1);
+				}
+			}
+			finally
+			{
+				if(deleteBackup && File.Exists(backupPath))
+				{
+					File.Delete(backupPath);
+				}
+			}
+			
 		}
 	}
 }
