@@ -22,11 +22,10 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Helper
 	{
-		public static double DpiScalingX = 1.0;
+		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
+		public static MainWindow MainWindow { get; set; }
 
-		public static double DpiScalingY = 1.0;
-
-		public static Dictionary<string, string> LanguageDict = new Dictionary<string, string>
+		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 			{
 				{"English", "enUS"},
 				{"Chinese (China)", "zhCN"},
@@ -42,19 +41,18 @@ namespace Hearthstone_Deck_Tracker
 				{"Spanish (Spain)", "esES"}
 			};
 
-		public static MainWindow MainWindow { get; set; }
+
 
 		public static Version CheckForUpdates(out Version newVersionOut)
 		{
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			var versionXmlUrl =
-				@"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			var versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
 			var currentVersion = GetCurrentVersion();
 
-			if(currentVersion != null)
+			if (currentVersion != null)
 			{
 				try
 				{
@@ -62,10 +60,10 @@ namespace Hearthstone_Deck_Tracker
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 
-					if(newVersion > currentVersion)
+					if (newVersion > currentVersion)
 						newVersionOut = newVersion;
 				}
-				catch(Exception e)
+				catch (Exception e)
 				{
 					MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
 				}
@@ -82,7 +80,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString());
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				MessageBox.Show(
 					e.Message + "\n\n" + e.InnerException +
@@ -101,17 +99,28 @@ namespace Hearthstone_Deck_Tracker
 
 		public static bool IsHex(IEnumerable<char> chars)
 		{
+			//TODO: Check Change
+			return chars.Any(c =>
+				{
+					return
+						(c >= '0' && c <= '9') ||
+						(c >= 'a' && c <= 'f') ||
+						(c >= 'A' && c <= 'F');
+				}
+			);
+			/*
 			bool isHex;
-			foreach(var c in chars)
+			foreach (var c in chars)
 			{
 				isHex = ((c >= '0' && c <= '9') ||
-				         (c >= 'a' && c <= 'f') ||
-				         (c >= 'A' && c <= 'F'));
+						 (c >= 'a' && c <= 'f') ||
+						 (c >= 'A' && c <= 'F'));
 
-				if(!isHex)
+				if (!isHex)
 					return false;
 			}
 			return true;
+			*/
 		}
 
 		public static double DrawProbability(int copies, int deck, int draw)
@@ -122,7 +131,7 @@ namespace Hearthstone_Deck_Tracker
 		public static double BinomialCoefficient(int n, int k)
 		{
 			double result = 1;
-			for(var i = 1; i <= k; i++)
+			for (var i = 1; i <= k; i++)
 			{
 				result *= n - (k - i);
 				result /= i;
@@ -140,11 +149,11 @@ namespace Hearthstone_Deck_Tracker
 				encoder.Frames.Add(BitmapFrame.Create(rtb));
 
 				var path = GetValidFilePath("Screenshots", name, ".png");
-				using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+				using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
 					encoder.Save(stream);
 				return path;
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				return null;
 			}
@@ -153,17 +162,17 @@ namespace Hearthstone_Deck_Tracker
 		public static string GetValidFilePath(string dir, string name, string extension)
 		{
 			var validDir = RemoveInvalidChars(dir);
-			if(!Directory.Exists(validDir))
+			if (!Directory.Exists(validDir))
 				Directory.CreateDirectory(validDir);
 
-			if(!extension.StartsWith("."))
+			if (!extension.StartsWith("."))
 				extension = "." + extension;
 
 			var path = validDir + "\\" + RemoveInvalidChars(name);
-			if(File.Exists(path + extension))
+			if (File.Exists(path + extension))
 			{
 				var num = 1;
-				while(File.Exists(path + "_" + num + extension))
+				while (File.Exists(path + "_" + num + extension))
 					num++;
 				path += "_" + num;
 			}
@@ -180,11 +189,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
-			if(collection == null) return;
+			if (collection == null) return;
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
 			view1.SortDescriptions.Clear();
 
-			if(classFirst)
+			if (classFirst)
 				view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
 
 			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
@@ -199,11 +208,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))
 		{
-			if(wndHandle == default(IntPtr))
+			if (wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if(!User32.IsHearthstoneInForeground()) return null;
+			if (!User32.IsHearthstoneInForeground()) return null;
 
 			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 			var graphics = Graphics.FromImage(bmp);
@@ -218,25 +227,25 @@ namespace Hearthstone_Deck_Tracker
 
 			var rect = User32.GetHearthstoneRect(false);
 			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1),
-			                                 (int)(rect.Height * 0.15));
-			if(capture == null) return false;
+											 (int)(rect.Height * 0.15));
+			if (capture == null) return false;
 
-			for(var y = 0; y < capture.Height; y++)
+			for (var y = 0; y < capture.Height; y++)
 			{
-				for(var x = 0; x < capture.Width; x++)
+				for (var x = 0; x < capture.Width; x++)
 				{
-					if(IsYellowPixel(capture.GetPixel(x, y)))
+					if (IsYellowPixel(capture.GetPixel(x, y)))
 					{
 						var foundFriendsList = true;
 
 						//check for a straight yellow line (left side of add button)
-						for(var i = 0; i < 5; i++)
+						for (var i = 0; i < 5; i++)
 						{
-							if(x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
+							if (x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
 								foundFriendsList = false;
 						}
 
-						if(foundFriendsList)
+						if (foundFriendsList)
 						{
 							Logger.WriteLine("Found Friendslist");
 							return true;
@@ -255,24 +264,24 @@ namespace Hearthstone_Deck_Tracker
 			const int blue = 10;
 			const int deviation = 10;
 			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation &&
-			       Math.Abs(pixel.B - blue) <= deviation;
+				   Math.Abs(pixel.B - blue) <= deviation;
 		}
 
 		public static void UpdateEverything()
 		{
 			//todo: move this somewhere else
 			//reader done analyzing new stuff, update things
-			if(MainWindow.Overlay.IsVisible)
+			if (MainWindow.Overlay.IsVisible)
 				MainWindow.Overlay.Update(false);
 
-			if(MainWindow.PlayerWindow.IsVisible)
+			if (MainWindow.PlayerWindow.IsVisible)
 				MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
 
-			if(MainWindow.OpponentWindow.IsVisible)
+			if (MainWindow.OpponentWindow.IsVisible)
 				MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
 
 
-			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage)
+			if (MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage)
 			{
 				MainWindow.IsShowingIncorrectDeckMessage = true;
 				MainWindow.ShowIncorrectDeckMessage();
@@ -282,17 +291,17 @@ namespace Hearthstone_Deck_Tracker
 		//http://stackoverflow.com/questions/23927702/move-a-folder-from-one-drive-to-another-in-c-sharp
 		public static void CopyFolder(string sourceFolder, string destFolder)
 		{
-			if(!Directory.Exists(destFolder))
+			if (!Directory.Exists(destFolder))
 				Directory.CreateDirectory(destFolder);
 			var files = Directory.GetFiles(sourceFolder);
-			foreach(var file in files)
+			foreach (var file in files)
 			{
 				var name = Path.GetFileName(file);
 				var dest = Path.Combine(destFolder, name);
 				File.Copy(file, dest);
 			}
 			var folders = Directory.GetDirectories(sourceFolder);
-			foreach(var folder in folders)
+			foreach (var folder in folders)
 			{
 				var name = Path.GetFileName(folder);
 				var dest = Path.Combine(destFolder, name);
