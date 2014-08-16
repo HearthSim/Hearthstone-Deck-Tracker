@@ -645,7 +645,7 @@ namespace Hearthstone_Deck_Tracker
 				ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items[cardIndex]);
 
 				//offset is affected by scaling
-				var topOffset = Canvas.GetTop(ListViewPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100;
+				var topOffset = Canvas.GetTop(StackPanelPlayer) + GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCard.ActualHeight > Height)
@@ -667,7 +667,7 @@ namespace Hearthstone_Deck_Tracker
 				ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items[cardIndex]);
 
 				//offset is affected by scaling
-				var topOffset = Canvas.GetTop(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
+				var topOffset = Canvas.GetTop(StackPanelOpponent) + GetListViewOffset(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCard.ActualHeight > Height)
@@ -723,6 +723,26 @@ namespace Hearthstone_Deck_Tracker
 				HideAdditionalToolTips();
 				_lastToolTipCardId = string.Empty;
 			}
+		}
+
+		private double GetListViewOffset(StackPanel stackPanel)
+		{
+			var offset = 0.0;
+			foreach(var child in stackPanel.Children)
+			{
+				var text = child as HearthstoneTextBlock;
+				if(text != null)
+					offset += text.ActualHeight;
+				else
+				{
+					if(child is ListView)
+						break;
+					var sp = child as StackPanel;
+					if(sp != null)
+						offset += sp.ActualHeight;
+				}
+			}
+			return offset;
 		}
 
 		private void HideAdditionalToolTips()
