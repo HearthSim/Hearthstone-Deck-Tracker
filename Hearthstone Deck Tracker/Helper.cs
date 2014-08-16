@@ -99,17 +99,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public static bool IsHex(IEnumerable<char> chars)
 		{
-			bool isHex;
-			foreach (var c in chars)
-			{
-				isHex = ((c >= '0' && c <= '9') ||
-						 (c >= 'a' && c <= 'f') ||
-						 (c >= 'A' && c <= 'F'));
-
-				if (!isHex)
-					return false;
-			}
-			return true;
+			return chars.All(c => ((c >= '0' && c <= '9')
+			                       || (c >= 'a' && c <= 'f')
+			                       || (c >= 'A' && c <= 'F')));
 		}
 
 		public static double DrawProbability(int copies, int deck, int draw)
