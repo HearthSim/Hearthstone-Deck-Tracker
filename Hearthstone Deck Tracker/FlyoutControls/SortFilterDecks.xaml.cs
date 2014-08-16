@@ -263,15 +263,10 @@ namespace Hearthstone_Deck_Tracker
 			if(Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
 				Helper.MainWindow.DeckList.AllTags.Remove(tag);
-				//TODO: Check Change
-				Helper.MainWindow.DeckList.DecksList.Where(deck => deck.Tags.Contains(tag)).ToList().ForEach(deck => deck.Tags.Remove(tag));
-				/*
-				foreach(var deck in Helper.MainWindow.DeckList.DecksList)
-				{
-					if(deck.Tags.Contains(tag))
-						deck.Tags.Remove(tag);
-				}
-				*/
+				
+				foreach(var deck in Helper.MainWindow.DeckList.DecksList.Where(deck => deck.Tags.Contains(tag)))
+					deck.Tags.Remove(tag);
+				
 				if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
 					Helper.MainWindow.NewDeck.Tags.Remove(tag);
 
