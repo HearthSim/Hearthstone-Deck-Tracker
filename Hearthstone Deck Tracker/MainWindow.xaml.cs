@@ -668,16 +668,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				
 				_doUpdate = false;
 
 				//wait for update to finish, might otherwise crash when overlay gets disposed
 				for(var i = 0; i < 100; i++)
 				{
 					if(_canShowDown)
-					{
 						break;
-					}
 					await Task.Delay(50);
 				}
 
@@ -1042,7 +1039,8 @@ namespace Hearthstone_Deck_Tracker
 						//game was closed
 						HsLogReader.Instance.ClearLog();
 						Game.Reset();
-						Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+						if(DeckPickerList.SelectedDeck != null)
+							Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
 						HsLogReader.Instance.Reset(true);
 					}
 					Game.IsRunning = false;
@@ -2580,7 +2578,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
 			Game.Reset();
-			Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+			if(DeckPickerList.SelectedDeck != null)
+				Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(true);
 		}
@@ -2591,7 +2590,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
 			Game.Reset();
-			Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+			if(DeckPickerList.SelectedDeck != null)
+				Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(true);
 		}
