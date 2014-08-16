@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
 		public Deck NewDeck;
+		private bool _canShowDown;
 		private bool _doUpdate;
 		private bool _newContainsDeck;
 		private Version _updatedVersion;
@@ -663,11 +664,23 @@ namespace Hearthstone_Deck_Tracker
 			Hide();
 		}
 
-		private void Window_Closing(object sender, CancelEventArgs e)
+		private async void Window_Closing(object sender, CancelEventArgs e)
 		{
 			try
 			{
+				
 				_doUpdate = false;
+
+				//wait for update to finish, might otherwise crash when overlay gets disposed
+				for(var i = 0; i < 100; i++)
+				{
+					if(_canShowDown)
+					{
+						break;
+					}
+					await Task.Delay(50);
+				}
+
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 
@@ -1036,6 +1049,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
+			_canShowDown = true;
 		}
 
 		private async void ShowNewUpdateMessage(Version newVersion = null)
