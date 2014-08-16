@@ -1700,6 +1700,13 @@ namespace Hearthstone_Deck_Tracker
 			Helper.SortCardCollection(ListViewNewDeck.Items, Config.Instance.CardSortingClassFirst);
 			BtnSaveDeck.Content = "Save*";
 			UpdateNewDeckHeader(true);
+			try
+			{
+				TextBoxDBFilter.Select(0, TextBoxDBFilter.Text.Length);
+			}
+			catch
+			{
+			}
 		}
 
 		public void SetNewDeck(Deck deck, bool editing = false)
