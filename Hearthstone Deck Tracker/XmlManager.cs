@@ -77,7 +77,6 @@ namespace Hearthstone_Deck_Tracker
 				if(deleteBackup && File.Exists(backupPath))
 					File.Delete(backupPath);
 			}
-			
 		}
 	}
 }

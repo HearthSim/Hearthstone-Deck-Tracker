@@ -583,9 +583,9 @@ namespace Hearthstone_Deck_Tracker
 
 			ReSizePosLists();
 
-			if (Helper.MainWindow.PlayerWindow.Visibility == Visibility.Visible)
+			if(Helper.MainWindow.PlayerWindow.Visibility == Visibility.Visible)
 				Helper.MainWindow.PlayerWindow.Update();
-			if (Helper.MainWindow.OpponentWindow.Visibility == Visibility.Visible)
+			if(Helper.MainWindow.OpponentWindow.Visibility == Visibility.Visible)
 				Helper.MainWindow.OpponentWindow.Update();
 		}
 
@@ -634,7 +634,7 @@ namespace Hearthstone_Deck_Tracker
 			var visibility = Config.Instance.OverlayCardToolTips ? Visibility.Visible : Visibility.Hidden;
 
 			//player card tooltips
-			if (ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
+			if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewPlayer.ActualHeight / ListViewPlayer.Items.Count;
