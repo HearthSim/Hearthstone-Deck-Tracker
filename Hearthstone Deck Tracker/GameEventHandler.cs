@@ -104,6 +104,11 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
 			}
 			Game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
+
+			//temp fix for deck not being updated here
+			//todo: figure out why draw is updating but deckdiscard is not
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 		}
 
 		#endregion
