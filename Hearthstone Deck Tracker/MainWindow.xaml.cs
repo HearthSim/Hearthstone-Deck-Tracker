@@ -1184,6 +1184,7 @@ namespace Hearthstone_Deck_Tracker
 			_newContainsDeck = true;
 			NewDeck = (Deck)selectedDeck.Clone();
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
+			ManaCurveNewDeck.SetDeck(NewDeck);
 
 			if(ComboBoxSelectClass.Items.Contains(NewDeck.Class))
 				ComboBoxSelectClass.SelectedValue = NewDeck.Class;
@@ -1638,7 +1639,7 @@ namespace Hearthstone_Deck_Tracker
 			ClearNewDeckSection();
 		}
 
-		private void ClearNewDeckSection()
+		private async void ClearNewDeckSection()
 		{
 			UpdateNewDeckHeader(false);
 			ComboBoxSelectClass.SelectedIndex = 0;
@@ -1647,9 +1648,13 @@ namespace Hearthstone_Deck_Tracker
 			ComboBoxFilterMana.SelectedIndex = 0;
 			NewDeck = new Deck();
 			ListViewNewDeck.ItemsSource = NewDeck.Cards;
+			ManaCurveNewDeck.SetDeck(NewDeck);
 			_newContainsDeck = false;
 			EditingDeck = false;
-			ManaCurveNewDeck.ClearDeck();
+
+			//wait for animations to finish
+			await Task.Delay(1000);
+			ManaCurveNewDeck.UpdateValues();
 		}
 
 		private void RemoveCardFromDeck(Card card)
@@ -1708,6 +1713,8 @@ namespace Hearthstone_Deck_Tracker
 				NewDeck = (Deck)deck.Clone();
 				ListViewNewDeck.ItemsSource = NewDeck.Cards;
 				Helper.SortCardCollection(ListViewNewDeck.ItemsSource, false);
+
+				ManaCurveNewDeck.SetDeck(NewDeck);
 
 				if(ComboBoxSelectClass.Items.Contains(NewDeck.Class))
 					ComboBoxSelectClass.SelectedValue = NewDeck.Class;
