@@ -751,7 +751,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_updatedVersion != null)
 				ShowUpdateNotesMessage(_updatedVersion);
 
-			if(_updatedLogConfig && Game.IsRunning)
+			if(_updatedLogConfig)
 			{
 				ShowMessage("Restart Hearthstone",
 				            "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
