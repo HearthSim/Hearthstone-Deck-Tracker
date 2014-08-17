@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker
 						DataGridDetails.Items.Add(new GameDetailItem());
 						needSeparator = false;
 					}
-					foreach(var play in turn.Plays)
+					foreach(var play in turn.Plays.Where(play => play != null))
 					{
 						if((play.Type == PlayType.PlayerPlay || play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.PlayerHeroPower) && !Config.Instance.GameDetails.ShowPlayerPlay
 						   || (play.Type == PlayType.PlayerDraw || play.Type == PlayType.PlayerGet || play.Type == PlayType.PlayerDeckDiscard) && !Config.Instance.GameDetails.ShowPlayerDraw
@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker
 				Action = play.Type.ToString().Replace("Player", string.Empty).Replace("Opponent", string.Empty);
 				Card = Game.GetCardFromId(play.CardId);
 
-				if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && Card.Type == "Spell")
+				if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && (Card != null && Card.Type == "Spell"))
 					Action = "Play/Discard";
 			}
 
