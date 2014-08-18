@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker
 		public double OverlayOpacity = Defaults.OverlayOpacity;
 		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
 		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
+		public bool OwnsGoldenFeugen = Defaults.OwnsGoldenFeugen;
+		public bool OwnsGoldenStalagg = Defaults.OwnsGoldenStalagg;
 		public string[] PanelOrderOpponent = Defaults.PanelOrderOpponent;
 		public string[] PanelOrderPlayer = Defaults.PanelOrderPlayer;
 		public double PlayerDeckHeight = Defaults.PlayerDeckHeight;
@@ -332,6 +334,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double OverlayOpacity = 100;
 			public static readonly double OverlayOpponentScaling = 100;
 			public static readonly double OverlayPlayerScaling = 100;
+			public static readonly bool OwnsGoldenFeugen = false;
+			public static readonly bool OwnsGoldenStalagg = false;
 			public static readonly double PlayerDeckHeight = 65;
 			public static readonly double PlayerDeckLeft = 99.5;
 			public static readonly double PlayerDeckTop = 17;

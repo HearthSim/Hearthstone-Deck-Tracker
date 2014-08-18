@@ -119,17 +119,9 @@ namespace Hearthstone_Deck_Tracker
 
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			if(card.Name == "Feugen")
-			{
-				await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
+			if(await CheckForSpecialCases(card, cardPosX, card2PosX, cardPosY, hsHandle))
 				return;
-			}
-			if(card.Name == "Stalagg")
-			{
-				await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-				return;
-			}
-
+			
 			var golden = CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05)));
 			for(var i = 0; i < card.Count; i++)
 			{
@@ -147,6 +139,39 @@ namespace Hearthstone_Deck_Tracker
 				else
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 			}
+		}
+
+		private async static Task<bool> CheckForSpecialCases(Card card, double cardPosX, double card2PosX, double cardPosY, IntPtr hsHandle)
+		{
+			if (card.Name == "Feugen")
+			{
+				if (Config.Instance.OwnsGoldenFeugen && Config.Instance.PrioritizeGolden)
+					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+				else
+					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
+				return true;
+			}
+			if (card.Name == "Stalagg")
+			{
+				var posX3 = cardPosX + (card2PosX - cardPosX) * 2;
+				var posX4 = cardPosX + (card2PosX - cardPosX) * 3;
+				if (Config.Instance.OwnsGoldenFeugen)
+				{
+					if (Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
+						await ClickOnPoint(hsHandle, new Point((int)posX4, (int)cardPosY));
+					else
+						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
+				}
+				else
+				{
+					if (Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
+						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
+					else
+						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+				}
+				return true;
+			}
+			return false;
 		}
 
 		private static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)

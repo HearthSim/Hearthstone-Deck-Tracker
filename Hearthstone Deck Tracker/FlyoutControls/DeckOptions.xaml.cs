@@ -36,9 +36,14 @@ namespace Hearthstone_Deck_Tracker
 			var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 			if(deck == null) return;
 
+			var message = "Please create a new, empty " + deck.Class +
+			              "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!";
+
+			if(deck.Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
+				message += "\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
+
 			var result = await Helper.MainWindow.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
-			                                                      "Please create a new, empty " + deck.Class +
-			                                                      "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!",
+			                                                      message,
 			                                                      MessageDialogStyle.AffirmativeAndNegative);
 
 			if(result == MessageDialogResult.Affirmative)

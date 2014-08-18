@@ -913,6 +913,8 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
 			CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
 			CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
+			CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
+			CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -2838,5 +2840,33 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void CheckboxGoldenFeugen_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.OwnsGoldenFeugen = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxGoldenFeugen_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.OwnsGoldenFeugen = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxGoldenStalagg_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized) return;
+			Config.Instance.OwnsGoldenStalagg = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxGoldenStalagg_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.OwnsGoldenStalagg = false;
+			SaveConfig(false);
+		}
 	}
 }
