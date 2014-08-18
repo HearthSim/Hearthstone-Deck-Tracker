@@ -1716,6 +1716,7 @@ namespace Hearthstone_Deck_Tracker
 			UpdateNewDeckHeader(true);
 			try
 			{
+				TextBoxDBFilter.Focus();
 				TextBoxDBFilter.Select(0, TextBoxDBFilter.Text.Length);
 			}
 			catch
