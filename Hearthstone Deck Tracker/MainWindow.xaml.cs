@@ -2287,6 +2287,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			Config.Instance.SelectedLanguage = selectedLanguage;
+			Config.Save();
 
 
 			await Restart();
