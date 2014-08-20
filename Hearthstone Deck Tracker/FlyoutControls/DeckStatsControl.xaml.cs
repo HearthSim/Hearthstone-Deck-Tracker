@@ -107,10 +107,13 @@ namespace Hearthstone_Deck_Tracker
 					timeFrame = new DateTime();
 					break;
 			}
+			var noteFilter = TextboxNoteFilter.Text;
 			DataGridGames.Items.Clear();
 			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
 			                                                     || selectedGameMode == Game.GameMode.All)
-			                                                    && g.StartTime > timeFrame).ToList();
+			                                                    && g.StartTime > timeFrame
+			                                                    && (g.Note == null && noteFilter == string.Empty
+			                                                        || g.Note != null && g.Note.Contains(noteFilter))).ToList();
 			foreach(var game in filteredGames)
 				DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
@@ -123,7 +126,9 @@ namespace Hearthstone_Deck_Tracker
 			                     .SelectMany(d => d.DeckStats.Games
 			                                       .Where(g => (g.GameMode == selectedGameMode
 			                                                    || selectedGameMode == Game.GameMode.All)
-			                                                   && g.StartTime > timeFrame)).ToList();
+			                                                   && g.StartTime > timeFrame
+			                                                   && (g.Note == null && noteFilter == string.Empty
+																   || g.Note != null && g.Note.Contains(noteFilter)))).ToList();
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
 			DataGridGames.Items.SortDescriptions.Clear();
@@ -236,6 +241,12 @@ namespace Hearthstone_Deck_Tracker
 			return _isGroupBoxExpanded[groupBox];
 		}
 
+		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			//todo: probably not the best performance
+			Refresh();
+		}
+
 		private class WinLoss
 		{
 			private readonly bool _percent;
@@ -319,6 +330,12 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
+		}
+
+		private void BtnMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
+		{
+			//todo
+			//show list of ther decks -> select -> move game to deck
 		}
 	}
 }
