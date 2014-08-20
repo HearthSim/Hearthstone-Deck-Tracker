@@ -915,6 +915,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
 			CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
 			CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
+			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -1044,6 +1045,9 @@ namespace Hearthstone_Deck_Tracker
 						if(DeckPickerList.SelectedDeck != null)
 							Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
 						HsLogReader.Instance.Reset(true);
+
+						if(Config.Instance.CloseWithHearthstone)
+							Close();
 					}
 					Game.IsRunning = false;
 				}
@@ -2841,25 +2845,23 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		#endregion
-
 		private void CheckboxGoldenFeugen_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized) return;
+			if(!_initialized) return;
 			Config.Instance.OwnsGoldenFeugen = true;
 			SaveConfig(false);
 		}
 
 		private void CheckboxGoldenFeugen_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized) return;
+			if(!_initialized) return;
 			Config.Instance.OwnsGoldenFeugen = false;
 			SaveConfig(false);
 		}
 
 		private void CheckboxGoldenStalagg_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized) return;
+			if(!_initialized) return;
 			Config.Instance.OwnsGoldenStalagg = true;
 			SaveConfig(false);
 		}
@@ -2870,5 +2872,21 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.OwnsGoldenStalagg = false;
 			SaveConfig(false);
 		}
+
+		private void CheckboxCloseWithHearthstone_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.CloseWithHearthstone = true;
+			Config.Save();
+		}
+
+		private void CheckboxCloseWithHearthstone_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.CloseWithHearthstone = false;
+			Config.Save();
+		}
+
+		#endregion
 	}
 }

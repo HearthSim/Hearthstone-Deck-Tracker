@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
 		public bool CheckForUpdates = Defaults.CheckForUpdates;
 		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
+		public bool CloseWithHearthstone = Defaults.CloseWithHearthstone;
 		public string CreatedByVersion = Defaults.CreatedByVersion;
 		public int CustomHeight = Defaults.CustomHeight;
 		public int CustomWidth = Defaults.CustomWidth;
@@ -275,6 +276,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool CardSortingClassFirst = false;
 			public static readonly bool CheckForUpdates = true;
 			public static readonly bool ClearLogFileAfterGame = true;
+			public static readonly bool CloseWithHearthstone = false;
 			public static readonly int CustomHeight = -1;
 			public static readonly int CustomWidth = -1;
 			public static readonly bool Debug = false;
