@@ -548,12 +548,12 @@
                                 <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap"><Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen"/></TextBlock>
                             </GroupBox>
                             <GroupBox Header="I found a bug, what do I do?">
-                                <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
+                                <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                     <Run Text="Two options here:"/>
                                     <LineBreak/>
                                     <Run Text="1) Check out the"/>
                                     <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open" RequestNavigate="Hyperlink_RequestNavigate">issues on GitHub.</Hyperlink>
-                                    <Run Text="If there's no issue on the topic feel free to open create new one and/or even fix it yourself and create a pull request."/>
+                                    <Run Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request."/>
                                     <LineBreak/>
                                     <Run Text="2) Send me an email: epik37@gmail.com"/>
                                 </TextBlock>
