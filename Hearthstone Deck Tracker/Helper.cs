@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker
 
 			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-			view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+			view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
 		}
 
 		public static string DeckToIdString(Deck deck)
