@@ -848,42 +848,6 @@ namespace Hearthstone_Deck_Tracker
 				LblTurnTime.Visibility = Config.Instance.HideTimers ? Visibility.Hidden : Visibility.Visible;
 		}
 
-		public void SetOpponentTextLocation(bool top)
-		{
-			StackPanelOpponent.Children.Clear();
-			if(top)
-			{
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-				StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-				StackPanelOpponent.Children.Add(ListViewOpponent);
-			}
-			else
-			{
-				StackPanelOpponent.Children.Add(ListViewOpponent);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-				StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-			}
-		}
-
-		public void SetPlayerTextLocation(bool top)
-		{
-			StackPanelPlayer.Children.Clear();
-			if(top)
-			{
-				StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
-				StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-				StackPanelPlayer.Children.Add(ListViewPlayer);
-			}
-			else
-			{
-				StackPanelPlayer.Children.Add(ListViewPlayer);
-				StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
-				StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-			}
-		}
-
 		public void UpdatePlayerLayout()
 		{
 			StackPanelPlayer.Children.Clear();
@@ -1074,10 +1038,12 @@ namespace Hearthstone_Deck_Tracker
 		private Size GetUiElementSize(UIElement element)
 		{
 			if(element == null) return new Size();
-			if(element is StackPanel)
-				return new Size(((StackPanel)element).ActualWidth, ((StackPanel)element).ActualHeight);
-			if(element is HearthstoneTextBlock)
-				return new Size(((HearthstoneTextBlock)element).ActualWidth, ((HearthstoneTextBlock)element).ActualHeight);
+			var panel = element as StackPanel;
+			if(panel != null)
+				return new Size(panel.ActualWidth, panel.ActualHeight);
+			var block = element as HearthstoneTextBlock;
+			if(block != null)
+				return new Size(block.ActualWidth, block.ActualHeight);
 			return new Size();
 		}
 

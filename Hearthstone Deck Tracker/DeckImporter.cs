@@ -383,7 +383,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<List<string>> GetPopularDeckLists()
 		{
-			var url = @"http://hearthstats.net/decks/public?class=&items=500&sort=num_users&order=desc";
+			const string url = @"http://hearthstats.net/decks/public?class=&items=500&sort=num_users&order=desc";
 
 			var doc = await GetHtmlDoc(url);
 

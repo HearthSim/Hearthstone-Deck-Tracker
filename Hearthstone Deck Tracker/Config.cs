@@ -129,8 +129,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool StatsClassOverviewIsExpanded = Defaults.StatsClassOverviewIsExpanded;
 		public bool StatsDeckOverviewIsExpanded = Defaults.StatsDeckOverviewIsExpanded;
 		public Operation TagOperation = Defaults.TagOperation;
-		public bool TextOnTopOpponent = Defaults.TextOnTopOpponent;
-		public bool TextOnTopPlayer = Defaults.TextOnTopPlayer;
 		public string ThemeName = Defaults.ThemeName;
 		public double TimerLeft = Defaults.TimerLeft;
 		public int TimerWindowHeight = Defaults.TimerWindowHeight;
@@ -374,8 +372,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool StatsClassOverviewIsExpanded = false;
 			public static readonly bool StatsDeckOverviewIsExpanded = true;
 			public static readonly Operation TagOperation = Operation.Or;
-			public static readonly bool TextOnTopOpponent = false;
-			public static readonly bool TextOnTopPlayer = false;
 			public static readonly string ThemeName;
 			public static readonly double TimerLeft = 75;
 			public static readonly int TimerWindowHeight = 130;

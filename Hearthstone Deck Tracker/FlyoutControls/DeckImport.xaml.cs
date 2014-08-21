@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker
 				var card = Game.GetCardFromId(splitEntry[0]);
 				if(card.Id == "UNKNOWN")
 					continue;
-				var count = 1;
+				int count;
 				int.TryParse(splitEntry[1], out count);
 				card.Count = count;
 

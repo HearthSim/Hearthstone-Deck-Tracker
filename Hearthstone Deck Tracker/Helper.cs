@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			var versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
 			var currentVersion = GetCurrentVersion();
 

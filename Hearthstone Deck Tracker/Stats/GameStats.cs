@@ -83,13 +83,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats CloneWithNewId()
 		{
-			var newGame = new GameStats(Result, OpponentHero);
-			newGame.StartTime = StartTime;
-			newGame.EndTime = EndTime;
-			newGame.Coin = Coin;
-			newGame.GameMode = GameMode;
-			newGame.Turns = Turns;
-			newGame._turnStats = LoadTurnStats();
+			var newGame = new GameStats(Result, OpponentHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats()};
 			newGame.Save();
 			return newGame;
 		}
@@ -103,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			if(ReferenceEquals(null, obj)) return false;
 			if(ReferenceEquals(this, obj)) return true;
-			if(obj.GetType() != this.GetType()) return false;
+			if(obj.GetType() != GetType()) return false;
 			return Equals((GameStats)obj);
 		}
 
