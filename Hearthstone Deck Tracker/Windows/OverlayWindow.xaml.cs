@@ -104,7 +104,8 @@ namespace Hearthstone_Deck_Tracker
 					{StackPanelPlayer, new ResizeGrip()},
 					{StackPanelOpponent, new ResizeGrip()},
 					{StackPanelSecrets, new ResizeGrip()},
-					{LblTurnTime, new ResizeGrip()}
+					{LblTurnTime, new ResizeGrip()},
+					{LblPlayerTurnTime, new ResizeGrip()}
 				};
 
 			UpdateScaling();
@@ -178,12 +179,23 @@ namespace Hearthstone_Deck_Tracker
 			var timer = _selectedUIElement as HearthstoneTextBlock;
 			if(timer != null)
 			{
-				if(timer.Name.Contains("Turn"))
+				if(timer.Name.Contains("Player"))
+				{
+					Config.Instance.TimersVerticalSpacing += delta.Y / 100;
+					Config.Instance.TimersHorizontalSpacing += delta.X / 100;
+					Canvas.SetTop(_movableElements[timer], Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
+					Canvas.SetLeft(_movableElements[timer], Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
+				}
+				else if(timer.Name.Contains("Turn"))
 				{
 					Config.Instance.TimersVerticalPosition += delta.Y / Height;
 					Config.Instance.TimersHorizontalPosition += delta.X / Width;
 					Canvas.SetTop(_movableElements[timer], Height * Config.Instance.TimersVerticalPosition / 100);
 					Canvas.SetLeft(_movableElements[timer], Width * Config.Instance.TimersHorizontalPosition / 100);
+
+					var playerTimer = _movableElements.First(e => e.Key is HearthstoneTextBlock && ((HearthstoneTextBlock)e.Key).Name.Contains("Player")).Value;
+					Canvas.SetTop(playerTimer, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
+					Canvas.SetLeft(playerTimer, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 				}
 			}
 
@@ -221,10 +233,10 @@ namespace Hearthstone_Deck_Tracker
 					var timer = movableElement.Key as HearthstoneTextBlock;
 					if(timer != null)
 					{
-						if(PointInsideControl(relativePos, timer.ActualWidth, timer.ActualHeight))
+						if(PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 						{
-							if(Math.Abs(relativePos.X - timer.ActualWidth) < 30 && Math.Abs(relativePos.Y - timer.ActualHeight) < 30)
-								_resizeElement = true;
+							//if(Math.Abs(relativePos.X - timer.ActualWidth) < 30 && Math.Abs(relativePos.Y - timer.ActualHeight) < 30)
+							//_resizeElement = true;
 
 							_selectedUIElement = movableElement.Key;
 							return;

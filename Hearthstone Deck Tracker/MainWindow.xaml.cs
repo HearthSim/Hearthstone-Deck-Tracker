@@ -927,8 +927,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 			CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
-			SliderTimersHorizontalSpacing.Value = Config.Instance.TimersHorizontalSpacing;
-			SliderTimersVerticalSpacing.Value = Config.Instance.TimersVerticalSpacing;
 
 			var delay = Config.Instance.DeckExportDelay;
 			ComboboxExportSpeed.SelectedIndex = delay < 50 ? 0 : delay < 75 ? 1 : delay < 125 ? 2 : delay < 250 ? 3 : 4;
@@ -2171,20 +2169,6 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(true);
 		}
 
-		private void SliderTimersHorizontalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if(!_initialized) return;
-			Config.Instance.TimersHorizontalSpacing = SliderTimersHorizontalSpacing.Value;
-			SaveConfig(true);
-		}
-
-		private void SliderTimersVerticalSpacing_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if(!_initialized) return;
-			Config.Instance.TimersVerticalSpacing = SliderTimersVerticalSpacing.Value;
-			SaveConfig(true);
-		}
-
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized) return;
@@ -2561,21 +2545,22 @@ namespace Hearthstone_Deck_Tracker
 				BtnUnlockOverlay.Content = "Unlock";
 			}
 
-			var defaultConfig = new Config();
+			Config.Instance.PlayerDeckTop = Config.Defaults.PlayerDeckTop;
+			Config.Instance.PlayerDeckLeft = Config.Defaults.PlayerDeckLeft;
+			Config.Instance.PlayerDeckHeight = Config.Defaults.PlayerDeckHeight;
 
-			Config.Instance.PlayerDeckTop = defaultConfig.PlayerDeckTop;
-			Config.Instance.PlayerDeckLeft = defaultConfig.PlayerDeckLeft;
-			Config.Instance.PlayerDeckHeight = defaultConfig.PlayerDeckHeight;
+			Config.Instance.OpponentDeckTop = Config.Defaults.OpponentDeckTop;
+			Config.Instance.OpponentDeckLeft = Config.Defaults.OpponentDeckLeft;
+			Config.Instance.OpponentDeckHeight = Config.Defaults.OpponentDeckHeight;
 
-			Config.Instance.OpponentDeckTop = defaultConfig.OpponentDeckTop;
-			Config.Instance.OpponentDeckLeft = defaultConfig.OpponentDeckLeft;
-			Config.Instance.OpponentDeckHeight = defaultConfig.OpponentDeckHeight;
+			Config.Instance.TimersHorizontalPosition = Config.Defaults.TimersHorizontalPosition;
+			Config.Instance.TimersHorizontalSpacing = Config.Defaults.TimersHorizontalSpacing;
 
-			Config.Instance.TimersHorizontalPosition = defaultConfig.TimersHorizontalPosition;
-			Config.Instance.TimersHorizontalSpacing = defaultConfig.TimersHorizontalSpacing;
+			Config.Instance.TimersHorizontalSpacing = Config.Defaults.TimersHorizontalSpacing;
+			Config.Instance.TimersVerticalSpacing = Config.Defaults.TimersVerticalSpacing;
 
-			Config.Instance.SecretsTop = defaultConfig.SecretsTop;
-			Config.Instance.SecretsLeft = defaultConfig.SecretsLeft;
+			Config.Instance.SecretsTop = Config.Defaults.SecretsTop;
+			Config.Instance.SecretsLeft = Config.Defaults.SecretsLeft;
 
 			SaveConfig(true);
 		}
