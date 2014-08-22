@@ -297,13 +297,6 @@ namespace Hearthstone_Deck_Tracker
 		public static string RemoveDiacritics(string src, bool compatNorm)
 		{
 			var sb = new StringBuilder();
-			foreach(var c in RemoveDiacriticsEnum(src, compatNorm))
-				sb.Append(c);
-			return sb.ToString();
-		}
-
-		public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm)
-		{
 			foreach(var c in src.Normalize(compatNorm ? NormalizationForm.FormKD : NormalizationForm.FormD))
 			{
 				switch(CharUnicodeInfo.GetUnicodeCategory(c))
@@ -313,10 +306,12 @@ namespace Hearthstone_Deck_Tracker
 					case UnicodeCategory.EnclosingMark:
 						break;
 					default:
-						yield return c;
+						sb.Append(c);
 						break;
 				}
 			}
+
+			return sb.ToString();
 		}
 	}
 }
