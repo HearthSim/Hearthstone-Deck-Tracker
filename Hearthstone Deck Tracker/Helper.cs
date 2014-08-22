@@ -20,7 +20,7 @@ using Size = System.Drawing.Size;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public static class Helper
+	public static partial class Helper
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
@@ -290,4 +290,47 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 	}
+
+	public partial class Helper
+	{
+		public static class Diacritics
+		{
+			public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm)
+			{
+				return RemoveDiacritics(src, compatNorm, c => c);
+			}
+			public static string RemoveDiacritics(string src, bool compatNorm, Func<char, char> customFolding)
+			{
+				var sb = new System.Text.StringBuilder();
+				foreach (char c in RemoveDiacriticsEnum(src, compatNorm, customFolding))
+					sb.Append(c);
+				return sb.ToString();
+			}
+			public static string RemoveDiacritics(string src, bool compatNorm)
+			{
+				return RemoveDiacritics(src, compatNorm, c => c);
+			}
+
+			public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm, Func<char, char> customFolding)
+			{
+				foreach (char c in src.Normalize(compatNorm ? System.Text.NormalizationForm.FormKD : System.Text.NormalizationForm.FormD))
+				{
+					switch (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c))
+					{
+						case System.Globalization.UnicodeCategory.NonSpacingMark:
+						case System.Globalization.UnicodeCategory.SpacingCombiningMark:
+						case System.Globalization.UnicodeCategory.EnclosingMark:
+							//do nothing
+							break;
+						default:
+							yield return customFolding(c);
+							break;
+					}
+				}
+			}
+		}
+
+	}
+
+
 }
