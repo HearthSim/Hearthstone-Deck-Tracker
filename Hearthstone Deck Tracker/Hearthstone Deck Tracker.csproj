@@ -163,6 +163,9 @@
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MoveGameDialog.xaml.cs">
+      <DependentUpon>MoveGameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
     </Compile>
@@ -249,6 +252,10 @@
     </Compile>
     <Compile Include="Config.cs" />
     <Page Include="Windows\DeckSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MoveGameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

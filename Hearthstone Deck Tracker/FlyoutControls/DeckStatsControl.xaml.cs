@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker
 			                                                    || selectedGameMode == Game.GameMode.All)
 			                                                   && g.StartTime > timeFrame
 			                                                   && (g.Note == null && noteFilter == string.Empty
-																   || g.Note != null && g.Note.Contains(noteFilter)))).ToList();
+			                                                       || g.Note != null && g.Note.Contains(noteFilter)))).ToList();
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
 			DataGridGames.Items.SortDescriptions.Clear();
@@ -181,18 +181,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(DataGridGames.SelectedItems.Count > 0)
-			{
-				BtnDelete.IsEnabled = true;
-				BtnDetails.IsEnabled = true;
-				BtnNote.IsEnabled = true;
-			}
-			else
-			{
-				BtnDelete.IsEnabled = false;
-				BtnDetails.IsEnabled = false;
-				BtnNote.IsEnabled = false;
-			}
+			var enabled = DataGridGames.SelectedItems.Count > 0;
+			BtnDelete.IsEnabled = enabled;
+			BtnDetails.IsEnabled = enabled;
+			BtnNote.IsEnabled = enabled;
+			BtnMoveToOtherDeck.IsEnabled = enabled;
 		}
 
 		private async void BtnEditNote_Click(object sender, RoutedEventArgs e)
@@ -242,6 +235,27 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//todo: probably not the best performance
 			Refresh();
+		}
+
+		private void BtnMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var selectedGame = DataGridGames.SelectedItem as GameStats;
+			if(selectedGame == null) return;
+
+			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == _deck.Class);
+
+			var dialog = new MoveGameDialog(possibleTargets) {Owner = Helper.MainWindow};
+			dialog.ShowDialog();
+			var selectedDeck = dialog.SelectedDeck;
+
+			if(selectedDeck == null) return;
+
+			_deck.DeckStats.Games.Remove(selectedGame);
+			selectedDeck.DeckStats.Games.Add(selectedGame);
+			DeckStatsList.Save();
+			Helper.MainWindow.WriteDecks();
+			Refresh();
+			Helper.MainWindow.DeckPickerList.UpdateList();
 		}
 
 		private class WinLoss
@@ -327,12 +341,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
-		}
-
-		private void BtnMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
-		{
-			//todo
-			//show list of ther decks -> select -> move game to deck
 		}
 	}
 }
