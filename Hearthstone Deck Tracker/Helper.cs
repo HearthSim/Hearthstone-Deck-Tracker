@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -299,13 +301,15 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return RemoveDiacritics(src, compatNorm, c => c);
 			}
+
 			public static string RemoveDiacritics(string src, bool compatNorm, Func<char, char> customFolding)
 			{
-				var sb = new System.Text.StringBuilder();
-				foreach (char c in RemoveDiacriticsEnum(src, compatNorm, customFolding))
+				var sb = new StringBuilder();
+				foreach(var c in RemoveDiacriticsEnum(src, compatNorm, customFolding))
 					sb.Append(c);
 				return sb.ToString();
 			}
+
 			public static string RemoveDiacritics(string src, bool compatNorm)
 			{
 				return RemoveDiacritics(src, compatNorm, c => c);
@@ -313,13 +317,13 @@ namespace Hearthstone_Deck_Tracker
 
 			public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm, Func<char, char> customFolding)
 			{
-				foreach (char c in src.Normalize(compatNorm ? System.Text.NormalizationForm.FormKD : System.Text.NormalizationForm.FormD))
+				foreach(var c in src.Normalize(compatNorm ? NormalizationForm.FormKD : NormalizationForm.FormD))
 				{
-					switch (System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c))
+					switch(CharUnicodeInfo.GetUnicodeCategory(c))
 					{
-						case System.Globalization.UnicodeCategory.NonSpacingMark:
-						case System.Globalization.UnicodeCategory.SpacingCombiningMark:
-						case System.Globalization.UnicodeCategory.EnclosingMark:
+						case UnicodeCategory.NonSpacingMark:
+						case UnicodeCategory.SpacingCombiningMark:
+						case UnicodeCategory.EnclosingMark:
 							//do nothing
 							break;
 						default:
@@ -329,8 +333,5 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 		}
-
 	}
-
-
 }
