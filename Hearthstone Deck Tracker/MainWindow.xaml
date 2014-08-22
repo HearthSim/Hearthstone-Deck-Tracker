@@ -397,18 +397,6 @@
                                         <RowDefinition Height="auto" ></RowDefinition>
                                         <RowDefinition Height="*" ></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <GroupBox Header="Timer Spacing" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Width="234" Height="108" Margin="5,10,0,0">
-                                        <StackPanel>
-                                            <DockPanel Margin="10,5,10,0">
-                                                <Label Content="Horizontal:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                                <Slider x:Name="SliderTimersHorizontalSpacing" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" ToolTip="Horizontal spacing between timers" ValueChanged="SliderTimersHorizontalSpacing_ValueChanged" Maximum="200" Minimum="-200" LargeChange="0.1"/>
-                                            </DockPanel>
-                                            <DockPanel Margin="10,5,10,0">
-                                                <Label Content="Vertical:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                                <Slider x:Name="SliderTimersVerticalSpacing" HorizontalAlignment="Right" VerticalAlignment="Center" Width="130" Minimum="20" Value="50" ValueChanged="SliderTimersVerticalSpacing_ValueChanged" Orientation="Horizontal" LargeChange="0.1" />
-                                            </DockPanel>
-                                        </StackPanel>
-                                    </GroupBox>
                                     <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="360" Width="235" Margin="5,0,0,0">
                                         <StackPanel>
                                             <DockPanel Margin="10,5,10,0">

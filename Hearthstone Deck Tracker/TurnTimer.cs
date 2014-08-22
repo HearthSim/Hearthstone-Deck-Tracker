@@ -46,14 +46,7 @@ namespace Hearthstone_Deck_Tracker
 		/// <param name="turnTime">Time of a turn in seconds</param>
 		public static void Create(int turnTime)
 		{
-			Instance = new TurnTimer();
-			Instance.Seconds = turnTime;
-			Instance.PlayerSeconds = 0;
-			Instance.OpponentSeconds = 0;
-			Instance._turnTime = turnTime;
-			Instance._timer = new Timer(1000);
-			Instance._timer.AutoReset = true;
-			Instance._timer.Enabled = true;
+			Instance = new TurnTimer {Seconds = turnTime, PlayerSeconds = 0, OpponentSeconds = 0, _turnTime = turnTime, _timer = new Timer(1000) {AutoReset = true, Enabled = true}};
 			Instance._timer.Elapsed += Instance.TimerOnElapsed;
 			Instance._timer.Stop();
 		}

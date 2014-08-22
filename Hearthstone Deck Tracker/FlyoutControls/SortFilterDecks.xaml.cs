@@ -46,24 +46,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		#region Delegates/Events/Properties
-
-		//private delegate void DeleteTagHandler(SortFilterDecks sender, string tag);
-
-		//private delegate void NewTagHandler(SortFilterDecks sender, string tag);
-
-		//public delegate void OperationChangedHandler(SortFilterDecks sender, Operation operation);
-
-		//public delegate void SelectedTagsChangedHandler(SortFilterDecks sender, List<string> tags);
-
 		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
-
-		//public event SelectedTagsChangedHandler SelectedTagsChanged;
-		//private event NewTagHandler TagControlOnNewTag;
-		//private event DeleteTagHandler DeleteTag;
-		//public event OperationChangedHandler OperationChanged;
-
-		#endregion
 
 		#region Methods
 
@@ -81,10 +64,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var tag in tags)
 			{
 				var old = oldTag.FirstOrDefault(t => t.Name == tag);
-				if(old != null)
-					_tags.Add(new Tag(tag, old.Selected));
-				else
-					_tags.Add(new Tag(tag, false));
+				_tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
 			}
 		}
 
@@ -244,29 +224,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void TagControlOnSelectedTagsChanged(SortFilterDecks sender, List<string> tags)
-		{
-			if(Helper.MainWindow.NewDeck == null) return;
-			if(sender.Name == "TagControlNewDeck")
-				Helper.MainWindow.BtnSaveDeck.Content = "Save*";
-			else if(sender.Name == "TagControlMyDecks")
-			{
-				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-				deck.Tags = tags;
-				Helper.MainWindow.DeckPickerList.UpdateList();
-				Helper.MainWindow.DeckPickerList.SelectDeck(deck);
-			}
-		}
 
 		private void TagControlOnDeleteTag(SortFilterDecks sender, string tag)
 		{
 			if(Helper.MainWindow.DeckList.AllTags.Contains(tag))
 			{
 				Helper.MainWindow.DeckList.AllTags.Remove(tag);
-				
+
 				foreach(var deck in Helper.MainWindow.DeckList.DecksList.Where(deck => deck.Tags.Contains(tag)))
 					deck.Tags.Remove(tag);
-				
+
 				if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
 					Helper.MainWindow.NewDeck.Tags.Remove(tag);
 

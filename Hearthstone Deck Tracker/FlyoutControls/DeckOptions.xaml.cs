@@ -98,9 +98,7 @@ namespace Hearthstone_Deck_Tracker
 			var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 			if(deck != null)
 			{
-				var settings = new MetroDialogSettings();
-				settings.AffirmativeButtonText = "Yes";
-				settings.NegativeButtonText = "No";
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 				var result =
 					await
 					Helper.MainWindow.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?",
@@ -142,9 +140,7 @@ namespace Hearthstone_Deck_Tracker
 
 			while(Helper.MainWindow.DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
-				var settings = new MetroDialogSettings();
-				settings.AffirmativeButtonText = "Set";
-				settings.DefaultText = clone.Name;
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
 					await
 					Helper.MainWindow.ShowInputAsync("Name already exists",

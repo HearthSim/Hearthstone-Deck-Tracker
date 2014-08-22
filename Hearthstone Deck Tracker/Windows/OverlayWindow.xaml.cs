@@ -104,7 +104,8 @@ namespace Hearthstone_Deck_Tracker
 					{StackPanelPlayer, new ResizeGrip()},
 					{StackPanelOpponent, new ResizeGrip()},
 					{StackPanelSecrets, new ResizeGrip()},
-					{LblTurnTime, new ResizeGrip()}
+					{LblTurnTime, new ResizeGrip()},
+					{LblPlayerTurnTime, new ResizeGrip()}
 				};
 
 			UpdateScaling();
@@ -178,12 +179,23 @@ namespace Hearthstone_Deck_Tracker
 			var timer = _selectedUIElement as HearthstoneTextBlock;
 			if(timer != null)
 			{
-				if(timer.Name.Contains("Turn"))
+				if(timer.Name.Contains("Player"))
+				{
+					Config.Instance.TimersVerticalSpacing += delta.Y / 100;
+					Config.Instance.TimersHorizontalSpacing += delta.X / 100;
+					Canvas.SetTop(_movableElements[timer], Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
+					Canvas.SetLeft(_movableElements[timer], Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
+				}
+				else if(timer.Name.Contains("Turn"))
 				{
 					Config.Instance.TimersVerticalPosition += delta.Y / Height;
 					Config.Instance.TimersHorizontalPosition += delta.X / Width;
 					Canvas.SetTop(_movableElements[timer], Height * Config.Instance.TimersVerticalPosition / 100);
 					Canvas.SetLeft(_movableElements[timer], Width * Config.Instance.TimersHorizontalPosition / 100);
+
+					var playerTimer = _movableElements.First(e => e.Key is HearthstoneTextBlock && ((HearthstoneTextBlock)e.Key).Name.Contains("Player")).Value;
+					Canvas.SetTop(playerTimer, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
+					Canvas.SetLeft(playerTimer, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 				}
 			}
 
@@ -221,10 +233,10 @@ namespace Hearthstone_Deck_Tracker
 					var timer = movableElement.Key as HearthstoneTextBlock;
 					if(timer != null)
 					{
-						if(PointInsideControl(relativePos, timer.ActualWidth, timer.ActualHeight))
+						if(PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 						{
-							if(Math.Abs(relativePos.X - timer.ActualWidth) < 30 && Math.Abs(relativePos.Y - timer.ActualHeight) < 30)
-								_resizeElement = true;
+							//if(Math.Abs(relativePos.X - timer.ActualWidth) < 30 && Math.Abs(relativePos.Y - timer.ActualHeight) < 30)
+							//_resizeElement = true;
 
 							_selectedUIElement = movableElement.Key;
 							return;
@@ -836,42 +848,6 @@ namespace Hearthstone_Deck_Tracker
 				LblTurnTime.Visibility = Config.Instance.HideTimers ? Visibility.Hidden : Visibility.Visible;
 		}
 
-		public void SetOpponentTextLocation(bool top)
-		{
-			StackPanelOpponent.Children.Clear();
-			if(top)
-			{
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-				StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-				StackPanelOpponent.Children.Add(ListViewOpponent);
-			}
-			else
-			{
-				StackPanelOpponent.Children.Add(ListViewOpponent);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
-				StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-				StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-			}
-		}
-
-		public void SetPlayerTextLocation(bool top)
-		{
-			StackPanelPlayer.Children.Clear();
-			if(top)
-			{
-				StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
-				StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-				StackPanelPlayer.Children.Add(ListViewPlayer);
-			}
-			else
-			{
-				StackPanelPlayer.Children.Add(ListViewPlayer);
-				StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
-				StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-			}
-		}
-
 		public void UpdatePlayerLayout()
 		{
 			StackPanelPlayer.Children.Clear();
@@ -1062,10 +1038,12 @@ namespace Hearthstone_Deck_Tracker
 		private Size GetUiElementSize(UIElement element)
 		{
 			if(element == null) return new Size();
-			if(element is StackPanel)
-				return new Size(((StackPanel)element).ActualWidth, ((StackPanel)element).ActualHeight);
-			if(element is HearthstoneTextBlock)
-				return new Size(((HearthstoneTextBlock)element).ActualWidth, ((HearthstoneTextBlock)element).ActualHeight);
+			var panel = element as StackPanel;
+			if(panel != null)
+				return new Size(panel.ActualWidth, panel.ActualHeight);
+			var block = element as HearthstoneTextBlock;
+			if(block != null)
+				return new Size(block.ActualWidth, block.ActualHeight);
 			return new Size();
 		}
 

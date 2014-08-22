@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Point GetMousePos()
 		{
-			var p = new MousePoint();
+			MousePoint p;
 			GetCursorPos(out p);
 			return new Point(p.X, p.Y);
 		}
@@ -161,15 +161,15 @@ namespace Hearthstone_Deck_Tracker
 			private const Int32 WH_MOUSE_LL = 14;
 			private const Int32 WM_LBUTTONDOWN = 0x201;
 			private const Int32 WM_LBUTTONUP = 0x0202;
-			private readonly WindowsHookHelper.HookDelegate mouseDelegate;
-			private readonly IntPtr mouseHandle;
+			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
+			private readonly IntPtr _mouseHandle;
 
-			private bool disposed;
+			private bool _disposed;
 
 			public MouseInput()
 			{
-				mouseDelegate = MouseHookDelegate;
-				mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, mouseDelegate, IntPtr.Zero, 0);
+				_mouseDelegate = MouseHookDelegate;
+				_mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, _mouseDelegate, IntPtr.Zero, 0);
 			}
 
 			public void Dispose()
@@ -184,7 +184,7 @@ namespace Hearthstone_Deck_Tracker
 			private IntPtr MouseHookDelegate(Int32 code, IntPtr wParam, IntPtr lParam)
 			{
 				if(code < 0)
-					return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
+					return WindowsHookHelper.CallNextHookEx(_mouseHandle, code, wParam, lParam);
 
 
 				switch(wParam.ToInt32())
@@ -203,17 +203,17 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 
-				return WindowsHookHelper.CallNextHookEx(mouseHandle, code, wParam, lParam);
+				return WindowsHookHelper.CallNextHookEx(_mouseHandle, code, wParam, lParam);
 			}
 
 			protected virtual void Dispose(bool disposing)
 			{
-				if(!disposed)
+				if(!_disposed)
 				{
-					if(mouseHandle != IntPtr.Zero)
-						WindowsHookHelper.UnhookWindowsHookEx(mouseHandle);
+					if(_mouseHandle != IntPtr.Zero)
+						WindowsHookHelper.UnhookWindowsHookEx(_mouseHandle);
 
-					disposed = true;
+					_disposed = true;
 				}
 			}
 

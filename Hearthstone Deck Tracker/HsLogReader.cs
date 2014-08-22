@@ -270,7 +270,7 @@ namespace Hearthstone_Deck_Tracker
 						var to = match.Groups["to"].Value.Trim();
 
 						var zonePos = -1;
-						var zone = string.Empty;
+						//var zone = string.Empty;
 
 						// Only for some log lines, should be valid in every action where we need it
 						if(_opponentPlayRegex.IsMatch(logLine))
@@ -280,8 +280,8 @@ namespace Hearthstone_Deck_Tracker
 						}
 						if(_zoneRegex.IsMatch(logLine))
 						{
-							var match3 = _zoneRegex.Match(logLine);
-							zone = match3.Groups["zone"].Value.Trim();
+							//var match3 = _zoneRegex.Match(logLine);
+							//zone = match3.Groups["zone"].Value.Trim();
 							GameEventHandler.PlayerSetAside(id);
 						}
 

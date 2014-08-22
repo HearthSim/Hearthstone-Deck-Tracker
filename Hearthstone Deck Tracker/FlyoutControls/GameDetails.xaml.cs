@@ -165,8 +165,7 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnImportDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var ignoreCards = new List<Card>();
-			var deck = new Deck();
-			deck.Class = _gameStats.OpponentHero;
+			var deck = new Deck {Class = _gameStats.OpponentHero};
 			foreach(var turn in _gameStats.TurnStats)
 			{
 				foreach(var play in turn.Plays)

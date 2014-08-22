@@ -242,49 +242,48 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 					//card graphic
-					var group = new DrawingGroup();
+					var drawingGroup = new DrawingGroup();
 
 					if(File.Exists("Images/" + cardFileName))
 					{
-						group.Children.Add(
+						drawingGroup.Children.Add(
 							new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
 							                 new Rect(104, 1, 110, 34)));
 					}
 
 					//frame
-					group.Children.Add(
+					drawingGroup.Children.Add(
 						new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)),
 						                 new Rect(0, 0, 218, 35)));
 
 					//extra info?
 					if(Count >= 2 || Rarity == "Legendary")
 					{
-						group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
-						                                    new Rect(189, 6, 25, 24)));
+						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
+						                                           new Rect(189, 6, 25, 24)));
 
 						if(Count >= 2 && Count <= 9)
 						{
-							group.Children.Add(new ImageDrawing(
-								                   new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)),
-								                   new Rect(194, 8, 18, 21)));
+							drawingGroup.Children.Add(new ImageDrawing(
+								                          new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)),
+								                          new Rect(194, 8, 18, 21)));
 						}
 						else
 						{
-							group.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
-							                                    new Rect(194, 8, 18, 21)));
+							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
+							                                           new Rect(194, 8, 18, 21)));
 						}
 					}
 
 					//dark overlay
 					if(Count == 0)
 					{
-						group.Children.Add(
+						drawingGroup.Children.Add(
 							new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)),
 							                 new Rect(0, 0, 218, 35)));
 					}
 
-					var brush = new ImageBrush();
-					brush.ImageSource = new DrawingImage(group);
+					var brush = new ImageBrush {ImageSource = new DrawingImage(drawingGroup)};
 					return brush;
 				}
 				catch(Exception)

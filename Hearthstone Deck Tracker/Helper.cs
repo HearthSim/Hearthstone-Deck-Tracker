@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			var versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
 			var currentVersion = GetCurrentVersion();
 
@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker
 
 			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-			view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+			view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
 		}
 
 		public static string DeckToIdString(Deck deck)

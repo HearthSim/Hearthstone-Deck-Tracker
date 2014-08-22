@@ -25,9 +25,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(Game.GameMode));
-			_isGroupBoxExpanded = new Dictionary<GroupBox, bool>();
-			_isGroupBoxExpanded.Add(GroupboxDeckOverview, true);
-			_isGroupBoxExpanded.Add(GroupboxClassOverview, true);
+			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxDeckOverview, true}, {GroupboxClassOverview, true}};
 		}
 
 		public void LoadConfig()
@@ -201,8 +199,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var selected = DataGridGames.SelectedItem as GameStats;
 			if(selected == null) return;
-			var settings = new MetroDialogSettings();
-			settings.DefaultText = selected.Note;
+			var settings = new MetroDialogSettings {DefaultText = selected.Note};
 			var newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
 				return;
