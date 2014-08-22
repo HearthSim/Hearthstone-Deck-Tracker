@@ -22,7 +22,7 @@ using Size = System.Drawing.Size;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public static partial class Helper
+	public static class Helper
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
@@ -291,45 +291,30 @@ namespace Hearthstone_Deck_Tracker
 				CopyFolder(folder, dest);
 			}
 		}
-	}
 
-	public partial class Helper
-	{
-		public static class Diacritics
+
+		//http://stackoverflow.com/questions/3769457/how-can-i-remove-accents-on-a-string
+		public static string RemoveDiacritics(string src, bool compatNorm)
 		{
-			public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm)
-			{
-				return RemoveDiacritics(src, compatNorm, c => c);
-			}
+			var sb = new StringBuilder();
+			foreach(var c in RemoveDiacriticsEnum(src, compatNorm))
+				sb.Append(c);
+			return sb.ToString();
+		}
 
-			public static string RemoveDiacritics(string src, bool compatNorm, Func<char, char> customFolding)
+		public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm)
+		{
+			foreach(var c in src.Normalize(compatNorm ? NormalizationForm.FormKD : NormalizationForm.FormD))
 			{
-				var sb = new StringBuilder();
-				foreach(var c in RemoveDiacriticsEnum(src, compatNorm, customFolding))
-					sb.Append(c);
-				return sb.ToString();
-			}
-
-			public static string RemoveDiacritics(string src, bool compatNorm)
-			{
-				return RemoveDiacritics(src, compatNorm, c => c);
-			}
-
-			public static IEnumerable<char> RemoveDiacriticsEnum(string src, bool compatNorm, Func<char, char> customFolding)
-			{
-				foreach(var c in src.Normalize(compatNorm ? NormalizationForm.FormKD : NormalizationForm.FormD))
+				switch(CharUnicodeInfo.GetUnicodeCategory(c))
 				{
-					switch(CharUnicodeInfo.GetUnicodeCategory(c))
-					{
-						case UnicodeCategory.NonSpacingMark:
-						case UnicodeCategory.SpacingCombiningMark:
-						case UnicodeCategory.EnclosingMark:
-							//do nothing
-							break;
-						default:
-							yield return customFolding(c);
-							break;
-					}
+					case UnicodeCategory.NonSpacingMark:
+					case UnicodeCategory.SpacingCombiningMark:
+					case UnicodeCategory.EnclosingMark:
+						break;
+					default:
+						yield return c;
+						break;
 				}
 			}
 		}

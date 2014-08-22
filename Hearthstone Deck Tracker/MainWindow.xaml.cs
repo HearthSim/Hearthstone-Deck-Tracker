@@ -1487,10 +1487,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void UpdateDbListView()
 		{
-			var Test = "Exécution";
-			var Result = Helper.Diacritics.RemoveDiacritics(Test, true);
-
-
 			var selectedClass = ComboBoxSelectClass.SelectedValue.ToString();
 			var selectedNeutral = ComboboxNeutral.SelectedValue.ToString();
 			if(selectedClass == "Select a Class")
@@ -1499,30 +1495,18 @@ namespace Hearthstone_Deck_Tracker
 			{
 				ListViewDB.Items.Clear();
 
+				var formattedInput = Helper.RemoveDiacritics(TextBoxDBFilter.Text.ToLowerInvariant(), true);
+				var words = formattedInput.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
 				foreach(var card in Game.GetActualCards())
 				{
-					var FormattedInput = Helper.Diacritics.RemoveDiacritics(TextBoxDBFilter.Text.ToLowerInvariant(), true);
-					var Card_Name = Helper.Diacritics.RemoveDiacritics(card.LocalizedName, true).ToLowerInvariant();
-
-					//var words = TextBoxDBFilter.Text.ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-					var words = FormattedInput.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
-					//if (!Config.Instance.UseFullTextSearch && !card.LocalizedName.Contains(TextBoxDBFilter.Text.ToLowerInvariant()))
-					if(!Config.Instance.UseFullTextSearch && !Card_Name.Contains(FormattedInput))
+					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
+					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput))
 						continue;
-					/*
-					if (Config.Instance.UseFullTextSearch && words.Any(w => !card.LocalizedName.ToLowerInvariant().Contains(w)
-																		   && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-																		   && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-																		   && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
-					*/
-
-
-					if(Config.Instance.UseFullTextSearch
-					   && words.Any(w => !Card_Name.Contains(w)
-					                     && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                     && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-					                     && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
+					if(Config.Instance.UseFullTextSearch && words.Any(w => !cardName.Contains(w)
+					                                                       && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+					                                                       && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
+					                                                       && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
 
 					// mana filter
