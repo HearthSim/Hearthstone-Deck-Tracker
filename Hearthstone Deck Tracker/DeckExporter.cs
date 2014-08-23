@@ -214,10 +214,11 @@ namespace Hearthstone_Deck_Tracker
 					}
 				case "Blizzard":
 					return cardName + " 2";
-
+				case "Feuerball":
+				case "Fireball":
+					return cardName + " 6";
 
 					//english
-				case "Fireball":
 				case "Windfury":
 				case "Claw":
 					return cardName + " Spell";
@@ -225,7 +226,6 @@ namespace Hearthstone_Deck_Tracker
 					return cardName + " Draw";
 
 					//german
-				case "Feuerball":
 				case "Windzorn":
 				case "Klaue":
 					return cardName + " Zauber";
