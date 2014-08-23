@@ -42,33 +42,25 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM hh:mm")};
 
-				const string baseUrl = @"http://www.arenavalue.com/helper/getdata.php?deck=";
+				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
 
-				var doc = await GetHtmlDoc(newUrl, "X-Requested-With", "XMLHttpRequest");
+				var doc = await GetHtmlDocJs(newUrl);
 
-				var idRegex = new Regex(@"\w*(""(?<id1>(\w*))_(?<id2>(\w*))"")\w*");
-				if(idRegex.IsMatch(doc.DocumentNode.InnerText))
+				var nodes = doc.DocumentNode.SelectNodes("//*[@id='deck']/div[@class='deck screenshot']");
+
+				foreach(var node in nodes)
 				{
-					var matches = idRegex.Matches(doc.DocumentNode.InnerText);
-					foreach(Match match in matches)
-					{
-						var cardId = match.Groups["id1"] + "_" + match.Groups["id2"];
-						var card = deck.Cards.FirstOrDefault(c => c.Id == cardId);
-						if(card != null)
-							card.Count++;
-						else
-						{
-							card = Game.GetCardFromId(cardId);
-							deck.Cards.Add(card);
-						}
+					var cardId = node.Attributes["data-original"].Value;
+					int count;
+					int.TryParse(node.Attributes["data-count"].Value, out count);
+					var card = Game.GetCardFromId(cardId);
+					card.Count = count;
+					deck.Cards.Add(card);
 
-						if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
-							deck.Class = card.PlayerClass;
-					}
+					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
 				}
-				else
-					return null;
 
 				return deck;
 			}
@@ -370,8 +362,10 @@ namespace Hearthstone_Deck_Tracker
 				var doc = new HtmlDocument();
 				//                  avoid cache
 				wb.Navigate(url + "?" + DateTime.Now.Ticks);
-				wb.DocumentCompleted += (sender, args) =>
+				wb.DocumentCompleted += async (sender, args) =>
 					{
+						//wait two seconds for javascript to finish
+						await Task.Delay(2000);
 						doc.Load(wb.DocumentStream);
 						done = true;
 					};
