@@ -1,39 +1,47 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.SortFilterDecks"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DockPanel Margin="6,0,6,6">
             <DockPanel x:Name="PnlSortDecks" DockPanel.Dock="Top">
-                <Label Content="Sort decks by:" FontSize="14"/>
-                <ComboBox Name="ComboboxDeckSorting" Width="120" HorizontalAlignment="Right" SelectionChanged="Selector_OnSelectionChanged">
+                <Label Content="Sort decks by:" FontSize="14" />
+                <ComboBox Name="ComboboxDeckSorting" Width="120" HorizontalAlignment="Right"
+                          SelectionChanged="Selector_OnSelectionChanged">
                     <system:String>Name</system:String>
                     <system:String>Last Edited</system:String>
                     <system:String>Tag</system:String>
                     <system:String>Win Rate</system:String>
                 </ComboBox>
             </DockPanel>
-            <Label Content="Filter by tags:" FontSize="14" DockPanel.Dock="Top"/>
-            <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom"  Margin="0,3,0,0" Content="Delete Selected" VerticalAlignment="Bottom" Width="auto" Click="BtnDeteleTag_Click" Height="26"/>
-            <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom" >
+            <Label Content="Filter by tags:" FontSize="14" DockPanel.Dock="Top" />
+            <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom" Margin="0,3,0,0" Content="Delete Selected"
+                    VerticalAlignment="Bottom" Width="auto" Click="BtnDeteleTag_Click" Height="26" />
+            <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBox controls:TextboxHelper.Watermark="New Tag"  Name="TextboxNewTag" TextWrapping="NoWrap" Text="" Grid.Column="0" Width="auto" Margin="0,0,3,0"/>
-                <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1" Margin="3,0,0,0" Width="auto"/>
+                <TextBox controls:TextboxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
+                         Grid.Column="0" Width="auto" Margin="0,0,3,0" />
+                <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
+                        Margin="3,0,0,0" Width="auto" />
             </Grid>
-            <controls:ToggleSwitch Name="OperationSwitch" Header="Filter operation" DockPanel.Dock="Bottom" OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right" Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked"/>
+            <controls:ToggleSwitch Name="OperationSwitch" Header="Filter operation" DockPanel.Dock="Bottom"
+                                   OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right"
+                                   Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
 
-            <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top" >
+            <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"></CheckBox>
+                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Unchecked">
+                        </CheckBox>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

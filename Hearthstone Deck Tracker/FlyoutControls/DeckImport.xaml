@@ -1,52 +1,56 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.DeckImport"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <ScrollViewer>
             <StackPanel Margin="3,0,3,0">
                 <GroupBox Header="From Web">
                     <StackPanel>
-                        <TextBlock Height="auto" TextWrapping="Wrap" >
-                <Bold>Supported websites:</Bold> <LineBreak />
-                arenavalue, hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck, hearthnews.fr 
+                        <TextBlock Height="auto" TextWrapping="Wrap">
+                            <Bold>Supported websites:</Bold> <LineBreak />
+                            arenavalue, hearthstats, hss.io, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck, hearthnews.fr
                         </TextBlock>
-                        <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0" Click="BtnWeb_Click" />
+                        <Button Name="BtnWeb" Content="Import from web" Height="26" Margin="0,6,0,0"
+                                Click="BtnWeb_Click" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="From Last Game">
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap">
-                        If the last game was played in "No Deck"-mode, the played cards can be imported as a new deck.
+                            If the last game was played in "No Deck"-mode, the played cards can be imported as a new deck.
                         </TextBlock>
-                        <Button Name="BtnLastGame" Content="Import from last game" Height="26" Margin="0,6,0,0" Click="BtnLastGame_Click" />
+                        <Button Name="BtnLastGame" Content="Import from last game" Height="26" Margin="0,6,0,0"
+                                Click="BtnLastGame_Click" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="From File">
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap">
-                        <Bold>Text file:</Bold> <LineBreak />
-                        One card per line, multiple copies => multiple lines
+                            <Bold>Text file:</Bold> <LineBreak />
+                            One card per line, multiple copies => multiple lines
                         </TextBlock>
-                        <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,3,0,0" >
-                        <Bold>Xml file:</Bold> <LineBreak />
-                        Obtained from:<LineBreak /> 
+                        <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,3,0,0">
+                            <Bold>Xml file:</Bold> <LineBreak />
+                            Obtained from:<LineBreak />
                             My Decks>More...>Save to file
                         </TextBlock>
-                        <Button Name="BtnFile" Content="Import from file" Height="26" Margin="0,6,0,0" Click="BtnFile_Click" />
+                        <Button Name="BtnFile" Content="Import from file" Height="26" Margin="0,6,0,0"
+                                Click="BtnFile_Click" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="From Id-string">
                     <StackPanel>
                         <TextBlock Height="auto" TextWrapping="Wrap">
-                        <Bold>ID-string style:</Bold> <LineBreak />
-                        id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;) <LineBreak />
-                        Obtained from: <LineBreak />My Decks>More...>Copy IDs to Clipboard
+                            <Bold>ID-string style:</Bold> <LineBreak />
+                            id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;) <LineBreak />
+                            Obtained from: <LineBreak />My Decks>More...>Copy IDs to Clipboard
                         </TextBlock>
-                        <Button Name="BtnIdString" Content="Import from id-string" Height="26" Margin="0,6,0,0" Click="BtnIdString_Click" />
+                        <Button Name="BtnIdString" Content="Import from id-string" Height="26" Margin="0,6,0,0"
+                                Click="BtnIdString_Click" />
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

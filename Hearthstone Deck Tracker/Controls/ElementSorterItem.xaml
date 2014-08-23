@@ -1,17 +1,20 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.ElementSorterItem"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="300" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" >
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="300"
+             BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
     <DockPanel>
-        <Button Name="ButtonUp" Margin="5" DockPanel.Dock="Left" Click="ButtonUp_OnClick" >
-            <Path Fill="Black" Data="M 0 6 L 12 6 L 6 0 Z"/>
+        <Button Name="ButtonUp" Margin="5" DockPanel.Dock="Left" Click="ButtonUp_OnClick">
+            <Path Fill="Black" Data="M 0 6 L 12 6 L 6 0 Z" />
         </Button>
-        <Button Name="ButtonDown" Margin="5" DockPanel.Dock="Right" Click="ButtonDown_OnClick" >
-            <Path Fill="Black" Data="M 0 0 L 6 6 L 12 0 Z"/>
+        <Button Name="ButtonDown" Margin="5" DockPanel.Dock="Right" Click="ButtonDown_OnClick">
+            <Path Fill="Black" Data="M 0 0 L 6 6 L 12 0 Z" />
         </Button>
-        <CheckBox Name="CheckBox"  Margin="5" DockPanel.Dock="Right" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"></CheckBox>
+        <CheckBox Name="CheckBox" Margin="5" DockPanel.Dock="Right" Checked="CheckBox_Checked"
+                  Unchecked="CheckBox_Unchecked">
+        </CheckBox>
     </DockPanel>
 </UserControl>

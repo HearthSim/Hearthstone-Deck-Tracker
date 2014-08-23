@@ -1,27 +1,36 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.ManaCostBarToolTip"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
         <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="25"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="25" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Ellipse Fill="#FFAA1E28" Stroke="#FFD7AABE" Grid.Row="0" Grid.Column="0" Width="10" Height="10"></Ellipse>
             <Ellipse Fill="#FF1E6EAA" Stroke="#FFA0C8D7" Grid.Row="1" Grid.Column="0" Width="10" Height="10"></Ellipse>
             <Ellipse Fill="#FF6EAA1E" Stroke="#FFC8D7A0" Grid.Row="2" Grid.Column="0" Width="10" Height="10"></Ellipse>
-            <TextBlock Name="TextblockWeapons" Text="Weapons: 0" Grid.Row="0" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
-            <TextBlock Name="TextblockSpells" Text="Spells: 0" Grid.Row="1" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
-            <TextBlock Name="TextblockMinions" Text="Minions: 0" Grid.Row="2" FontSize="14" Grid.Column="1" VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"></TextBlock>
+            <TextBlock Name="TextblockWeapons" Text="Weapons: 0" Grid.Row="0" FontSize="14" Grid.Column="1"
+                       VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+            </TextBlock>
+            <TextBlock Name="TextblockSpells" Text="Spells: 0" Grid.Row="1" FontSize="14" Grid.Column="1"
+                       VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+            </TextBlock>
+            <TextBlock Name="TextblockMinions" Text="Minions: 0" Grid.Row="2" FontSize="14" Grid.Column="1"
+                       VerticalAlignment="Center" FontWeight="Medium" HorizontalAlignment="Left" TextWrapping="Wrap"
+                       Margin="0,0,10,0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+            </TextBlock>
         </Grid>
     </Border>
 </UserControl>

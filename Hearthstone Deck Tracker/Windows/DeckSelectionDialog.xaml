@@ -1,11 +1,16 @@
 ﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.DeckSelectionDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Wrong deck!" Height="265" Width="280" Topmost="True" WindowStyle="ToolWindow" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Closing="Window_Closing">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="Wrong deck!" Height="265" Width="280" Topmost="True" WindowStyle="ToolWindow"
+                      Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                      Closing="Window_Closing">
     <Grid>
-        <local:DeckPicker x:Name="DeckPickerList" SelectionChanged="DeckPickerList_SelectionChanged" Height="auto" Margin="0,34,0,0"></local:DeckPicker>
-        <Label Content="Select your deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="10,0,0,0" />
+        <local:DeckPicker x:Name="DeckPickerList" SelectionChanged="DeckPickerList_SelectionChanged" Height="auto"
+                          Margin="0,34,0,0">
+        </local:DeckPicker>
+        <Label Content="Select your deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
+               FontWeight="Bold" Margin="10,0,0,0" />
     </Grid>
 </controls:MetroWindow>

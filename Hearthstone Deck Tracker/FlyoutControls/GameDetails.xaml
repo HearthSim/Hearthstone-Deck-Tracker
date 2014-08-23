@@ -1,17 +1,19 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.GameDetails"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
         <GroupBox Header="Game Details" Grid.Row="1" Grid.Column="1">
             <Grid>
                 <Separator Margin="0,58,0,0" VerticalAlignment="Top"></Separator>
-                <DataGrid Name="DataGridDetails" Margin="0,60,0,0" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False">
+                <DataGrid Name="DataGridDetails" Margin="0,60,0,0" CanUserAddRows="False" CanUserDeleteRows="False"
+                          CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                          CanUserSortColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Turn" Binding="{Binding Turn}" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
@@ -53,15 +55,28 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <CheckBox Name="CheckboxPlayerPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" Checked="CheckboxPlayerPlay_Checked" Unchecked="CheckboxPlayerPlay_Unchecked"/>
-                <CheckBox Name="CheckboxOpponentPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,33,0,0" VerticalAlignment="Top" Checked="CheckboxOpponentPlay_Checked" Unchecked="CheckboxOpponentPlay_Unchecked"/>
-                <CheckBox Name="CheckboxPlayerDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,10,0,0" VerticalAlignment="Top" Checked="CheckboxPlayerDraw_Checked" Unchecked="CheckboxPlayerDraw_Unchecked"/>
-                <CheckBox Name="CheckboxOpponentDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,33,0,0" VerticalAlignment="Top" Checked="CheckboxOpponentDraw_Checked" Unchecked="CheckboxOpponentDraw_Unchecked"/>
-                <CheckBox Name="CheckboxPlayerMulligan" Content="Mulligan" HorizontalAlignment="Left" Margin="213,10,0,0" VerticalAlignment="Top" Checked="CheckboxPlayerMulligan_Checked" Unchecked="CheckboxPlayerMulligan_Unchecked"/>
-                <CheckBox Name="CheckboxOpponentMulligan" Content="Mulligan" HorizontalAlignment="Left" Margin="213,33,0,0" VerticalAlignment="Top" Checked="CheckboxOpponentMulligan_Checked" Unchecked="CheckboxOpponentMulligan_Unchecked"/>
-                <Label Content="Player:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top"/>
-                <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
-                <Button Name="BtnImportDeck" Content="Import opponent deck" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="153" Click="BtnImportDeck_Click"/>
+                <CheckBox Name="CheckboxPlayerPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,10,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxPlayerPlay_Checked"
+                          Unchecked="CheckboxPlayerPlay_Unchecked" />
+                <CheckBox Name="CheckboxOpponentPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,33,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxOpponentPlay_Checked"
+                          Unchecked="CheckboxOpponentPlay_Unchecked" />
+                <CheckBox Name="CheckboxPlayerDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,10,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxPlayerDraw_Checked"
+                          Unchecked="CheckboxPlayerDraw_Unchecked" />
+                <CheckBox Name="CheckboxOpponentDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,33,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxOpponentDraw_Checked"
+                          Unchecked="CheckboxOpponentDraw_Unchecked" />
+                <CheckBox Name="CheckboxPlayerMulligan" Content="Mulligan" HorizontalAlignment="Left"
+                          Margin="213,10,0,0" VerticalAlignment="Top" Checked="CheckboxPlayerMulligan_Checked"
+                          Unchecked="CheckboxPlayerMulligan_Unchecked" />
+                <CheckBox Name="CheckboxOpponentMulligan" Content="Mulligan" HorizontalAlignment="Left"
+                          Margin="213,33,0,0" VerticalAlignment="Top" Checked="CheckboxOpponentMulligan_Checked"
+                          Unchecked="CheckboxOpponentMulligan_Unchecked" />
+                <Label Content="Player:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" />
+                <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" />
+                <Button Name="BtnImportDeck" Content="Import opponent deck" HorizontalAlignment="Right"
+                        Margin="0,10,10,0" VerticalAlignment="Top" Width="153" Click="BtnImportDeck_Click" />
             </Grid>
         </GroupBox>
     </Grid>

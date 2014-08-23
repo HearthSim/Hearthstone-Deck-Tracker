@@ -1,22 +1,30 @@
 ﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.PlayerWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Player" Height="440" Width="226" MinWidth="226" MaxWidth="226" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1" Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico" Deactivated="MetroWindow_Deactivated">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      Title="Player" Height="440" Width="226" MinWidth="226" MaxWidth="226"
+                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                      SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
+                      Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico"
+                      Deactivated="MetroWindow_Deactivated">
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
             <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
             <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0 - 0 (0%)" />
-            <local:DeckListView x:Name="ListViewPlayer" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
-            <ListView.Resources>
-                <Style TargetType="GridViewColumnHeader">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                </Style>
+            <local:DeckListView x:Name="ListViewPlayer" Foreground="White" FontWeight="Bold" BorderThickness="0"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                <ListView.Resources>
+                    <Style TargetType="GridViewColumnHeader">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
                     <Style TargetType="ListViewItem">
                         <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                         <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                        <Setter Property="ToolTipService.IsEnabled" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlayerWindow}}, Path=ShowToolTip}" />
+                        <Setter Property="ToolTipService.IsEnabled"
+                                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlayerWindow}}, Path=ShowToolTip}" />
                         <Setter Property="ToolTip">
                             <Setter.Value>
                                 <ToolTip Background="Transparent" BorderBrush="Transparent">
@@ -25,26 +33,32 @@
                             </Setter.Value>
                         </Setter>
                         <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                    <Setter Property="Background" Value="{Binding Background}" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Height" Value="{Binding PlayerWindowHeight}"></Setter>
-                    <Setter Property="Margin" Value="0,-2,0,0"/>
-                    <Setter Property="IsEnabled" Value="False"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.Resources>
+                        <Setter Property="Background" Value="{Binding Background}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Height" Value="{Binding PlayerWindowHeight}"></Setter>
+                        <Setter Property="Margin" Value="0,-2,0,0" />
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
             </local:DeckListView>
             <StackPanel Name="StackPanelDraw" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblDrawChance2" Text="0%" FontSize="16" VerticalAlignment="Center"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDrawChance1" Text="0%" FontSize="16" VerticalAlignment="Center"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDrawChance1" Text="0%" FontSize="16"
+                                            VerticalAlignment="Center">
+                </local:HearthstoneTextBlock>
             </StackPanel>
             <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                <local:HearthstoneTextBlock x:Name="LblCardCount" Text="Hand: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDeckCount" Text="Deck: 0" FontSize="14" VerticalAlignment="Center"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblCardCount" Text="Hand: 0" FontSize="14"
+                                            VerticalAlignment="Center">
+                </local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDeckCount" Text="Deck: 0" FontSize="14"
+                                            VerticalAlignment="Center">
+                </local:HearthstoneTextBlock>
             </StackPanel>
         </StackPanel>
 

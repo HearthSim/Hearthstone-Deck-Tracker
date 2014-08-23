@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.DeckStatsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,9 +13,14 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <GroupBox Name="GroupboxClassOverview" Header="Overview Class:  wins - losses" VerticalAlignment="Top" Height="auto" Grid.Row="0" Grid.ColumnSpan="2" PreviewMouseLeftButtonDown="GroupboxClassOverview_OnPreviewMouseLeftButtonDown">
-            <ScrollViewer  VerticalScrollBarVisibility="Disabled">
-                <DataGrid IsReadOnly="True" Name="DataGridWinLossClass" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
+        <GroupBox Name="GroupboxClassOverview" Header="Overview Class:  wins - losses" VerticalAlignment="Top"
+                  Height="auto" Grid.Row="0" Grid.ColumnSpan="2"
+                  PreviewMouseLeftButtonDown="GroupboxClassOverview_OnPreviewMouseLeftButtonDown">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled">
+                <DataGrid IsReadOnly="True" Name="DataGridWinLossClass" AutoGenerateColumns="False"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto"
+                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Total" Binding="{Binding Total}">
                             <DataGridTextColumn.ElementStyle>
@@ -136,9 +141,14 @@
                 </DataGrid>
             </ScrollViewer>
         </GroupBox>
-        <GroupBox Name="GroupboxDeckOverview" Header="Overview Deck:  wins - losses" VerticalAlignment="Top" Height="auto" Grid.Row="1" Grid.ColumnSpan="2" PreviewMouseLeftButtonDown="GroupBoxDeckOverview_PreviewMouseLeftButtonDown">
-            <ScrollViewer  VerticalScrollBarVisibility="Disabled">
-                <DataGrid IsReadOnly="True" Name="DataGridWinLoss" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserReorderColumns="False"  CanUserSortColumns="False" CanUserResizeColumns="False">
+        <GroupBox Name="GroupboxDeckOverview" Header="Overview Deck:  wins - losses" VerticalAlignment="Top"
+                  Height="auto" Grid.Row="1" Grid.ColumnSpan="2"
+                  PreviewMouseLeftButtonDown="GroupBoxDeckOverview_PreviewMouseLeftButtonDown">
+            <ScrollViewer VerticalScrollBarVisibility="Disabled">
+                <DataGrid IsReadOnly="True" Name="DataGridWinLoss" AutoGenerateColumns="False"
+                          HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto"
+                          CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
+                          CanUserReorderColumns="False" CanUserSortColumns="False" CanUserResizeColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Total" Binding="{Binding Total}">
                             <DataGridTextColumn.ElementStyle>
@@ -268,76 +278,89 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Label Content="Mode:"></Label>
-                    <ComboBox Name="ComboboxGameMode" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboboxGameMode_SelectionChanged"/>
+                    <ComboBox Name="ComboboxGameMode" VerticalAlignment="Bottom" Width="90"
+                              SelectionChanged="ComboboxGameMode_SelectionChanged" />
                     <Label Content="Timeframe:"></Label>
-                    <ComboBox x:Name="ComboboxTime" SelectedIndex="4" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboboxTime_SelectionChanged">
+                    <ComboBox x:Name="ComboboxTime" SelectedIndex="4" VerticalAlignment="Bottom" Width="90"
+                              SelectionChanged="ComboboxTime_SelectionChanged">
                         <system:String>Today</system:String>
                         <system:String>Last Week</system:String>
                         <system:String>Last Month</system:String>
                         <system:String>Last Year</system:String>
                         <system:String>All Time</system:String>
                     </ComboBox>
-                    <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="5,0,0,0" TextChanged="TextBox_TextChanged" ></TextBox>
+                    <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="5,0,0,0"
+                             TextChanged="TextBox_TextChanged">
+                    </TextBox>
                 </DockPanel>
-                    <DataGrid IsReadOnly="True" Grid.Row="1" Margin="0,5" CanUserAddRows="False" Name="DataGridGames" AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged" >
+                <DataGrid IsReadOnly="True" Grid.Row="1" Margin="0,5" CanUserAddRows="False" Name="DataGridGames"
+                          AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False"
+                          CanUserResizeColumns="False" CanUserResizeRows="False"
+                          MouseDoubleClick="DGrid_MouseDoubleClick" SelectionChanged="DGrid_SelectionChanged">
                     <DataGrid.Columns>
-                            <DataGridTextColumn Header="Result" Binding="{Binding Result}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding HeroImage}" Height="24" Width="24" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Time" Binding="{Binding Duration}" >
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
+                        <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Note" Binding="{Binding Note}"/>
+                        <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding HeroImage}" Height="24" Width="24" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Time" Binding="{Binding Duration}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Started"
+                                            Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
                     </DataGrid.Columns>
-                    </DataGrid>
+                </DataGrid>
                 <StackPanel Margin="0,0,0,5" Grid.Row="2" Orientation="Horizontal">
-                    <Button Name="BtnMoveToOtherDeck" IsEnabled="False" Content="Move to other deck" Margin="5,0,0,0" Click="BtnMoveToOtherDeck_Click"></Button>
-                    <Button x:Name="BtnDetails" IsEnabled="False" Content="Show game details" Margin="5,0,0,0" Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
-                    <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0" Width="75" VerticalAlignment="Bottom" Click="BtnEditNote_Click" />
-                    <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete" Margin="5,0,0,0" Width="75" VerticalAlignment="Bottom" Click="BtnDelete_Click" />
+                    <Button Name="BtnMoveToOtherDeck" IsEnabled="False" Content="Move to other deck" Margin="5,0,0,0"
+                            Click="BtnMoveToOtherDeck_Click">
+                    </Button>
+                    <Button x:Name="BtnDetails" IsEnabled="False" Content="Show game details" Margin="5,0,0,0"
+                            Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
+                    <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0" Width="75"
+                            VerticalAlignment="Bottom" Click="BtnEditNote_Click" />
+                    <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete" Margin="5,0,0,0" Width="75"
+                            VerticalAlignment="Bottom" Click="BtnDelete_Click" />
                 </StackPanel>
 
             </Grid>

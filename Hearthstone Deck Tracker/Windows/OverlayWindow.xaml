@@ -2,24 +2,33 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="HearthstoneOverlay" Height="571" Width="832" Background="{x:Null}" ResizeMode="NoResize" ShowInTaskbar="False" SourceInitialized="Window_SourceInitialized_1" AllowsTransparency="True" WindowStyle="None" Topmost="True" Closing="Window_Closing">
+        Title="HearthstoneOverlay" Height="571" Width="832" Background="{x:Null}" ResizeMode="NoResize"
+        ShowInTaskbar="False" SourceInitialized="Window_SourceInitialized_1" AllowsTransparency="True"
+        WindowStyle="None" Topmost="True" Closing="Window_Closing">
     <Grid>
 
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="0" Canvas.Top="418" Canvas.Left="418" FontSize="24" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378" Canvas.Left="353" FontSize="32" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338" Canvas.Left="418" FontSize="24" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="0" Canvas.Top="418"
+                                        Canvas.Left="418" FontSize="24" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378"
+                                        Canvas.Left="353" FontSize="32" />
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338"
+                                        Canvas.Left="418" FontSize="24" />
 
             <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" Visibility="Hidden"
-                          Background="Beige" Foreground="Aqua" Opacity="75" 
-                          VerticalScrollBarVisibility="Visible" >
-                <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua"/>
+                          Background="Beige" Foreground="Aqua" Opacity="75"
+                          VerticalScrollBarVisibility="Visible">
+                <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua" />
             </ScrollViewer>
 
             <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
                 <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0 - 0 (0%)" />
-                <local:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                <local:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147"
+                                    Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold"
+                                    BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -27,9 +36,9 @@
                         <Style TargetType="ListViewItem">
                             <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
                             <Setter Property="Background" Value="{Binding Background}" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Height" Value="{Binding Height}"></Setter>
-                            <Setter Property="Margin" Value="0,-2,0,0"/>
+                            <Setter Property="Margin" Value="0,-2,0,0" />
                         </Style>
                     </ListView.Resources>
                 </local:DeckListView>
@@ -44,7 +53,11 @@
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"></local:HearthstoneTextBlock>
-                <local:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147" Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
+                <local:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147"
+                                    Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -53,8 +66,8 @@
                             <Setter Property="Foreground" Value="{Binding ColorOpponent}" />
                             <Setter Property="Background" Value="{Binding Background}" />
                             <Setter Property="Height" Value="{Binding OpponentHeight}" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Margin" Value="0,-2,0,0"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="0,-2,0,0" />
                         </Style>
                     </ListView.Resources>
                 </local:DeckListView>
@@ -62,13 +75,15 @@
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
                 <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
-                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0"
+                                                Margin="4,0,0,0" />
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed"/>
+            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
-            <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
+            <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73"
+                         Canvas.Top="105">
                 <StackPanel Name="Marks0">
                     <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
                     <local:HearthstoneTextBlock x:Name="LblCardMark0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
@@ -110,7 +125,8 @@
                     <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
                 </StackPanel>
             </UniformGrid>
-            <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Visibility="Hidden"/>
+            <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203"
+                               Visibility="Hidden" />
             <StackPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed"></StackPanel>
         </Canvas>
 

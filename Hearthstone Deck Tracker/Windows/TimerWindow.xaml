@@ -1,14 +1,16 @@
 ﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.TimerWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="Timer" Height="130" Width="150" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      Title="Timer" Height="130" Width="150"
+                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                      Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" />
             <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="90" FontSize="32" />
-            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="0"  FontSize="24" />
+            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="0" FontSize="24" />
         </StackPanel>
     </Grid>
 </controls:MetroWindow>
