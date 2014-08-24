@@ -329,14 +329,23 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0"
-                                          HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="265"
+                                          HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="275"
                                           Margin="11,0,1,0">
                                     <StackPanel>
-                                        <CheckBox x:Name="CheckboxWindowsOpenAutomatically"
-                                                  Content="Show decks in additional windows" HorizontalAlignment="Left"
+                                        <StackPanel Orientation="Horizontal">
+
+                                            <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
+                                                  Content="Player deck" HorizontalAlignment="Left"
                                                   Margin="10,5,0,0" VerticalAlignment="Top"
-                                                  Checked="CheckboxWindowsOpenAutomatically_Checked"
-                                                  Unchecked="CheckboxWindowsOpenAutomatically_Unchecked" />
+                                                  Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
+                                                  Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
+
+                                            <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
+                                                  Content="Opponent deck" HorizontalAlignment="Left"
+                                                  Margin="10,5,0,0" VerticalAlignment="Top"
+                                                  Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
+                                                  Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
+                                        </StackPanel>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost"
                                                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxWindowsTopmost_Checked"
@@ -346,8 +355,13 @@
                                                   Margin="30,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxWinTopmostHsForeground_Checked"
                                                   Unchecked="CheckboxWinTopmostHsForeground_Unchecked" />
+                                        <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips"
+                                                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                                  Checked="CheckboxWindowCardToolTips_Checked"
+                                                  Unchecked="CheckboxWindowCardToolTips_Unchecked" />
+                                        <Separator Margin="0,5,0,0"></Separator>
                                         <CheckBox x:Name="CheckboxTimerWindow"
-                                                  Content="Show timer in additional window" HorizontalAlignment="Left"
+                                                  Content="Timer" HorizontalAlignment="Left"
                                                   Margin="10,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxTimerWindow_Checked"
                                                   Unchecked="CheckboxTimerWindow_Unchecked" />
@@ -360,6 +374,7 @@
                                                   Margin="30,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxTimerTopmostHsForeground_Checked"
                                                   Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
+                                        <Separator Margin="0,5,0,0"></Separator>
                                         <DockPanel Margin="10,5,10,0">
                                             <Label Content="Background:" HorizontalAlignment="Left"
                                                    VerticalAlignment="Top" />
@@ -380,10 +395,6 @@
                                                      TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top"
                                                      Width="110" TextChanged="TextboxCustomBackground_TextChanged" />
                                         </DockPanel>
-                                        <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips"
-                                                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                                  Checked="CheckboxWindowCardToolTips_Checked"
-                                                  Unchecked="CheckboxWindowCardToolTips_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"

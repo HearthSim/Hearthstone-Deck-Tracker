@@ -191,11 +191,10 @@ namespace Hearthstone_Deck_Tracker
 			TimerWindow = new TimerWindow(Config.Instance);
 			StatsWindow = new StatsWindow();
 
-			if(Config.Instance.WindowsOnStartup)
-			{
+			if(Config.Instance.PlayerWindowOnStart)
 				PlayerWindow.Show();
+			if(Config.Instance.OpponentWindowOnStart)
 				OpponentWindow.Show();
-			}
 			if(Config.Instance.TimerWindowOnStartup)
 				TimerWindow.Show();
 			if(!DeckList.AllTags.Contains("All"))
@@ -884,7 +883,8 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
-			CheckboxWindowsOpenAutomatically.IsChecked = Config.Instance.WindowsOnStartup;
+			CheckboxPlayerWindowOpenAutomatically.IsChecked = Config.Instance.PlayerWindowOnStart;
+			CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
 			CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;
 			CheckboxTimerWindow.IsChecked = Config.Instance.TimerWindowOnStartup;
 			CheckboxTimerTopmostHsForeground.IsChecked = Config.Instance.TimerWindowTopmostIfHsForeground;
@@ -1885,31 +1885,6 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(true);
 		}
 
-		private void CheckboxWindowsOpenAutomatically_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			PlayerWindow.Show();
-			PlayerWindow.Activate();
-			OpponentWindow.Show();
-			OpponentWindow.Activate();
-
-			PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
-
-			OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
-
-			Config.Instance.WindowsOnStartup = true;
-			SaveConfig(true);
-		}
-
-		private void CheckboxWindowsOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			PlayerWindow.Hide();
-			OpponentWindow.Hide();
-			Config.Instance.WindowsOnStartup = false;
-			SaveConfig(true);
-		}
-
 		private void CheckboxWinTopmostHsForeground_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
@@ -2843,6 +2818,42 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.StatsInWindow = false;
+			Config.Save();
+		}
+
+		private void CheckboxPlayerWindowOpenAutomatically_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			PlayerWindow.Show();
+			PlayerWindow.Activate();
+			PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
+			Config.Instance.PlayerWindowOnStart = true;
+			Config.Save();
+		}
+
+		private void CheckboxPlayerWindowOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			PlayerWindow.Hide();
+			Config.Instance.PlayerWindowOnStart = false;
+			Config.Save();
+		}
+
+		private void CheckboxOpponentWindowOpenAutomatically_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			OpponentWindow.Show();
+			OpponentWindow.Activate();
+			OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+			Config.Instance.OpponentWindowOnStart = true;
+			Config.Save();
+		}
+
+		private void CheckboxOpponentWindowOpenAutomatically_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			OpponentWindow.Hide();
+			Config.Instance.OpponentWindowOnStart = false;
 			Config.Save();
 		}
 
