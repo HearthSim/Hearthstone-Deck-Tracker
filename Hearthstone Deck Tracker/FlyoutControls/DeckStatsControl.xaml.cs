@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker
@@ -42,6 +44,12 @@ namespace Hearthstone_Deck_Tracker
 			if(_deck == null)
 				return;
 
+			MetroWindow window;
+			if(Config.Instance.StatsInWindow)
+				window = Helper.MainWindow.StatsWindow;
+			else
+				window = Helper.MainWindow;
+
 			var count = DataGridGames.SelectedItems.Count;
 			if(count == 1)
 			{
@@ -49,7 +57,7 @@ namespace Hearthstone_Deck_Tracker
 				if(selectedGame == null)
 					return;
 
-				if(await Helper.MainWindow.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
+				if(await MessageDialogs.ShowDeleteGameStatsMessage(window, selectedGame) != MessageDialogResult.Affirmative)
 					return;
 
 				if(_deck.DeckStats.Games.Contains(selectedGame))
@@ -64,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(count > 1)
 			{
-				if(await Helper.MainWindow.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
+				if(await MessageDialogs.ShowDeleteMultipleGameStatsMessage(window, count) != MessageDialogResult.Affirmative)
 					return;
 				foreach(var selectedItem in DataGridGames.SelectedItems)
 				{

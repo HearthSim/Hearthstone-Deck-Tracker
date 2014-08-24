@@ -357,6 +357,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static void SaveAndUpdateStats()
 		{
+			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
 			if(Game.CurrentGameMode == Game.GameMode.None && Config.Instance.RecordOther
 			   || Game.CurrentGameMode == Game.GameMode.Practice && Config.Instance.RecordPractice
 			   || Game.CurrentGameMode == Game.GameMode.Arena && Config.Instance.RecordArena
@@ -372,13 +373,13 @@ namespace Hearthstone_Deck_Tracker
 				//todo: may not want to set current to null - allow for later reassigning of games?
 				Game.CurrentGameStats = null;
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
-				Helper.MainWindow.DeckStatsFlyout.Refresh();
+				statsControl.Refresh();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(Game.CurrentGameStats))
 			{
 				//game was not supposed to be recorded, remove from deck again.
 				_assignedDeck.DeckStats.Games.Remove(Game.CurrentGameStats);
-				Helper.MainWindow.DeckStatsFlyout.Refresh();
+				statsControl.Refresh();
 			}
 		}
 

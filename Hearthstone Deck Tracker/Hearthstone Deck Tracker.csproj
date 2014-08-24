@@ -163,6 +163,7 @@
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MessageDialogs.cs" />
     <Compile Include="Windows\MoveGameDialog.xaml.cs">
       <DependentUpon>MoveGameDialog.xaml</DependentUpon>
     </Compile>
