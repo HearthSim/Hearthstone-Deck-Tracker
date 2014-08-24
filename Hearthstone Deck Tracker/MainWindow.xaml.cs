@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker
 		public readonly OpponentWindow OpponentWindow;
 		public readonly OverlayWindow Overlay;
 		public readonly PlayerWindow PlayerWindow;
+		public readonly StatsWindow StatsWindow;
 		public readonly TimerWindow TimerWindow;
 		private readonly string _configPath;
 		private readonly string _decksPath;
@@ -188,6 +189,7 @@ namespace Hearthstone_Deck_Tracker
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
 			TimerWindow = new TimerWindow(Config.Instance);
+			StatsWindow = new StatsWindow();
 
 			if(Config.Instance.WindowsOnStartup)
 			{
@@ -705,12 +707,20 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.TimerWindowHeight = (int)TimerWindow.Height;
 				Config.Instance.TimerWindowWidth = (int)TimerWindow.Width;
 
+				if(!double.IsNaN(StatsWindow.Left))
+					Config.Instance.StatsWindowLeft = (int)StatsWindow.Left;
+				if(!double.IsNaN(StatsWindow.Top))
+					Config.Instance.StatsWindowTop = (int)StatsWindow.Top;
+				Config.Instance.StatsWindowHeight = (int)StatsWindow.Height;
+				Config.Instance.StatsWindowWidth = (int)StatsWindow.Width;
+
 				_notifyIcon.Visible = false;
 				Overlay.Close();
 				HsLogReader.Instance.Stop();
 				TimerWindow.Shutdown();
 				PlayerWindow.Shutdown();
 				OpponentWindow.Shutdown();
+				StatsWindow.Shutdown();
 				Config.Save();
 				WriteDecks();
 			}
@@ -909,6 +919,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
 			CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
+			CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -971,6 +982,8 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsFlyout.LoadConfig();
 			GameDetailsFlyout.LoadConfig();
+			StatsWindow.StatsControl.LoadConfig();
+			StatsWindow.GameDetailsFlyout.LoadConfig();
 		}
 
 		private async void UpdateOverlayAsync()
@@ -1220,10 +1233,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
 		{
-			FlyoutDeckStats.IsOpen = true;
 			var deck = DeckPickerList.SelectedDeck;
-			if(deck != null)
+			if(Config.Instance.StatsInWindow)
+			{
+				StatsWindow.StatsControl.SetDeck(deck);
+				StatsWindow.WindowState = WindowState.Normal;
+				StatsWindow.Show();
+				StatsWindow.Activate();
+			}
+			else
+			{
 				DeckStatsFlyout.SetDeck(deck);
+				FlyoutDeckStats.IsOpen = true;
+			}
 		}
 
 		private void BtnDeckOptions_Click(object sender, RoutedEventArgs e)
@@ -2807,6 +2829,20 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.CloseWithHearthstone = false;
+			Config.Save();
+		}
+
+		private void CheckboxStatsInWindow_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.StatsInWindow = true;
+			Config.Save();
+		}
+
+		private void CheckboxStatsInWindow_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.StatsInWindow = false;
 			Config.Save();
 		}
 

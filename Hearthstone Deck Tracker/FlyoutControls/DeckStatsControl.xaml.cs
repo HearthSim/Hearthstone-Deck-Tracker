@@ -84,6 +84,7 @@ namespace Hearthstone_Deck_Tracker
 		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
+			if(deck == null) return;
 			var selectedGameMode = (Game.GameMode)ComboboxGameMode.SelectedItem;
 			var comboboxString = ComboboxTime.SelectedValue.ToString();
 			var timeFrame = DateTime.Now.Date;
@@ -157,9 +158,18 @@ namespace Hearthstone_Deck_Tracker
 			var selected = DataGridGames.SelectedItem as GameStats;
 			if(selected != null)
 			{
-				Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
-				Helper.MainWindow.FlyoutGameDetails.Header = selected.ToString();
-				Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
+				if(Config.Instance.StatsInWindow)
+				{
+					Helper.MainWindow.StatsWindow.GameDetailsFlyout.SetGame(selected);
+					Helper.MainWindow.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
+					Helper.MainWindow.StatsWindow.FlyoutGameDetails.IsOpen = true;
+				}
+				else
+				{
+					Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
+					Helper.MainWindow.FlyoutGameDetails.Header = selected.ToString();
+					Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
+				}
 			}
 		}
 
@@ -193,7 +203,11 @@ namespace Hearthstone_Deck_Tracker
 			var selected = DataGridGames.SelectedItem as GameStats;
 			if(selected == null) return;
 			var settings = new MetroDialogSettings {DefaultText = selected.Note};
-			var newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
+			string newNote;
+			if(Config.Instance.StatsInWindow)
+				newNote = await Helper.MainWindow.StatsWindow.ShowInputAsync("Note", "", settings);
+			else
+				newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
 				return;
 			selected.Note = newNote;
@@ -244,7 +258,11 @@ namespace Hearthstone_Deck_Tracker
 
 			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == _deck.Class);
 
-			var dialog = new MoveGameDialog(possibleTargets) {Owner = Helper.MainWindow};
+			var dialog = new MoveGameDialog(possibleTargets);
+			if(Config.Instance.StatsInWindow)
+				dialog.Owner = Helper.MainWindow.StatsWindow;
+			else dialog.Owner = Helper.MainWindow;
+
 			dialog.ShowDialog();
 			var selectedDeck = dialog.SelectedDeck;
 

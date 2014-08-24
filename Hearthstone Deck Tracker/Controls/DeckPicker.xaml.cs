@@ -351,8 +351,16 @@ namespace Hearthstone_Deck_Tracker
 				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
 				Helper.MainWindow.FlyoutNotes.Header = flyoutHeader;
 				Helper.MainWindow.FlyoutDeckOptions.Header = flyoutHeader;
-				Helper.MainWindow.FlyoutDeckStats.Header = "Stats: " + deck.Name;
-				Helper.MainWindow.DeckStatsFlyout.SetDeck(deck);
+				if(Config.Instance.StatsInWindow)
+				{
+					Helper.MainWindow.StatsWindow.Title = "Stats: " + deck.Name;
+					Helper.MainWindow.StatsWindow.StatsControl.SetDeck(deck);
+				}
+				else
+				{
+					Helper.MainWindow.FlyoutDeckStats.Header = "Stats: " + deck.Name;
+					Helper.MainWindow.DeckStatsFlyout.SetDeck(deck);
+				}
 
 				//change player deck itemsource
 				if(Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)

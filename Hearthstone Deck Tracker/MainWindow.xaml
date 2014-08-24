@@ -468,7 +468,7 @@
                                     </StackPanel>
                                 </GroupBox>
                                 <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
-                                          VerticalAlignment="Top" Height="209" Width="235" Margin="10,10,0,0">
+                                          VerticalAlignment="Top" Height="229" Width="235" Margin="10,10,0,0">
                                     <StackPanel>
                                         <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -503,6 +503,11 @@
                                                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxTrackerCardToolTips_Checked"
                                                   Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
+
+                                        <CheckBox x:Name="CheckboxStatsInWindow" Content="Show deck stats in new window"
+                                                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                                  Checked="CheckboxStatsInWindow_Checked"
+                                                  Unchecked="CheckboxStatsInWindow_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
                             </Grid>

@@ -128,6 +128,11 @@ namespace Hearthstone_Deck_Tracker
 		public bool StartMinimized = Defaults.StartMinimized;
 		public bool StatsClassOverviewIsExpanded = Defaults.StatsClassOverviewIsExpanded;
 		public bool StatsDeckOverviewIsExpanded = Defaults.StatsDeckOverviewIsExpanded;
+		public bool StatsInWindow = Defaults.StatsInWindow;
+		public int StatsWindowHeight = Defaults.StatsWindowHeight;
+		public int? StatsWindowLeft = Defaults.StatsWindowLeft;
+		public int? StatsWindowTop = Defaults.StatsWindowTop;
+		public int StatsWindowWidth = Defaults.StatsWindowWidth;
 		public Operation TagOperation = Defaults.TagOperation;
 		public string ThemeName = Defaults.ThemeName;
 		public double TimerLeft = Defaults.TimerLeft;
@@ -371,6 +376,11 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool StartMinimized = false;
 			public static readonly bool StatsClassOverviewIsExpanded = false;
 			public static readonly bool StatsDeckOverviewIsExpanded = true;
+			public static readonly bool StatsInWindow = false;
+			public static readonly int StatsWindowHeight = 672;
+			public static readonly int? StatsWindowLeft = null;
+			public static readonly int? StatsWindowTop = null;
+			public static readonly int StatsWindowWidth = 510;
 			public static readonly Operation TagOperation = Operation.Or;
 			public static readonly string ThemeName;
 			public static readonly double TimerLeft = 75;

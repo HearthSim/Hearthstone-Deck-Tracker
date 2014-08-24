@@ -1,0 +1,16 @@
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.StatsWindow"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      Title="Stats" Height="500" Width="600"
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
+    <Grid>
+        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="1">
+            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
+        </controls:Flyout>
+        <local:DeckStatsControl x:Name="StatsControl">
+
+        </local:DeckStatsControl>
+    </Grid>
+</controls:MetroWindow>
