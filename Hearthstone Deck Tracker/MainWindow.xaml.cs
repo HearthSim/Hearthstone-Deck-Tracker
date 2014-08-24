@@ -2838,5 +2838,19 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void BtnNewDeck_Click(object sender, RoutedEventArgs e)
+		{
+			if(GridNewDeck.Visibility == Visibility.Visible)
+			{
+				Width -= GridNewDeck.ActualWidth;
+				GridNewDeck.Visibility = Visibility.Collapsed;
+			}
+			else
+			{
+				GridNewDeck.Visibility = Visibility.Visible;
+				Width += GridNewDeck.ActualWidth;
+			}
+		}
 	}
 }
