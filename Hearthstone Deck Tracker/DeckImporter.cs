@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 namespace Hearthstone_Deck_Tracker
@@ -45,9 +46,38 @@ namespace Hearthstone_Deck_Tracker
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
 
-				var doc = await GetHtmlDocJs(newUrl);
 
-				var nodes = doc.DocumentNode.SelectNodes("//*[@id='deck']/div[@class='deck screenshot']");
+				HtmlNodeCollection nodes = null;
+				using(var wb = new WebBrowser())
+				{
+					var done = false;
+					wb.Navigate(newUrl + "#" + DateTime.Now.Ticks);
+					wb.DocumentCompleted += (sender, args) => done = true;
+
+					while(!done)
+						await Task.Delay(50);
+
+					for(var i = 0; i < 20; i++)
+					{
+						var doc = new HtmlDocument();
+						doc.Load(wb.DocumentStream);
+						if((nodes = doc.DocumentNode.SelectNodes("//*[@id='deck']/div[@class='deck screenshot']")) != null)
+						{
+							try
+							{
+								if(nodes.Sum(x => int.Parse(x.Attributes["data-count"].Value)) == 30)
+									break;
+							}
+							catch
+							{
+							}
+						}
+						await Task.Delay(500);
+					}
+				}
+
+				if(nodes == null)
+					return null;
 
 				foreach(var node in nodes)
 				{
