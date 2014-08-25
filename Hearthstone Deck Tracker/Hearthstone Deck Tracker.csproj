@@ -120,6 +120,12 @@
     <Compile Include="FlyoutControls\GameDetails.xaml.cs">
       <DependentUpon>GameDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
@@ -159,6 +165,9 @@
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="MainWindow_Edit.cs" />
+    <Compile Include="MainWindow_Export.cs" />
+    <Compile Include="MainWindow_Import.cs" />
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
@@ -249,6 +258,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\SortFilterDecks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,6 +279,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Page Include="Resources\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\DeckSelectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

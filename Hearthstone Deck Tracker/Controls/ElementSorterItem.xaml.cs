@@ -28,13 +28,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.ElementSorterPlayer.MoveItem(this, Direction.Up);
+				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, Direction.Up);
 				Helper.MainWindow.Overlay.UpdatePlayerLayout();
 				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.ElementSorterOpponent.MoveItem(this, Direction.Up);
+				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, Direction.Up);
 				Helper.MainWindow.Overlay.UpdateOpponentLayout();
 				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
 			}
@@ -44,13 +44,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.ElementSorterPlayer.MoveItem(this, Direction.Down);
+				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, Direction.Down);
 				Helper.MainWindow.Overlay.UpdatePlayerLayout();
 				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.ElementSorterOpponent.MoveItem(this, Direction.Down);
+				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, Direction.Down);
 				Helper.MainWindow.Overlay.UpdateOpponentLayout();
 				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
 			}
