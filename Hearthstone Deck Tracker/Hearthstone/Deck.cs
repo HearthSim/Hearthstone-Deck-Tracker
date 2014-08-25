@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Tags = new List<string>();
 			Note = string.Empty;
 			Url = string.Empty;
+			Name = string.Empty;
 		}
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,

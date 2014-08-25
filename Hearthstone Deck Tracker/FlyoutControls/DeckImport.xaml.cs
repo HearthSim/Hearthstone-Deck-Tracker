@@ -60,18 +60,18 @@ namespace Hearthstone_Deck_Tracker
 
 			if(deck != null)
 			{
-				var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null &&
-				               Helper.MainWindow.NewDeck.Url == url;
+				//var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null &&
+				//               Helper.MainWindow.NewDeck.Url == url;
 
 				deck.Url = url;
 
-				if(reimport) //keep old notes
-					deck.Note = Helper.MainWindow.NewDeck.Note;
+				//if(reimport) //keep old notes
+				//	deck.Note = Helper.MainWindow.NewDeck.Note;
 
 				if(!deck.Note.Contains(url))
 					deck.Note = url + "\n" + deck.Note;
 
-				Helper.MainWindow.SetNewDeck(deck, reimport);
+				//Helper.MainWindow.SetNewDeck(deck, reimport);
 			}
 			else
 				await Helper.MainWindow.ShowMessageAsync("Error", "Could not load deck from specified url");

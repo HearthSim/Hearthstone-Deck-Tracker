@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			None
 		}
 
+		public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
+
 		#region Properties
 
 		private const int DefaultCoinPosition = 4;

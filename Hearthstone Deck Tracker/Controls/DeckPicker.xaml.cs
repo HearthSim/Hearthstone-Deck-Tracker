@@ -111,6 +111,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
+		public delegate void SelectedClassHandler(DeckPicker sender, string hsClass);
+
+		public event SelectedDeckHandler OnSelectedDeckChanged;
+		public event SelectedClassHandler OnSelectedClassChanged;
+
 		private readonly List<string> _classNames = new List<string>
 			{
 				"Druid",
@@ -132,6 +137,11 @@ namespace Hearthstone_Deck_Tracker
 		public Operation TagOperation;
 		private bool _inClassSelect;
 		private HsClass _selectedClass;
+
+		public string GetSelectedClass
+		{
+			get { return _selectedClass != null ? _selectedClass.Name : "None"; }
+		}
 
 		#endregion
 
@@ -258,7 +268,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					_inClassSelect = false;
 					SortDecks();
-					Console.WriteLine("SELECTION CHANGED - SORT");
+					OnSelectedClassChanged(this, selectedClass.Name);
 				}
 				else if(selectedClass.Name == "Back")
 				{
@@ -268,6 +278,7 @@ namespace Hearthstone_Deck_Tracker
 					foreach(var hsClass in _hsClasses)
 						ListboxPicker.Items.Add(hsClass);
 					_inClassSelect = true;
+					OnSelectedClassChanged(this, "None");
 				}
 			}
 			else
@@ -281,7 +292,7 @@ namespace Hearthstone_Deck_Tracker
 					ListboxPicker.Items.Refresh();
 
 					//if (SelectedDeckChanged != null)
-					SelectedDeckChanged(this, newSelectedDeck);
+					OnSelectedDeckChanged(this, newSelectedDeck);
 
 					SelectedDeck = newSelectedDeck;
 				}
@@ -341,58 +352,7 @@ namespace Hearthstone_Deck_Tracker
 				hsClass.TagOperation = o;
 		}
 
-		private void SelectedDeckChanged(DeckPicker sender, Deck deck)
-		{
-			if(!_initialized) return;
-			if(deck != null)
-			{
-				//set up notes
-				Helper.MainWindow.DeckNotesEditor.SetDeck(deck);
-				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
-				Helper.MainWindow.FlyoutNotes.Header = flyoutHeader;
-				Helper.MainWindow.FlyoutDeckOptions.Header = flyoutHeader;
-				if(Config.Instance.StatsInWindow)
-				{
-					Helper.MainWindow.StatsWindow.Title = "Stats: " + deck.Name;
-					Helper.MainWindow.StatsWindow.StatsControl.SetDeck(deck);
-				}
-				else
-				{
-					Helper.MainWindow.FlyoutDeckStats.Header = "Stats: " + deck.Name;
-					Helper.MainWindow.DeckStatsFlyout.SetDeck(deck);
-				}
-
-				//change player deck itemsource
-				if(Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
-				{
-					Helper.MainWindow.Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					Helper.MainWindow.PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					Logger.WriteLine("Set player itemsource as playerdeck");
-				}
-				Game.IsUsingPremade = true;
-				Helper.MainWindow.UpdateDeckList(deck);
-				Helper.MainWindow.UseDeck(deck);
-				Logger.WriteLine("Switched to deck: " + deck.Name);
-
-				//set and save last used deck for class
-				while(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
-				{
-					var lastSelected = Helper.MainWindow.DeckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
-					if(lastSelected != null)
-						Helper.MainWindow.DeckList.LastDeckClass.Remove(lastSelected);
-					else
-						break;
-				}
-				Helper.MainWindow.DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
-				Helper.MainWindow.WriteDecks();
-				Helper.MainWindow.EnableDeckButtons(true);
-				Helper.MainWindow.ManaCurveMyDecks.SetDeck(deck);
-				Helper.MainWindow.TagControlMyDecks.SetSelectedTags(deck.Tags);
-			}
-			else
-				Helper.MainWindow.EnableDeckButtons(false);
-		}
-
+		
 		public void SortDecks()
 		{
 			if(_inClassSelect) return;

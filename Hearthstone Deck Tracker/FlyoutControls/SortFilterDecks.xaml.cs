@@ -234,8 +234,8 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var deck in Helper.MainWindow.DeckList.DecksList.Where(deck => deck.Tags.Contains(tag)))
 					deck.Tags.Remove(tag);
 
-				if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
-					Helper.MainWindow.NewDeck.Tags.Remove(tag);
+				//if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
+				//	Helper.MainWindow.NewDeck.Tags.Remove(tag);
 
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);

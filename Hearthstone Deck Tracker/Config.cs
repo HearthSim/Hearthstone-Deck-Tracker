@@ -72,7 +72,6 @@ namespace Hearthstone_Deck_Tracker
 		public string LastDeck = Defaults.LastDeck;
 		public int LogLevel = Defaults.LogLevel;
 		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
-		public bool ManaCurveNewDeck = Defaults.ManaCurveNewDeck;
 		public bool MinimizeToTray = Defaults.MinimizeToTray;
 		public int OffsetX = Defaults.OffsetX;
 		public int OffsetY = Defaults.OffsetY;
@@ -325,7 +324,6 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly string LastDeck = "";
 			public static readonly int LogLevel = 0;
 			public static readonly bool ManaCurveMyDecks = true;
-			public static readonly bool ManaCurveNewDeck = true;
 			public static readonly bool MinimizeToTray = false;
 			public static readonly int OffsetX = 0;
 			public static readonly int OffsetY = 0;

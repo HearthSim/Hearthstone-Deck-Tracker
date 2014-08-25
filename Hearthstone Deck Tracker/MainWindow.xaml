@@ -4,7 +4,7 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Hearthstone Deck Tracker" Height="670" Width="896"
+                      Title="Hearthstone Deck Tracker" Height="670" Width="644.399"
                       MinHeight="525"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="Images/HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
@@ -18,7 +18,8 @@
         <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101" Width="510">
             <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
         </controls:Flyout>
-        <TabControl Name="TabControlTracker" Height="auto" Width="auto" SelectionChanged="TabControlTracker_SelectionChanged">
+        <TabControl Name="TabControlTracker" Height="auto" Width="auto"
+                    SelectionChanged="TabControlTracker_SelectionChanged">
             <TabItem Header="My Decks">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -35,7 +36,7 @@
                         <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutDeckOptions" Header="More..." Position="Right" Width="255"
-                                     Height="auto" Panel.ZIndex="100" Grid.Column="1" >
+                                     Height="auto" Panel.ZIndex="100" Grid.Column="1">
                         <local:DeckOptions Width="auto" Height="auto" x:Name="DeckOptionsFlyout" Margin="3,0,0,0"></local:DeckOptions>
                     </controls:Flyout>
                     <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
@@ -43,6 +44,14 @@
                         <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
                     </controls:Flyout>
 
+                    <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
+                                     Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+                    </controls:Flyout>
+                    <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255"
+                                     Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                        <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
+                    </controls:Flyout>
                     <Grid Grid.Column="1" Margin="-1,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
@@ -51,7 +60,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
                                     Grid.Row="0">
-                            <Button Name="BtnEditDeck" IsEnabled="False" Content="Edit Deck" Margin="0,0,3,0"
+                            <Button Name="BtnEditDeck" IsEnabled="False" Content="Edit" Margin="0,0,3,0"
                                     Width="117" Height="26" Click="BtnEditDeck_Click" />
                             <Button Name="BtnDeckOptions" IsEnabled="False" Content="More..." Margin="3,0,0,0"
                                     Width="117" Height="26" Click="BtnDeckOptions_Click">
@@ -64,7 +73,9 @@
                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                                             ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
-                                            HorizontalAlignment="Center" Width="240" Height="auto">
+                                            HorizontalAlignment="Center" Width="240" Height="auto"
+                                            MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
+                                            MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
                             <local:DeckListView.Resources>
                                 <Style TargetType="GridViewColumnHeader">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -85,11 +96,18 @@
                                     <Setter Property="Background" Value="{Binding Background}" />
                                     <Setter Property="Height" Value="35" />
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="Margin" Value="0,0,0,0" />
-                                    <Setter Property="IsEnabled" Value="False" />
                                     <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
+                                        <Trigger Property="IsMouseOver"
+                                                 Value="True">
+                                            <Setter Property="Background"
+                                                    Value="{Binding Background}" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected"
+                                                 Value="True">
+                                            <Setter Property="Background"
+                                                    Value="{Binding Background}" />
+                                            <Setter Property="BorderBrush"
+                                                    Value="Blue" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -103,64 +121,52 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
-                                    Grid.Row="0">
+                        <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="0">
                             <Button x:Name="ButtonNoDeck" Content="No Deck" Width="70" Margin="0,0,3,0" Height="26"
                                     Click="ButtonNoDeck_Click" />
                             <Button x:Name="BtnSortFilter" Content="Sort / Filter" Width="86" Margin="3,0,3,0"
                                     Height="26" Click="BtnSortFilter_Click" />
                             <Button x:Name="BtnDeckStats" Content="Stats" Width="70" Margin="3,0,3,0" Height="26"
                                     Click="BtnDeckStats_Click" />
-                            <Button x:Name="BtnNewDeck" Content="New Deck" Width="70" Margin="3,0,0,0" Height="26"
-                                    Click="BtnNewDeck_Click" VerticalAlignment="Top" />
-                        </StackPanel>
+                            <ComboBox x:Name="ComboBoxNewDeck" HorizontalAlignment="Left"
+                                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                      Margin="0,0,3,0" VerticalAlignment="Top" Width="117" SelectedIndex="0"
+                                      SelectionChanged="ComboNewDeck_SelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
+                                            <Image Source="{Binding HeroImage}" Height="24" Width="24"
+                                                   DockPanel.Dock="Left" Visibility="{Binding ImageVisibility}" />
+                                            <TextBlock Text="{Binding HeroName}" Margin="3,0,0,0" FontWeight="Medium"
+                                                       TextAlignment="Center" VerticalAlignment="Center"
+                                                       DockPanel.Dock="Left">
+                                            </TextBlock>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <!--<Button x:Name="BtnNewDeck" Content="New Deck" Width="117" Margin="3,0,0,0" Height="26" IsEnabled="False"
+                                    Click="BtnNewDeck_Click" VerticalAlignment="Top" />-->
+                        </WrapPanel>
                         <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="0,6,0,6"
                                           Height="auto" Width="auto" Grid.Row="1"
-                                          Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
+                                          Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                                          OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
+                                          OnSelectedClassChanged="DeckPickerList_OnSelectedClassChanged" />
                     </Grid>
-                    <Grid Grid.Column="2" Margin="-1,0,0,0" Name="GridNewDeck" Visibility="Visible">
+                    <Grid Grid.Column="2" Margin="-1,0,0,0" Name="GridNewDeck" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
                                     Grid.Row="0" Width="240">
-                            <ComboBox x:Name="ComboBoxSelectClass" HorizontalAlignment="Left"
-                                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                      Margin="0,0,3,0" VerticalAlignment="Top" Width="117" SelectedIndex="0"
-                                      SelectionChanged="ComboBoxFilterClass_SelectionChanged">
-                                <system:String>Select a Class</system:String>
-                                <system:String>Druid</system:String>
-                                <system:String>Hunter</system:String>
-                                <system:String>Mage</system:String>
-                                <system:String>Paladin</system:String>
-                                <system:String>Priest</system:String>
-                                <system:String>Rogue</system:String>
-                                <system:String>Shaman</system:String>
-                                <system:String>Warlock</system:String>
-                                <system:String>Warrior</system:String>
-                            </ComboBox>
                             <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName"
                                      VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
-                                     Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="117" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1"
-                                    Width="240">
-                            <Button Name="BtnClear" Content="Clear" HorizontalAlignment="Left" Margin="0,0,3,0"
-                                    VerticalAlignment="Top" Width="76" Click="BtnClear_Click" Height="26" />
-                            <Button Name="BtnSetTag" Content="Edit Tags" HorizontalAlignment="Left" Margin="3,0,3,0"
-                                    VerticalAlignment="Top" Width="76" Click="BtnSetTag_Click" Height="26" />
-
-                            <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top"
-                                    Width="76" Click="BtnSaveDeck_Click" Height="26" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
-                                    Grid.Row="2" Width="240">
-                            <Button x:Name="BtnImport" Content="Import" Margin="0,0,3,0" Width="98" Height="26"
-                                    Click="BtnImport_OnClick" VerticalAlignment="Bottom" />
+                                     Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" Width="117"
+                                     TextChanged="TextBoxDeckName_TextChanged" />
                             <ComboBox Name="ComboboxNeutral" Margin="3,0,0,0" Width="136" SelectedIndex="0"
                                       SelectionChanged="ComboboxNeutral_SelectionChanged">
                                 <system:String>Class + Neutral</system:String>
@@ -168,7 +174,17 @@
                                 <system:String>Neutral Only</system:String>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="3"
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,5" Grid.Row="3"
+                                    Width="240">
+                            <Button Name="BtnClear" Content="Clear" HorizontalAlignment="Left" Margin="0,0,3,0"
+                                    VerticalAlignment="Top" Width="76" Click="BtnClear_Click" Height="26" />
+
+                            <Button x:Name="BtnCancelEdit" Content="Cancel" Margin="3,0,0,0" VerticalAlignment="Top"
+                                    Width="76" Click="BtnCancelEdit_Click" Height="26" />
+                            <Button x:Name="BtnSaveDeck" Content="Save" Margin="3,0,0,0" VerticalAlignment="Top"
+                                    Width="76" Click="BtnSaveDeck_Click" Height="26" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0" Grid.Row="1"
                                     Width="240">
                             <TextBox controls:TextboxHelper.Watermark="Search by name"
                                      controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter"
@@ -199,7 +215,7 @@
                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                             ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                                             Width="240" KeyDown="ListViewDB_KeyDown"
-                                            MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="4">
+                                            MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="2">
                             <ListView.Resources>
                                 <Style TargetType="{x:Type GridViewColumnHeader}">
                                     <Setter Property="Visibility" Value="Collapsed" />
@@ -241,80 +257,6 @@
 
                             </ListView.Resources>
                         </local:DeckListView>
-                    </Grid>
-
-                </Grid>
-            </TabItem>
-            <TabItem Name="TabItemNewDeck" Header="New Deck">
-                <Grid AllowDrop="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
-                                     Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
-                    </controls:Flyout>
-                    <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255"
-                                     Height="auto" Panel.ZIndex="100" Grid.Column="1">
-                        <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
-                    </controls:Flyout>
-                    <Grid Grid.Column="0" Margin="0,0,-1,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <local:DeckListView x:Name="ListViewNewDeck" Background="DimGray" Grid.Row="2"
-                                            Foreground="White" FontWeight="Bold" BorderThickness="1"
-                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                            ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                            ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
-                                            HorizontalAlignment="Center" Width="240" Height="auto"
-                                            MouseLeftButtonUp="ListViewNewDeck_MouseLeftButtonUp"
-                                            MouseRightButtonUp="ListViewNewDeck_MouseRightButtonUp">
-                            <ListView.Resources>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </Style>
-                                <Style TargetType="{x:Type ListViewItem}">
-                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                                    <Setter Property="ToolTipService.IsEnabled"
-                                            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
-                                    <Setter Property="ToolTip">
-                                        <Setter.Value>
-                                            <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                                <local:CardToolTip></local:CardToolTip>
-                                            </ToolTip>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="FontFamily"
-                                            Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
-                                    <Setter Property="Foreground" Value="White" />
-                                    <Setter Property="Background" Value="{Binding Background}" />
-                                    <Setter Property="Height" Value="35" />
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="Margin" Value="0,0,0,0" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver"
-                                                 Value="True">
-                                            <Setter Property="Background"
-                                                    Value="{Binding Background}" />
-                                        </Trigger>
-                                        <Trigger Property="IsSelected"
-                                                 Value="True">
-                                            <Setter Property="Background"
-                                                    Value="{Binding Background}" />
-                                            <Setter Property="BorderBrush"
-                                                    Value="Blue" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListView.Resources>
-                        </local:DeckListView>
-                        <local:ManaCurve x:Name="ManaCurveNewDeck" Grid.Row="3" Height="150" Margin="0,0,0,6"></local:ManaCurve>
                     </Grid>
 
                 </Grid>
@@ -339,16 +281,16 @@
                                         <StackPanel Orientation="Horizontal">
 
                                             <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
-                                                  Content="Player deck" HorizontalAlignment="Left"
-                                                  Margin="10,5,0,0" VerticalAlignment="Top"
-                                                  Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
-                                                  Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
+                                                      Content="Player deck" HorizontalAlignment="Left"
+                                                      Margin="10,5,0,0" VerticalAlignment="Top"
+                                                      Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
+                                                      Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
 
                                             <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
-                                                  Content="Opponent deck" HorizontalAlignment="Left"
-                                                  Margin="10,5,0,0" VerticalAlignment="Top"
-                                                  Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
-                                                  Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
+                                                      Content="Opponent deck" HorizontalAlignment="Left"
+                                                      Margin="10,5,0,0" VerticalAlignment="Top"
+                                                      Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
+                                                      Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
                                         </StackPanel>
                                         <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost"
                                                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -519,7 +461,8 @@
                                                   Checked="CheckboxTrackerCardToolTips_Checked"
                                                   Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
 
-                                        <CheckBox x:Name="CheckboxStatsInWindow" Content="Show deck stats in new window"
+                                        <CheckBox x:Name="CheckboxStatsInWindow"
+                                                  Content="Show deck stats in new window"
                                                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                                   Checked="CheckboxStatsInWindow_Checked"
                                                   Unchecked="CheckboxStatsInWindow_Unchecked" />
