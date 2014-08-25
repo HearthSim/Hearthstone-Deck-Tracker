@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.DeckPickerItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Height="45" Margin="-2,2,3,2"
+          Width="{Binding Path=ViewportWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollViewer}}}">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="{Binding ClassColor}" Offset="0" />
+                <GradientStop Color="#FFE5E5E5" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="{Binding WinPercentString}" Grid.Column="1" HorizontalAlignment="Center"
+               VerticalAlignment="Center" FontSize="12" FontWeight="Medium" Foreground="Black" />
+        <Rectangle Width="2" Height="auto"
+                   Fill="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Grid.Column="1"
+                   HorizontalAlignment="Left" />
+        <TextBlock Name="LblName"
+                   TextDecorations="{Binding Underline, RelativeSource={RelativeSource AncestorType=local:DeckPickerItem}}"
+                   TextTrimming="CharacterEllipsis"
+                   Text="{Binding DeckName, RelativeSource={RelativeSource AncestorType=local:DeckPickerItem}}"
+                   Grid.Column="0" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" FontWeight="{Binding GetFontWeight}" FontSize="14" Foreground="Black"
+                   Margin="10,0">
+        </TextBlock>
+        <Label Content="{Binding TagList}" Grid.Column="0" HorizontalAlignment="Center"
+               VerticalAlignment="Center" FontSize="10" Margin="0,23,0,0" Foreground="Black">
+        </Label>
+    </Grid>
+</UserControl>

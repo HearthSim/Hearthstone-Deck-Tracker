@@ -392,10 +392,8 @@ namespace Hearthstone_Deck_Tracker
 				var doc = new HtmlDocument();
 				//                  avoid cache
 				wb.Navigate(url + "?" + DateTime.Now.Ticks);
-				wb.DocumentCompleted += (sender, args) =>
-					{
-						done = true;
-					};
+				wb.DocumentCompleted += (sender, args) => done = true;
+
 				while(!done)
 					await Task.Delay(50);
 				doc.Load(wb.DocumentStream);
