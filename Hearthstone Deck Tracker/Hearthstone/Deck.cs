@@ -79,17 +79,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string GetName
-		{
-			get
-			{
-				var charCount = IsSelectedInGui ? 15 : 17;
-				var tmpName = Name.Length > charCount ? string.Join("", Name.Take(charCount)) + "..." : Name;
-				return IsSelectedInGui ? string.Format("> {0} <", tmpName) : tmpName;
-			}
-		}
-
-		[XmlIgnore]
 		public FontWeight GetFontWeight
 		{
 			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Bold; }
