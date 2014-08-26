@@ -35,8 +35,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Cards = new ObservableCollection<Card>();
 			Tags = new List<string>();
 			Note = string.Empty;
-			Url = string.Empty;
+			Url = string.Empty;                       
 		}
+
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited)
@@ -44,13 +45,103 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Name = name;
 			Class = className;
 			Cards = new ObservableCollection<Card>();
-			foreach(var card in cards)
-				Cards.Add((Card)card.Clone());
+            foreach(var card in cards)
+                Cards.Add((Card)card.Clone());
 			Tags = new List<string>(tags);
 			Note = note;
 			Url = url;
 			LastEdited = lastEdited;
 		}
+
+        /// returns the number of cards in the deck with mechanics matching the newmechanic.
+        /// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
+        public int getMechanicCount(String newmechanic)
+        {
+            int count;
+
+            count = 0;
+            foreach (var card in Cards)
+            {
+                if (card.Mechanics != null)
+                {
+                    foreach (String mechanic in card.Mechanics)
+                    {
+                        if (mechanic.Equals(newmechanic))
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine(newmechanic + count.ToString() + "\n");
+            return count;
+        }
+
+        public int getNumTaunt()
+        {
+            return getMechanicCount("Taunt");
+        }
+
+        public int getNumBattlecry()
+        {
+            return getMechanicCount("Battlecry");
+        }
+
+        public int getNumImmuneToSpellpower()
+        {
+            return getMechanicCount("ImmuneToSpellpower");
+        }
+
+        public int getNumSpellpower()
+        {
+            return getMechanicCount("Spellpower");
+        }
+
+        public int getNumOneTurnEffect()
+        {
+            return getMechanicCount("OneTurnEffect");
+        }
+
+        public int getNumCharge()
+        {
+            return getMechanicCount("Charge") + getMechanicCount("GrantCharge");
+        }
+
+        public int getNumFreeze()
+        {
+            return getMechanicCount("Freeze");
+        }
+
+        public int getNumAdjacentBuff()
+        {
+            return getMechanicCount("AdjacentBuff");
+        }
+
+        public int getNumSecret()
+        {
+            return getMechanicCount("Secret");
+        }
+
+        public int getNumDeathrattle()
+        {
+            return getMechanicCount("Deathrattle");
+        }
+
+        public int getNumWindfury()
+        {
+            return getMechanicCount("Windfury");
+        }
+
+        public int getNumDivineShield()
+        {
+            return getMechanicCount("Divine Shield");
+        }
+
+        public int getNumCombo()
+        {
+            return getMechanicCount("Combo");
+        }
 
 		[XmlIgnore]
 		public string WinPercentString
@@ -67,6 +158,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
+
 				if(DeckStats.Games.Count == 0) return 0.0;
 				return 100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count;
 			}
@@ -167,4 +259,5 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Name.GetHashCode();
 		}
 	}
+
 }
