@@ -158,16 +158,16 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Decks.cs" />
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="HsLogReader.cs" />
-    <Compile Include="MainWindow_Edit.cs" />
-    <Compile Include="MainWindow_Export.cs" />
-    <Compile Include="MainWindow_Import.cs" />
+    <Compile Include="MainWindow\MainWindow_Edit.cs" />
+    <Compile Include="MainWindow\MainWindow_Export.cs" />
+    <Compile Include="MainWindow\MainWindow_Import.cs" />
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
@@ -270,7 +270,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
