@@ -30,13 +30,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _text;
 		private bool _wasDiscarded;
 
+        /// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
+        [XmlIgnore]
+        public string[] Mechanics;
+
 		public Card()
 		{
 			Count = 1;
 		}
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName,
-		            int inHandCount, int count, string text, int attack, int health, string race, int? durability)
+		            int inHandCount, int count, string text, int attack, int health, string race, string [] mechanics, int? durability)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -52,6 +56,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Health = health;
 			Race = race;
 			Durability = durability;
+            Mechanics = mechanics;
+            
 		}
 
 		public int Count
@@ -295,8 +301,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health,
-			                Race, Durability);
+			Card newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health,
+			                Race, Mechanics, Durability);
+            return newcard;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -336,6 +343,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Health = stats.Health;
 			Race = stats.Race;
 			Durability = stats.Durability;
+            Mechanics = stats.Mechanics;
 			_wasDiscarded = false;
 			OnPropertyChanged();
 		}
@@ -360,3 +368,4 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 	}
 }
+
