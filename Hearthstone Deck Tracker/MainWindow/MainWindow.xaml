@@ -45,6 +45,40 @@
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <Grid>
+
+        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:Options x:Name="Options"></local:Options>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:Help x:Name="Help"></local:Help>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
+                         Width="255" Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
+                         Panel.ZIndex="100">
+            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
+                         Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
+                         Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+        </controls:Flyout>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
@@ -54,47 +88,6 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="102"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:Options x:Name="Options"></local:Options>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="102"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:Help x:Name="Help"></local:Help>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="100"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="101"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
-                         Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
-                         Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutDeckOptions" Header="More..." Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:DeckOptions Width="auto" Height="auto" x:Name="DeckOptionsFlyout" Margin="3,0,0,0"></local:DeckOptions>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
-        </controls:Flyout>
-
-        <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
-            <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
-        </controls:Flyout>
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem Header="_NEW">
                 <MenuItem.Icon>
@@ -226,7 +219,7 @@
             </MenuItem>
         </Menu>
         <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
-        <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0">
+        <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -279,13 +272,12 @@
             </local:DeckListView>
             <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
         </Grid>
-
         <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Left" Margin="6,6,0,6"  Grid.Column="0" Grid.Row="1"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
                               OnSelectedClassChanged="DeckPickerList_OnSelectedClassChanged" />
-        <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0">
+        <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
             <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">
@@ -335,7 +327,7 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Visible">
+        <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="255">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -403,5 +395,6 @@
             </local:DeckListView>
         </Grid>
 
+        </Grid>
     </Grid>
 </controls:MetroWindow>

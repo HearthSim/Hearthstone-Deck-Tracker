@@ -240,9 +240,9 @@ namespace Hearthstone_Deck_Tracker
 			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
 			DeckPickerList.SelectDeck(lastDeck);
 
-			DeckOptionsFlyout.DeckOptionsButtonClicked += sender => { FlyoutDeckOptions.IsOpen = false; };
+			//DeckOptionsFlyout.DeckOptionsButtonClicked += sender => { FlyoutDeckOptions.IsOpen = false; };
 
-			DeckImportFlyout.DeckOptionsButtonClicked += sender => { FlyoutDeckImport.IsOpen = false; };
+			//DeckImportFlyout.DeckOptionsButtonClicked += sender => { FlyoutDeckImport.IsOpen = false; };
 
 			TurnTimer.Create(90);
 
@@ -1183,7 +1183,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void EnableDeckButtons(bool enable)
 		{
-			DeckOptionsFlyout.EnableButtons(enable);
+			//DeckOptionsFlyout.EnableButtons(enable);
 			//BtnEditDeck.IsEnabled = enable;
 			//BtnDeckOptions.IsEnabled = enable;
 		}
@@ -1268,7 +1268,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeckOptions_Click(object sender, RoutedEventArgs e)
 		{
-			FlyoutDeckOptions.IsOpen = true;
+			//FlyoutDeckOptions.IsOpen = true;
 		}
 
 		#endregion
@@ -1426,8 +1426,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnImport_OnClick(object sender, RoutedEventArgs e)
 		{
-			FlyoutDeckImport.IsOpen = true;
-			DeckImportFlyout.BtnLastGame.IsEnabled = Game.DrawnLastGame != null;
+			//FlyoutDeckImport.IsOpen = true;
+			//DeckImportFlyout.BtnLastGame.IsEnabled = Game.DrawnLastGame != null;
 		}
 
 		private void ListViewDB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1787,7 +1787,7 @@ namespace Hearthstone_Deck_Tracker
 				DeckNotesEditor.SetDeck(deck);
 				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
 				FlyoutNotes.Header = flyoutHeader;
-				FlyoutDeckOptions.Header = flyoutHeader;
+				//FlyoutDeckOptions.Header = flyoutHeader;
 				if(Config.Instance.StatsInWindow)
 				{
 					StatsWindow.Title = "Stats: " + deck.Name;
@@ -1869,8 +1869,11 @@ namespace Hearthstone_Deck_Tracker
 
 		}
 
-		private void BtnCancelEdit_Click(object sender, RoutedEventArgs e)
+		private async void BtnCancelEdit_Click(object sender, RoutedEventArgs e)
 		{
+			var result = await this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation", EditingDeck ? "This will cause you to lose all changes made to the deck." : "This will cause you to lose the new deck.", MessageDialogStyle.AffirmativeAndNegative);
+			if(result != MessageDialogResult.Affirmative)
+				return;
 			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
