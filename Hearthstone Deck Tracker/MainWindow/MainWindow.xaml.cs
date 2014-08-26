@@ -1731,25 +1731,18 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetNewDeck(Deck deck, bool editing = false)
 		{
-			/*if(deck != null)
+			if(deck != null)
 			{
 				ClearNewDeckSection();
 				_newContainsDeck = true;
 				EditingDeck = editing;
-
-				NewDeck = (Deck)deck.Clone();
-				ListViewNewDeck.ItemsSource = NewDeck.Cards;
-				Helper.SortCardCollection(ListViewNewDeck.ItemsSource, false);
-
-				ManaCurveNewDeck.SetDeck(NewDeck);
-
-				if(ComboBoxSelectClass.Items.Contains(NewDeck.Class))
-					ComboBoxSelectClass.SelectedValue = NewDeck.Class;
-
-				TextBoxDeckName.Text = NewDeck.Name;
-				UpdateNewDeckHeader(true);
+				_newDeck = (Deck)deck.Clone();
+				ListViewDeck.ItemsSource = _newDeck.Cards;
+				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
+				TextBoxDeckName.Text = _newDeck.Name;
 				UpdateDbListView();
-			}*/
+				ExpandNewDeck();
+			}
 		}
 
 		private async void ShowClearNewDeckMessage()
@@ -1892,6 +1885,11 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnFilter_OnClick(object sender, RoutedEventArgs e)
 		{
 			UpdateDbListView();
+		}
+		
+		private void BtnDonate_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
 		}
 	} 
 	

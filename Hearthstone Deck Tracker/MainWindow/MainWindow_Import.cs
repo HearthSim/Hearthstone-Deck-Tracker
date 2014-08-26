@@ -23,34 +23,34 @@ namespace Hearthstone_Deck_Tracker
 				settings.DefaultText = clipboard;
 
 			//import dialog
-			var url = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
+			var url = await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
 			if(string.IsNullOrEmpty(url))
 				return;
 
-			var controller = await Helper.MainWindow.ShowProgressAsync("Loading Deck...", "please wait");
+			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
-			//var deck = await Helper.MainWindow._deckImporter.Import(url);
+			//var deck = await this._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
 
 			await controller.CloseAsync();
 
 			if(deck != null)
 			{
-				//var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null &&
-				//               Helper.MainWindow.NewDeck.Url == url;
+				var reimport = EditingDeck && _newDeck != null &&
+							   _newDeck.Url == url;
 
 				deck.Url = url;
 
-				//if(reimport) //keep old notes
-				//	deck.Note = Helper.MainWindow.NewDeck.Note;
+				if(reimport) //keep old notes
+					deck.Note = _newDeck.Note;
 
 				if(!deck.Note.Contains(url))
 					deck.Note = url + "\n" + deck.Note;
 
-				//Helper.MainWindow.SetNewDeck(deck, reimport);
+				SetNewDeck(deck, reimport);
 			}
 			else
-				await Helper.MainWindow.ShowMessageAsync("Error", "Could not load deck from specified url");
+				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
 
 		}
 
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 				settings.DefaultText = clipboard;
 
 			//import dialog
-			var idString = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
+			var idString = await this.ShowInputAsync("Import deck", "", settings);
 			if(string.IsNullOrEmpty(idString))
 				return;
 			var deck = new Deck();
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker
 
 				deck.Cards.Add(card);
 			}
-			Helper.MainWindow.SetNewDeck(deck);
+			SetNewDeck(deck);
 		}
 
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
@@ -133,9 +133,9 @@ namespace Hearthstone_Deck_Tracker
 						//not all required information is saved in xml
 						foreach(var card in deck.Cards)
 							card.Load();
-						Helper.MainWindow.TagControlNewDeck.SetSelectedTags(deck.Tags);
+						TagControlNewDeck.SetSelectedTags(deck.Tags);
 					}
-					Helper.MainWindow.SetNewDeck(deck);
+					SetNewDeck(deck);
 				}
 				catch(Exception ex)
 				{
@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.PlayerClass;
 			}
 
-			Helper.MainWindow.SetNewDeck(deck);
+			SetNewDeck(deck);
 		}
 	}
 }

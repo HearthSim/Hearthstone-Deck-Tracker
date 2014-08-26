@@ -32,7 +32,7 @@
                 </StackPanel>
             </Button>
             <Button Click="BtnHelp_OnClick" Content="help" />
-            <Button>
+            <Button Click="BtnDonate_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
