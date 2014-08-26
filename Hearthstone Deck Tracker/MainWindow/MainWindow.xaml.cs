@@ -946,7 +946,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 
 			var delay = Config.Instance.DeckExportDelay;
-			Options.ComboboxExportSpeed.SelectedIndex = delay < 50 ? 0 : delay < 75 ? 1 : delay < 125 ? 2 : delay < 250 ? 3 : 4;
+			Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
 
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
 
