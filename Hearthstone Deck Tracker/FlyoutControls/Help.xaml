@@ -99,12 +99,5 @@
             </StackPanel>
         </ScrollViewer>
         <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom" />
-        <TextBlock Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-                        <Hyperlink
-                            NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PZDMUT88NLFYJ"
-                            RequestNavigate="Hyperlink_RequestNavigate">
-                            Just in case you would like to buy me a coffee/beer
-                        </Hyperlink>
-        </TextBlock>
     </Grid>
 </UserControl>

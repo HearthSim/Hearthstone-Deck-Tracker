@@ -66,33 +66,33 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Grid.ColumnSpan="3" Panel.ZIndex="101"
+        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Grid.ColumnSpan="3" Grid.RowSpan="2" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
-                         Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                         Width="255" Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
-                         Panel.ZIndex="100" Grid.Column="1">
+                         Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutDeckOptions" Header="More..." Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:DeckOptions Width="auto" Height="auto" x:Name="DeckOptionsFlyout" Margin="3,0,0,0"></local:DeckOptions>
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
         </controls:Flyout>
 
         <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutDeckImport" Header="Import Deck" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100" Grid.Column="1">
+                         Height="auto" Panel.ZIndex="100" Grid.Column="1" Grid.Row="1">
             <local:DeckImport Width="auto" Height="auto" x:Name="DeckImportFlyout" />
         </controls:Flyout>
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
