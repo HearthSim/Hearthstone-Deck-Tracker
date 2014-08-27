@@ -1840,8 +1840,8 @@ namespace Hearthstone_Deck_Tracker
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
 				GridNewDeck.UpdateLayout();
-				MinWidth += GridNewDeck.ActualWidth;
 				Width += GridNewDeck.ActualWidth;
+				MinWidth += GridNewDeck.ActualWidth;
 			}
 			
 		}
@@ -1849,8 +1849,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(GridNewDeck.Visibility != Visibility.Collapsed)
 			{
-				Width -= GridNewDeck.ActualWidth;
 				MinWidth -= GridNewDeck.ActualWidth;
+				Width -= GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Visibility.Collapsed;
 				MenuNewDeck.Visibility = Visibility.Collapsed;
 			}
