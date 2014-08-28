@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 				settings.DefaultText = clipboard;
 
 			//import dialog
-			var idString = await this.ShowInputAsync("Import deck", "", settings);
+			var idString = await this.ShowInputAsync("Import deck", "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD", settings);
 			if(string.IsNullOrEmpty(idString))
 				return;
 			var deck = new Deck();

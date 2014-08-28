@@ -115,12 +115,6 @@
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\DeckImport.xaml.cs">
-      <DependentUpon>DeckImport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
-      <DependentUpon>DeckOptions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
       <DependentUpon>DeckStatsControl.xaml</DependentUpon>
     </Compile>
@@ -229,15 +223,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\DeckImport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FlyoutControls\DeckNotes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\DeckOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
