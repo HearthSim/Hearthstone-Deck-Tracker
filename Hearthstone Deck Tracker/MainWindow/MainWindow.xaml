@@ -24,18 +24,26 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_cog}" />
+                            <VisualBrush Visual="{StaticResource appbar_settings}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="options" />
                 </StackPanel>
             </Button>
-            <Button Click="BtnHelp_OnClick" Content="help" />
+            <Button Click="BtnHelp_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12" Height="14">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_question}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="help" />
+                </StackPanel></Button>
             <Button Click="BtnDonate_OnClick">
                 <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16" Height="16">
+                    <Rectangle Width="16" Height="14">
                         <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_beer}" />
+                            <VisualBrush Visual="{StaticResource appbar_heart}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="donate" />
