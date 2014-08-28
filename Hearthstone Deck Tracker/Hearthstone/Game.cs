@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			None
 		}
 
-		public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
+		public static readonly string[] Classes = new[] {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
 
 		#region Properties
 
@@ -535,7 +535,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var obj = JObject.Parse(File.ReadAllText(fileEng));
 					foreach(var cardType in obj)
 					{
-                        
 						if(!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
 
 						foreach(var card in cardType.Value)

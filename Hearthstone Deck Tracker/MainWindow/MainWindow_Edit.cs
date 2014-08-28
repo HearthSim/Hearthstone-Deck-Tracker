@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -12,13 +9,10 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-
 		private void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
 			if(DeckPickerList.SelectedDeck == null) return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
-
-			
 		}
 
 		private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
@@ -26,11 +20,11 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckPickerList.SelectedDeck;
 			if(deck != null)
 			{
-				var settings = new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" };
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 				var result =
 					await
 					this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?",
-													   MessageDialogStyle.AffirmativeAndNegative, settings);
+					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					try
@@ -56,9 +50,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 			}
-
-
-			
 		}
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
@@ -68,11 +59,11 @@ namespace Hearthstone_Deck_Tracker
 
 			while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
-				var settings = new MetroDialogSettings { AffirmativeButtonText = "Set", DefaultText = clone.Name };
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
 					await
 					this.ShowInputAsync("Name already exists",
-													 "You already have a deck with that name, please select a different one.", settings);
+					                    "You already have a deck with that name, please select a different one.", settings);
 
 				if(String.IsNullOrEmpty(name))
 					return;
@@ -97,8 +88,6 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
-
-			
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
@@ -106,8 +95,6 @@ namespace Hearthstone_Deck_Tracker
 			FlyoutMyDecksSetTags.IsOpen = true;
 			if(DeckPickerList.SelectedDeck != null)
 				TagControlMyDecks.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
-
-			
 		}
 	}
 }

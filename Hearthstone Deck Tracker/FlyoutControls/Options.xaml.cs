@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
@@ -22,6 +20,7 @@ namespace Hearthstone_Deck_Tracker
 	public partial class Options
 	{
 		private bool _initialized;
+
 		public Options()
 		{
 			InitializeComponent();
@@ -338,7 +337,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.UseSameScaling && SliderOverlayPlayerScaling.Value != scaling)
 				SliderOverlayPlayerScaling.Value = scaling;
 		}
-		
+
 		private void CheckboxHideTimers_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;

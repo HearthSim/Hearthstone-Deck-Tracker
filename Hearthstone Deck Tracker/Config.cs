@@ -157,6 +157,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool VisibleOverlay = Defaults.VisibleOverlay;
 		public bool WindowCardToolTips = Defaults.WindowCardToolTips;
 		public int WindowHeight = Defaults.WindowHeight;
+		public int WindowWidth = Defaults.WindowWidth;
 		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
 		public bool WindowsTopmost = Defaults.WindowsTopmost;
 		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
@@ -181,7 +182,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _config; }
 		}
-
 
 		private string GetLogFileName()
 		{
@@ -404,7 +404,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool UseSameScaling = true;
 			public static readonly bool VisibleOverlay = false;
 			public static readonly bool WindowCardToolTips = true;
-			public static readonly int WindowHeight = 672;
+			public static readonly int WindowHeight = 620;
+			public static readonly int WindowWidth = 550;
 			public static readonly string WindowsBackgroundHex = "#696969";
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;

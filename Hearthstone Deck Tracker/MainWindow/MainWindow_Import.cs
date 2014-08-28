@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck != null)
 			{
 				var reimport = EditingDeck && _newDeck != null &&
-							   _newDeck.Url == url;
+				               _newDeck.Url == url;
 
 				deck.Url = url;
 
@@ -51,7 +51,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
-
 		}
 
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)

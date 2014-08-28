@@ -4,8 +4,8 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Hearthstone Deck Tracker" Height="620.321" Width="750.471"
-                      MinHeight="525" MinWidth="500"
+                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
+                      MinHeight="525" MinWidth="515"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -21,7 +21,6 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Click="BtnOptions_OnClick">
-
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
@@ -47,7 +46,7 @@
     <Grid>
 
         <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                         Width="515">
             <local:Options x:Name="Options"></local:Options>
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
@@ -143,7 +142,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_EDIT">
+            <MenuItem Header="_EDIT" Name="MenuItemEdit" IsEnabled="False">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
@@ -193,7 +192,7 @@
                 <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="E_XPORT">
+            <MenuItem Header="E_XPORT" Name="MenuItemExport" IsEnabled="False">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
@@ -206,7 +205,7 @@
                 <MenuItem Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
                 <MenuItem Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Header="_STATS">
+                <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
@@ -214,8 +213,6 @@
                         </Rectangle.Fill>
                     </Rectangle>
                 </MenuItem.Icon>
-                <MenuItem Header="CURRENT _DECK" Click="BtnDeckStats_Click"></MenuItem>
-                <MenuItem Header="_OVERALL"></MenuItem>
             </MenuItem>
         </Menu>
         <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
@@ -272,12 +269,16 @@
             </local:DeckListView>
             <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
         </Grid>
+        
         <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6"  Grid.Column="0" Grid.Row="1"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
-                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
-                              OnSelectedClassChanged="DeckPickerList_OnSelectedClassChanged" />
-        <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
+                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
+            <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6"  Grid.Column="0" Grid.Row="1" Panel.ZIndex="1"
+                              Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden"/>
+
+
+            <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
             <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">

@@ -111,10 +111,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
-		public delegate void SelectedClassHandler(DeckPicker sender, string hsClass);
-
-		public event SelectedDeckHandler OnSelectedDeckChanged;
-		public event SelectedClassHandler OnSelectedClassChanged;
 
 		private readonly List<string> _classNames = new List<string>
 			{
@@ -142,6 +138,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _selectedClass != null ? _selectedClass.Name : "None"; }
 		}
+
+		public event SelectedDeckHandler OnSelectedDeckChanged;
 
 		#endregion
 
@@ -268,7 +266,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 					_inClassSelect = false;
 					SortDecks();
-					OnSelectedClassChanged(this, selectedClass.Name);
 				}
 				else if(selectedClass.Name == "Back")
 				{
@@ -278,7 +275,6 @@ namespace Hearthstone_Deck_Tracker
 					foreach(var hsClass in _hsClasses)
 						ListboxPicker.Items.Add(hsClass);
 					_inClassSelect = true;
-					OnSelectedClassChanged(this, "None");
 				}
 			}
 			else
@@ -352,7 +348,7 @@ namespace Hearthstone_Deck_Tracker
 				hsClass.TagOperation = o;
 		}
 
-		
+
 		public void SortDecks()
 		{
 			if(_inClassSelect) return;
