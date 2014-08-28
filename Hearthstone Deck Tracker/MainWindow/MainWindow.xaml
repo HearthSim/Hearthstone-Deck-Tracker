@@ -328,13 +328,13 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-        <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="255">
+        <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,6,0" Grid.Row="0" Width="233">
-                <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="100"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0" Width="240">
+                <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
                          VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                          TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                          TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
@@ -350,7 +350,8 @@
                                 FontWeight="Bold" BorderThickness="1"
                                 ScrollViewer.VerticalScrollBarVisibility="Visible"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,6,6"
+                                ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                                HorizontalAlignment="Left"
                                 Width="240" KeyDown="ListViewDB_KeyDown"
                                 MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
                 <ListView.Resources>
