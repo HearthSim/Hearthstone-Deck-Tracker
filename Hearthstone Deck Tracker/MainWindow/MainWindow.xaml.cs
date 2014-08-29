@@ -115,10 +115,11 @@ namespace Hearthstone_Deck_Tracker
 			else
 				currentVersion = Helper.GetCurrentVersion();
 
+			var versionString = string.Empty; 
 			if(currentVersion != null)
 			{
-				Help.TxtblockVersion.Text = string.Format("Version: {0}.{1}.{2}", currentVersion.Major, currentVersion.Minor,
-				                                          currentVersion.Build);
+				versionString = string.Format("{0}.{1}.{2}", currentVersion.Major, currentVersion.Minor, currentVersion.Build);
+				Help.TxtblockVersion.Text = "Version: " + versionString;
 
 				// Assign current version to the config instance so that it will be saved when the config
 				// is rewritten to disk, thereby telling us what version of the application created it
@@ -168,7 +169,7 @@ namespace Hearthstone_Deck_Tracker
 			SetupDeckStatsFile();
 			DeckStatsList.Load();
 
-			_notifyIcon = new NotifyIcon {Icon = new Icon(@"Images/HearthstoneDeckTracker.ico"), Visible = true, ContextMenu = new ContextMenu()};
+			_notifyIcon = new NotifyIcon {Icon = new Icon(@"Images/HearthstoneDeckTracker.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString};
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 			_notifyIcon.MouseClick += (sender, args) => { if(args.Button == MouseButtons.Left) ActivateWindow(); };
