@@ -57,6 +57,7 @@
     <ApplicationIcon>Images\HearthstoneDeckTracker.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility" />
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -67,9 +68,13 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -84,6 +89,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -108,17 +115,17 @@
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\DeckImport.xaml.cs">
-      <DependentUpon>DeckImport.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FlyoutControls\DeckOptions.xaml.cs">
-      <DependentUpon>DeckOptions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
       <DependentUpon>DeckStatsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\GameDetails.xaml.cs">
       <DependentUpon>GameDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
@@ -151,14 +158,19 @@
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Utility\Logger.cs" />
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Decks.cs" />
     <Compile Include="Hearthstone\Game.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="Utility\Helper.cs" />
     <Compile Include="HsLogReader.cs" />
+    <Compile Include="MainWindow\MainWindow_Edit.cs" />
+    <Compile Include="MainWindow\MainWindow_Export.cs" />
+    <Compile Include="MainWindow\MainWindow_Import.cs" />
+    <Compile Include="MainWindow\MainWindow_Load.cs" />
+    <Compile Include="MainWindow\MainWindow_NewDeck.cs" />
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
@@ -176,15 +188,15 @@
     <Compile Include="Windows\PlayerWindow.xaml.cs">
       <DependentUpon>PlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SerializableVersion.cs" />
-    <Compile Include="User32.cs" />
+    <Compile Include="Utility\SerializableVersion.cs" />
+    <Compile Include="Utility\User32.cs" />
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XmlManager.cs" />
+    <Compile Include="Utility\XmlManager.cs" />
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,15 +225,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\DeckImport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FlyoutControls\DeckNotes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\DeckOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,11 +253,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Help.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\SortFilterDecks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -262,6 +274,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Page Include="Resources\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\DeckSelectionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1764,7 +1780,6 @@
     <Content Include="Images\zombie-chow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Rebracer.xml" />
     <Resource Include="Resources\druid_small.png" />
     <Resource Include="Resources\hunter_small.png" />
     <Resource Include="Resources\mage_small.png" />
@@ -1826,7 +1841,6 @@
     <Content Include="Files\cardsDB.zhTW.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

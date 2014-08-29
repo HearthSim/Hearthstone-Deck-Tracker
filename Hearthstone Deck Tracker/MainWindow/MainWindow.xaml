@@ -1,0 +1,421 @@
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:system="clr-namespace:System;assembly=mscorlib"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
+                      MinHeight="525" MinWidth="515"
+                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
+                      Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
+                      Deactivated="MetroWindow_Deactivated"
+                      StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="BtnOptions_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="options" />
+                </StackPanel>
+            </Button>
+            <Button Click="BtnHelp_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12" Height="14">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_question}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="help" />
+                </StackPanel>
+            </Button>
+            <Button Click="BtnDonate_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="14">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_heart}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="donate" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <Grid>
+
+        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
+                         Width="515">
+            <local:Options x:Name="Options"></local:Options>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:Help x:Name="Help"></local:Help>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
+                         Width="255" Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
+                         Panel.ZIndex="100">
+            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
+                         Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
+                         Height="auto" Panel.ZIndex="100">
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+        </controls:Flyout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Menu Grid.Row="0" Grid.ColumnSpan="2">
+                <MenuItem Header="_DECKS">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_layer}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
+                    </MenuItem>
+                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="AUTO DECK SELECTION"
+                              FontSize="14"
+                              Checked="CheckboxDeckDetection_Checked"
+                              Unchecked="CheckboxDeckDetection_Unchecked" />
+                    <Separator />
+                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_NEW">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_layer_add}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="_DRUID" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_HUNTER" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_MAGE" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_PRIEST" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_PALADIN" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_ROGUE" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_SHAMAN" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_WARLOCK" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_WARRIOR" Click="BtnNewDeck_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_EDIT" Name="MenuItemEdit" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_edit}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="_DECK" Click="BtnEditDeck_Click">
+                    </MenuItem>
+                    <MenuItem Header="_TAGS" Click="BtnTags_Click">
+                    </MenuItem>
+                    <MenuItem Header="_NOTES" Click="BtnNotes_Click">
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click">
+                    </MenuItem>
+                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click">
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_IMPORT">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_download}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="FROM _WEB" Click="BtnWeb_Click">
+                    </MenuItem>
+                    <MenuItem Header="FROM _FILE" Click="BtnFile_Click">
+                    </MenuItem>
+                    <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click">
+                    </MenuItem>
+                    <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="E_XPORT" Name="MenuItemExport" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_upload}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
+                    <MenuItem Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
+                    <MenuItem Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
+                    <MenuItem Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_graph_line}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </Menu>
+            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
+            <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <local:DeckListView x:Name="ListViewDeck" Grid.Row="0"
+                                    Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                                    Foreground="White" FontWeight="Bold" BorderThickness="1"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                                    HorizontalAlignment="Center" Width="240" Height="auto"
+                                    MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
+                                    MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
+                    <local:DeckListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                            <Setter Property="ToolTipService.IsEnabled"
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                        <local:CardToolTip></local:CardToolTip>
+                                    </ToolTip>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" Value="{Binding Background}" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="{Binding Background}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="{Binding Background}" />
+                                    <Setter Property="BorderBrush"
+                                            Value="Blue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </local:DeckListView.Resources>
+                </local:DeckListView>
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
+            </Grid>
+
+            <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
+                              Grid.Row="1"
+                              Height="auto" Width="auto"
+                              Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
+            <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
+                       Grid.Row="1" Panel.ZIndex="1"
+                       Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
+
+
+            <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
+                <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_save}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_cancel}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="FILTER"></TextBlock>
+                    </MenuItem.Header>
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_filter}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Name="MenuFilterMana" Header="MANA">
+                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
+                                     FontSize="14" />
+                        <RadioButton Content="0" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="1" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="2" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="3" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="4" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="5" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="6" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="7" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="8" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="9+" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                    </MenuItem>
+                    <MenuItem Name="MenuFilterType" Header="TYPE">
+                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
+                                     FontSize="14" />
+                        <RadioButton Content="CLASS ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="NEUTRAL ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
+                            Width="240">
+                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
+                             VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
+                             TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
+                             TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
+                    <TextBox controls:TextboxHelper.Watermark="Search..."
+                             controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter"
+                             VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
+                             Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
+                             TextChanged="TextBoxDBFilter_TextChanged"
+                             PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"
+                             DockPanel.Dock="Left" Width="130" />
+                </StackPanel>
+                <local:DeckListView x:Name="ListViewDB" Background="DimGray" Foreground="White"
+                                    FontWeight="Bold" BorderThickness="1"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                                    HorizontalAlignment="Left"
+                                    Width="240" KeyDown="ListViewDB_KeyDown"
+                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
+                    <ListView.Resources>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                            <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                            <Setter Property="ToolTipService.IsEnabled"
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                        <local:CardToolTip></local:CardToolTip>
+                                    </ToolTip>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="FontFamily"
+                                    Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" Value="{Binding Background}" />
+                            <Setter Property="Height" Value="35" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="0,0,0,0" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="{Binding Background}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected"
+                                         Value="True">
+                                    <Setter Property="Background"
+                                            Value="{Binding Background}" />
+                                    <Setter Property="BorderBrush"
+                                            Value="Blue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                    </ListView.Resources>
+                </local:DeckListView>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</controls:MetroWindow>

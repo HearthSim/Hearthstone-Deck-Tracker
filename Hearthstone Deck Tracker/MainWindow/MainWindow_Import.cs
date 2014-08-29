@@ -8,32 +8,8 @@ using Microsoft.Win32;
 
 namespace Hearthstone_Deck_Tracker
 {
-	/// <summary>
-	/// Interaction logic for DeckImport.xaml
-	/// </summary>
-	public partial class DeckImport
+	public partial class MainWindow
 	{
-		//TODO: Convert this into a Flyout with a user control inside of it!!!
-
-		//public MainWindow Window;
-
-
-		public delegate void DeckOptionsButtonClickedEvent(DeckImport sender);
-
-		public DeckImport()
-		{
-			InitializeComponent();
-		}
-
-		public event DeckOptionsButtonClickedEvent DeckOptionsButtonClicked;
-
-
-		public void After_Click()
-		{
-			if(DeckOptionsButtonClicked != null)
-				DeckOptionsButtonClicked(this);
-		}
-
 		private async void BtnWeb_Click(object sender, RoutedEventArgs e)
 		{
 			var settings = new MetroDialogSettings();
@@ -47,36 +23,34 @@ namespace Hearthstone_Deck_Tracker
 				settings.DefaultText = clipboard;
 
 			//import dialog
-			var url = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
+			var url = await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
 			if(string.IsNullOrEmpty(url))
 				return;
 
-			var controller = await Helper.MainWindow.ShowProgressAsync("Loading Deck...", "please wait");
+			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
-			//var deck = await Helper.MainWindow._deckImporter.Import(url);
+			//var deck = await this._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
 
 			await controller.CloseAsync();
 
 			if(deck != null)
 			{
-				var reimport = Helper.MainWindow.EditingDeck && Helper.MainWindow.NewDeck != null &&
-				               Helper.MainWindow.NewDeck.Url == url;
+				var reimport = EditingDeck && _newDeck != null &&
+				               _newDeck.Url == url;
 
 				deck.Url = url;
 
 				if(reimport) //keep old notes
-					deck.Note = Helper.MainWindow.NewDeck.Note;
+					deck.Note = _newDeck.Note;
 
 				if(!deck.Note.Contains(url))
 					deck.Note = url + "\n" + deck.Note;
 
-				Helper.MainWindow.SetNewDeck(deck, reimport);
+				SetNewDeck(deck, reimport);
 			}
 			else
-				await Helper.MainWindow.ShowMessageAsync("Error", "Could not load deck from specified url");
-
-			After_Click();
+				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
 		}
 
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)
@@ -87,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 				settings.DefaultText = clipboard;
 
 			//import dialog
-			var idString = await Helper.MainWindow.ShowInputAsync("Import deck", "", settings);
+			var idString = await this.ShowInputAsync("Import deck", "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD", settings);
 			if(string.IsNullOrEmpty(idString))
 				return;
 			var deck = new Deck();
@@ -108,9 +82,7 @@ namespace Hearthstone_Deck_Tracker
 
 				deck.Cards.Add(card);
 			}
-			Helper.MainWindow.SetNewDeck(deck);
-
-			After_Click();
+			SetNewDeck(deck);
 		}
 
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
@@ -160,17 +132,15 @@ namespace Hearthstone_Deck_Tracker
 						//not all required information is saved in xml
 						foreach(var card in deck.Cards)
 							card.Load();
-						Helper.MainWindow.TagControlNewDeck.SetSelectedTags(deck.Tags);
+						TagControlNewDeck.SetSelectedTags(deck.Tags);
 					}
-					Helper.MainWindow.SetNewDeck(deck);
+					SetNewDeck(deck);
 				}
 				catch(Exception ex)
 				{
 					Logger.WriteLine("Error getting deck from file: \n" + ex.Message + "\n" + ex.StackTrace);
 				}
 			}
-
-			After_Click();
 		}
 
 		private void BtnLastGame_Click(object sender, RoutedEventArgs e)
@@ -187,7 +157,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.PlayerClass;
 			}
 
-			Helper.MainWindow.SetNewDeck(deck);
+			SetNewDeck(deck);
 		}
 	}
 }

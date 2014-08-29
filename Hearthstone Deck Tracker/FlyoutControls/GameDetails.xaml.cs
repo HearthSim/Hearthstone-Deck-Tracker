@@ -195,7 +195,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			Helper.MainWindow.SetNewDeck(deck);
-			Helper.MainWindow.TabControlTracker.SelectedIndex = 1;
+			//Helper.MainWindow.TabControlTracker.SelectedIndex = 1;
 			Helper.MainWindow.FlyoutGameDetails.IsOpen = false;
 			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
 		}
