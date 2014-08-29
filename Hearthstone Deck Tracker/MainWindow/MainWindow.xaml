@@ -95,8 +95,21 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            <MenuItem Header="_NEW">
+            <Menu Grid.Row="0" Grid.ColumnSpan="2">
+                <MenuItem Header="_DECKS">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_layer}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
+                    </MenuItem>
+                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_NEW">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16">
                         <Rectangle.Fill>
@@ -168,19 +181,6 @@
                 <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click">
                 </MenuItem>
                 <MenuItem Header="CLONE" Click="BtnCloneDeck_Click">
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="_DECKS">
-                <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_layer}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </MenuItem.Icon>
-                <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
-                </MenuItem>
-                <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_IMPORT">

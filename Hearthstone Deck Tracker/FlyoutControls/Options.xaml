@@ -332,7 +332,7 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Height="360" Width="235" Margin="5,0,0,0">
+                                      VerticalAlignment="Top" Height="338" Width="235" Margin="5,0,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Theme:" HorizontalAlignment="Left"
@@ -383,15 +383,10 @@
                                                   SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
                                     </DockPanel>
                                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
-                                              Content="Manacurve in My Decks" HorizontalAlignment="Left"
+                                              Content="Show Manacurve" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxManaCurveMyDecks_Checked"
                                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
-                                    <CheckBox x:Name="CheckboxHideManaCurveNewDeck"
-                                              Content="Manacurve in New Deck" HorizontalAlignment="Left"
-                                              Margin="10,5,0,0" VerticalAlignment="Top"
-                                              Checked="CheckboxManaCurveNewDeck_Checked"
-                                              Unchecked="CheckboxManaCurveNewDeck_Unchecked" />
                                     <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxAppData_Checked"

@@ -295,7 +295,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.AutoDeckDetection = false;
-			CheckboxAutoSelectDeck.IsChecked = false;
 			CheckboxAutoSelectDeck.IsEnabled = false;
 			SaveConfig(false);
 		}
@@ -560,22 +559,6 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.ManaCurveMyDecks = false;
 			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			SaveConfig(false);
-		}
-
-		private void CheckboxManaCurveNewDeck_Checked(object sender, RoutedEventArgs e)
-		{
-			//if(!_initialized) return;
-			//Config.Instance.ManaCurveNewDeck = true;
-			//ManaCurveNewDeck.Visibility = Visibility.Visible;
-			//SaveConfig(false);
-		}
-
-		private void CheckboxManaCurveNewDeck_Unchecked(object sender, RoutedEventArgs e)
-		{
-			//if(!_initialized) return;
-			//Config.Instance.ManaCurveNewDeck = false;
-			//ManaCurveNewDeck.Visibility = Visibility.Collapsed;
-			//SaveConfig(false);
 		}
 
 		private async void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
