@@ -796,8 +796,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					Logger.WriteLine("No deck selected. disabled deck detection.");
-					Options.CheckboxDeckDetection.IsChecked = false;
+					ShowMessage("Deck detection disabled.", "Can be re-enabled in \"DECKS\" menu.");
+					CheckboxDeckDetection.IsChecked = false;
 					Config.Save();
 				}
 			}
@@ -865,7 +865,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxTimerTopmostHsForeground.IsChecked = Config.Instance.TimerWindowTopmostIfHsForeground;
 			Options.CheckboxTimerTopmostHsForeground.IsEnabled = Config.Instance.TimerWindowTopmost;
 			Options.CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
-			Options.CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
+			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			Options.CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
 			Options.CheckboxWinTopmostHsForeground.IsEnabled = Config.Instance.WindowsTopmost;
 			Options.CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
@@ -1752,6 +1752,19 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AutoDeckDetection = true;
+			Config.Save();
+		}
+
+		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AutoDeckDetection = false;
+			Config.Save();
+		}
 		#endregion
 	}
 }

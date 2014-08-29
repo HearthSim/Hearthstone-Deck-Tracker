@@ -29,11 +29,5 @@ namespace Hearthstone_Deck_Tracker
 			SelectedDeck = DeckPickerList.SelectedItem as Deck;
 			Close();
 		}
-
-		private void Window_Closing(object sender, CancelEventArgs e)
-		{
-			if(SelectedDeck == null)
-				MessageBox.Show("Deck detection disabled for now. You can reenable it in the options.");
-		}
 	}
 }

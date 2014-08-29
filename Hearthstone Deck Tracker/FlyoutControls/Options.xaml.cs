@@ -283,22 +283,6 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.AutoDeckDetection = true;
-			CheckboxAutoSelectDeck.IsEnabled = true;
-			SaveConfig(false);
-		}
-
-		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.AutoDeckDetection = false;
-			CheckboxAutoSelectDeck.IsEnabled = false;
-			SaveConfig(false);
-		}
-
 		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
