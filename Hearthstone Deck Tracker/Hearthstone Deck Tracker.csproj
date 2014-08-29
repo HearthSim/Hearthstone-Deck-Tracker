@@ -158,13 +158,13 @@
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Decks.cs" />
     <Compile Include="Hearthstone\Game.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="Utility\Helper.cs" />
     <Compile Include="HsLogReader.cs" />
     <Compile Include="MainWindow\MainWindow_Edit.cs" />
     <Compile Include="MainWindow\MainWindow_Export.cs" />
@@ -188,15 +188,15 @@
     <Compile Include="Windows\PlayerWindow.xaml.cs">
       <DependentUpon>PlayerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SerializableVersion.cs" />
-    <Compile Include="User32.cs" />
+    <Compile Include="Utility\SerializableVersion.cs" />
+    <Compile Include="Utility\User32.cs" />
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="XmlManager.cs" />
+    <Compile Include="Utility\XmlManager.cs" />
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1780,7 +1780,6 @@
     <Content Include="Images\zombie-chow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Rebracer.xml" />
     <Resource Include="Resources\druid_small.png" />
     <Resource Include="Resources\hunter_small.png" />
     <Resource Include="Resources\mage_small.png" />
@@ -1842,7 +1841,6 @@
     <Content Include="Files\cardsDB.zhTW.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
