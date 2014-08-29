@@ -169,6 +169,8 @@
     <Compile Include="MainWindow\MainWindow_Edit.cs" />
     <Compile Include="MainWindow\MainWindow_Export.cs" />
     <Compile Include="MainWindow\MainWindow_Import.cs" />
+    <Compile Include="MainWindow\MainWindow_Load.cs" />
+    <Compile Include="MainWindow\MainWindow_NewDeck.cs" />
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />

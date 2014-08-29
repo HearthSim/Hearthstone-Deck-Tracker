@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker
 				if(selectedGame == null)
 					return;
 
-				if(await MessageDialogs.ShowDeleteGameStatsMessage(window, selectedGame) != MessageDialogResult.Affirmative)
+				if(await window.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
 					return;
 
 				if(_deck.DeckStats.Games.Contains(selectedGame))
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(count > 1)
 			{
-				if(await MessageDialogs.ShowDeleteMultipleGameStatsMessage(window, count) != MessageDialogResult.Affirmative)
+				if(await window.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
 					return;
 				foreach(var selectedItem in DataGridGames.SelectedItems)
 				{

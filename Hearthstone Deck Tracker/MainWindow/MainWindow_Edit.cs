@@ -96,5 +96,12 @@ namespace Hearthstone_Deck_Tracker
 			if(DeckPickerList.SelectedDeck != null)
 				TagControlMyDecks.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
 		}
+
+		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var selectedDeck = DeckPickerList.SelectedDeck;
+			if(selectedDeck == null) return;
+			SetNewDeck(selectedDeck, true);
+		}
 	}
 }

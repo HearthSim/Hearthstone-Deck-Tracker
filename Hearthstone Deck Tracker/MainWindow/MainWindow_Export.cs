@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker
@@ -72,7 +75,18 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckPickerList.SelectedDeck;
 			if(deck == null) return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
-			ShowMessage("", "copied to clipboard");
+			this.ShowMessage("", "copied to clipboard");
+		}
+
+
+		public async Task ShowSavedFileMessage(string fileName, string dir)
+		{
+			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
+			var result =
+				await
+				this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Negative)
+				Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "\\" + dir);
 		}
 	}
 }
