@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker
 				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deck-list-title']").InnerText);
 				deck.Name = deckName;
 
-				var cardNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'deck-list')]/div[contains(@class,'card')]");
+				var cardNodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'deck-list')]/div/div[contains(@class,'card')]");
 				foreach(var cardNode in cardNodes)
 				{
 					//silly names contain right-single quotation mark
