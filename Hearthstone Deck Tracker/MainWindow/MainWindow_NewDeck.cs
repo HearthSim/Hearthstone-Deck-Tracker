@@ -214,6 +214,7 @@ namespace Hearthstone_Deck_Tracker
 
 			UpdateTitle();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			ManaCurveMyDecks.UpdateValues();
 		}
 
 		private void AddCardToDeck(Card card)
@@ -230,6 +231,7 @@ namespace Hearthstone_Deck_Tracker
 
 			UpdateTitle();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			ManaCurveMyDecks.UpdateValues();
 			try
 			{
 				TextBoxDBFilter.Focus();
@@ -330,7 +332,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_newDeckUnsavedChanges)
 			{
-				var result = await this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation", EditingDeck ? "This will cause you to lose all changes made to the deck." : "This will cause you to lose the new deck.", MessageDialogStyle.AffirmativeAndNegative);
+				var result = await this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation", EditingDeck ? "All changes made to the deck will be lost." : "The new deck will be lost.", MessageDialogStyle.AffirmativeAndNegative);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
