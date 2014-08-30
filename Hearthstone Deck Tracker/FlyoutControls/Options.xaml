@@ -205,7 +205,7 @@
                                           Checked="CheckboxFullTextSearch_Checked"
                                           Unchecked="CheckboxFullTextSearch_Unchecked" />
 
-                                <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
+                                <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips in Tracker"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTrackerCardToolTips_Checked"
                                           Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
