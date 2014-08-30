@@ -9,7 +9,7 @@ The ingame overlay:
 
 The app: 
 
-![Tracker](http://i.imgur.com/cU4qTBC.png "The tracker")
+![Tracker](http://i.imgur.com/lwB9s76.png "The tracker")
 
 
 Features:
@@ -39,7 +39,7 @@ Features:
   - Select which game modes to track (Options > Other).  
   - Import your opponent's (partial) deck from a tracked game as a new deck.
 
-![Stats](http://i.imgur.com/q8UlO7c.png "Deck stats")
+![Stats](http://i.imgur.com/giLIQRE.png "Deck stats")
 
 
 How to use: 
