@@ -81,14 +81,20 @@ namespace Hearthstone_Deck_Tracker
 						//backup in case the file already exists
 						var time = DateTime.Now.ToFileTime();
 						File.Move(appDataPath, appDataPath + time);
-						Helper.CopyFolder(appDataGamesDirPath, appDataGamesDirPath + time);
-						Directory.Delete(appDataGamesDirPath, true);
+						if(Directory.Exists(appDataGamesDirPath))
+						{
+							Helper.CopyFolder(appDataGamesDirPath, appDataGamesDirPath + time);
+							Directory.Delete(appDataGamesDirPath, true);
+						}
 						Logger.WriteLine("Created backups of deckstats and games in appdata");
 					}
 					File.Move(localPath, appDataPath);
 					Logger.WriteLine("Moved DeckStats to appdata");
-					Helper.CopyFolder(localGamesDirPath, appDataGamesDirPath);
-					Directory.Delete(localGamesDirPath, true);
+					if(Directory.Exists(localGamesDirPath))
+					{
+						Helper.CopyFolder(localGamesDirPath, appDataGamesDirPath);
+						Directory.Delete(localGamesDirPath, true);
+					}
 					Logger.WriteLine("Moved Games to appdata");
 				}
 			}
@@ -99,14 +105,20 @@ namespace Hearthstone_Deck_Tracker
 					//backup in case the file already exists
 					var time = DateTime.Now.ToFileTime();
 					File.Move(localPath, localPath + time);
-					Helper.CopyFolder(localGamesDirPath, localGamesDirPath + time);
-					Directory.Delete(localGamesDirPath, true);
+					if(Directory.Exists(localGamesDirPath))
+					{
+						Helper.CopyFolder(localGamesDirPath, localGamesDirPath + time);
+						Directory.Delete(localGamesDirPath, true);
+					}
 					Logger.WriteLine("Created backups of deckstats and games locally");
 				}
 				File.Move(appDataPath, localPath);
 				Logger.WriteLine("Moved DeckStats to local");
-				Helper.CopyFolder(appDataGamesDirPath, localGamesDirPath);
-				Directory.Delete(appDataGamesDirPath, true);
+				if(Directory.Exists(appDataGamesDirPath))
+				{
+					Helper.CopyFolder(appDataGamesDirPath, localGamesDirPath);
+					Directory.Delete(appDataGamesDirPath, true);
+				}
 				Logger.WriteLine("Moved Games to appdata");
 			}
 
