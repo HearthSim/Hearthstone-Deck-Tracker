@@ -75,7 +75,16 @@ namespace Hearthstone_Deck_Tracker
 			finally
 			{
 				if(deleteBackup && File.Exists(backupPath))
-					File.Delete(backupPath);
+				{
+					try
+					{
+						File.Delete(backupPath);
+					}
+					catch(Exception)
+					{
+						//note sure, todo?
+					}
+				}
 			}
 		}
 	}
