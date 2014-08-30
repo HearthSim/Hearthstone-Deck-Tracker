@@ -582,6 +582,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.OverlayCardToolTips = true;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = true;
+			CheckboxOverlaySecretToolTipsOnly.IsEnabled = true;
 			SaveConfig(true);
 		}
 
@@ -591,6 +592,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.OverlayCardToolTips = false;
 			CheckboxOverlayAdditionalCardToolTips.IsChecked = false;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = false;
+			CheckboxOverlaySecretToolTipsOnly.IsEnabled = false;
+			CheckboxOverlaySecretToolTipsOnly.IsChecked = false;
 			SaveConfig(true);
 		}
 
@@ -1069,6 +1072,20 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Helper.MainWindow.OpponentWindow.Hide();
 			Config.Instance.OpponentWindowOnStart = false;
+			Config.Save();
+		}
+
+		private void CheckboxOverlaySecretToolTipsOnly_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.OverlaySecretToolTipsOnly = true;
+			Config.Save();
+		}
+
+		private void CheckboxOverlaySecretToolTipsOnly_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.OverlaySecretToolTipsOnly = false;
 			Config.Save();
 		}
 	}

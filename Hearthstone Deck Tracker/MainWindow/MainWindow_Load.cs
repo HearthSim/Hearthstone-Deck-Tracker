@@ -475,6 +475,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
 			Options.CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
+			Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

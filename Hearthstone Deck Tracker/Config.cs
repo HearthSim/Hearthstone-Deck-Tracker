@@ -84,6 +84,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool OpponentWindowOnStart = Defaults.OpponentWindowOnStart;
 		public int? OpponentWindowTop = Defaults.OpponentWindowTop;
 		public bool OverlayCardToolTips = Defaults.OverlayCardToolTips;
+		public bool OverlaySecretToolTipsOnly = Defaults.OverlaySecretToolTipsOnly;
 		public double OverlayOpacity = Defaults.OverlayOpacity;
 		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
 		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
@@ -336,6 +337,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool OpponentWindowOnStart = false;
 			public static readonly int? OpponentWindowTop = null;
 			public static readonly bool OverlayCardToolTips = true;
+			public static readonly bool OverlaySecretToolTipsOnly = false;
 			public static readonly double OverlayOpacity = 100;
 			public static readonly double OverlayOpponentScaling = 100;
 			public static readonly double OverlayPlayerScaling = 100;

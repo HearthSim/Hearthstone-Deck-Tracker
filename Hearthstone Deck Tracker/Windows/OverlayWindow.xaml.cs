@@ -638,12 +638,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void UpdateCardTooltip()
 		{
-			//todo: if distance to left or right of overlay < tooltip width -> switch side
 			var pos = User32.GetMousePos();
 			var relativePlayerDeckPos = ListViewPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
-			var visibility = Config.Instance.OverlayCardToolTips ? Visibility.Visible : Visibility.Hidden;
+			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly) ? Visibility.Visible : Visibility.Hidden;
 
 			//player card tooltips
 			if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
@@ -708,7 +707,7 @@ namespace Hearthstone_Deck_Tracker
 
 				SetTooltipPosition(topOffset, StackPanelSecrets);
 
-				ToolTipCard.Visibility = visibility;
+				ToolTipCard.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visibility.Visible : visibility;
 			}
 			else
 			{
