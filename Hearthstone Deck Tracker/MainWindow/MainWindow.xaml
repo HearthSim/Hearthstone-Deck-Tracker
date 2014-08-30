@@ -357,6 +357,12 @@
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
+
+                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="Name already exists" Visibility="Collapsed" Margin="3,0,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_warning}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
                     <TextBox controls:TextboxHelper.Watermark="Search..."
                              controls:TextboxHelper.ClearTextButton="True" x:Name="TextBoxDBFilter"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"

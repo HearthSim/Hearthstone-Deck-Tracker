@@ -245,12 +245,17 @@ namespace Hearthstone_Deck_Tracker
 			Title = _newDeck == null ? "Hearthstone Deck Tracker" : string.Format("Hearthstone Deck Tracker - Cards: {0}", _newDeck.Cards.Sum(c => c.Count));
 		}
 
+		private string editedDeckName;
 		public void SetNewDeck(Deck deck, bool editing = false)
 		{
 			if(deck != null)
 			{
 				ClearNewDeckSection();
 				EditingDeck = editing;
+				if(editing)
+				{
+					editedDeckName = deck.Name;
+				}
 				_newDeck = (Deck)deck.Clone();
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
@@ -305,10 +310,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TextBoxDeckName_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			var name = ((TextBox)sender).Text;
-			//TODO INDICATE IF NAME EXISTS
-			if(DeckList.DecksList.Any(d => d.Name == name))
+			var tb = (TextBox)sender;
+			var name = tb.Text;
+			if(DeckList.DecksList.Any(d => d.Name == name) && !(EditingDeck && name == editedDeckName))
 			{
+				if(DeckNameExistsWarning.Visibility == Visibility.Collapsed)
+					tb.Width -= 19;
+				DeckNameExistsWarning.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				if(DeckNameExistsWarning.Visibility == Visibility.Visible)
+					tb.Width += 19;
+				DeckNameExistsWarning.Visibility = Visibility.Collapsed;
 			}
 		}
 
@@ -323,6 +337,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
+			editedDeckName = string.Empty;
 		}
 
 		private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
@@ -378,6 +393,7 @@ namespace Hearthstone_Deck_Tracker
 				SaveDeck(false);
 
 			FlyoutNewDeckSetTags.IsOpen = false;
+			editedDeckName = string.Empty;
 		}
 
 		private void TextBoxDBFilter_PreviewKeyDown(object sender, KeyEventArgs e)
