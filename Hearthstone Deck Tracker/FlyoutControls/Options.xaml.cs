@@ -262,6 +262,20 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+        private void CheckboxTagOnImport_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.TagDecksOnImport = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxTagOnImport_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.TagDecksOnImport = false;
+            SaveConfig(false);
+        }
+
 		private void CheckboxMinimizeTray_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;

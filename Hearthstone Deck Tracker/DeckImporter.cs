@@ -267,7 +267,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
                 //<span class="t-deck-type-label">Midrange</span>
                 string decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'t-deck-type-label')]").InnerText;
-                if (decktype != "None")
+                if (decktype != "None" && Config.Instance.TagDecksOnImport)
                 {
                     if (!Helper.MainWindow.DeckList.AllTags.Contains(decktype))
                     {

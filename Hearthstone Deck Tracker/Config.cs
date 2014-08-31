@@ -162,6 +162,7 @@ namespace Hearthstone_Deck_Tracker
 		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
 		public bool WindowsTopmost = Defaults.WindowsTopmost;
 		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
+        public bool TagDecksOnImport = Defaults.TagDecksOnImport;
 		private string _currentLogFile;
 
 		public string HomeDir
@@ -411,6 +412,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly string WindowsBackgroundHex = "#696969";
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
+            public static readonly bool TagDecksOnImport = true;
 		}
 
 		public class GameDetailsConfig

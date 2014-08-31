@@ -416,6 +416,7 @@
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
@@ -491,6 +492,16 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
                                               Unchecked="CheckboxDiscardGame_Unchecked" />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
+                            	Width="235" Height="191" Margin="10.5,10,0.5,0">
+                                <StackPanel>                                
+                                    <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
+                            			Unchecked="CheckboxTagOnImport_Unchecked" />
+
                                 </StackPanel>
                             </GroupBox>
                         </Grid>
