@@ -471,30 +471,39 @@ namespace Hearthstone_Deck_Tracker
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
-			var version = newVersion ?? Helper.MainWindow.NewVersion;
-			var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
-			                                     version.Build);
-			var result =
-				await
-				this.ShowMessageAsync("New Update available!",
-				                      "Press \"Download\" to automatically download.",
-				                      MessageDialogStyle.AffirmativeAndNegative, settings);
-
-			if(result == MessageDialogResult.Affirmative)
+			var version = newVersion ?? NewVersion;
+			if(version == null) return;
+			try
 			{
-				try
+				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
+													 version.Build);
+				var result =
+					await
+					this.ShowMessageAsync("New Update available!",
+										  "Press \"Download\" to automatically download.",
+										  MessageDialogStyle.AffirmativeAndNegative, settings);
+
+				if(result == MessageDialogResult.Affirmative)
 				{
-					Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
-					Application.Current.Shutdown();
+					try
+					{
+						Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
+						Application.Current.Shutdown();
+					}
+					catch
+					{
+						Logger.WriteLine("Error starting updater");
+						Process.Start(releaseDownloadUrl);
+					}
 				}
-				catch
-				{
-					Logger.WriteLine("Error starting updater");
-					Process.Start(releaseDownloadUrl);
-				}
+				else
+					_tempUpdateCheckDisabled = true;
 			}
-			else
-				_tempUpdateCheckDisabled = true;
+			catch(Exception e)
+			{
+				
+				Logger.WriteLine("Error showing new update message\n" + e.Message);
+			}
 		}
 
 		public async Task Restart()
