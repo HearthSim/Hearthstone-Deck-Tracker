@@ -687,8 +687,8 @@ namespace Hearthstone_Deck_Tracker
 			var result =
 				await
 				Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
-				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-				                                   MessageDialogStyle.AffirmativeAndNegative);
+												   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+												   MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 
@@ -714,6 +714,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Config.Instance.SecretsTop = Config.Defaults.SecretsTop;
 			Config.Instance.SecretsLeft = Config.Defaults.SecretsLeft;
+			Config.Instance.SecretsHeight = Config.Defaults.SecretsHeight;
 
 			SaveConfig(true);
 		}

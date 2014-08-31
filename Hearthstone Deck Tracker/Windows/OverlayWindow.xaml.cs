@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker
 						Config.Instance.PlayerDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.PlayerDeckTop / 100);
 						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.PlayerDeckLeft / 100 -
-						                                        StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
+																StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 					}
 				}
 				else if(panel.Name.Contains("Opponent"))
@@ -169,10 +169,18 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(panel.Name.Contains("Secret"))
 				{
-					Config.Instance.SecretsTop += delta.Y / Height;
-					Config.Instance.SecretsLeft += delta.X / Width;
-					Canvas.SetTop(_movableElements[panel], Height * Config.Instance.SecretsTop / 100);
-					Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.SecretsLeft / 100);
+					if(_resizeElement)
+					{
+						Config.Instance.SecretsHeight += delta.Y / Height;
+						_movableElements[panel].Height = Height * Config.Instance.SecretsHeight / 100;
+					}
+					else
+					{
+						Config.Instance.SecretsTop += delta.Y / Height;
+						Config.Instance.SecretsLeft += delta.X / Width;
+						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.SecretsTop / 100);
+						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.SecretsLeft / 100);
+					}
 				}
 			}
 
@@ -308,7 +316,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(
 				!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth,
-				                    StackPanelSecrets.ActualHeight))
+									StackPanelSecrets.ActualHeight))
 				return;
 
 			var card = ToolTipCard.DataContext as Card;
@@ -412,11 +420,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//player TODO: take labels into account
 			if(((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100) -
-			    (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+				(ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
 				Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100) /
-				          (ListViewPlayer.Items.Count * 35);
+						  (ListViewPlayer.Items.Count * 35);
 				if(Scaling > 1)
 					Scaling = 1;
 
@@ -426,23 +434,22 @@ namespace Hearthstone_Deck_Tracker
 
 			Canvas.SetTop(StackPanelPlayer, Height * Config.Instance.PlayerDeckTop / 100);
 			Canvas.SetLeft(StackPanelPlayer,
-			               Width * Config.Instance.PlayerDeckLeft / 100 -
-			               StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
+						   Width * Config.Instance.PlayerDeckLeft / 100 -
+						   StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 
 			//opponent
 			if(((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100) -
-			    (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
+				(ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
 			{
 				var previousScaling = OpponentScaling;
 				OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100) /
-				                  (ListViewOpponent.Items.Count * 35);
+								  (ListViewOpponent.Items.Count * 35);
 				if(OpponentScaling > 1)
 					OpponentScaling = 1;
 
 				if(previousScaling != OpponentScaling)
 					ListViewOpponent.Items.Refresh();
 			}
-
 
 			Canvas.SetTop(StackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
 			Canvas.SetLeft(StackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
@@ -453,24 +460,22 @@ namespace Hearthstone_Deck_Tracker
 
 			// Timers
 			Canvas.SetTop(LblTurnTime,
-			              Height * Config.Instance.TimersVerticalPosition / 100 - 5);
+						  Height * Config.Instance.TimersVerticalPosition / 100 - 5);
 			Canvas.SetLeft(LblTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100);
 
 			Canvas.SetTop(LblOpponentTurnTime,
-			              Height * Config.Instance.TimersVerticalPosition / 100 -
-			              Config.Instance.TimersVerticalSpacing);
+						  Height * Config.Instance.TimersVerticalPosition / 100 -
+						  Config.Instance.TimersVerticalSpacing);
 			Canvas.SetLeft(LblOpponentTurnTime,
-			               (Width * Config.Instance.TimersHorizontalPosition / 100) + Config.Instance.TimersHorizontalSpacing);
+						   (Width * Config.Instance.TimersHorizontalPosition / 100) + Config.Instance.TimersHorizontalSpacing);
 
 			Canvas.SetTop(LblPlayerTurnTime,
-			              Height * Config.Instance.TimersVerticalPosition / 100 +
-			              Config.Instance.TimersVerticalSpacing);
+						  Height * Config.Instance.TimersVerticalPosition / 100 +
+						  Config.Instance.TimersVerticalSpacing);
 			Canvas.SetLeft(LblPlayerTurnTime,
-			               Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
-
+						   Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 
 			Canvas.SetTop(LblGrid, Height * 0.03);
-
 
 			var ratio = Width / Height;
 			LblGrid.Width = ratio < 1.5 ? Width * 0.3 : Width * 0.15 * (ratio / 1.33);
@@ -564,11 +569,11 @@ namespace Hearthstone_Deck_Tracker
 			LblDeckCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 
 			LblOpponentDrawChance1.Visibility = Config.Instance.HideOpponentDrawChances
-				                                    ? Visibility.Collapsed
-				                                    : Visibility.Visible;
+													? Visibility.Collapsed
+													: Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = Config.Instance.HideOpponentDrawChances
-				                                    ? Visibility.Collapsed
-				                                    : Visibility.Visible;
+													? Visibility.Collapsed
+													: Visibility.Visible;
 			LblOpponentCardCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDeckCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 
@@ -581,7 +586,7 @@ namespace Hearthstone_Deck_Tracker
 			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
 			SetCardCount(Game.PlayerHandCount,
-			             30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
+						 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
@@ -666,7 +671,7 @@ namespace Hearthstone_Deck_Tracker
 
 				ToolTipCard.Visibility = visibility;
 			}
-				//opponent card tooltips
+			//opponent card tooltips
 			else if(StackPanelOpponent.Visibility == Visibility.Visible && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
@@ -768,7 +773,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Canvas.GetLeft(stackpanel) < Width / 2)
 			{
 				Canvas.SetLeft(ToolTipCard,
-				               Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
+							   Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
 			}
 			else
 				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) - ToolTipCard.Width);
@@ -778,9 +783,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//hide the overlay depenting on options
 			ShowOverlay(!(
-				             (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
-				             || (Config.Instance.HideInMenu && Game.IsInMenu)
-				             || Config.Instance.HideOverlay));
+							 (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
+							 || (Config.Instance.HideInMenu && Game.IsInMenu)
+							 || Config.Instance.HideOverlay));
 
 
 			var hsRect = User32.GetHearthstoneRect(true);
@@ -808,18 +813,18 @@ namespace Hearthstone_Deck_Tracker
 				ShowTimers();
 
 				LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds / 60) % 60,
-				                                 timerEventArgs.Seconds % 60);
+												 timerEventArgs.Seconds % 60);
 				LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60,
-				                                       timerEventArgs.PlayerSeconds % 60);
+													   timerEventArgs.PlayerSeconds % 60);
 				LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds / 60) % 60,
-				                                         timerEventArgs.OpponentSeconds % 60);
+														 timerEventArgs.OpponentSeconds % 60);
 
 				if(Config.Instance.Debug)
 				{
 					LblDebugLog.Text += string.Format("Current turn: {0} {1} {2} \n",
-					                                  timerEventArgs.CurrentTurn.ToString(),
-					                                  timerEventArgs.PlayerSeconds.ToString(),
-					                                  timerEventArgs.OpponentSeconds.ToString());
+													  timerEventArgs.CurrentTurn.ToString(),
+													  timerEventArgs.PlayerSeconds.ToString(),
+													  timerEventArgs.OpponentSeconds.ToString());
 					DebugViewer.ScrollToBottom();
 				}
 			}
@@ -828,11 +833,11 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdateScaling()
 		{
 			StackPanelPlayer.RenderTransform = new ScaleTransform(Config.Instance.OverlayPlayerScaling / 100,
-			                                                      Config.Instance.OverlayPlayerScaling / 100);
+																  Config.Instance.OverlayPlayerScaling / 100);
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
-			                                                        Config.Instance.OverlayOpponentScaling / 100);
+																	Config.Instance.OverlayOpponentScaling / 100);
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
-			                                                       Config.Instance.OverlayOpponentScaling / 100);
+																   Config.Instance.OverlayOpponentScaling / 100);
 		}
 
 		public void HideTimers()
@@ -918,12 +923,15 @@ namespace Hearthstone_Deck_Tracker
 						return;
 				}
 				StackPanelSecrets.Children.Clear();
+
+
 				foreach(var id in ids)
 				{
 					var cardObj = new Controls.Card();
 					cardObj.SetValue(DataContextProperty, Game.GetCardFromId(id));
 					StackPanelSecrets.Children.Add(cardObj);
 				}
+
 				_lastSecretsClass = hsClass;
 				_needToRefreshSecrets = false;
 			}
@@ -954,8 +962,8 @@ namespace Hearthstone_Deck_Tracker
 			//set position
 			var tooltipLeft = Canvas.GetLeft(ToolTipCard);
 			var left = tooltipLeft < Width / 2
-				           ? tooltipLeft + ToolTipCard.ActualWidth
-				           : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
+						   ? tooltipLeft + ToolTipCard.ActualWidth
+						   : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
 
 			Canvas.SetLeft(StackPanelAdditionalTooltips, left);
 			var top = Canvas.GetTop(ToolTipCard) - (StackPanelAdditionalTooltips.ActualHeight / 2 - ToolTipCard.ActualHeight / 2);
@@ -1010,6 +1018,8 @@ namespace Hearthstone_Deck_Tracker
 						movableElement.Value.Height = Config.Instance.PlayerDeckHeight * Height / 100;
 					else if(movableElement.Key == StackPanelOpponent)
 						movableElement.Value.Height = Config.Instance.OpponentDeckHeight * Height / 100;
+					else if(movableElement.Key == StackPanelSecrets)
+						movableElement.Value.Height = Config.Instance.SecretsHeight * Height / 100;
 					else
 						movableElement.Value.Height = elementSize.Height;
 
