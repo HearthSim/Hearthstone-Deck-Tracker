@@ -265,6 +265,21 @@ namespace Hearthstone_Deck_Tracker
 					doc.DocumentNode.SelectNodes(
 						"//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
 				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
+                //<span class="t-deck-type-label">Midrange</span>
+                string decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'t-deck-type-label')]").InnerText;
+                if (decktype != "None")
+                {
+                    if (!Helper.MainWindow.DeckList.AllTags.Contains(decktype))
+                    {
+                        Helper.MainWindow.DeckList.AllTags.Add(decktype);
+                        Helper.MainWindow.WriteDecks();
+                        Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
+                        Helper.MainWindow.TagControlMyDecks.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+                        Helper.MainWindow.TagControlNewDeck.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+                    }
+                    deck.Tags.Add(decktype);
+                }
+
 
 				var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
 				var cardCosts =

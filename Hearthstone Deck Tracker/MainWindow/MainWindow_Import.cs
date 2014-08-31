@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Note = url + "\n" + deck.Note;
 
 				SetNewDeck(deck, reimport);
+                TagControlNewDeck.SetSelectedTags(deck.Tags);
 			}
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
