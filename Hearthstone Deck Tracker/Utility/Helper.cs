@@ -174,7 +174,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(collection == null) return;
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
-			view1.SortDescriptions.Clear();
+            view1.SortDescriptions.Clear();
 
             if (classFirst)
             {
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
                 view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
                 view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));                
             }
-		}
+        }
 
 		public static string DeckToIdString(Deck deck)
 		{
