@@ -77,9 +77,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 
         static public void doPrediction(String enemy, int turnnumber)
         {
-            Dictionary<String, int> innerhash = predictiondictionary[enemy + turnnumber];
+            Dictionary<String, int> innerhash;  
             cardpercent newcardpercent;
             List<cardpercent> cardpredictions = new List<cardpercent>();
+
+            if (! predictiondictionary.ContainsKey(enemy + turnnumber) )
+            {
+                predictionText = "";
+                return;
+            }
+
+            innerhash = predictiondictionary[enemy + turnnumber];
 
             float numpossiblecards = 0;
 
@@ -109,6 +117,12 @@ namespace Hearthstone_Deck_Tracker.Stats
         }
         public static String predictionText;
 
+
+        private static bool isSpell(TurnStats.Play play)
+        {
+            Hearthstone.Card card = Hearthstone.Game.GetCardFromId(play.CardId);
+            return play.Type == PlayType.OpponentHandDiscard && (card != null && card.Type == "Spell");
+        }
         public static void analyzeAllGames()
         {
             
@@ -138,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
                         foreach (TurnStats.Play play in turn.Plays)
                         {
-                            if (play.Type == PlayType.OpponentPlay)
+                            if (play.Type == PlayType.OpponentPlay || isSpell(play))
                             {
                                 string cardid = play.CardId; 
 
