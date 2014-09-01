@@ -75,6 +75,8 @@ namespace Hearthstone_Deck_Tracker
 
 			InitializeComponent();
 
+			EnableMenuItems(false);
+
 			try
 			{
 				if(File.Exists("Updater_new.exe"))
@@ -474,12 +476,12 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
-													 version.Build);
+				                                     version.Build);
 				var result =
 					await
 					this.ShowMessageAsync("New Update available!",
-										  "Press \"Download\" to automatically download.",
-										  MessageDialogStyle.AffirmativeAndNegative, settings);
+					                      "Press \"Download\" to automatically download.",
+					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
 				{
@@ -499,7 +501,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				
 				Logger.WriteLine("Error showing new update message\n" + e.Message);
 			}
 		}
@@ -548,8 +549,7 @@ namespace Hearthstone_Deck_Tracker
 
 			UpdateDeckList(null);
 			UseDeck(null);
-			MenuItemEdit.IsEnabled = false;
-			MenuItemExport.IsEnabled = false;
+			EnableMenuItems(false);
 			ManaCurveMyDecks.ClearDeck();
 		}
 

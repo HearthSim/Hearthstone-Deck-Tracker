@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker
 		private static Config _config = new Config();
 
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-											 @"\HearthstoneDeckTracker";
+		                                     @"\HearthstoneDeckTracker";
 
 		public string AccentName = Defaults.AccentName;
 		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
@@ -84,10 +84,10 @@ namespace Hearthstone_Deck_Tracker
 		public bool OpponentWindowOnStart = Defaults.OpponentWindowOnStart;
 		public int? OpponentWindowTop = Defaults.OpponentWindowTop;
 		public bool OverlayCardToolTips = Defaults.OverlayCardToolTips;
-		public bool OverlaySecretToolTipsOnly = Defaults.OverlaySecretToolTipsOnly;
 		public double OverlayOpacity = Defaults.OverlayOpacity;
 		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
 		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
+		public bool OverlaySecretToolTipsOnly = Defaults.OverlaySecretToolTipsOnly;
 		public bool OwnsGoldenFeugen = Defaults.OwnsGoldenFeugen;
 		public bool OwnsGoldenStalagg = Defaults.OwnsGoldenStalagg;
 		public string[] PanelOrderOpponent = Defaults.PanelOrderOpponent;
@@ -109,9 +109,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool RecordRanked = Defaults.RecordRanked;
 		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
 		public bool SaveInAppData = Defaults.SaveInAppData;
+		public double SecretsHeight = Defaults.SecretsHeight;
 		public double SecretsLeft = Defaults.SecretsLeft;
 		public double SecretsTop = Defaults.SecretsTop;
-		public double SecretsHeight = Defaults.SecretsHeight;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
 		public string SelectedLanguage = Defaults.SelectedLanguage;
 		public Game.GameMode SelectedStatsFilterGameMode = Defaults.SelectedStatsFilterGameMode;
@@ -136,6 +136,7 @@ namespace Hearthstone_Deck_Tracker
 		public int? StatsWindowLeft = Defaults.StatsWindowLeft;
 		public int? StatsWindowTop = Defaults.StatsWindowTop;
 		public int StatsWindowWidth = Defaults.StatsWindowWidth;
+		public bool TagDecksOnImport = Defaults.TagDecksOnImport;
 		public Operation TagOperation = Defaults.TagOperation;
 		public string ThemeName = Defaults.ThemeName;
 		public double TimerLeft = Defaults.TimerLeft;
@@ -163,7 +164,6 @@ namespace Hearthstone_Deck_Tracker
 		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
 		public bool WindowsTopmost = Defaults.WindowsTopmost;
 		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
-        public bool TagDecksOnImport = Defaults.TagDecksOnImport;
 		private string _currentLogFile;
 
 		public string HomeDir
@@ -190,8 +190,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var date = DateTime.Now;
 			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-											date.Hour,
-											date.Minute, date.Second);
+			                                date.Hour,
+			                                date.Minute, date.Second);
 			return _currentLogFile;
 		}
 
@@ -349,8 +349,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double PlayerDeckLeft = 99.5;
 			public static readonly double PlayerDeckTop = 17;
 			public static readonly double PlayerOpacity = 100;
-			public static readonly string[] PanelOrderPlayer = new[] { "Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter" };
-			public static readonly string[] PanelOrderOpponent = new[] { "Win Rate", "Cards", "Draw Chances", "Card Counter" };
+			public static readonly string[] PanelOrderPlayer = new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"};
+			public static readonly string[] PanelOrderOpponent = new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter"};
 			public static readonly int PlayerWindowHeight = 400;
 			public static readonly int? PlayerWindowLeft = null;
 			public static readonly bool PlayerWindowOnStart = false;
@@ -415,7 +415,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly string WindowsBackgroundHex = "#696969";
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
-            public static readonly bool TagDecksOnImport = true;
+			public static readonly bool TagDecksOnImport = true;
 		}
 
 		public class GameDetailsConfig

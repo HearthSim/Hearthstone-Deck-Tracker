@@ -13,6 +13,8 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
+		private string editedDeckName;
+
 		private void UpdateDbListView()
 		{
 			if(_newDeck == null) return;
@@ -247,7 +249,6 @@ namespace Hearthstone_Deck_Tracker
 			Title = _newDeck == null ? "Hearthstone Deck Tracker" : string.Format("Hearthstone Deck Tracker - Cards: {0}", _newDeck.Cards.Sum(c => c.Count));
 		}
 
-		private string editedDeckName;
 		public void SetNewDeck(Deck deck, bool editing = false)
 		{
 			if(deck != null)
@@ -255,9 +256,7 @@ namespace Hearthstone_Deck_Tracker
 				ClearNewDeckSection();
 				EditingDeck = editing;
 				if(editing)
-				{
 					editedDeckName = deck.Name;
-				}
 				_newDeck = (Deck)deck.Clone();
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
@@ -285,10 +284,7 @@ namespace Hearthstone_Deck_Tracker
 		private void CloseNewDeck()
 		{
 			if(DeckPickerList.SelectedDeck != null)
-			{
-				MenuItemEdit.IsEnabled = true;
-				MenuItemExport.IsEnabled = true;
-			}
+				EnableMenuItems(true);
 			if(GridNewDeck.Visibility != Visibility.Collapsed)
 			{
 				var width = GridNewDeck.ActualWidth;
@@ -299,6 +295,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 			ClearNewDeckSection();
 			DeckPickerListCover.Visibility = Visibility.Hidden;
+		}
+
+		private void EnableMenuItems(bool enable)
+		{
+			MenuItemEdit.IsEnabled = enable;
+			MenuItemExportIds.IsEnabled = enable;
+			MenuItemExportScreenshot.IsEnabled = enable;
+			MenuItemExportToHs.IsEnabled = enable;
+			MenuItemExportXml.IsEnabled = enable;
 		}
 
 		#region UI

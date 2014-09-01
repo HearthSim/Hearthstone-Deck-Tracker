@@ -262,19 +262,19 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-        private void CheckboxTagOnImport_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            Config.Instance.TagDecksOnImport = true;
-            SaveConfig(false);
-        }
+		private void CheckboxTagOnImport_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.TagDecksOnImport = true;
+			SaveConfig(false);
+		}
 
-        private void CheckboxTagOnImport_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized) return;
-            Config.Instance.TagDecksOnImport = false;
-            SaveConfig(false);
-        }
+		private void CheckboxTagOnImport_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.TagDecksOnImport = false;
+			SaveConfig(false);
+		}
 
 		private void CheckboxMinimizeTray_Unchecked(object sender, RoutedEventArgs e)
 		{
@@ -701,8 +701,8 @@ namespace Hearthstone_Deck_Tracker
 			var result =
 				await
 				Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
-												   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-												   MessageDialogStyle.AffirmativeAndNegative);
+				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+				                                   MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 

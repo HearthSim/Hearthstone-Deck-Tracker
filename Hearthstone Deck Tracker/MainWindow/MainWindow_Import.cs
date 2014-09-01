@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
@@ -11,6 +12,27 @@ namespace Hearthstone_Deck_Tracker
 	public partial class MainWindow
 	{
 		private async void BtnWeb_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = await ImportDeckFromWeb();
+			if(deck != null)
+			{
+				var reimport = EditingDeck && _newDeck != null &&
+				               _newDeck.Url == deck.Url;
+
+				if(reimport) //keep old notes
+					deck.Note = _newDeck.Note;
+
+				if(!deck.Note.Contains(deck.Url))
+					deck.Note = deck.Url + "\n" + deck.Note;
+
+				SetNewDeck(deck, reimport);
+				TagControlEdit.SetSelectedTags(deck.Tags);
+			}
+			else
+				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+		}
+
+		private async Task<Deck> ImportDeckFromWeb()
 		{
 			var settings = new MetroDialogSettings();
 			var clipboard = Clipboard.GetText();
@@ -25,33 +47,16 @@ namespace Hearthstone_Deck_Tracker
 			//import dialog
 			var url = await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
 			if(string.IsNullOrEmpty(url))
-				return;
+				return null;
 
 			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
 			//var deck = await this._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
+			deck.Url = url;
 
 			await controller.CloseAsync();
-
-			if(deck != null)
-			{
-				var reimport = EditingDeck && _newDeck != null &&
-				               _newDeck.Url == url;
-
-				deck.Url = url;
-
-				if(reimport) //keep old notes
-					deck.Note = _newDeck.Note;
-
-				if(!deck.Note.Contains(url))
-					deck.Note = url + "\n" + deck.Note;
-
-				SetNewDeck(deck, reimport);
-				TagControlEdit.SetSelectedTags(deck.Tags);
-			}
-			else
-				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+			return deck;
 		}
 
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)

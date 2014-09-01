@@ -165,7 +165,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_EDIT" Name="MenuItemEdit" IsEnabled="False">
+                <MenuItem Header="_EDIT" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -202,7 +202,7 @@
                     <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="E_XPORT" Name="MenuItemExport" IsEnabled="False">
+                <MenuItem Header="E_XPORT" Name="MenuItemExport">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -210,10 +210,11 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
-                    <MenuItem Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
-                    <MenuItem Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
-                    <MenuItem Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
+                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
+                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
+                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
