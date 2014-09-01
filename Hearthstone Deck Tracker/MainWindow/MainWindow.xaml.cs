@@ -529,6 +529,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
 		{
+			DeselectDeck();
+		}
+
+		private void DeselectDeck()
+		{
 			Logger.WriteLine("set player item source as drawn");
 			Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
 			PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;

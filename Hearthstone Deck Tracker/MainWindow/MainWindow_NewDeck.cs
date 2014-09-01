@@ -270,6 +270,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ExpandNewDeck()
 		{
+			DeselectDeck();
 			if(GridNewDeck.Visibility != Visibility.Visible)
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
@@ -283,6 +284,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CloseNewDeck()
 		{
+			if(DeckPickerList.SelectedDeck != null)
+			{
+				MenuItemEdit.IsEnabled = true;
+				MenuItemExport.IsEnabled = true;
+			}
 			if(GridNewDeck.Visibility != Visibility.Collapsed)
 			{
 				var width = GridNewDeck.ActualWidth;
@@ -302,7 +308,6 @@ namespace Hearthstone_Deck_Tracker
 			string hero = ((dynamic)sender).Header;
 			hero = hero.Substring(1, hero.Length - 1).ToLower();
 			hero = hero.Substring(0, 1).ToUpper() + hero.Substring(1, hero.Length - 1);
-			ButtonNoDeck_Click(this, e);
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
