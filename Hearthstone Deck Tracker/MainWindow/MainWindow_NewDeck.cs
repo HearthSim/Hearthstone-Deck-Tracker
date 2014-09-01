@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 			var oldDeckName = _newDeck.Name;
 
 			_newDeck.Name = deckName;
-			_newDeck.Tags = TagControlNewDeck.GetTags();
+			_newDeck.Tags = TagControlEdit.GetTags();
 
 			var newDeckClone = (Deck)_newDeck.Clone();
 			DeckList.DecksList.Add(newDeckClone);
@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(EditingDeck)
 			{
-				TagControlNewDeck.SetSelectedTags(new List<string>());
+				TagControlEdit.SetSelectedTags(new List<string>());
 				if(deckName != oldDeckName)
 				{
 					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == oldDeckName);
@@ -394,7 +394,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				SaveDeck(false);
 
-			FlyoutNewDeckSetTags.IsOpen = false;
 			editedDeckName = string.Empty;
 		}
 

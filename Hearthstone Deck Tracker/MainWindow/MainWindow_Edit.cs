@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;
 			if(DeckPickerList.SelectedDeck != null)
-				TagControlMyDecks.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
+				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)

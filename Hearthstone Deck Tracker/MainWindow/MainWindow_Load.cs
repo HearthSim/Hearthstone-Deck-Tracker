@@ -488,6 +488,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
+			Options.CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -510,8 +511,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var tags = new List<string>(DeckList.AllTags);
 			tags.Remove("All");
-			TagControlNewDeck.LoadTags(tags);
-			TagControlMyDecks.LoadTags(tags);
+			TagControlEdit.LoadTags(tags);
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
 			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
 

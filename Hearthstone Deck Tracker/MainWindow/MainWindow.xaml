@@ -80,11 +80,7 @@
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlMyDecks" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutNewDeckSetTags" Header="Set tags" Position="Right" Width="255"
-                         Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlNewDeck" />
+            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
         </controls:Flyout>
         <Grid>
             <Grid.RowDefinitions>

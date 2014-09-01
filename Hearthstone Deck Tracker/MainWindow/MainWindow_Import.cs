@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Note = url + "\n" + deck.Note;
 
 				SetNewDeck(deck, reimport);
-                TagControlNewDeck.SetSelectedTags(deck.Tags);
+				TagControlEdit.SetSelectedTags(deck.Tags);
 			}
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 						//not all required information is saved in xml
 						foreach(var card in deck.Cards)
 							card.Load();
-						TagControlNewDeck.SetSelectedTags(deck.Tags);
+						TagControlEdit.SetSelectedTags(deck.Tags);
 					}
 					SetNewDeck(deck);
 				}

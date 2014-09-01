@@ -213,10 +213,8 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Create(90);
 
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
-			TagControlNewDeck.OperationSwitch.Visibility = Visibility.Collapsed;
-			TagControlMyDecks.OperationSwitch.Visibility = Visibility.Collapsed;
-			TagControlNewDeck.PnlSortDecks.Visibility = Visibility.Collapsed;
-			TagControlMyDecks.PnlSortDecks.Visibility = Visibility.Collapsed;
+			TagControlEdit.OperationSwitch.Visibility = Visibility.Collapsed;
+			TagControlEdit.PnlSortDecks.Visibility = Visibility.Collapsed;
 
 
 			UpdateDbListView();
@@ -613,7 +611,7 @@ namespace Hearthstone_Deck_Tracker
 				MenuItemEdit.IsEnabled = true;
 				MenuItemExport.IsEnabled = true;
 				ManaCurveMyDecks.SetDeck(deck);
-				TagControlMyDecks.SetSelectedTags(deck.Tags);
+				TagControlEdit.SetSelectedTags(deck.Tags);
 			}
 			else
 			{
