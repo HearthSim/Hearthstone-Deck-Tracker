@@ -174,15 +174,23 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(collection == null) return;
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
-			view1.SortDescriptions.Clear();
+            view1.SortDescriptions.Clear();
 
-			if(classFirst)
-				view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
-
-			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-			view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-			view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
-		}
+            if (classFirst)
+            {
+                view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
+                view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
+                view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
+            }
+            else
+            {
+                view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
+                view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
+                view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
+                view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));                
+            }
+        }
 
 		public static string DeckToIdString(Deck deck)
 		{
