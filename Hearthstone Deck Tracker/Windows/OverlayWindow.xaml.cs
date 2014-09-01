@@ -590,6 +590,7 @@ namespace Hearthstone_Deck_Tracker
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
+            PredictedCards.Text = Stats.DeckStatsList.predictionText;
 
 			LblWins.Visibility = Config.Instance.ShowDeckWins ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle ? Visibility.Visible : Visibility.Collapsed;
@@ -878,29 +879,31 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void UpdateOpponentLayout()
-		{
-			StackPanelOpponent.Children.Clear();
-			foreach(var item in Config.Instance.PanelOrderOpponent)
-			{
-				switch(item)
-				{
-					case "Cards":
-						StackPanelOpponent.Children.Add(ListViewOpponent);
-						break;
-					case "Draw Chances":
-						StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-						StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
-						break;
-					case "Card Counter":
-						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-						break;
-					case "Win Rate":
-						StackPanelOpponent.Children.Add(LblWinRateAgainst);
-						break;
-				}
-			}
-		}
+        public void UpdateOpponentLayout()
+        {
+            StackPanelOpponent.Children.Clear();
+            foreach (var item in Config.Instance.PanelOrderOpponent)
+            {
+                switch (item)
+                {
+                    case "Cards":
+                        StackPanelOpponent.Children.Add(ListViewOpponent);
+                        break;
+                    case "Draw Chances":
+                        StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
+                        StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
+                        break;
+                    case "Card Counter":
+                        StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+                        break;
+                    case "Win Rate":
+                        StackPanelOpponent.Children.Add(LblWinRateAgainst);
+                        break;
+                }
+            }
+            StackPanelOpponent.Children.Add(PredictedCards);
+        }
+		
 
 		public void ShowSecrets(string hsClass, bool force = false)
 		{
@@ -937,6 +940,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 			StackPanelSecrets.Visibility = Visibility.Visible;
 		}
+
+        public void UpdatePrediction(string newtext)
+        {
+            PredictedCards.Text = newtext;
+        }
 
 		public void ShowAdditionalToolTips()
 		{

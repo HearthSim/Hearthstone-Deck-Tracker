@@ -78,6 +78,7 @@
                     <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0"
                                                 Margin="4,0,0,0" />
                 </StackPanel>
+                <local:HearthstoneTextBlock x:Name="PredictedCards" FontSize="14" Text="PredictedCards" Margin="5,0"/>
             </StackPanel>
 
 			<StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
