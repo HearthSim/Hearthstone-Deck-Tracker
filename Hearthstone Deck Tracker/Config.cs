@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker
 		private static Config _config = new Config();
 
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-		                                     @"\HearthstoneDeckTracker";
+											 @"\HearthstoneDeckTracker";
 
 		public string AccentName = Defaults.AccentName;
 		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
@@ -111,6 +111,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool SaveInAppData = Defaults.SaveInAppData;
 		public double SecretsLeft = Defaults.SecretsLeft;
 		public double SecretsTop = Defaults.SecretsTop;
+		public double SecretsHeight = Defaults.SecretsHeight;
 		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
 		public string SelectedLanguage = Defaults.SelectedLanguage;
 		public Game.GameMode SelectedStatsFilterGameMode = Defaults.SelectedStatsFilterGameMode;
@@ -189,8 +190,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var date = DateTime.Now;
 			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-			                                date.Hour,
-			                                date.Minute, date.Second);
+											date.Hour,
+											date.Minute, date.Second);
 			return _currentLogFile;
 		}
 
@@ -348,8 +349,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly double PlayerDeckLeft = 99.5;
 			public static readonly double PlayerDeckTop = 17;
 			public static readonly double PlayerOpacity = 100;
-			public static readonly string[] PanelOrderPlayer = new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"};
-			public static readonly string[] PanelOrderOpponent = new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter"};
+			public static readonly string[] PanelOrderPlayer = new[] { "Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter" };
+			public static readonly string[] PanelOrderOpponent = new[] { "Win Rate", "Cards", "Draw Chances", "Card Counter" };
 			public static readonly int PlayerWindowHeight = 400;
 			public static readonly int? PlayerWindowLeft = null;
 			public static readonly bool PlayerWindowOnStart = false;
@@ -365,6 +366,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool SaveInAppData = true;
 			public static readonly double SecretsLeft = 15;
 			public static readonly double SecretsTop = 5;
+			public static readonly double SecretsHeight = 35;
+
 			public static readonly Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;
 			public static readonly string SelectedStatsFilterTime = "All Time";
 			public static readonly string SelectedDeckSorting = "Name";
