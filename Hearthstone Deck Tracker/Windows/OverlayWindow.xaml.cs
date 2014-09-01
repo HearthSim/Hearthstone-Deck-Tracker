@@ -590,7 +590,14 @@ namespace Hearthstone_Deck_Tracker
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
-            PredictedCards.Text = Stats.DeckStatsList.predictionText;
+            if (Config.Instance.PredictAllowed)
+            {
+                PredictedCards.Text = Stats.DeckStatsList.predictionText;
+            }
+            else
+            {
+                PredictedCards.Text = "";
+            }
 
 			LblWins.Visibility = Config.Instance.ShowDeckWins ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle ? Visibility.Visible : Visibility.Collapsed;

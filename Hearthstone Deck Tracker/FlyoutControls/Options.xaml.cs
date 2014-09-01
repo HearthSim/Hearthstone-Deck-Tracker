@@ -31,6 +31,20 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
+   		private void CheckboxPredict_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.PredictAllowed = true;
+			SaveConfig(true);
+		}
+
+   		private void CheckboxPredict_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+            Config.Instance.PredictAllowed = false;
+			SaveConfig(true);
+		}
+
 		private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
