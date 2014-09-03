@@ -313,5 +313,11 @@ namespace Hearthstone_Deck_Tracker
 
 			return sb.ToString();
 		}
+
+		public static string GetWinPercentString(int wins, int losses)
+		{
+			if(wins + losses == 0) return "-%";
+			return Math.Round(wins*100.0/(wins+losses), 0) + "%";
+		}
 	}
 }

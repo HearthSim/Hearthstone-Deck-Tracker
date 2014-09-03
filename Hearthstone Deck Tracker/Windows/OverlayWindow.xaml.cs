@@ -614,7 +614,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
 			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
-			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, selectedDeck.WinPercentString);
+			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
 
 			if(Game.PlayingAgainst != string.Empty)
 			{
