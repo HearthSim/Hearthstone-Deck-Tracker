@@ -1,0 +1,1205 @@
+Class: Druid
+
+
+Prediction for Turn 1
+
+The Coin 34.8%
+Innervate 22.7%
+Wild Growth 10.6%
+Wrath 9.1%
+Deathlord 4.5%
+Lord of the Arena 4.5%
+Chillwind Yeti 3.0%
+
+
+Prediction for Turn 2
+
+The Coin 12.5%
+Wrath 12.5%
+Wild Growth 10.4%
+Harvest Golem 10.4%
+Ancient Watcher 8.3%
+Haunted Creeper 4.2%
+Moonfire 4.2%
+
+
+Prediction for Turn 3
+
+Harvest Golem 9.8%
+The Coin 8.2%
+Wrath 8.2%
+Keeper of the Grove 6.6%
+Wild Growth 4.9%
+Power of the Wild 4.9%
+Ancient Watcher 4.9%
+
+
+Prediction for Turn 4
+
+Wrath 12.5%
+Keeper of the Grove 11.2%
+Swipe 10.0%
+Innervate 6.3%
+Harvest Golem 5.0%
+Wild Growth 3.8%
+Coldlight Oracle 3.8%
+
+
+Prediction for Turn 5
+
+Druid of the Claw 10.0%
+Swipe 8.6%
+Innervate 7.1%
+Keeper of the Grove 7.1%
+Defender of Argus 5.7%
+Wrath 5.7%
+Sludge Belcher 5.7%
+
+
+Prediction for Turn 6
+
+Starfall 9.2%
+Mark of the Wild 7.7%
+Druid of the Claw 6.2%
+Starfire 6.2%
+Keeper of the Grove 4.6%
+The Black Knight 3.1%
+Chillwind Yeti 3.1%
+
+
+Prediction for Turn 7
+
+Starfire 8.0%
+Swipe 8.0%
+Innervate 8.0%
+Druid of the Claw 6.7%
+Ancient of War 6.7%
+Starfall 4.0%
+Keeper of the Grove 4.0%
+
+
+Prediction for Turn 8
+
+Swipe 20.0%
+Keeper of the Grove 6.7%
+Ancient of Lore 5.3%
+Sunwalker 5.3%
+Starfall 5.3%
+Mark of the Wild 4.0%
+Healing Touch 4.0%
+
+
+Prediction for Turn 9
+
+Druid of the Claw 10.3%
+Savage Roar 8.6%
+Wrath 6.9%
+Starfall 6.9%
+Healing Touch 6.9%
+Azure Drake 5.2%
+Swipe 5.2%
+
+
+Prediction for Turn 10
+
+Wild Growth 9.3%
+Excess Mana 9.3%
+Swipe 5.6%
+Mark of the Wild 5.6%
+Innervate 5.6%
+Naturalize 5.6%
+Dancing Swords 5.6%
+
+
+Prediction for Turn 11
+
+Poison Seeds 13.6%
+Deathlord 13.6%
+Harvest Golem 9.1%
+Keeper of the Grove 9.1%
+Mark of the Wild 9.1%
+Power of the Wild 4.5%
+Wrath 4.5%
+
+
+Prediction for Turn 12
+
+Swipe 16.7%
+Keeper of the Grove 12.5%
+Starfall 12.5%
+Sludge Belcher 12.5%
+Savage Roar 8.3%
+Wild Growth 4.2%
+Excess Mana 4.2%
+
+Class: Hunter
+
+
+Prediction for Turn 1
+
+Webspinner 46.3%
+Stonetusk Boar 16.4%
+Tracking 11.9%
+The Coin 9.0%
+Leper Gnome 4.5%
+Flare 3.0%
+River Crocolisk 1.5%
+
+
+Prediction for Turn 2
+
+Haunted Creeper 14.6%
+The Coin 13.4%
+Animal Companion 11.0%
+Mad Scientist 9.8%
+Ironbeak Owl 6.1%
+Hunter's Mark 6.1%
+River Crocolisk 3.7%
+
+
+Prediction for Turn 3
+
+Animal Companion 26.0%
+Eaglehorn Bow 11.5%
+Kill Command 7.7%
+The Coin 6.7%
+Webspinner 6.7%
+Haunted Creeper 5.8%
+Ironbeak Owl 2.9%
+
+
+Prediction for Turn 4
+
+Animal Companion 17.4%
+Houndmaster 9.1%
+Webspinner 7.4%
+Haunted Creeper 6.6%
+Starving Buzzard 5.8%
+Timber Wolf 5.8%
+Unleash the Hounds 5.0%
+
+
+Prediction for Turn 5
+
+Kill Command 9.4%
+Haunted Creeper 7.2%
+Starving Buzzard 7.2%
+Unleash the Hounds 7.2%
+Tundra Rhino 6.5%
+Eaglehorn Bow 6.5%
+Houndmaster 5.8%
+
+
+Prediction for Turn 6
+
+Savannah Highmane 11.0%
+Hunter's Mark 7.9%
+Webspinner 6.7%
+Starving Buzzard 6.1%
+Scavenging Hyena 5.5%
+Unleash the Hounds 4.9%
+Tracking 4.3%
+
+
+Prediction for Turn 7
+
+Savannah Highmane 10.0%
+Animal Companion 8.1%
+Hunter's Mark 8.1%
+Kill Command 6.3%
+Unleash the Hounds 6.3%
+Houndmaster 5.0%
+Starving Buzzard 4.4%
+
+
+Prediction for Turn 8
+
+Kill Command 13.7%
+Starving Buzzard 11.6%
+Savannah Highmane 8.9%
+Animal Companion 7.5%
+Houndmaster 5.5%
+Unleash the Hounds 4.8%
+Eaglehorn Bow 4.1%
+
+
+Prediction for Turn 9
+
+Houndmaster 7.0%
+Animal Companion 5.8%
+Timber Wolf 5.8%
+Unleash the Hounds 5.8%
+Starving Buzzard 4.7%
+Stonetusk Boar 4.7%
+Deadly Shot 4.7%
+
+
+Prediction for Turn 10
+
+Houndmaster 10.5%
+Unleash the Hounds 10.5%
+Hunter's Mark 8.8%
+Kill Command 8.8%
+King Krush 7.0%
+Eaglehorn Bow 5.3%
+Starving Buzzard 5.3%
+
+
+Prediction for Turn 11
+
+Unleash the Hounds 20.0%
+Animal Companion 12.0%
+Leeroy Jenkins 12.0%
+Explosive Shot 8.0%
+Starving Buzzard 8.0%
+Kill Command 8.0%
+Houndmaster 8.0%
+
+
+Prediction for Turn 12
+
+Scavenging Hyena 12.5%
+Unleash the Hounds 12.5%
+Houndmaster 12.5%
+Eaglehorn Bow 12.5%
+Tracking 12.5%
+Savannah Highmane 12.5%
+Dire Wolf Alpha 12.5%
+
+Class: Mage
+
+
+Prediction for Turn 1
+
+Mana Wyrm 40.4%
+Mirror Image 27.7%
+The Coin 17.0%
+Knife Juggler 2.1%
+Loot Hoarder 2.1%
+Sorcerer's Apprentice 2.1%
+Undertaker 2.1%
+
+
+Prediction for Turn 2
+
+The Coin 22.6%
+Sorcerer's Apprentice 12.9%
+Frostbolt 12.9%
+Arcane Intellect 8.1%
+Loot Hoarder 4.8%
+Mad Scientist 4.8%
+Faerie Dragon 3.2%
+
+
+Prediction for Turn 3
+
+Frostbolt 19.4%
+Arcane Missiles 12.9%
+Arcane Intellect 9.7%
+Harvest Golem 6.5%
+Kirin Tor Mage 6.5%
+Bluegill Warrior 6.5%
+Mana Wyrm 4.8%
+
+
+Prediction for Turn 4
+
+Arcane Missiles 12.2%
+Arcane Intellect 9.8%
+The Coin 7.3%
+Mana Wyrm 6.1%
+Water Elemental 6.1%
+Frostbolt 6.1%
+Mirror Image 6.1%
+
+
+Prediction for Turn 5
+
+Frostbolt 9.9%
+Arcane Missiles 9.9%
+Ethereal Arcanist 7.4%
+Mirror Image 7.4%
+Mana Wyrm 7.4%
+Gurubashi Berserker 4.9%
+Chillwind Yeti 4.9%
+
+
+Prediction for Turn 6
+
+Polymorph 9.2%
+Frostbolt 5.7%
+Azure Drake 5.7%
+Arcane Intellect 5.7%
+Frostwolf Grunt 4.6%
+Mana Wyrm 4.6%
+The Coin 3.4%
+
+
+Prediction for Turn 7
+
+Flamestrike 7.6%
+Frostbolt 6.5%
+Arcane Missiles 5.4%
+Acolyte of Pain 4.3%
+Fireball 4.3%
+Blizzard 4.3%
+Polymorph 4.3%
+
+
+Prediction for Turn 8
+
+Fireball 11.4%
+Flamestrike 11.4%
+Mana Wyrm 5.7%
+Water Elemental 5.7%
+Frostbolt 5.7%
+Arcane Intellect 4.5%
+Defender of Argus 4.5%
+
+
+Prediction for Turn 9
+
+Fireball 11.4%
+Mana Wyrm 8.9%
+Azure Drake 7.6%
+Flamestrike 6.3%
+Blizzard 6.3%
+Arcane Missiles 5.1%
+Arcane Intellect 5.1%
+
+
+Prediction for Turn 10
+
+Fireball 20.5%
+Pyroblast 7.7%
+Flamestrike 7.7%
+Water Elemental 6.4%
+Arcane Explosion 3.8%
+Arcane Missiles 3.8%
+Kirin Tor Mage 3.8%
+
+
+Prediction for Turn 11
+
+Fireball 15.7%
+Frostbolt 7.8%
+Mana Wyrm 7.8%
+Mirror Image 7.8%
+Arcane Intellect 5.9%
+Flamestrike 5.9%
+Ethereal Arcanist 5.9%
+
+
+Prediction for Turn 12
+
+Arcane Intellect 7.5%
+Mana Wyrm 7.5%
+Water Elemental 7.5%
+Fireball 7.5%
+Polymorph 7.5%
+Faceless Manipulator 7.5%
+Kirin Tor Mage 7.5%
+
+Class: Priest
+
+
+Prediction for Turn 1
+
+Northshire Cleric 34.1%
+The Coin 19.5%
+Mind Vision 17.1%
+Acidic Swamp Ooze 9.8%
+Argent Squire 7.3%
+Wild Pyromancer 2.4%
+Mad Bomber 2.4%
+
+
+Prediction for Turn 2
+
+The Coin 18.8%
+Shadow Word: Pain 10.1%
+Power Word: Shield 5.8%
+Northshire Cleric 5.8%
+Wild Pyromancer 5.8%
+Injured Blademaster 4.3%
+Knife Juggler 4.3%
+
+
+Prediction for Turn 3
+
+Injured Blademaster 15.5%
+Thoughtsteal 12.7%
+Circle of Healing 7.0%
+Harvest Golem 7.0%
+Earthen Ring Farseer 7.0%
+The Coin 5.6%
+Deathlord 4.2%
+
+
+Prediction for Turn 4
+
+Power Word: Shield 14.3%
+Northshire Cleric 13.2%
+Thoughtsteal 6.6%
+Holy Smite 4.4%
+Sen'jin Shieldmasta 4.4%
+Shadow Word: Pain 4.4%
+The Coin 3.3%
+
+
+Prediction for Turn 5
+
+Power Word: Shield 10.5%
+Circle of Healing 5.3%
+Thoughtsteal 5.3%
+Wild Pyromancer 5.3%
+Auchenai Soulpriest 4.2%
+Sludge Belcher 4.2%
+Azure Drake 3.2%
+
+
+Prediction for Turn 6
+
+Holy Nova 8.6%
+Power Word: Shield 7.5%
+Shadow Word: Pain 6.5%
+Cabal Shadow Priest 6.5%
+Holy Smite 5.4%
+Maexxna 5.4%
+Auchenai Soulpriest 4.3%
+
+
+Prediction for Turn 7
+
+Power Word: Shield 11.8%
+Northshire Cleric 11.8%
+Holy Nova 6.9%
+Holy Fire 4.9%
+Holy Smite 4.9%
+Shadow Word: Death 3.9%
+Sludge Belcher 2.9%
+
+
+Prediction for Turn 8
+
+Thoughtsteal 7.9%
+Shadow Word: Death 7.9%
+Earthen Ring Farseer 6.6%
+Shadow Word: Pain 6.6%
+Holy Smite 5.3%
+Holy Nova 5.3%
+Wild Pyromancer 3.9%
+
+
+Prediction for Turn 9
+
+Power Word: Shield 8.5%
+Holy Fire 8.5%
+Shadow Word: Death 6.4%
+Holy Nova 5.3%
+Injured Blademaster 4.3%
+Holy Smite 4.3%
+Sen'jin Shieldmasta 3.2%
+
+
+Prediction for Turn 10
+
+Holy Nova 6.7%
+Northshire Cleric 5.6%
+Cabal Shadow Priest 5.6%
+Shadow Word: Pain 5.6%
+Thoughtsteal 4.5%
+Sen'jin Shieldmasta 4.5%
+Holy Smite 4.5%
+
+
+Prediction for Turn 11
+
+Holy Nova 10.4%
+Divine Spirit 10.4%
+Mind Control 8.3%
+Holy Fire 6.3%
+Shadow Word: Death 6.3%
+Auchenai Soulpriest 6.3%
+Holy Smite 6.3%
+
+
+Prediction for Turn 12
+
+Holy Nova 9.4%
+Thoughtsteal 7.5%
+Holy Fire 7.5%
+Acolyte of Pain 5.7%
+Maexxna 5.7%
+Power Word: Shield 3.8%
+Circle of Healing 3.8%
+
+Class: Paladin
+
+
+Prediction for Turn 1
+
+Argent Squire 24.3%
+The Coin 21.6%
+Leper Gnome 18.9%
+Light's Justice 10.8%
+Worgen Infiltrator 5.4%
+Knife Juggler 5.4%
+Amani Berserker 2.7%
+
+
+Prediction for Turn 2
+
+Knife Juggler 16.7%
+The Coin 13.0%
+Loot Hoarder 5.6%
+Elven Archer 5.6%
+Scarlet Crusader 5.6%
+Bloodsail Raider 5.6%
+Deathlord 3.7%
+
+
+Prediction for Turn 3
+
+Sword of Justice 10.6%
+Aldor Peacekeeper 10.6%
+Argent Protector 7.6%
+Scarlet Crusader 7.6%
+Harvest Golem 7.6%
+The Coin 6.1%
+Abusive Sergeant 6.1%
+
+
+Prediction for Turn 4
+
+Truesilver Champion 10.4%
+Argent Protector 7.8%
+Spellbreaker 7.8%
+Knife Juggler 6.5%
+The Coin 6.5%
+Chillwind Yeti 5.2%
+Hammer of Wrath 5.2%
+
+
+Prediction for Turn 5
+
+Argent Protector 11.1%
+Leper Gnome 7.8%
+Knife Juggler 5.6%
+Consecration 5.6%
+Truesilver Champion 4.4%
+Azure Drake 4.4%
+Harvest Golem 4.4%
+
+
+Prediction for Turn 6
+
+Truesilver Champion 11.3%
+Consecration 10.3%
+Aldor Peacekeeper 10.3%
+Avenging Wrath 8.2%
+Equality 5.2%
+Sunwalker 5.2%
+Sword of Justice 4.1%
+
+
+Prediction for Turn 7
+
+Truesilver Champion 10.2%
+Consecration 9.2%
+Bloodsail Raider 4.1%
+Hammer of Wrath 4.1%
+Equality 4.1%
+Sunwalker 4.1%
+Stampeding Kodo 4.1%
+
+
+Prediction for Turn 8
+
+Avenging Wrath 8.0%
+Consecration 5.7%
+Equality 5.7%
+Wild Pyromancer 5.7%
+Leper Gnome 5.7%
+Argent Commander 4.5%
+Sludge Belcher 4.5%
+
+
+Prediction for Turn 9
+
+Consecration 10.4%
+Equality 7.8%
+Hand of Protection 6.5%
+Avenging Wrath 5.2%
+Sword of Justice 5.2%
+Defender of Argus 5.2%
+Divine Favor 5.2%
+
+
+Prediction for Turn 10
+
+Truesilver Champion 9.8%
+Consecration 9.8%
+Blood Knight 7.3%
+Lay on Hands 7.3%
+Guardian of Kings 4.9%
+Avenging Wrath 4.9%
+Harvest Golem 4.9%
+
+
+Prediction for Turn 11
+
+Equality 12.8%
+Guardian of Kings 10.3%
+Avenging Wrath 10.3%
+Argent Squire 7.7%
+Argent Protector 5.1%
+Defender of Argus 5.1%
+Abusive Sergeant 5.1%
+
+
+Prediction for Turn 12
+
+Guardian of Kings 18.5%
+Tirion Fordring 11.1%
+Consecration 7.4%
+Blessing of Kings 7.4%
+Harvest Golem 7.4%
+Sludge Belcher 3.7%
+Hammer of Wrath 3.7%
+
+Class: Shaman
+
+
+Prediction for Turn 1
+
+The Coin 19.2%
+Leper Gnome 15.4%
+Lightning Bolt 11.5%
+Undertaker 7.7%
+Rockbiter Weapon 7.7%
+Nerubian Egg 3.8%
+Earth Shock 3.8%
+
+
+Prediction for Turn 2
+
+Nerubian Egg 20.6%
+Haunted Creeper 14.7%
+Loot Hoarder 8.8%
+Lightning Bolt 8.8%
+The Coin 5.9%
+Rockbiter Weapon 5.9%
+Hex 2.9%
+
+
+Prediction for Turn 3
+
+Rockbiter Weapon 12.2%
+Feral Spirit 10.2%
+Earth Shock 10.2%
+Sen'jin Shieldmasta 6.1%
+Lightning Bolt 6.1%
+Nerubian Egg 6.1%
+The Coin 6.1%
+
+
+Prediction for Turn 4
+
+Feral Spirit 15.4%
+The Coin 13.8%
+Lightning Bolt 7.7%
+Hex 6.2%
+Flametongue Totem 6.2%
+Feugen 4.6%
+Sludge Belcher 3.1%
+
+
+Prediction for Turn 5
+
+Lightning Bolt 12.1%
+Flametongue Totem 10.6%
+Feral Spirit 7.6%
+Earth Shock 4.5%
+Rockbiter Weapon 4.5%
+Sludge Belcher 4.5%
+Earth Elemental 4.5%
+
+
+Prediction for Turn 6
+
+Hex 14.5%
+Fire Elemental 9.7%
+Lightning Bolt 8.1%
+Azure Drake 6.5%
+Sludge Belcher 6.5%
+Lightning Storm 4.8%
+Reincarnate 4.8%
+
+
+Prediction for Turn 7
+
+Fire Elemental 12.0%
+Lightning Bolt 7.2%
+Sludge Belcher 7.2%
+Flametongue Totem 6.0%
+Mana Tide Totem 6.0%
+Lightning Storm 6.0%
+Unbound Elemental 4.8%
+
+
+Prediction for Turn 8
+
+Flametongue Totem 10.0%
+Hex 8.6%
+Unstable Ghoul 8.6%
+Lightning Storm 5.7%
+Rockbiter Weapon 4.3%
+Fire Elemental 4.3%
+Ancestral Spirit 4.3%
+
+
+Prediction for Turn 9
+
+Flametongue Totem 13.2%
+Rockbiter Weapon 10.3%
+Bloodlust 7.4%
+Feral Spirit 5.9%
+Hex 4.4%
+Ancestral Spirit 4.4%
+Reincarnate 4.4%
+
+
+Prediction for Turn 10
+
+Hex 12.0%
+Earth Shock 12.0%
+Fire Elemental 8.0%
+Lightning Bolt 8.0%
+Stormforged Axe 6.0%
+Flametongue Totem 6.0%
+Lightning Storm 4.0%
+
+
+Prediction for Turn 11
+
+Hex 10.6%
+Fire Elemental 8.5%
+Earth Shock 6.4%
+Sunwalker 6.4%
+Ironbeak Owl 6.4%
+Lightning Storm 4.3%
+Rockbiter Weapon 4.3%
+
+
+Prediction for Turn 12
+
+Lightning Storm 9.7%
+Ragnaros the Firelord 9.7%
+Windfury 9.7%
+Windspeaker 6.5%
+Argent Commander 6.5%
+Rockbiter Weapon 6.5%
+Lightning Bolt 6.5%
+
+Class: Rogue
+
+
+Prediction for Turn 1
+
+Leper Gnome 35.5%
+The Coin 22.6%
+Defias Ringleader 16.1%
+Argent Squire 6.5%
+Backstab 6.5%
+Eviscerate 3.2%
+Southsea Deckhand 3.2%
+
+
+Prediction for Turn 2
+
+The Coin 21.4%
+SI:7 Agent 14.3%
+Shiv 11.9%
+Backstab 9.5%
+Loot Hoarder 7.1%
+Shieldbearer 2.4%
+Cold Blood 2.4%
+
+
+Prediction for Turn 3
+
+Backstab 16.4%
+Loot Hoarder 11.9%
+Deadly Poison 9.0%
+Argent Squire 6.0%
+Eviscerate 6.0%
+SI:7 Agent 6.0%
+Shiv 6.0%
+
+
+Prediction for Turn 4
+
+SI:7 Agent 15.8%
+Eviscerate 7.9%
+Backstab 7.9%
+Fan of Knives 6.6%
+Deadly Poison 5.3%
+Defias Ringleader 5.3%
+Argent Squire 3.9%
+
+
+Prediction for Turn 5
+
+Azure Drake 11.2%
+Backstab 7.5%
+Fan of Knives 7.5%
+Assassin's Blade 7.5%
+Shiv 7.5%
+Knife Juggler 3.8%
+King Mukla 3.8%
+
+
+Prediction for Turn 6
+
+Fan of Knives 9.1%
+Deadly Poison 9.1%
+Backstab 7.1%
+Blade Flurry 6.1%
+Argent Commander 5.1%
+Eviscerate 5.1%
+Sap 5.1%
+
+
+Prediction for Turn 7
+
+SI:7 Agent 7.8%
+Blade Flurry 5.8%
+Eviscerate 5.8%
+Deadly Poison 4.9%
+Backstab 3.9%
+Gadgetzan Auctioneer 3.9%
+Fan of Knives 3.9%
+
+
+Prediction for Turn 8
+
+Eviscerate 7.1%
+SI:7 Agent 7.1%
+Southsea Deckhand 7.1%
+Sludge Belcher 5.9%
+Leeroy Jenkins 5.9%
+Shadowstep 4.7%
+Deadly Poison 4.7%
+
+
+Prediction for Turn 9
+
+Deadly Poison 8.9%
+Leeroy Jenkins 7.8%
+Sap 6.7%
+Eviscerate 6.7%
+Defias Ringleader 5.6%
+Blade Flurry 5.6%
+Gadgetzan Auctioneer 4.4%
+
+
+Prediction for Turn 10
+
+Gadgetzan Auctioneer 10.2%
+Sap 10.2%
+Preparation 8.5%
+Conceal 6.8%
+Fan of Knives 5.1%
+SI:7 Agent 5.1%
+Backstab 5.1%
+
+
+Prediction for Turn 11
+
+Leeroy Jenkins 20.5%
+Shadowstep 13.6%
+Cold Blood 11.4%
+Deadly Poison 6.8%
+Sap 6.8%
+Dark Iron Dwarf 4.5%
+Bloodmage Thalnos 4.5%
+
+
+Prediction for Turn 12
+
+Argent Commander 15.4%
+Shadowstep 15.4%
+Backstab 15.4%
+Eviscerate 15.4%
+Conceal 15.4%
+Leeroy Jenkins 7.7%
+Defender of Argus 7.7%
+
+Class: Warlock
+
+
+Prediction for Turn 1
+
+The Coin 27.6%
+Flame Imp 14.6%
+Voidwalker 13.8%
+Argent Squire 6.5%
+Shieldbearer 5.7%
+Leper Gnome 4.1%
+Undertaker 4.1%
+
+
+Prediction for Turn 2
+
+Nerubian Egg 13.8%
+Haunted Creeper 10.6%
+Flame Imp 8.5%
+Dire Wolf Alpha 8.5%
+Voidwalker 8.5%
+Argent Squire 6.4%
+Leper Gnome 6.4%
+
+
+Prediction for Turn 3
+
+Argent Squire 9.5%
+Dire Wolf Alpha 7.8%
+Harvest Golem 7.8%
+Voidwalker 7.8%
+Knife Juggler 6.9%
+Soulfire 6.0%
+Abusive Sergeant 5.2%
+
+
+Prediction for Turn 4
+
+Nerubian Egg 7.4%
+Knife Juggler 7.4%
+Soulfire 5.9%
+Young Priestess 4.4%
+Dire Wolf Alpha 4.4%
+Leper Gnome 4.4%
+Twilight Drake 3.7%
+
+
+Prediction for Turn 5
+
+Dark Iron Dwarf 6.3%
+Dire Wolf Alpha 5.6%
+Voidwalker 4.9%
+Shattered Sun Cleric 4.2%
+Soulfire 4.2%
+The Coin 4.2%
+Blood Imp 3.5%
+
+
+Prediction for Turn 6
+
+Soulfire 9.5%
+Abusive Sergeant 8.0%
+Defender of Argus 5.8%
+Nerubian Egg 5.1%
+Doomguard 3.6%
+Dire Wolf Alpha 2.9%
+Voidwalker 2.9%
+
+
+Prediction for Turn 7
+
+Abusive Sergeant 9.4%
+Doomguard 8.0%
+Soulfire 5.8%
+Voidwalker 5.8%
+Defender of Argus 4.3%
+Power Overwhelming 4.3%
+Dark Iron Dwarf 3.6%
+
+
+Prediction for Turn 8
+
+Power Overwhelming 7.5%
+Defender of Argus 7.5%
+Soulfire 5.7%
+Hellfire 4.7%
+Demonfire 3.8%
+Shattered Sun Cleric 3.8%
+Dread Infernal 3.8%
+
+
+Prediction for Turn 9
+
+Defender of Argus 8.0%
+Flame Imp 6.0%
+Doomguard 6.0%
+Soulfire 5.0%
+Molten Giant 5.0%
+Shadowflame 5.0%
+Knife Juggler 4.0%
+
+
+Prediction for Turn 10
+
+Doomguard 9.2%
+Soulfire 8.0%
+Hellfire 8.0%
+Nerubian Egg 4.6%
+Defender of Argus 4.6%
+Abusive Sergeant 4.6%
+Voidwalker 4.6%
+
+
+Prediction for Turn 11
+
+Power Overwhelming 9.8%
+Abusive Sergeant 7.3%
+Knife Juggler 4.9%
+Unstable Ghoul 4.9%
+Doomguard 4.9%
+Soulfire 4.9%
+Nerubian Egg 4.9%
+
+
+Prediction for Turn 12
+
+Siphon Soul 8.3%
+Sludge Belcher 8.3%
+Young Priestess 8.3%
+Power Overwhelming 4.2%
+Dread Infernal 4.2%
+Twisting Nether 4.2%
+Murloc Warleader 4.2%
+
+Class: Warrior
+
+
+Prediction for Turn 1
+
+The Coin 44.8%
+Unstable Ghoul 13.8%
+Fiery War Axe 10.3%
+Cruel Taskmaster 6.9%
+Faerie Dragon 3.4%
+Young Priestess 3.4%
+Leper Gnome 3.4%
+
+
+Prediction for Turn 2
+
+Fiery War Axe 35.5%
+Armorsmith 12.9%
+Amani Berserker 6.5%
+The Coin 6.5%
+Loot Hoarder 3.2%
+Slam 3.2%
+Nerubian Egg 3.2%
+
+
+Prediction for Turn 3
+
+Fiery War Axe 12.9%
+Cruel Taskmaster 9.7%
+Shield Block 8.1%
+The Coin 4.8%
+Whirlwind 4.8%
+Frothing Berserker 4.8%
+Acidic Swamp Ooze 4.8%
+
+
+Prediction for Turn 4
+
+Sen'jin Shieldmasta 13.4%
+Kor'kron Elite 11.9%
+Death's Bite 6.0%
+Cruel Taskmaster 4.5%
+Shield Block 4.5%
+Mortal Strike 4.5%
+Unstable Ghoul 4.5%
+
+
+Prediction for Turn 5
+
+Shield Block 8.6%
+Acolyte of Pain 8.6%
+Arathi Weaponsmith 7.1%
+Kor'kron Elite 5.7%
+Armorsmith 5.7%
+Stranglethorn Tiger 4.3%
+Bloodsail Raider 4.3%
+
+
+Prediction for Turn 6
+
+Arathi Weaponsmith 7.6%
+Execute 6.5%
+Armorsmith 6.5%
+Slam 5.4%
+Heroic Strike 5.4%
+Cruel Taskmaster 5.4%
+Fiery War Axe 4.3%
+
+
+Prediction for Turn 7
+
+Slam 9.5%
+Execute 8.6%
+Fiery War Axe 5.7%
+Kor'kron Elite 3.8%
+Frothing Berserker 3.8%
+Brawl 3.8%
+Acolyte of Pain 3.8%
+
+
+Prediction for Turn 8
+
+Kor'kron Elite 13.6%
+Fiery War Axe 7.4%
+Bloodsail Raider 7.4%
+Defender of Argus 4.9%
+Ragnaros the Firelord 4.9%
+Whirlwind 4.9%
+Execute 4.9%
+
+
+Prediction for Turn 9
+
+Execute 8.1%
+Shield Block 6.5%
+Brawl 6.5%
+Cruel Taskmaster 4.8%
+Kor'kron Elite 4.8%
+Whirlwind 4.8%
+Gnomish Inventor 4.8%
+
+
+Prediction for Turn 10
+
+Kor'kron Elite 10.3%
+Warsong Commander 6.9%
+Ragnaros the Firelord 5.2%
+Whirlwind 5.2%
+Execute 5.2%
+Fiery War Axe 5.2%
+Argent Squire 5.2%
+
+
+Prediction for Turn 11
+
+Shield Block 14.6%
+Bananas 14.6%
+Whirlwind 9.8%
+Ironfur Grizzly 7.3%
+Darkscale Healer 7.3%
+Armorsmith 7.3%
+Execute 4.9%
+
+
+Prediction for Turn 12
+
+Armorsmith 20.8%
+Darkscale Healer 12.5%
+Acolyte of Pain 12.5%
+Cleave 4.2%
+Heroic Strike 4.2%
+Whirlwind 4.2%
+Kor'kron Elite 4.2%

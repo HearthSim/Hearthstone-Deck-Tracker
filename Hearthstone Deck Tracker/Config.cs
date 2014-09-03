@@ -137,6 +137,7 @@ namespace Hearthstone_Deck_Tracker
 		public int? StatsWindowTop = Defaults.StatsWindowTop;
 		public int StatsWindowWidth = Defaults.StatsWindowWidth;
 		public bool TagDecksOnImport = Defaults.TagDecksOnImport;
+        public bool PredictAllowed = Defaults.PredictAllowed;
 		public Operation TagOperation = Defaults.TagOperation;
 		public string ThemeName = Defaults.ThemeName;
 		public double TimerLeft = Defaults.TimerLeft;
@@ -416,6 +417,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool WindowsTopmost = false;
 			public static readonly bool WindowsTopmostIfHsForeground = false;
 			public static readonly bool TagDecksOnImport = true;
+            public static readonly bool PredictAllowed = false;            
 		}
 
 		public class GameDetailsConfig

@@ -489,6 +489,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
 			Options.CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
+            Options.CheckboxPrediction.IsChecked = Config.Instance.PredictAllowed;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			Game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
+
+
 		}
 
 		public static void HandlePlayerBackToHand(string cardId, int turn)
@@ -49,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Found incorrect deck");
 			}
 			Game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
+
 		}
 
 		public static void HandlePlayerMulligan(string cardId)
@@ -195,10 +198,17 @@ namespace Hearthstone_Deck_Tracker
 				Game.CurrentGameStats.OpponentHero = hero;
 
 			Logger.WriteLine("Playing against " + hero, "Hearthstone");
+            DeckStatsList.doPrediction(Game.PlayingAgainst, 1);
 		}
 
 		public static void TurnStart(Turn player, int turnNumber)
 		{
+
+            if (player != Turn.Player)
+            {
+                DeckStatsList.doPrediction(Game.PlayingAgainst, turnNumber + 1);
+            }
+
 			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer
 			//maybe add timer to player/opponent windows
@@ -218,6 +228,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//avoid new game being started when jaraxxus is played
 			if(!Game.IsInMenu) return;
+
 
 			Game.PlayingAs = playerHero;
 
