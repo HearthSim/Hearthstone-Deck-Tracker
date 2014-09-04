@@ -1,170 +1,318 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using System.Linq;
 
 namespace Hearthstone_Deck_Tracker
 {
 	public class Config
 	{
-		private static Config _config = new Config();
+		#region Settings
 
-		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-		                                     @"\HearthstoneDeckTracker";
+		private static Config _config; //= new Config();
 
-		public string AccentName = Defaults.AccentName;
-		public bool AdditionalOverlayTooltips = Defaults.AdditionalOverlayTooltips;
-		public bool AlwaysOverwriteLogConfig = Defaults.AlwaysOverwriteLogConfig;
-		public bool AutoDeckDetection = Defaults.AutoDeckDetection;
-		public bool AutoSelectDetectedDeck = Defaults.AutoSelectDetectedDeck;
-		public bool BringHsToForeground = Defaults.BringHsToForeground;
-		public bool CardSortingClassFirst = Defaults.CardSortingClassFirst;
-		public bool CheckForUpdates = Defaults.CheckForUpdates;
-		public bool ClearLogFileAfterGame = Defaults.ClearLogFileAfterGame;
-		public bool CloseWithHearthstone = Defaults.CloseWithHearthstone;
-		public string CreatedByVersion = Defaults.CreatedByVersion;
-		public int CustomHeight = Defaults.CustomHeight;
-		public int CustomWidth = Defaults.CustomWidth;
+		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\HearthstoneDeckTracker";
 
+		[DefaultValue(false)]
 		[XmlIgnore]
-		public bool Debug = Defaults.Debug;
-
-		public int DeckExportDelay = Defaults.DeckExportDelay;
-		public bool DiscardGameIfIncorrectDeck = Defaults.DiscardGameIfIncorrectDeck;
-		public double ExportAllButtonX = Defaults.ExportAllButtonX;
-		public double ExportAllButtonY = Defaults.ExportAllButtonY;
-		public double ExportCard1X = Defaults.ExportCard1X;
-		public double ExportCard2X = Defaults.ExportCard2X;
-		public double ExportCardsY = Defaults.ExportCardsY;
-		public double ExportNameDeckX = Defaults.ExportNameDeckX;
-		public double ExportNameDeckY = Defaults.ExportNameDeckY;
-		public bool ExportPasteClipboard = Defaults.ExportPasteClipboard;
-		public double ExportSearchBoxX = Defaults.ExportSearchBoxX;
-		public double ExportSearchBoxY = Defaults.ExportSearchBoxY;
-		public bool ExportSetDeckName = Defaults.ExportSetDeckName;
-		public bool ExtraFeatures = Defaults.ExtraFeatures;
-		public bool FlashHsOnTurnStart = Defaults.FlashHsOnTurnStart;
-		public GameDetailsConfig GameDetails = Defaults.GameDetails;
-		public bool GenerateLog = Defaults.GenerateLog;
-		public string HearthstoneDirectory = Defaults.HearthstoneDirectory;
-		public bool HideDecksInOverlay = Defaults.HideDecksInOverlay;
-		public bool HideDrawChances = Defaults.HideDrawChances;
-		public bool HideInBackground = Defaults.HideInBackground;
-		public bool HideInMenu = Defaults.HideInMenu;
-		public bool HideOpponentCardAge = Defaults.HideOpponentCardAge;
-		public bool HideOpponentCardCount = Defaults.HideOpponentCardCount;
-		public bool HideOpponentCardMarks = Defaults.HideOpponentCardMarks;
-		public bool HideOpponentCards = Defaults.HideOpponentCards;
-		public bool HideOpponentDrawChances = Defaults.HideOpponentDrawChances;
-		public bool HideOverlay = Defaults.HideOverlay;
-		public bool HidePlayerCardCount = Defaults.HidePlayerCardCount;
-		public bool HidePlayerCards = Defaults.HidePlayerCards;
-		public bool HideSecrets = Defaults.HideSecrets;
-		public bool HideTimers = Defaults.HideTimers;
-		public bool HighlightCardsInHand = Defaults.HighlightCardsInHand;
-		public bool HighlightDiscarded = Defaults.HighlightDiscarded;
-		public bool HighlightLastDrawn = Defaults.HighlightLastDrawn;
-		public bool KeepDecksVisible = Defaults.KeepDecksVisible;
-		public string KeyPressOnGameEnd = Defaults.KeyPressOnGameEnd;
-		public string KeyPressOnGameStart = Defaults.KeyPressOnGameStart;
-		public string LastDeck = Defaults.LastDeck;
-		public int LogLevel = Defaults.LogLevel;
-		public bool ManaCurveMyDecks = Defaults.ManaCurveMyDecks;
-		public bool MinimizeToTray = Defaults.MinimizeToTray;
-		public int OffsetX = Defaults.OffsetX;
-		public int OffsetY = Defaults.OffsetY;
-		public double OpponentDeckHeight = Defaults.OpponentDeckHeight;
-		public double OpponentDeckLeft = Defaults.OpponentDeckLeft;
-		public double OpponentDeckTop = Defaults.OpponentDeckTop;
-		public double OpponentOpacity = Defaults.OpponentOpacity;
-		public int OpponentWindowHeight = Defaults.OpponentWindowHeight;
-		public int? OpponentWindowLeft = Defaults.OpponentWindowLeft;
-		public bool OpponentWindowOnStart = Defaults.OpponentWindowOnStart;
-		public int? OpponentWindowTop = Defaults.OpponentWindowTop;
-		public bool OverlayCardToolTips = Defaults.OverlayCardToolTips;
-		public double OverlayOpacity = Defaults.OverlayOpacity;
-		public double OverlayOpponentScaling = Defaults.OverlayOpponentScaling;
-		public double OverlayPlayerScaling = Defaults.OverlayPlayerScaling;
-		public bool OverlaySecretToolTipsOnly = Defaults.OverlaySecretToolTipsOnly;
-		public bool OwnsGoldenFeugen = Defaults.OwnsGoldenFeugen;
-		public bool OwnsGoldenStalagg = Defaults.OwnsGoldenStalagg;
-		public string[] PanelOrderOpponent = Defaults.PanelOrderOpponent;
-		public string[] PanelOrderPlayer = Defaults.PanelOrderPlayer;
-		public double PlayerDeckHeight = Defaults.PlayerDeckHeight;
-		public double PlayerDeckLeft = Defaults.PlayerDeckLeft;
-		public double PlayerDeckTop = Defaults.PlayerDeckTop;
-		public double PlayerOpacity = Defaults.PlayerOpacity;
-		public int PlayerWindowHeight = Defaults.PlayerWindowHeight;
-		public int? PlayerWindowLeft = Defaults.PlayerWindowLeft;
-		public bool PlayerWindowOnStart = Defaults.PlayerWindowOnStart;
-		public int? PlayerWindowTop = Defaults.PlayerWindowTop;
-		public bool PrioritizeGolden = Defaults.PrioritizeGolden;
-		public bool RecordArena = Defaults.RecordArena;
-		public bool RecordCasual = Defaults.RecordCasual;
-		public bool RecordFriendly = Defaults.RecordFriendly;
-		public bool RecordOther = Defaults.RecordOther;
-		public bool RecordPractice = Defaults.RecordPractice;
-		public bool RecordRanked = Defaults.RecordRanked;
-		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
-		public bool SaveInAppData = Defaults.SaveInAppData;
-		public double SecretsHeight = Defaults.SecretsHeight;
-		public double SecretsLeft = Defaults.SecretsLeft;
-		public double SecretsTop = Defaults.SecretsTop;
-		public string SelectedDeckSorting = Defaults.SelectedDeckSorting;
-		public string SelectedLanguage = Defaults.SelectedLanguage;
-		public Game.GameMode SelectedStatsFilterGameMode = Defaults.SelectedStatsFilterGameMode;
-		public string SelectedStatsFilterTime = Defaults.SelectedStatsFilterTime;
+		public bool Debug { get; set; }
 
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
-		public List<string> SelectedTags = Defaults.SelectedTags;
+		public List<string> SelectedTags { get; set; }
 
-		public string SelectedWindowBackground = Defaults.SelectedWindowBackground;
-		public bool ShowAllDecks = Defaults.ShowAllDecks;
-		public bool ShowDeckTitle = Defaults.ShowDeckTitle;
-		public bool ShowDeckWins = Defaults.ShowDeckWins;
-		public bool ShowInTaskbar = Defaults.ShowInTaskbar;
-		public bool ShowPlayerGet = Defaults.ShowPlayerGet;
-		public bool ShowWinRateAgainst = Defaults.ShowWinRateAgainst;
-		public bool StartMinimized = Defaults.StartMinimized;
-		public bool StatsClassOverviewIsExpanded = Defaults.StatsClassOverviewIsExpanded;
-		public bool StatsDeckOverviewIsExpanded = Defaults.StatsDeckOverviewIsExpanded;
-		public bool StatsInWindow = Defaults.StatsInWindow;
-		public int StatsWindowHeight = Defaults.StatsWindowHeight;
-		public int? StatsWindowLeft = Defaults.StatsWindowLeft;
-		public int? StatsWindowTop = Defaults.StatsWindowTop;
-		public int StatsWindowWidth = Defaults.StatsWindowWidth;
-		public bool TagDecksOnImport = Defaults.TagDecksOnImport;
-		public Operation TagOperation = Defaults.TagOperation;
-		public string ThemeName = Defaults.ThemeName;
-		public double TimerLeft = Defaults.TimerLeft;
-		public int TimerWindowHeight = Defaults.TimerWindowHeight;
-		public int? TimerWindowLeft = Defaults.TimerWindowLeft;
-		public bool TimerWindowOnStartup = Defaults.TimerWindowOnStartup;
-		public int? TimerWindowTop = Defaults.TimerWindowTop;
-		public bool TimerWindowTopmost = Defaults.TimerWindowTopmost;
-		public bool TimerWindowTopmostIfHsForeground = Defaults.TimerWindowTopmostIfHsForeground;
-		public int TimerWindowWidth = Defaults.TimerWindowWidth;
-		public double TimersHorizontalPosition = Defaults.TimersHorizontalPosition;
-		public double TimersHorizontalSpacing = Defaults.TimersHorizontalSpacing;
-		public double TimersVerticalPosition = Defaults.TimersVerticalPosition;
-		public double TimersVerticalSpacing = Defaults.TimersVerticalSpacing;
-		public bool TrackerCardToolTips = Defaults.TrackerCardToolTips;
-		public int? TrackerWindowLeft = Defaults.TrackerWindowLeft;
-		public int? TrackerWindowTop = Defaults.TrackerWindowTop;
-		public int UpdateDelay = Defaults.UpdateDelay;
-		public bool UseFullTextSearch = Defaults.UseFullTextSearch;
-		public bool UseSameScaling = Defaults.UseSameScaling;
-		public bool VisibleOverlay = Defaults.VisibleOverlay;
-		public bool WindowCardToolTips = Defaults.WindowCardToolTips;
-		public int WindowHeight = Defaults.WindowHeight;
-		public int WindowWidth = Defaults.WindowWidth;
-		public string WindowsBackgroundHex = Defaults.WindowsBackgroundHex;
-		public bool WindowsTopmost = Defaults.WindowsTopmost;
-		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
-		private string _currentLogFile;
+		public GameDetailsConfig GameDetails { get; set; }
+
+		[DefaultValue("")]
+		public string AccentName { get; set; }
+		[DefaultValue(true)]
+		public bool AdditionalOverlayTooltips { get; set; }
+		[DefaultValue(true)]
+		public bool AlwaysOverwriteLogConfig { get; set; }
+		[DefaultValue(true)]
+		public bool AutoDeckDetection { get; set; }
+		[DefaultValue(true)]
+		public bool AutoSelectDetectedDeck { get; set; }
+		[DefaultValue(false)]
+		public bool BringHsToForeground { get; set; }
+		[DefaultValue(false)]
+		public bool CardSortingClassFirst { get; set; }
+		[DefaultValue(true)]
+		public bool CheckForUpdates { get; set; }
+		[DefaultValue(true)]
+		public bool ClearLogFileAfterGame { get; set; }
+		[DefaultValue(false)]
+		public bool CloseWithHearthstone { get; set; }
+		[DefaultValue("")]
+		public string CreatedByVersion;
+		[DefaultValue(-1)]
+		public int CustomHeight { get; set; }
+		[DefaultValue(-1)]
+		public int CustomWidth { get; set; }
+		[DefaultValue(50)]
+		public int DeckExportDelay { get; set; }
+		[DefaultValue(false)]
+		public bool DiscardGameIfIncorrectDeck { get; set; }
+		[DefaultValue(0.06)]
+		public double ExportAllButtonX { get; set; }
+		[DefaultValue(0.915)]
+		public double ExportAllButtonY { get; set; }
+		[DefaultValue(0.12)]
+		public double ExportCard1X { get; set; }
+		[DefaultValue(0.285)]
+		public double ExportCard2X { get; set; }
+		[DefaultValue(0.32)]
+		public double ExportCardsY { get; set; }
+		[DefaultValue(0.85)]
+		public double ExportNameDeckX { get; set; }
+		[DefaultValue(0.075)]
+		public double ExportNameDeckY { get; set; }
+		[DefaultValue(false)]
+		public bool ExportPasteClipboard { get; set; }
+		[DefaultValue(0.5)]
+		public double ExportSearchBoxX { get; set; }
+		[DefaultValue(0.915)]
+		public double ExportSearchBoxY { get; set; }
+		[DefaultValue(true)]
+		public bool ExportSetDeckName { get; set; }
+		[DefaultValue(false)]
+		public bool ExtraFeatures { get; set; }
+		[DefaultValue(true)]
+		public bool FlashHsOnTurnStart { get; set; }
+		[DefaultValue(false)]
+		public bool GenerateLog { get; set; }
+		[DefaultValue("")]
+		public string HearthstoneDirectory { get; set; }
+		[DefaultValue(false)]
+		public bool HideDecksInOverlay { get; set; }
+		[DefaultValue(false)]
+		public bool HideDrawChances { get; set; }
+		[DefaultValue(false)]
+		public bool HideInBackground { get; set; }
+		[DefaultValue(false)]
+		public bool HideInMenu { get; set; }
+		[DefaultValue(false)]
+		public bool HideOpponentCardAge { get; set; }
+		[DefaultValue(false)]
+		public bool HideOpponentCardCount { get; set; }
+		[DefaultValue(false)]
+		public bool HideOpponentCardMarks { get; set; }
+		[DefaultValue(false)]
+		public bool HideOpponentCards { get; set; }
+		[DefaultValue(false)]
+		public bool HideOpponentDrawChances { get; set; }
+		[DefaultValue(false)]
+		public bool HideOverlay { get; set; }
+		[DefaultValue(false)]
+		public bool HidePlayerCardCount { get; set; }
+		[DefaultValue(false)]
+		public bool HidePlayerCards { get; set; }
+		[DefaultValue(false)]
+		public bool HideSecrets { get; set; }
+		[DefaultValue(false)]
+		public bool HideTimers { get; set; }
+		[DefaultValue(false)]
+		public bool HighlightCardsInHand { get; set; }
+		[DefaultValue(false)]
+		public bool HighlightDiscarded { get; set; }
+		[DefaultValue(true)]
+		public bool HighlightLastDrawn { get; set; }
+		[DefaultValue(true)]
+		public bool KeepDecksVisible { get; set; }
+		[DefaultValue("None")]
+		public string KeyPressOnGameEnd { get; set; }
+		[DefaultValue("None")]
+		public string KeyPressOnGameStart { get; set; }
+		[DefaultValue("")]
+		public string LastDeck { get; set; }
+		[DefaultValue(0)]
+		public int LogLevel { get; set; }
+		[DefaultValue(true)]
+		public bool ManaCurveMyDecks { get; set; }
+		[DefaultValue(false)]
+		public bool MinimizeToTray { get; set; }
+		[DefaultValue(0)]
+		public int OffsetX { get; set; }
+		[DefaultValue(0)]
+		public int OffsetY { get; set; }
+		[DefaultValue(65)]
+		public double OpponentDeckHeight { get; set; }
+		[DefaultValue(0.5)]
+		public double OpponentDeckLeft { get; set; }
+		[DefaultValue(17)]
+		public double OpponentDeckTop { get; set; }
+		[DefaultValue(100)]
+		public double OpponentOpacity { get; set; }
+		[DefaultValue(400)]
+		public int OpponentWindowHeight { get; set; }
+		[DefaultValue(null)]
+		public int? OpponentWindowLeft { get; set; }
+		[DefaultValue(false)]
+		public bool OpponentWindowOnStart { get; set; }
+		[DefaultValue(null)]
+		public int? OpponentWindowTop { get; set; }
+		[DefaultValue(true)]
+		public bool OverlayCardToolTips { get; set; }
+		[DefaultValue(100)]
+		public double OverlayOpacity { get; set; }
+		[DefaultValue(100)]
+		public double OverlayOpponentScaling { get; set; }
+		[DefaultValue(100)]
+		public double OverlayPlayerScaling { get; set; }
+		[DefaultValue(false)]
+		public bool OverlaySecretToolTipsOnly { get; set; }
+		[DefaultValue(false)]
+		public bool OwnsGoldenFeugen { get; set; }
+		[DefaultValue(false)]
+		public bool OwnsGoldenStalagg { get; set; }
+		[DefaultValue(new[] { "Win Rate", "Cards", "Draw Chances", "Card Counter" })]
+		public string[] PanelOrderOpponent { get; set; }
+		[DefaultValue(new[] { "Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter" })]
+		public string[] PanelOrderPlayer { get; set; }
+		[DefaultValue(65)]
+		public double PlayerDeckHeight { get; set; }
+		[DefaultValue(99.5)]
+		public double PlayerDeckLeft { get; set; }
+		[DefaultValue(17)]
+		public double PlayerDeckTop { get; set; }
+		[DefaultValue(100)]
+		public double PlayerOpacity { get; set; }
+		[DefaultValue(400)]
+		public int PlayerWindowHeight { get; set; }
+		[DefaultValue(null)]
+		public int? PlayerWindowLeft { get; set; }
+		[DefaultValue(false)]
+		public bool PlayerWindowOnStart { get; set; }
+		[DefaultValue(null)]
+		public int? PlayerWindowTop { get; set; }
+		[DefaultValue(true)]
+		public bool PrioritizeGolden { get; set; }
+		[DefaultValue(true)]
+		public bool RecordArena { get; set; }
+		[DefaultValue(true)]
+		public bool RecordCasual { get; set; }
+		[DefaultValue(true)]
+		public bool RecordFriendly { get; set; }
+		[DefaultValue(false)]
+		public bool RecordOther { get; set; }
+		[DefaultValue(false)]
+		public bool RecordPractice { get; set; }
+		[DefaultValue(true)]
+		public bool RecordRanked { get; set; }
+		[DefaultValue(false)]
+		public bool RemoveCardsFromDeck { get; set; }
+		[DefaultValue(true)]
+		public bool SaveInAppData { get; set; }
+		[DefaultValue(35)]
+		public double SecretsHeight { get; set; }
+		[DefaultValue(15)]
+		public double SecretsLeft { get; set; }
+		[DefaultValue(5)]
+		public double SecretsTop { get; set; }
+		[DefaultValue("Name")]
+		public string SelectedDeckSorting { get; set; }
+		[DefaultValue("enUS")]
+		public string SelectedLanguage { get; set; }
+		[DefaultValue(Game.GameMode.All)]
+		public Game.GameMode SelectedStatsFilterGameMode { get; set; }
+		[DefaultValue("All Time")]
+		public string SelectedStatsFilterTime { get; set; }
+		[DefaultValue("Theme")]
+		public string SelectedWindowBackground { get; set; }
+		[DefaultValue(false)]
+		public bool ShowAllDecks { get; set; }
+		[DefaultValue(false)]
+		public bool ShowDeckTitle { get; set; }
+		[DefaultValue(false)]
+		public bool ShowDeckWins { get; set; }
+		[DefaultValue(false)]
+		public bool ShowInTaskbar { get; set; }
+		[DefaultValue(false)]
+		public bool ShowPlayerGet { get; set; }
+		[DefaultValue(false)]
+		public bool ShowWinRateAgainst { get; set; }
+		[DefaultValue(false)]
+		public bool StartMinimized { get; set; }
+		[DefaultValue(false)]
+		public bool StatsClassOverviewIsExpanded { get; set; }
+		[DefaultValue(true)]
+		public bool StatsDeckOverviewIsExpanded { get; set; }
+		[DefaultValue(false)]
+		public bool StatsInWindow { get; set; }
+		[DefaultValue(672)]
+		public int StatsWindowHeight { get; set; }
+		[DefaultValue(null)]
+		public int? StatsWindowLeft { get; set; }
+		[DefaultValue(null)]
+		public int? StatsWindowTop { get; set; }
+		[DefaultValue(510)]
+		public int StatsWindowWidth { get; set; }
+		[DefaultValue(true)]
+		public bool TagDecksOnImport { get; set; }
+		[DefaultValue(Operation.Or)]
+		public Operation TagOperation { get; set; }
+		[DefaultValue("")]
+		public string ThemeName { get; set; }
+		[DefaultValue(75)]
+		public double TimerLeft { get; set; }
+		[DefaultValue(130)]
+		public int TimerWindowHeight { get; set; }
+		[DefaultValue(null)]
+		public int? TimerWindowLeft { get; set; }
+		[DefaultValue(false)]
+		public bool TimerWindowOnStartup { get; set; }
+		[DefaultValue(null)]
+		public int? TimerWindowTop { get; set; }
+		[DefaultValue(false)]
+		public bool TimerWindowTopmost { get; set; }
+		[DefaultValue(false)]
+		public bool TimerWindowTopmostIfHsForeground { get; set; }
+		[DefaultValue(150)]
+		public int TimerWindowWidth { get; set; }
+		[DefaultValue(80)]
+		public double TimersHorizontalPosition { get; set; }
+		[DefaultValue(0)]
+		public double TimersHorizontalSpacing { get; set; }
+		[DefaultValue(43.5)]
+		public double TimersVerticalPosition { get; set; }
+		[DefaultValue(50)]
+		public double TimersVerticalSpacing { get; set; }
+		[DefaultValue(true)]
+		public bool TrackerCardToolTips { get; set; }
+		[DefaultValue(null)]
+		public int? TrackerWindowLeft { get; set; }
+		[DefaultValue(null)]
+		public int? TrackerWindowTop { get; set; }
+		[DefaultValue(100)]
+		public int UpdateDelay { get; set; }
+		[DefaultValue(false)]
+		public bool UseFullTextSearch { get; set; }
+		[DefaultValue(true)]
+		public bool UseSameScaling { get; set; }
+		[DefaultValue(false)]
+		public bool VisibleOverlay { get; set; }
+		[DefaultValue(true)]
+		public bool WindowCardToolTips { get; set; }
+		[DefaultValue(620)]
+		public int WindowHeight { get; set; }
+		[DefaultValue(550)]
+		public int WindowWidth { get; set; }
+		[DefaultValue("#696969")]
+		public string WindowsBackgroundHex { get; set; }
+		[DefaultValue(false)]
+		public bool WindowsTopmost { get; set; }
+		[DefaultValue(false)]
+		public bool WindowsTopmostIfHsForeground { get; set; }
+		[DefaultValue(true)]
+		private string _currentLogFile { get; set; }
+
+		#endregion
+
+		#region Properties
 
 		public string HomeDir
 		{
@@ -183,15 +331,32 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Config Instance
 		{
-			get { return _config; }
+			get
+			{
+				if(_config == null)
+				{
+					_config = new Config();
+					_config.ResetAll();
+					_config.SelectedTags = new List<string>();
+					_config.GameDetails = new GameDetailsConfig();
+				}
+
+				return _config;
+			}
 		}
+
+		#endregion
+
+		#region Misc
+
+		private Config() { }
 
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;
 			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-			                                date.Hour,
-			                                date.Minute, date.Second);
+											date.Hour,
+											date.Minute, date.Second);
 			return _currentLogFile;
 		}
 
@@ -270,152 +435,25 @@ namespace Hearthstone_Deck_Tracker
 			return configPath;
 		}
 
-		public class Defaults
+		public void ResetAll()
 		{
-			public static readonly string CreatedByVersion;
-			public static readonly string AccentName;
-			public static readonly bool AdditionalOverlayTooltips = true;
-			public static readonly bool AlwaysOverwriteLogConfig = true;
-			public static readonly bool AutoDeckDetection = true;
-			public static readonly bool AutoSelectDetectedDeck = true;
-			public static readonly bool BringHsToForeground = false;
-			public static readonly bool CardSortingClassFirst = false;
-			public static readonly bool CheckForUpdates = true;
-			public static readonly bool ClearLogFileAfterGame = true;
-			public static readonly bool CloseWithHearthstone = false;
-			public static readonly int CustomHeight = -1;
-			public static readonly int CustomWidth = -1;
-			public static readonly bool Debug = false;
-			public static int DeckExportDelay = 50;
-			public static readonly bool DiscardGameIfIncorrectDeck = false;
-			public static readonly bool ExtraFeatures = false;
-			public static readonly double ExportAllButtonX = 0.06;
-			public static readonly double ExportAllButtonY = 0.915;
-			public static readonly double ExportCard2X = 0.285;
-			public static readonly double ExportCard1X = 0.12;
-			public static readonly double ExportCardsY = 0.32;
-			public static readonly double ExportNameDeckX = 0.85;
-			public static readonly double ExportNameDeckY = 0.075;
-			public static readonly double ExportSearchBoxY = 0.915;
-			public static readonly double ExportSearchBoxX = 0.5;
-			public static readonly bool ExportSetDeckName = true;
-			public static readonly bool ExportPasteClipboard = false;
-			public static readonly bool FlashHsOnTurnStart = true;
-			public static readonly GameDetailsConfig GameDetails = new GameDetailsConfig();
-			public static readonly bool GenerateLog = false;
-			public static readonly string HearthstoneDirectory = "";
-			public static readonly bool HideDecksInOverlay = false;
-			public static readonly bool HideDrawChances = false;
-			public static readonly bool HideInBackground = false;
-			public static readonly bool HideInMenu = false;
-			public static readonly bool HideOpponentCardAge = false;
-			public static readonly bool HideOpponentCardCount = false;
-			public static readonly bool HideOpponentCardMarks = false;
-			public static readonly bool HideOpponentCards = false;
-			public static readonly bool HideOpponentDrawChances = false;
-			public static readonly bool HideOverlay = false;
-			public static readonly bool HidePlayerCardCount = false;
-			public static readonly bool HidePlayerCards = false;
-			public static readonly bool HideSecrets = false;
-			public static readonly bool HideTimers = false;
-			public static readonly bool HighlightCardsInHand = false;
-			public static readonly bool HighlightDiscarded = false;
-			public static readonly bool HighlightLastDrawn = true;
-			public static readonly bool KeepDecksVisible = true;
-			public static readonly string KeyPressOnGameEnd = "None";
-			public static readonly string KeyPressOnGameStart = "None";
-			public static readonly string LastDeck = "";
-			public static readonly int LogLevel = 0;
-			public static readonly bool ManaCurveMyDecks = true;
-			public static readonly bool MinimizeToTray = false;
-			public static readonly int OffsetX = 0;
-			public static readonly int OffsetY = 0;
-			public static readonly double OpponentDeckHeight = 65;
-			public static readonly double OpponentDeckLeft = 0.5;
-			public static readonly double OpponentDeckTop = 17;
-			public static readonly double OpponentOpacity = 100;
-			public static readonly int OpponentWindowHeight = 400;
-			public static readonly int? OpponentWindowLeft = null;
-			public static readonly bool OpponentWindowOnStart = false;
-			public static readonly int? OpponentWindowTop = null;
-			public static readonly bool OverlayCardToolTips = true;
-			public static readonly bool OverlaySecretToolTipsOnly = false;
-			public static readonly double OverlayOpacity = 100;
-			public static readonly double OverlayOpponentScaling = 100;
-			public static readonly double OverlayPlayerScaling = 100;
-			public static readonly bool OwnsGoldenFeugen = false;
-			public static readonly bool OwnsGoldenStalagg = false;
-			public static readonly double PlayerDeckHeight = 65;
-			public static readonly double PlayerDeckLeft = 99.5;
-			public static readonly double PlayerDeckTop = 17;
-			public static readonly double PlayerOpacity = 100;
-			public static readonly string[] PanelOrderPlayer = new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"};
-			public static readonly string[] PanelOrderOpponent = new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter"};
-			public static readonly int PlayerWindowHeight = 400;
-			public static readonly int? PlayerWindowLeft = null;
-			public static readonly bool PlayerWindowOnStart = false;
-			public static readonly int? PlayerWindowTop = null;
-			public static readonly bool PrioritizeGolden = true;
-			public static readonly bool RecordArena = true;
-			public static readonly bool RecordCasual = true;
-			public static readonly bool RecordFriendly = true;
-			public static readonly bool RecordOther = false;
-			public static readonly bool RecordPractice = false;
-			public static readonly bool RecordRanked = true;
-			public static readonly bool RemoveCardsFromDeck = false;
-			public static readonly bool SaveInAppData = true;
-			public static readonly double SecretsLeft = 15;
-			public static readonly double SecretsTop = 5;
-			public static readonly double SecretsHeight = 35;
+			// Use the DefaultValue property of each property to actually set it, via reflection.
+			foreach(PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
+			{
+				var attr = (DefaultValueAttribute)prop.Attributes[typeof(DefaultValueAttribute)];
+				if(attr != null)
+				{
+					prop.SetValue(this, attr.Value);
+				}
+			}
+		}
 
-			public static readonly Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;
-			public static readonly string SelectedStatsFilterTime = "All Time";
-			public static readonly string SelectedDeckSorting = "Name";
-			public static readonly string SelectedLanguage = "enUS";
-			public static readonly List<string> SelectedTags = new List<string>();
-			public static readonly string SelectedWindowBackground = "Theme";
-			public static readonly bool ShowAllDecks = false;
-			public static readonly bool ShowDeckTitle = false;
-			public static readonly bool ShowDeckWins = false;
-			public static readonly bool ShowInTaskbar = false;
-			public static readonly bool ShowPlayerGet = false;
-			public static readonly bool ShowWinRateAgainst = false;
-			public static readonly bool StartMinimized = false;
-			public static readonly bool StatsClassOverviewIsExpanded = false;
-			public static readonly bool StatsDeckOverviewIsExpanded = true;
-			public static readonly bool StatsInWindow = false;
-			public static readonly int StatsWindowHeight = 672;
-			public static readonly int? StatsWindowLeft = null;
-			public static readonly int? StatsWindowTop = null;
-			public static readonly int StatsWindowWidth = 510;
-			public static readonly Operation TagOperation = Operation.Or;
-			public static readonly string ThemeName;
-			public static readonly double TimerLeft = 75;
-			public static readonly int TimerWindowHeight = 130;
-			public static readonly int? TimerWindowLeft = null;
-			public static readonly bool TimerWindowOnStartup = false;
-			public static readonly int? TimerWindowTop = null;
-			public static readonly bool TimerWindowTopmost = false;
-			public static readonly bool TimerWindowTopmostIfHsForeground = false;
-			public static readonly int TimerWindowWidth = 150;
-			public static readonly double TimersHorizontalPosition = 80;
-			public static readonly double TimersHorizontalSpacing = 0;
-			public static readonly double TimersVerticalPosition = 43.5;
-			public static readonly double TimersVerticalSpacing = 50;
-			public static readonly bool TrackerCardToolTips = true;
-			public static readonly int? TrackerWindowLeft = null;
-			public static readonly int? TrackerWindowTop = null;
-			public static readonly int UpdateDelay = 100;
-			public static readonly bool UseFullTextSearch = false;
-			public static readonly bool UseSameScaling = true;
-			public static readonly bool VisibleOverlay = false;
-			public static readonly bool WindowCardToolTips = true;
-			public static readonly int WindowHeight = 620;
-			public static readonly int WindowWidth = 550;
-			public static readonly string WindowsBackgroundHex = "#696969";
-			public static readonly bool WindowsTopmost = false;
-			public static readonly bool WindowsTopmostIfHsForeground = false;
-			public static readonly bool TagDecksOnImport = true;
+		public void Reset(string PropertyName)
+		{
+			//TODO: Upgrade to use LINQ and not the property's name!!
+			var property = this.GetType().GetProperty(PropertyName);
+			var attribute = property.CustomAttributes.OfType<DefaultValueAttribute>().First();
+			property.SetValue(this, attribute.Value);
 		}
 
 		public class GameDetailsConfig
@@ -427,5 +465,7 @@ namespace Hearthstone_Deck_Tracker
 			public bool ShowPlayerMulligan = false;
 			public bool ShowPlayerPlay = true;
 		}
+
+		#endregion
 	}
 }
