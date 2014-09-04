@@ -240,6 +240,8 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.SortDecks();
+
+			var value = Hearthstone_Deck_Tracker.Config_With_Attribute_Defaults.Config.Instance;
 		}
 
 		#endregion
