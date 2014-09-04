@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using System.Linq;
+//using System.ComponentModel;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -19,296 +19,296 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		[XmlIgnore]
-		public bool Debug { get; set; }
+		public bool Debug;
 
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
-		public List<string> SelectedTags { get; set; }
+		public List<string> SelectedTags;
 
-		public GameDetailsConfig GameDetails { get; set; }
+		public GameDetailsConfig GameDetails;
 
 		[DefaultValue("")]
-		public string AccentName { get; set; }
+		public string AccentName;
 		[DefaultValue(true)]
-		public bool AdditionalOverlayTooltips { get; set; }
+		public bool AdditionalOverlayTooltips;
 		[DefaultValue(true)]
-		public bool AlwaysOverwriteLogConfig { get; set; }
+		public bool AlwaysOverwriteLogConfig;
 		[DefaultValue(true)]
-		public bool AutoDeckDetection { get; set; }
+		public bool AutoDeckDetection;
 		[DefaultValue(true)]
-		public bool AutoSelectDetectedDeck { get; set; }
+		public bool AutoSelectDetectedDeck;
 		[DefaultValue(false)]
-		public bool BringHsToForeground { get; set; }
+		public bool BringHsToForeground;
 		[DefaultValue(false)]
-		public bool CardSortingClassFirst { get; set; }
+		public bool CardSortingClassFirst;
 		[DefaultValue(true)]
-		public bool CheckForUpdates { get; set; }
+		public bool CheckForUpdates;
 		[DefaultValue(true)]
-		public bool ClearLogFileAfterGame { get; set; }
+		public bool ClearLogFileAfterGame;
 		[DefaultValue(false)]
-		public bool CloseWithHearthstone { get; set; }
+		public bool CloseWithHearthstone;
 		[DefaultValue("")]
 		public string CreatedByVersion;
 		[DefaultValue(-1)]
-		public int CustomHeight { get; set; }
+		public int CustomHeight;
 		[DefaultValue(-1)]
-		public int CustomWidth { get; set; }
+		public int CustomWidth;
 		[DefaultValue(50)]
-		public int DeckExportDelay { get; set; }
+		public int DeckExportDelay;
 		[DefaultValue(false)]
-		public bool DiscardGameIfIncorrectDeck { get; set; }
+		public bool DiscardGameIfIncorrectDeck;
 		[DefaultValue(0.06)]
-		public double ExportAllButtonX { get; set; }
+		public double ExportAllButtonX;
 		[DefaultValue(0.915)]
-		public double ExportAllButtonY { get; set; }
+		public double ExportAllButtonY;
 		[DefaultValue(0.12)]
-		public double ExportCard1X { get; set; }
+		public double ExportCard1X;
 		[DefaultValue(0.285)]
-		public double ExportCard2X { get; set; }
+		public double ExportCard2X;
 		[DefaultValue(0.32)]
-		public double ExportCardsY { get; set; }
+		public double ExportCardsY;
 		[DefaultValue(0.85)]
-		public double ExportNameDeckX { get; set; }
+		public double ExportNameDeckX;
 		[DefaultValue(0.075)]
-		public double ExportNameDeckY { get; set; }
+		public double ExportNameDeckY;
 		[DefaultValue(false)]
-		public bool ExportPasteClipboard { get; set; }
+		public bool ExportPasteClipboard;
 		[DefaultValue(0.5)]
-		public double ExportSearchBoxX { get; set; }
+		public double ExportSearchBoxX;
 		[DefaultValue(0.915)]
-		public double ExportSearchBoxY { get; set; }
+		public double ExportSearchBoxY;
 		[DefaultValue(true)]
-		public bool ExportSetDeckName { get; set; }
+		public bool ExportSetDeckName;
 		[DefaultValue(false)]
-		public bool ExtraFeatures { get; set; }
+		public bool ExtraFeatures;
 		[DefaultValue(true)]
-		public bool FlashHsOnTurnStart { get; set; }
+		public bool FlashHsOnTurnStart;
 		[DefaultValue(false)]
-		public bool GenerateLog { get; set; }
+		public bool GenerateLog;
 		[DefaultValue("")]
-		public string HearthstoneDirectory { get; set; }
+		public string HearthstoneDirectory;
 		[DefaultValue(false)]
-		public bool HideDecksInOverlay { get; set; }
+		public bool HideDecksInOverlay;
 		[DefaultValue(false)]
-		public bool HideDrawChances { get; set; }
+		public bool HideDrawChances;
 		[DefaultValue(false)]
-		public bool HideInBackground { get; set; }
+		public bool HideInBackground;
 		[DefaultValue(false)]
-		public bool HideInMenu { get; set; }
+		public bool HideInMenu;
 		[DefaultValue(false)]
-		public bool HideOpponentCardAge { get; set; }
+		public bool HideOpponentCardAge;
 		[DefaultValue(false)]
-		public bool HideOpponentCardCount { get; set; }
+		public bool HideOpponentCardCount;
 		[DefaultValue(false)]
-		public bool HideOpponentCardMarks { get; set; }
+		public bool HideOpponentCardMarks;
 		[DefaultValue(false)]
-		public bool HideOpponentCards { get; set; }
+		public bool HideOpponentCards;
 		[DefaultValue(false)]
-		public bool HideOpponentDrawChances { get; set; }
+		public bool HideOpponentDrawChances;
 		[DefaultValue(false)]
-		public bool HideOverlay { get; set; }
+		public bool HideOverlay;
 		[DefaultValue(false)]
-		public bool HidePlayerCardCount { get; set; }
+		public bool HidePlayerCardCount;
 		[DefaultValue(false)]
-		public bool HidePlayerCards { get; set; }
+		public bool HidePlayerCards;
 		[DefaultValue(false)]
-		public bool HideSecrets { get; set; }
+		public bool HideSecrets;
 		[DefaultValue(false)]
-		public bool HideTimers { get; set; }
+		public bool HideTimers;
 		[DefaultValue(false)]
-		public bool HighlightCardsInHand { get; set; }
+		public bool HighlightCardsInHand;
 		[DefaultValue(false)]
-		public bool HighlightDiscarded { get; set; }
+		public bool HighlightDiscarded;
 		[DefaultValue(true)]
-		public bool HighlightLastDrawn { get; set; }
+		public bool HighlightLastDrawn;
 		[DefaultValue(true)]
-		public bool KeepDecksVisible { get; set; }
+		public bool KeepDecksVisible;
 		[DefaultValue("None")]
-		public string KeyPressOnGameEnd { get; set; }
+		public string KeyPressOnGameEnd;
 		[DefaultValue("None")]
-		public string KeyPressOnGameStart { get; set; }
+		public string KeyPressOnGameStart;
 		[DefaultValue("")]
-		public string LastDeck { get; set; }
+		public string LastDeck;
 		[DefaultValue(0)]
-		public int LogLevel { get; set; }
+		public int LogLevel;
 		[DefaultValue(true)]
-		public bool ManaCurveMyDecks { get; set; }
+		public bool ManaCurveMyDecks;
 		[DefaultValue(false)]
-		public bool MinimizeToTray { get; set; }
+		public bool MinimizeToTray;
 		[DefaultValue(0)]
-		public int OffsetX { get; set; }
+		public int OffsetX;
 		[DefaultValue(0)]
-		public int OffsetY { get; set; }
+		public int OffsetY;
 		[DefaultValue(65)]
-		public double OpponentDeckHeight { get; set; }
+		public double OpponentDeckHeight;
 		[DefaultValue(0.5)]
-		public double OpponentDeckLeft { get; set; }
+		public double OpponentDeckLeft;
 		[DefaultValue(17)]
-		public double OpponentDeckTop { get; set; }
+		public double OpponentDeckTop;
 		[DefaultValue(100)]
-		public double OpponentOpacity { get; set; }
+		public double OpponentOpacity;
 		[DefaultValue(400)]
-		public int OpponentWindowHeight { get; set; }
+		public int OpponentWindowHeight;
 		[DefaultValue(null)]
-		public int? OpponentWindowLeft { get; set; }
+		public int? OpponentWindowLeft;
 		[DefaultValue(false)]
-		public bool OpponentWindowOnStart { get; set; }
+		public bool OpponentWindowOnStart;
 		[DefaultValue(null)]
-		public int? OpponentWindowTop { get; set; }
+		public int? OpponentWindowTop;
 		[DefaultValue(true)]
-		public bool OverlayCardToolTips { get; set; }
+		public bool OverlayCardToolTips;
 		[DefaultValue(100)]
-		public double OverlayOpacity { get; set; }
+		public double OverlayOpacity;
 		[DefaultValue(100)]
-		public double OverlayOpponentScaling { get; set; }
+		public double OverlayOpponentScaling;
 		[DefaultValue(100)]
-		public double OverlayPlayerScaling { get; set; }
+		public double OverlayPlayerScaling;
 		[DefaultValue(false)]
-		public bool OverlaySecretToolTipsOnly { get; set; }
+		public bool OverlaySecretToolTipsOnly;
 		[DefaultValue(false)]
-		public bool OwnsGoldenFeugen { get; set; }
+		public bool OwnsGoldenFeugen;
 		[DefaultValue(false)]
-		public bool OwnsGoldenStalagg { get; set; }
+		public bool OwnsGoldenStalagg;
 		[DefaultValue(new[] { "Win Rate", "Cards", "Draw Chances", "Card Counter" })]
-		public string[] PanelOrderOpponent { get; set; }
+		public string[] PanelOrderOpponent;
 		[DefaultValue(new[] { "Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter" })]
-		public string[] PanelOrderPlayer { get; set; }
+		public string[] PanelOrderPlayer;
 		[DefaultValue(65)]
-		public double PlayerDeckHeight { get; set; }
+		public double PlayerDeckHeight;
 		[DefaultValue(99.5)]
-		public double PlayerDeckLeft { get; set; }
+		public double PlayerDeckLeft;
 		[DefaultValue(17)]
-		public double PlayerDeckTop { get; set; }
+		public double PlayerDeckTop;
 		[DefaultValue(100)]
-		public double PlayerOpacity { get; set; }
+		public double PlayerOpacity;
 		[DefaultValue(400)]
-		public int PlayerWindowHeight { get; set; }
+		public int PlayerWindowHeight;
 		[DefaultValue(null)]
-		public int? PlayerWindowLeft { get; set; }
+		public int? PlayerWindowLeft;
 		[DefaultValue(false)]
-		public bool PlayerWindowOnStart { get; set; }
+		public bool PlayerWindowOnStart;
 		[DefaultValue(null)]
-		public int? PlayerWindowTop { get; set; }
+		public int? PlayerWindowTop;
 		[DefaultValue(true)]
-		public bool PrioritizeGolden { get; set; }
+		public bool PrioritizeGolden;
 		[DefaultValue(true)]
-		public bool RecordArena { get; set; }
+		public bool RecordArena;
 		[DefaultValue(true)]
-		public bool RecordCasual { get; set; }
+		public bool RecordCasual;
 		[DefaultValue(true)]
-		public bool RecordFriendly { get; set; }
+		public bool RecordFriendly;
 		[DefaultValue(false)]
-		public bool RecordOther { get; set; }
+		public bool RecordOther;
 		[DefaultValue(false)]
-		public bool RecordPractice { get; set; }
+		public bool RecordPractice;
 		[DefaultValue(true)]
-		public bool RecordRanked { get; set; }
+		public bool RecordRanked;
 		[DefaultValue(false)]
-		public bool RemoveCardsFromDeck { get; set; }
+		public bool RemoveCardsFromDeck;
 		[DefaultValue(true)]
-		public bool SaveInAppData { get; set; }
+		public bool SaveInAppData;
 		[DefaultValue(35)]
-		public double SecretsHeight { get; set; }
+		public double SecretsHeight;
 		[DefaultValue(15)]
-		public double SecretsLeft { get; set; }
+		public double SecretsLeft;
 		[DefaultValue(5)]
-		public double SecretsTop { get; set; }
+		public double SecretsTop;
 		[DefaultValue("Name")]
-		public string SelectedDeckSorting { get; set; }
+		public string SelectedDeckSorting;
 		[DefaultValue("enUS")]
-		public string SelectedLanguage { get; set; }
+		public string SelectedLanguage;
 		[DefaultValue(Game.GameMode.All)]
-		public Game.GameMode SelectedStatsFilterGameMode { get; set; }
+		public Game.GameMode SelectedStatsFilterGameMode;
 		[DefaultValue("All Time")]
-		public string SelectedStatsFilterTime { get; set; }
+		public string SelectedStatsFilterTime;
 		[DefaultValue("Theme")]
-		public string SelectedWindowBackground { get; set; }
+		public string SelectedWindowBackground;
 		[DefaultValue(false)]
-		public bool ShowAllDecks { get; set; }
+		public bool ShowAllDecks;
 		[DefaultValue(false)]
-		public bool ShowDeckTitle { get; set; }
+		public bool ShowDeckTitle;
 		[DefaultValue(false)]
-		public bool ShowDeckWins { get; set; }
+		public bool ShowDeckWins;
 		[DefaultValue(false)]
-		public bool ShowInTaskbar { get; set; }
+		public bool ShowInTaskbar;
 		[DefaultValue(false)]
-		public bool ShowPlayerGet { get; set; }
+		public bool ShowPlayerGet;
 		[DefaultValue(false)]
-		public bool ShowWinRateAgainst { get; set; }
+		public bool ShowWinRateAgainst;
 		[DefaultValue(false)]
-		public bool StartMinimized { get; set; }
+		public bool StartMinimized;
 		[DefaultValue(false)]
-		public bool StatsClassOverviewIsExpanded { get; set; }
+		public bool StatsClassOverviewIsExpanded;
 		[DefaultValue(true)]
-		public bool StatsDeckOverviewIsExpanded { get; set; }
+		public bool StatsDeckOverviewIsExpanded;
 		[DefaultValue(false)]
-		public bool StatsInWindow { get; set; }
+		public bool StatsInWindow;
 		[DefaultValue(672)]
-		public int StatsWindowHeight { get; set; }
+		public int StatsWindowHeight;
 		[DefaultValue(null)]
-		public int? StatsWindowLeft { get; set; }
+		public int? StatsWindowLeft;
 		[DefaultValue(null)]
-		public int? StatsWindowTop { get; set; }
+		public int? StatsWindowTop;
 		[DefaultValue(510)]
-		public int StatsWindowWidth { get; set; }
+		public int StatsWindowWidth;
 		[DefaultValue(true)]
-		public bool TagDecksOnImport { get; set; }
+		public bool TagDecksOnImport;
 		[DefaultValue(Operation.Or)]
-		public Operation TagOperation { get; set; }
+		public Operation TagOperation;
 		[DefaultValue("")]
-		public string ThemeName { get; set; }
+		public string ThemeName;
 		[DefaultValue(75)]
-		public double TimerLeft { get; set; }
+		public double TimerLeft;
 		[DefaultValue(130)]
-		public int TimerWindowHeight { get; set; }
+		public int TimerWindowHeight;
 		[DefaultValue(null)]
-		public int? TimerWindowLeft { get; set; }
+		public int? TimerWindowLeft;
 		[DefaultValue(false)]
-		public bool TimerWindowOnStartup { get; set; }
+		public bool TimerWindowOnStartup;
 		[DefaultValue(null)]
-		public int? TimerWindowTop { get; set; }
+		public int? TimerWindowTop;
 		[DefaultValue(false)]
-		public bool TimerWindowTopmost { get; set; }
+		public bool TimerWindowTopmost;
 		[DefaultValue(false)]
-		public bool TimerWindowTopmostIfHsForeground { get; set; }
+		public bool TimerWindowTopmostIfHsForeground;
 		[DefaultValue(150)]
-		public int TimerWindowWidth { get; set; }
+		public int TimerWindowWidth;
 		[DefaultValue(80)]
-		public double TimersHorizontalPosition { get; set; }
+		public double TimersHorizontalPosition;
 		[DefaultValue(0)]
-		public double TimersHorizontalSpacing { get; set; }
+		public double TimersHorizontalSpacing;
 		[DefaultValue(43.5)]
-		public double TimersVerticalPosition { get; set; }
+		public double TimersVerticalPosition;
 		[DefaultValue(50)]
-		public double TimersVerticalSpacing { get; set; }
+		public double TimersVerticalSpacing;
 		[DefaultValue(true)]
-		public bool TrackerCardToolTips { get; set; }
+		public bool TrackerCardToolTips;
 		[DefaultValue(null)]
-		public int? TrackerWindowLeft { get; set; }
+		public int? TrackerWindowLeft;
 		[DefaultValue(null)]
-		public int? TrackerWindowTop { get; set; }
+		public int? TrackerWindowTop;
 		[DefaultValue(100)]
-		public int UpdateDelay { get; set; }
+		public int UpdateDelay;
 		[DefaultValue(false)]
-		public bool UseFullTextSearch { get; set; }
+		public bool UseFullTextSearch;
 		[DefaultValue(true)]
-		public bool UseSameScaling { get; set; }
+		public bool UseSameScaling;
 		[DefaultValue(false)]
-		public bool VisibleOverlay { get; set; }
+		public bool VisibleOverlay;
 		[DefaultValue(true)]
-		public bool WindowCardToolTips { get; set; }
+		public bool WindowCardToolTips;
 		[DefaultValue(620)]
-		public int WindowHeight { get; set; }
+		public int WindowHeight;
 		[DefaultValue(550)]
-		public int WindowWidth { get; set; }
+		public int WindowWidth;
 		[DefaultValue("#696969")]
-		public string WindowsBackgroundHex { get; set; }
+		public string WindowsBackgroundHex;
 		[DefaultValue(false)]
-		public bool WindowsTopmost { get; set; }
+		public bool WindowsTopmost;
 		[DefaultValue(false)]
-		public bool WindowsTopmostIfHsForeground { get; set; }
+		public bool WindowsTopmostIfHsForeground;
 		[DefaultValue(true)]
-		private string _currentLogFile { get; set; }
+		private string _currentLogFile;
 
 		#endregion
 
@@ -378,7 +378,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string Load()
+		public static void Load()
 		{
 			var foundConfig = false;
 			try
@@ -406,8 +406,6 @@ namespace Hearthstone_Deck_Tracker
 				Application.Current.Shutdown();
 			}
 
-			var configPath = Instance.ConfigPath;
-
 			if(!foundConfig)
 			{
 				if(Instance.HomeDir != string.Empty)
@@ -431,14 +429,21 @@ namespace Hearthstone_Deck_Tracker
 				File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
 				Logger.WriteLine("Moved config to local");
 			}
-
-			return configPath;
 		}
 
 		public void ResetAll()
 		{
-			// Use the DefaultValue property of each property to actually set it, via reflection.
-			foreach(PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
+			foreach(var field in this.GetType().GetFields())
+			{
+				var attr = (DefaultValueAttribute)field.GetCustomAttributes(typeof(DefaultValueAttribute), false).FirstOrDefault();
+				if(attr != null)
+				{
+					field.SetValue(this, attr.Value);
+				}
+			};
+
+			/*
+			foreach(System.ComponentModel.PropertyDescriptor prop in System.ComponentModel.TypeDescriptor.GetProperties(this))
 			{
 				var attr = (DefaultValueAttribute)prop.Attributes[typeof(DefaultValueAttribute)];
 				if(attr != null)
@@ -446,14 +451,18 @@ namespace Hearthstone_Deck_Tracker
 					prop.SetValue(this, attr.Value);
 				}
 			}
+			*/
 		}
 
-		public void Reset(string PropertyName)
+		public void Reset(string Name)
 		{
 			//TODO: Upgrade to use LINQ and not the property's name!!
-			var property = this.GetType().GetProperty(PropertyName);
-			var attribute = property.CustomAttributes.OfType<DefaultValueAttribute>().First();
-			property.SetValue(this, attribute.Value);
+			//var proper = System.ComponentModel.TypeDescriptor.GetProperties(this).OfType<System.ComponentModel.PropertyDescriptor>().First(x => x.Name == PropertyName);
+			//var attr = (DefaultValueAttribute)proper.Attributes[typeof(DefaultValueAttribute)];
+
+			var proper = this.GetType().GetFields().First(x => x.Name == Name);
+			var attr = (DefaultValueAttribute)proper.GetCustomAttributes(typeof(DefaultValueAttribute), false).First();		
+			proper.SetValue(this, attr.Value);
 		}
 
 		public class GameDetailsConfig
@@ -464,6 +473,18 @@ namespace Hearthstone_Deck_Tracker
 			public bool ShowPlayerDraw = false;
 			public bool ShowPlayerMulligan = false;
 			public bool ShowPlayerPlay = true;
+		}
+
+		[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
+		sealed class DefaultValueAttribute : Attribute
+		{
+			public object Value { get; private set; }
+
+			// This is a positional argument
+			public DefaultValueAttribute(object Value)
+			{
+				this.Value = Value;
+			}
 		}
 
 		#endregion

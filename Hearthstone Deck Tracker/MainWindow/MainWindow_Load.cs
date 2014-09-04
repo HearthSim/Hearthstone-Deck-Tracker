@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					updated = true;
 					File.Copy("Files/log.config", _logConfigPath, true);
-					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _configPath));
+					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", Config.Instance.ConfigPath));
 				}
 				else
 				{
@@ -340,12 +340,12 @@ namespace Hearthstone_Deck_Tracker
 					{
 						updated = true;
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _configPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", Config.Instance.ConfigPath));
 					}
 					else if(Config.Instance.AlwaysOverwriteLogConfig)
 					{
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _configPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", Config.Instance.ConfigPath));
 					}
 				}
 			}
@@ -401,6 +401,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void LoadConfig()
 		{
+			//Config.Instance.ResetAll(); //TODO: Find out why I need this here so all the values are correctly initialized!!!
 			if(Config.Instance.TrackerWindowTop.HasValue)
 				Top = Config.Instance.TrackerWindowTop.Value;
 			if(Config.Instance.TrackerWindowLeft.HasValue)
