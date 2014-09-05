@@ -132,6 +132,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		//TODO
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
 		private void ConvertLegacyConfig(Version currentVersion, Version configVersion)
@@ -435,7 +436,9 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxTheme.SelectedItem = theme;
 			Options.ComboboxAccent.SelectedItem = accent;
 
-			Options.CheckboxSaveAppData.IsChecked = Config.Instance.SaveInAppData;
+			//Options.CheckboxSaveAppData.IsChecked = Config.Instance.SaveInAppData;
+			//TODO
+
 
 			Height = Config.Instance.WindowHeight;
 			Width = Config.Instance.WindowWidth;

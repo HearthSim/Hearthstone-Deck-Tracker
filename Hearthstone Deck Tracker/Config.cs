@@ -108,6 +108,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool RecordPractice = Defaults.RecordPractice;
 		public bool RecordRanked = Defaults.RecordRanked;
 		public bool RemoveCardsFromDeck = Defaults.RemoveCardsFromDeck;
+		public bool SaveConfigInAppData = Defaults.SaveConfigInAppData;
+		public bool SaveDataInAppData = Defaults.SaveDataInAppData;
+		[Obsolete]
 		public bool SaveInAppData = Defaults.SaveInAppData;
 		public double SecretsHeight = Defaults.SecretsHeight;
 		public double SecretsLeft = Defaults.SecretsLeft;
@@ -166,6 +169,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool WindowsTopmostIfHsForeground = Defaults.WindowsTopmostIfHsForeground;
 		private string _currentLogFile;
 
+		[Obsolete("Use ConfigDir or DataDir")]
 		public string HomeDir
 		{
 			get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
@@ -173,7 +177,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public string ConfigPath
 		{
-			get { return HomeDir + "config.xml"; }
+			get { return ConfigDir + "config.xml"; }
+		}
+
+		public string ConfigDir
+		{
+			get { return SaveConfigInAppData ? AppDataPath + "\\" : string.Empty; }
+		}
+
+		public string DataDir
+		{
+			get { return SaveDataInAppData ? AppDataPath + "\\" : string.Empty; }
 		}
 
 		public string LogFilePath
@@ -190,8 +204,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var date = DateTime.Now;
 			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
-			                                date.Hour,
-			                                date.Minute, date.Second);
+				date.Hour,
+				date.Minute, date.Second);
 			return _currentLogFile;
 		}
 
@@ -230,7 +244,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
 					//save locally if appdata doesn't exist (when e.g. not on C)
-					Instance.SaveInAppData = false;
+					Instance.SaveConfigInAppData = false;
 			}
 			catch(Exception e)
 			{
@@ -245,16 +259,16 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!foundConfig)
 			{
-				if(Instance.HomeDir != string.Empty)
-					Directory.CreateDirectory(Instance.HomeDir);
+				if(Instance.ConfigDir != string.Empty)
+					Directory.CreateDirectory(Instance.ConfigDir);
 				using(var sr = new StreamWriter(Instance.ConfigPath, false))
 					sr.WriteLine("<Config></Config>");
 			}
-			else if(Instance.SaveInAppData) //check if config needs to be moved
+			else if(Instance.SaveConfigInAppData) //check if config needs to be moved
 			{
 				if(File.Exists("config.xml"))
 				{
-					Directory.CreateDirectory(Instance.HomeDir);
+					Directory.CreateDirectory(Instance.ConfigDir);
 					SaveBackup(true); //backup in case the file already exists
 					File.Move("config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to appdata");
@@ -363,6 +377,8 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly bool RecordPractice = false;
 			public static readonly bool RecordRanked = true;
 			public static readonly bool RemoveCardsFromDeck = false;
+			public static readonly bool SaveConfigInAppData = true;
+			public static readonly bool SaveDataInAppData = true;
 			public static readonly bool SaveInAppData = true;
 			public static readonly double SecretsLeft = 15;
 			public static readonly double SecretsTop = 5;
