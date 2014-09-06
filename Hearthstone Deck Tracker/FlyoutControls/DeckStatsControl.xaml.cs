@@ -264,7 +264,23 @@ namespace Hearthstone_Deck_Tracker
 			var selectedGame = DataGridGames.SelectedItem as GameStats;
 			if(selectedGame == null) return;
 
-			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == _deck.Class);
+			var heroes = new Dictionary<string, int>();
+			foreach(var turn in selectedGame.TurnStats)
+			{
+				foreach(var play in turn.Plays)
+				{
+					if(!play.Type.ToString().Contains("Player")) continue;
+					var hero = Game.GetCardFromId(play.CardId).PlayerClass;
+					if(hero == null) continue;
+					if(!heroes.ContainsKey(hero))
+						heroes.Add(hero, 0);
+					heroes[hero]++;
+				}
+			}
+
+			var heroPlayed = heroes.OrderByDescending(x => x.Value).First().Key;
+
+			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == heroPlayed);
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
