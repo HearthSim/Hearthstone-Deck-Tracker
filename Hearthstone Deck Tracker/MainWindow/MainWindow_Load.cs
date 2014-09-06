@@ -457,6 +457,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
 			Options.CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
 			Options.CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
+			Options.CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
 			Options.CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
 			Options.CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
 			Options.CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
