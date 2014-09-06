@@ -700,9 +700,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var result =
 				await
-				Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
-												   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-												   MessageDialogStyle.AffirmativeAndNegative);
+					Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
+						"Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+						MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 
@@ -1103,6 +1103,40 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized) return;
 			Config.Instance.OverlaySecretToolTipsOnly = false;
 			Config.Save();
+		}
+
+		private async void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			var path = Config.Instance.ConfigPath;
+			Config.Instance.SaveConfigInAppData = true;
+			XmlManager<Config>.Save(path, Config.Instance);
+			await Helper.MainWindow.Restart();
+		}
+
+		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			var path = Config.Instance.ConfigPath;
+			Config.Instance.SaveConfigInAppData = false;
+			XmlManager<Config>.Save(path, Config.Instance);
+			await Helper.MainWindow.Restart();
+		}
+
+		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.SaveDataInAppData = true;
+			Config.Save();
+			await Helper.MainWindow.Restart();
+		}
+
+		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.SaveDataInAppData = false;
+			Config.Save();
+			await Helper.MainWindow.Restart();
 		}
 	}
 }

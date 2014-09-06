@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker
 			//hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
 			Game.Reset();
 
-			_decksPath = Config.Instance.HomeDir + "PlayerDecks.xml";
+			_decksPath = Config.Instance.DataDir + "PlayerDecks.xml";
 			SetupDeckListFile();
 			try
 			{

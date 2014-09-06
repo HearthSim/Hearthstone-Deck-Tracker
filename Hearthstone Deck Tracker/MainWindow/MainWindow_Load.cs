@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			var appDataGamesDirPath = Config.Instance.AppDataPath + @"\Games";
 			const string localPath = "DeckStats.xml";
 			const string localGamesDirPath = "Games";
-			if(Config.Instance.SaveInAppData)
+			if(Config.Instance.SaveDataInAppData)
 			{
 				if(File.Exists(localPath))
 				{
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Moved Games to appdata");
 			}
 
-			var filePath = Config.Instance.HomeDir + "DeckStats.xml";
+			var filePath = Config.Instance.DataDir + "DeckStats.xml";
 			//load saved decks
 			if(!File.Exists(filePath))
 			{
@@ -132,6 +132,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		//TODO
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
 		private void ConvertLegacyConfig(Version currentVersion, Version configVersion)
@@ -278,6 +279,15 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
+			if(configVersion <= new Version(0, 5, 2, 0))
+			{
+#pragma warning disable 612
+				//TODO: uncomment before 0.5.2
+				//Config.Instance.SaveConfigInAppData = Config.Instance.SaveInAppData;
+				//Config.Instance.SaveDataInAppData = Config.Instance.SaveInAppData;
+#pragma warning restore 612
+			}
+
 			if(converted)
 			{
 				Config.SaveBackup();
@@ -367,7 +377,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
 			const string localPath = "PlayerDecks.xml";
-			if(Config.Instance.SaveInAppData)
+			if(Config.Instance.SaveDataInAppData)
 			{
 				if(File.Exists(localPath))
 				{
@@ -437,7 +447,9 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxTheme.SelectedItem = theme;
 			Options.ComboboxAccent.SelectedItem = accent;
 
-			Options.CheckboxSaveAppData.IsChecked = Config.Instance.SaveInAppData;
+			//Options.CheckboxSaveAppData.IsChecked = Config.Instance.SaveInAppData;
+			//TODO
+
 
 			Height = Config.Instance.WindowHeight;
 			Width = Config.Instance.WindowWidth;
@@ -491,6 +503,8 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
 			Options.CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
+			Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
+			Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

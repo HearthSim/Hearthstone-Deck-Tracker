@@ -14,12 +14,12 @@
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0"
                                   HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="275"
@@ -52,7 +52,7 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxWindowCardToolTips_Checked"
                                           Unchecked="CheckboxWindowCardToolTips_Unchecked" />
-                                <Separator Margin="0,5,0,0"></Separator>
+                                <Separator Margin="0,5,0,0" />
                                 <CheckBox x:Name="CheckboxTimerWindow"
                                           Content="Timer" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
@@ -67,7 +67,7 @@
                                           Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTimerTopmostHsForeground_Checked"
                                           Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
-                                <Separator Margin="0,5,0,0"></Separator>
+                                <Separator Margin="0,5,0,0" />
                                 <DockPanel Margin="10,5,10,0">
                                     <Label Content="Background:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
@@ -171,8 +171,7 @@
                                         <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures"
                                                                OnLabel="Enabled" OffLabel="Disabled"
                                                                Checked="ToggleSwitchExtraFeatures_Checked"
-                                                               Unchecked="ToggleSwitchExtraFeatures_Unchecked">
-                                        </controls:ToggleSwitch>
+                                                               Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
@@ -224,13 +223,13 @@
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="22"></RowDefinition>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="22" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0"
                                   Content="Use same scaling for player/opponent" HorizontalAlignment="Left"
@@ -276,8 +275,7 @@
                                           Checked="CheckboxShowPlayerGet_Checked"
                                           Unchecked="CheckboxShowPlayerGet_Unchecked" />
                                 <local:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10"
-                                                     Height="auto">
-                                </local:ElementSorter>
+                                                     Height="auto" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"
@@ -305,8 +303,7 @@
                                           Checked="CheckboxHighlightDiscarded_Checked"
                                           Unchecked="CheckboxHighlightDiscarded_Unchecked" />
                                 <local:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
-                                                     Height="auto">
-                                </local:ElementSorter>
+                                                     Height="auto" />
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"
@@ -325,16 +322,17 @@
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Height="338" Width="235" Margin="5,0,0,0">
+                                      VerticalAlignment="Top" Height="359" Width="235" Margin="5,0,0,0"
+                                      Grid.RowSpan="2">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Theme:" HorizontalAlignment="Left"
@@ -389,10 +387,14 @@
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxManaCurveMyDecks_Checked"
                                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
-                                    <CheckBox x:Name="CheckboxSaveAppData" Content="Save files in AppData"
+                                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxAppData_Checked"
-                                              Unchecked="CheckboxAppData_Unchecked" />
+                                              VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
+                                              Unchecked="CheckboxConfigSaveAppData_Unchecked" />
+                                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
+                                              Unchecked="CheckboxDataSaveAppData_Unchecked" />
                                     <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
@@ -415,9 +417,9 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="auto"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
                                       Width="235" Height="191" Margin="10,10,0,0">
@@ -495,12 +497,12 @@
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
-                            	Width="235" Height="191" Margin="10.5,10,0.5,0">
-                                <StackPanel>                                
+                                      Width="235" Height="73" Margin="11,10,1,0">
+                                <StackPanel>
                                     <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
-                            			HorizontalAlignment="Left" Margin="10,5,0,0"
-                            			VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
-                            			Unchecked="CheckboxTagOnImport_Unchecked" />
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
+                                              Unchecked="CheckboxTagOnImport_Unchecked" />
 
                                 </StackPanel>
                             </GroupBox>
