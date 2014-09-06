@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace Hearthstone_Deck_Tracker
 {
+	[DebuggerStepThrough]
 	internal static class Logger
 	{
 		/// <summary>
@@ -15,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
 
 		/// <summary>
 		/// Writes line to trace
-		/// </summary>
+		/// </summary>		
 		public static void WriteLine(string line, string category, int logLevel = 0)
 		{
 			if(logLevel <= Config.Instance.LogLevel)

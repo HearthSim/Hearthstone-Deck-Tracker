@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 			var validUrls = new[]
 				{
 					"hearthstats", "hss.io", "hearthpwn", "hearthhead", "hearthstoneplayers", "tempostorm",
-					"hearthstonetopdeck", "hearthnews.fr", "arenavalue"
+					"hearthstonetopdeck", "hearthnews.fr", "arenavalue", "hearthstone-decks"
 				};
 			if(validUrls.Any(clipboard.Contains))
 				settings.DefaultText = clipboard;

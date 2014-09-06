@@ -15,6 +15,7 @@ namespace Hearthstone_Deck_Tracker
 				var xml = new XmlSerializer(typeof(T));
 				instance = (T)xml.Deserialize(reader);
 			}
+
 			Logger.WriteLine("File loaded: " + path, "XmlManager", 1);
 			return instance;
 		}
