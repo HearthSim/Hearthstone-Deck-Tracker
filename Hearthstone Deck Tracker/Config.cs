@@ -300,8 +300,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool SaveInAppData = true;
 
-		[DefaultValue(35)]
-		public double SecretsHeight = 35;
+		[DefaultValue(1)]
+		public double SecretsPanelScaling = 1;
 
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;

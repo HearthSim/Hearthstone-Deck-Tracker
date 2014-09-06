@@ -171,8 +171,14 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(_resizeElement)
 					{
-						Config.Instance.SecretsHeight += delta.Y / Height;
-						_movableElements[panel].Height = Height * Config.Instance.SecretsHeight / 100;
+						const int width = 215;
+						var height = 35 * StackPanelSecrets.Children.Count;
+						Config.Instance.SecretsPanelScaling += Math.Abs(delta.Y) > Math.Abs(delta.X) ? delta.Y / (100*height) : delta.X / (100*width);
+						if(Config.Instance.SecretsPanelScaling > 1)
+							Config.Instance.SecretsPanelScaling = 1; 
+						else if(Config.Instance.SecretsPanelScaling < 0.4)
+							Config.Instance.SecretsPanelScaling = 0.4;
+						_movableElements[panel].RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 					}
 					else
 					{
@@ -450,6 +456,9 @@ namespace Hearthstone_Deck_Tracker
 				if(previousScaling != OpponentScaling)
 					ListViewOpponent.Items.Refresh();
 			}
+
+			//secrets
+			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 
 			Canvas.SetTop(StackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
 			Canvas.SetLeft(StackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
@@ -836,8 +845,6 @@ namespace Hearthstone_Deck_Tracker
 			                                                      Config.Instance.OverlayPlayerScaling / 100);
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 			                                                        Config.Instance.OverlayOpponentScaling / 100);
-			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
-			                                                       Config.Instance.OverlayOpponentScaling / 100);
 		}
 
 		public void HideTimers()
@@ -1019,7 +1026,7 @@ namespace Hearthstone_Deck_Tracker
 					else if(movableElement.Key == StackPanelOpponent)
 						movableElement.Value.Height = Config.Instance.OpponentDeckHeight * Height / 100;
 					else if(movableElement.Key == StackPanelSecrets)
-						movableElement.Value.Height = Config.Instance.SecretsHeight * Height / 100;
+						movableElement.Value.Height = StackPanelSecrets.ActualHeight;
 					else
 						movableElement.Value.Height = elementSize.Height;
 
