@@ -925,6 +925,9 @@
     <Content Include="Images\HearthstoneDeckTracker.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\HearthstoneDeckTracker16.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\hellfire.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
