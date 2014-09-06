@@ -81,6 +81,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public string GetName
+		{
+			get { return Name; }
+		}
+
+		[XmlIgnore]
 		public FontWeight GetFontWeight
 		{
 			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Bold; }
