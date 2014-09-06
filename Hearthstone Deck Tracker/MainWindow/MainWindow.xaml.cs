@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker
 		public readonly PlayerWindow PlayerWindow;
 		public readonly StatsWindow StatsWindow;
 		public readonly TimerWindow TimerWindow;
-		private readonly string _configPath;
+		//private readonly string _configPath;
 		private readonly string _decksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool EditingDeck;
 
 		public ReadOnlyCollection<string> EventKeys =
-			new ReadOnlyCollection<string>(new[] {"None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"});
+			new ReadOnlyCollection<string>(new[] { "None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" });
 
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
@@ -92,12 +92,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			Helper.MainWindow = this;
-			_configPath = Config.Load();
+			/*_configPath =*/
+			Config.Load();
 			HsLogReader.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion)
-				                    ? null
-				                    : new Version(Config.Instance.CreatedByVersion);
+									? null
+									: new Version(Config.Instance.CreatedByVersion);
 
 			Version currentVersion;
 			if(Config.Instance.CheckForUpdates)
@@ -162,13 +163,13 @@ namespace Hearthstone_Deck_Tracker
 			SetupDeckStatsFile();
 			DeckStatsList.Load();
 
-			_notifyIcon = new NotifyIcon {Icon = new Icon(@"Images/HearthstoneDeckTracker.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString};
+			_notifyIcon = new NotifyIcon { Icon = new Icon(@"Images/HearthstoneDeckTracker.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString };
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 			_notifyIcon.MouseClick += (sender, args) => { if(args.Button == MouseButtons.Left) ActivateWindow(); };
 
 			//create overlay
-			Overlay = new OverlayWindow {Topmost = true};
+			Overlay = new OverlayWindow { Topmost = true };
 
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
@@ -470,18 +471,18 @@ namespace Hearthstone_Deck_Tracker
 		private async void ShowNewUpdateMessage(Version newVersion = null)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
+			var settings = new MetroDialogSettings { AffirmativeButtonText = "Download", NegativeButtonText = "Not now" };
 			var version = newVersion ?? NewVersion;
 			if(version == null) return;
 			try
 			{
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
-				                                     version.Build);
+													 version.Build);
 				var result =
 					await
 					this.ShowMessageAsync("New Update available!",
-					                      "Press \"Download\" to automatically download.",
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
+										  "Press \"Download\" to automatically download.",
+										  MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
 				{
@@ -611,7 +612,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						break;
 				}
-				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
+				DeckList.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name });
 				WriteDecks();
 				MenuItemEdit.IsEnabled = true;
 				MenuItemExport.IsEnabled = true;
