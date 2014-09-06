@@ -53,13 +53,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public static void Load()
 		{
-			var file = Config.Instance.HomeDir + "DeckStats.xml";
+			var file = Config.Instance.DataDir + "DeckStats.xml";
 			_instance = XmlManager<DeckStatsList>.Load(file);
 		}
 
 		public static void Save()
 		{
-			var file = Config.Instance.HomeDir + "DeckStats.xml";
+			var file = Config.Instance.DataDir + "DeckStats.xml";
 			XmlManager<DeckStatsList>.Save(file, Instance);
 		}
 	}

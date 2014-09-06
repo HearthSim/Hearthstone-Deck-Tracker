@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private string _gamesDir
 		{
-			get { return Config.Instance.HomeDir + "Games"; }
+			get { return Config.Instance.DataDir + "Games"; }
 		}
 
 		private string _gameFile

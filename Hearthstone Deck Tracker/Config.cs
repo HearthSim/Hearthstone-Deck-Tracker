@@ -139,6 +139,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideOpponentCards;
 
 		[DefaultValue(false)]
+		public bool HideOpponentDrawChances;
+
+		[DefaultValue(false)]
 		public bool HideOverlay;
 
 		[DefaultValue(false)]
@@ -294,7 +297,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]		
 		public bool SaveDataInAppData;
 
-		[DefaultValue(true)][Obsolete]
+		[DefaultValue(true)]
 		public bool SaveInAppData;
 
 		[DefaultValue(35)]
@@ -458,6 +461,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Properties
 
+		[Obsolete]
 		public string HomeDir
 		{
 			get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
@@ -608,8 +612,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			*/
 		}
-			public static readonly bool SaveConfigInAppData = true;
-			public static readonly bool SaveDataInAppData = true;
 
 		public void Reset(string name)
 		{
