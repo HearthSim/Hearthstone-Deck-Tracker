@@ -614,16 +614,12 @@ namespace Hearthstone_Deck_Tracker
 				}
 				DeckList.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name });
 				WriteDecks();
-				MenuItemEdit.IsEnabled = true;
-				MenuItemExport.IsEnabled = true;
+				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
 				TagControlEdit.SetSelectedTags(deck.Tags);
 			}
 			else
-			{
-				MenuItemEdit.IsEnabled = false;
-				MenuItemExport.IsEnabled = false;
-			}
+				EnableMenuItems(false);
 		}
 
 		#endregion
