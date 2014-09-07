@@ -68,11 +68,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetupDeckStatsFile()
 		{
-			var appDataPath = Config.Instance.AppDataPath + @"\DeckStats.xml";
+			if(Config.Instance.SaveDataInAppData == null)
+				return;
+            var appDataPath = Config.Instance.AppDataPath + @"\DeckStats.xml";
 			var appDataGamesDirPath = Config.Instance.AppDataPath + @"\Games";
 			const string localPath = "DeckStats.xml";
 			const string localGamesDirPath = "Games";
-			if(Config.Instance.SaveDataInAppData)
+			if(Config.Instance.SaveDataInAppData.Value)
 			{
 				if(File.Exists(localPath))
 				{
@@ -216,76 +218,80 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 			}
-			else if(configVersion <= v0_3_21)
+			else
 			{
-				// Config must be between v0.3.20 and v0.3.21 inclusive
-				// It was still possible in 0.3.21 to see (-32000, -32000) window positions
-				// under certain circumstances (GitHub issue #135).
-				if(Config.Instance.TrackerWindowLeft == -32000)
+				if(configVersion <= v0_3_21)
 				{
-					Config.Instance.Reset("TrackerWindowLeft");
-					converted = true;
-				}
-				if(Config.Instance.TrackerWindowTop == -32000)
-				{
-					Config.Instance.Reset("TrackerWindowTop");
-					converted = true;
+					// Config must be between v0.3.20 and v0.3.21 inclusive
+					// It was still possible in 0.3.21 to see (-32000, -32000) window positions
+					// under certain circumstances (GitHub issue #135).
+					if(Config.Instance.TrackerWindowLeft == -32000)
+					{
+						Config.Instance.Reset("TrackerWindowLeft");
+						converted = true;
+					}
+					if(Config.Instance.TrackerWindowTop == -32000)
+					{
+						Config.Instance.Reset("TrackerWindowTop");
+						converted = true;
+					}
+
+					if(Config.Instance.PlayerWindowLeft == -32000)
+					{
+						Config.Instance.Reset("PlayerWindowLeft");
+						converted = true;
+					}
+					if(Config.Instance.PlayerWindowTop == -32000)
+					{
+						Config.Instance.Reset("PlayerWindowTop");
+						converted = true;
+					}
+
+					if(Config.Instance.OpponentWindowLeft == -32000)
+					{
+						Config.Instance.Reset("OpponentWindowLeft");
+						converted = true;
+					}
+					if(Config.Instance.OpponentWindowTop == -32000)
+					{
+						Config.Instance.Reset("OpponentWindowTop");
+						converted = true;
+					}
+
+					if(Config.Instance.TimerWindowLeft == -32000)
+					{
+						Config.Instance.Reset("TimerWindowLeft");
+						converted = true;
+					}
+					if(Config.Instance.TimerWindowTop == -32000)
+					{
+						Config.Instance.Reset("TimerWindowTop");
+						converted = true;
+					}
+
+					//player scaling used to be increased by a very minimal about to circumvent some problem,
+					//should no longer be required. not sure is the increment is actually noticeable, but resetting can't hurt
+					if(Config.Instance.OverlayOpponentScaling > 100)
+					{
+						Config.Instance.OverlayOpponentScaling = 100;
+						converted = true;
+					}
+					if(Config.Instance.OverlayPlayerScaling > 100)
+					{
+						Config.Instance.OverlayPlayerScaling = 100;
+						converted = true;
+					}
 				}
 
-				if(Config.Instance.PlayerWindowLeft == -32000)
-				{
-					Config.Instance.Reset("PlayerWindowLeft");
-					converted = true;
-				}
-				if(Config.Instance.PlayerWindowTop == -32000)
-				{
-					Config.Instance.Reset("PlayerWindowTop");
-					converted = true;
-				}
 
-				if(Config.Instance.OpponentWindowLeft == -32000)
+				if(configVersion <= new Version(0, 5, 1, 0))
 				{
-					Config.Instance.Reset("OpponentWindowLeft");
-					converted = true;
-				}
-				if(Config.Instance.OpponentWindowTop == -32000)
-				{
-					Config.Instance.Reset("OpponentWindowTop");
-					converted = true;
-				}
-
-				if(Config.Instance.TimerWindowLeft == -32000)
-				{
-					Config.Instance.Reset("TimerWindowLeft");
-					converted = true;
-				}
-				if(Config.Instance.TimerWindowTop == -32000)
-				{
-					Config.Instance.Reset("TimerWindowTop");
-					converted = true;
-				}
-
-				//player scaling used to be increased by a very minimal about to circumvent some problem,
-				//should no longer be required. not sure is the increment is actually noticeable, but resetting can't hurt
-				if(Config.Instance.OverlayOpponentScaling > 100)
-				{
-					Config.Instance.OverlayOpponentScaling = 100;
-					converted = true;
-				}
-				if(Config.Instance.OverlayPlayerScaling > 100)
-				{
-					Config.Instance.OverlayPlayerScaling = 100;
-					converted = true;
-				}
-			}
-
-			if(configVersion <= new Version(0, 5, 2, 0))
-			{
 #pragma warning disable 612
-				//TODO: uncomment before 0.5.2
-				//Config.Instance.SaveConfigInAppData = Config.Instance.SaveInAppData;
-				//Config.Instance.SaveDataInAppData = Config.Instance.SaveInAppData;
+					Config.Instance.SaveConfigInAppData = Config.Instance.SaveInAppData;
+					Config.Instance.SaveDataInAppData = Config.Instance.SaveInAppData;
+					converted = true;
 #pragma warning restore 612
+				}
 			}
 
 			if(converted)
@@ -375,9 +381,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetupDeckListFile()
 		{
+			if(Config.Instance.SaveDataInAppData == null)
+				return;
 			var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
 			const string localPath = "PlayerDecks.xml";
-			if(Config.Instance.SaveDataInAppData)
+			if(Config.Instance.SaveDataInAppData.Value)
 			{
 				if(File.Exists(localPath))
 				{
@@ -411,7 +419,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void LoadConfig()
 		{
-			//Config.Instance.ResetAll(); //TODO: Find out why I need this here so all the values are correctly initialized!!!
 			if(Config.Instance.TrackerWindowTop.HasValue)
 				Top = Config.Instance.TrackerWindowTop.Value;
 			if(Config.Instance.TrackerWindowLeft.HasValue)
@@ -446,10 +453,7 @@ namespace Hearthstone_Deck_Tracker
 			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
 			Options.ComboboxTheme.SelectedItem = theme;
 			Options.ComboboxAccent.SelectedItem = accent;
-
-			//Options.CheckboxSaveAppData.IsChecked = Config.Instance.SaveInAppData;
-			//TODO
-
+			
 
 			Height = Config.Instance.WindowHeight;
 			Width = Config.Instance.WindowWidth;

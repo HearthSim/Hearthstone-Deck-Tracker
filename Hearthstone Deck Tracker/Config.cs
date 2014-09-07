@@ -291,11 +291,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
+		//updating from <= 0.5.1: 
+		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
+		//=> Need to be null to avoid creating new config in appdata if config is stored locally.
 		[DefaultValue(true)]
-		public bool SaveConfigInAppData = true;
-		
+		public bool? SaveConfigInAppData = null;
+
 		[DefaultValue(true)]		
-		public bool SaveDataInAppData = true;
+		public bool? SaveDataInAppData = null;
 
 		[DefaultValue(true)]
 		public bool SaveInAppData = true;
@@ -463,27 +466,27 @@ namespace Hearthstone_Deck_Tracker
 		[Obsolete]
 		public string HomeDir
 		{
-			get { return SaveInAppData ? AppDataPath + "/" : string.Empty; }
+			get { return Instance.SaveInAppData ? AppDataPath + "/" : string.Empty; }
 		}
 
 		public string ConfigPath
 		{
-			get { return ConfigDir + "config.xml"; }
+			get { return Instance.ConfigDir + "config.xml"; }
 		}
 
 		public string ConfigDir
 		{
-			get { return SaveConfigInAppData ? AppDataPath + "\\" : string.Empty; }
+			get { return Instance.SaveConfigInAppData == false ? string.Empty : AppDataPath + "\\"; }
 		}
 
 		public string DataDir
 		{
-			get { return SaveDataInAppData ? AppDataPath + "\\" : string.Empty; }
+			get { return Instance.SaveDataInAppData == false ? string.Empty : AppDataPath + "\\"; }
 		}
 
 		public string LogFilePath
 		{
-			get { return _currentLogFile ?? GetLogFileName(); }
+			get { return Instance._currentLogFile ?? GetLogFileName(); }
 		}
 
 		public static Config Instance
@@ -513,7 +516,7 @@ namespace Hearthstone_Deck_Tracker
 		private string GetLogFileName()
 		{
 			var date = DateTime.Now;
-			_currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
+			Instance._currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year,
 				date.Hour,
 				date.Minute, date.Second);
 			return _currentLogFile;
@@ -572,21 +575,24 @@ namespace Hearthstone_Deck_Tracker
 				using(var sr = new StreamWriter(Instance.ConfigPath, false))
 					sr.WriteLine("<Config></Config>");
 			}
-			else if(Instance.SaveConfigInAppData) //check if config needs to be moved
+			else if(Instance.SaveConfigInAppData != null)
 			{
-				if(File.Exists("config.xml"))
+				if(Instance.SaveConfigInAppData.Value) //check if config needs to be moved
 				{
-					Directory.CreateDirectory(Instance.ConfigDir);
-					SaveBackup(true); //backup in case the file already exists
-					File.Move("config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to appdata");
+					if(File.Exists("config.xml"))
+					{
+						Directory.CreateDirectory(Instance.ConfigDir);
+						SaveBackup(true); //backup in case the file already exists
+						File.Move("config.xml", Instance.ConfigPath);
+						Logger.WriteLine("Moved config to appdata");
+					}
 				}
-			}
-			else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
-			{
-				SaveBackup(true); //backup in case the file already exists
-				File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
-				Logger.WriteLine("Moved config to local");
+				else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
+				{
+					SaveBackup(true); //backup in case the file already exists
+					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
+					Logger.WriteLine("Moved config to local");
+				}
 			}
 		}
 
