@@ -66,6 +66,17 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.PlayerMulligan, 0, cardId);
 		}
 
+		public static void HandlePlayerSecretPlayed(string cardId, int turn)
+		{
+
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			LogEvent("PlayerSecretPlayed", cardId);
+			Game.PlayerHandDiscard(cardId);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
+			Game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
+		}
 		public static void HandlePlayerHandDiscard(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))

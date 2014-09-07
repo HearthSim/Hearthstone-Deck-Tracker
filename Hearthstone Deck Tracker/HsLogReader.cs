@@ -364,6 +364,8 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "FRIENDLY PLAY")
 									GameEventHandler.HandlePlayerPlay(id, GetTurnNumber());
+								else if(to == "FRIENDLY SECRET")
+									GameEventHandler.HandlePlayerSecretPlayed(id, GetTurnNumber());
 								else
 									//player discard from hand and spells
 									GameEventHandler.HandlePlayerHandDiscard(id, GetTurnNumber());

@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					foreach(var play in turn.Plays.Where(play => play != null))
 					{
-						if((play.Type == PlayType.PlayerPlay || play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.PlayerHeroPower) && !Config.Instance.GameDetails.ShowPlayerPlay
+						if((play.Type == PlayType.PlayerPlay || play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.PlayerHeroPower || play.Type == PlayType.PlayerSecretPlayed) && !Config.Instance.GameDetails.ShowPlayerPlay
 						   || (play.Type == PlayType.PlayerDraw || play.Type == PlayType.PlayerGet || play.Type == PlayType.PlayerDeckDiscard) && !Config.Instance.GameDetails.ShowPlayerDraw
 						   || play.Type == PlayType.PlayerMulligan && !Config.Instance.GameDetails.ShowPlayerMulligan
 						   || (play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentSecretTriggered || play.Type == PlayType.OpponentHandDiscard || play.Type == PlayType.OpponentHeroPower) && !Config.Instance.GameDetails.ShowOpponentPlay
