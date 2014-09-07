@@ -66,13 +66,15 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.PlayerMulligan, 0, cardId);
 		}
 
-		public static void HandlePlayerSecretPlayed(string cardId, int turn)
+		public static void HandlePlayerSecretPlayed(string cardId, int turn, bool fromDeck)
 		{
-
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerSecretPlayed", cardId);
-			Game.PlayerHandDiscard(cardId);
+			if(fromDeck)
+				Game.PlayerDeckDiscard(cardId);
+			else
+				Game.PlayerHandDiscard(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
@@ -160,10 +162,15 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 		}
 
-		public static void HandleOpponentSecretPlayed()
+		public static void HandleOpponentSecretPlayed(string cardId, int from, int turn, bool fromDeck)
 		{
 			LogEvent("OpponentSecretPlayed");
 			Game.OpponentSecretCount++;
+			if(fromDeck)
+				Game.OpponentDeckDiscard(cardId);
+			else
+				Game.OpponentPlay(cardId, from, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentSecretPlayed, turn, cardId);
 			Helper.MainWindow.Overlay.ShowSecrets(Game.PlayingAgainst);
 		}
 

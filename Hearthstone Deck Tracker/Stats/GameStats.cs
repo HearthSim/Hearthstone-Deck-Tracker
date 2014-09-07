@@ -185,7 +185,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		OpponentHandDiscard,
 		OpponentDeckDiscard,
 		OpponentBackToHand,
-		OpponentSecretTriggered,
-		OpponentHeroPower
+		OpponentSecretPlayed,
+        OpponentSecretTriggered,
+		OpponentHeroPower,
 	}
 }

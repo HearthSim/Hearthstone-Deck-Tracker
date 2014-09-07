@@ -351,6 +351,8 @@ namespace Hearthstone_Deck_Tracker
 										_lastPlayerDrawIncrementedTurn = false;
 									GameEventHandler.HandlePlayerDraw(id, GetTurnNumber());
 								}
+								else if(to == "FRIENDLY SECRET")
+									GameEventHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
 								else
 									//player discard from deck
 									GameEventHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
@@ -365,7 +367,7 @@ namespace Hearthstone_Deck_Tracker
 								else if(to == "FRIENDLY PLAY")
 									GameEventHandler.HandlePlayerPlay(id, GetTurnNumber());
 								else if(to == "FRIENDLY SECRET")
-									GameEventHandler.HandlePlayerSecretPlayed(id, GetTurnNumber());
+									GameEventHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), false);
 								else
 									//player discard from hand and spells
 									GameEventHandler.HandlePlayerHandDiscard(id, GetTurnNumber());
@@ -383,15 +385,13 @@ namespace Hearthstone_Deck_Tracker
 									//opponent mulligan
 									GameEventHandler.HandleOpponentMulligan(zonePos);
 								}
+								else if(to == "OPPOSING SECRET")
+									GameEventHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), false);
+								else if(to == "OPPOSING PLAY")
+									GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
 								else
-								{
-									if(to == "OPPOSING SECRET")
-										GameEventHandler.HandleOpponentSecretPlayed();
-									if(to == "OPPOSING PLAY")
-										GameEventHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
-									else
-										GameEventHandler.HandleOpponentHandDiscard(id, zonePos, GetTurnNumber());
-								}
+									GameEventHandler.HandleOpponentHandDiscard(id, zonePos, GetTurnNumber());
+								
 								break;
 							case "OPPOSING DECK":
 								if(to == "OPPOSING HAND")
@@ -410,12 +410,13 @@ namespace Hearthstone_Deck_Tracker
 									//opponent draw
 									GameEventHandler.HandlOpponentDraw(GetTurnNumber());
 								}
+								else if(to == "OPPOSING SECRET")
+                                    GameEventHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
 								else
 									//opponent discard from deck
 									GameEventHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 
-								if(to == "OPPOSING SECRET")
-									GameEventHandler.HandleOpponentSecretPlayed();
+								
 								break;
 							case "OPPOSING SECRET":
 								//opponent secret triggered
