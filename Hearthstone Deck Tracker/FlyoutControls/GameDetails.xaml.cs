@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 						if((play.Type == PlayType.PlayerPlay || play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.PlayerHeroPower || play.Type == PlayType.PlayerSecretPlayed) && !Config.Instance.GameDetails.ShowPlayerPlay
 						   || (play.Type == PlayType.PlayerDraw || play.Type == PlayType.PlayerGet || play.Type == PlayType.PlayerDeckDiscard) && !Config.Instance.GameDetails.ShowPlayerDraw
 						   || play.Type == PlayType.PlayerMulligan && !Config.Instance.GameDetails.ShowPlayerMulligan
-						   || (play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentSecretTriggered || play.Type == PlayType.OpponentHandDiscard || play.Type == PlayType.OpponentHeroPower) && !Config.Instance.GameDetails.ShowOpponentPlay
+						   || (play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentSecretTriggered || play.Type == PlayType.OpponentHandDiscard || play.Type == PlayType.OpponentHeroPower || play.Type == PlayType.OpponentSecretPlayed) && !Config.Instance.GameDetails.ShowOpponentPlay
 						   || (play.Type == PlayType.OpponentDraw || play.Type == PlayType.OpponentGet || play.Type == PlayType.OpponentBackToHand || play.Type == PlayType.OpponentDeckDiscard) && !Config.Instance.GameDetails.ShowOpponentDraw
 						   || play.Type == PlayType.OpponentMulligan && !Config.Instance.GameDetails.ShowOpponentMulligan)
 							continue;
