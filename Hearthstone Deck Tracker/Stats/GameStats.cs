@@ -106,13 +106,55 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return GameId.GetHashCode();
 		}
 
-		private List<TurnStats> LoadTurnStats()
-		{
-			Directory.CreateDirectory(_gamesDir);
-			if(GameId != Guid.Empty && File.Exists(_gameFile))
-				return XmlManager<List<TurnStats>>.Load(_gameFile);
-			return new List<TurnStats>();
-		}
+
+        private void fixupSecrets(List<TurnStats> newturnstats)
+        {
+            int unresolved_secrets = 0;
+            int triggered_secrets = 0;
+            TurnStats.Play candidate_secret = null;
+
+
+            foreach (TurnStats turn in newturnstats)
+            {
+                foreach (TurnStats.Play play in turn.Plays)
+                {
+                    // is secret play
+                    if ((play.Type == PlayType.OpponentHandDiscard && play.CardId == "") ||
+                        play.Type == PlayType.OpponentSecretPlayed)
+                    {
+                        unresolved_secrets++;
+                        candidate_secret = play;
+                        play.Type = PlayType.OpponentSecretPlayed;
+                    }
+                    else if (play.Type == PlayType.OpponentSecretTriggered)
+                    {
+                        if (unresolved_secrets == 1)
+                        {
+                            candidate_secret.CardId = play.CardId;
+                        }
+                        triggered_secrets++;
+                        if (triggered_secrets == unresolved_secrets)
+                        {
+                            triggered_secrets = 0;
+                            unresolved_secrets = 0;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private List<TurnStats> LoadTurnStats()
+        {
+            Directory.CreateDirectory(_gamesDir);
+            if (GameId != Guid.Empty && File.Exists(_gameFile))
+            {
+                List<TurnStats> newturnstats = XmlManager<List<TurnStats>>.Load(_gameFile);
+                fixupSecrets(newturnstats);
+                return newturnstats;
+            }
+            return new List<TurnStats>();
+        }
 
 		public void DeleteGameFile()
 		{
