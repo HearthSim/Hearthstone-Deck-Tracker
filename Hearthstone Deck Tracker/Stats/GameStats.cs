@@ -107,36 +107,35 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 
-        private void fixupSecrets(List<TurnStats> newturnstats)
+        private void ResolveSecrets(IEnumerable<TurnStats> newturnstats)
         {
-            int unresolved_secrets = 0;
-            int triggered_secrets = 0;
-            TurnStats.Play candidate_secret = null;
+            var unresolvedSecrets = 0;
+            var triggeredSecrets = 0;
+            TurnStats.Play candidateSecret = null;
 
-
-            foreach (TurnStats turn in newturnstats)
+            foreach (var turn in newturnstats)
             {
-                foreach (TurnStats.Play play in turn.Plays)
+                foreach (var play in turn.Plays)
                 {
                     // is secret play
                     if ((play.Type == PlayType.OpponentHandDiscard && play.CardId == "") ||
                         play.Type == PlayType.OpponentSecretPlayed)
                     {
-                        unresolved_secrets++;
-                        candidate_secret = play;
+                        unresolvedSecrets++;
+                        candidateSecret = play;
                         play.Type = PlayType.OpponentSecretPlayed;
                     }
                     else if (play.Type == PlayType.OpponentSecretTriggered)
                     {
-                        if (unresolved_secrets == 1)
+                        if (unresolvedSecrets == 1 && candidateSecret != null)
                         {
-                            candidate_secret.CardId = play.CardId;
+                            candidateSecret.CardId = play.CardId;
                         }
-                        triggered_secrets++;
-                        if (triggered_secrets == unresolved_secrets)
+                        triggeredSecrets++;
+                        if (triggeredSecrets == unresolvedSecrets)
                         {
-                            triggered_secrets = 0;
-                            unresolved_secrets = 0;
+                            triggeredSecrets = 0;
+                            unresolvedSecrets = 0;
 
                         }
                     }
@@ -149,8 +148,8 @@ namespace Hearthstone_Deck_Tracker.Stats
             Directory.CreateDirectory(_gamesDir);
             if (GameId != Guid.Empty && File.Exists(_gameFile))
             {
-                List<TurnStats> newturnstats = XmlManager<List<TurnStats>>.Load(_gameFile);
-                fixupSecrets(newturnstats);
+                var newturnstats = XmlManager<List<TurnStats>>.Load(_gameFile);
+                ResolveSecrets(newturnstats);
                 return newturnstats;
             }
             return new List<TurnStats>();
