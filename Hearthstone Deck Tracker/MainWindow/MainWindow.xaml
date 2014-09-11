@@ -119,47 +119,47 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DRUID" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_HUNTER" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_MAGE" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PRIEST" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PALADIN" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_ROGUE" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_SHAMAN" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARLOCK" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARRIOR" Click="BtnNewDeck_Click">
+                    <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>

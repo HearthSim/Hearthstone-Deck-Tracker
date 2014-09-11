@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = deckName};
 				var name =
 					await
-					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+						this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
 
 				if(String.IsNullOrEmpty(name))
 					return;
@@ -121,10 +121,10 @@ namespace Hearthstone_Deck_Tracker
 
 				var result =
 					await
-					this.ShowMessageAsync("Not 30 cards",
-					                      string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
-					                                    _newDeck.Cards.Sum(c => c.Count)),
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
+						this.ShowMessageAsync("Not 30 cards",
+							string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
+								_newDeck.Cards.Sum(c => c.Count)),
+							MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -308,11 +308,53 @@ namespace Hearthstone_Deck_Tracker
 
 		#region UI
 
-		private void BtnNewDeck_Click(object sender, RoutedEventArgs e)
+		private void BtnNewDeckDruid_Click(object sender, RoutedEventArgs e)
 		{
-			string hero = ((dynamic)sender).Header;
-			hero = hero.Substring(1, hero.Length - 1).ToLower();
-			hero = hero.Substring(0, 1).ToUpper() + hero.Substring(1, hero.Length - 1);
+			CreateNewDeck("Druid");
+		}
+
+		private void BtnNewDeckHunter_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Hunter");
+		}
+
+		private void BtnNewDeckMage_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Mage");
+		}
+
+		private void BtnNewDeckPaladin_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Paladin");
+		}
+
+		private void BtnNewDeckPriest_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Priest");
+		}
+
+		private void BtnNewDeckRogue_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Rogue");
+		}
+
+		private void BtnNewDeckShaman_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Shaman");
+		}
+
+		private void BtnNewDeckWarrior_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Warrior");
+		}
+
+		private void BtnNewDeckWarlock_Click(object sender, RoutedEventArgs e)
+		{
+			CreateNewDeck("Warlock");
+		}
+
+		private void CreateNewDeck(string hero)
+		{
 			DeselectDeck();
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
@@ -365,8 +407,8 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
 				var result =
 					await
-					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative,
-					                      settings);
+						this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative,
+							settings);
 				if(result == MessageDialogResult.Affirmative)
 					SaveDeck(true);
 				else if(result == MessageDialogResult.Negative)
@@ -377,8 +419,8 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
 				var result =
 					await
-					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
+						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
+							MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					Deck oldDeck;
