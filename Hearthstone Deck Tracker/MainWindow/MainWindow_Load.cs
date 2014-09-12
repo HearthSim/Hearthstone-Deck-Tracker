@@ -134,7 +134,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		//TODO
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
 		private void ConvertLegacyConfig(Version currentVersion, Version configVersion)
@@ -144,80 +143,7 @@ namespace Hearthstone_Deck_Tracker
 			var v0_3_21 = new Version(0, 3, 21, 0);
 
 			if(configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
-			{
-				// We previously assumed negative pixel coordinates were invalid, but in fact they can go negative
-				// with multi-screen setups. Negative positions were being used to represent 'no specific position'
-				// as a default. That means that when the windows are created for the first time, we let the operating
-				// system decide where to place them. As we should not be using negative positions for this purpose, since
-				// they are in fact a valid range of pixel positions, we now use nullable types instead. The default
-				// 'no specific position' is now expressed when the positions are null.
-				{
-					//Note: Upgraded .HasValue AND .Value into GetValueOrDefault()
-					if(Config.Instance.TrackerWindowLeft.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("TrackerWindowLeft");
-						converted = true;
-					}
-					if(Config.Instance.TrackerWindowTop.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("TrackerWindowTop");
-						converted = true;
-					}
-
-					if(Config.Instance.PlayerWindowLeft.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("PlayerWindowLeft");
-						converted = true;
-					}
-					if(Config.Instance.PlayerWindowTop.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("PlayerWindowTop");
-						converted = true;
-					}
-
-					if(Config.Instance.OpponentWindowLeft.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("OpponentWindowLeft");
-						converted = true;
-					}
-					if(Config.Instance.OpponentWindowTop.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("OpponentWindowTop");
-						converted = true;
-					}
-
-					if(Config.Instance.TimerWindowLeft.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("TimerWindowLeft");
-						converted = true;
-					}
-					if(Config.Instance.TimerWindowTop.GetValueOrDefault() < 0)
-					{
-						Config.Instance.Reset("TimerWindowTop");
-						converted = true;
-					}
-				}
-
-				// Player and opponent window heights were previously set to zero as a default, and then
-				// a bit of logic was used when creating the windows: if height == 0, then set height to 400.
-				// This was a little pointless and also inconsistent with the way the default timer window
-				// dimensions were implemented. Unfortunately we cannot make this consistent without
-				// breaking legacy config files, where the height will still be stored as zero. So
-				// we handle the changed semantics here.
-
-				if(Config.Instance.PlayerWindowHeight == 0)
-				{
-					Config.Instance.Reset("PlayerWindowHeight");
-					converted = true;
-				}
-
-				if(Config.Instance.OpponentWindowHeight == 0)
-				{
-					Config.Instance.Reset("OpponentWindowHeight");
-					converted = true;
-				}
-
-			}
+				Config.Instance.ResetAll();
 			else
 			{
 				if(configVersion <= v0_3_21)
