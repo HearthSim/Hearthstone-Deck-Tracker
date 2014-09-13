@@ -93,7 +93,32 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_deck = deck;
 			if(deck == null) return;
+			DataGridGames.Items.Clear();
+			var filteredGames = FilterGames(deck.DeckStats.Games).ToList();
+			foreach(var game in filteredGames)
+				DataGridGames.Items.Add(game);
+			DataGridWinLoss.Items.Clear();
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
+			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
+
+			var defaultStats = DefaultDeckStats.Instance.GetDeckStats(deck.Class) ?? new DeckStats();
+
+			DataGridWinLossClass.Items.Clear();
+			var allGames = Helper.MainWindow.DeckList.DecksList
+			                     .Where(d => d.GetClass == _deck.GetClass)
+			                     .SelectMany(d => FilterGames(d.DeckStats.Games))
+								 .Concat(FilterGames(defaultStats.Games)).ToList();
+
+			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
+			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
+			DataGridGames.Items.SortDescriptions.Clear();
+			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+		}
+
+		private IEnumerable<GameStats> FilterGames(IEnumerable<GameStats> games)
+		{
 			var selectedGameMode = (Game.GameMode)ComboboxGameMode.SelectedItem;
+			var noteFilter = TextboxNoteFilter.Text;
 			var comboboxString = ComboboxTime.SelectedValue.ToString();
 			var timeFrame = DateTime.Now.Date;
 			switch(comboboxString)
@@ -114,33 +139,11 @@ namespace Hearthstone_Deck_Tracker
 					timeFrame = new DateTime();
 					break;
 			}
-			var noteFilter = TextboxNoteFilter.Text;
-			DataGridGames.Items.Clear();
-			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
-			                                                     || selectedGameMode == Game.GameMode.All)
-			                                                    && g.StartTime > timeFrame
-			                                                    && (g.Note == null && noteFilter == string.Empty
-			                                                        || g.Note != null && g.Note.Contains(noteFilter))).ToList();
-			foreach(var game in filteredGames)
-				DataGridGames.Items.Add(game);
-			DataGridWinLoss.Items.Clear();
-			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
-			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
-
-			DataGridWinLossClass.Items.Clear();
-			var allGames = Helper.MainWindow.DeckList.DecksList
-			                     .Where(d => d.GetClass == _deck.GetClass)
-			                     .SelectMany(d => d.DeckStats.Games
-			                                       .Where(g => (g.GameMode == selectedGameMode
-			                                                    || selectedGameMode == Game.GameMode.All)
-			                                                   && g.StartTime > timeFrame
-			                                                   && (g.Note == null && noteFilter == string.Empty
-			                                                       || g.Note != null && g.Note.Contains(noteFilter)))).ToList();
-			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
-			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
-			DataGridGames.Items.SortDescriptions.Clear();
-			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
-		}
+			return
+				games.Where(g =>
+				            (g.GameMode == selectedGameMode || selectedGameMode == Game.GameMode.All) && g.StartTime > timeFrame &&
+				            (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.Contains(noteFilter)));
+		} 
 
 		public void Refresh()
 		{

@@ -309,6 +309,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void EnableMenuItems(bool enable)
 		{
+			MenuItemSelectedDeckStats.IsEnabled = enable;
 			MenuItemEdit.IsEnabled = enable;
 			MenuItemExportIds.IsEnabled = enable;
 			MenuItemExportScreenshot.IsEnabled = enable;

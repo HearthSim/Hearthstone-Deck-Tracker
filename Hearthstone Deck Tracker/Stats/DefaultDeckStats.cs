@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DeckStats GetDeckStats(string hero)
 		{
 			if(!Game.Classes.Contains(hero))
-				throw new InvalidHeroException(hero);
+				return null;
 			var ds = DeckStats.FirstOrDefault(d => d.Name == hero);
 			if(ds == null)
 			{
@@ -45,14 +45,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			var file = Config.Instance.DataDir + "DefaultDeckStats.xml";
 			XmlManager<DefaultDeckStats>.Save(file, Instance);
-		}
-	}
-
-	public class InvalidHeroException : Exception
-	{
-		public InvalidHeroException(string hero) : base(hero)
-		{
-
 		}
 	}
 }

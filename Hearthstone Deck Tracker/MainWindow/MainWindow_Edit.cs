@@ -125,5 +125,10 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null) return;
 			SetNewDeck(selectedDeck, true);
 		}
+
+		private void BtnDeckStatsOverall_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }
