@@ -53,7 +53,9 @@ namespace Hearthstone_Deck_Tracker
 
 			//var deck = await this._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
-			deck.Url = url;
+
+			if(deck != null)
+				deck.Url = url;
 
 			await controller.CloseAsync();
 			return deck;
