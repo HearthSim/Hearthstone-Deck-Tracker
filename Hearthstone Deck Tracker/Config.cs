@@ -188,6 +188,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool KeepDecksVisible = true;
 
+		[DefaultValue(true)]
+		public bool KeepStatsWhenDeletingDeck = true;
+
 		[DefaultValue("None")]
 		public string KeyPressOnGameEnd = "None";
 

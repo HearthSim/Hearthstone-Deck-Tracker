@@ -1276,5 +1276,21 @@ namespace Hearthstone_Deck_Tracker
 				await Helper.MainWindow.Restart();
 			}
 		}
+
+		private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = true;
+			Config.Save();
+		}
+
+		private void CheckboxDeleteDeckKeepStats_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = false;
+			Config.Save();
+		}
 	}
 }

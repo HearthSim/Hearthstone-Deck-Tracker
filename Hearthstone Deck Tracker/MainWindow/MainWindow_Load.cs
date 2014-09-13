@@ -487,6 +487,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
+			Options.CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
 			Options.CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
 			Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
 			Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
