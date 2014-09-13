@@ -349,6 +349,50 @@ namespace Hearthstone_Deck_Tracker
 				File.Copy(_decksPath, _decksPath + ".old");
 		}
 
+		private void SetupDefaultDeckStatsFile()
+		{
+			if(Config.Instance.SaveDataInAppData == null)
+				return;
+			var appDataPath = Config.Instance.AppDataPath + @"\DefaultDeckStats.xml";
+			const string localPath = "DefaultDeckStats.xml";
+			if(Config.Instance.SaveDataInAppData.Value)
+			{
+				if(File.Exists(localPath))
+				{
+					if(File.Exists(appDataPath))
+					{
+						//backup in case the file already exists
+						var time = DateTime.Now.ToFileTime();
+						File.Move(appDataPath, appDataPath + time);
+						Logger.WriteLine("Created backups of DefaultDeckStats in appdata");
+					}
+					File.Move(localPath, appDataPath);
+					Logger.WriteLine("Moved DefaultDeckStats to appdata");
+				}
+			}
+			else if(File.Exists(appDataPath))
+			{
+				if(File.Exists(localPath))
+				{
+					//backup in case the file already exists
+					var time = DateTime.Now.ToFileTime();
+					File.Move(localPath, localPath + time);
+					Logger.WriteLine("Created backups of DefaultDeckStats locally");
+				}
+				File.Move(appDataPath, localPath);
+				Logger.WriteLine("Moved DefaultDeckStats to local");
+			}
+
+			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";
+			//load saved decks
+			if(!File.Exists(filePath))
+			{
+				//avoid overwriting file with new releases.
+				using (var sr = new StreamWriter(filePath, false))
+					sr.WriteLine("<DefaultDeckStats></DefaultDeckStats>");
+			}
+		}
+
 		private void LoadConfig()
 		{
 			if(Config.Instance.TrackerWindowTop.HasValue)

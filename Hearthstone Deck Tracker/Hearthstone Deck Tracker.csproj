@@ -159,6 +159,8 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="IGameHandler.cs" />
+    <Compile Include="Stats\DeckStatsList.cs" />
+    <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -26,6 +27,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
+		public readonly List<Deck> DefaultDecks;
 		public readonly Decks DeckList;
 		public readonly Version NewVersion;
 		public readonly OpponentWindow OpponentWindow;
@@ -35,6 +37,7 @@ namespace Hearthstone_Deck_Tracker
 		public readonly TimerWindow TimerWindow;
 		//private readonly string _configPath;
 		private readonly string _decksPath;
+		private readonly string _defaultDecksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
 
@@ -155,6 +158,12 @@ namespace Hearthstone_Deck_Tracker
 
 			foreach(var deck in DeckList.DecksList)
 				DeckPickerList.AddDeck(deck);
+
+			_defaultDecksPath = Config.Instance.DataDir + "DefaultDecks.xml";
+
+			SetupDefaultDeckStatsFile();
+			DefaultDeckStats.Load();
+			
 
 			SetupDeckStatsFile();
 			DeckStatsList.Load();

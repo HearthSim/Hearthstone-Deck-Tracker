@@ -37,28 +37,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Games.Add(gameStats);
 		}
 	}
-
-	public class DeckStatsList
-	{
-		private static DeckStatsList _instance;
-
-		[XmlArray(ElementName = "DeckStats")]
-		[XmlArrayItem(ElementName = "Deck")]
-		public List<DeckStats> DeckStats;
-
-		public DeckStatsList()
-		{
-			DeckStats = new List<DeckStats>();
-		}
-
-		public static DeckStatsList Instance
-		{
-			get { return _instance ?? (_instance = new DeckStatsList()); }
-		}
-
-		public static void Load()
-		{
-			var file = Config.Instance.DataDir + "DeckStats.xml";
 			try
 			{
 				_instance = XmlManager<DeckStatsList>.Load(file);
@@ -99,12 +77,4 @@ namespace Hearthstone_Deck_Tracker.Stats
 					MessageBox.Show("Your DeckStats file got corrupted and there was no backup to restore from.", "Error restoring DeckStats backup");
 				}
 			}
-		}
-
-		public static void Save()
-		{
-			var file = Config.Instance.DataDir + "DeckStats.xml";
-			XmlManager<DeckStatsList>.Save(file, Instance);
-		}
-	}
 }
