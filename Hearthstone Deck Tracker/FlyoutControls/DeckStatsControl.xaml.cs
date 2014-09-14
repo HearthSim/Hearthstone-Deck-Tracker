@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
@@ -303,16 +304,37 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.UpdateList();
 		}
 
-		private class WinLoss
+		public class WinLoss
 		{
 			private readonly bool _percent;
 			private readonly List<GameStats> _stats;
+			private readonly string _hero;
 
 			public WinLoss(List<GameStats> stats, string text)
 			{
 				_percent = text == "%";
 				_stats = stats;
 				Text = text;
+			}
+
+			public WinLoss(List<GameStats> stats, bool percent, string hero)
+			{
+
+				_percent = percent;
+				_stats = stats;
+				_hero = hero;
+			}
+
+
+			public BitmapImage HeroImage
+			{
+				get
+				{
+					if(!Game.Classes.Contains(_hero))
+						return new BitmapImage();
+					var uri = new Uri(string.Format("../Resources/{0}_small.png", _hero.ToLower()), UriKind.Relative);
+					return new BitmapImage(uri);
+				}
 			}
 
 			public string Text { get; private set; }

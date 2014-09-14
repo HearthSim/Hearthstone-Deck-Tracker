@@ -66,6 +66,10 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
         </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutOverallStats" Position="Left" Panel.ZIndex="100"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <local:OverallStats x:Name="OverallStatsFlyout"></local:OverallStats>
+        </controls:Flyout>
         <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
