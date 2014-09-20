@@ -380,17 +380,16 @@ namespace Hearthstone_Deck_Tracker
 				var deck = new Deck();
 
 				var deckName =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='entry-header']/h1[@class='entry-title']").InnerText);
 				deck.Name = deckName;
 
 
-				var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='cardname']");
+				var cardNodes = doc.DocumentNode.SelectNodes("//ul[@id='classes' or @id='neutral']/li");
 
 				foreach(var cardNode in cardNodes)
 				{
-					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
-					var count = int.Parse(text[0].Trim());
-					var name = string.Join(" ", text.Skip(1));
+                    var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a").InnerText);
+					var count = int.Parse(cardNode.InnerText[0].ToString());
 
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
