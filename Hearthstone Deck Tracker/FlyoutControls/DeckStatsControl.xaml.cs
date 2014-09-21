@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(Game.GameMode));
-			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxDeckOverview, true}, {GroupboxClassOverview, true}};
+			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxClassOverview, true}};
 		}
 
 		public void LoadConfig()
@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
 			_initialized = true;
-			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
+			//ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
 		}
 
@@ -228,15 +228,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void GroupBoxDeckOverview_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
-			{
-				Config.Instance.StatsDeckOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxDeckOverview);
-				Config.Save();
-			}
-		}
-
 		private void GroupboxClassOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			if(e.GetPosition(GroupboxClassOverview).Y < GroupBoxHeaderHeight)
@@ -308,7 +299,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			private readonly bool _percent;
 			private readonly List<GameStats> _stats;
-			private readonly string _hero;
+			private readonly string _playerHero;
+			private readonly string _opponentHero;
 
 			public WinLoss(List<GameStats> stats, string text)
 			{
@@ -317,22 +309,33 @@ namespace Hearthstone_Deck_Tracker
 				Text = text;
 			}
 
-			public WinLoss(List<GameStats> stats, bool percent, string hero)
+			public WinLoss(List<GameStats> stats, bool percent, string playerHero, string opponentHero)
 			{
 
 				_percent = percent;
 				_stats = stats;
-				_hero = hero;
+				_playerHero = playerHero;
+				_opponentHero = opponentHero;
 			}
 
 
-			public BitmapImage HeroImage
+			public BitmapImage OpponentHeroImage
 			{
 				get
 				{
-					if(!Game.Classes.Contains(_hero))
+					if(!Game.Classes.Contains(_opponentHero))
 						return new BitmapImage();
-					var uri = new Uri(string.Format("../Resources/{0}_small.png", _hero.ToLower()), UriKind.Relative);
+					var uri = new Uri(string.Format("../Resources/{0}_small.png", _opponentHero.ToLower()), UriKind.Relative);
+					return new BitmapImage(uri);
+				}
+			}
+			public BitmapImage PlayerHeroImage
+			{
+				get
+				{
+					if(!Game.Classes.Contains(_playerHero))
+						return new BitmapImage();
+					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
 					return new BitmapImage(uri);
 				}
 			}
@@ -408,6 +411,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
+		}
+
+		private void GroupboxFilter_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			
 		}
 	}
 }

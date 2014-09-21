@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker
 				var allGames = unassigned.Concat(assigned).ToList();
 				total.AddRange(allGames);
 
-				DataGridWinLoss.Items.Add(new DeckStatsControl.WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
+				//DataGridWinLoss.Items.Add(new DeckStatsControl.WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
 			}
 
 			DataGridTotal.Items.Add(new DeckStatsControl.WinLoss(total, "%"));
