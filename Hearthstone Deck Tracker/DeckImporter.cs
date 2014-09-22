@@ -28,7 +28,9 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportHearthstonePlayers(url);
 			if(url.Contains("tempostorm"))
 				return await ImportTempostorm(url);
-			if(url.Contains("hearthstonetopdeck"))
+			if(url.Contains("hearthstonetopdecks"))
+				return await ImportHsTopdeck_s(url);
+			if(url.Contains("hearthstonetopdeck."))
 				return await ImportHsTopdeck(url);
 			if(url.Contains("hearthnews.fr"))
 				return await ImportHearthNewsFr(url);
@@ -37,6 +39,44 @@ namespace Hearthstone_Deck_Tracker
 			if(url.Contains("hearthstone-decks"))
 				return await ImportHearthstoneDecks(url);
 			return null;
+		}
+
+		private static async Task<Deck> ImportHsTopdeck(string url)
+		{
+			try
+			{
+				var doc = await GetHtmlDoc(url);
+
+				var deck = new Deck();
+
+				var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+
+				deck.Name = deckName;
+
+
+				var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='cardname']");
+
+				foreach(var cardNode in cardNodes)
+				{
+					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
+					var count = int.Parse(text[0].Trim());
+					var name = string.Join(" ", text.Skip(1));
+
+					var card = Game.GetCardFromName(name);
+					card.Count = count;
+					deck.Cards.Add(card);
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
+				}
+
+				return deck;
+			}
+			catch (Exception e)
+			{
+				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
+				return null;
+			}
 		}
 
 		private static async Task<Deck> ImportHearthstoneDecks(string url)
@@ -371,7 +411,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private static async Task<Deck> ImportHsTopdeck(string url)
+		private static async Task<Deck> ImportHsTopdeck_s(string url)
 		{
 			try
 			{
