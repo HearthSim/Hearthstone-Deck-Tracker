@@ -143,7 +143,11 @@ namespace Hearthstone_Deck_Tracker
 			var v0_3_21 = new Version(0, 3, 21, 0);
 
 			if(configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
+			{
 				Config.Instance.ResetAll();
+				Config.Instance.CreatedByVersion = currentVersion.ToString();
+				converted = true;
+			}
 			else
 			{
 				if(configVersion <= v0_3_21)
