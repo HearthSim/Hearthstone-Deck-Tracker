@@ -157,26 +157,42 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.OpponentWindow.Topmost = true;
 			}
 			SaveConfig(false);
-		}
+        }
 
-		private void CheckboxTimerTopmost_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.TimerWindowTopmost = true;
-			Helper.MainWindow.TimerWindow.Topmost = true;
-			CheckboxTimerTopmostHsForeground.IsEnabled = true;
-			SaveConfig(true);
-		}
+        private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
+        {
+            if(!_initialized) return;
+            Config.Instance.TimerAlert = true;
+            TextboxTimerAlert.IsEnabled = true;
+            SaveConfig(false);
+        }
 
-		private void CheckboxTimerTopmost_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized) return;
-			Config.Instance.TimerWindowTopmost = false;
-			Helper.MainWindow.TimerWindow.Topmost = false;
-			CheckboxTimerTopmostHsForeground.IsEnabled = false;
-			CheckboxTimerTopmostHsForeground.IsChecked = false;
-			SaveConfig(true);
-		}
+        private void CheckboxTimerAlert_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if(!_initialized) return;
+            Config.Instance.TimerAlert = false;
+            TextboxTimerAlert.IsEnabled = false;
+            SaveConfig(false);
+        }
+
+        private void CheckboxTimerTopmost_Checked(object sender, RoutedEventArgs e)
+        {
+            if(!_initialized) return;
+            Config.Instance.TimerWindowTopmost = true;
+            Helper.MainWindow.TimerWindow.Topmost = true;
+            CheckboxTimerTopmostHsForeground.IsEnabled = true;
+            SaveConfig(true);
+        }
+
+        private void CheckboxTimerTopmost_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if(!_initialized) return;
+            Config.Instance.TimerWindowTopmost = false;
+            Helper.MainWindow.TimerWindow.Topmost = false;
+            CheckboxTimerTopmostHsForeground.IsEnabled = false;
+            CheckboxTimerTopmostHsForeground.IsChecked = false;
+            SaveConfig(true);
+        }
 
 		private void CheckboxTimerWindow_Checked(object sender, RoutedEventArgs e)
 		{
@@ -430,17 +446,49 @@ namespace Hearthstone_Deck_Tracker
 			return brush;
 		}
 
-		private void TextboxCustomBackground_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if(!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom") return;
-			var background = BackgroundFromHex();
-			if(background != null)
-			{
-				UpdateAdditionalWindowsBackground(background);
-				Config.Instance.WindowsBackgroundHex = TextboxCustomBackground.Text;
-				SaveConfig(false);
-			}
-		}
+        private void TextboxCustomBackground_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom") return;
+            var background = BackgroundFromHex();
+            if(background != null)
+            {
+                UpdateAdditionalWindowsBackground(background);
+                Config.Instance.WindowsBackgroundHex = TextboxCustomBackground.Text;
+                SaveConfig(false);
+            }
+        }
+
+        private void TextboxTimerAlert_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextboxTimerAlert_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(!_initialized || CheckboxTimerAlert.IsChecked != true) return;
+            int mTimerAlertValue;
+            int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue);
+            if (mTimerAlertValue != null)
+            {
+                if (mTimerAlertValue < 0)
+                {
+                    TextboxTimerAlert.Text = "0";
+                    mTimerAlertValue = 0;
+                }
+
+                if (mTimerAlertValue > 90)
+                {
+                    TextboxTimerAlert.Text = "90";
+                    mTimerAlertValue = 90;
+                }
+
+                Config.Instance.TimerAlertSeconds = mTimerAlertValue;
+                SaveConfig(false);
+            }
+        }
 
 		private async void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{

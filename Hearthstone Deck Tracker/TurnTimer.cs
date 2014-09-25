@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Timers;
 
 namespace Hearthstone_Deck_Tracker
@@ -108,6 +109,19 @@ namespace Hearthstone_Deck_Tracker
 				new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
 			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(
 				new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
+
+            if (CurrentTurn == Turn.Player)
+                CheckForTimerAlarm();
 		}
+
+        private void CheckForTimerAlarm()
+        {
+            if (Config.Instance.TimerAlert)
+                if (Seconds == Config.Instance.TimerAlertSeconds)
+                {
+                    SystemSounds.Asterisk.Play();
+                    User32.FlashHs();
+                }
+        }
 	}
 }
