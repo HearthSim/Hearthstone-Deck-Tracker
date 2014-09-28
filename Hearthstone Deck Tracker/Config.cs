@@ -395,10 +395,16 @@ namespace Hearthstone_Deck_Tracker
 		public bool TimerWindowOnStartup = false;
 
 		[DefaultValue(null)]
-		public int? TimerWindowTop = null;
+        public int? TimerWindowTop = null;
 
-		[DefaultValue(false)]
-		public bool TimerWindowTopmost = false;
+        [DefaultValue(false)]
+        public bool TimerWindowTopmost = false;
+
+        [DefaultValue(false)]
+        public bool TimerAlert = false;
+
+        [DefaultValue(30)]
+        public int TimerAlertSeconds = 30;
 
 		[DefaultValue(false)]
 		public bool TimerWindowTopmostIfHsForeground = false;
