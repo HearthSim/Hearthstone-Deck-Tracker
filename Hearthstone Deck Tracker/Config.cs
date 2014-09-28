@@ -106,7 +106,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool FlashHsOnTurnStart = true;
 
-		public GameDetailsConfig GameDetails;
+		private GameDetailsConfig _gameDetails;
+		public GameDetailsConfig GameDetails
+		{
+			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
+			set { _gameDetails = value; }
+		}
 
 		[DefaultValue(false)]
 		public bool GenerateLog = false;
@@ -611,7 +616,6 @@ namespace Hearthstone_Deck_Tracker
 					field.SetValue(this, attr.Value);
 			}
 			
-
 			/*
 			foreach(System.ComponentModel.PropertyDescriptor prop in System.ComponentModel.TypeDescriptor.GetProperties(this))
 			{
