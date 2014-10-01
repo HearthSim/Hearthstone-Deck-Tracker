@@ -234,6 +234,8 @@ namespace Hearthstone_Deck_Tracker
 					//french
 				case "Éclair":
 					return cardName + " 3";
+                case "Boule de Feu":
+                    return cardName + "Horsley";
 
 				default:
 					return cardName;
