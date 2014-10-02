@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls.DataVisualization;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -15,6 +16,8 @@ using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
+using System.Collections.Generic;
+using System.Windows.Controls.DataVisualization.Charting;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -240,7 +243,8 @@ namespace Hearthstone_Deck_Tracker
 				HsLogReader.Instance.Start();
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			DeckPickerList.SortDecks();
+			DeckPickerList.SortDecks();           
+            
 		}
 
 		#endregion
@@ -616,11 +620,167 @@ namespace Hearthstone_Deck_Tracker
 				WriteDecks();
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
+                updateCharts(deck);
 				TagControlEdit.SetSelectedTags(deck.Tags);
 			}
 			else
 				EnableMenuItems(false);
 		}
+
+
+        /***
+         * 
+         * 					switch(card.Type)
+					{
+						case "Weapon":
+							weapons[7] += card.Count;
+							break;
+						case "Enchantment":
+						case "Spell":
+							spells[7] += card.Count;
+							break;
+						case "Minion":
+							minions[7] += card.Count;
+							break;
+					}
+
+         */
+        private void updateCharts(Deck newdeck)
+        {
+            int[] attacklist = new int[11];
+            int[] healthlist = new int[11];
+            int tempattack = 0;
+            int temphealth = 0;
+
+            int minioncount=0;
+            int weaponcount=0;
+            int spellcount = 0;
+
+            if (newdeck == null)
+            {
+                return;
+            }
+
+            foreach(Card card in newdeck.Cards)
+            {
+
+
+                if (card.Type == "Minion")
+                {
+                    tempattack = card.Attack;
+                    if (tempattack >= 10)
+                    {
+                        tempattack = 10;
+                    }
+                    attacklist[tempattack] += card.Count;
+
+                    temphealth = card.Health;
+                    if (temphealth >= 10)
+                    {
+                        temphealth = 10;
+                    }
+                    healthlist[temphealth] += card.Count;
+                    minioncount++;
+
+                }
+                else if (card.Type == "Weapon")
+                {
+                    weaponcount++;
+                }
+                else
+                {
+                    spellcount++;
+                }
+
+            }
+
+
+            List<KeyValuePair<int, int>> MyValue = new List<KeyValuePair<int, int>>();
+            for (int i=0; i < attacklist.Count(); i++)
+            {
+                MyValue.Add(new KeyValuePair<int, int>(i, attacklist[i]));
+            }
+            AttackChart.DataContext = MyValue;
+
+            List<KeyValuePair<int, int>> MyHealthValue = new List<KeyValuePair<int, int>>();
+            for (int i = 0; i < healthlist.Count(); i++)
+            {
+                MyHealthValue.Add(new KeyValuePair<int, int>(i, healthlist[i]));
+            }
+            
+            HealthChart.DataContext = MyHealthValue;
+            //////////// pie 
+
+            /*
+            List<KeyValuePair<string, double>> valueList = new List<KeyValuePair<string, double>>();
+            valueList.Add(new KeyValuePair<string, double>("Spells", spellcount));
+            valueList.Add(new KeyValuePair<string, double>("Weapons", weaponcount));
+            valueList.Add(new KeyValuePair<string, double>("Minions", minioncount));
+            pieChart.DataContext = valueList;
+            pieChart.Palette = null;
+             */
+
+            /// abilities
+            /// 
+
+            List<KeyValuePair<string, double>> abilitylist = new List<KeyValuePair<string, double>>();
+
+            if (newdeck.getNumAdjacentBuff() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Adjacent Buff", newdeck.getNumAdjacentBuff()));
+            }
+            if (newdeck.getNumBattlecry() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Battlecry", newdeck.getNumBattlecry()));
+            }
+            if (newdeck.getNumCharge() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Charge", newdeck.getNumCharge()));
+            }
+            if (newdeck.getNumCombo() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Combo", newdeck.getNumCombo()));
+            }
+            if (newdeck.getNumDeathrattle() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Deathrattle", newdeck.getNumDeathrattle()));
+            }
+            if (newdeck.getNumDivineShield() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Divine Shield", newdeck.getNumDivineShield()));
+            }
+            if (newdeck.getNumFreeze() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Freeze", newdeck.getNumFreeze()));
+            }
+            if (newdeck.getNumImmuneToSpellpower() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Immune to Spells", newdeck.getNumImmuneToSpellpower()));
+            }
+            if (newdeck.getNumOneTurnEffect() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("One turn effect", newdeck.getNumOneTurnEffect()));
+            }
+            if (newdeck.getNumSecret() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Secret", newdeck.getNumSecret()));
+            }
+            if (newdeck.getNumSpellpower() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Spell Power", newdeck.getNumSpellpower()));
+            }
+            if (newdeck.getNumTaunt() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Taunt", newdeck.getNumTaunt()));
+            }
+            if (newdeck.getNumWindfury() != 0)
+            {
+                abilitylist.Add(new KeyValuePair<string, double>("Windfury", newdeck.getNumWindfury()));
+            }
+
+
+            ((BarSeries)cardabilitieschart.Series[0]).ItemsSource = abilitylist;
+        }
 
 		#endregion
 
@@ -669,3 +829,4 @@ namespace Hearthstone_Deck_Tracker
 		}
 	}
 }
+

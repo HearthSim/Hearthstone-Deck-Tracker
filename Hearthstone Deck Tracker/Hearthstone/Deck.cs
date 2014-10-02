@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					foreach(var mechanic in card.Mechanics)
 					{
 						if(mechanic.Equals(newmechanic))
-							count++;
+                            count += card.Count;
 					}
 				}
 			}

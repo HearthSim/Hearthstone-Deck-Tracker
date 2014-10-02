@@ -217,6 +217,8 @@ namespace Hearthstone_Deck_Tracker
 			UpdateTitle();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
+            updateCharts(_newDeck);
+
 		}
 
 		private void AddCardToDeck(Card card)
@@ -234,6 +236,7 @@ namespace Hearthstone_Deck_Tracker
 			UpdateTitle();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
+            updateCharts(_newDeck);
 			try
 			{
 				TextBoxDBFilter.Focus();
