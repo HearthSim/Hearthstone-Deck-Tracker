@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 
-			var fixedName = FixCardName(card.LocalizedName).ToLowerInvariant();
+			var fixedName = (card.LocalizedName + " " + card.Artist).ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
 				Clipboard.SetText(fixedName);
@@ -196,48 +196,6 @@ namespace Hearthstone_Deck_Tracker
 				User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
 
 			await Task.Delay(Config.Instance.DeckExportDelay);
-		}
-
-		private static string FixCardName(string cardName)
-		{
-			switch(cardName)
-			{
-					//multilanguage
-				case "Silence":
-					switch(Config.Instance.SelectedLanguage)
-					{
-						case "enUS":
-							return cardName + " common";
-						case "frFR":
-							return cardName + " commune";
-						default:
-							return cardName;
-					}
-				case "Blizzard":
-					return cardName + " 2";
-				case "Feuerball":
-				case "Fireball":
-					return cardName + " 6";
-
-					//english
-				case "Windfury":
-				case "Claw":
-					return cardName + " Spell";
-				case "Slam":
-					return cardName + " Draw";
-
-					//german
-				case "Windzorn":
-				case "Klaue":
-					return cardName + " Zauber";
-
-					//french
-				case "Éclair":
-					return cardName + " 3";
-
-				default:
-					return cardName;
-			}
 		}
 
 		private static bool CheckForGolden(IntPtr wndHandle, Point point)
