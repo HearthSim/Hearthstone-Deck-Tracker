@@ -3,38 +3,38 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
-	public class TurnStats
-	{
-		[XmlArray(ElementName = "Plays")]
-		[XmlArrayItem(ElementName = "Play")]
-		public List<Play> Plays;
+    public class TurnStats
+    {
+        [XmlArray(ElementName = "Plays")]
+        [XmlArrayItem(ElementName = "Play")]
+        public List<Play> Plays;
 
-		public int Turn;
+        public int Turn;
 
-		public TurnStats()
-		{
-			Plays = new List<Play>();
-		}
+        public TurnStats()
+        {
+            Plays = new List<Play>();
+        }
 
-		public void AddPlay(PlayType type, string cardId)
-		{
-			Plays.Add(new Play(type, cardId));
-		}
+        public void AddPlay(PlayType type, string cardId)
+        {
+            Plays.Add(new Play(type, cardId));
+        }
 
-		public class Play
-		{
-			public string CardId;
-			public PlayType Type;
+        public class Play
+        {
+            public string CardId;
+            public PlayType Type;
 
-			public Play()
-			{
-			}
+            public Play()
+            {
+            }
 
-			public Play(PlayType type, string cardId)
-			{
-				Type = type;
-				CardId = cardId;
-			}
-		}
-	}
+            public Play(PlayType type, string cardId)
+            {
+                Type = type;
+                CardId = cardId;
+            }
+        }
+    }
 }

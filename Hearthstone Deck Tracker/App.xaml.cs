@@ -5,35 +5,35 @@ using System.Windows.Threading;
 
 namespace Hearthstone_Deck_Tracker
 {
-	/// <summary>
-	/// Interaction logic for App.xaml
-	/// </summary>
-	public partial class App : Application
-	{
-		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
-		{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+        private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
 #if(DEBUG)
-			//Just so resharper codecleanup does not remove using system and system.io when in debug
-			if(File.Exists("HearthstoneDeckTracker.exe"))
-				Console.WriteLine("Ignore this");
+            //Just so resharper codecleanup does not remove using system and system.io when in debug
+            if(File.Exists("HearthstoneDeckTracker.exe"))
+                Console.WriteLine("Ignore this");
 #endif
 #if (!DEBUG)
-			var date = DateTime.Now;
-			var fileName = "Crash Reports\\" + string.Format("Crash report {0}{1}{2}-{3}{4}", date.Day, date.Month, date.Year, date.Hour, date.Minute);
+            var date = DateTime.Now;
+            var fileName = "Crash Reports\\" + string.Format("Crash report {0}{1}{2}-{3}{4}", date.Day, date.Month, date.Year, date.Hour, date.Minute);
 
-			if(!Directory.Exists("Crash Reports"))
-				Directory.CreateDirectory("Crash Reports");
+            if(!Directory.Exists("Crash Reports"))
+                Directory.CreateDirectory("Crash Reports");
 
-			using(var sr = new StreamWriter(fileName + ".txt", true))
-			{
-				sr.WriteLine("########## " + DateTime.Now + " ##########");
-				sr.WriteLine(e.Exception);
-			}
+            using(var sr = new StreamWriter(fileName + ".txt", true))
+            {
+                sr.WriteLine("########## " + DateTime.Now + " ##########");
+                sr.WriteLine(e.Exception);
+            }
 
-			MessageBox.Show("A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send me an email (epikz37@gmail.com).\n\nPlease include the generated crash report(s) and a short explanation of what you were doing before the crash.", "Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
-			e.Handled = true;
-			Shutdown();
+            MessageBox.Show("A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send me an email (epikz37@gmail.com).\n\nPlease include the generated crash report(s) and a short explanation of what you were doing before the crash.", "Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
+            e.Handled = true;
+            Shutdown();
 #endif
-		}
-	}
+        }
+    }
 }
