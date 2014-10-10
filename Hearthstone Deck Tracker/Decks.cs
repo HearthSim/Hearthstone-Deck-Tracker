@@ -5,21 +5,21 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public class Decks
-	{
-		[XmlArray(ElementName = "Tags")]
-		[XmlArrayItem(ElementName = "Tag")]
-		public List<string> AllTags;
+    public class Decks
+    {
+        [XmlArray(ElementName = "Tags")]
+        [XmlArrayItem(ElementName = "Tag")]
+        public List<string> AllTags;
 
-		[XmlElement(ElementName = "Deck")]
-		public ObservableCollection<Deck> DecksList;
+        [XmlElement(ElementName = "Deck")]
+        public ObservableCollection<Deck> DecksList;
 
-		public List<DeckInfo> LastDeckClass;
-	}
+        public List<DeckInfo> LastDeckClass;
+    }
 
-	public class DeckInfo
-	{
-		public string Class;
-		public string Name;
-	}
+    public class DeckInfo
+    {
+        public string Class;
+        public string Name;
+    }
 }
