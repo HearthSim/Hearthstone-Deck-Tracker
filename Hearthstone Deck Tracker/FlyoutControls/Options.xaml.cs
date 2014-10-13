@@ -1186,5 +1186,19 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 			await Helper.MainWindow.Restart();
 		}
+
+		private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AdvancedWindowSearch = true;
+			Config.Save();
+		}
+
+		private void CheckboxAdvancedWindowSearch_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AdvancedWindowSearch = false;
+			Config.Save();
+		}
 	}
 }

@@ -25,6 +25,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AdditionalOverlayTooltips = true;
 
 		[DefaultValue(true)]
+		public bool AdvancedWindowSearch = true;
+
+		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
 
 		[DefaultValue(true)]
@@ -515,6 +518,7 @@ namespace Hearthstone_Deck_Tracker
 				return _config;
 			}
 		}
+
 
 		#endregion
 

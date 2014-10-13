@@ -343,7 +343,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Height="359" Width="235" Margin="5,0,0,0"
+                                      VerticalAlignment="Top" Height="392" Width="235" Margin="5,0,0,0"
                                       Grid.RowSpan="2">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
@@ -424,6 +424,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
                                               Unchecked="CheckboxCheckForUpdates_Unchecked" />
+                                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
+                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                                    	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
+                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
                                 </StackPanel>
                             </GroupBox>
                         </Grid>
