@@ -253,6 +253,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
+				if(!url.Contains("http://www."))
+					url = "http://www." + url.Split('.').Skip(1).Aggregate((c, n) => c + "." + n);
+
 				var doc = await GetHtmlDocJs(url);
 				var deck = new Deck();
 
