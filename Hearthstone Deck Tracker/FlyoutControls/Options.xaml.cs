@@ -1200,5 +1200,26 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.AdvancedWindowSearch = false;
 			Config.Save();
 		}
+
+        private void CheckboxSaveScreenShot_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.SaveScreenShot = true;
+            Config.Save();
+        }
+
+        private void CheckboxSaveScreenShot_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.SaveScreenShot = false;
+            Config.Save();
+        }
+
+        private void TextBoxPlayerName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.PlayerName = ((TextBox)sender).Text;
+            Config.Save();
+        }
 	}
 }

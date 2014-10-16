@@ -441,6 +441,8 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
+            Options.TextBoxPlayerName.Text = Config.Instance.PlayerName;
+            Options.CheckboxSaveScreenShot.IsChecked = Config.Instance.SaveScreenShot;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

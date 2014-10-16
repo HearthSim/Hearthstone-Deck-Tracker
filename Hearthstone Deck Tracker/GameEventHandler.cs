@@ -3,6 +3,9 @@ using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -304,7 +307,22 @@ namespace Hearthstone_Deck_Tracker
 				if(Game.CurrentGameStats == null)
 					return;
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
-				Game.CurrentGameStats.GameEnd();
+				
+
+                if(Config.Instance.SaveScreenShot)
+                {
+                    System.Threading.Thread.Sleep(5000);
+                    var rect = User32.GetHearthstoneRect(false);
+
+                    var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+
+                    Graphics graphics = Graphics.FromImage(bmp);
+                    graphics.CopyFromScreen(rect.Left, rect.Top, 0, 0, new Size(rect.Width, rect.Height), CopyPixelOperation.SourceCopy);
+                    var path = Helper.GetValidFilePath("Screenshots", Config.Instance.PlayerName + " Playing AS: " + Game.PlayingAs + " vs " + Game.PlayingAgainst + " " + Game.CurrentGameStats.StartTime , ".png");
+                    bmp.Save(path, ImageFormat.Png);
+                }
+
+                Game.CurrentGameStats.GameEnd();
 
 				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if(selectedDeck != null)
