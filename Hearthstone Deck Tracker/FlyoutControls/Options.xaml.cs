@@ -1199,5 +1199,19 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.AdvancedWindowSearch = false;
 			Config.Save();
 		}
+
+		private void CheckboxNoteDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.ShowNoteDialogAfterGame = true;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.ShowNoteDialogAfterGame = false;
+			Config.Save();
+		}
 	}
 }

@@ -182,6 +182,9 @@
     <Compile Include="Windows\MoveGameDialog.xaml.cs">
       <DependentUpon>MoveGameDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\NoteDialog.xaml.cs">
+      <DependentUpon>NoteDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MoveGameDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\NoteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

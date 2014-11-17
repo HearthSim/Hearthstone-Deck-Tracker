@@ -324,6 +324,8 @@ namespace Hearthstone_Deck_Tracker
 						return;
 					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+					if(Config.Instance.ShowNoteDialogAfterGame)
+						new NoteDialog(Game.CurrentGameStats);
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 					_assignedDeck = selectedDeck;
 				}

@@ -70,6 +70,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
 
+		[DefaultValue(true)]
+		public bool EnterToSaveNote = true;
+
 		[DefaultValue(0.06)]
 		public double ExportAllButtonX = 0.06;
 
@@ -350,6 +353,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowInTaskbar = false;
+
+		[DefaultValue(false)]
+		public bool ShowNoteDialogAfterGame = false;
 
 		[DefaultValue(false)]
 		public bool ShowPlayerGet = false;
