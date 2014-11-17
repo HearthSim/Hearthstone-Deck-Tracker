@@ -144,6 +144,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void BringHsToForeground()
 		{
 			var hsHandle = GetHearthstoneWindow();
+			ShowWindow(hsHandle, SwRestore);
 			SetForegroundWindow(hsHandle);
 		}
 
