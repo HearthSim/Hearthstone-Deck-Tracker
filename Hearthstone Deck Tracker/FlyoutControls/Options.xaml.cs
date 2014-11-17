@@ -777,7 +777,6 @@ namespace Hearthstone_Deck_Tracker
 
 			Config.Instance.Reset("SecretsTop");
 			Config.Instance.Reset("SecretsLeft");
-			Config.Instance.Reset("SecretsHeight");
 
 			SaveConfig(true);
 		}
