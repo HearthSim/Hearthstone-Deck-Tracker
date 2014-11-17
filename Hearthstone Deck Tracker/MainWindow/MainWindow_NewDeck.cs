@@ -523,6 +523,8 @@ namespace Hearthstone_Deck_Tracker
 			if(originalSource != null)
 			{
 				var card = (Card)ListViewDeck.SelectedItem;
+				if(card == null)
+					return;
 				RemoveCardFromDeck(card);
 				_newDeckUnsavedChanges = true;
 			}
@@ -538,6 +540,8 @@ namespace Hearthstone_Deck_Tracker
 			if(originalSource != null)
 			{
 				var card = (Card)ListViewDeck.SelectedItem;
+				if(card == null)
+					return;
 				AddCardToDeck((Card)card.Clone());
 				_newDeckUnsavedChanges = true;
 			}
