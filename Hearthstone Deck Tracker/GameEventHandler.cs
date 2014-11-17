@@ -48,6 +48,8 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
 			}
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
 		}
 
@@ -130,6 +132,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
 		}
 
@@ -137,6 +141,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
 		}
 
@@ -178,6 +184,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentBackToHand", cardId, turn);
 			Game.OpponentBackToHand(cardId, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
 		}
 
