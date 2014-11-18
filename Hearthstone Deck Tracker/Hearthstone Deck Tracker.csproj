@@ -158,6 +158,7 @@
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
+    <Compile Include="IGameHandler.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -181,9 +182,6 @@
     <Compile Include="Windows\MessageDialogs.cs" />
     <Compile Include="Windows\MoveGameDialog.xaml.cs">
       <DependentUpon>MoveGameDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\NoteDialog.xaml.cs">
-      <DependentUpon>NoteDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OpponentWindow.xaml.cs">
       <DependentUpon>OpponentWindow.xaml</DependentUpon>
@@ -286,10 +284,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MoveGameDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\NoteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
