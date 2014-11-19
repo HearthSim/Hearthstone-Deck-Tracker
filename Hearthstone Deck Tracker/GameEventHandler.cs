@@ -321,6 +321,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
 						_assignedDeck = null;
+						if(Config.Instance.ShowNoteDialogAfterGame)
+							new NoteDialog(Game.CurrentGameStats);
 						return;
 					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
