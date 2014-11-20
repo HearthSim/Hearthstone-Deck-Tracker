@@ -2,6 +2,7 @@
 
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -108,7 +109,10 @@ namespace Hearthstone_Deck_Tracker
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 
-			var fixedName = (card.LocalizedName + " " + card.Artist).ToLowerInvariant();
+			var addArtist = new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
+			var fixedName = addArtist
+				                ? (card.LocalizedName + " " + card.Artist).ToLowerInvariant()
+				                : card.LocalizedName.ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
 				Clipboard.SetText(fixedName);
