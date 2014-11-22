@@ -18,61 +18,83 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null) return;
 
-			var hsHandle = User32.GetHearthstoneWindow();
-
-			if(!User32.IsHearthstoneInForeground())
-			{
-				//restore window and bring to foreground
-				User32.ShowWindow(hsHandle, User32.SwRestore);
-				User32.SetForegroundWindow(hsHandle);
-				//wait it to actually be in foreground, else the rect might be wrong
-				await Task.Delay(500);
-			}
-			if(!User32.IsHearthstoneInForeground())
-			{
-				MessageBox.Show("Can't find Heartstone window.");
-				return;
-			}
-
-			var hsRect = User32.GetHearthstoneRect(false);
-			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
-
-			string oldClipboardContent = null;
 			try
 			{
-				oldClipboardContent = Clipboard.GetText();
+				var hsHandle = User32.GetHearthstoneWindow();
+
+				if(!User32.IsHearthstoneInForeground())
+				{
+					//restore window and bring to foreground
+					User32.ShowWindow(hsHandle, User32.SwRestore);
+					User32.SetForegroundWindow(hsHandle);
+					//wait it to actually be in foreground, else the rect might be wrong
+					await Task.Delay(500);
+				}
+				if(!User32.IsHearthstoneInForeground())
+				{
+					MessageBox.Show("Can't find Heartstone window.");
+					return;
+				}
+
+				var hsRect = User32.GetHearthstoneRect(false);
+				var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
+
+				string oldClipboardContent = null;
+				try
+				{
+					oldClipboardContent = Clipboard.GetText();
+				}
+				catch
+				{
+				}
+
+				var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)),
+				                             (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
+				var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
+				var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
+				var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
+
+
+				Helper.MainWindow.Overlay.ForceHidden = true;
+				Helper.MainWindow.Overlay.UpdatePosition();
+
+				if(Config.Instance.AutoClearDeck)
+					await ClearDeck(hsRect.Width, hsRect.Height, hsHandle, ratio);
+
+				if(Config.Instance.ExportSetDeckName)
+					await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
+
+				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
+
+				foreach(var card in deck.Cards)
+					await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
+
+
+				// Clear search field now all cards have been entered
+
+				await ClickOnPoint(hsHandle, searchBoxPos);
+				SendKeys.SendWait("{DELETE}");
+				SendKeys.SendWait("{ENTER}");
+				try
+				{
+					if(oldClipboardContent != null)
+						Clipboard.SetText(oldClipboardContent);
+				}
+				catch
+				{
+
+				}
 			}
-			catch
+			catch(Exception e)
 			{
+				Logger.WriteLine("Error exporting deck: " + e.Message);
 			}
-
-			var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)), (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
-			var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
-			var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
-			var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
-
-			if(Config.Instance.ExportSetDeckName)
-				await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
-
-			await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
-
-			foreach(var card in deck.Cards)
-				await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
-
-
-			// Clear search field now all cards have been entered
-
-			await ClickOnPoint(hsHandle, searchBoxPos);
-			SendKeys.SendWait("{DELETE}");
-			SendKeys.SendWait("{ENTER}");
-			try
+			finally
 			{
-				if(oldClipboardContent != null)
-					Clipboard.SetText(oldClipboardContent);
+				Helper.MainWindow.Overlay.ForceHidden = false;
+				Helper.MainWindow.Overlay.UpdatePosition();
 			}
-			catch
-			{
-			}
+
 		}
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
@@ -233,6 +255,29 @@ namespace Hearthstone_Deck_Tracker
 			avgSat /= validPixels;
 
 			return avgHue <= targetHue && avgSat <= targetSat;
+		}
+
+		private static async Task ClearDeck(int width, int height, IntPtr handle, double ratio)
+		{
+			while(!CheckForCardsInDeck(handle, width, height, ratio))
+				await
+					ClickOnPoint(handle,
+					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
+					                       (int)(Config.Instance.ExportClearY * height)));
+		}
+
+		private static bool CheckForCardsInDeck(IntPtr wndHandle, int width, int height, double ratio)
+		{
+
+			var capture = Helper.CaptureHearthstone(new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearCheckY*height)), 1,
+			                                        1, wndHandle);
+			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255,56,45,69), 5);
+		}
+
+		private static bool ColorDistance(Color color, Color target, double distance)
+		{
+			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance &&
+			       Math.Abs(color.B - target.B) < distance;
 		}
 	}
 }

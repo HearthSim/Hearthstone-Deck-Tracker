@@ -31,6 +31,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AlwaysOverwriteLogConfig = true;
 
 		[DefaultValue(true)]
+		public bool AutoClearDeck = true;
+
+		[DefaultValue(true)]
 		public bool AutoDeckDetection = true;
 
 		[DefaultValue(true)]
@@ -87,6 +90,15 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(0.32)]
 		public double ExportCardsY = 0.32;
+
+		[DefaultValue(0.86)]
+		public double ExportClearX = 0.83;
+
+		[DefaultValue(0.16)]
+		public double ExportClearY = 0.13;
+
+		[DefaultValue(0.2)]
+		public double ExportClearCheckY = 0.17;
 
 		[DefaultValue(0.85)]
 		public double ExportNameDeckX = 0.85;

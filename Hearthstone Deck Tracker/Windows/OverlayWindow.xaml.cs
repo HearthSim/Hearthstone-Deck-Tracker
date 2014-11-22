@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
 
+		public bool ForceHidden { get; set; }
+
 		public OverlayWindow()
 		{
 			InitializeComponent();
@@ -794,7 +796,7 @@ namespace Hearthstone_Deck_Tracker
 			ShowOverlay(!(
 				             (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 				             || (Config.Instance.HideInMenu && Game.IsInMenu)
-				             || Config.Instance.HideOverlay));
+				             || Config.Instance.HideOverlay || ForceHidden));
 
 
 			var hsRect = User32.GetHearthstoneRect(true);

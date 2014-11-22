@@ -1213,5 +1213,19 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.ShowNoteDialogAfterGame = false;
 			Config.Save();
 		}
+
+		private void CheckboxAutoClear_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AutoClearDeck = true;
+			Config.Save();
+		}
+
+		private void CheckboxAutoClear_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.AutoClearDeck = false;
+			Config.Save();
+		}
 	}
 }

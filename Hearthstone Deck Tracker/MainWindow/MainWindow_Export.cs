@@ -20,15 +20,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void ExportDeck(Deck deck)
 		{
-			var message = "Please create a new, empty " + deck.Class +
-			              "-Deck in Hearthstone before continuing (leave the deck creation screen open).\nDo not move your mouse after clicking OK!";
+			var message =
+				string.Format(
+							  "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
+				              deck.Class,
+				              (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
 
 			if(deck.Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				message += "\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
 			var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
 			                                         message,
-			                                         MessageDialogStyle.AffirmativeAndNegative);
+			                                         MessageDialogStyle.AffirmativeAndNegative, settings);
 
 			if(result == MessageDialogResult.Affirmative)
 			{

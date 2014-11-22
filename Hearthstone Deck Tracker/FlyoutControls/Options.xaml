@@ -444,7 +444,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
-                                      Width="235" Height="191" Margin="10,10,0,0">
+                                      Width="235" Height="215" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
@@ -466,6 +466,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
                                               Unchecked="CheckboxExportName_Unchecked" />
+                                    <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
+                                              Unchecked="CheckboxAutoClear_Unchecked" />
                                     <CheckBox x:Name="CheckboxExportPasteClipboard"
                                               Content="Paste names from clipboard"
                                               ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
