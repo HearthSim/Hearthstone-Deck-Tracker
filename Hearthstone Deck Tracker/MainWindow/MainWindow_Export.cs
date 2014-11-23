@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			if(DeckPickerList.SelectedDeck == null) return;
+			Logger.WriteLine("Creating screenshot of " + DeckPickerList.SelectedDeck.GetDeckInfo(), "Screenshot");
 			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.SelectedDeck.Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
@@ -76,6 +77,7 @@ namespace Hearthstone_Deck_Tracker
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
 			XmlManager<Deck>.Save(path, deck);
 			await ShowSavedFileMessage(path, "SavedDecks");
+			Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + path);
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -84,6 +86,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null) return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
 			this.ShowMessage("", "copied to clipboard");
+			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard");
 		}
 
 
@@ -93,6 +96,7 @@ namespace Hearthstone_Deck_Tracker
 			var result =
 				await
 				this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
+			Logger.WriteLine("Saved to " +  fileName, "Screenshot");
 			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "\\" + dir);
 		}

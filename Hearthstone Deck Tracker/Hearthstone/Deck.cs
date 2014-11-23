@@ -54,6 +54,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastEdited = lastEdited;
 		}
 
+		public string GetDeckInfo()
+		{
+			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name, Class, Cards.Sum(x => x.Count));
+		}
+
 		[XmlIgnore]
 		public string WinPercentString
 		{

@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void WriteLine(string line, string category, int logLevel = 0)
 		{
 			if(logLevel <= Config.Instance.LogLevel)
-				Trace.WriteLine(string.Format("[{0}]{1}: {2}", DateTime.Now.ToLongTimeString(), category, line));
+				Trace.WriteLine(string.Format("[{0}] {1}: {2}", DateTime.Now.ToLongTimeString(), category, line));
 		}
 	}
 }

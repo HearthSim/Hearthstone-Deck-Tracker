@@ -176,6 +176,7 @@
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
     <Compile Include="TurnTimer.cs" />
+    <Compile Include="Utility\TextBoxTraceListener.cs" />
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
     </Compile>

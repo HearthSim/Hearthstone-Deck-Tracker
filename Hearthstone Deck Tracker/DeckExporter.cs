@@ -17,9 +17,9 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task Export(Deck deck)
 		{
 			if(deck == null) return;
-
 			try
 			{
+				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo(), "DeckExporter"));
 				var hsHandle = User32.GetHearthstoneWindow();
 
 				if(!User32.IsHearthstoneInForeground())
@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker
 				if(!User32.IsHearthstoneInForeground())
 				{
 					MessageBox.Show("Can't find Heartstone window.");
+					Logger.WriteLine("Can't find Hearthstone window.", "DeckExporter");
 					return;
 				}
 
@@ -66,6 +67,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
+				Logger.WriteLine("Creating deck...", "DeckExporter");
 				foreach(var card in deck.Cards)
 					await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
 
@@ -84,10 +86,11 @@ namespace Hearthstone_Deck_Tracker
 				{
 
 				}
+				Logger.WriteLine("Done creating deck.", "DeckExporter");
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error exporting deck: " + e.Message);
+				Logger.WriteLine("Error exporting deck: " + e.Message, "DeckExporter");
 			}
 			finally
 			{
@@ -99,11 +102,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
+			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
 			await ClickOnPoint(hsHandle, new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio), (int)(Config.Instance.ExportAllButtonY * height)));
 		}
 
 		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
 		{
+			Logger.WriteLine("Setting deck name...", "DeckExporter");
 			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			if(Config.Instance.ExportPasteClipboard)
@@ -126,6 +131,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!User32.IsHearthstoneInForeground())
 			{
 				Helper.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
+				Logger.WriteLine("Exporting aborted, window lost focus", "DeckExporter");
 				return;
 			}
 
@@ -259,6 +265,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task ClearDeck(int width, int height, IntPtr handle, double ratio)
 		{
+			Logger.WriteLine("Clearing deck...", "DeckExporter");
 			while(!CheckForCardsInDeck(handle, width, height, ratio))
 				await
 					ClickOnPoint(handle,

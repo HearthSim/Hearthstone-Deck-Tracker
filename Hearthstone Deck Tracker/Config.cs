@@ -130,10 +130,7 @@ namespace Hearthstone_Deck_Tracker
 			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
 			set { _gameDetails = value; }
 		}
-
-		[DefaultValue(false)]
-		public bool GenerateLog = false;
-
+		
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 
