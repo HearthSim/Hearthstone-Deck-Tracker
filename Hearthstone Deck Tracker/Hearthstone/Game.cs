@@ -524,6 +524,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							}
 						}
 					}
+					Logger.WriteLine("Done loading localized card database (" + languageTag + ")", "Hearthstone");
 				}
 
 
@@ -549,10 +550,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							tempDb.Add(tmp.Id, tmp);
 						}
 					}
+					Logger.WriteLine("Done loading card database (enUS)", "Hearthstone");
 				}
 				_cardDb = new Dictionary<string, Card>(tempDb);
 
-				Logger.WriteLine("Done loading card database (" + languageTag + ")", "Hearthstone");
 			}
 			catch(Exception e)
 			{

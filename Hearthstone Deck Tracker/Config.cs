@@ -31,6 +31,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AlwaysOverwriteLogConfig = true;
 
 		[DefaultValue(true)]
+		public bool AutoClearDeck = true;
+
+		[DefaultValue(true)]
 		public bool AutoDeckDetection = true;
 
 		[DefaultValue(true)]
@@ -70,6 +73,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
 
+		[DefaultValue(true)]
+		public bool EnterToSaveNote = true;
+
 		[DefaultValue(0.06)]
 		public double ExportAllButtonX = 0.06;
 
@@ -84,6 +90,15 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(0.32)]
 		public double ExportCardsY = 0.32;
+
+		[DefaultValue(0.86)]
+		public double ExportClearX = 0.83;
+
+		[DefaultValue(0.16)]
+		public double ExportClearY = 0.13;
+
+		[DefaultValue(0.2)]
+		public double ExportClearCheckY = 0.17;
 
 		[DefaultValue(0.85)]
 		public double ExportNameDeckX = 0.85;
@@ -115,10 +130,7 @@ namespace Hearthstone_Deck_Tracker
 			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
 			set { _gameDetails = value; }
 		}
-
-		[DefaultValue(false)]
-		public bool GenerateLog = false;
-
+		
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 
@@ -350,6 +362,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowInTaskbar = false;
+
+		[DefaultValue(false)]
+		public bool ShowNoteDialogAfterGame = false;
 
 		[DefaultValue(false)]
 		public bool ShowPlayerGet = false;

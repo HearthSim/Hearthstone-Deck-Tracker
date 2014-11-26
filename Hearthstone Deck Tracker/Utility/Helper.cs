@@ -144,14 +144,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string GetValidFilePath(string dir, string name, string extension)
 		{
-			var validDir = RemoveInvalidChars(dir);
+			var validDir = RemoveInvalidPathChars(dir);
 			if(!Directory.Exists(validDir))
 				Directory.CreateDirectory(validDir);
 
 			if(!extension.StartsWith("."))
 				extension = "." + extension;
 
-			var path = validDir + "\\" + RemoveInvalidChars(name);
+			var path = validDir + "\\" + RemoveInvalidFileNameChars(name);
 			if(File.Exists(path + extension))
 			{
 				var num = 1;
@@ -163,9 +163,16 @@ namespace Hearthstone_Deck_Tracker
 			return path + extension;
 		}
 
-		public static string RemoveInvalidChars(string s)
+		public static string RemoveInvalidPathChars(string s)
 		{
-			var invalidChars = new string(Path.GetInvalidPathChars()) + new string(Path.GetInvalidFileNameChars());
+			var invalidChars = new string(Path.GetInvalidPathChars());
+			var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
+			return regex.Replace(s, "");
+		}
+
+		public static string RemoveInvalidFileNameChars(string s)
+		{
+			var invalidChars = new string(Path.GetInvalidFileNameChars());
 			var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
 			return regex.Replace(s, "");
 		}

@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				sr.WriteLine("########## " + DateTime.Now + " ##########");
 				sr.WriteLine(e.Exception);
+				sr.WriteLine(Helper.MainWindow.Options.TextBoxLog.Text);
 			}
 
 			MessageBox.Show("A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send me an email (epikz37@gmail.com).\n\nPlease include the generated crash report(s) and a short explanation of what you were doing before the crash.", "Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);

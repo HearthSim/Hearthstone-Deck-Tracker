@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public class GameEventHandler
+    public class GameEventHandler : IGameHandler
 	{
 		#region Player
 
@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
 		}
 
-		public static void HandlePlayerBackToHand(string cardId, int turn)
+        public static void HandlePlayerBackToHand(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
@@ -51,6 +51,8 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
 			}
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
 		}
 
@@ -133,6 +135,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
 		}
 
@@ -140,6 +144,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
 		}
 
@@ -181,6 +187,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentBackToHand", cardId, turn);
 			Game.OpponentBackToHand(cardId, turn);
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
 		}
 
@@ -331,6 +339,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
 						_assignedDeck = null;
+						if(Config.Instance.ShowNoteDialogAfterGame)
+							new NoteDialog(Game.CurrentGameStats);
 						return;
 					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
@@ -430,5 +440,141 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("OpponentHeroPower", cardId, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentHeroPower, turn, cardId);
 		}
+
+
+        #region IGameHandlerImplementation
+
+        void IGameHandler.HandlePlayerBackToHand(string cardId, int turn)
+        {
+            HandlePlayerBackToHand(cardId, turn);
+        }
+
+        void IGameHandler.HandlePlayerDraw(string cardId, int turn)
+        {
+            HandlePlayerDraw(cardId, turn);
+        }
+
+        void IGameHandler.HandlePlayerMulligan(string cardId)
+        {
+            HandlePlayerMulligan(cardId);
+        }
+
+        void IGameHandler.HandlePlayerSecretPlayed(string cardId, int turn, bool fromDeck)
+        {
+            HandlePlayerSecretPlayed(cardId, turn, fromDeck);
+        }
+
+        void IGameHandler.HandlePlayerHandDiscard(string cardId, int turn)
+        {
+            HandlePlayerHandDiscard(cardId, turn);
+        }
+
+        void IGameHandler.HandlePlayerPlay(string cardId, int turn)
+        {
+            HandlePlayerPlay(cardId, turn);
+        }
+
+        void IGameHandler.HandlePlayerDeckDiscard(string cardId, int turn)
+        {
+            HandlePlayerDeckDiscard(cardId, turn);
+        }
+
+        void IGameHandler.HandlePlayerHeroPower(string cardId, int turn)
+        {
+            HandlePlayerHeroPower(cardId, turn);
+        }
+
+        void IGameHandler.HandleOpponentPlay(string cardId, int @from, int turn)
+        {
+            HandleOpponentPlay(cardId, @from, turn);
+        }
+
+        void IGameHandler.HandleOpponentHandDiscard(string cardId, int @from, int turn)
+        {
+            HandleOpponentHandDiscard(cardId, @from, turn);
+        }
+
+        void IGameHandler.HandlOpponentDraw(int turn)
+        {
+            HandlOpponentDraw(turn);
+        }
+
+        void IGameHandler.HandleOpponentMulligan(int @from)
+        {
+            HandleOpponentMulligan(@from);
+        }
+
+        void IGameHandler.HandleOpponentGet(int turn)
+        {
+            HandleOpponentGet(turn);
+        }
+
+        void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck)
+        {
+            HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck);
+        }
+
+        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn)
+        {
+            HandleOpponentPlayToHand(cardId, turn);
+        }
+
+        void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn)
+        {
+            HandleOpponentSecretTrigger(cardId, turn);
+        }
+
+        void IGameHandler.HandleOpponentDeckDiscard(string cardId, int turn)
+        {
+            HandleOpponentDeckDiscard(cardId, turn);
+        }
+
+        void IGameHandler.SetOpponentHero(string hero)
+        {
+            SetOpponentHero(hero);
+        }
+
+        void IGameHandler.HandleOpponentHeroPower(string cardId, int turn)
+        {
+            HandleOpponentHeroPower(cardId, turn);
+        }
+
+        void IGameHandler.TurnStart(Turn player, int turnNumber)
+        {
+            TurnStart(player, turnNumber);
+        }
+
+        void IGameHandler.HandleGameStart(string playerHero)
+        {
+            HandleGameStart(playerHero);
+        }
+
+        void IGameHandler.HandleGameEnd(bool backInMenu)
+        {
+            HandleGameEnd(backInMenu);
+        }
+
+        void IGameHandler.HandleLoss()
+        {
+            HandleLoss();
+        }
+
+        void IGameHandler.HandleWin()
+        {
+            HandleWin();
+        }
+
+        void IGameHandler.PlayerSetAside(string id)
+        {
+            PlayerSetAside(id);
+        }
+
+        void IGameHandler.HandlePlayerGet(string cardId, int turn)
+        {
+            HandlePlayerGet(cardId, turn);
+        }
+
+        #endregion IGameHandlerImplementation
+
 	}
 }

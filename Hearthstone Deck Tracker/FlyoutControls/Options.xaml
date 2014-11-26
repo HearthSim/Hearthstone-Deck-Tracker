@@ -179,7 +179,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Height="236" Width="235" Margin="10,10,0,0">
+                                  VerticalAlignment="Top" Height="258" Width="235" Margin="10,10,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -226,6 +226,12 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxStatsInWindow_Checked"
                                           Unchecked="CheckboxStatsInWindow_Unchecked" />
+
+                                <CheckBox x:Name="CheckboxNoteDialog"
+                                          Content="Show note dialog after game"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxNoteDialog_Checked"
+                                          Unchecked="CheckboxNoteDialog_Unchecked" />
                             </StackPanel>
                         </GroupBox>
                     </Grid>
@@ -494,7 +500,7 @@
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
-                                      Width="235" Height="191" Margin="10,10,0,0">
+                                      Width="235" Height="215" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
@@ -516,6 +522,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
                                               Unchecked="CheckboxExportName_Unchecked" />
+                                    <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
+                                              Unchecked="CheckboxAutoClear_Unchecked" />
                                     <CheckBox x:Name="CheckboxExportPasteClipboard"
                                               Content="Paste names from clipboard"
                                               ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
@@ -537,6 +547,23 @@
                         </Grid>
                     </Grid>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Log">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name="BtnSaveLog" Content="Save to file" Click="BtnSaveLog_OnClick"/>
+                            <Button Name="BtnClear" Content="Clear" Click="BtnClear_OnClick" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox  Grid.Row="1">
+                        <TextBox Name="TextBoxLog" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                    </GroupBox>
+                </Grid>
             </TabItem>
         </TabControl>
 
