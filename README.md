@@ -45,10 +45,12 @@ Features:
 How to use: 
 ===========
 1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
-2) Extract file 
+2) Extract file  
 3) Run "Hearthstone Deck Tracker.exe"  
-4) Create your decks under "New Deck" (or import from any of the supported websites), click save.  
+4) Create your decks under "New" (or import from any of the supported websites), click save.  
 5) Play!
+
+[Video guide / feature overview by TheAdipose](https://www.youtube.com/watch?v=gNVlF83w-wY) (v0.5.6)
 
 
 How it works:
