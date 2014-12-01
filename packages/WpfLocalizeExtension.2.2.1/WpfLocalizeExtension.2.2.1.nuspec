@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>WpfLocalizeExtension</id>
+    <version>2.2.1</version>
+    <title>WPF Localization Extension</title>
+    <authors>Bernhard Millauer, Uwe Mayer</authors>
+    <owners>Bernhard Millauer, Uwe Mayer</owners>
+    <licenseUrl>http://wpflocalizeextension.codeplex.com/license</licenseUrl>
+    <projectUrl>https://github.com/SeriousM/WPFLocalizationExtension/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>LocalizationExtension is a really easy way to localize any type of DependencyProperties or native Properties on DependencyObjects</description>
+    <summary>LocalizationExtension is a really easy way to localize any type of DependencyProperties or native Properties on DependencyObjects</summary>
+    <releaseNotes>v2.2.1
+* Issue #9277
+* Issue #9292
+* Issue #9311
+* Issue #9312
+* Issue #9313
+* Issue #9314</releaseNotes>
+    <copyright>Bernhard Millauer, Uwe Mayer</copyright>
+    <language>en-US</language>
+    <tags>wpf silverlight phone localization extension globalization resx csv resource language</tags>
+    <dependencies>
+      <dependency id="XAMLMarkupExtensions" version="1.1.6.3" />
+    </dependencies>
+  </metadata>
+</package>

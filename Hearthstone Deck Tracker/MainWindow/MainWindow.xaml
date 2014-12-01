@@ -10,7 +10,16 @@
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
+                      
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="zh-CN"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker" >
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -93,7 +102,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="0" Grid.ColumnSpan="2">
-                <MenuItem Header="_DECKS">
+                <MenuItem Header="{lex:Loc Key=MainWindow_DECK}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -111,7 +120,7 @@
                     <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_NEW">
+                <MenuItem Header="{lex:Loc Key=MainWindow_New}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -165,7 +174,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_EDIT" Name="MenuItemEdit">
+                <MenuItem Header="{lex:Loc Key=MainWindow_EDIT}" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -185,7 +194,7 @@
                     <MenuItem Header="CLONE" Click="BtnCloneDeck_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_IMPORT">
+                <MenuItem Header="{lex:Loc Key=MainWindow_IMPORT}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -202,7 +211,7 @@
                     <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="E_XPORT" Name="MenuItemExport">
+                <MenuItem Header="{lex:Loc Key=MainWindow_EXPORT}" Name="MenuItemExport">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -216,7 +225,7 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
+                <MenuItem Header="{lex:Loc Key=MainWindow_STATS}" Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
