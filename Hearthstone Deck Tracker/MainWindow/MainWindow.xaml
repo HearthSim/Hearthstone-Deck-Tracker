@@ -102,7 +102,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="0" Grid.ColumnSpan="2">
-                <MenuItem Header="{lex:Loc Key=MainWindow_DECK}">
+                <MenuItem Header="{lex:Loc MainWindow_DECK}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -120,7 +120,7 @@
                     <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc Key=MainWindow_New}">
+                <MenuItem Header="{lex:Loc MainWindow_New}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
