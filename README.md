@@ -58,6 +58,10 @@ How it works:
 The automated tracking is done my reading out Hearthstone logfile.  
 More information on that here:  http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
 
+Is Blizzard okay with this?
+=============
+[Yes](https://twitter.com/bdbrode/status/511151446038179840)
+
 Requirements:
 =============
 - Windows Vista or higher
