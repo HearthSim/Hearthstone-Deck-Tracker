@@ -486,6 +486,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
 
+        [DefaultValue(false)]
+        public bool SaveScreenShot = false;
+
+        [DefaultValue("User")]
+        public string PlayerName = "Undef";
+
 		private string _currentLogFile;
 
 		#endregion

@@ -348,16 +348,16 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
+                            <GroupBox Header="Tracker" Grid.Row="0"
                                       VerticalAlignment="Top" Height="392" Width="235" Margin="5,0,0,0"
                                       Grid.RowSpan="2">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Theme:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
+                            				VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="120"
-                                                  SelectionChanged="ComboboxTheme_SelectionChanged">
+                            				VerticalAlignment="Top" Width="120"
+                            				SelectionChanged="ComboboxTheme_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}" />
@@ -368,10 +368,10 @@
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Accent:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
+                            				VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="120"
-                                                  SelectionChanged="ComboboxAccent_SelectionChanged">
+                            				VerticalAlignment="Top" Width="120"
+                            				SelectionChanged="ComboboxAccent_SelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Label Content="{Binding Name}" />
@@ -381,59 +381,69 @@
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Language:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="120"
-                                                  SelectionChanged="ComboboxLanguages_SelectionChanged" />
+                            				VerticalAlignment="Top" />
+                                        <ComboBox x:Name="ComboboxLanguages" HorizontalAlignment="Right"
+                            				VerticalAlignment="Top" Width="120"
+                            				SelectionChanged="ComboboxLanguages_SelectionChanged" />
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Key on game start:" HorizontalAlignment="Right"
-                                               VerticalAlignment="Top" />
+                            				VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="90"
-                                                  SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
+                            				VerticalAlignment="Top" Width="90"
+                            				SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Key on game end:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
+                            				VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="90"
-                                                  SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
+                            				VerticalAlignment="Top" Width="90"
+                            				SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
                                     </DockPanel>
                                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
-                                              Content="Show Manacurve" HorizontalAlignment="Left"
-                                              Margin="10,5,0,0" VerticalAlignment="Top"
-                                              Checked="CheckboxManaCurveMyDecks_Checked"
-                                              Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
+                            			Content="Show Manacurve" HorizontalAlignment="Left"
+                            			Margin="10,5,0,0" VerticalAlignment="Top"
+                            			Checked="CheckboxManaCurveMyDecks_Checked"
+                            			Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
                                     <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
-                                              Unchecked="CheckboxConfigSaveAppData_Unchecked" />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
+                            			Unchecked="CheckboxConfigSaveAppData_Unchecked" />
                                     <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
-                                              Unchecked="CheckboxDataSaveAppData_Unchecked" />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
+                            			Unchecked="CheckboxDataSaveAppData_Unchecked" />
                                     <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
-                                              Unchecked="CheckboxMinimizeTray_Unchecked" />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
+                            			Unchecked="CheckboxMinimizeTray_Unchecked" />
                                     <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
-                                              Unchecked="CheckboxStartMinimized_Unchecked" />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
+                            			Unchecked="CheckboxStartMinimized_Unchecked" />
                                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
-                                              Content="Close with Hearthstone" HorizontalAlignment="Left"
-                                              Margin="10,5,0,0" VerticalAlignment="Top"
-                                              Checked="CheckboxCloseWithHearthstone_Checked"
-                                              Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
+                            			Content="Close with Hearthstone" HorizontalAlignment="Left"
+                            			Margin="10,5,0,0" VerticalAlignment="Top"
+                            			Checked="CheckboxCloseWithHearthstone_Checked"
+                            			Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
                                     <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
-                                              Unchecked="CheckboxCheckForUpdates_Unchecked" />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
+                            			Unchecked="CheckboxCheckForUpdates_Unchecked" />
                                     <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
-                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
-                                    	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
-                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
+                            			Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Importing from Websites" Grid.Row="1" VerticalAlignment="Top"
+                        		Width="235" Height="73" Margin="12,416,2,0">
+                                <StackPanel>
+                                    <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
+                        				HorizontalAlignment="Left" Margin="10,5,0,0"
+                        				VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
+                        				Unchecked="CheckboxTagOnImport_Unchecked" />
+
                                 </StackPanel>
                             </GroupBox>
                         </Grid>
@@ -443,12 +453,58 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
+                            <GroupBox Header="Record Games" Width="235" VerticalAlignment="Top"
+                                      Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
+                                <StackPanel>
+                                    <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
+                            			Unchecked="CheckboxRecordRanked_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
+                            			Unchecked="CheckboxRecordArena_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
+                            			Unchecked="CheckboxRecordCasual_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
+                            			Unchecked="CheckboxRecordFriendly_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
+                            			Unchecked="CheckboxRecordPractice_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
+                            			Unchecked="CheckboxRecordOther_Unchecked" />
+                                    <CheckBox x:Name="CheckboxDiscardGame"
+                            			Content="Discard game if incorrect deck"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
+                            			Unchecked="CheckboxDiscardGame_Unchecked" />
+                                    <CheckBox x:Name="CheckboxSaveScreenShot"
+                            			Content="Save Result Screenshot"
+                            			HorizontalAlignment="Left" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" Checked="CheckboxSaveScreenShot_Checked"
+                            			Unchecked="CheckboxSaveScreenShot_Unchecked" />
+                                    <DockPanel Margin="10,5,10,0">
+                                        <Label Content="Player Name:" HorizontalAlignment="Left"
+                            				VerticalAlignment="Top" />
+                                        <TextBox  x:Name="TextBoxPlayerName" Margin="10,5,0,0"
+                            			VerticalAlignment="Top" TextChanged="TextBoxPlayerName_TextChanged" />
+                                    </DockPanel>
+
+                                </StackPanel>
+                            </GroupBox>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
                                       Width="235" Height="215" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
-                                        <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1"
+                                        <ComboBox x:Name="ComboboxExportSpeed" SelectedIndex="1"
                                                   HorizontalAlignment="Right" Width="120"
                                                   SelectionChanged="ComboboxExportSpeed_SelectionChanged">
                                             <system:String>Very Fast (20ms)</system:String>
@@ -485,50 +541,6 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxGoldenStalagg_Checked"
                                               Unchecked="CheckboxGoldenStalagg_Unchecked" />
-
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top"
-                                      Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
-                                <StackPanel>
-                                    <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
-                                              Unchecked="CheckboxRecordRanked_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
-                                              Unchecked="CheckboxRecordArena_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
-                                              Unchecked="CheckboxRecordCasual_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
-                                              Unchecked="CheckboxRecordFriendly_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
-                                              Unchecked="CheckboxRecordPractice_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
-                                              Unchecked="CheckboxRecordOther_Unchecked" />
-                                    <CheckBox x:Name="CheckboxDiscardGame"
-                                              Content="Discard game if incorrect deck"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
-                                              Unchecked="CheckboxDiscardGame_Unchecked" />
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
-                                      Width="235" Height="73" Margin="11,10,1,0">
-                                <StackPanel>
-                                    <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
-                                              Unchecked="CheckboxTagOnImport_Unchecked" />
 
                                 </StackPanel>
                             </GroupBox>
