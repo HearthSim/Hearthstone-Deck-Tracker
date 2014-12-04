@@ -4,6 +4,8 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      xmlns:my="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"            
+                      xmlns:chartingprimitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"                      
                       Title="Hearthstone Deck Tracker" Height="620" Width="550"
                       MinHeight="525" MinWidth="515"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -91,8 +93,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu Grid.Row="0" Grid.ColumnSpan="4">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -226,8 +229,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
-            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
-            <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
+            <Separator Grid.Row="0" Grid.ColumnSpan="1" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
+            <Grid Grid.Column="2" Grid.Row="1" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -279,6 +282,92 @@
                     </local:DeckListView.Resources>
                 </local:DeckListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <my:Chart  Name="AttackChart" Title="Attack" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+                    <my:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0"/>
+                            <Setter Property="Height" Value="0"/>
+                        </Style>
+                    </my:Chart.LegendStyle>
+
+                    <my:Chart.Axes>
+                        <my:LinearAxis Orientation="Y" Interval="2" />
+                    </my:Chart.Axes>
+                    <my:ColumnSeries DependentValuePath="Value"
+          IndependentValuePath="Key" ItemsSource="{Binding}"
+            IsSelectionEnabled="False" Title="Mytitle" />
+                </my:Chart>
+                <my:Chart  Name="HealthChart" Title="Health" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2">
+                    <my:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0"/>
+                            <Setter Property="Height" Value="0"/>
+                        </Style>
+                    </my:Chart.LegendStyle>
+                    <my:Chart.Axes>
+                        <my:LinearAxis Orientation="Y" Interval="2" />
+                    </my:Chart.Axes>
+                    <my:ColumnSeries DependentValuePath="Value"
+          IndependentValuePath="Key" ItemsSource="{Binding}"
+            IsSelectionEnabled="False" Title="Mytitle"  />
+
+                </my:Chart>
+                <!-- 
+                <my:Chart  Name="pieChart" Margin="5,5,0,0" BorderBrush="#00000000" DataContext="{Binding}" IsHitTestVisible="False" IsTabStop="True" ForceCursor="True" Grid.Row="3">
+
+                    <my:PieSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding}" IsSelectionEnabled="True" >
+                    </my:PieSeries>
+                    <my:Chart.TitleStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0"/>
+                            <Setter Property="Height" Value="0"/>
+                        </Style>
+                    </my:Chart.TitleStyle>
+                    <my:Chart.PlotAreaStyle>
+                        <Style TargetType="Grid">
+                            <Setter Property="Background" Value="White" />
+                        </Style>
+                    </my:Chart.PlotAreaStyle>
+                </my:Chart>
+                -->
+                <my:Chart  Title="Card Abilities" Margin="5"  Width="300" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="cardabilitieschart"
+
+           
+
+           Background="White" Grid.Row="3">
+
+                    <my:Chart.Series>
+
+                        <my:BarSeries 
+
+            IndependentValueBinding="{Binding Path=Key}"
+
+            DependentValueBinding="{Binding Path=Value}">
+
+                        </my:BarSeries>
+
+                    </my:Chart.Series>
+                    <my:Chart.LegendStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Width" Value="0"/>
+                            <Setter Property="Height" Value="0"/>
+                        </Style>
+                    </my:Chart.LegendStyle>
+                    <my:Chart.Axes>
+                        <my:LinearAxis Orientation="X" Interval="1" Minimum="0"/>
+                    </my:Chart.Axes>
+
+
+                </my:Chart>
             </Grid>
 
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
@@ -343,7 +432,7 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
+            <Grid Grid.Column="3" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -374,7 +463,7 @@
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                                     HorizontalAlignment="Left"
                                     Width="240" KeyDown="ListViewDB_KeyDown"
-                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
+                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1" >
                     <ListView.Resources>
                         <Style TargetType="{x:Type GridViewColumnHeader}">
                             <Setter Property="Visibility" Value="Collapsed" />
