@@ -357,6 +357,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void OpponentDraw(int turn)
 		{
 			OpponentHandCount++;
+			if(turn == 0 && OpponentHandCount == 5)
+				//coin draw
+				return;
 			OpponentDeckCount--;
 
 			if(!ValidateOpponentHandCount())

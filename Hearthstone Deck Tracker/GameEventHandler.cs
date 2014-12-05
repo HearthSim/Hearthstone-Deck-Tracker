@@ -476,7 +476,7 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentHandDiscard(cardId, @from, turn);
         }
 
-        void IGameHandler.HandlOpponentDraw(int turn)
+        void IGameHandler.HandleOpponentDraw(int turn)
         {
             HandlOpponentDraw(turn);
         }

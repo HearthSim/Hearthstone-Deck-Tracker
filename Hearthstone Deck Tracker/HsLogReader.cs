@@ -460,7 +460,7 @@ namespace Hearthstone_Deck_Tracker
 										_lastOpponentDrawIncrementedTurn = false;
 
 									//opponent draw
-									_gameHandler.HandlOpponentDraw(GetTurnNumber());
+									_gameHandler.HandleOpponentDraw(GetTurnNumber());
 								}
 								else if(to == "OPPOSING SECRET")
 									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
@@ -480,11 +480,23 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							default:
 								if(to == "OPPOSING HAND")
-									//coin, thoughtsteal etc
-									_gameHandler.HandleOpponentGet(GetTurnNumber());
+								{
+
+									if(GetTurnNumber() == 0) //coin is handled in Game.OpponentDraw()
+										_gameHandler.HandleOpponentDraw(GetTurnNumber());
+									else
+										//coin, thoughtsteal etc
+										_gameHandler.HandleOpponentGet(GetTurnNumber());
+								}
 								else if(to == "FRIENDLY HAND")
-									//coin, thoughtsteal etc
-									_gameHandler.HandlePlayerGet(id, GetTurnNumber());
+								{
+									
+									if(GetTurnNumber() == 0 && id != "GAME_005")
+										_gameHandler.HandlePlayerDraw(id, GetTurnNumber());
+									else
+										//coin, thoughtsteal etc
+										_gameHandler.HandlePlayerGet(id, GetTurnNumber());
+								}	
 								else if(to == "OPPOSING GRAVEYARD" && from == "" && id != "")
 								{
 									//todo: not sure why those two are here
