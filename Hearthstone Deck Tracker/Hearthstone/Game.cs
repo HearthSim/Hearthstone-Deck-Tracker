@@ -69,7 +69,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"Reward",
 				"Expert",
 				"Promotion",
-				"Curse of Naxxramas"
+				"Curse of Naxxramas",
+				"Goblins vs Gnomes"
 			};
 
 		public static List<Card> DrawnLastGame;
@@ -536,7 +537,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var obj = JObject.Parse(File.ReadAllText(fileEng));
 					foreach(var cardType in obj)
 					{
-						if(!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
+						var set = ValidCardSets.FirstOrDefault(cs => cs.Equals(cardType.Key));
+						if(set == null)
+							continue;
 
 						foreach(var card in cardType.Value)
 						{
@@ -547,6 +550,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								tmp.LocalizedName = localizedCard.Name;
 								tmp.Text = localizedCard.Text;
 							}
+							tmp.Set = set;
 							tempDb.Add(tmp.Id, tmp);
 						}
 					}

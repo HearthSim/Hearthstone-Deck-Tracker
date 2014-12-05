@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker
 			if(_newDeck == null) return;
 			var selectedClass = _newDeck.Class;
 			string selectedNeutral;
+			string selectedManaCost;
+			string selectedSet;
 			try
 			{
 				selectedNeutral = MenuFilterType.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
@@ -28,14 +30,21 @@ namespace Hearthstone_Deck_Tracker
 			{
 				selectedNeutral = "ALL";
 			}
-			string selectedManaCost;
 			try
 			{
 				selectedManaCost = MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				selectedManaCost = "ALL";
+			}
+			try
+			{
+				selectedSet = MenuFilterSet.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+			}
+			catch (Exception)
+			{
+				selectedSet = "ALL";
 			}
 			if(selectedClass == "Select a Class")
 				ListViewDB.Items.Clear();
@@ -58,25 +67,25 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 
 					// mana filter
-					if(selectedManaCost == "ALL"
-					   || ((selectedManaCost == "9+" && card.Cost >= 9)
-					       || (selectedManaCost == card.Cost.ToString())))
+					if(selectedManaCost != "ALL" &&
+					   ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+						continue;
+					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
+						continue;
+					switch(selectedNeutral)
 					{
-						switch(selectedNeutral)
-						{
-							case "ALL":
-								if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
-									ListViewDB.Items.Add(card);
-								break;
-							case "CLASS ONLY":
-								if(card.GetPlayerClass == selectedClass)
-									ListViewDB.Items.Add(card);
-								break;
-							case "NEUTRAL ONLY":
-								if(card.GetPlayerClass == "Neutral")
-									ListViewDB.Items.Add(card);
-								break;
-						}
+						case "ALL":
+							if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
+								ListViewDB.Items.Add(card);
+							break;
+						case "CLASS ONLY":
+							if(card.GetPlayerClass == selectedClass)
+								ListViewDB.Items.Add(card);
+							break;
+						case "NEUTRAL ONLY":
+							if(card.GetPlayerClass == "Neutral")
+								ListViewDB.Items.Add(card);
+							break;
 					}
 				}
 
