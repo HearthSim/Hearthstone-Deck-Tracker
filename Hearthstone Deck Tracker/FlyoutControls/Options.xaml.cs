@@ -1242,5 +1242,21 @@ namespace Hearthstone_Deck_Tracker
 		{
 			TextBoxLog.Text = "";
 		}
+
+		private void CheckboxLogTab_Checked(object sender, RoutedEventArgs e)
+		{
+			TabItemLog.Visibility = Visibility.Visible;
+			if(!_initialized) return;
+			Config.Instance.ShowLogTab = true;
+			Config.Save();
+		}
+
+		private void CheckboxLogTab_Unchecked(object sender, RoutedEventArgs e)
+		{
+			TabItemLog.Visibility = Visibility.Hidden;
+			if(!_initialized) return;
+			Config.Instance.ShowLogTab = false;
+			Config.Save();
+		}
 	}
 }

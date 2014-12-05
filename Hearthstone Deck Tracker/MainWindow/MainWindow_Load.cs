@@ -445,6 +445,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
 			Options.CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
 			Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
+			Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
