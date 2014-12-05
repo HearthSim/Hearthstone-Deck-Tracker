@@ -281,7 +281,7 @@ namespace Hearthstone_Deck_Tracker
 		private static bool CheckForCardsInDeck(IntPtr wndHandle, int width, int height, double ratio)
 		{
 
-			var capture = Helper.CaptureHearthstone(new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearCheckY*height)), 1,
+			var capture = Helper.CaptureHearthstone(new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearCheckYFixed*height)), 1,
 			                                        1, wndHandle);
 			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255,56,45,69), 5);
 		}
