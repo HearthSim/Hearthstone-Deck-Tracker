@@ -265,12 +265,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task ClearDeck(int width, int height, IntPtr handle, double ratio)
 		{
+			var count = 0;
 			Logger.WriteLine("Clearing deck...", "DeckExporter");
 			while(!CheckForCardsInDeck(handle, width, height, ratio))
+			{
 				await
 					ClickOnPoint(handle,
 					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
 					                       (int)(Config.Instance.ExportClearY * height)));
+				if(count++ > 35)
+					break;
+			}
 		}
 
 		private static bool CheckForCardsInDeck(IntPtr wndHandle, int width, int height, double ratio)
