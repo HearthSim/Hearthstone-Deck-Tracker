@@ -16,7 +16,7 @@
     xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
     xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
        
-    Engine:LocalizeDictionary.DesignCulture="zh-CN"	
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
     providers:ResxLocalizationProvider.DefaultDictionary="Strings"
     providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker" >
 
