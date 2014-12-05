@@ -117,28 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MainWindow_AUTODECKSELECTION" xml:space="preserve">
+    <value>AUTO DECK SELECTION</value>
+    <comment>Auto Deck Selection</comment>
+  </data>
   <data name="MainWindow_DECK" xml:space="preserve">
     <value>_DECK</value>
-    <comment>MenuItem DECK of MainWindow</comment>
+    <comment>MenuItem DECK Of MainWindow</comment>
+  </data>
+  <data name="MainWindow_DRUID" xml:space="preserve">
+    <value>_DRUID</value>
+    <comment>DRUID</comment>
   </data>
   <data name="MainWindow_EDIT" xml:space="preserve">
     <value>_EDIT</value>
-    <comment>MenuItem EDIT of MainWindow</comment>
+    <comment>MenuItem EDIT Of MainWindow</comment>
+  </data>
+  <data name="MainWindow_EDITCLONE" xml:space="preserve">
+    <value>CLONE</value>
+    <comment>Edit Clone</comment>
+  </data>
+  <data name="MainWindow_EDITDECK" xml:space="preserve">
+    <value>_DECK</value>
+    <comment>Edit Deck</comment>
+  </data>
+  <data name="MainWindow_EDITDELETE" xml:space="preserve">
+    <value>DELETE</value>
+    <comment>Edit Delete</comment>
+  </data>
+  <data name="MainWindow_EDITNOTES" xml:space="preserve">
+    <value>_NOTES</value>
+    <comment>Edit Notes</comment>
+  </data>
+  <data name="MainWindow_EDITTAGS" xml:space="preserve">
+    <value>_TAGS</value>
+    <comment>Edit Tags</comment>
   </data>
   <data name="MainWindow_EXPORT" xml:space="preserve">
     <value>_EXPORT</value>
-    <comment>MenuItem EXPORT of MainWindow</comment>
+    <comment>MenuItem EXPORT Of MainWindow</comment>
+  </data>
+  <data name="MainWindow_HUNTER" xml:space="preserve">
+    <value>_HUNTER</value>
+    <comment>HUNTER</comment>
   </data>
   <data name="MainWindow_IMPORT" xml:space="preserve">
     <value>_IMPORT</value>
-    <comment>MenuItem IMPORT of MainWindow</comment>
+    <comment>MenuItem IMPORT Of MainWindow</comment>
   </data>
-  <data name="MainWindow_New" xml:space="preserve">
+  <data name="MainWindow_MAGE" xml:space="preserve">
+    <value>_MAGE</value>
+    <comment>MAGE</comment>
+  </data>
+  <data name="MainWindow_NEW" xml:space="preserve">
     <value>_NEW</value>
-    <comment>MenuItem NEW of MainWindow</comment>
+    <comment>MenuItem NEW Of MainWindow</comment>
+  </data>
+  <data name="MainWindow_PALADIN" xml:space="preserve">
+    <value>_PALADIN</value>
+    <comment>PALADIN</comment>
+  </data>
+  <data name="MainWindow_PRIEST" xml:space="preserve">
+    <value>_PRIEST</value>
+    <comment>PRIEST</comment>
+  </data>
+  <data name="MainWindow_ROGUE" xml:space="preserve">
+    <value>_ROGUE</value>
+    <comment>ROGUE</comment>
+  </data>
+  <data name="MainWindow_SHAMAN" xml:space="preserve">
+    <value>_SHAMAN</value>
+    <comment>SHAMAN</comment>
+  </data>
+  <data name="MainWindow_SORTFILTER" xml:space="preserve">
+    <value>_SORT / FILTER</value>
+    <comment>Sort Or Filter</comment>
   </data>
   <data name="MainWindow_STATS" xml:space="preserve">
     <value>_STATS</value>
-    <comment>MenuItem STATS of MainWindow</comment>
+    <comment>MenuItem STATS Of MainWindow</comment>
+  </data>
+  <data name="MainWindow_TITLE" xml:space="preserve">
+    <value>Hearthstone Deck Tracker</value>
+    <comment>Form Title</comment>
+  </data>
+  <data name="MainWindow_USENODECK" xml:space="preserve">
+    <value>USE _NO DECK</value>
+    <comment>Use No Deck</comment>
+  </data>
+  <data name="MainWindow_WARLOCK" xml:space="preserve">
+    <value>_WARLOCK</value>
+    <comment>WARLOCK</comment>
+  </data>
+  <data name="MainWindow_WARRIOR" xml:space="preserve">
+    <value>_WARRIOR</value>
+    <comment>WARRIOR</comment>
   </data>
 </root>

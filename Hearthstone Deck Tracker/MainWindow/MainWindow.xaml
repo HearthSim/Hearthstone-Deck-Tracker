@@ -4,7 +4,7 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
+                      Title="{lex:Loc MainWindow_TITLE}" Height="620" Width="550"
                       MinHeight="525" MinWidth="515"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
@@ -110,17 +110,17 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_USENODECK}" Click="ButtonNoDeck_Click">
                     </MenuItem>
-                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="AUTO DECK SELECTION"
+                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="{lex:Loc MainWindow_AUTODECKSELECTION}"
                               FontSize="14"
                               Checked="CheckboxDeckDetection_Checked"
                               Unchecked="CheckboxDeckDetection_Unchecked" />
                     <Separator />
-                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_SORTFILTER}" Click="BtnSortFilter_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc MainWindow_New}">
+                <MenuItem Header="{lex:Loc MainWindow_NEW}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -128,53 +128,53 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_DRUID}" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_HUNTER}" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_MAGE}" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_PRIEST}" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_PALADIN}" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_ROGUE}" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_SHAMAN}" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_WARLOCK}" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_WARRIOR}" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc Key=MainWindow_EDIT}" Name="MenuItemEdit">
+                <MenuItem Header="{lex:Loc MainWindow_EDIT}" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -182,19 +182,19 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DECK" Click="BtnEditDeck_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_EDITDECK}" Click="BtnEditDeck_Click">
                     </MenuItem>
-                    <MenuItem Header="_TAGS" Click="BtnTags_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_EDITTAGS}" Click="BtnTags_Click">
                     </MenuItem>
-                    <MenuItem Header="_NOTES" Click="BtnNotes_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_EDITNOTES}" Click="BtnNotes_Click">
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_EDITDELETE}" Click="BtnDeleteDeck_Click">
                     </MenuItem>
-                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_EDITCLONE}" Click="BtnCloneDeck_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc Key=MainWindow_IMPORT}">
+                <MenuItem Header="{lex:Loc MainWindow_IMPORT}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -211,7 +211,7 @@
                     <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc Key=MainWindow_EXPORT}" Name="MenuItemExport">
+                <MenuItem Header="{lex:Loc MainWindow_EXPORT}" Name="MenuItemExport">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -225,7 +225,7 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="{lex:Loc Key=MainWindow_STATS}" Click="BtnDeckStats_Click">
+                <MenuItem Header="{lex:Loc MainWindow_STATS}" Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
