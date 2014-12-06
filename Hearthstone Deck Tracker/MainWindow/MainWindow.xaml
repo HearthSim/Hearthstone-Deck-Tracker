@@ -202,13 +202,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="FROM _WEB" Click="BtnWeb_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_FROMWEB}" Click="BtnWeb_Click">
                     </MenuItem>
-                    <MenuItem Header="FROM _FILE" Click="BtnFile_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_FROMFILE}" Click="BtnFile_Click">
                     </MenuItem>
-                    <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_FROMIDSTRING}" Click="BtnIdString_Click">
                     </MenuItem>
-                    <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_FROMLASTGAME}" Click="BtnLastGame_Click">
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="{lex:Loc MainWindow_EXPORT}" Name="MenuItemExport">
@@ -219,11 +219,11 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
-                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
-                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
+                    <MenuItem Name="MenuItemExportToHs" Header="{lex:Loc MainWindow_TOHEARTHSTONE}" Click="BtnExport_Click"></MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_TOHEARTHSTONEFROMWEB}" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
+                    <MenuItem Name="MenuItemExportXml" Header="{lex:Loc MainWindow_SAVEASXML}" Click="BtnSaveToFile_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportIds" Header="{lex:Loc MainWindow_COPYIDSTOCLIPBOARD}" Click="BtnClipboard_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportScreenshot" Header="{lex:Loc MainWindow_SCREENSHOT}" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="{lex:Loc MainWindow_STATS}" Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
@@ -301,7 +301,7 @@
 
 
             <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
-                <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
+                <MenuItem Header="{lex:Loc SAVE}" Click="BtnSaveDeck_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -310,7 +310,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
+                <MenuItem Header="{lex:Loc CANCEL}" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -321,7 +321,7 @@
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="FILTER"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="{lex:Loc FILTER}"></TextBlock>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -330,7 +330,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuFilterMana" Header="MANA">
+                    <MenuItem Name="MenuFilterMana" Header="{lex:Loc MANA}">
                         <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
                                      FontSize="14" />
                         <RadioButton Content="0" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
@@ -344,11 +344,11 @@
                         <RadioButton Content="8" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="9+" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
-                    <MenuItem Name="MenuFilterType" Header="TYPE">
-                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
+                    <MenuItem Name="MenuFilterType" Header="{lex:Loc TYPE}">
+                        <RadioButton Content="{lex:Loc ALL}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
                                      FontSize="14" />
-                        <RadioButton Content="CLASS ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="NEUTRAL ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc CLASSONLY}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc NEUTRALONLY}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>
@@ -364,7 +364,7 @@
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
 
-                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="Name already exists" Visibility="Collapsed" Margin="3,0,0,0">
+                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="{lex:Loc NAMEALREADYEXISTS}" Visibility="Collapsed" Margin="3,0,0,0">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>

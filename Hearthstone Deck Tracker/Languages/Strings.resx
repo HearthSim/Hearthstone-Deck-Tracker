@@ -117,9 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ALL" xml:space="preserve">
+    <value>ALL</value>
+    <comment>All</comment>
+  </data>
+  <data name="CANCEL" xml:space="preserve">
+    <value>CANCEL</value>
+    <comment>Cancel</comment>
+  </data>
+  <data name="CLASSONLY" xml:space="preserve">
+    <value>CLASS ONLY</value>
+    <comment>Class Only</comment>
+  </data>
+  <data name="COST" xml:space="preserve">
+    <value>cost</value>
+    <comment>Cost</comment>
+  </data>
+  <data name="FILTER" xml:space="preserve">
+    <value>FILTER</value>
+    <comment>Filter</comment>
+  </data>
   <data name="MainWindow_AUTODECKSELECTION" xml:space="preserve">
     <value>AUTO DECK SELECTION</value>
     <comment>Auto Deck Selection</comment>
+  </data>
+  <data name="MainWindow_COPYIDSTOCLIPBOARD" xml:space="preserve">
+    <value>COPY IDS TO _CLIPBOARD</value>
+    <comment>Copy IDs To Clip Board</comment>
   </data>
   <data name="MainWindow_DECK" xml:space="preserve">
     <value>_DECK</value>
@@ -157,6 +181,22 @@
     <value>_EXPORT</value>
     <comment>MenuItem EXPORT Of MainWindow</comment>
   </data>
+  <data name="MainWindow_FROMFILE" xml:space="preserve">
+    <value>FROM _FILE</value>
+    <comment>From File</comment>
+  </data>
+  <data name="MainWindow_FROMIDSTRING" xml:space="preserve">
+    <value>FROM _ID STRING</value>
+    <comment>From ID String</comment>
+  </data>
+  <data name="MainWindow_FROMLASTGAME" xml:space="preserve">
+    <value>FROM LAST _GAME</value>
+    <comment>From Last Game</comment>
+  </data>
+  <data name="MainWindow_FROMWEB" xml:space="preserve">
+    <value>FROM _WEB</value>
+    <comment>From Web</comment>
+  </data>
   <data name="MainWindow_HUNTER" xml:space="preserve">
     <value>_HUNTER</value>
     <comment>HUNTER</comment>
@@ -185,6 +225,14 @@
     <value>_ROGUE</value>
     <comment>ROGUE</comment>
   </data>
+  <data name="MainWindow_SAVEASXML" xml:space="preserve">
+    <value>SAVE AS _XML</value>
+    <comment>Save As Xml</comment>
+  </data>
+  <data name="MainWindow_SCREENSHOT" xml:space="preserve">
+    <value>_SCREENSHOT</value>
+    <comment>Screen Shot</comment>
+  </data>
   <data name="MainWindow_SHAMAN" xml:space="preserve">
     <value>_SHAMAN</value>
     <comment>SHAMAN</comment>
@@ -201,6 +249,14 @@
     <value>Hearthstone Deck Tracker</value>
     <comment>Form Title</comment>
   </data>
+  <data name="MainWindow_TOHEARTHSTONE" xml:space="preserve">
+    <value>TO _HEARTHSTON</value>
+    <comment>To Hearth Stone</comment>
+  </data>
+  <data name="MainWindow_TOHEARTHSTONEFROMWEB" xml:space="preserve">
+    <value>TO HEARTHSTONE FROM _WEB</value>
+    <comment>To Hearth Stone From Web</comment>
+  </data>
   <data name="MainWindow_USENODECK" xml:space="preserve">
     <value>USE _NO DECK</value>
     <comment>Use No Deck</comment>
@@ -212,5 +268,29 @@
   <data name="MainWindow_WARRIOR" xml:space="preserve">
     <value>_WARRIOR</value>
     <comment>WARRIOR</comment>
+  </data>
+  <data name="MANA" xml:space="preserve">
+    <value>MANA</value>
+    <comment>Mana</comment>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>name</value>
+    <comment>Name</comment>
+  </data>
+  <data name="NAMEALREADYEXISTS" xml:space="preserve">
+    <value>Name already exists</value>
+    <comment>Name Already Exists</comment>
+  </data>
+  <data name="NEUTRALONLY" xml:space="preserve">
+    <value>NEUTRAL ONLY</value>
+    <comment>Neutral Only</comment>
+  </data>
+  <data name="SAVE" xml:space="preserve">
+    <value>SAVE</value>
+    <comment>Save</comment>
+  </data>
+  <data name="TYPE" xml:space="preserve">
+    <value>TYPE</value>
+    <comment>Type</comment>
   </data>
 </root>
