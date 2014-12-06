@@ -88,10 +88,11 @@ namespace Hearthstone_Deck_Tracker
 		private int _powerCount;
 		private long _previousSize;
 		private int _turnCount;
+		private int _playerCount;
 
 		#endregion
 
-		private readonly Regex _heroPowerRegex = new Regex(@".*(cardId=(?<Id>(\w*))).*");
+		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
 		private Turn _currentPlayer;
 		private bool _opponentUsedHeroPower;
 		private bool _playerUsedHeroPower;
@@ -337,6 +338,7 @@ namespace Hearthstone_Deck_Tracker
 					_gameHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
+					_playerCount = 0;
 					_lastOpponentDrawIncrementedTurn = false;
 					_lastPlayerDrawIncrementedTurn = false;
 					ClearLog();
@@ -373,9 +375,15 @@ namespace Hearthstone_Deck_Tracker
 							if(!from.Contains("PLAY"))
 							{
 								if(to.Contains("FRIENDLY"))
-									_gameHandler.HandleGameStart(_heroIdDict[id]);
+								{
+									if(_playerCount++ == 0)
+										_gameHandler.HandleGameStart();
+									_gameHandler.SetPlayerHero(_heroIdDict[id]);
+								}
 								else if(to.Contains("OPPOSING"))
 								{
+									if(_playerCount++ == 0)
+										_gameHandler.HandleGameStart();
 									string heroName;
 									if(_heroIdDict.TryGetValue(id, out heroName))
 										_gameHandler.SetOpponentHero(heroName);
