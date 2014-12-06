@@ -167,7 +167,8 @@ namespace Hearthstone_Deck_Tracker
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
-
+				if(Helper.MainWindow.DeckList.AllTags.Contains("Arena"))
+					deck.Tags.Add("Arena");
 				return deck;
 			}
 			catch(Exception e)
