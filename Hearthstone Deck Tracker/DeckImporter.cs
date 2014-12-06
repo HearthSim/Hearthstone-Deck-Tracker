@@ -50,9 +50,8 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 
 				var deck = new Deck();
-
-				var deckName =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+                var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='center']/div[1]/div[1]").InnerText).Split('-')[1].Trim();
 
 				deck.Name = deckName;
 
@@ -63,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
 					var count = int.Parse(text[0].Trim());
-					var name = string.Join(" ", text.Skip(1));
+					var name = string.Join(" ", text.Skip(1)).Trim();
 
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
