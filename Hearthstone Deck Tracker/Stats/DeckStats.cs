@@ -27,9 +27,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Games = new List<GameStats>();
 		}
 
-		public void AddGameResult(GameResult result, string opponentHero)
+		public void AddGameResult(GameResult result, string opponentHero, string playerHero)
 		{
-			Games.Add(new GameStats(result, opponentHero));
+			Games.Add(new GameStats(result, opponentHero, playerHero));
 		}
 
 		public void AddGameResult(GameStats gameStats)

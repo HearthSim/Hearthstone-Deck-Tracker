@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandAge[DefaultCoinPosition] = 0;
 			OpponentHasCoin = true;
 			if(!IsInMenu && resetStats)
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst);
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs);
 		}
 
 		public static void SetPremadeDeck(Deck deck)

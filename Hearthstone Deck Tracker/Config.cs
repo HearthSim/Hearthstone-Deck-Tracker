@@ -387,14 +387,17 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool StatsDeckOverviewIsExpanded = true;
 
-		[DefaultValue(true)]
-		public bool StatsOverallDetailIsExpanded = true;
+		[DefaultValue(false)]
+		public bool StatsOverallDetailIsExpanded = false;
 
 		[DefaultValue(true)]
 		public bool StatsOverallTotalIsExpanded = true;
 
 		[DefaultValue(false)]
 		public bool StatsInWindow = false;
+
+		[DefaultValue("With deck")]
+		public string StatsOverallAssignedOnly = "With deck";
 
 		[DefaultValue(672)]
 		public int StatsWindowHeight = 672;
