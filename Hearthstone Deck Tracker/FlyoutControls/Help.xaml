@@ -4,11 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Grid>
         <ScrollViewer Margin="0,0,0,33">
             <StackPanel>
-                <GroupBox Header="What are all these percentages?">
+                <GroupBox Header="{lex:Loc Help_WHATAREALLTHESEPERCENTAGES}">
                     <StackPanel Margin="10,0,10,0">
                         <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                         <Bold>
@@ -16,70 +25,70 @@
                                         </Bold>
                                         <LineBreak />
                                         <Run
-                                            Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
+                                            Text="{lex:Loc Help_DRAWCARD}" />
                         </TextBlock>
                         <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                         <Bold>
-                                            <Run Text="Opponent: " />
+                                            <Run Text="{lex:Loc Help_OPPONENT}" />
                                         </Bold>
                                         <LineBreak />
                                         <Run
-                                            Text="[2] and [1] stands for the number of copies left in deck+hand / deck." />
+                                            Text="{lex:Loc Help_STANDFORNUMBER}" />
                                         <LineBreak />
                                         <Bold>
-                                            <Run Text="First number:" />
+                                            <Run Text="{lex:Loc Help_FIRSTNUMBER}" />
                                         </Bold>
-                                        <Run Text="The chance of your opponent"></Run>
+                                        <Run Text="{lex:Loc Help_CHANCEOFYOUROPPONENT}"></Run>
                                         <Italic>
-                                            <Run Text="having" />
+                                            <Run Text="{lex:Loc HAVING}" />
                                         </Italic>
-                                        <Run Text="a card next turn. "></Run>
+                                        <Run Text="{lex:Loc Help_CARDNEXTTURN}"></Run>
                                         <LineBreak />
                                         <Run
-                                            Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)">
+                                            Text="{lex:Loc Help_NUMBERISINTERESTING}">
                                         </Run>
                                         <LineBreak />
                                         <Bold>
-                                            <Run Text="Second number:" />
+                                            <Run Text="{lex:Loc Help_SECONDNUMBER}" />
                                         </Bold>
-                                        <Run Text="The chance of your opponent"></Run>
+                                        <Run Text="{lex:Loc Help_CHANCEOFYOUROPPONENT}"></Run>
                                         <Italic>
-                                            <Run Text="drawing" />
+                                            <Run Text="{lex:Loc DRAWING}" />
                                         </Italic>
-                                        <Run Text="a card next turn."></Run>
+                                        <Run Text="{lex:Loc Help_CARDNEXTTURN}"></Run>
                                         <LineBreak />
                                         <Run
-                                            Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)">
+                                            Text="{lex:Loc Help_NUMBERGETSINTERESTING}">
                                         </Run>
                         </TextBlock>
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Card Marks">
+                <GroupBox Header="{lex:Loc Help_CARDMARKS}">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen" />
+                                    <Run Text="{lex:Loc Help_CRMS}" />
                     </TextBlock>
                 </GroupBox>
-                <GroupBox Header="I found a bug, what do I do?">
+                <GroupBox Header="{lex:Loc Help_FOUNDABUG}">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="Two options here:" />
+                                    <Run Text="{lex:Loc Help_TWOOPTIONSHERE}" />
                                     <LineBreak />
-                                    <Run Text="1) Check out the" />
+                                    <Run Text="{lex:Loc Help_OPTION1}" />
                                     <Hyperlink
                                         NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open"
                                         RequestNavigate="Hyperlink_RequestNavigate">
                                         issues on GitHub.
                                     </Hyperlink>
                                     <Run
-                                        Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request." />
+                                        Text="{lex:Loc Help_IFNOISSUE}" />
                                     <LineBreak />
-                                    <Run Text="2) Send me an email: epikz37@gmail.com" />
+                                    <Run Text="{lex:Loc Help_OPTION2}" />
                     </TextBlock>
                 </GroupBox>
-                <GroupBox Header="GitHub Project">
+                <GroupBox Header="{lex:Loc Help_GITHUBPROJECT}">
                     <StackPanel>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
-                                        <Run Text="The project can be found" />
+                                        <Run Text="{lex:Loc Help_PROJECTCANBEFOUND}" />
                                         <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/"
                                                    RequestNavigate="Hyperlink_RequestNavigate">
                                             here.
@@ -92,12 +101,12 @@
                                             readme
                                         </Hyperlink>
                                         <Run
-                                            Text="contains a brief overview of all the features." />
+                                            Text="{lex:Loc Help_CONTAINSABRIEF}" />
                         </TextBlock>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
-        <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom" />
+        <TextBlock Name="TxtblockVersion" Text="{lex:Loc Help_VERSION}" Margin="10,0,340,10" VerticalAlignment="Bottom" />
     </Grid>
 </UserControl>

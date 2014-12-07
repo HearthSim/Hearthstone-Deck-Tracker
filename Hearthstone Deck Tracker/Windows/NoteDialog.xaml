@@ -2,13 +2,21 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="NOTE FOR THIS GAME" Height="205" Width="439" Topmost="True" WindowStyle="ToolWindow"
+                      Title="{lex:Loc NoteDialog_TITLE}" Height="205" Width="439" Topmost="True" WindowStyle="ToolWindow"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
-                      WindowStartupLocation="CenterScreen">
+                      WindowStartupLocation="CenterScreen"
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Grid>
         <Button Content="Set" Margin="10,140,158,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox Name="TextBoxNote" controls:TextboxHelper.Watermark="Note..." Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <CheckBox Name="CheckBoxEnterToSave" Content="Save with ENTER" HorizontalAlignment="Right" Margin="0,0,10,10" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom"/>
+        <TextBox Name="TextBoxNote" controls:TextboxHelper.Watermark="{lex:Loc NoteDialog_NOTE}" Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <CheckBox Name="CheckBoxEnterToSave" Content="{lex:Loc NoteDialog_SAVEWITHENTER}" HorizontalAlignment="Right" Margin="0,0,10,10" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom"/>
     </Grid>
 </controls:MetroWindow>

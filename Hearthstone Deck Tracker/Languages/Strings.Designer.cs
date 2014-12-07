@@ -61,6 +61,24 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        internal static string ACTION {
+            get {
+                return ResourceManager.GetString("ACTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string ADD {
+            get {
+                return ResourceManager.GetString("ADD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ALL.
         /// </summary>
         internal static string ALL {
@@ -79,11 +97,38 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Card.
+        /// </summary>
+        internal static string CARD {
+            get {
+                return ResourceManager.GetString("CARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CLASS ONLY.
         /// </summary>
         internal static string CLASSONLY {
             get {
                 return ResourceManager.GetString("CLASSONLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string CLEAR {
+            get {
+                return ResourceManager.GetString("CLEAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coin.
+        /// </summary>
+        internal static string COIN {
+            get {
+                return ResourceManager.GetString("COIN", resourceCulture);
             }
         }
         
@@ -97,11 +142,371 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decks.
+        /// </summary>
+        internal static string DECKS {
+            get {
+                return ResourceManager.GetString("DECKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select your deck.
+        /// </summary>
+        internal static string DeckSelectionDialog_SELECTYOURDECK {
+            get {
+                return ResourceManager.GetString("DeckSelectionDialog_SELECTYOURDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview Class:  wins - losses.
+        /// </summary>
+        internal static string DeckStatsControl_CLASSOVERVIEW {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_CLASSOVERVIEW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview Deck:  wins - losses.
+        /// </summary>
+        internal static string DeckStatsControl_DECKGRIDCOLUM {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_DECKGRIDCOLUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Note.
+        /// </summary>
+        internal static string DeckStatsControl_EDITNOTE {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_EDITNOTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        internal static string DeckStatsControl_GRIDCOLUM {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_GRIDCOLUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to other deck.
+        /// </summary>
+        internal static string DeckStatsControl_MOVETOOTHERDECK {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_MOVETOOTHERDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show game details.
+        /// </summary>
+        internal static string DeckStatsControl_SHOWGAMEDETAILS {
+            get {
+                return ResourceManager.GetString("DeckStatsControl_SHOWGAMEDETAILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DELETE {
+            get {
+                return ResourceManager.GetString("DELETE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to drawing.
+        /// </summary>
+        internal static string DRAWING {
+            get {
+                return ResourceManager.GetString("DRAWING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draws.
+        /// </summary>
+        internal static string DRAWS {
+            get {
+                return ResourceManager.GetString("DRAWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FILTER.
         /// </summary>
         internal static string FILTER {
             get {
                 return ResourceManager.GetString("FILTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Details.
+        /// </summary>
+        internal static string GameDetails_GAMEDETAILS {
+            get {
+                return ResourceManager.GetString("GameDetails_GAMEDETAILS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import opponent deck.
+        /// </summary>
+        internal static string GameDetails_IMPORTOPPONENTDECK {
+            get {
+                return ResourceManager.GetString("GameDetails_IMPORTOPPONENTDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent:.
+        /// </summary>
+        internal static string GameDetails_OPPONENT {
+            get {
+                return ResourceManager.GetString("GameDetails_OPPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player:.
+        /// </summary>
+        internal static string GameDetails_PLAYER {
+            get {
+                return ResourceManager.GetString("GameDetails_PLAYER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Games.
+        /// </summary>
+        internal static string GAMES {
+            get {
+                return ResourceManager.GetString("GAMES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        internal static string GENERAL {
+            get {
+                return ResourceManager.GetString("GENERAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to having.
+        /// </summary>
+        internal static string HAVING {
+            get {
+                return ResourceManager.GetString("HAVING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Marks.
+        /// </summary>
+        internal static string Help_CARDMARKS {
+            get {
+                return ResourceManager.GetString("Help_CARDMARKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to a card next turn..
+        /// </summary>
+        internal static string Help_CARDNEXTTURN {
+            get {
+                return ResourceManager.GetString("Help_CARDNEXTTURN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The chance of your opponent.
+        /// </summary>
+        internal static string Help_CHANCEOFYOUROPPONENT {
+            get {
+                return ResourceManager.GetString("Help_CHANCEOFYOUROPPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to contains a brief overview of all the features..
+        /// </summary>
+        internal static string Help_CONTAINSABRIEF {
+            get {
+                return ResourceManager.GetString("Help_CONTAINSABRIEF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (C)oin, (R)eturned, (M)ulliganed, (S)tolen.
+        /// </summary>
+        internal static string Help_CRMS {
+            get {
+                return ResourceManager.GetString("Help_CRMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The chances of drawing a card with [2] or [1] copies left in the deck..
+        /// </summary>
+        internal static string Help_DRAWCARD {
+            get {
+                return ResourceManager.GetString("Help_DRAWCARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First number:.
+        /// </summary>
+        internal static string Help_FIRSTNUMBER {
+            get {
+                return ResourceManager.GetString("Help_FIRSTNUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I found a bug, what do I do?.
+        /// </summary>
+        internal static string Help_FOUNDABUG {
+            get {
+                return ResourceManager.GetString("Help_FOUNDABUG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GitHub Project.
+        /// </summary>
+        internal static string Help_GITHUBPROJECT {
+            get {
+                return ResourceManager.GetString("Help_GITHUBPROJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If there&apos;s no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request..
+        /// </summary>
+        internal static string Help_IFNOISSUE {
+            get {
+                return ResourceManager.GetString("Help_IFNOISSUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.).
+        /// </summary>
+        internal static string Help_NUMBERGETSINTERESTING {
+            get {
+                return ResourceManager.GetString("Help_NUMBERGETSINTERESTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent&apos;s turn or mulligan for specific cards, but should give you a rough idea.).
+        /// </summary>
+        internal static string Help_NUMBERISINTERESTING {
+            get {
+                return ResourceManager.GetString("Help_NUMBERISINTERESTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent: .
+        /// </summary>
+        internal static string Help_OPPONENT {
+            get {
+                return ResourceManager.GetString("Help_OPPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1) Check out the.
+        /// </summary>
+        internal static string Help_OPTION1 {
+            get {
+                return ResourceManager.GetString("Help_OPTION1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2) Send me an email: epikz37@gmail.com.
+        /// </summary>
+        internal static string Help_OPTION2 {
+            get {
+                return ResourceManager.GetString("Help_OPTION2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The project can be found.
+        /// </summary>
+        internal static string Help_PROJECTCANBEFOUND {
+            get {
+                return ResourceManager.GetString("Help_PROJECTCANBEFOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second number:.
+        /// </summary>
+        internal static string Help_SECONDNUMBER {
+            get {
+                return ResourceManager.GetString("Help_SECONDNUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [2] and [1] stands for the number of copies left in deck+hand / deck..
+        /// </summary>
+        internal static string Help_STANDFORNUMBER {
+            get {
+                return ResourceManager.GetString("Help_STANDFORNUMBER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two options here:.
+        /// </summary>
+        internal static string Help_TWOOPTIONSHERE {
+            get {
+                return ResourceManager.GetString("Help_TWOOPTIONSHERE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        internal static string Help_VERSION {
+            get {
+                return ResourceManager.GetString("Help_VERSION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What are all these percentages?.
+        /// </summary>
+        internal static string Help_WHATAREALLTHESEPERCENTAGES {
+            get {
+                return ResourceManager.GetString("Help_WHATAREALLTHESEPERCENTAGES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log.
+        /// </summary>
+        internal static string LOG {
+            get {
+                return ResourceManager.GetString("LOG", resourceCulture);
             }
         }
         
@@ -412,6 +817,33 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        internal static string MODE {
+            get {
+                return ResourceManager.GetString("MODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select target deck.
+        /// </summary>
+        internal static string MoveGameDialog_TITLE {
+            get {
+                return ResourceManager.GetString("MoveGameDialog_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mulligan.
+        /// </summary>
+        internal static string MULLIGAN {
+            get {
+                return ResourceManager.GetString("MULLIGAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to name.
         /// </summary>
         internal static string NAME {
@@ -439,6 +871,762 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        internal static string NOTE {
+            get {
+                return ResourceManager.GetString("NOTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note....
+        /// </summary>
+        internal static string NoteDialog_NOTE {
+            get {
+                return ResourceManager.GetString("NoteDialog_NOTE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save with ENTER.
+        /// </summary>
+        internal static string NoteDialog_SAVEWITHENTER {
+            get {
+                return ResourceManager.GetString("NoteDialog_SAVEWITHENTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTE FOR THIS GAME.
+        /// </summary>
+        internal static string NoteDialog_TITLE {
+            get {
+                return ResourceManager.GetString("NoteDialog_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent.
+        /// </summary>
+        internal static string OPPONENT {
+            get {
+                return ResourceManager.GetString("OPPONENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent.
+        /// </summary>
+        internal static string OpponentWindow_TITLE {
+            get {
+                return ResourceManager.GetString("OpponentWindow_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent:.
+        /// </summary>
+        internal static string Options_ACCENT {
+            get {
+                return ResourceManager.GetString("Options_ACCENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional card tooltips.
+        /// </summary>
+        internal static string Options_ADDITIONALCARDTOOLTIPS {
+            get {
+                return ResourceManager.GetString("Options_ADDITIONALCARDTOOLTIPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional Windows.
+        /// </summary>
+        internal static string Options_ADDITIONALWINDOWS {
+            get {
+                return ResourceManager.GetString("Options_ADDITIONALWINDOWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced window search.
+        /// </summary>
+        internal static string Options_ADVANCEDWINDOWSEARCH {
+            get {
+                return ResourceManager.GetString("Options_ADVANCEDWINDOWSEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This can be turned off if the overlay shows up in non-Hearthstone windows..
+        /// </summary>
+        internal static string Options_ADVANCEWINDOWSEARCHTOOLTIP {
+            get {
+                return ResourceManager.GetString("Options_ADVANCEWINDOWSEARCHTOOLTIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alert at X seconds.
+        /// </summary>
+        internal static string Options_ALERTATXSECONDS {
+            get {
+                return ResourceManager.GetString("Options_ALERTATXSECONDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto clear cards.
+        /// </summary>
+        internal static string Options_AUTOCLEARCARDS {
+            get {
+                return ResourceManager.GetString("Options_AUTOCLEARCARDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background:.
+        /// </summary>
+        internal static string Options_BACKGROUND {
+            get {
+                return ResourceManager.GetString("Options_BACKGROUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card tooltips.
+        /// </summary>
+        internal static string Options_CARDTOOLTIPS {
+            get {
+                return ResourceManager.GetString("Options_CARDTOOLTIPS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card tooltips in Tracker.
+        /// </summary>
+        internal static string Options_CARDTOOLTIPSINTRACKER {
+            get {
+                return ResourceManager.GetString("Options_CARDTOOLTIPSINTRACKER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        internal static string Options_CHECKFORUPDATES {
+            get {
+                return ResourceManager.GetString("Options_CHECKFORUPDATES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class cards first.
+        /// </summary>
+        internal static string Options_CLASSCARDSFIRST {
+            get {
+                return ResourceManager.GetString("Options_CLASSCARDSFIRST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close with Hearthstone.
+        /// </summary>
+        internal static string Options_CLONEWITHHS {
+            get {
+                return ResourceManager.GetString("Options_CLONEWITHHS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #123456.
+        /// </summary>
+        internal static string Options_CUSTOMBACKGROUND {
+            get {
+                return ResourceManager.GetString("Options_CUSTOMBACKGROUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom hex:.
+        /// </summary>
+        internal static string Options_CUSTOMHEX {
+            get {
+                return ResourceManager.GetString("Options_CUSTOMHEX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard game if incorrect deck.
+        /// </summary>
+        internal static string Options_DISCARDGAMEIFINCORRECT {
+            get {
+                return ResourceManager.GetString("Options_DISCARDGAMEIFINCORRECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t reset decks after game.
+        /// </summary>
+        internal static string Options_DONTRESETDECK {
+            get {
+                return ResourceManager.GetString("Options_DONTRESETDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t show deck select if only 1.
+        /// </summary>
+        internal static string Options_DONTSHOWDECK {
+            get {
+                return ResourceManager.GetString("Options_DONTSHOWDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts.
+        /// </summary>
+        internal static string Options_EXPORTCERTAINCARDPROBLEMTOOLTIP {
+            get {
+                return ResourceManager.GetString("Options_EXPORTCERTAINCARDPROBLEMTOOLTIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting to Hearthstone.
+        /// </summary>
+        internal static string Options_EXPORTINGTOHS {
+            get {
+                return ResourceManager.GetString("Options_EXPORTINGTOHS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extra Features - may cause lag.
+        /// </summary>
+        internal static string Options_EXTRAFEATURES {
+            get {
+                return ResourceManager.GetString("Options_EXTRAFEATURES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash Hearthstone on turn start.
+        /// </summary>
+        internal static string Options_FLASHHSONTURNSTART {
+            get {
+                return ResourceManager.GetString("Options_FLASHHSONTURNSTART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For secrets only.
+        /// </summary>
+        internal static string Options_FORSECRETSONLY {
+            get {
+                return ResourceManager.GetString("Options_FORSECRETSONLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full text search in New Deck.
+        /// </summary>
+        internal static string Options_FULLTEXTSEARCH {
+            get {
+                return ResourceManager.GetString("Options_FULLTEXTSEARCH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Golden Stalagg.
+        /// </summary>
+        internal static string Options_GLODENSTALAGG {
+            get {
+                return ResourceManager.GetString("Options_GLODENSTALAGG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Golden Feugen.
+        /// </summary>
+        internal static string Options_GOLDENFEUGEN {
+            get {
+                return ResourceManager.GetString("Options_GOLDENFEUGEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide card-age.
+        /// </summary>
+        internal static string Options_HIDECARDAGE {
+            get {
+                return ResourceManager.GetString("Options_HIDECARDAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide card-marks.
+        /// </summary>
+        internal static string Options_HIDECARDMARKS {
+            get {
+                return ResourceManager.GetString("Options_HIDECARDMARKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide (completely).
+        /// </summary>
+        internal static string Options_HIDECOMPLETELY {
+            get {
+                return ResourceManager.GetString("Options_HIDECOMPLETELY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide decks.
+        /// </summary>
+        internal static string Options_HIDEDECKS {
+            get {
+                return ResourceManager.GetString("Options_HIDEDECKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide if HS in background.
+        /// </summary>
+        internal static string Options_HIDEIFHSINBACKGROUND {
+            get {
+                return ResourceManager.GetString("Options_HIDEIFHSINBACKGROUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide in menu.
+        /// </summary>
+        internal static string Options_HIDEINMENU {
+            get {
+                return ResourceManager.GetString("Options_HIDEINMENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide secrets.
+        /// </summary>
+        internal static string Options_HIDESECRETS {
+            get {
+                return ResourceManager.GetString("Options_HIDESECRETS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide timers.
+        /// </summary>
+        internal static string Options_HIDETIMERS {
+            get {
+                return ResourceManager.GetString("Options_HIDETIMERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight cards in hand.
+        /// </summary>
+        internal static string Options_HIGHLIGHTCARD {
+            get {
+                return ResourceManager.GetString("Options_HIGHLIGHTCARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight discarded from deck.
+        /// </summary>
+        internal static string Options_HIGHLIGHTDISCARDED {
+            get {
+                return ResourceManager.GetString("Options_HIGHLIGHTDISCARDED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight last drawn card.
+        /// </summary>
+        internal static string Options_HIGHLIGHTLASTCARD {
+            get {
+                return ResourceManager.GetString("Options_HIGHLIGHTLASTCARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importing from Websites.
+        /// </summary>
+        internal static string Options_IMPORTFROMWEB {
+            get {
+                return ResourceManager.GetString("Options_IMPORTFROMWEB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include obtained cards.
+        /// </summary>
+        internal static string Options_INCLUDEOBTAINEDCARDS {
+            get {
+                return ResourceManager.GetString("Options_INCLUDEOBTAINEDCARDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key on game end:.
+        /// </summary>
+        internal static string Options_KEYONGAMEEND {
+            get {
+                return ResourceManager.GetString("Options_KEYONGAMEEND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key on game start:.
+        /// </summary>
+        internal static string Options_KEYONGAMESTART {
+            get {
+                return ResourceManager.GetString("Options_KEYONGAMESTART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        internal static string Options_LANGUAGE {
+            get {
+                return ResourceManager.GetString("Options_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize to tray.
+        /// </summary>
+        internal static string Options_MINIMIZETOTRAY {
+            get {
+                return ResourceManager.GetString("Options_MINIMIZETOTRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only if HS in foreground.
+        /// </summary>
+        internal static string Options_ONLYIFHSINFOREGROUND {
+            get {
+                return ResourceManager.GetString("Options_ONLYIFHSINFOREGROUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity:.
+        /// </summary>
+        internal static string Options_OPACITY {
+            get {
+                return ResourceManager.GetString("Options_OPACITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent deck.
+        /// </summary>
+        internal static string Options_OPPONENTDECK {
+            get {
+                return ResourceManager.GetString("Options_OPPONENTDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste names from clipboard.
+        /// </summary>
+        internal static string Options_PASTENAMESFROMCLIPBOARD {
+            get {
+                return ResourceManager.GetString("Options_PASTENAMESFROMCLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player deck.
+        /// </summary>
+        internal static string Options_PLAYERDECK {
+            get {
+                return ResourceManager.GetString("Options_PLAYERDECK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popup Hearthstone on turn start.
+        /// </summary>
+        internal static string Options_POPUPHSONTURNSTART {
+            get {
+                return ResourceManager.GetString("Options_POPUPHSONTURNSTART", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prioritize golden cards.
+        /// </summary>
+        internal static string Options_PRIORITIZEGOLDENCARDS {
+            get {
+                return ResourceManager.GetString("Options_PRIORITIZEGOLDENCARDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Arena.
+        /// </summary>
+        internal static string Options_RECORDARENA {
+            get {
+                return ResourceManager.GetString("Options_RECORDARENA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Casual.
+        /// </summary>
+        internal static string Options_RECORDCASUAL {
+            get {
+                return ResourceManager.GetString("Options_RECORDCASUAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Friendly.
+        /// </summary>
+        internal static string Options_RECORDFRIENDLY {
+            get {
+                return ResourceManager.GetString("Options_RECORDFRIENDLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Games.
+        /// </summary>
+        internal static string Options_RECORDGAMES {
+            get {
+                return ResourceManager.GetString("Options_RECORDGAMES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Other.
+        /// </summary>
+        internal static string Options_RECORDOTHER {
+            get {
+                return ResourceManager.GetString("Options_RECORDOTHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Practice.
+        /// </summary>
+        internal static string Options_RECORDPRRACTICE {
+            get {
+                return ResourceManager.GetString("Options_RECORDPRRACTICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record Ranked.
+        /// </summary>
+        internal static string Options_RECORDRANKED {
+            get {
+                return ResourceManager.GetString("Options_RECORDRANKED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove cards if count is 0.
+        /// </summary>
+        internal static string Options_REMOVECARD {
+            get {
+                return ResourceManager.GetString("Options_REMOVECARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save config in AppData.
+        /// </summary>
+        internal static string Options_SAVECONFIGINAPPDATA {
+            get {
+                return ResourceManager.GetString("Options_SAVECONFIGINAPPDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save data in AppData.
+        /// </summary>
+        internal static string Options_SAVEDATAINAPPDATA {
+            get {
+                return ResourceManager.GetString("Options_SAVEDATAINAPPDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save to file.
+        /// </summary>
+        internal static string Options_SAVETOFILE {
+            get {
+                return ResourceManager.GetString("Options_SAVETOFILE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scaling:.
+        /// </summary>
+        internal static string Options_SCALING {
+            get {
+                return ResourceManager.GetString("Options_SCALING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set deck name.
+        /// </summary>
+        internal static string Options_SETDECKNAME {
+            get {
+                return ResourceManager.GetString("Options_SETDECKNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show deck stats in new window.
+        /// </summary>
+        internal static string Options_SHOWDECKSTATS {
+            get {
+                return ResourceManager.GetString("Options_SHOWDECKSTATS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Manacurve.
+        /// </summary>
+        internal static string Options_SHOWMANACURVE {
+            get {
+                return ResourceManager.GetString("Options_SHOWMANACURVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show note dialog after game.
+        /// </summary>
+        internal static string Options_SHOWNOTEDIALOG {
+            get {
+                return ResourceManager.GetString("Options_SHOWNOTEDIALOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed:.
+        /// </summary>
+        internal static string Options_SPEED {
+            get {
+                return ResourceManager.GetString("Options_SPEED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        internal static string Options_STARTMINIMIZED {
+            get {
+                return ResourceManager.GetString("Options_STARTMINIMIZED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag decks on import.
+        /// </summary>
+        internal static string Options_TAGDECKSONIMPORT {
+            get {
+                return ResourceManager.GetString("Options_TAGDECKSONIMPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme:.
+        /// </summary>
+        internal static string Options_THEME {
+            get {
+                return ResourceManager.GetString("Options_THEME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use same scaling for player/opponent.
+        /// </summary>
+        internal static string Options_USESAMESCALING {
+            get {
+                return ResourceManager.GetString("Options_USESAMESCALING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        internal static string OTHER {
+            get {
+                return ResourceManager.GetString("OTHER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HearthstoneOverlay.
+        /// </summary>
+        internal static string OverlayWindow_TITLE {
+            get {
+                return ResourceManager.GetString("OverlayWindow_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        internal static string PLAYER {
+            get {
+                return ResourceManager.GetString("PLAYER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        internal static string PlayerWindow_TITLE {
+            get {
+                return ResourceManager.GetString("PlayerWindow_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plays.
+        /// </summary>
+        internal static string PLAYS {
+            get {
+                return ResourceManager.GetString("PLAYS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        internal static string RESET {
+            get {
+                return ResourceManager.GetString("RESET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        internal static string RESULT {
+            get {
+                return ResourceManager.GetString("RESULT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SAVE.
         /// </summary>
         internal static string SAVE {
@@ -448,11 +1636,164 @@ namespace Hearthstone_Deck_Tracker.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Selected.
+        /// </summary>
+        internal static string SortFilterDecks_DELETESELECTED {
+            get {
+                return ResourceManager.GetString("SortFilterDecks_DELETESELECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter by tags:.
+        /// </summary>
+        internal static string SortFilterDecks_FILTERBYTAGS {
+            get {
+                return ResourceManager.GetString("SortFilterDecks_FILTERBYTAGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter operation.
+        /// </summary>
+        internal static string SortFilterDecks_FILTEROPERATION {
+            get {
+                return ResourceManager.GetString("SortFilterDecks_FILTEROPERATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Tag.
+        /// </summary>
+        internal static string SortFilterDecks_NEWTAG {
+            get {
+                return ResourceManager.GetString("SortFilterDecks_NEWTAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort decks by:.
+        /// </summary>
+        internal static string SortFilterDecks_SORTDECKSBY {
+            get {
+                return ResourceManager.GetString("SortFilterDecks_SORTDECKSBY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorting.
+        /// </summary>
+        internal static string SORTING {
+            get {
+                return ResourceManager.GetString("SORTING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started.
+        /// </summary>
+        internal static string STARTED {
+            get {
+                return ResourceManager.GetString("STARTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stats.
+        /// </summary>
+        internal static string StatsWindow_TITLE {
+            get {
+                return ResourceManager.GetString("StatsWindow_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        internal static string TIME {
+            get {
+                return ResourceManager.GetString("TIME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        internal static string TIMER {
+            get {
+                return ResourceManager.GetString("TIMER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        internal static string TimerWindow_TITLE {
+            get {
+                return ResourceManager.GetString("TimerWindow_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topmost.
+        /// </summary>
+        internal static string TOPMOST {
+            get {
+                return ResourceManager.GetString("TOPMOST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracker.
+        /// </summary>
+        internal static string TRACKER {
+            get {
+                return ResourceManager.GetString("TRACKER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn.
+        /// </summary>
+        internal static string TURN {
+            get {
+                return ResourceManager.GetString("TURN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turns.
+        /// </summary>
+        internal static string TURNS {
+            get {
+                return ResourceManager.GetString("TURNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TYPE.
         /// </summary>
         internal static string TYPE {
             get {
                 return ResourceManager.GetString("TYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock.
+        /// </summary>
+        internal static string UNLOCK {
+            get {
+                return ResourceManager.GetString("UNLOCK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS.
+        /// </summary>
+        internal static string VS {
+            get {
+                return ResourceManager.GetString("VS", resourceCulture);
             }
         }
     }

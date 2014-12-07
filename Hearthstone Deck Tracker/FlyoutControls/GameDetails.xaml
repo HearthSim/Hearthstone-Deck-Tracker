@@ -6,37 +6,46 @@
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="500">
+             d:DesignHeight="500" d:DesignWidth="500"
+             
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Grid>
-        <GroupBox Header="Game Details" Grid.Row="1" Grid.Column="1">
+        <GroupBox Header="{lex:Loc GameDetails_GAMEDETAILS}" Grid.Row="1" Grid.Column="1">
             <Grid>
                 <Separator Margin="0,58,0,0" VerticalAlignment="Top"></Separator>
                 <DataGrid Name="DataGridDetails" Margin="0,60,0,0" CanUserAddRows="False" CanUserDeleteRows="False"
                           CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
                           CanUserSortColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Turn" Binding="{Binding Turn}" IsReadOnly="True">
+                        <DataGridTextColumn Header="{lex:Loc TURN}" Binding="{Binding Turn}" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Player" Binding="{Binding Player}" IsReadOnly="True">
+                        <DataGridTextColumn Header="{lex:Loc PLAYER}" Binding="{Binding Player}" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Action" Binding="{Binding Action}" IsReadOnly="True">
+                        <DataGridTextColumn Header="{lex:Loc Action}" Binding="{Binding Action}" IsReadOnly="True">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTemplateColumn Header="Card" IsReadOnly="True">
+                        <DataGridTemplateColumn Header="{lex:Loc CARD}" IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <controls:Card DataContext="{Binding Card}">
@@ -55,27 +64,27 @@
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
-                <CheckBox Name="CheckboxPlayerPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,10,0,0"
+                <CheckBox Name="CheckboxPlayerPlay" Content="{lex:Loc PLAYS}" HorizontalAlignment="Left" Margin="91,10,0,0"
                           VerticalAlignment="Top" Checked="CheckboxPlayerPlay_Checked"
                           Unchecked="CheckboxPlayerPlay_Unchecked" />
-                <CheckBox Name="CheckboxOpponentPlay" Content="Plays" HorizontalAlignment="Left" Margin="91,33,0,0"
+                <CheckBox Name="CheckboxOpponentPlay" Content="{lex:Loc PLAYS}" HorizontalAlignment="Left" Margin="91,33,0,0"
                           VerticalAlignment="Top" Checked="CheckboxOpponentPlay_Checked"
                           Unchecked="CheckboxOpponentPlay_Unchecked" />
-                <CheckBox Name="CheckboxPlayerDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,10,0,0"
+                <CheckBox Name="CheckboxPlayerDraw" Content="{lex:Loc DRAWS}" HorizontalAlignment="Left" Margin="152,10,0,0"
                           VerticalAlignment="Top" Checked="CheckboxPlayerDraw_Checked"
                           Unchecked="CheckboxPlayerDraw_Unchecked" />
-                <CheckBox Name="CheckboxOpponentDraw" Content="Draws" HorizontalAlignment="Left" Margin="152,33,0,0"
+                <CheckBox Name="CheckboxOpponentDraw" Content="{lex:Loc DRAWS}" HorizontalAlignment="Left" Margin="152,33,0,0"
                           VerticalAlignment="Top" Checked="CheckboxOpponentDraw_Checked"
                           Unchecked="CheckboxOpponentDraw_Unchecked" />
-                <CheckBox Name="CheckboxPlayerMulligan" Content="Mulligan" HorizontalAlignment="Left"
+                <CheckBox Name="CheckboxPlayerMulligan" Content="{lex:Loc MULLIGAN}" HorizontalAlignment="Left"
                           Margin="213,10,0,0" VerticalAlignment="Top" Checked="CheckboxPlayerMulligan_Checked"
                           Unchecked="CheckboxPlayerMulligan_Unchecked" />
-                <CheckBox Name="CheckboxOpponentMulligan" Content="Mulligan" HorizontalAlignment="Left"
+                <CheckBox Name="CheckboxOpponentMulligan" Content="{lex:Loc MULLIGAN}" HorizontalAlignment="Left"
                           Margin="213,33,0,0" VerticalAlignment="Top" Checked="CheckboxOpponentMulligan_Checked"
                           Unchecked="CheckboxOpponentMulligan_Unchecked" />
-                <Label Content="Player:" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" />
-                <Label Content="Opponent:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" />
-                <Button Name="BtnImportDeck" Content="Import opponent deck" HorizontalAlignment="Right"
+                <Label Content="{lex:Loc GameDetails_PLAYER}" HorizontalAlignment="Left" Margin="10,6,0,0" VerticalAlignment="Top" />
+                <Label Content="{lex:Loc GameDetails_OPPONENT}" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top" />
+                <Button Name="BtnImportDeck" Content="{lex:Loc GameDetails_IMPORTOPPONENTDECK}" HorizontalAlignment="Right"
                         Margin="0,10,10,0" VerticalAlignment="Top" Width="153" Click="BtnImportDeck_Click" />
             </Grid>
         </GroupBox>

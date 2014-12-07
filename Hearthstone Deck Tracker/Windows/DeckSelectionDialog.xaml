@@ -5,12 +5,20 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Wrong deck detected" Height="265" Width="450" Topmost="True" WindowStyle="ToolWindow"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker" >
+    
     <Grid>
         <local:DeckPicker x:Name="DeckPickerList" SelectionChanged="DeckPickerList_SelectionChanged" Height="auto"
                           Margin="0,34,0,0">
         </local:DeckPicker>
-        <Label Content="Select your deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
+        <Label Content="{lex:Loc DeckSelectionDialog_SELECTYOURDECK}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
                FontWeight="Bold" Margin="10,0,0,0" />
     </Grid>
 </controls:MetroWindow>
