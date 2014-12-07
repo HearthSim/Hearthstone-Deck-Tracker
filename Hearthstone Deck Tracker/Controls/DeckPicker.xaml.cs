@@ -56,9 +56,10 @@ namespace Hearthstone_Deck_Tracker
 				get
 				{
 					if(Name == "Back" || Name == "All") return "win%";
-					var total = Decks.Sum(d => d.DeckStats.Games.Count);
+					var filteredDecks = Decks.Where(d => Config.Instance.SelectedTags.Any(t => t == "All" || d.Tags.Contains(t))).ToList();
+					var total = filteredDecks.Sum(d => d.DeckStats.Games.Count);
 					if(total == 0) return "-%";
-					return Math.Round(100.0 * Decks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
+					return Math.Round(100.0 * filteredDecks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
 				}
 			}
 
