@@ -602,9 +602,9 @@ namespace Hearthstone_Deck_Tracker
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
 
-			LblWins.Visibility = Config.Instance.ShowDeckWins ? Visibility.Visible : Visibility.Collapsed;
-			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle ? Visibility.Visible : Visibility.Collapsed;
-			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst ? Visibility.Visible : Visibility.Collapsed;
+			LblWins.Visibility = Config.Instance.ShowDeckWins && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
 			SetDeckTitle();
 			SetWinRates();

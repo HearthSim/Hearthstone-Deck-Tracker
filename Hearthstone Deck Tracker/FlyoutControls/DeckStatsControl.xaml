@@ -32,6 +32,8 @@
                         <system:String>All Time</system:String>
                     </ComboBox>
                 </StackPanel>
+                <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="3"
+                         TextChanged="TextBox_TextChanged" Width="120" />
                 <StackPanel Name="StackPanelUnassignedFilter" Orientation="Horizontal" Margin="3" Visibility="Collapsed">
                     <Label Content="Games:" />
                     <ComboBox x:Name="ComboboxUnassigned" SelectedIndex="6" VerticalAlignment="Bottom" Width="90"
@@ -41,13 +43,11 @@
                         <system:String>All</system:String>
                     </ComboBox>
                 </StackPanel>
-                <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="3"
-                         TextChanged="TextBox_TextChanged" Width="120" />
 
             </WrapPanel>
         </GroupBox>
         <TabControl Grid.Row="1" Name="TabControlCurrentOverall">
-            <TabItem Header="Current Deck" PreviewMouseDown="TabItemHeaderCurrent_OnPreviewMouseDown">
+            <TabItem Header="Deck" PreviewMouseDown="TabItemHeaderCurrent_OnPreviewMouseDown">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />

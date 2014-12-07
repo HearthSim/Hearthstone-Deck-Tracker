@@ -567,8 +567,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
 				var total = _stats.Count(s => (hsClass == null || s.OpponentHero == hsClass));
-				var percent = total > 0 ? Math.Round(100.0 * wins / total, 1).ToString() : "-";
-				return string.Format("{0}%", percent);
+				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";
 			}
 
 			private string GetClassDisplayString(string hsClass)
