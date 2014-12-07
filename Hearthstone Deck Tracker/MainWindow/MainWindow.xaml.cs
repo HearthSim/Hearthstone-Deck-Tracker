@@ -674,13 +674,5 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
-
-
-		private void BtnDeckStatsOverall_Click(object sender, RoutedEventArgs e)
-		{
-			OverallStatsFlyout.LoadStats();
-			FlyoutOverallStats.IsOpen = true;
-
-		}
 	}
 }

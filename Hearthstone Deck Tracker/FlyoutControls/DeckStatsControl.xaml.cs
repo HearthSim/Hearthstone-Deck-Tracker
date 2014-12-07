@@ -36,8 +36,12 @@ namespace Hearthstone_Deck_Tracker
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
 			_initialized = true;
-			//ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
+			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
+			ExpandCollapseGroupBox(GroupboxOverallTotalOverview, Config.Instance.StatsOverallTotalIsExpanded);
+			ExpandCollapseGroupBox(GroupboxOverallDetailOverview, Config.Instance.StatsOverallDetailIsExpanded);
+
+			LoadOverallStats();
 		}
 
 		private async void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -122,7 +126,8 @@ namespace Hearthstone_Deck_Tracker
 			var noteFilter = TextboxNoteFilter.Text;
 			var comboboxString = ComboboxTime.SelectedValue.ToString();
 			var timeFrame = DateTime.Now.Date;
-			switch(comboboxString)
+
+            switch(comboboxString)
 			{
 				case "Today":
 					//timeFrame -= new TimeSpan(0, 0, 0, 0);
@@ -227,12 +232,37 @@ namespace Hearthstone_Deck_Tracker
 			Refresh();
 		}
 
-
+		private void GroupBoxDeckOverview_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
+			{
+				Config.Instance.StatsDeckOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxDeckOverview);
+				Config.Save();
+			}
+		}
 		private void GroupboxClassOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			if(e.GetPosition(GroupboxClassOverview).Y < GroupBoxHeaderHeight)
 			{
 				Config.Instance.StatsClassOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxClassOverview);
+				Config.Save();
+			}
+		}
+		
+		private void GroupboxOverallTotalOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
+			{
+				Config.Instance.StatsOverallTotalIsExpanded = ExpandCollapseGroupBox(GroupboxOverallTotalOverview);
+				Config.Save();
+			}
+		}
+
+		private void GroupboxOverallDetailOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
+			{
+				Config.Instance.StatsOverallDetailIsExpanded = ExpandCollapseGroupBox(GroupboxOverallDetailOverview);
 				Config.Save();
 			}
 		}
@@ -295,6 +325,36 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.UpdateList();
 		}
 
+
+		public void LoadOverallStats()
+		{
+			DataGridOverallWinLoss.Items.Clear();
+			DataGridOverallTotal.Items.Clear();
+			var total = new List<GameStats>();
+			foreach(var @class in Game.Classes)
+			{
+				var unassigned = DefaultDeckStats.Instance.GetDeckStats(@class).Games;
+				var assigned = Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class).SelectMany(d => d.DeckStats.Games);
+				var allGames = unassigned.Concat(assigned).ToList();
+				total.AddRange(allGames);
+				DataGridOverallWinLoss.Items.Add(new WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
+			}
+
+			DataGridOverallTotal.Items.Add(new WinLoss(total, "%"));
+			DataGridOverallTotal.Items.Add(new WinLoss(total, "Win - Loss"));
+
+		}
+
+		private void CheckboxPercent_Checked(object sender, RoutedEventArgs e)
+		{
+			LoadOverallStats();
+		}
+
+		private void CheckboxPercent_Unchecked(object sender, RoutedEventArgs e)
+		{
+			LoadOverallStats();
+		}
+		
 		public class WinLoss
 		{
 			private readonly bool _percent;
@@ -309,13 +369,13 @@ namespace Hearthstone_Deck_Tracker
 				Text = text;
 			}
 
-			public WinLoss(List<GameStats> stats, bool percent, string playerHero, string opponentHero)
+			public WinLoss(List<GameStats> stats, bool percent, string playerHero)//, string opponentHero)
 			{
 
 				_percent = percent;
 				_stats = stats;
 				_playerHero = playerHero;
-				_opponentHero = opponentHero;
+				//_opponentHero = opponentHero;
 			}
 
 

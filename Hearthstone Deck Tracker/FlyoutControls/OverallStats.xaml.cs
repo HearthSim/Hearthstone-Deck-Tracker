@@ -30,8 +30,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void LoadStats()
 		{
-			DataGridWinLoss.Items.Clear();
-			DataGridTotal.Items.Clear();
+			/*DataGridOverallWinLoss.Items.Clear();
+			DataGridOverallTotal.Items.Clear();
 			var total = new List<GameStats>();
 			foreach(var @class in Game.Classes)
 			{
@@ -39,12 +39,11 @@ namespace Hearthstone_Deck_Tracker
 				var assigned = Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class).SelectMany(d => d.DeckStats.Games);
 				var allGames = unassigned.Concat(assigned).ToList();
 				total.AddRange(allGames);
-
-				//DataGridWinLoss.Items.Add(new DeckStatsControl.WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
+				DataGridOverallWinLoss.Items.Add(new DeckStatsControl.WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
 			}
 
-			DataGridTotal.Items.Add(new DeckStatsControl.WinLoss(total, "%"));
-			DataGridTotal.Items.Add(new DeckStatsControl.WinLoss(total, "Win - Loss"));
+			DataGridOverallTotal.Items.Add(new DeckStatsControl.WinLoss(total, "%"));
+			DataGridOverallTotal.Items.Add(new DeckStatsControl.WinLoss(total, "Win - Loss"));*/
 
 		}
 
