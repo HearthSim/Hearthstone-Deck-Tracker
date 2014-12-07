@@ -309,6 +309,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void EnableMenuItems(bool enable)
 		{
+			//MenuItemSelectedDeckStats.IsEnabled = enable;
 			MenuItemEdit.IsEnabled = enable;
 			MenuItemExportIds.IsEnabled = enable;
 			MenuItemExportScreenshot.IsEnabled = enable;
@@ -427,27 +428,19 @@ namespace Hearthstone_Deck_Tracker
 			else if(DeckList.DecksList.Any(d => d.Name == deckName))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
+
+				var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
+										? "The stats will be moved to the default-deck (can be changed in options)"
+										: "The stats will be deleted (can be changed in options)";
 				var result =
 					await
-						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
+						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!\n" + keepStatsInfo,
 							MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					Deck oldDeck;
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
-					{
-						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == oldDeck.Name);
-						if(deckStats != null)
-						{
-							foreach(var game in deckStats.Games)
-								game.DeleteGameFile();
-							DeckStatsList.Instance.DeckStats.Remove(deckStats);
-							DeckStatsList.Save();
-							Logger.WriteLine("Deleted deckstats for deck: " + oldDeck.Name);
-						}
-						DeckList.DecksList.Remove(oldDeck);
-						DeckPickerList.RemoveDeck(oldDeck);
-					}
+						DeleteDeck(oldDeck);
 
 					SaveDeck(true);
 				}

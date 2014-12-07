@@ -226,6 +226,11 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxStatsInWindow_Checked"
                                           Unchecked="CheckboxStatsInWindow_Unchecked" />
+                                <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
+                                          Content="Keep stats when deleting deck"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxDeleteDeckKeepStats_Checked"
+                                          Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
 
                                 <CheckBox x:Name="CheckboxNoteDialog"
                                           Content="Show note dialog after game"

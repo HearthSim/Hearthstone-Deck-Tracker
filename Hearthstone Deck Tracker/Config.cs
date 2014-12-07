@@ -188,6 +188,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool KeepDecksVisible = true;
 
+		[DefaultValue(true)]
+		public bool KeepStatsWhenDeletingDeck = true;
+
 		[DefaultValue("None")]
 		public string KeyPressOnGameEnd = "None";
 
@@ -385,7 +388,16 @@ namespace Hearthstone_Deck_Tracker
 		public bool StatsDeckOverviewIsExpanded = true;
 
 		[DefaultValue(false)]
+		public bool StatsOverallDetailIsExpanded = false;
+
+		[DefaultValue(true)]
+		public bool StatsOverallTotalIsExpanded = true;
+
+		[DefaultValue(false)]
 		public bool StatsInWindow = false;
+
+		[DefaultValue("With deck")]
+		public string StatsOverallAssignedOnly = "With deck";
 
 		[DefaultValue(672)]
 		public int StatsWindowHeight = 672;

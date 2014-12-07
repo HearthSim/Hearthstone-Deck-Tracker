@@ -127,6 +127,9 @@
     <Compile Include="FlyoutControls\Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\OverallStats.xaml.cs">
+      <DependentUpon>OverallStats.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
@@ -159,6 +162,8 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="IGameHandler.cs" />
+    <Compile Include="Stats\DeckStatsList.cs" />
+    <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -263,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\OverallStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

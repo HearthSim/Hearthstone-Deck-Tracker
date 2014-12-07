@@ -18,12 +18,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 		}
 
-		public GameStats(GameResult result, string opponentHero)
+		public GameStats(GameResult result, string opponentHero, string playerHero)
 		{
 			Coin = false;
 			Result = result;
 			GameMode = Game.GameMode.None;
 			OpponentHero = opponentHero;
+			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
 			Logger.WriteLine("Started new game", "Gamestats");
 			GameId = Guid.NewGuid();
@@ -39,6 +40,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return _gamesDir + string.Format(@"\Game_{0}.xml", GameId); }
 		}
 
+		//playerhero does not get loaded from xml for some reason
+		public string PlayerHero { get; set; }
 		public string OpponentHero { get; set; }
 		public bool Coin { get; set; }
 		public Game.GameMode GameMode { get; set; }
@@ -47,9 +50,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public string Note { get; set; }
-
+		
 		[XmlIgnore]
-		public BitmapImage HeroImage
+		public BitmapImage OpponentHeroImage
 		{
 			get
 			{
@@ -59,6 +62,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 				return new BitmapImage(uri);
 			}
 		}
+		 
+		[XmlIgnore]
+		public BitmapImage PlayerHeroImage
+		{
+			get
+			{
+				if(!_hsClasses.Contains(PlayerHero))
+					return new BitmapImage();
+				var uri = new Uri(string.Format("../Resources/{0}_small.png", PlayerHero.ToLower()), UriKind.Relative);
+				return new BitmapImage(uri);
+			}
+		}
+
 
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]
@@ -83,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats CloneWithNewId()
 		{
-			var newGame = new GameStats(Result, OpponentHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats()};
+			var newGame = new GameStats(Result, OpponentHero, PlayerHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats()};
 			newGame.Save();
 			return newGame;
 		}
