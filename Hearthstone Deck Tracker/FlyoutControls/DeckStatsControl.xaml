@@ -32,7 +32,7 @@
                         <system:String>All Time</system:String>
                     </ComboBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="3">
+                <StackPanel Name="StackPanelUnassignedFilter" Orientation="Horizontal" Margin="3" Visibility="Collapsed">
                     <Label Content="Games:" />
                     <ComboBox x:Name="ComboboxUnassigned" SelectedIndex="6" VerticalAlignment="Bottom" Width="90"
                               SelectionChanged="ComboboxUnassigned_SelectionChanged" ToolTip="Show games with an/no associated deck.">
@@ -47,7 +47,7 @@
             </WrapPanel>
         </GroupBox>
         <TabControl Grid.Row="1" Name="TabControlCurrentOverall">
-            <TabItem Header="Current Deck">
+            <TabItem Header="Current Deck" PreviewMouseDown="TabItemHeaderCurrent_OnPreviewMouseDown">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -402,7 +402,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Overall">
+            <TabItem Header="Overall" PreviewMouseDown="TabItemHeaderOverall_OnPreviewMouseDown">
                 <Grid>
                     <TabControl Grid.Row="0">
                         <TabItem Header="Stats">

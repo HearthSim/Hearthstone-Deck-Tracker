@@ -25,6 +25,11 @@ namespace Hearthstone_Deck_Tracker
 		private Deck _deck;
 		private bool _initialized;
 
+		public Visibility OnlyOverallVisible
+		{
+			get { return TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
 		public DeckStatsControl()
 		{
 			InitializeComponent();
@@ -183,15 +188,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Refresh()
 		{
-			if(_deck == null) return;
-			var oldSelectionCurrent = DataGridGames.SelectedItem;
 			var oldSelectionOverall = DataGridOverallGames.SelectedItem;
-			SetDeck(_deck);
 			LoadOverallStats();
-            if(oldSelectionCurrent != null)
-				DataGridGames.SelectedItem = oldSelectionCurrent;
 			if(oldSelectionOverall != null)
 				DataGridOverallGames.SelectedItem = oldSelectionOverall;
+
+			if(_deck == null) return;
+			var oldSelectionCurrent = DataGridGames.SelectedItem;
+			SetDeck(_deck);
+            if(oldSelectionCurrent != null)
+				DataGridGames.SelectedItem = oldSelectionCurrent;
 		}
 
 		private void BtnDetails_Click(object sender, RoutedEventArgs e)
@@ -578,6 +584,16 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.StatsOverallAssignedOnly = ComboboxUnassigned.SelectedValue.ToString();
 			Config.Save();
 			LoadOverallStats();
+		}
+		
+		private void TabItemHeaderOverall_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			StackPanelUnassignedFilter.Visibility = Visibility.Visible;
+		}
+
+		private void TabItemHeaderCurrent_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			StackPanelUnassignedFilter.Visibility = Visibility.Collapsed;
 		}
 	}
 }
