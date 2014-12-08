@@ -159,8 +159,6 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var deck in DeckList.DecksList)
 				DeckPickerList.AddDeck(deck);
 
-			_defaultDecksPath = Config.Instance.DataDir + "DefaultDecks.xml";
-
 			SetupDefaultDeckStatsFile();
 			DefaultDeckStats.Load();
 			
