@@ -389,10 +389,7 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool StatsOverallDetailIsExpanded = false;
-
-		[DefaultValue(true)]
-		public bool StatsOverallTotalIsExpanded = true;
-
+		
 		[DefaultValue(false)]
 		public bool StatsInWindow = false;
 

@@ -45,7 +45,6 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
-			ExpandCollapseGroupBox(GroupboxOverallTotalOverview, Config.Instance.StatsOverallTotalIsExpanded);
 			ExpandCollapseGroupBox(GroupboxOverallDetailOverview, Config.Instance.StatsOverallDetailIsExpanded);
 
 			LoadOverallStats();
@@ -333,15 +332,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 			}
 		}
-		
-		private void GroupboxOverallTotalOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			if(e.GetPosition(GroupboxOverallTotalOverview).Y < GroupBoxHeaderHeight)
-			{
-				Config.Instance.StatsOverallTotalIsExpanded = ExpandCollapseGroupBox(GroupboxOverallTotalOverview);
-				Config.Save();
-			}
-		}
 
 		private void GroupboxOverallDetailOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
@@ -432,7 +422,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var needToSaveDeckStats = false;
 			DataGridOverallWinLoss.Items.Clear();
-			DataGridOverallTotal.Items.Clear();
 			DataGridOverallGames.Items.Clear();
 			var total = new List<GameStats>();
 			foreach(var @class in Game.Classes)
@@ -462,8 +451,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				DeckStatsList.Save();
 			}
-			DataGridOverallTotal.Items.Add(new WinLoss(total, "%"));
-			DataGridOverallTotal.Items.Add(new WinLoss(total, "Win - Loss"));
+			DataGridOverallWinLoss.Items.Add(new WinLoss(total, CheckboxPercent.IsChecked ?? true, "Total"));
 
 		}
 
@@ -510,6 +498,20 @@ namespace Hearthstone_Deck_Tracker
 					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
 					return new BitmapImage(uri);
 				}
+			}
+
+			public Visibility VisibilityImage
+			{
+				get { return _playerHero != "Total" ? Visibility.Visible : Visibility.Collapsed; }
+			}
+
+			public Visibility VisibilityText
+			{
+				get { return _playerHero == "Total" ? Visibility.Visible : Visibility.Collapsed; }
+			}
+			public string PlayerText
+			{
+				get { return _playerHero.ToUpper(); }
 			}
 
 			public string Text { get; private set; }
