@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="515">
+             d:DesignHeight="650" d:DesignWidth="515">
     <Grid>
         <TabControl Width="auto">
             <TabItem Header="General" Background="{x:Null}">
@@ -179,7 +179,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Height="258" Width="235" Margin="10,10,0,0">
+                                  VerticalAlignment="Top" Height="282" Width="235" Margin="10,10,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
