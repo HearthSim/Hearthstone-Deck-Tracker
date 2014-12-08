@@ -354,7 +354,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Height="432" Width="235" Margin="5,0,0,0"
+                                      VerticalAlignment="Top" Height="465" Width="235" Margin="5,0,0,0"
                                       Grid.RowSpan="2">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
@@ -444,6 +444,7 @@
                                               VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
                                               Unchecked="CheckboxLogTab_Unchecked" />
                                     <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
+                                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
                                 </StackPanel>
                             </GroupBox>
                         </Grid>

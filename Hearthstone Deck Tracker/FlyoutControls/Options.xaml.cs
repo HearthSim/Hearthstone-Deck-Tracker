@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -1291,6 +1292,11 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.KeepStatsWhenDeletingDeck = false;
 			Config.Save();
+		}
+
+		private void ButtonOpenAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(Config.Instance.AppDataPath);
 		}
 	}
 }
