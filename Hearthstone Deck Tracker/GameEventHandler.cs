@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
+			if(Game.SetAsideCards.Contains(cardId))
+				Game.SetAsideCards.Remove(cardId);
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
 
@@ -86,6 +88,8 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerHandDiscard", cardId);
+			if(Game.SetAsideCards.Contains(cardId))
+				Game.SetAsideCards.Remove(cardId);
 			Game.PlayerHandDiscard(cardId);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();

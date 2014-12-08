@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -256,6 +257,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private Tuple<string, int> _possibleDiscard;
 		private void Analyze(string log)
 		{
 			var logLines = log.Split('\n');
@@ -413,7 +415,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "FRIENDLY SECRET")
 									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
-								else
+								else if(to == "FRIENDLY GRAVEYARD")
 									//player discard from deck
 									_gameHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
 								break;
@@ -472,15 +474,16 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "OPPOSING SECRET")
 									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
-								else
+								else if(to == "OPPOSING GRAVEYARD")
 									//opponent discard from deck
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 
 								
 								break;
 							case "OPPOSING SECRET":
-								//opponent secret triggered
-								_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
+								if(to == "OPPOSING GRAVEYARD")
+									//opponent secret triggered
+									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
 								break;
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)

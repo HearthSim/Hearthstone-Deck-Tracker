@@ -227,6 +227,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(fromSetAside)
 			{
 				Logger.WriteLine("Got card from setaside: " + cardId);
+				foreach(var c in SetAsideCards)
+					PlayerDeckDiscard(c);
 				SetAsideCards.Clear();
 			}
 
