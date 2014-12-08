@@ -11,7 +11,7 @@
          SelectionChanged="ListboxPicker_SelectionChanged">
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <local:DeckPickerItem />
+            <local:DeckPickerItem PreviewMouseDown="DeckPickerItem_OnPreviewMouseDown"/>
         </DataTemplate>
     </ListBox.ItemTemplate>
 </ListBox>
