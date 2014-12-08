@@ -58,7 +58,8 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var card in Game.GetActualCards())
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
-					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput))
+					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput) 
+						&& (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
 						continue;
 					if(Config.Instance.UseFullTextSearch && words.Any(w => !cardName.Contains(w)
 					                                                       && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
