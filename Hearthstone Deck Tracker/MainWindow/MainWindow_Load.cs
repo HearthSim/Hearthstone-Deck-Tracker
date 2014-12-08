@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					updated = true;
 					File.Copy("Files/log.config", _logConfigPath, true);
-					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", Config.Instance.ConfigPath));
+					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _logConfigPath));
 				}
 				else
 				{
@@ -288,12 +288,12 @@ namespace Hearthstone_Deck_Tracker
 					{
 						updated = true;
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", Config.Instance.ConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _logConfigPath));
 					}
 					else if(Config.Instance.AlwaysOverwriteLogConfig)
 					{
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", Config.Instance.ConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _logConfigPath));
 					}
 				}
 			}
