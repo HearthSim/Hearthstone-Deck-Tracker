@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -88,10 +89,11 @@ namespace Hearthstone_Deck_Tracker
 		private int _powerCount;
 		private long _previousSize;
 		private int _turnCount;
+		private int _playerCount;
 
 		#endregion
 
-		private readonly Regex _heroPowerRegex = new Regex(@".*(cardId=(?<Id>(\w*))).*");
+		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
 		private Turn _currentPlayer;
 		private bool _opponentUsedHeroPower;
 		private bool _playerUsedHeroPower;
@@ -337,6 +339,7 @@ namespace Hearthstone_Deck_Tracker
 					_gameHandler.HandleGameEnd(true);
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
+					_playerCount = 0;
 					_lastOpponentDrawIncrementedTurn = false;
 					_lastPlayerDrawIncrementedTurn = false;
 					ClearLog();
@@ -373,9 +376,15 @@ namespace Hearthstone_Deck_Tracker
 							if(!from.Contains("PLAY"))
 							{
 								if(to.Contains("FRIENDLY"))
-									_gameHandler.HandleGameStart(_heroIdDict[id]);
+								{
+									if(_playerCount++ == 0)
+										_gameHandler.HandleGameStart();
+									_gameHandler.SetPlayerHero(_heroIdDict[id]);
+								}
 								else if(to.Contains("OPPOSING"))
 								{
+									if(_playerCount++ == 0)
+										_gameHandler.HandleGameStart();
 									string heroName;
 									if(_heroIdDict.TryGetValue(id, out heroName))
 										_gameHandler.SetOpponentHero(heroName);
@@ -405,7 +414,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "FRIENDLY SECRET")
 									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
-								else
+								else if(to == "FRIENDLY GRAVEYARD")
 									//player discard from deck
 									_gameHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
 								break;
@@ -460,19 +469,20 @@ namespace Hearthstone_Deck_Tracker
 										_lastOpponentDrawIncrementedTurn = false;
 
 									//opponent draw
-									_gameHandler.HandlOpponentDraw(GetTurnNumber());
+									_gameHandler.HandleOpponentDraw(GetTurnNumber());
 								}
 								else if(to == "OPPOSING SECRET")
 									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
-								else
+								else if(to == "OPPOSING GRAVEYARD")
 									//opponent discard from deck
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 
 								
 								break;
 							case "OPPOSING SECRET":
-								//opponent secret triggered
-								_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
+								if(to == "OPPOSING GRAVEYARD")
+									//opponent secret triggered
+									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
 								break;
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
@@ -480,11 +490,23 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							default:
 								if(to == "OPPOSING HAND")
-									//coin, thoughtsteal etc
-									_gameHandler.HandleOpponentGet(GetTurnNumber());
+								{
+
+									if(GetTurnNumber() == 0) //coin is handled in Game.OpponentDraw()
+										_gameHandler.HandleOpponentDraw(GetTurnNumber());
+									else
+										//coin, thoughtsteal etc
+										_gameHandler.HandleOpponentGet(GetTurnNumber());
+								}
 								else if(to == "FRIENDLY HAND")
-									//coin, thoughtsteal etc
-									_gameHandler.HandlePlayerGet(id, GetTurnNumber());
+								{
+									
+									if(GetTurnNumber() == 0 && id != "GAME_005")
+										_gameHandler.HandlePlayerDraw(id, GetTurnNumber());
+									else
+										//coin, thoughtsteal etc
+										_gameHandler.HandlePlayerGet(id, GetTurnNumber());
+								}	
 								else if(to == "OPPOSING GRAVEYARD" && from == "" && id != "")
 								{
 									//todo: not sure why those two are here

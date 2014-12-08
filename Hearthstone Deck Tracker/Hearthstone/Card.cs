@@ -102,6 +102,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public string Set { get; set; }
+
+		[XmlIgnore]
 		public string Race { get; set; }
 
 		[XmlIgnore]

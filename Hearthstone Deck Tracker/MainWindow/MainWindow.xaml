@@ -216,7 +216,7 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
+                <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -340,6 +340,14 @@
                                      FontSize="14" />
                         <RadioButton Content="CLASS ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="NEUTRAL ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                    </MenuItem>
+                    <MenuItem Name="MenuFilterSet" Header="SET">
+                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="BASIC" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="EXPERT" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="PROMOTION" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="CURSE OF NAXXRAMAS" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="GOBLINS VS GNOMES" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

@@ -18,38 +18,60 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDeck;
-			if(deck != null)
+			if(deck == null)
+				return;
+
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
+				                    ? "The stats will be kept (can be changed in options)"
+				                    : "The stats will be deleted (can be changed in options)";
+			var result =
+				await
+				this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?\n" + keepStatsInfo,
+				                      MessageDialogStyle.AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Negative)
+				return;
+
+			DeleteDeck(deck);
+		}
+
+		private void DeleteDeck(Deck deck)
+		{
+			if(deck == null)
+				return;
+
+			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
+			if(deckStats != null)
 			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
-				var result =
-					await
-					this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?",
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
-				if(result == MessageDialogResult.Affirmative)
+				if(Config.Instance.KeepStatsWhenDeletingDeck)
+				{
+					DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
+					DefaultDeckStats.Save();
+					Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
+				}
+				else
 				{
 					try
 					{
-						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
-						if(deckStats != null)
-						{
-							foreach(var game in deckStats.Games)
-								game.DeleteGameFile();
-							DeckStatsList.Instance.DeckStats.Remove(deckStats);
-							DeckStatsList.Save();
-							Logger.WriteLine("Deleted deckstats for deck: " + deck.Name);
-						}
-						DeckList.DecksList.Remove(deck);
-						WriteDecks();
-						DeckPickerList.RemoveDeck(deck);
-						ListViewDeck.ItemsSource = null;
-						Logger.WriteLine("Deleted deck: " + deck.Name);
+						foreach(var game in deckStats.Games)
+							game.DeleteGameFile();
+						Logger.WriteLine("Deleted games from deck: " + deck.Name);
 					}
-					catch(Exception)
+					catch (Exception)
 					{
-						Logger.WriteLine("Error deleting deck");
+						Logger.WriteLine("Error deleting games");
 					}
 				}
+				DeckStatsList.Instance.DeckStats.Remove(deckStats);
+				DeckStatsList.Save();
+				Logger.WriteLine("Removed deckstats from deck: " + deck.Name);
 			}
+
+			DeckList.DecksList.Remove(deck);
+			WriteDecks();
+			DeckPickerList.RemoveDeck(deck);
+			ListViewDeck.ItemsSource = null;
+			Logger.WriteLine("Deleted deck: " + deck.Name);
 		}
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
@@ -65,7 +87,7 @@ namespace Hearthstone_Deck_Tracker
 					this.ShowInputAsync("Name already exists",
 					                    "You already have a deck with that name, please select a different one.", settings);
 
-				if(String.IsNullOrEmpty(name))
+				if(string.IsNullOrEmpty(name))
 					return;
 
 				clone.Name = name;

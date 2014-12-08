@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
 using SystemColors = System.Windows.SystemColors;
@@ -1241,6 +1241,56 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnClear_OnClick(object sender, RoutedEventArgs e)
 		{
 			TextBoxLog.Text = "";
+		}
+
+		private void CheckboxLogTab_Checked(object sender, RoutedEventArgs e)
+		{
+			TabItemLog.Visibility = Visibility.Visible;
+			if(!_initialized) return;
+			Config.Instance.ShowLogTab = true;
+			Config.Save();
+		}
+
+		private void CheckboxLogTab_Unchecked(object sender, RoutedEventArgs e)
+		{
+			TabItemLog.Visibility = Visibility.Hidden;
+			if(!_initialized) return;
+			Config.Instance.ShowLogTab = false;
+			Config.Save();
+		}
+
+		private async void ButtonGamePath_OnClick(object sender, RoutedEventArgs e)
+		{
+			var dialog = new OpenFileDialog
+			{
+				Title = "Select Hearthstone.exe",
+				DefaultExt = "Hearthstone.exe",
+				Filter = "Hearthstone.exe|Hearthstone.exe"
+			};
+			var dialogResult = dialog.ShowDialog();
+
+			if(dialogResult == true)
+			{
+				Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
+				Config.Save();
+				await Helper.MainWindow.Restart();
+			}
+		}
+
+		private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = true;
+			Config.Save();
+		}
+
+		private void CheckboxDeleteDeckKeepStats_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = false;
+			Config.Save();
 		}
 	}
 }
