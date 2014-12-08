@@ -413,8 +413,7 @@
                                 </Grid.RowDefinitions>
                                 <GroupBox Name="GroupboxOverallDetailOverview" Header="Overview Detail: wins - losses"
                                           VerticalAlignment="Top"
-                                          Height="auto" Grid.Row="1" Grid.ColumnSpan="2"
-                                          PreviewMouseLeftButtonDown="GroupboxOverallDetailOverview_OnPreviewMouseLeftButtonDown">
+                                          Height="auto" Grid.Row="1" Grid.ColumnSpan="2">
                                         <StackPanel>
                                             <CheckBox Name="CheckboxPercent" Content="Show as percent"
                                                   Checked="CheckboxPercent_Checked"

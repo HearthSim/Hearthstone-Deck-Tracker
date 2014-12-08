@@ -45,7 +45,6 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
-			ExpandCollapseGroupBox(GroupboxOverallDetailOverview, Config.Instance.StatsOverallDetailIsExpanded);
 
 			LoadOverallStats();
 		}
@@ -329,15 +328,6 @@ namespace Hearthstone_Deck_Tracker
 			if(e.GetPosition(GroupboxClassOverview).Y < GroupBoxHeaderHeight)
 			{
 				Config.Instance.StatsClassOverviewIsExpanded = ExpandCollapseGroupBox(GroupboxClassOverview);
-				Config.Save();
-			}
-		}
-
-		private void GroupboxOverallDetailOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			if(e.GetPosition(GroupboxOverallDetailOverview).Y < GroupBoxHeaderHeight)
-			{
-				Config.Instance.StatsOverallDetailIsExpanded = ExpandCollapseGroupBox(GroupboxOverallDetailOverview);
 				Config.Save();
 			}
 		}
