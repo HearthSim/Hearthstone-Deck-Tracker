@@ -47,6 +47,9 @@ namespace Hearthstone_Deck_Tracker
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
 
 			LoadOverallStats();
+
+			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+			DataGridOverallGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 		}
 
 		private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -157,8 +160,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
-			DataGridGames.Items.SortDescriptions.Clear();
-			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+			DataGridGames.Items.Refresh();
 		}
 		
 		private IEnumerable<GameStats> FilterGames(IEnumerable<GameStats> games)
@@ -442,8 +444,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckStatsList.Save();
 			}
 			DataGridOverallWinLoss.Items.Add(new WinLoss(total, CheckboxPercent.IsChecked ?? true, "Total"));
-
-		}
+			DataGridOverallGames.Items.Refresh();
+        }
 
 		private void CheckboxPercent_Checked(object sender, RoutedEventArgs e)
 		{
