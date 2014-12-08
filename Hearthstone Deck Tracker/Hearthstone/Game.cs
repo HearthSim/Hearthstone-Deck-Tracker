@@ -69,7 +69,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"Reward",
 				"Expert",
 				"Promotion",
-				"Curse of Naxxramas"
+				"Curse of Naxxramas",
+				"Goblins vs Gnomes"
 			};
 
 		public static List<Card> DrawnLastGame;
@@ -125,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandAge[DefaultCoinPosition] = 0;
 			OpponentHasCoin = true;
 			if(!IsInMenu && resetStats)
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst);
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs);
 		}
 
 		public static void SetPremadeDeck(Deck deck)
@@ -226,6 +227,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(fromSetAside)
 			{
 				Logger.WriteLine("Got card from setaside: " + cardId);
+				foreach(var c in SetAsideCards)
+					PlayerDeckDiscard(c);
 				SetAsideCards.Clear();
 			}
 
@@ -356,6 +359,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void OpponentDraw(int turn)
 		{
 			OpponentHandCount++;
+			if(turn == 0 && OpponentHandCount == 5)
+				//coin draw
+				return;
 			OpponentDeckCount--;
 
 			if(!ValidateOpponentHandCount())
@@ -536,7 +542,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var obj = JObject.Parse(File.ReadAllText(fileEng));
 					foreach(var cardType in obj)
 					{
-						if(!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
+						var set = ValidCardSets.FirstOrDefault(cs => cs.Equals(cardType.Key));
+						if(set == null)
+							continue;
 
 						foreach(var card in cardType.Value)
 						{
@@ -547,6 +555,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								tmp.LocalizedName = localizedCard.Name;
 								tmp.Text = localizedCard.Text;
 							}
+							tmp.Set = set;
 							tempDb.Add(tmp.Id, tmp);
 						}
 					}

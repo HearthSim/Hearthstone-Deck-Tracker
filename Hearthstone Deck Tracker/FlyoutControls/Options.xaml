@@ -7,19 +7,10 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="515"
-             
-    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
-    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
-    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
-       
-    Engine:LocalizeDictionary.DesignCulture="en-US"	
-    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
-    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
-    
+             d:DesignHeight="600" d:DesignWidth="515">
     <Grid>
         <TabControl Width="auto">
-            <TabItem Header="{lex:Loc GENERAL}" Background="{x:Null}">
+            <TabItem Header="General" Background="{x:Null}">
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -30,57 +21,57 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <GroupBox Header="{lex:Loc Options_ADDITIONALWINDOWS}" Grid.Column="1" Grid.Row="0"
+                        <GroupBox Header="Additional Windows" Grid.Column="1" Grid.Row="0"
                                   HorizontalAlignment="Center" VerticalAlignment="Top" Width="234" Height="284"
                                   Margin="11,0,2,0">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
 
                                     <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
-                                              Content="{lex:Loc Options_PLAYERDECK}" HorizontalAlignment="Left"
+                                              Content="Player deck" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
                                               Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
 
                                     <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
-                                              Content="{lex:Loc Options_OPPONENTDECK}" HorizontalAlignment="Left"
+                                              Content="Opponent deck" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
                                               Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
                                 </StackPanel>
-                                <CheckBox x:Name="CheckboxWindowsTopmost" Content="{lex:Loc TOPMOST}"
+                                <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxWindowsTopmost_Checked"
                                           Unchecked="CheckboxWindowsTopmost_Unchecked" />
                                 <CheckBox x:Name="CheckboxWinTopmostHsForeground"
-                                          Content="{lex:Loc Options_ONLYIFHSINFOREGROUND}" HorizontalAlignment="Left"
+                                          Content="Only if HS in foreground" HorizontalAlignment="Left"
                                           Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxWinTopmostHsForeground_Checked"
                                           Unchecked="CheckboxWinTopmostHsForeground_Unchecked" />
-                                <CheckBox x:Name="CheckboxWindowCardToolTips" Content="{lex:Loc Options_CARDTOOLTIPS}"
+                                <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxWindowCardToolTips_Checked"
                                           Unchecked="CheckboxWindowCardToolTips_Unchecked" />
                                 <Separator Margin="0,5,0,0" />
                                 <CheckBox x:Name="CheckboxTimerWindow"
-                                          Content="{lex:Loc TIMER}" HorizontalAlignment="Left"
+                                          Content="Timer" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTimerWindow_Checked"
                                           Unchecked="CheckboxTimerWindow_Unchecked" />
 
 
-                                <CheckBox x:Name="CheckboxTimerTopmost" Content="{lex:Loc TOPMOST}"
+                                <CheckBox x:Name="CheckboxTimerTopmost" Content="Topmost"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTimerTopmost_Checked"
                                           Unchecked="CheckboxTimerTopmost_Unchecked" />
                                 <CheckBox x:Name="CheckboxTimerTopmostHsForeground"
-                                          Content="{lex:Loc Options_ONLYIFHSINFOREGROUND}" HorizontalAlignment="Left"
+                                          Content="Only if HS in foreground" HorizontalAlignment="Left"
                                           Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTimerTopmostHsForeground_Checked"
                                           Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
                                 <Separator Margin="0,5,0,0" />
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_BACKGROUND}" HorizontalAlignment="Left"
+                                    <Label Content="Background:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Right"
                                               Margin="5,0,0,0" VerticalAlignment="Top" Width="110"
@@ -92,11 +83,11 @@
                                     </ComboBox>
                                 </DockPanel>
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_CUSTOMHEX}" HorizontalAlignment="Left"
+                                    <Label Content="Custom hex:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
                                              Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
-                                             TextWrapping="Wrap" Text="{lex:Loc Options_CUSTOMBACKGROUND}" VerticalAlignment="Top"
+                                             TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top"
                                              Width="110" TextChanged="TextboxCustomBackground_TextChanged" />
                                 </DockPanel>
                             </StackPanel>
@@ -105,75 +96,75 @@
                                   HorizontalAlignment="Left" VerticalAlignment="Top" Height="458" Width="235"
                                   Margin="5,0,0,0">
                             <StackPanel>
-                                <CheckBox x:Name="CheckboxHideOverlay" Content="{lex:Loc Options_HIDECOMPLETELY}"
+                                <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOverlay_Checked"
                                           Unchecked="CheckboxHideOverlay_Unchecked" />
-                                <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="{lex:Loc Options_HIDEINMENU}"
+                                <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="Hide in menu"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOverlayInMenu_Checked"
                                           Unchecked="CheckboxHideOverlayInMenu_Unchecked" />
                                 <CheckBox x:Name="CheckboxHideOverlayInBackground"
-                                          Content="{lex:Loc Options_HIDEIFHSINBACKGROUND}" HorizontalAlignment="Left"
+                                          Content="Hide if HS in background" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOverlayInBackground_Checked"
                                           Unchecked="CheckboxHideOverlayInBackground_Unchecked" />
                                 <DockPanel>
-                                    <CheckBox x:Name="CheckboxHideDecksInOverlay" Content="{lex:Loc Options_HIDEDECKS}"
+                                    <CheckBox x:Name="CheckboxHideDecksInOverlay" Content="Hide decks"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top"
                                               Checked="CheckboxHideDecksInOverlay_Checked"
                                               Unchecked="CheckboxHideDecksInOverlay_Unchecked" />
-                                    <CheckBox x:Name="CheckboxHideTimers" Content="{lex:Loc Options_HIDETIMERS}"
+                                    <CheckBox x:Name="CheckboxHideTimers" Content="Hide timers"
                                               HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
                                               VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
                                               Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
                                 </DockPanel>
-                                <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="{lex:Loc Options_HIDECARDAGE}"
+                                <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOpponentCardAge_Checked"
                                           Unchecked="CheckboxHideOpponentCardAge_Unchecked" />
-                                <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="{lex:Loc Options_HIDECARDMARKS}"
+                                <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="Hide card-marks"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOpponentCardMarks_Checked"
                                           Unchecked="CheckboxHideOpponentCardMarks_Unchecked"
                                           HorizontalAlignment="Left" Width="114" />
-                                <CheckBox x:Name="CheckboxHideSecrets" Content="{lex:Loc Options_HIDESECRETS}"
+                                <CheckBox x:Name="CheckboxHideSecrets" Content="Hide secrets"
                                           HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
                                           VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
                                           Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
-                                <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_CARDTOOLTIPS}"
+                                <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="Card tooltips"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxOverlayCardToolTips_Checked"
                                           Unchecked="CheckboxOverlayCardToolTips_Unchecked"
                                           HorizontalAlignment="Left" Width="114" />
                                 <CheckBox x:Name="CheckboxOverlaySecretToolTipsOnly"
-                                          Content="{lex:Loc Options_FORSECRETSONLY}" Margin="30,5,0,0"
+                                          Content="For secrets only" Margin="30,5,0,0"
                                           VerticalAlignment="Top"
                                           Checked="CheckboxOverlaySecretToolTipsOnly_Checked"
                                           Unchecked="CheckboxOverlaySecretToolTipsOnly_Unchecked"
                                           HorizontalAlignment="Left" />
                                 <CheckBox x:Name="CheckboxOverlayAdditionalCardToolTips"
-                                          Content="{lex:Loc Options_ADDITIONALCARDTOOLTIPS}" Margin="30,5,0,0"
+                                          Content="Additional card tooltips" Margin="30,5,0,0"
                                           VerticalAlignment="Top"
                                           Checked="CheckboxOverlayAdditionalCardToolTips_Checked"
                                           Unchecked="CheckboxOverlayAdditionalCardToolTips_Unchecked"
                                           HorizontalAlignment="Left" />
                                 <DockPanel>
-                                    <Label Content="{lex:Loc Options_OPACITY}" HorizontalAlignment="Left" Margin="5,5,0,0"
+                                    <Label Content="Opacity:" HorizontalAlignment="Left" Margin="5,5,0,0"
                                            VerticalAlignment="Center" />
                                     <Slider x:Name="SliderOverlayOpacity" HorizontalAlignment="Left"
                                             Margin="5,5,0,0" VerticalAlignment="Center" Width="125" Value="100"
                                             ValueChanged="SliderOverlayOpacity_ValueChanged" />
                                 </DockPanel>
                                 <DockPanel Margin="10,5,0,0">
-                                    <Button Name="BtnUnlockOverlay" Content="{lex:Loc UNLOCK}" HorizontalAlignment="Left"
+                                    <Button Name="BtnUnlockOverlay" Content="Unlock" HorizontalAlignment="Left"
                                             VerticalAlignment="Top" Width="98" Click="BtnUnlockOverlay_Click" />
-                                    <Button x:Name="BtnResetOverlay" Content="{lex:Loc RESET}" HorizontalAlignment="Left"
+                                    <Button x:Name="BtnResetOverlay" Content="Reset" HorizontalAlignment="Left"
                                             Margin="10,0,0,0" VerticalAlignment="Top" Width="98"
                                             Click="BtnResetOverlay_Click" />
                                 </DockPanel>
-                                <GroupBox Header="{lex:Loc Options_EXTRAFEATURES}" Margin="5,10,5,0">
+                                <GroupBox Header="Extra Features - may cause lag" Margin="5,10,5,0">
                                     <StackPanel>
                                         <TextBlock TextWrapping="Wrap">
                                             1) Gray out secrets when clicked<LineBreak />
@@ -190,19 +181,19 @@
                         <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
                                   VerticalAlignment="Top" Height="258" Width="235" Margin="10,10,0,0">
                             <StackPanel>
-                                <CheckBox x:Name="CheckboxFlashHs" Content="{lex:Loc Options_FLASHHSONTURNSTART}"
+                                <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxFlashHs_Checked"
                                           Unchecked="CheckboxFlashHs_Unchecked" />
                                 <CheckBox x:Name="CheckboxBringHsToForegorund"
-                                          Content="{lex:Loc Options_POPUPHSONTURNSTART}" HorizontalAlignment="Left"
+                                          Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxBringHsToForegorund_Checked"
                                           Unchecked="CheckboxBringHsToForegorund_Unchecked" />
                                 <DockPanel Margin="10,5,10,0">
 
                                     <CheckBox x:Name="CheckboxTimerAlert"
-                                              Content="{lex:Loc Options_ALERTATXSECONDS}" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Sound an alert and flash when you have X seconds remaining"
+                                              Content="Alert at X seconds" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Sound an alert and flash when you have X seconds remaining"
                                               VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked" Unchecked="CheckboxTimerAlert_Unchecked" />
                                     <TextBox x:Name="TextboxTimerAlert" 
                                              HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
@@ -210,34 +201,39 @@
                                              Width="60" TextChanged="TextboxTimerAlert_TextChanged" PreviewTextInput="TextboxTimerAlert_PreviewTextInput"/>
                                 </DockPanel>
                                 <CheckBox x:Name="CheckboxKeepDecksVisible"
-                                          Content="{lex:Loc Options_DONTRESETDECK}" HorizontalAlignment="Left"
+                                          Content="Don't reset decks after game" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top" Width="200"
                                           Checked="CheckboxKeepDecksVisible_Checked"
                                           Unchecked="CheckboxKeepDecksVisible_Unchecked" />
                                 <CheckBox x:Name="CheckboxAutoSelectDeck"
-                                          Content="{lex:Loc Options_DONTSHOWDECK}" HorizontalAlignment="Left"
+                                          Content="Don't show deck select if only 1" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxAutoSelectDeck_Checked"
                                           Unchecked="CheckboxAutoSelectDeck_Unchecked" />
                                 <CheckBox x:Name="CheckboxFullTextSearch"
-                                          Content="{lex:Loc Options_FULLTEXTSEARCH}" HorizontalAlignment="Left"
+                                          Content="Full text search in New Deck" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxFullTextSearch_Checked"
                                           Unchecked="CheckboxFullTextSearch_Unchecked" />
 
-                                <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="{lex:Loc Options_CARDTOOLTIPSINTRACKER}"
+                                <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips in Tracker"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTrackerCardToolTips_Checked"
                                           Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
 
                                 <CheckBox x:Name="CheckboxStatsInWindow"
-                                          Content="{lex:Loc Options_SHOWDECKSTATS}"
+                                          Content="Show deck stats in new window"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxStatsInWindow_Checked"
                                           Unchecked="CheckboxStatsInWindow_Unchecked" />
+                                <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
+                                          Content="Keep stats when deleting deck"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxDeleteDeckKeepStats_Checked"
+                                          Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
 
                                 <CheckBox x:Name="CheckboxNoteDialog"
-                                          Content="{lex:Loc Options_SHOWNOTEDIALOG}"
+                                          Content="Show note dialog after game"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxNoteDialog_Checked"
                                           Unchecked="CheckboxNoteDialog_Unchecked" />
@@ -246,7 +242,7 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{lex:Loc DECKS}">
+            <TabItem Header="Decks">
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -259,16 +255,16 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <CheckBox x:Name="CheckboxSameScaling" Grid.Column="0" Grid.Row="0"
-                                  Content="{lex:Loc Options_USESAMESCALING}" HorizontalAlignment="Left"
+                                  Content="Use same scaling for player/opponent" HorizontalAlignment="Left"
                                   Margin="10,0,0,0" VerticalAlignment="Top" IsChecked="True"
                                   Checked="CheckboxSameScaling_Checked"
                                   Unchecked="CheckboxSameScaling_Unchecked" />
-                        <GroupBox Header="{lex:Loc PLAYER}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"
+                        <GroupBox Header="Player" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2"
                                   HorizontalAlignment="Center" VerticalAlignment="Top" Height="auto"
                                   Width="235" Margin="5,5,5,0">
                             <StackPanel>
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_SCALING}" HorizontalAlignment="Left"
+                                    <Label Content="Scaling:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Right"
                                             VerticalAlignment="Center" Width="125" Value="100"
@@ -276,7 +272,7 @@
                                             Minimum="0.0001" />
                                 </DockPanel>
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_OPACITY}" HorizontalAlignment="Left"
+                                    <Label Content="Opacity:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Right"
                                             VerticalAlignment="Center" Width="125" Value="100"
@@ -284,20 +280,20 @@
 
                                 </DockPanel>
                                 <CheckBox x:Name="CheckboxHighlightCardsInHand"
-                                          Content="{lex:Loc Options_HIGHLIGHTCARD}" HorizontalAlignment="Left"
+                                          Content="Highlight cards in hand" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHighlightCardsInHand_Checked"
                                           Unchecked="CheckboxHighlightCardsInHand_Unchecked" />
                                 <CheckBox x:Name="CheckboxHighlightLastDrawn"
-                                          Content="{lex:Loc Options_HIGHLIGHTLASTCARD}" HorizontalAlignment="Left"
+                                          Content="Highlight last drawn card" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHighlightLastDrawn_Checked"
                                           Unchecked="CheckboxHighlightLastDrawn_Unchecked" />
-                                <CheckBox x:Name="CheckboxRemoveCards" Content="{lex:Loc Options_REMOVECARD}"
+                                <CheckBox x:Name="CheckboxRemoveCards" Content="Remove cards if count is 0"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxRemoveCards_Checked"
                                           Unchecked="CheckboxRemoveCards_Unchecked" />
-                                <CheckBox x:Name="CheckboxShowPlayerGet" Content="{lex:Loc Options_INCLUDEOBTAINEDCARDS}"
+                                <CheckBox x:Name="CheckboxShowPlayerGet" Content="Include obtained cards"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxShowPlayerGet_Checked"
                                           Unchecked="CheckboxShowPlayerGet_Unchecked" />
@@ -305,11 +301,11 @@
                                                      Height="auto" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="{lex:Loc OPPONENT}" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"
+                        <GroupBox Header="Opponent" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"
                                   Height="Auto" Width="235" HorizontalAlignment="Center">
                             <StackPanel>
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_SCALING}" HorizontalAlignment="Left"
+                                    <Label Content="Scaling:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Right"
                                             VerticalAlignment="Center" Width="125" Value="100"
@@ -317,7 +313,7 @@
                                             Minimum="0.0001" />
                                 </DockPanel>
                                 <DockPanel Margin="10,5,10,0">
-                                    <Label Content="{lex:Loc Options_OPACITY}" HorizontalAlignment="Left"
+                                    <Label Content="Opacity:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                                     <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Right"
                                             VerticalAlignment="Center" Width="125" Value="100"
@@ -325,7 +321,7 @@
 
                                 </DockPanel>
                                 <CheckBox x:Name="CheckboxHighlightDiscarded"
-                                          Content="{lex:Loc Options_HIGHLIGHTDISCARDED}" HorizontalAlignment="Left"
+                                          Content="Highlight discarded from deck" HorizontalAlignment="Left"
                                           Margin="10,5,0,10" VerticalAlignment="Top"
                                           Checked="CheckboxHighlightDiscarded_Checked"
                                           Unchecked="CheckboxHighlightDiscarded_Unchecked" />
@@ -333,10 +329,10 @@
                                                      Height="auto" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="{lex:Loc SORTING}" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"
+                        <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"
                                   Height="72" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
                             <StackPanel>
-                                <CheckBox Name="CheckboxDeckSortingClassFirst" Content="{lex:Loc Options_CLASSCARDSFIRST}"
+                                <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxDeckSortingClassFirst_Checked"
                                           Unchecked="CheckboxDeckSortingClassFirst_Unchecked" />
@@ -345,7 +341,7 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{lex:Loc OTHER}">
+            <TabItem Header="Other">
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -357,12 +353,12 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <GroupBox Header="{lex:Loc TRACKER}" Grid.Row="0" HorizontalAlignment="Left"
-                                      VerticalAlignment="Top" Height="392" Width="235" Margin="5,0,0,0"
+                            <GroupBox Header="Tracker" Grid.Row="0" HorizontalAlignment="Left"
+                                      VerticalAlignment="Top" Height="432" Width="235" Margin="5,0,0,0"
                                       Grid.RowSpan="2">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_THEME}" HorizontalAlignment="Left"
+                                        <Label Content="Theme:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="120"
@@ -376,7 +372,7 @@
 
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_ACCENT}" HorizontalAlignment="Left"
+                                        <Label Content="Accent:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="120"
@@ -389,60 +385,65 @@
                                         </ComboBox>
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_LANGUAGE}" HorizontalAlignment="Left"
+                                        <Label Content="Language:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                                         <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="120"
                                                   SelectionChanged="ComboboxLanguages_SelectionChanged" />
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_KEYONGAMESTART}" HorizontalAlignment="Right"
+                                        <Label Content="Key on game start:" HorizontalAlignment="Right"
                                                VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="90"
                                                   SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
                                     </DockPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_KEYONGAMEEND}" HorizontalAlignment="Left"
+                                        <Label Content="Key on game end:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                                         <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="90"
                                                   SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
                                     </DockPanel>
                                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
-                                              Content="{lex:Loc Options_SHOWMANACURVE}" HorizontalAlignment="Left"
+                                              Content="Show Manacurve" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxManaCurveMyDecks_Checked"
                                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
-                                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="{lex:Loc Options_SAVECONFIGINAPPDATA}"
+                                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
                                               Unchecked="CheckboxConfigSaveAppData_Unchecked" />
-                                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="{lex:Loc Options_SAVEDATAINAPPDATA}"
+                                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
                                               Unchecked="CheckboxDataSaveAppData_Unchecked" />
-                                    <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_MINIMIZETOTRAY}"
+                                    <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
                                               Unchecked="CheckboxMinimizeTray_Unchecked" />
-                                    <CheckBox x:Name="CheckboxStartMinimized" Content="{lex:Loc Options_STARTMINIMIZED}"
+                                    <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
                                               Unchecked="CheckboxStartMinimized_Unchecked" />
                                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
-                                              Content="{lex:Loc Options_CLONEWITHHS}" HorizontalAlignment="Left"
+                                              Content="Close with Hearthstone" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"
                                               Checked="CheckboxCloseWithHearthstone_Checked"
                                               Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
-                                    <CheckBox x:Name="CheckboxCheckForUpdates" Content="{lex:Loc Options_CHECKFORUPDATES}"
+                                    <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
                                               Unchecked="CheckboxCheckForUpdates_Unchecked" />
-                                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="{lex:Loc Options_ADVANCEDWINDOWSEARCH}"
+                                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
                                     	HorizontalAlignment="Left" Margin="10,5,0,0"
                                     	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
-                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="{lex:Loc Options_ADVANCEWINDOWSEARCHTOOLTIP}" />
+                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                                    <CheckBox x:Name="CheckboxLogTab" Content="Show Log-tab"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
+                                              Unchecked="CheckboxLogTab_Unchecked" />
+                                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
                                 </StackPanel>
                             </GroupBox>
                         </Grid>
@@ -452,11 +453,11 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <GroupBox Header="{lex:Loc Options_EXPORTINGTOHS}" Grid.Row="1" VerticalAlignment="Top"
+                            <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
                                       Width="235" Height="215" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
-                                        <Label Content="{lex:Loc Options_SPEED}" />
+                                        <Label Content="Speed:" />
                                         <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1"
                                                   HorizontalAlignment="Right" Width="120"
                                                   SelectionChanged="ComboboxExportSpeed_SelectionChanged">
@@ -467,74 +468,74 @@
                                             <system:String>Very Slow (150ms)</system:String>
                                         </ComboBox>
                                     </DockPanel>
-                                    <CheckBox x:Name="CheckboxPrioGolden" Content="{lex:Loc Options_PRIORITIZEGOLDENCARDS}"
+                                    <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked"
                                               Unchecked="CheckboxPrioGolden_Unchecked" />
-                                    <CheckBox x:Name="CheckboxExportName" Content="{lex:Loc Options_SETDECKNAME}"
+                                    <CheckBox x:Name="CheckboxExportName" Content="Set deck name"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
                                               Unchecked="CheckboxExportName_Unchecked" />
-                                    <CheckBox x:Name="CheckboxAutoClear" Content="{lex:Loc Options_AUTOCLEARCARDS}"
+                                    <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
                                               Unchecked="CheckboxAutoClear_Unchecked" />
                                     <CheckBox x:Name="CheckboxExportPasteClipboard"
-                                              Content="{lex:Loc Options_PASTENAMESFROMCLIPBOARD}"
-                                              ToolTip="{lex:Loc Options_EXPORTCERTAINCARDPROBLEMTOOLTIP}"
+                                              Content="Paste names from clipboard"
+                                              ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top"
                                               Checked="CheckboxExportPasteClipboard_Checked"
                                               Unchecked="CheckboxExportPasteClipboard_Unchecked" />
-                                    <CheckBox x:Name="CheckboxGoldenFeugen" Content="{lex:Loc Options_GOLDENFEUGEN}"
+                                    <CheckBox x:Name="CheckboxGoldenFeugen" Content="Golden Feugen"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxGoldenFeugen_Checked"
                                               Unchecked="CheckboxGoldenFeugen_Unchecked" />
-                                    <CheckBox x:Name="CheckboxGoldenStalagg" Content="{lex:Loc Options_GLODENSTALAGG}"
+                                    <CheckBox x:Name="CheckboxGoldenStalagg" Content="Golden Stalagg"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxGoldenStalagg_Checked"
                                               Unchecked="CheckboxGoldenStalagg_Unchecked" />
 
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="{lex:Loc Options_RECORDGAMES}" Height="205" Width="235" VerticalAlignment="Top"
+                            <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top"
                                       Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
                                 <StackPanel>
-                                    <CheckBox x:Name="CheckboxRecordRanked" Content="{lex:Loc Options_RECORDRANKED}"
+                                    <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
                                               Unchecked="CheckboxRecordRanked_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordArena" Content="{lex:Loc Options_RECORDARENA}"
+                                    <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
                                               Unchecked="CheckboxRecordArena_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordCasual" Content="{lex:Loc Options_RECORDCASUAL}"
+                                    <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
                                               Unchecked="CheckboxRecordCasual_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordFriendly" Content="{lex:Loc Options_RECORDFRIENDLY}"
+                                    <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
                                               Unchecked="CheckboxRecordFriendly_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordPractice" Content="{lex:Loc Options_RECORDPRRACTICE}"
+                                    <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
                                               Unchecked="CheckboxRecordPractice_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordOther" Content="{lex:Loc Options_RECORDOTHER}"
+                                    <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
                                               Unchecked="CheckboxRecordOther_Unchecked" />
                                     <CheckBox x:Name="CheckboxDiscardGame"
-                                              Content="{lex:Loc Options_DISCARDGAMEIFINCORRECT}"
+                                              Content="Discard game if incorrect deck"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
                                               Unchecked="CheckboxDiscardGame_Unchecked" />
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="{lex:Loc Options_IMPORTFROMWEB}" Grid.Row="2" VerticalAlignment="Top"
+                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
                                       Width="235" Height="73" Margin="11,10,1,0">
                                 <StackPanel>
-                                    <CheckBox x:Name="CheckboxTagOnImport" Content="{lex:Loc Options_TAGDECKSONIMPORT}"
+                                    <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                                               Unchecked="CheckboxTagOnImport_Unchecked" />
@@ -545,7 +546,7 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="{lex:Loc LOG}">
+            <TabItem Name="TabItemLog" Header="Log" Visibility="Hidden">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -553,8 +554,8 @@
                     </Grid.RowDefinitions>
                     <GroupBox Grid.Row="0">
                         <StackPanel Orientation="Horizontal">
-                            <Button Name="BtnSaveLog" Content="{lex:Loc Options_SAVETOFILE}" Click="BtnSaveLog_OnClick"/>
-                            <Button Name="BtnClear" Content="{lex:Loc CLEAR}" Click="BtnClear_OnClick" Margin="5,0,0,0"/>
+                            <Button Name="BtnSaveLog" Content="Save to file" Click="BtnSaveLog_OnClick"/>
+                            <Button Name="BtnClear" Content="Clear" Click="BtnClear_OnClick" Margin="5,0,0,0"/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox  Grid.Row="1">

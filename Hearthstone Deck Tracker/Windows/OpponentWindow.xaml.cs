@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Update()
 		{
-			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst ? Visibility.Visible : Visibility.Collapsed;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;

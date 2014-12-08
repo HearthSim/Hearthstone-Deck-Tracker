@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -56,9 +57,10 @@ namespace Hearthstone_Deck_Tracker
 				get
 				{
 					if(Name == "Back" || Name == "All") return "win%";
-					var total = Decks.Sum(d => d.DeckStats.Games.Count);
+					var filteredDecks = Decks.Where(d => Config.Instance.SelectedTags.Any(t => t == "All" || d.Tags.Contains(t))).ToList();
+					var total = filteredDecks.Sum(d => d.DeckStats.Games.Count);
 					if(total == 0) return "-%";
-					return Math.Round(100.0 * Decks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
+					return Math.Round(100.0 * filteredDecks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
 				}
 			}
 
@@ -207,7 +209,6 @@ namespace Hearthstone_Deck_Tracker
 				ListboxPicker.SelectedItem = deck;
 				_inClassSelect = false;
 				SortDecks();
-				Console.WriteLine("SELECT DECK - SORT");
 			}
 
 			SelectedDeck = deck;
@@ -235,7 +236,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(ListboxPicker.SelectedIndex == -1) return;
 			if(!_initialized) return;
-
+			
 			var selectedClass = ListboxPicker.SelectedItem as HsClass;
 			if(selectedClass != null)
 			{
@@ -280,6 +281,10 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				var newSelectedDeck = ListboxPicker.SelectedItem as Deck;
+				if(Equals(newSelectedDeck, SelectedDeck))
+				{
+					return;
+				}
 				if(newSelectedDeck != null)
 				{
 					if(SelectedDeck != null)
@@ -380,6 +385,21 @@ namespace Hearthstone_Deck_Tracker
 
 			foreach(var deck in orderedDecks)
 				ListboxPicker.Items.Add(deck);
+		}
+
+		private void DeckPickerItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			var deckPickerItem = (sender as DeckPickerItem);
+			if(deckPickerItem == null)
+				return;
+			var deck = deckPickerItem.DataContext as Deck;
+			if(deck == null)
+				return;
+			if(Equals(deck, SelectedDeck))
+			{
+				Helper.MainWindow.DeselectDeck();
+				e.Handled = true;
+			}
 		}
 	}
 }
