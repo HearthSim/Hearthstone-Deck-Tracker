@@ -547,6 +547,17 @@ namespace Hearthstone_Deck_Tracker
 			PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
 			Game.IsUsingPremade = false;
 
+			if(Config.Instance.StatsInWindow)
+			{
+				StatsWindow.Title = "Stats";
+				StatsWindow.StatsControl.SetDeck(null);
+			}
+			else
+			{
+				FlyoutDeckStats.Header = "Stats";
+				DeckStatsFlyout.SetDeck(null);
+			}
+
 			if(DeckPickerList.SelectedDeck != null)
 				DeckPickerList.SelectedDeck.IsSelectedInGui = false;
 
@@ -618,14 +629,16 @@ namespace Hearthstone_Deck_Tracker
 					else
 						break;
 				}
-				DeckList.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name });
+				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
 				WriteDecks();
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
 				TagControlEdit.SetSelectedTags(deck.Tags);
 			}
 			else
+			{
 				EnableMenuItems(false);
+			}
 		}
 
 		#endregion

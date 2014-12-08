@@ -47,7 +47,7 @@
             </WrapPanel>
         </GroupBox>
         <TabControl Grid.Row="1" Name="TabControlCurrentOverall">
-            <TabItem Header="Deck" PreviewMouseDown="TabItemHeaderCurrent_OnPreviewMouseDown">
+            <TabItem Name="TabItemDeck" Header="Deck" PreviewMouseDown="TabItemHeaderCurrent_OnPreviewMouseDown">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -402,7 +402,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Overall" PreviewMouseDown="TabItemHeaderOverall_OnPreviewMouseDown">
+            <TabItem Name="TabItemOverall" Header="Overall" PreviewMouseDown="TabItemHeaderOverall_OnPreviewMouseDown">
                 <Grid>
                     <TabControl Grid.Row="0">
                         <TabItem Header="Stats">

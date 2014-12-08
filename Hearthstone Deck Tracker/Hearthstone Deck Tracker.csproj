@@ -127,9 +127,6 @@
     <Compile Include="FlyoutControls\Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\OverallStats.xaml.cs">
-      <DependentUpon>OverallStats.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
@@ -268,10 +265,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\OverallStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

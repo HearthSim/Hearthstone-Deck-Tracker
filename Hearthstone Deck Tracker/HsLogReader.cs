@@ -257,7 +257,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private Tuple<string, int> _possibleDiscard;
 		private void Analyze(string log)
 		{
 			var logLines = log.Split('\n');

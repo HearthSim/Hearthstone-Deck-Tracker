@@ -132,7 +132,15 @@ namespace Hearthstone_Deck_Tracker
 		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
-			if(deck == null) return;
+			if(deck == null)
+			{
+				TabControlCurrentOverall.SelectedIndex = 1;
+				TabItemDeck.Visibility = Visibility.Collapsed;
+				TabItemOverall.Visibility = Visibility.Collapsed;
+				return;
+			}
+			TabItemDeck.Visibility = Visibility.Visible;
+			TabItemOverall.Visibility = Visibility.Visible;
 			DataGridGames.Items.Clear();
 			var filteredGames = FilterGames(deck.DeckStats.Games).ToList();
 			foreach(var game in filteredGames)
