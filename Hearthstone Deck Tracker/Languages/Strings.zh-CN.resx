@@ -310,15 +310,15 @@
     <comment>The chances of drawing a card with [2] or [1] copies left in the deck.</comment>
   </data>
 	<data name="Help_FIRSTNUMBER" xml:space="preserve">
-    <value>First number:</value>
+    <value>第一个数字：</value>
     <comment>First number:</comment>
   </data>
 	<data name="Help_FOUNDABUG" xml:space="preserve">
-    <value>I found a bug, what do I do?</value>
+    <value>发现一个BUG，我该怎么办？</value>
     <comment>I found a bug, what do I do?</comment>
   </data>
 	<data name="Help_GITHUBPROJECT" xml:space="preserve">
-    <value>GitHub Project</value>
+    <value>GitHub项目</value>
     <comment>GitHub Project</comment>
   </data>
 	<data name="Help_IFNOISSUE" xml:space="preserve">
@@ -334,7 +334,7 @@
     <comment>(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)</comment>
   </data>
 	<data name="Help_OPPONENT" xml:space="preserve">
-    <value>Opponent: </value>
+    <value>对手：</value>
     <comment>Opponent:</comment>
   </data>
 	<data name="Help_OPTION1" xml:space="preserve">
