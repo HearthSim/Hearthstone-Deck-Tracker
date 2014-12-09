@@ -490,6 +490,13 @@ namespace Hearthstone_Deck_Tracker
 
 				if(result == MessageDialogResult.Affirmative)
 				{
+					//recheck, in case there was no immediate response to the dialog
+					if((DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
+					{
+						Helper.CheckForUpdates(out version);
+						if(version != null)
+							newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+					}
 					try
 					{
 						Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
