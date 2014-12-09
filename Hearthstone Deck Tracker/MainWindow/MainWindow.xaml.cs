@@ -74,9 +74,6 @@ namespace Hearthstone_Deck_Tracker
 
         public MainWindow()
         {
-            // Set Language
-            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = System.Globalization.CultureInfo.GetCultureInfo("zh-CN");
-
             // Set working directory to path of executable
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -248,6 +245,10 @@ namespace Hearthstone_Deck_Tracker
 
             Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
             DeckPickerList.SortDecks();
+
+            // Set Language
+            var culture = Config.Instance.SelectedLanguage;
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = System.Globalization.CultureInfo.GetCultureInfo(culture.Insert(2, "-"));
         }
 
         #endregion
