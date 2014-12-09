@@ -386,12 +386,21 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool StatsDeckOverviewIsExpanded = true;
-		
+
+		[DefaultValue("All")]
+		public string StatsFilterOpponentClass = "All";
+
 		[DefaultValue(false)]
 		public bool StatsInWindow = false;
 
+		[DefaultValue(false)]
+		public bool StatsOverallApplyTagFilters = false;
+
 		[DefaultValue("With deck")]
 		public string StatsOverallAssignedOnly = "With deck";
+
+		[DefaultValue("All")]
+		public string StatsOverallFilterPlayerClass = "All";
 
 		[DefaultValue(672)]
 		public int StatsWindowHeight = 672;

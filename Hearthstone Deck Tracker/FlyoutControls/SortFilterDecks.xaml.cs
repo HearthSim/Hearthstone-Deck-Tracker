@@ -125,7 +125,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				ListboxTags.Items.Refresh();
-
 				//if (SelectedTagsChanged != null)
 				//{
 				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
@@ -270,6 +269,8 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
+			    Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
+				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 			else if(Name == "TagControlEdit")
 			{

@@ -42,6 +42,11 @@ namespace Hearthstone_Deck_Tracker
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
 			ComboboxUnassigned.SelectedValue = Config.Instance.StatsOverallAssignedOnly;
+			ComboBoxPlayerClass.SelectedValue = Config.Instance.StatsOverallFilterPlayerClass;
+			ComboBoxOpponentClassD.SelectedValue = Config.Instance.StatsFilterOpponentClass;
+			ComboBoxOpponentClassOG.SelectedValue = Config.Instance.StatsFilterOpponentClass;
+			CheckBoxApplyTagFiltersOS.IsChecked = Config.Instance.StatsOverallApplyTagFilters;
+			CheckBoxApplyTagFiltersOG.IsChecked = Config.Instance.StatsOverallApplyTagFilters;
 			_initialized = true;
 			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
@@ -145,7 +150,8 @@ namespace Hearthstone_Deck_Tracker
 			DataGridGames.Items.Clear();
 			var filteredGames = FilterGames(deck.DeckStats.Games).ToList();
 			foreach(var game in filteredGames)
-				DataGridGames.Items.Add(game);
+				if(Config.Instance.StatsFilterOpponentClass == "All" || game.OpponentHero == Config.Instance.StatsFilterOpponentClass)
+					DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
@@ -415,16 +421,18 @@ namespace Hearthstone_Deck_Tracker
 			var needToSaveDeckStats = false;
 			DataGridOverallWinLoss.Items.Clear();
 			DataGridOverallGames.Items.Clear();
+			var sortedCol = DataGridOverallGames.Columns.FirstOrDefault(col => col.SortDirection != null);
 			var total = new List<GameStats>();
 			foreach(var @class in Game.Classes)
 			{
 				var allGames = new List<GameStats>();
 				if(Config.Instance.StatsOverallAssignedOnly == "With deck" || Config.Instance.StatsOverallAssignedOnly == "All")
-					allGames.AddRange(Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class).SelectMany(d => d.DeckStats.Games));
+					allGames.AddRange(Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class && MatchesTagFilters(x)).SelectMany(d => d.DeckStats.Games));
 				if(Config.Instance.StatsOverallAssignedOnly == "Without deck" || Config.Instance.StatsOverallAssignedOnly == "All")
 					allGames.AddRange(DefaultDeckStats.Instance.GetDeckStats(@class).Games);
 
 				allGames = FilterGames(allGames).ToList();
+
 				total.AddRange(allGames);
 				DataGridOverallWinLoss.Items.Add(new WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
 
@@ -436,7 +444,9 @@ namespace Hearthstone_Deck_Tracker
 						game.PlayerHero = @class;
 						needToSaveDeckStats = true;
 					}
-					DataGridOverallGames.Items.Add(game);
+					if((Config.Instance.StatsOverallFilterPlayerClass == "All" || game.PlayerHero == Config.Instance.StatsOverallFilterPlayerClass)
+						&& (Config.Instance.StatsFilterOpponentClass == "All" || game.OpponentHero == Config.Instance.StatsFilterOpponentClass))
+						DataGridOverallGames.Items.Add(game);
 				}
 			}
 			if(needToSaveDeckStats)
@@ -444,8 +454,20 @@ namespace Hearthstone_Deck_Tracker
 				DeckStatsList.Save();
 			}
 			DataGridOverallWinLoss.Items.Add(new WinLoss(total, CheckboxPercent.IsChecked ?? true, "Total"));
+			if(sortedCol != null)
+			{
+				var prevSorted = DataGridOverallGames.Columns.FirstOrDefault(col => col.Header == sortedCol.Header);
+				if(prevSorted != null)
+					prevSorted.SortDirection = sortedCol.SortDirection;
+			}
 			DataGridOverallGames.Items.Refresh();
         }
+
+
+		private bool MatchesTagFilters(Deck deck)
+		{
+			return !Config.Instance.StatsOverallApplyTagFilters || Config.Instance.SelectedTags.Contains("All") || deck.Tags.Any(tag => Config.Instance.SelectedTags.Contains(tag));
+		}
 
 		private void CheckboxPercent_Checked(object sender, RoutedEventArgs e)
 		{
@@ -587,14 +609,45 @@ namespace Hearthstone_Deck_Tracker
 			LoadOverallStats();
 		}
 		
-		private void TabItemHeaderOverall_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private void CheckBoxApplyTagFilters_OnChecked(object sender, RoutedEventArgs e)
 		{
-			StackPanelUnassignedFilter.Visibility = Visibility.Visible;
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallApplyTagFilters = true;
+			Config.Save();
+			LoadOverallStats();
 		}
 
-		private void TabItemHeaderCurrent_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private void CheckBoxApplyTagFilters_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-			StackPanelUnassignedFilter.Visibility = Visibility.Collapsed;
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallApplyTagFilters = false;
+			Config.Save();
+			LoadOverallStats();
 		}
+
+		private void ComboBoxPlayerClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallFilterPlayerClass = ComboBoxPlayerClass.SelectedValue.ToString();
+			Config.Save();
+			LoadOverallStats();
+
+		}
+
+		private void ComboBoxOpponentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			var selectedValue = ((ComboBox)sender).SelectedValue.ToString();
+			ComboBoxOpponentClassD.SelectedValue = selectedValue;
+			ComboBoxOpponentClassOG.SelectedValue = selectedValue;
+			Config.Instance.StatsFilterOpponentClass = selectedValue;
+			Config.Save();
+			LoadOverallStats();
+		}
+
 	}
 }
