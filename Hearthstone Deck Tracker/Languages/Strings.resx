@@ -889,4 +889,112 @@
     <value>VS</value>
     <comment>VS</comment>
   </data>
+  <data name="BASIC" xml:space="preserve">
+    <value>BASIC</value>
+    <comment>BASIC</comment>
+  </data>
+  <data name="DeckSelectionDialog_FILTER" xml:space="preserve">
+    <value>Filter</value>
+    <comment>Filter</comment>
+  </data>
+  <data name="DeckSelectionDialog_GAMES" xml:space="preserve">
+    <value>Games:</value>
+    <comment>Games:</comment>
+  </data>
+  <data name="DeckSelectionDialog_MODE" xml:space="preserve">
+    <value>Mode:</value>
+    <comment>Mode:</comment>
+  </data>
+  <data name="DeckSelectionDialog_SHOWGAMEWITHNODECK" xml:space="preserve">
+    <value>Show games with an/no associated deck.</value>
+    <comment>Show games with an/no associated deck.</comment>
+  </data>
+  <data name="DeckSelectionDialog_TIMEFRAME" xml:space="preserve">
+    <value>Timeframe:</value>
+    <comment>Timeframe:</comment>
+  </data>
+  <data name="DeckSelectionDialog_TITLE" xml:space="preserve">
+    <value>Wrong deck detected</value>
+    <comment>Wrong deck detected</comment>
+  </data>
+  <data name="DeckStatsControl_OVERVIEWDETAIL" xml:space="preserve">
+    <value>Overview Detail: wins - losses</value>
+    <comment>Overview Detail: wins - losses</comment>
+  </data>
+  <data name="DeckStatsControl_OVERVIEWTOTAL" xml:space="preserve">
+    <value>Overview Total: wins - losses</value>
+    <comment>Overview Total: wins - losses</comment>
+  </data>
+  <data name="DeckStatsControl_SHOWASPERCENT" xml:space="preserve">
+    <value>Show as percent</value>
+    <comment>Show as percent</comment>
+  </data>
+  <data name="DeckStatsControl_YOUVS" xml:space="preserve">
+    <value>You \ Vs</value>
+    <comment>You \ Vs</comment>
+  </data>
+  <data name="DONATE" xml:space="preserve">
+    <value>donate</value>
+    <comment>Donate</comment>
+  </data>
+  <data name="EXPERT" xml:space="preserve">
+    <value>EXPERT</value>
+    <comment>EXPERT</comment>
+  </data>
+  <data name="HELP" xml:space="preserve">
+    <value>help</value>
+    <comment>Help</comment>
+  </data>
+  <data name="HERO" xml:space="preserve">
+    <value>Hero</value>
+    <comment>Hero</comment>
+  </data>
+  <data name="MainWindow_CARSEOFNAXXRAMAS" xml:space="preserve">
+    <value>CURSE OF NAXXRAMAS</value>
+    <comment>CURSE OF NAXXRAMAS</comment>
+  </data>
+  <data name="MainWindow_DECKNAME" xml:space="preserve">
+    <value>Deckname</value>
+    <comment>Deckname</comment>
+  </data>
+  <data name="MainWindow_GOBLINSVSGNOMES" xml:space="preserve">
+    <value>GOBLINS VS GNOMES</value>
+    <comment>GOBLINS VS GNOMES</comment>
+  </data>
+  <data name="MainWindow_NAMEALREADYEXISTS" xml:space="preserve">
+    <value>Name already exists</value>
+    <comment>Name already exists</comment>
+  </data>
+  <data name="MainWindow_NOTES" xml:space="preserve">
+    <value>Notes</value>
+    <comment>Notes</comment>
+  </data>
+  <data name="MainWindow_SEARCH" xml:space="preserve">
+    <value>Search...</value>
+    <comment>Search...</comment>
+  </data>
+  <data name="MainWindow_SETTAGS" xml:space="preserve">
+    <value>Set tags</value>
+    <comment>Set tags</comment>
+  </data>
+  <data name="MainWindow_SORTFILTERDECKS" xml:space="preserve">
+    <value>Sort / Filter Decks</value>
+    <comment>Sort / Filter Decks</comment>
+  </data>
+  <data name="OPTIONS" xml:space="preserve">
+    <value>options</value>
+    <comment>Options</comment>
+  </data>
+  <data name="PROMOTION" xml:space="preserve">
+    <value>PROMOTION</value>
+    <comment>PROMOTION</comment>
+  </data>
+  <data name="STATS" xml:space="preserve">
+    <value>Stats</value>
+    <comment>Stats</comment>
+  </data>
+  <data name="TOTAL" xml:space="preserve">
+    <value>Total</value>
+    <comment>Total</comment>
+  </data>
 </root>
