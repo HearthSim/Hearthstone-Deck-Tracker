@@ -72,7 +72,7 @@
                                       CanUserReorderColumns="False" CanUserSortColumns="False"
                                       CanUserResizeColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc TOTAL}" Binding="{Binding Total}">
+                                    <DataGridTextColumn Header="Total" Binding="{Binding Total}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
