@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -16,6 +17,8 @@ using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
+using ContextMenu = System.Windows.Forms.ContextMenu;
+using MenuItem = System.Windows.Forms.MenuItem;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
@@ -167,6 +170,19 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Load();
 
 			_notifyIcon = new NotifyIcon { Icon = new Icon(@"Images/HearthstoneDeckTracker16.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString };
+			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => DeselectDeck());
+			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect")
+			                                      {
+				                                      MenuItems =
+				                                      {
+					                                      new MenuItem("On",
+					                                                   (sender, args) =>
+					                                                   AutoDeckDetection(true)),
+					                                      new MenuItem("Off",
+					                                                   (sender, args) =>
+					                                                   AutoDeckDetection(false))
+				                                      }
+			                                      });
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 			_notifyIcon.MouseClick += (sender, args) => { if(args.Button == MouseButtons.Left) ActivateWindow(); };
@@ -689,6 +705,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.AutoDeckDetection = false;
+			Config.Save();
+		}
+
+		private void AutoDeckDetection(bool enable)
+		{
+			CheckboxDeckDetection.IsChecked = enable;
+            Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
 		}
 
