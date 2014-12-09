@@ -997,4 +997,20 @@
     <value>Total</value>
     <comment>Total</comment>
   </data>
+  <data name="Options_KEEPSTATSWHENDELETINGDECK" xml:space="preserve">
+    <value>Keep stats when deleting deck</value>
+    <comment>Keep stats when deleting deck</comment>
+  </data>
+  <data name="Options_SHOWLOGTAB" xml:space="preserve">
+    <value>Show Log-tab</value>
+    <comment>Show Log-tab</comment>
+  </data>
+  <data name="Options_SOUNDANALERTANDFLASH" xml:space="preserve">
+    <value>Sound an alert and flash when you have X seconds remaining</value>
+    <comment>Sound an alert and flash when you have X seconds remaining</comment>
+  </data>
+  <data name="OVERLAY" xml:space="preserve">
+    <value>Overlay</value>
+    <comment>Overlay</comment>
+  </data>
 </root>
