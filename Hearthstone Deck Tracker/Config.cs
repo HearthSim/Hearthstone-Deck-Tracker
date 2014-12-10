@@ -109,6 +109,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ExportPasteClipboard = false;
 
+		[DefaultValue(0)]
+		public int ExportStartDelay = 0;
+
 		[DefaultValue(0.5)]
 		public double ExportSearchBoxX = 0.5;
 

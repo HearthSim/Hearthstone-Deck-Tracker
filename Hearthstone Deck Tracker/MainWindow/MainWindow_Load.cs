@@ -494,6 +494,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
 			Options.CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
 			Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
+			Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

@@ -459,7 +459,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
-                                      Width="235" Height="215" Margin="10,10,0,0">
+                                      Width="235" Height="240" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
@@ -473,6 +473,14 @@
                                             <system:String>Very Slow (150ms)</system:String>
                                         </ComboBox>
                                     </DockPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5,0,0" >
+                                        <Label Content="Wait"></Label>
+                                        <TextBox x:Name="TextboxExportDelay" 
+                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                             TextWrapping="Wrap" Text="0" VerticalAlignment="Top"
+                                             Width="27" TextChanged="TextboxExportDelay_TextChanged" PreviewTextInput="TextboxExportDelay_PreviewTextInput"/>
+                                        <Label Content="seconds before starting"></Label>
+                                    </StackPanel>
                                     <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked"
