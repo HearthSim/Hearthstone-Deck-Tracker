@@ -21,7 +21,7 @@
                     <StackPanel Margin="10,0,10,0">
                         <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                         <Bold>
-                                            <Run Text="Player: " />
+                                            <Run Text="{lex:Loc Help_PLAYER}" />
                                         </Bold>
                                         <LineBreak />
                                         <Run

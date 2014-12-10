@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ACTION" xml:space="preserve">
-    <value>Action</value>
+    <value>动作</value>
     <comment>Action</comment>
   </data>
   <data name="ADD" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>Card</comment>
   </data>
   <data name="CLASSONLY" xml:space="preserve">
-    <value>仅限Class</value>
+    <value>仅限职业</value>
     <comment>Class Only</comment>
   </data>
   <data name="CLEAR" xml:space="preserve">
@@ -158,7 +158,7 @@
     <comment>Cost</comment>
   </data>
   <data name="DECKS" xml:space="preserve">
-    <value>卡牌</value>
+    <value>卡组</value>
     <comment>Decks</comment>
   </data>
   <data name="DeckSelectionDialog_FILTER" xml:space="preserve">
@@ -174,11 +174,11 @@
     <comment>Mode:</comment>
   </data>
   <data name="DeckSelectionDialog_SELECTYOURDECK" xml:space="preserve">
-    <value>选择你的卡牌</value>
+    <value>选择你的卡组</value>
     <comment>Select your deck</comment>
   </data>
   <data name="DeckSelectionDialog_SHOWGAMEWITHNODECK" xml:space="preserve">
-    <value>Show games with an/no associated deck.</value>
+    <value>显示游戏是否附带卡组</value>
     <comment>Show games with an/no associated deck.</comment>
   </data>
   <data name="DeckSelectionDialog_TIMEFRAME" xml:space="preserve">
@@ -186,15 +186,15 @@
     <comment>Timeframe:</comment>
   </data>
   <data name="DeckSelectionDialog_TITLE" xml:space="preserve">
-    <value>Wrong deck detected</value>
+    <value>发现错误的卡组</value>
     <comment>Wrong deck detected</comment>
   </data>
   <data name="DeckStatsControl_CLASSOVERVIEW" xml:space="preserve">
-    <value>概览Class：胜 - 败</value>
+    <value>职业概览：胜 - 败</value>
     <comment>Overview Class:  wins - losses</comment>
   </data>
   <data name="DeckStatsControl_DECKGRIDCOLUM" xml:space="preserve">
-    <value>概览卡牌：胜 - 败</value>
+    <value>卡组概览：胜 - 败</value>
     <comment>Overview Deck:  wins - losses</comment>
   </data>
   <data name="DeckStatsControl_EDITNOTE" xml:space="preserve">
@@ -206,15 +206,15 @@
     <comment>Total</comment>
   </data>
   <data name="DeckStatsControl_MOVETOOTHERDECK" xml:space="preserve">
-    <value>Move to other deck</value>
+    <value>移动到另一个卡组</value>
     <comment>Move to other deck</comment>
   </data>
   <data name="DeckStatsControl_OVERVIEWDETAIL" xml:space="preserve">
-    <value>概览详情：胜 - 败</value>
+    <value>详情概览：胜 - 败</value>
     <comment>Overview Detail: wins - losses</comment>
   </data>
   <data name="DeckStatsControl_OVERVIEWTOTAL" xml:space="preserve">
-    <value>概览总体：胜 - 败</value>
+    <value>总体概览：胜 - 败</value>
     <comment>Overview Total: wins - losses</comment>
   </data>
   <data name="DeckStatsControl_SHOWASPERCENT" xml:space="preserve">
@@ -238,7 +238,7 @@
     <comment>drawing</comment>
   </data>
   <data name="DRAWS" xml:space="preserve">
-    <value>Draws</value>
+    <value>抽取</value>
     <comment>Draws</comment>
   </data>
   <data name="EXPERT" xml:space="preserve">
@@ -254,7 +254,7 @@
     <comment>Game Details</comment>
   </data>
   <data name="GameDetails_IMPORTOPPONENTDECK" xml:space="preserve">
-    <value>导入对手卡牌</value>
+    <value>导入对手卡组</value>
     <comment>Import opponent deck</comment>
   </data>
   <data name="GameDetails_OPPONENT" xml:space="preserve">
@@ -282,7 +282,7 @@
     <comment>Help</comment>
   </data>
   <data name="Help_CARDMARKS" xml:space="preserve">
-    <value>卡牌标识</value>
+    <value>卡片标识</value>
     <comment>Card Marks</comment>
   </data>
   <data name="Help_CARDNEXTTURN" xml:space="preserve">
@@ -374,11 +374,11 @@
     <comment>Log</comment>
   </data>
   <data name="MainWindow_AUTODECKSELECTION" xml:space="preserve">
-    <value>AUTO DECK SELECTION</value>
+    <value>自动卡组选择</value>
     <comment>Auto Deck Selection</comment>
   </data>
   <data name="MainWindow_CARSEOFNAXXRAMAS" xml:space="preserve">
-    <value>CURSE OF NAXXRAMAS</value>
+    <value>纳克萨玛斯的诅咒</value>
     <comment>CURSE OF NAXXRAMAS</comment>
   </data>
   <data name="MainWindow_COPYIDSTOCLIPBOARD" xml:space="preserve">
@@ -386,11 +386,11 @@
     <comment>Copy IDs To Clip Board</comment>
   </data>
   <data name="MainWindow_DECK" xml:space="preserve">
-    <value>卡牌</value>
+    <value>卡组</value>
     <comment>MenuItem DECK Of MainWindow</comment>
   </data>
   <data name="MainWindow_DECKNAME" xml:space="preserve">
-    <value>卡牌名称</value>
+    <value>卡组名称</value>
     <comment>Deckname</comment>
   </data>
   <data name="MainWindow_DRUID" xml:space="preserve">
@@ -406,7 +406,7 @@
     <comment>Edit Clone</comment>
   </data>
   <data name="MainWindow_EDITDECK" xml:space="preserve">
-    <value>卡牌</value>
+    <value>卡组</value>
     <comment>Edit Deck</comment>
   </data>
   <data name="MainWindow_EDITDELETE" xml:space="preserve">
@@ -414,7 +414,7 @@
     <comment>Edit Delete</comment>
   </data>
   <data name="MainWindow_EDITNOTES" xml:space="preserve">
-    <value>_NOTES</value>
+    <value>注解</value>
     <comment>Edit Notes</comment>
   </data>
   <data name="MainWindow_EDITTAGS" xml:space="preserve">
@@ -442,7 +442,7 @@
     <comment>From Web</comment>
   </data>
   <data name="MainWindow_GOBLINSVSGNOMES" xml:space="preserve">
-    <value>GOBLINS VS GNOMES</value>
+    <value>地精 VS 侏儒</value>
     <comment>GOBLINS VS GNOMES</comment>
   </data>
   <data name="MainWindow_HUNTER" xml:space="preserve">
@@ -466,7 +466,7 @@
     <comment>MenuItem NEW Of MainWindow</comment>
   </data>
   <data name="MainWindow_NOTES" xml:space="preserve">
-    <value>Notes</value>
+    <value>注解</value>
     <comment>Notes</comment>
   </data>
   <data name="MainWindow_PALADIN" xml:space="preserve">
@@ -506,7 +506,7 @@
     <comment>Sort Or Filter</comment>
   </data>
   <data name="MainWindow_SORTFILTERDECKS" xml:space="preserve">
-    <value>排序/过滤 卡牌</value>
+    <value>排序/过滤 卡组</value>
     <comment>Sort / Filter Decks</comment>
   </data>
   <data name="MainWindow_STATS" xml:space="preserve">
@@ -514,7 +514,7 @@
     <comment>MenuItem STATS Of MainWindow</comment>
   </data>
   <data name="MainWindow_TITLE" xml:space="preserve">
-    <value>炉石卡牌记牌器</value>
+    <value>炉石卡组记牌器</value>
     <comment>Form Title</comment>
   </data>
   <data name="MainWindow_TOHEARTHSTONE" xml:space="preserve">
@@ -542,7 +542,7 @@
     <comment>Mode</comment>
   </data>
   <data name="MoveGameDialog_TITLE" xml:space="preserve">
-    <value>选取目标卡牌</value>
+    <value>选取目标卡组</value>
     <comment>Select target deck</comment>
   </data>
   <data name="MULLIGAN" xml:space="preserve">
@@ -558,7 +558,7 @@
     <comment>Name Already Exists</comment>
   </data>
   <data name="NEUTRALONLY" xml:space="preserve">
-    <value>NEUTRAL ONLY</value>
+    <value>仅限生物</value>
     <comment>Neutral Only</comment>
   </data>
   <data name="NOTE" xml:space="preserve">
@@ -574,7 +574,7 @@
     <comment>Save with ENTER</comment>
   </data>
   <data name="NoteDialog_TITLE" xml:space="preserve">
-    <value>NOTE FOR THIS GAME</value>
+    <value>为这个游戏加注释</value>
     <comment>NOTE FOR THIS GAME</comment>
   </data>
   <data name="OPPONENT" xml:space="preserve">
@@ -618,7 +618,7 @@
     <comment>Auto clear cards</comment>
   </data>
   <data name="Options_BACKGROUND" xml:space="preserve">
-    <value>Background:</value>
+    <value>背景:</value>
     <comment>Background:</comment>
   </data>
   <data name="Options_CARDTOOLTIPS" xml:space="preserve">
@@ -626,7 +626,7 @@
     <comment>Card tooltips</comment>
   </data>
   <data name="Options_CARDTOOLTIPSINTRACKER" xml:space="preserve">
-    <value>Card tooltips in Tracker</value>
+    <value>在记牌器中显示卡片提示</value>
     <comment>Card tooltips in Tracker</comment>
   </data>
   <data name="Options_CHECKFORUPDATES" xml:space="preserve">
@@ -634,7 +634,7 @@
     <comment>Check for updates</comment>
   </data>
   <data name="Options_CLASSCARDSFIRST" xml:space="preserve">
-    <value>Class cards first</value>
+    <value>职业卡片优先</value>
     <comment>Class cards first</comment>
   </data>
   <data name="Options_CLONEWITHHS" xml:space="preserve">
@@ -650,11 +650,11 @@
     <comment>Custom hex:</comment>
   </data>
   <data name="Options_DISCARDGAMEIFINCORRECT" xml:space="preserve">
-    <value>如果有错误的卡牌则丢弃游戏</value>
+    <value>如果有错误的卡组则丢弃游戏</value>
     <comment>Discard game if incorrect deck</comment>
   </data>
   <data name="Options_DONTRESETDECK" xml:space="preserve">
-    <value>在游戏后不复位卡牌</value>
+    <value>在游戏后不复位卡组</value>
     <comment>Don't reset decks after game</comment>
   </data>
   <data name="Options_DONTSHOWDECK" xml:space="preserve">
@@ -678,19 +678,19 @@
     <comment>Flash Hearthstone on turn start</comment>
   </data>
   <data name="Options_FORSECRETSONLY" xml:space="preserve">
-    <value>For secrets only</value>
+    <value>仅限秘密</value>
     <comment>For secrets only</comment>
   </data>
   <data name="Options_FULLTEXTSEARCH" xml:space="preserve">
-    <value>在新建的卡牌中全文搜索</value>
+    <value>在新建的卡组中全文搜索</value>
     <comment>Full text search in New Deck</comment>
   </data>
   <data name="Options_GLODENSTALAGG" xml:space="preserve">
-    <value>Golden Stalagg</value>
+    <value>黄金斯塔拉格</value>
     <comment>Golden Stalagg</comment>
   </data>
   <data name="Options_GOLDENFEUGEN" xml:space="preserve">
-    <value>Golden Feugen</value>
+    <value>黄金费尔根</value>
     <comment>Golden Feugen</comment>
   </data>
   <data name="Options_HIDECARDAGE" xml:space="preserve">
@@ -706,7 +706,7 @@
     <comment>Hide (completely)</comment>
   </data>
   <data name="Options_HIDEDECKS" xml:space="preserve">
-    <value>隐藏卡牌</value>
+    <value>隐藏卡组</value>
     <comment>Hide decks</comment>
   </data>
   <data name="Options_HIDEIFHSINBACKGROUND" xml:space="preserve">
@@ -718,7 +718,7 @@
     <comment>Hide in menu</comment>
   </data>
   <data name="Options_HIDESECRETS" xml:space="preserve">
-    <value>Hide secrets</value>
+    <value>隐藏秘密</value>
     <comment>Hide secrets</comment>
   </data>
   <data name="Options_HIDETIMERS" xml:space="preserve">
@@ -746,7 +746,7 @@
     <comment>Include obtained cards</comment>
   </data>
   <data name="Options_KEEPSTATSWHENDELETINGDECK" xml:space="preserve">
-    <value>当删除卡牌时保持状态</value>
+    <value>删除卡组时保持状态</value>
     <comment>Keep stats when deleting deck</comment>
   </data>
   <data name="Options_KEYONGAMEEND" xml:space="preserve">
@@ -774,7 +774,7 @@
     <comment>Opacity:</comment>
   </data>
   <data name="Options_OPPONENTDECK" xml:space="preserve">
-    <value>对手卡牌</value>
+    <value>对手卡组</value>
     <comment>Opponent deck</comment>
   </data>
   <data name="Options_PASTENAMESFROMCLIPBOARD" xml:space="preserve">
@@ -782,7 +782,7 @@
     <comment>Paste names from clipboard</comment>
   </data>
   <data name="Options_PLAYERDECK" xml:space="preserve">
-    <value>玩家卡牌</value>
+    <value>玩家卡组</value>
     <comment>Player deck</comment>
   </data>
   <data name="Options_POPUPHSONTURNSTART" xml:space="preserve">
@@ -790,7 +790,7 @@
     <comment>Popup Hearthstone on turn start</comment>
   </data>
   <data name="Options_PRIORITIZEGOLDENCARDS" xml:space="preserve">
-    <value>Prioritize golden cards</value>
+    <value>优先考虑黄金卡片</value>
     <comment>Prioritize golden cards</comment>
   </data>
   <data name="Options_RECORDARENA" xml:space="preserve">
@@ -838,7 +838,7 @@
     <comment>Save to file</comment>
   </data>
   <data name="Options_SCALING" xml:space="preserve">
-    <value>Scaling:</value>
+    <value>缩放比例：</value>
     <comment>Scaling:</comment>
   </data>
   <data name="Options_SETDECKNAME" xml:space="preserve">
@@ -850,7 +850,7 @@
     <comment>Show deck stats in new window</comment>
   </data>
   <data name="Options_SHOWLOGTAB" xml:space="preserve">
-    <value>Show Log-tab</value>
+    <value>展示日志标签</value>
     <comment>Show Log-tab</comment>
   </data>
   <data name="Options_SHOWMANACURVE" xml:space="preserve">
@@ -870,11 +870,11 @@
     <comment>Speed:</comment>
   </data>
   <data name="Options_STARTMINIMIZED" xml:space="preserve">
-    <value>Start minimized</value>
+    <value>启动时最小化</value>
     <comment>Start minimized</comment>
   </data>
   <data name="Options_TAGDECKSONIMPORT" xml:space="preserve">
-    <value>Tag decks on import</value>
+    <value>在导出时附加卡组信息</value>
     <comment>Tag decks on import</comment>
   </data>
   <data name="Options_THEME" xml:space="preserve">
@@ -882,7 +882,7 @@
     <comment>Theme:</comment>
   </data>
   <data name="Options_USESAMESCALING" xml:space="preserve">
-    <value>Use same scaling for player/opponent</value>
+    <value>对玩家/对手使用相同的比例</value>
     <comment>Use same scaling for player/opponent</comment>
   </data>
   <data name="OTHER" xml:space="preserve">
@@ -910,7 +910,7 @@
     <comment>Plays</comment>
   </data>
   <data name="PROMOTION" xml:space="preserve">
-    <value>PROMOTION</value>
+    <value>晋升</value>
     <comment>PROMOTION</comment>
   </data>
   <data name="RESET" xml:space="preserve">
@@ -926,23 +926,23 @@
     <comment>Save</comment>
   </data>
   <data name="SortFilterDecks_DELETESELECTED" xml:space="preserve">
-    <value>Delete Selected</value>
+    <value>删除所选</value>
     <comment>Delete Selected</comment>
   </data>
   <data name="SortFilterDecks_FILTERBYTAGS" xml:space="preserve">
-    <value>Filter by tags:</value>
+    <value>根据标签过滤:</value>
     <comment>Filter by tags:</comment>
   </data>
   <data name="SortFilterDecks_FILTEROPERATION" xml:space="preserve">
-    <value>Filter operation</value>
+    <value>过滤操作</value>
     <comment>Filter operation</comment>
   </data>
   <data name="SortFilterDecks_NEWTAG" xml:space="preserve">
-    <value>新建 标签</value>
+    <value>新建标签</value>
     <comment>New Tag</comment>
   </data>
   <data name="SortFilterDecks_SORTDECKSBY" xml:space="preserve">
-    <value>卡牌分类通过：</value>
+    <value>卡组排序方式：</value>
     <comment>Sort decks by:</comment>
   </data>
   <data name="SORTING" xml:space="preserve">
@@ -1000,8 +1000,8 @@
   <data name="MainWindow_WARRIOR" xml:space="preserve">
     <value>战士</value>
   </data>
-  <data name="STARTED" xml:space="preserve">
-    <value>开始</value>
-    <comment>Started</comment>
+  <data name="Help_PLAYER" xml:space="preserve">
+    <value>玩家： </value>
+    <comment>Player: </comment>
   </data>
 </root>

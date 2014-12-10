@@ -1001,4 +1001,8 @@
     <value>VS</value>
     <comment>VS</comment>
   </data>
+  <data name="Help_PLAYER" xml:space="preserve">
+    <value>Player: </value>
+    <comment>Player: </comment>
+  </data>
 </root>
