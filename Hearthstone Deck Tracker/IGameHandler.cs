@@ -11,6 +11,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerHandDiscard(string cardId, int turn);
 		void HandlePlayerPlay(string cardId, int turn);
 		void HandlePlayerDeckDiscard(string cardId, int turn);
+		void HandlePlayerPlayToDeck(string cardId, int turn);
 		void HandlePlayerHeroPower(string cardId, int turn);
 		void SetPlayerHero(string playerHero);
 
@@ -23,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGet(int turn);
 		void HandleOpponentSecretPlayed(string cardId, int from, int turn, bool fromDeck);
 		void HandleOpponentPlayToHand(string cardId, int turn);
+		void HandleOpponentPlayToDeck(string cardId, int turn);
 		void HandleOpponentSecretTrigger(string cardId, int turn);
 		void HandleOpponentDeckDiscard(string cardId, int turn);
 		void SetOpponentHero(string hero);

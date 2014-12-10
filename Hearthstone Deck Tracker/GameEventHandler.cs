@@ -127,6 +127,20 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 		}
+		
+	    public static void HandlePlayerPlayToDeck(string cardId, int turn)
+	    {
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			LogEvent("PlayerPlayToDeck", cardId);
+			Game.PlayerPlayToDeck(cardId);
+
+			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
+			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
+			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
+
+			Game.AddPlayToCurrentGame(PlayType.PlayerPlayToDeck, turn, cardId);
+		}
 
 		#endregion
 
@@ -193,7 +207,17 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
 		}
 
-		public static void HandleOpponentSecretTrigger(string cardId, int turn)
+
+	    public static void HandleOpponentPlayToDeck(string cardId, int turn)
+	    {
+			LogEvent("OpponentPlayToDeck", cardId, turn);
+			Game.OpponentPlayToDeck(cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentPlayToDeck, turn, cardId);
+			Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
+		}
+
+	    public static void HandleOpponentSecretTrigger(string cardId, int turn)
 		{
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
@@ -582,7 +606,17 @@ namespace Hearthstone_Deck_Tracker
             HandlePlayerGet(cardId, turn);
         }
 
-        #endregion IGameHandlerImplementation
+		void IGameHandler.HandlePlayerPlayToDeck(string cardId, int turn)
+		{
+			HandlePlayerPlayToDeck(cardId, turn);
+		}
+
+		void IGameHandler.HandleOpponentPlayToDeck(string cardId, int turn)
+		{
+			HandleOpponentPlayToDeck(cardId, turn);
+		}
+
+		#endregion IGameHandlerImplementation
 
 	}
 }

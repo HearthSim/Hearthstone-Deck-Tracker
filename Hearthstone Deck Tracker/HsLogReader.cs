@@ -437,6 +437,8 @@ namespace Hearthstone_Deck_Tracker
 							case "FRIENDLY PLAY":
 								if(to == "FRIENDLY HAND")
 									_gameHandler.HandlePlayerBackToHand(id, GetTurnNumber());
+								else if(to == "FRIENDLY DECK")
+									_gameHandler.HandlePlayerPlayToDeck(id, GetTurnNumber());
 								break;
 							case "OPPOSING HAND":
 								if(to == "OPPOSING DECK")
@@ -487,6 +489,8 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
 									_gameHandler.HandleOpponentPlayToHand(id, GetTurnNumber());
+								else if(to == "OPPOSING DECK")
+									_gameHandler.HandleOpponentPlayToDeck(id, GetTurnNumber());
 								break;
 							default:
 								if(to == "OPPOSING HAND")
