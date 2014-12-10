@@ -18,7 +18,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Coin = 'C',
 			Returned = 'R',
 			Mulliganed = 'M',
-			Stolen = 'S'
+			Stolen = 'S',
+			Kept = 'K'
 		}
 
 		public enum GameMode
@@ -373,7 +374,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
 
 				OpponentHandAge[OpponentHandCount - 1] = turn;
-				OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
+				OpponentHandMarks[OpponentHandCount - 1] = turn == 0 ? CardMark.Kept :  CardMark.None;
 
 				LogOpponentHand();
 			}
