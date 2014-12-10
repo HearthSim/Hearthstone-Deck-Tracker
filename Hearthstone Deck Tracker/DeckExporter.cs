@@ -37,6 +37,9 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 
+				Logger.WriteLine("Waiting for " + Config.Instance.ExportStartDelay + " seconds before starting the export process");
+				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
+
 				var hsRect = User32.GetHearthstoneRect(false);
 				var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 
