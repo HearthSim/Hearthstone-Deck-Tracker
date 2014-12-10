@@ -165,6 +165,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideOverlay = false;
 
 		[DefaultValue(false)]
+		public bool HideOverlayInSpectator = false;
+
+		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
 
 		[DefaultValue(false)]
@@ -307,6 +310,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool RecordPractice = false;
+
+		[DefaultValue(false)]
+		public bool RecordSpectator = false;
 
 		[DefaultValue(true)]
 		public bool RecordRanked = true;

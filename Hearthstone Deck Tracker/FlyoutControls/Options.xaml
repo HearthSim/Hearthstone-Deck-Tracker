@@ -93,7 +93,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="458" Width="235"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="480" Width="235"
                                   Margin="5,0,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)"
@@ -104,6 +104,10 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOverlayInMenu_Checked"
                                           Unchecked="CheckboxHideOverlayInMenu_Unchecked" />
+                                <CheckBox x:Name="CheckboxHideOverlayInSpectator" Content="Hide in spectator"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxHideOverlayInSpectator_Checked"
+                                          Unchecked="CheckboxHideOverlayInSpectator_Unchecked" />
                                 <CheckBox x:Name="CheckboxHideOverlayInBackground"
                                           Content="Hide if HS in background" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
@@ -499,7 +503,7 @@
 
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top"
+                            <GroupBox Header="Record Games" Height="230" Width="235" VerticalAlignment="Top"
                                       Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
@@ -522,6 +526,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
                                               Unchecked="CheckboxRecordPractice_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordSpectator" Content="Record Spectator"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
+                                              Unchecked="CheckboxRecordSpectator_Unchecked" />
                                     <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"

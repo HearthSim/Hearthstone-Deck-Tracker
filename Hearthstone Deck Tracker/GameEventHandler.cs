@@ -426,7 +426,8 @@ namespace Hearthstone_Deck_Tracker
 			   || Game.CurrentGameMode == Game.GameMode.Arena && Config.Instance.RecordArena
 			   || Game.CurrentGameMode == Game.GameMode.Ranked && Config.Instance.RecordRanked
 			   || Game.CurrentGameMode == Game.GameMode.Friendly && Config.Instance.RecordFriendly
-			   || Game.CurrentGameMode == Game.GameMode.Casual && Config.Instance.RecordCasual)
+			   || Game.CurrentGameMode == Game.GameMode.Casual && Config.Instance.RecordCasual
+			   || Game.CurrentGameMode == Game.GameMode.Spectator && Config.Instance.RecordSpectator)
 			{
 				if(Game.CurrentGameStats != null)
 				{

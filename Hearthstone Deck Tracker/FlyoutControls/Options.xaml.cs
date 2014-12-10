@@ -1298,5 +1298,33 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Process.Start(Config.Instance.AppDataPath);
 		}
+
+		private void CheckboxRecordSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = false;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = false;
+			Config.Save();
+		}
 	}
 }

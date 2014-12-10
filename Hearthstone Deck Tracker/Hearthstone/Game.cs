@@ -30,7 +30,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Arena,
 			Friendly,
 			Practice,
-			None
+			Spectator,
+            None
 		}
 
 		public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };

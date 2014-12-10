@@ -266,7 +266,13 @@ namespace Hearthstone_Deck_Tracker
 				if(logLine.StartsWith("[Power]"))
 				{
 					_powerCount++;
-
+				
+					if(logLine.Contains("Begin Spectating"))
+					{
+						Game.CurrentGameMode = Game.GameMode.Spectator;
+						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
+						return;
+					}
 					if((_currentPlayer == Turn.Player && !_playerUsedHeroPower) || _currentPlayer == Turn.Opponent && !_opponentUsedHeroPower)
 					{
 						if(_heroPowerRegex.IsMatch(logLine))

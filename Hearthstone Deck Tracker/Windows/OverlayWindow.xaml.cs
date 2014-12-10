@@ -796,6 +796,7 @@ namespace Hearthstone_Deck_Tracker
 			ShowOverlay(!(
 				             (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 				             || (Config.Instance.HideInMenu && Game.IsInMenu)
+							 || (Config.Instance.HideOverlayInSpectator && Game.CurrentGameMode == Game.GameMode.Spectator)
 				             || Config.Instance.HideOverlay || ForceHidden));
 
 
