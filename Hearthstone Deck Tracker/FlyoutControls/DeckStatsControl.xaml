@@ -202,7 +202,7 @@
                                       CanUserReorderColumns="False" CanUserSortColumns="False"
                                       CanUserResizeColumns="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc TOTAL}" Binding="{Binding Total}">
+                                    <DataGridTextColumn Header="Total" Binding="{Binding Total}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -336,49 +336,49 @@
                                       MouseDoubleClick="DGrid_MouseDoubleClick"
                                       SelectionChanged="DGrid_SelectionChanged">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{lex:Loc RESULT}" Binding="{Binding Result}">
+                                    <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTemplateColumn Header="{lex:Loc VS}" SortMemberPath="OpponentHero">
+                                    <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Image Source="{Binding OpponentHeroImage}" Height="24" Width="24" />
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="{lex:Loc MODE}" Binding="{Binding GameMode}">
+                                    <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="{lex:Loc TURNS}" Binding="{Binding Turns}">
+                                    <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="{lex:Loc COIN}" Binding="{Binding GotCoin}">
+                                    <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="{lex:Loc TIME}" Binding="{Binding Duration}">
+                                    <DataGridTextColumn Header="Time" Binding="{Binding Duration}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="{lex:Loc STARTED}"
+                                    <DataGridTextColumn Header="Started"
                                                         Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
@@ -386,7 +386,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="{lex:Loc NOTE}" Binding="{Binding Note}" />
+                                    <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                             <Separator Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" />
@@ -432,7 +432,7 @@
                                                   CanUserReorderColumns="False" CanUserSortColumns="False"
                                                   CanUserResizeColumns="False">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="{lex:Loc TOTAL}" Binding="{Binding Total}">
+                                                <DataGridTextColumn Header="Total" Binding="{Binding Total}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -586,7 +586,7 @@
                                                       CanUserReorderColumns="False" CanUserSortColumns="False"
                                                       CanUserResizeColumns="False">
                                                 <DataGrid.Columns>
-                                                    <DataGridTemplateColumn Header="{lex:Loc DeckStatsControl_YOUVS}">
+                                                    <DataGridTemplateColumn Header="You \ Vs">
                                                         <DataGridTemplateColumn.CellTemplate>
                                                             <DataTemplate>
                                                                 <Image Source="{Binding PlayerHeroImage}" Width="24"
@@ -746,14 +746,14 @@
                                                   MouseDoubleClick="DGridOverall_MouseDoubleClick"
                                                   SelectionChanged="DGridOverall_SelectionChanged">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="{lex:Loc RESULT}" Binding="{Binding Result}">
+                                                <DataGridTextColumn Header="Result" Binding="{Binding Result}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTemplateColumn Header="{lex:Loc HERO}" SortMemberPath="PlayerHero">
+                                                <DataGridTemplateColumn Header="Hero" SortMemberPath="PlayerHero">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <Image Source="{Binding PlayerHeroImage}" Height="24"
@@ -761,7 +761,7 @@
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTemplateColumn Header="{lex:Loc VS}" SortMemberPath="OpponentHero">
+                                                <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                                     <DataGridTemplateColumn.CellTemplate>
                                                         <DataTemplate>
                                                             <Image Source="{Binding OpponentHeroImage}" Height="24"
@@ -769,35 +769,35 @@
                                                         </DataTemplate>
                                                     </DataGridTemplateColumn.CellTemplate>
                                                 </DataGridTemplateColumn>
-                                                <DataGridTextColumn Header="{lex:Loc MODE}" Binding="{Binding GameMode}">
+                                                <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="{lex:Loc TURNS}" Binding="{Binding Turns}">
+                                                <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="{lex:Loc COIN}" Binding="{Binding GotCoin}">
+                                                <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="{lex:Loc TIME}" Binding="{Binding Duration}">
+                                                <DataGridTextColumn Header="Time" Binding="{Binding Duration}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="{lex:Loc STARTED}"
+                                                <DataGridTextColumn Header="Started"
                                                                     Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
@@ -805,7 +805,7 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="{lex:Loc NOTE}" Binding="{Binding Note}" />
+                                                <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                         <Separator Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" />
@@ -816,10 +816,10 @@
                                             <Button x:Name="BtnOverallDetails" IsEnabled="False"
                                                     Content="{lex:Loc DeckStatsControl_SHOWGAMEDETAILS}" Margin="5,0,0,0"
                                                     Width="120" VerticalAlignment="Bottom" Click="BtnOverallDetails_Click" />
-                                            <Button x:Name="BtnOverallNote" IsEnabled="False" Content="Edit Note"
+                                            <Button x:Name="BtnOverallNote" IsEnabled="False" Content="{lex:Loc DeckStatsControl_EDITNOTE}"
                                                     Margin="5,0,0,0" Width="75"
                                                     VerticalAlignment="Bottom" Click="BtnOverallEditNote_Click" />
-                                            <Button x:Name="BtnOverallDelete" IsEnabled="False" Content="Delete"
+                                            <Button x:Name="BtnOverallDelete" IsEnabled="False" Content="{lex:Loc DELETE}"
                                                     Margin="5,0,0,0" Width="75"
                                                     VerticalAlignment="Bottom" Click="BtnOverallDelete_Click" />
                                         </StackPanel>

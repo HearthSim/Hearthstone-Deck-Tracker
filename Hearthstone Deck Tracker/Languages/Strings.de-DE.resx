@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,957 +59,945 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="ACTION" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ACTION" xml:space="preserve">
     <value>Action</value>
     <comment>Action</comment>
   </data>
-	<data name="ADD" xml:space="preserve">
+  <data name="ADD" xml:space="preserve">
     <value>Add</value>
     <comment>Add</comment>
   </data>
-	<data name="ALL" xml:space="preserve">
+  <data name="ALL" xml:space="preserve">
     <value>ALL</value>
     <comment>All</comment>
   </data>
-	<data name="BASIC" xml:space="preserve">
+  <data name="BASIC" xml:space="preserve">
     <value>BASIC</value>
     <comment>BASIC</comment>
   </data>
-	<data name="CANCEL" xml:space="preserve">
+  <data name="CANCEL" xml:space="preserve">
     <value>CANCEL</value>
     <comment>Cancel</comment>
   </data>
-	<data name="CARD" xml:space="preserve">
+  <data name="CARD" xml:space="preserve">
     <value>Card</value>
     <comment>Card</comment>
   </data>
-	<data name="CLASSONLY" xml:space="preserve">
+  <data name="CLASSONLY" xml:space="preserve">
     <value>CLASS ONLY</value>
     <comment>Class Only</comment>
   </data>
-	<data name="CLEAR" xml:space="preserve">
+  <data name="CLEAR" xml:space="preserve">
     <value>Clear</value>
     <comment>Clear</comment>
   </data>
-	<data name="COIN" xml:space="preserve">
+  <data name="COIN" xml:space="preserve">
     <value>Coin</value>
     <comment>Coin</comment>
   </data>
-	<data name="COST" xml:space="preserve">
+  <data name="COST" xml:space="preserve">
     <value>cost</value>
     <comment>Cost</comment>
   </data>
-	<data name="DECKS" xml:space="preserve">
+  <data name="DECKS" xml:space="preserve">
     <value>Decks</value>
     <comment>Decks</comment>
   </data>
-	<data name="DeckSelectionDialog_FILTER" xml:space="preserve">
+  <data name="DeckSelectionDialog_FILTER" xml:space="preserve">
     <value>Filter</value>
     <comment>Filter</comment>
   </data>
-	<data name="DeckSelectionDialog_GAMES" xml:space="preserve">
+  <data name="DeckSelectionDialog_GAMES" xml:space="preserve">
     <value>Games:</value>
     <comment>Games:</comment>
   </data>
-	<data name="DeckSelectionDialog_MODE" xml:space="preserve">
+  <data name="DeckSelectionDialog_MODE" xml:space="preserve">
     <value>Mode:</value>
     <comment>Mode:</comment>
   </data>
-	<data name="DeckSelectionDialog_SELECTYOURDECK" xml:space="preserve">
+  <data name="DeckSelectionDialog_SELECTYOURDECK" xml:space="preserve">
     <value>Select your deck</value>
     <comment>Select your deck</comment>
   </data>
-	<data name="DeckSelectionDialog_SHOWGAMEWITHNODECK" xml:space="preserve">
+  <data name="DeckSelectionDialog_SHOWGAMEWITHNODECK" xml:space="preserve">
     <value>Show games with an/no associated deck.</value>
     <comment>Show games with an/no associated deck.</comment>
   </data>
-	<data name="DeckSelectionDialog_TIMEFRAME" xml:space="preserve">
+  <data name="DeckSelectionDialog_TIMEFRAME" xml:space="preserve">
     <value>Timeframe:</value>
     <comment>Timeframe:</comment>
   </data>
-	<data name="DeckSelectionDialog_TITLE" xml:space="preserve">
+  <data name="DeckSelectionDialog_TITLE" xml:space="preserve">
     <value>Wrong deck detected</value>
     <comment>Wrong deck detected</comment>
   </data>
-	<data name="DeckStatsControl_CLASSOVERVIEW" xml:space="preserve">
+  <data name="DeckStatsControl_CLASSOVERVIEW" xml:space="preserve">
     <value>Overview Class:  wins - losses</value>
     <comment>Overview Class:  wins - losses</comment>
   </data>
-	<data name="DeckStatsControl_DECKGRIDCOLUM" xml:space="preserve">
+  <data name="DeckStatsControl_DECKGRIDCOLUM" xml:space="preserve">
     <value>Overview Deck:  wins - losses</value>
     <comment>Overview Deck:  wins - losses</comment>
   </data>
-	<data name="DeckStatsControl_EDITNOTE" xml:space="preserve">
+  <data name="DeckStatsControl_EDITNOTE" xml:space="preserve">
     <value>Edit Note</value>
     <comment>Edit Note</comment>
   </data>
-	<data name="DeckStatsControl_GRIDCOLUM" xml:space="preserve">
+  <data name="DeckStatsControl_GRIDCOLUM" xml:space="preserve">
     <value>Total</value>
     <comment>Total</comment>
   </data>
-	<data name="DeckStatsControl_MOVETOOTHERDECK" xml:space="preserve">
+  <data name="DeckStatsControl_MOVETOOTHERDECK" xml:space="preserve">
     <value>Move to other deck</value>
     <comment>Move to other deck</comment>
   </data>
-	<data name="DeckStatsControl_OVERVIEWDETAIL" xml:space="preserve">
+  <data name="DeckStatsControl_OVERVIEWDETAIL" xml:space="preserve">
     <value>Overview Detail: wins - losses</value>
     <comment>Overview Detail: wins - losses</comment>
   </data>
-	<data name="DeckStatsControl_OVERVIEWTOTAL" xml:space="preserve">
+  <data name="DeckStatsControl_OVERVIEWTOTAL" xml:space="preserve">
     <value>Overview Total: wins - losses</value>
     <comment>Overview Total: wins - losses</comment>
   </data>
-	<data name="DeckStatsControl_SHOWASPERCENT" xml:space="preserve">
+  <data name="DeckStatsControl_SHOWASPERCENT" xml:space="preserve">
     <value>Show as percent</value>
     <comment>Show as percent</comment>
   </data>
-	<data name="DeckStatsControl_SHOWGAMEDETAILS" xml:space="preserve">
+  <data name="DeckStatsControl_SHOWGAMEDETAILS" xml:space="preserve">
     <value>Show game details</value>
     <comment>Show game details</comment>
   </data>
-	<data name="DeckStatsControl_YOUVS" xml:space="preserve">
-    <value>You \ Vs</value>
-    <comment>You \ Vs</comment>
-  </data>
-	<data name="DELETE" xml:space="preserve">
+  <data name="DELETE" xml:space="preserve">
     <value>Delete</value>
     <comment>Delete</comment>
   </data>
-	<data name="DONATE" xml:space="preserve">
+  <data name="DONATE" xml:space="preserve">
     <value>donate</value>
     <comment>Donate</comment>
   </data>
-	<data name="DRAWING" xml:space="preserve">
+  <data name="DRAWING" xml:space="preserve">
     <value>drawing</value>
     <comment>drawing</comment>
   </data>
-	<data name="DRAWS" xml:space="preserve">
+  <data name="DRAWS" xml:space="preserve">
     <value>Draws</value>
     <comment>Draws</comment>
   </data>
-	<data name="EXPERT" xml:space="preserve">
+  <data name="EXPERT" xml:space="preserve">
     <value>EXPERT</value>
     <comment>EXPERT</comment>
   </data>
-	<data name="FILTER" xml:space="preserve">
+  <data name="FILTER" xml:space="preserve">
     <value>FILTER</value>
     <comment>Filter</comment>
   </data>
-	<data name="GameDetails_GAMEDETAILS" xml:space="preserve">
+  <data name="GameDetails_GAMEDETAILS" xml:space="preserve">
     <value>Game Details</value>
     <comment>Game Details</comment>
   </data>
-	<data name="GameDetails_IMPORTOPPONENTDECK" xml:space="preserve">
+  <data name="GameDetails_IMPORTOPPONENTDECK" xml:space="preserve">
     <value>Import opponent deck</value>
     <comment>Import opponent deck</comment>
   </data>
-	<data name="GameDetails_OPPONENT" xml:space="preserve">
+  <data name="GameDetails_OPPONENT" xml:space="preserve">
     <value>Opponent:</value>
     <comment>Opponent:</comment>
   </data>
-	<data name="GameDetails_PLAYER" xml:space="preserve">
+  <data name="GameDetails_PLAYER" xml:space="preserve">
     <value>Player:</value>
     <comment>Player:</comment>
   </data>
-	<data name="GAMES" xml:space="preserve">
+  <data name="GAMES" xml:space="preserve">
     <value>Games</value>
     <comment>Games</comment>
   </data>
-	<data name="GENERAL" xml:space="preserve">
+  <data name="GENERAL" xml:space="preserve">
     <value>General</value>
     <comment>General</comment>
   </data>
-	<data name="HAVING" xml:space="preserve">
+  <data name="HAVING" xml:space="preserve">
     <value>having</value>
     <comment>having</comment>
   </data>
-	<data name="HELP" xml:space="preserve">
+  <data name="HELP" xml:space="preserve">
     <value>help</value>
     <comment>Help</comment>
   </data>
-	<data name="Help_CARDMARKS" xml:space="preserve">
+  <data name="Help_CARDMARKS" xml:space="preserve">
     <value>Card Marks</value>
     <comment>Card Marks</comment>
   </data>
-	<data name="Help_CARDNEXTTURN" xml:space="preserve">
+  <data name="Help_CARDNEXTTURN" xml:space="preserve">
     <value>a card next turn.</value>
     <comment>a card next turn.</comment>
   </data>
-	<data name="Help_CHANCEOFYOUROPPONENT" xml:space="preserve">
+  <data name="Help_CHANCEOFYOUROPPONENT" xml:space="preserve">
     <value>The chance of your opponent</value>
     <comment>The chance of your opponent</comment>
   </data>
-	<data name="Help_CONTAINSABRIEF" xml:space="preserve">
+  <data name="Help_CONTAINSABRIEF" xml:space="preserve">
     <value>contains a brief overview of all the features.</value>
     <comment>contains a brief overview of all the features.</comment>
   </data>
-	<data name="Help_CRMS" xml:space="preserve">
+  <data name="Help_CRMS" xml:space="preserve">
     <value>(C)oin, (R)eturned, (M)ulliganed, (S)tolen</value>
     <comment>(C)oin, (R)eturned, (M)ulliganed, (S)tolen</comment>
   </data>
-	<data name="Help_DRAWCARD" xml:space="preserve">
+  <data name="Help_DRAWCARD" xml:space="preserve">
     <value>The chances of drawing a card with [2] or [1] copies left in the deck.</value>
     <comment>The chances of drawing a card with [2] or [1] copies left in the deck.</comment>
   </data>
-	<data name="Help_FIRSTNUMBER" xml:space="preserve">
+  <data name="Help_FIRSTNUMBER" xml:space="preserve">
     <value>First number:</value>
     <comment>First number:</comment>
   </data>
-	<data name="Help_FOUNDABUG" xml:space="preserve">
+  <data name="Help_FOUNDABUG" xml:space="preserve">
     <value>I found a bug, what do I do?</value>
     <comment>I found a bug, what do I do?</comment>
   </data>
-	<data name="Help_GITHUBPROJECT" xml:space="preserve">
+  <data name="Help_GITHUBPROJECT" xml:space="preserve">
     <value>GitHub Project</value>
     <comment>GitHub Project</comment>
   </data>
-	<data name="Help_IFNOISSUE" xml:space="preserve">
+  <data name="Help_IFNOISSUE" xml:space="preserve">
     <value>If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request.</value>
     <comment>If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request.</comment>
   </data>
-	<data name="Help_NUMBERGETSINTERESTING" xml:space="preserve">
+  <data name="Help_NUMBERGETSINTERESTING" xml:space="preserve">
     <value>(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)</value>
     <comment>(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)</comment>
   </data>
-	<data name="Help_NUMBERISINTERESTING" xml:space="preserve">
+  <data name="Help_NUMBERISINTERESTING" xml:space="preserve">
     <value>(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)</value>
     <comment>(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)</comment>
   </data>
-	<data name="Help_OPPONENT" xml:space="preserve">
+  <data name="Help_OPPONENT" xml:space="preserve">
     <value>Opponent: </value>
     <comment>Opponent:</comment>
   </data>
-	<data name="Help_OPTION1" xml:space="preserve">
+  <data name="Help_OPTION1" xml:space="preserve">
     <value>1) Check out the</value>
     <comment>1) Check out the</comment>
   </data>
-	<data name="Help_OPTION2" xml:space="preserve">
+  <data name="Help_OPTION2" xml:space="preserve">
     <value>2) Send me an email: epikz37@gmail.com</value>
     <comment>2) Send me an email: epikz37@gmail.com</comment>
   </data>
-	<data name="Help_PROJECTCANBEFOUND" xml:space="preserve">
+  <data name="Help_PROJECTCANBEFOUND" xml:space="preserve">
     <value>The project can be found</value>
     <comment>The project can be found</comment>
   </data>
-	<data name="Help_SECONDNUMBER" xml:space="preserve">
+  <data name="Help_SECONDNUMBER" xml:space="preserve">
     <value>Second number:</value>
     <comment>Second number:</comment>
   </data>
-	<data name="Help_STANDFORNUMBER" xml:space="preserve">
+  <data name="Help_STANDFORNUMBER" xml:space="preserve">
     <value>[2] and [1] stands for the number of copies left in deck+hand / deck.</value>
     <comment>[2] and [1] stands for the number of copies left in deck+hand / deck.</comment>
   </data>
-	<data name="Help_TWOOPTIONSHERE" xml:space="preserve">
+  <data name="Help_TWOOPTIONSHERE" xml:space="preserve">
     <value>Two options here:</value>
     <comment>Two options here:</comment>
   </data>
-	<data name="Help_VERSION" xml:space="preserve">
+  <data name="Help_VERSION" xml:space="preserve">
     <value>Version:</value>
     <comment>Version:</comment>
   </data>
-	<data name="Help_WHATAREALLTHESEPERCENTAGES" xml:space="preserve">
+  <data name="Help_WHATAREALLTHESEPERCENTAGES" xml:space="preserve">
     <value>What are all these percentages?</value>
     <comment>What are all these percentages?</comment>
   </data>
-	<data name="HERO" xml:space="preserve">
+  <data name="HERO" xml:space="preserve">
     <value>Hero</value>
     <comment>Hero</comment>
   </data>
-	<data name="LOG" xml:space="preserve">
+  <data name="LOG" xml:space="preserve">
     <value>Log</value>
     <comment>Log</comment>
   </data>
-	<data name="MainWindow_AUTODECKSELECTION" xml:space="preserve">
+  <data name="MainWindow_AUTODECKSELECTION" xml:space="preserve">
     <value>AUTO DECK SELECTION</value>
     <comment>Auto Deck Selection</comment>
   </data>
-	<data name="MainWindow_CARSEOFNAXXRAMAS" xml:space="preserve">
+  <data name="MainWindow_CARSEOFNAXXRAMAS" xml:space="preserve">
     <value>CURSE OF NAXXRAMAS</value>
     <comment>CURSE OF NAXXRAMAS</comment>
   </data>
-	<data name="MainWindow_COPYIDSTOCLIPBOARD" xml:space="preserve">
+  <data name="MainWindow_COPYIDSTOCLIPBOARD" xml:space="preserve">
     <value>COPY IDS TO _CLIPBOARD</value>
     <comment>Copy IDs To Clip Board</comment>
   </data>
-	<data name="MainWindow_DECK" xml:space="preserve">
+  <data name="MainWindow_DECK" xml:space="preserve">
     <value>_DECK</value>
     <comment>MenuItem DECK Of MainWindow</comment>
   </data>
-	<data name="MainWindow_DECKNAME" xml:space="preserve">
+  <data name="MainWindow_DECKNAME" xml:space="preserve">
     <value>Deckname</value>
     <comment>Deckname</comment>
   </data>
-	<data name="MainWindow_DRUID" xml:space="preserve">
+  <data name="MainWindow_DRUID" xml:space="preserve">
     <value>_DRUID</value>
     <comment>DRUID</comment>
   </data>
-	<data name="MainWindow_EDIT" xml:space="preserve">
+  <data name="MainWindow_EDIT" xml:space="preserve">
     <value>_EDIT</value>
     <comment>MenuItem EDIT Of MainWindow</comment>
   </data>
-	<data name="MainWindow_EDITCLONE" xml:space="preserve">
+  <data name="MainWindow_EDITCLONE" xml:space="preserve">
     <value>CLONE</value>
     <comment>Edit Clone</comment>
   </data>
-	<data name="MainWindow_EDITDECK" xml:space="preserve">
+  <data name="MainWindow_EDITDECK" xml:space="preserve">
     <value>_DECK</value>
     <comment>Edit Deck</comment>
   </data>
-	<data name="MainWindow_EDITDELETE" xml:space="preserve">
+  <data name="MainWindow_EDITDELETE" xml:space="preserve">
     <value>DELETE</value>
     <comment>Edit Delete</comment>
   </data>
-	<data name="MainWindow_EDITNOTES" xml:space="preserve">
+  <data name="MainWindow_EDITNOTES" xml:space="preserve">
     <value>_NOTES</value>
     <comment>Edit Notes</comment>
   </data>
-	<data name="MainWindow_EDITTAGS" xml:space="preserve">
+  <data name="MainWindow_EDITTAGS" xml:space="preserve">
     <value>_TAGS</value>
     <comment>Edit Tags</comment>
   </data>
-	<data name="MainWindow_EXPORT" xml:space="preserve">
+  <data name="MainWindow_EXPORT" xml:space="preserve">
     <value>_EXPORT</value>
     <comment>MenuItem EXPORT Of MainWindow</comment>
   </data>
-	<data name="MainWindow_FROMFILE" xml:space="preserve">
+  <data name="MainWindow_FROMFILE" xml:space="preserve">
     <value>FROM _FILE</value>
     <comment>From File</comment>
   </data>
-	<data name="MainWindow_FROMIDSTRING" xml:space="preserve">
+  <data name="MainWindow_FROMIDSTRING" xml:space="preserve">
     <value>FROM _ID STRING</value>
     <comment>From ID String</comment>
   </data>
-	<data name="MainWindow_FROMLASTGAME" xml:space="preserve">
+  <data name="MainWindow_FROMLASTGAME" xml:space="preserve">
     <value>FROM LAST _GAME</value>
     <comment>From Last Game</comment>
   </data>
-	<data name="MainWindow_FROMWEB" xml:space="preserve">
+  <data name="MainWindow_FROMWEB" xml:space="preserve">
     <value>FROM _WEB</value>
     <comment>From Web</comment>
   </data>
-	<data name="MainWindow_GOBLINSVSGNOMES" xml:space="preserve">
+  <data name="MainWindow_GOBLINSVSGNOMES" xml:space="preserve">
     <value>GOBLINS VS GNOMES</value>
     <comment>GOBLINS VS GNOMES</comment>
   </data>
-	<data name="MainWindow_HUNTER" xml:space="preserve">
+  <data name="MainWindow_HUNTER" xml:space="preserve">
     <value>_HUNTER</value>
     <comment>HUNTER</comment>
   </data>
-	<data name="MainWindow_IMPORT" xml:space="preserve">
+  <data name="MainWindow_IMPORT" xml:space="preserve">
     <value>_IMPORT</value>
     <comment>MenuItem IMPORT Of MainWindow</comment>
   </data>
-	<data name="MainWindow_MAGE" xml:space="preserve">
+  <data name="MainWindow_MAGE" xml:space="preserve">
     <value>_MAGE</value>
     <comment>MAGE</comment>
   </data>
-	<data name="MainWindow_NAMEALREADYEXISTS" xml:space="preserve">
+  <data name="MainWindow_NAMEALREADYEXISTS" xml:space="preserve">
     <value>Name already exists</value>
     <comment>Name already exists</comment>
   </data>
-	<data name="MainWindow_NEW" xml:space="preserve">
+  <data name="MainWindow_NEW" xml:space="preserve">
     <value>_NEW</value>
     <comment>MenuItem NEW Of MainWindow</comment>
   </data>
-	<data name="MainWindow_NOTES" xml:space="preserve">
+  <data name="MainWindow_NOTES" xml:space="preserve">
     <value>Notes</value>
     <comment>Notes</comment>
   </data>
-	<data name="MainWindow_PALADIN" xml:space="preserve">
+  <data name="MainWindow_PALADIN" xml:space="preserve">
     <value>_PALADIN</value>
     <comment>PALADIN</comment>
   </data>
-	<data name="MainWindow_PRIEST" xml:space="preserve">
+  <data name="MainWindow_PRIEST" xml:space="preserve">
     <value>_PRIEST</value>
     <comment>PRIEST</comment>
   </data>
-	<data name="MainWindow_ROGUE" xml:space="preserve">
+  <data name="MainWindow_ROGUE" xml:space="preserve">
     <value>_ROGUE</value>
     <comment>ROGUE</comment>
   </data>
-	<data name="MainWindow_SAVEASXML" xml:space="preserve">
+  <data name="MainWindow_SAVEASXML" xml:space="preserve">
     <value>SAVE AS _XML</value>
     <comment>Save As Xml</comment>
   </data>
-	<data name="MainWindow_SCREENSHOT" xml:space="preserve">
+  <data name="MainWindow_SCREENSHOT" xml:space="preserve">
     <value>_SCREENSHOT</value>
     <comment>Screen Shot</comment>
   </data>
-	<data name="MainWindow_SEARCH" xml:space="preserve">
+  <data name="MainWindow_SEARCH" xml:space="preserve">
     <value>Search...</value>
     <comment>Search...</comment>
   </data>
-	<data name="MainWindow_SETTAGS" xml:space="preserve">
+  <data name="MainWindow_SETTAGS" xml:space="preserve">
     <value>Set tags</value>
     <comment>Set tags</comment>
   </data>
-	<data name="MainWindow_SHAMAN" xml:space="preserve">
+  <data name="MainWindow_SHAMAN" xml:space="preserve">
     <value>_SHAMAN</value>
     <comment>SHAMAN</comment>
   </data>
-	<data name="MainWindow_SORTFILTER" xml:space="preserve">
+  <data name="MainWindow_SORTFILTER" xml:space="preserve">
     <value>_SORT / FILTER</value>
     <comment>Sort Or Filter</comment>
   </data>
-	<data name="MainWindow_SORTFILTERDECKS" xml:space="preserve">
+  <data name="MainWindow_SORTFILTERDECKS" xml:space="preserve">
     <value>Sort / Filter Decks</value>
     <comment>Sort / Filter Decks</comment>
   </data>
-	<data name="MainWindow_STATS" xml:space="preserve">
+  <data name="MainWindow_STATS" xml:space="preserve">
     <value>_STATS</value>
     <comment>MenuItem STATS Of MainWindow</comment>
   </data>
-	<data name="MainWindow_TITLE" xml:space="preserve">
+  <data name="MainWindow_TITLE" xml:space="preserve">
     <value>Hearthstone Deck Tracker</value>
     <comment>Form Title</comment>
   </data>
-	<data name="MainWindow_TOHEARTHSTONE" xml:space="preserve">
+  <data name="MainWindow_TOHEARTHSTONE" xml:space="preserve">
     <value>TO _HEARTHSTON</value>
     <comment>To Hearth Stone</comment>
   </data>
-	<data name="MainWindow_TOHEARTHSTONEFROMWEB" xml:space="preserve">
+  <data name="MainWindow_TOHEARTHSTONEFROMWEB" xml:space="preserve">
     <value>TO HEARTHSTONE FROM _WEB</value>
     <comment>To Hearth Stone From Web</comment>
   </data>
-	<data name="MainWindow_USENODECK" xml:space="preserve">
+  <data name="MainWindow_USENODECK" xml:space="preserve">
     <value>USE _NO DECK</value>
     <comment>Use No Deck</comment>
   </data>
-	<data name="MainWindow_WARLOCK" xml:space="preserve">
+  <data name="MainWindow_WARLOCK" xml:space="preserve">
     <value>_WARLOCK</value>
     <comment>WARLOCK</comment>
   </data>
-	<data name="MainWindow_WARRIOR" xml:space="preserve">
+  <data name="MainWindow_WARRIOR" xml:space="preserve">
     <value>_WARRIOR</value>
     <comment>WARRIOR</comment>
   </data>
-	<data name="MANA" xml:space="preserve">
+  <data name="MANA" xml:space="preserve">
     <value>MANA</value>
     <comment>Mana</comment>
   </data>
-	<data name="MODE" xml:space="preserve">
+  <data name="MODE" xml:space="preserve">
     <value>Mode</value>
     <comment>Mode</comment>
   </data>
-	<data name="MoveGameDialog_TITLE" xml:space="preserve">
+  <data name="MoveGameDialog_TITLE" xml:space="preserve">
     <value>Select target deck</value>
     <comment>Select target deck</comment>
   </data>
-	<data name="MULLIGAN" xml:space="preserve">
+  <data name="MULLIGAN" xml:space="preserve">
     <value>Mulligan</value>
     <comment>Mulligan</comment>
   </data>
-	<data name="NAME" xml:space="preserve">
+  <data name="NAME" xml:space="preserve">
     <value>name</value>
     <comment>Name</comment>
   </data>
-	<data name="NAMEALREADYEXISTS" xml:space="preserve">
+  <data name="NAMEALREADYEXISTS" xml:space="preserve">
     <value>Name already exists</value>
     <comment>Name Already Exists</comment>
   </data>
-	<data name="NEUTRALONLY" xml:space="preserve">
+  <data name="NEUTRALONLY" xml:space="preserve">
     <value>NEUTRAL ONLY</value>
     <comment>Neutral Only</comment>
   </data>
-	<data name="NOTE" xml:space="preserve">
+  <data name="NOTE" xml:space="preserve">
     <value>Note</value>
     <comment>Note</comment>
   </data>
-	<data name="NoteDialog_NOTE" xml:space="preserve">
+  <data name="NoteDialog_NOTE" xml:space="preserve">
     <value>Note...</value>
     <comment>Note...</comment>
   </data>
-	<data name="NoteDialog_SAVEWITHENTER" xml:space="preserve">
+  <data name="NoteDialog_SAVEWITHENTER" xml:space="preserve">
     <value>Save with ENTER</value>
     <comment>Save with ENTER</comment>
   </data>
-	<data name="NoteDialog_TITLE" xml:space="preserve">
+  <data name="NoteDialog_TITLE" xml:space="preserve">
     <value>NOTE FOR THIS GAME</value>
     <comment>NOTE FOR THIS GAME</comment>
   </data>
-	<data name="OPPONENT" xml:space="preserve">
+  <data name="OPPONENT" xml:space="preserve">
     <value>Opponent</value>
     <comment>Opponent</comment>
   </data>
-	<data name="OpponentWindow_TITLE" xml:space="preserve">
+  <data name="OpponentWindow_TITLE" xml:space="preserve">
     <value>Opponent</value>
     <comment>Opponent</comment>
   </data>
-	<data name="OPTIONS" xml:space="preserve">
+  <data name="OPTIONS" xml:space="preserve">
     <value>options</value>
     <comment>Options</comment>
   </data>
-	<data name="Options_ACCENT" xml:space="preserve">
+  <data name="Options_ACCENT" xml:space="preserve">
     <value>Accent:</value>
     <comment>Accent:</comment>
   </data>
-	<data name="Options_ADDITIONALCARDTOOLTIPS" xml:space="preserve">
+  <data name="Options_ADDITIONALCARDTOOLTIPS" xml:space="preserve">
     <value>Additional card tooltips</value>
     <comment>Additional card tooltips</comment>
   </data>
-	<data name="Options_ADDITIONALWINDOWS" xml:space="preserve">
+  <data name="Options_ADDITIONALWINDOWS" xml:space="preserve">
     <value>Additional Windows</value>
     <comment>Additional Windows</comment>
   </data>
-	<data name="Options_ADVANCEDWINDOWSEARCH" xml:space="preserve">
+  <data name="Options_ADVANCEDWINDOWSEARCH" xml:space="preserve">
     <value>Advanced window search</value>
     <comment>Advanced window search</comment>
   </data>
-	<data name="Options_ADVANCEWINDOWSEARCHTOOLTIP" xml:space="preserve">
+  <data name="Options_ADVANCEWINDOWSEARCHTOOLTIP" xml:space="preserve">
     <value>This can be turned off if the overlay shows up in non-Hearthstone windows.</value>
     <comment>This can be turned off if the overlay shows up in non-Hearthstone windows.</comment>
   </data>
-	<data name="Options_ALERTATXSECONDS" xml:space="preserve">
+  <data name="Options_ALERTATXSECONDS" xml:space="preserve">
     <value>Alert at X seconds</value>
     <comment>Alert at X seconds</comment>
   </data>
-	<data name="Options_AUTOCLEARCARDS" xml:space="preserve">
+  <data name="Options_AUTOCLEARCARDS" xml:space="preserve">
     <value>Auto clear cards</value>
     <comment>Auto clear cards</comment>
   </data>
-	<data name="Options_BACKGROUND" xml:space="preserve">
+  <data name="Options_BACKGROUND" xml:space="preserve">
     <value>Background:</value>
     <comment>Background:</comment>
   </data>
-	<data name="Options_CARDTOOLTIPS" xml:space="preserve">
+  <data name="Options_CARDTOOLTIPS" xml:space="preserve">
     <value>Card tooltips</value>
     <comment>Card tooltips</comment>
   </data>
-	<data name="Options_CARDTOOLTIPSINTRACKER" xml:space="preserve">
+  <data name="Options_CARDTOOLTIPSINTRACKER" xml:space="preserve">
     <value>Card tooltips in Tracker</value>
     <comment>Card tooltips in Tracker</comment>
   </data>
-	<data name="Options_CHECKFORUPDATES" xml:space="preserve">
+  <data name="Options_CHECKFORUPDATES" xml:space="preserve">
     <value>Check for updates</value>
     <comment>Check for updates</comment>
   </data>
-	<data name="Options_CLASSCARDSFIRST" xml:space="preserve">
+  <data name="Options_CLASSCARDSFIRST" xml:space="preserve">
     <value>Class cards first</value>
     <comment>Class cards first</comment>
   </data>
-	<data name="Options_CLONEWITHHS" xml:space="preserve">
+  <data name="Options_CLONEWITHHS" xml:space="preserve">
     <value>Close with Hearthstone</value>
     <comment>Close with Hearthstone</comment>
   </data>
-	<data name="Options_CUSTOMBACKGROUND" xml:space="preserve">
+  <data name="Options_CUSTOMBACKGROUND" xml:space="preserve">
     <value>#123456</value>
     <comment>#123456</comment>
   </data>
-	<data name="Options_CUSTOMHEX" xml:space="preserve">
+  <data name="Options_CUSTOMHEX" xml:space="preserve">
     <value>Custom hex:</value>
     <comment>Custom hex:</comment>
   </data>
-	<data name="Options_DISCARDGAMEIFINCORRECT" xml:space="preserve">
+  <data name="Options_DISCARDGAMEIFINCORRECT" xml:space="preserve">
     <value>Discard game if incorrect deck</value>
     <comment>Discard game if incorrect deck</comment>
   </data>
-	<data name="Options_DONTRESETDECK" xml:space="preserve">
+  <data name="Options_DONTRESETDECK" xml:space="preserve">
     <value>Don't reset decks after game</value>
     <comment>Don't reset decks after game</comment>
   </data>
-	<data name="Options_DONTSHOWDECK" xml:space="preserve">
+  <data name="Options_DONTSHOWDECK" xml:space="preserve">
     <value>Don't show deck select if only 1</value>
     <comment>Don't show deck select if only 1</comment>
   </data>
-	<data name="Options_EXPORTCERTAINCARDPROBLEMTOOLTIP" xml:space="preserve">
+  <data name="Options_EXPORTCERTAINCARDPROBLEMTOOLTIP" xml:space="preserve">
     <value>Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts</value>
     <comment>Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts</comment>
   </data>
-	<data name="Options_EXPORTINGTOHS" xml:space="preserve">
+  <data name="Options_EXPORTINGTOHS" xml:space="preserve">
     <value>Exporting to Hearthstone</value>
     <comment>Exporting to Hearthstone</comment>
   </data>
-	<data name="Options_EXTRAFEATURES" xml:space="preserve">
+  <data name="Options_EXTRAFEATURES" xml:space="preserve">
     <value>Extra Features - may cause lag</value>
     <comment>Extra Features - may cause lag</comment>
   </data>
-	<data name="Options_FLASHHSONTURNSTART" xml:space="preserve">
+  <data name="Options_FLASHHSONTURNSTART" xml:space="preserve">
     <value>Flash Hearthstone on turn start</value>
     <comment>Flash Hearthstone on turn start</comment>
   </data>
-	<data name="Options_FORSECRETSONLY" xml:space="preserve">
+  <data name="Options_FORSECRETSONLY" xml:space="preserve">
     <value>For secrets only</value>
     <comment>For secrets only</comment>
   </data>
-	<data name="Options_FULLTEXTSEARCH" xml:space="preserve">
+  <data name="Options_FULLTEXTSEARCH" xml:space="preserve">
     <value>Full text search in New Deck</value>
     <comment>Full text search in New Deck</comment>
   </data>
-	<data name="Options_GLODENSTALAGG" xml:space="preserve">
+  <data name="Options_GLODENSTALAGG" xml:space="preserve">
     <value>Golden Stalagg</value>
     <comment>Golden Stalagg</comment>
   </data>
-	<data name="Options_GOLDENFEUGEN" xml:space="preserve">
+  <data name="Options_GOLDENFEUGEN" xml:space="preserve">
     <value>Golden Feugen</value>
     <comment>Golden Feugen</comment>
   </data>
-	<data name="Options_HIDECARDAGE" xml:space="preserve">
+  <data name="Options_HIDECARDAGE" xml:space="preserve">
     <value>Hide card-age</value>
     <comment>Hide card-age</comment>
   </data>
-	<data name="Options_HIDECARDMARKS" xml:space="preserve">
+  <data name="Options_HIDECARDMARKS" xml:space="preserve">
     <value>Hide card-marks</value>
     <comment>Hide card-marks</comment>
   </data>
-	<data name="Options_HIDECOMPLETELY" xml:space="preserve">
+  <data name="Options_HIDECOMPLETELY" xml:space="preserve">
     <value>Hide (completely)</value>
     <comment>Hide (completely)</comment>
   </data>
-	<data name="Options_HIDEDECKS" xml:space="preserve">
+  <data name="Options_HIDEDECKS" xml:space="preserve">
     <value>Hide decks</value>
     <comment>Hide decks</comment>
   </data>
-	<data name="Options_HIDEIFHSINBACKGROUND" xml:space="preserve">
+  <data name="Options_HIDEIFHSINBACKGROUND" xml:space="preserve">
     <value>Hide if HS in background</value>
     <comment>Hide if HS in background</comment>
   </data>
-	<data name="Options_HIDEINMENU" xml:space="preserve">
+  <data name="Options_HIDEINMENU" xml:space="preserve">
     <value>Hide in menu</value>
     <comment>Hide in menu</comment>
   </data>
-	<data name="Options_HIDESECRETS" xml:space="preserve">
+  <data name="Options_HIDESECRETS" xml:space="preserve">
     <value>Hide secrets</value>
     <comment>Hide secrets</comment>
   </data>
-	<data name="Options_HIDETIMERS" xml:space="preserve">
+  <data name="Options_HIDETIMERS" xml:space="preserve">
     <value>Hide timers</value>
     <comment>Hide timers</comment>
   </data>
-	<data name="Options_HIGHLIGHTCARD" xml:space="preserve">
+  <data name="Options_HIGHLIGHTCARD" xml:space="preserve">
     <value>Highlight cards in hand</value>
     <comment>Highlight cards in hand</comment>
   </data>
-	<data name="Options_HIGHLIGHTDISCARDED" xml:space="preserve">
+  <data name="Options_HIGHLIGHTDISCARDED" xml:space="preserve">
     <value>Highlight discarded from deck</value>
     <comment>Highlight discarded from deck</comment>
   </data>
-	<data name="Options_HIGHLIGHTLASTCARD" xml:space="preserve">
+  <data name="Options_HIGHLIGHTLASTCARD" xml:space="preserve">
     <value>Highlight last drawn card</value>
     <comment>Highlight last drawn card</comment>
   </data>
-	<data name="Options_IMPORTFROMWEB" xml:space="preserve">
+  <data name="Options_IMPORTFROMWEB" xml:space="preserve">
     <value>Importing from Websites</value>
     <comment>Importing from Websites</comment>
   </data>
-	<data name="Options_INCLUDEOBTAINEDCARDS" xml:space="preserve">
+  <data name="Options_INCLUDEOBTAINEDCARDS" xml:space="preserve">
     <value>Include obtained cards</value>
     <comment>Include obtained cards</comment>
   </data>
-	<data name="Options_KEEPSTATSWHENDELETINGDECK" xml:space="preserve">
+  <data name="Options_KEEPSTATSWHENDELETINGDECK" xml:space="preserve">
     <value>Keep stats when deleting deck</value>
     <comment>Keep stats when deleting deck</comment>
   </data>
-	<data name="Options_KEYONGAMEEND" xml:space="preserve">
+  <data name="Options_KEYONGAMEEND" xml:space="preserve">
     <value>Key on game end:</value>
     <comment>Key on game end:</comment>
   </data>
-	<data name="Options_KEYONGAMESTART" xml:space="preserve">
+  <data name="Options_KEYONGAMESTART" xml:space="preserve">
     <value>Key on game start:</value>
     <comment>Key on game start:</comment>
   </data>
-	<data name="Options_LANGUAGE" xml:space="preserve">
+  <data name="Options_LANGUAGE" xml:space="preserve">
     <value>Language:</value>
     <comment>Language:</comment>
   </data>
-	<data name="Options_MINIMIZETOTRAY" xml:space="preserve">
+  <data name="Options_MINIMIZETOTRAY" xml:space="preserve">
     <value>Minimize to tray</value>
     <comment>Minimize to tray</comment>
   </data>
-	<data name="Options_ONLYIFHSINFOREGROUND" xml:space="preserve">
+  <data name="Options_ONLYIFHSINFOREGROUND" xml:space="preserve">
     <value>Only if HS in foreground</value>
     <comment>Only if HS in foreground</comment>
   </data>
-	<data name="Options_OPACITY" xml:space="preserve">
+  <data name="Options_OPACITY" xml:space="preserve">
     <value>Opacity:</value>
     <comment>Opacity:</comment>
   </data>
-	<data name="Options_OPPONENTDECK" xml:space="preserve">
+  <data name="Options_OPPONENTDECK" xml:space="preserve">
     <value>Opponent deck</value>
     <comment>Opponent deck</comment>
   </data>
-	<data name="Options_PASTENAMESFROMCLIPBOARD" xml:space="preserve">
+  <data name="Options_PASTENAMESFROMCLIPBOARD" xml:space="preserve">
     <value>Paste names from clipboard</value>
     <comment>Paste names from clipboard</comment>
   </data>
-	<data name="Options_PLAYERDECK" xml:space="preserve">
+  <data name="Options_PLAYERDECK" xml:space="preserve">
     <value>Player deck</value>
     <comment>Player deck</comment>
   </data>
-	<data name="Options_POPUPHSONTURNSTART" xml:space="preserve">
+  <data name="Options_POPUPHSONTURNSTART" xml:space="preserve">
     <value>Popup Hearthstone on turn start</value>
     <comment>Popup Hearthstone on turn start</comment>
   </data>
-	<data name="Options_PRIORITIZEGOLDENCARDS" xml:space="preserve">
+  <data name="Options_PRIORITIZEGOLDENCARDS" xml:space="preserve">
     <value>Prioritize golden cards</value>
     <comment>Prioritize golden cards</comment>
   </data>
-	<data name="Options_RECORDARENA" xml:space="preserve">
+  <data name="Options_RECORDARENA" xml:space="preserve">
     <value>Record Arena</value>
     <comment>Record Arena</comment>
   </data>
-	<data name="Options_RECORDCASUAL" xml:space="preserve">
+  <data name="Options_RECORDCASUAL" xml:space="preserve">
     <value>Record Casual</value>
     <comment>Record Casual</comment>
   </data>
-	<data name="Options_RECORDFRIENDLY" xml:space="preserve">
+  <data name="Options_RECORDFRIENDLY" xml:space="preserve">
     <value>Record Friendly</value>
     <comment>Record Friendly</comment>
   </data>
-	<data name="Options_RECORDGAMES" xml:space="preserve">
+  <data name="Options_RECORDGAMES" xml:space="preserve">
     <value>Record Games</value>
     <comment>Record Games</comment>
   </data>
-	<data name="Options_RECORDOTHER" xml:space="preserve">
+  <data name="Options_RECORDOTHER" xml:space="preserve">
     <value>Record Other</value>
     <comment>Record Other</comment>
   </data>
-	<data name="Options_RECORDPRRACTICE" xml:space="preserve">
+  <data name="Options_RECORDPRRACTICE" xml:space="preserve">
     <value>Record Practice</value>
     <comment>Record Practice</comment>
   </data>
-	<data name="Options_RECORDRANKED" xml:space="preserve">
+  <data name="Options_RECORDRANKED" xml:space="preserve">
     <value>Record Ranked</value>
     <comment>Record Ranked</comment>
   </data>
-	<data name="Options_REMOVECARD" xml:space="preserve">
+  <data name="Options_REMOVECARD" xml:space="preserve">
     <value>Remove cards if count is 0</value>
     <comment>Remove cards if count is 0</comment>
   </data>
-	<data name="Options_SAVECONFIGINAPPDATA" xml:space="preserve">
+  <data name="Options_SAVECONFIGINAPPDATA" xml:space="preserve">
     <value>Save config in AppData</value>
     <comment>Save config in AppData</comment>
   </data>
-	<data name="Options_SAVEDATAINAPPDATA" xml:space="preserve">
+  <data name="Options_SAVEDATAINAPPDATA" xml:space="preserve">
     <value>Save data in AppData</value>
     <comment>Save data in AppData</comment>
   </data>
-	<data name="Options_SAVETOFILE" xml:space="preserve">
+  <data name="Options_SAVETOFILE" xml:space="preserve">
     <value>Save to file</value>
     <comment>Save to file</comment>
   </data>
-	<data name="Options_SCALING" xml:space="preserve">
+  <data name="Options_SCALING" xml:space="preserve">
     <value>Scaling:</value>
     <comment>Scaling:</comment>
   </data>
-	<data name="Options_SETDECKNAME" xml:space="preserve">
+  <data name="Options_SETDECKNAME" xml:space="preserve">
     <value>Set deck name</value>
     <comment>Set deck name</comment>
   </data>
-	<data name="Options_SHOWDECKSTATS" xml:space="preserve">
+  <data name="Options_SHOWDECKSTATS" xml:space="preserve">
     <value>Show deck stats in new window</value>
     <comment>Show deck stats in new window</comment>
   </data>
-	<data name="Options_SHOWLOGTAB" xml:space="preserve">
+  <data name="Options_SHOWLOGTAB" xml:space="preserve">
     <value>Show Log-tab</value>
     <comment>Show Log-tab</comment>
   </data>
-	<data name="Options_SHOWMANACURVE" xml:space="preserve">
+  <data name="Options_SHOWMANACURVE" xml:space="preserve">
     <value>Show Manacurve</value>
     <comment>Show Manacurve</comment>
   </data>
-	<data name="Options_SHOWNOTEDIALOG" xml:space="preserve">
+  <data name="Options_SHOWNOTEDIALOG" xml:space="preserve">
     <value>Show note dialog after game</value>
     <comment>Show note dialog after game</comment>
   </data>
-	<data name="Options_SOUNDANALERTANDFLASH" xml:space="preserve">
+  <data name="Options_SOUNDANALERTANDFLASH" xml:space="preserve">
     <value>Sound an alert and flash when you have X seconds remaining</value>
     <comment>Sound an alert and flash when you have X seconds remaining</comment>
   </data>
-	<data name="Options_SPEED" xml:space="preserve">
+  <data name="Options_SPEED" xml:space="preserve">
     <value>Speed:</value>
     <comment>Speed:</comment>
   </data>
-	<data name="Options_STARTMINIMIZED" xml:space="preserve">
+  <data name="Options_STARTMINIMIZED" xml:space="preserve">
     <value>Start minimized</value>
     <comment>Start minimized</comment>
   </data>
-	<data name="Options_TAGDECKSONIMPORT" xml:space="preserve">
+  <data name="Options_TAGDECKSONIMPORT" xml:space="preserve">
     <value>Tag decks on import</value>
     <comment>Tag decks on import</comment>
   </data>
-	<data name="Options_THEME" xml:space="preserve">
+  <data name="Options_THEME" xml:space="preserve">
     <value>Theme:</value>
     <comment>Theme:</comment>
   </data>
-	<data name="Options_USESAMESCALING" xml:space="preserve">
+  <data name="Options_USESAMESCALING" xml:space="preserve">
     <value>Use same scaling for player/opponent</value>
     <comment>Use same scaling for player/opponent</comment>
   </data>
-	<data name="OTHER" xml:space="preserve">
+  <data name="OTHER" xml:space="preserve">
     <value>Other</value>
     <comment>Other</comment>
   </data>
-	<data name="OVERLAY" xml:space="preserve">
+  <data name="OVERLAY" xml:space="preserve">
     <value>Overlay</value>
     <comment>Overlay</comment>
   </data>
-	<data name="OverlayWindow_TITLE" xml:space="preserve">
+  <data name="OverlayWindow_TITLE" xml:space="preserve">
     <value>HearthstoneOverlay</value>
     <comment>HearthstoneOverlay</comment>
   </data>
-	<data name="PLAYER" xml:space="preserve">
+  <data name="PLAYER" xml:space="preserve">
     <value>Player</value>
     <comment>Player</comment>
   </data>
-	<data name="PlayerWindow_TITLE" xml:space="preserve">
+  <data name="PlayerWindow_TITLE" xml:space="preserve">
     <value>Player</value>
     <comment>Player</comment>
   </data>
-	<data name="PLAYS" xml:space="preserve">
+  <data name="PLAYS" xml:space="preserve">
     <value>Plays</value>
     <comment>Plays</comment>
   </data>
-	<data name="PROMOTION" xml:space="preserve">
+  <data name="PROMOTION" xml:space="preserve">
     <value>PROMOTION</value>
     <comment>PROMOTION</comment>
   </data>
-	<data name="RESET" xml:space="preserve">
+  <data name="RESET" xml:space="preserve">
     <value>Reset</value>
     <comment>Reset</comment>
   </data>
-	<data name="RESULT" xml:space="preserve">
+  <data name="RESULT" xml:space="preserve">
     <value>Result</value>
     <comment>Result</comment>
   </data>
-	<data name="SAVE" xml:space="preserve">
+  <data name="SAVE" xml:space="preserve">
     <value>SAVE</value>
     <comment>Save</comment>
   </data>
-	<data name="SortFilterDecks_DELETESELECTED" xml:space="preserve">
+  <data name="SortFilterDecks_DELETESELECTED" xml:space="preserve">
     <value>Delete Selected</value>
     <comment>Delete Selected</comment>
   </data>
-	<data name="SortFilterDecks_FILTERBYTAGS" xml:space="preserve">
+  <data name="SortFilterDecks_FILTERBYTAGS" xml:space="preserve">
     <value>Filter by tags:</value>
     <comment>Filter by tags:</comment>
   </data>
-	<data name="SortFilterDecks_FILTEROPERATION" xml:space="preserve">
+  <data name="SortFilterDecks_FILTEROPERATION" xml:space="preserve">
     <value>Filter operation</value>
     <comment>Filter operation</comment>
   </data>
-	<data name="SortFilterDecks_NEWTAG" xml:space="preserve">
+  <data name="SortFilterDecks_NEWTAG" xml:space="preserve">
     <value>New Tag</value>
     <comment>New Tag</comment>
   </data>
-	<data name="SortFilterDecks_SORTDECKSBY" xml:space="preserve">
+  <data name="SortFilterDecks_SORTDECKSBY" xml:space="preserve">
     <value>Sort decks by:</value>
     <comment>Sort decks by:</comment>
   </data>
-	<data name="SORTING" xml:space="preserve">
+  <data name="SORTING" xml:space="preserve">
     <value>Sorting</value>
     <comment>Sorting</comment>
   </data>
-	<data name="STARTED" xml:space="preserve">
-    <value>Started</value>
-    <comment>Started</comment>
-  </data>
-	<data name="STATS" xml:space="preserve">
+  <data name="STATS" xml:space="preserve">
     <value>Stats</value>
     <comment>Stats</comment>
   </data>
-	<data name="StatsWindow_TITLE" xml:space="preserve">
+  <data name="StatsWindow_TITLE" xml:space="preserve">
     <value>Stats</value>
     <comment>Stats</comment>
   </data>
-	<data name="TIME" xml:space="preserve">
+  <data name="TIME" xml:space="preserve">
     <value>Time</value>
     <comment>Time</comment>
   </data>
-	<data name="TIMER" xml:space="preserve">
+  <data name="TIMER" xml:space="preserve">
     <value>Timer</value>
     <comment>Timer</comment>
   </data>
-	<data name="TimerWindow_TITLE" xml:space="preserve">
+  <data name="TimerWindow_TITLE" xml:space="preserve">
     <value>Timer</value>
     <comment>Timer</comment>
   </data>
-	<data name="TOPMOST" xml:space="preserve">
+  <data name="TOPMOST" xml:space="preserve">
     <value>Topmost</value>
     <comment>Topmost</comment>
   </data>
-	<data name="TOTAL" xml:space="preserve">
+  <data name="TOTAL" xml:space="preserve">
     <value>Total</value>
     <comment>Total</comment>
   </data>
-	<data name="TRACKER" xml:space="preserve">
+  <data name="TRACKER" xml:space="preserve">
     <value>Tracker</value>
     <comment>Tracker</comment>
   </data>
-	<data name="TURN" xml:space="preserve">
+  <data name="TURN" xml:space="preserve">
     <value>Turn</value>
     <comment>Turn</comment>
   </data>
-	<data name="TURNS" xml:space="preserve">
-    <value>Turns</value>
-    <comment>Turns</comment>
-  </data>
-	<data name="TYPE" xml:space="preserve">
+  <data name="TYPE" xml:space="preserve">
     <value>TYPE</value>
     <comment>Type</comment>
   </data>
-	<data name="UNLOCK" xml:space="preserve">
+  <data name="UNLOCK" xml:space="preserve">
     <value>Unlock</value>
     <comment>Unlock</comment>
   </data>
-	<data name="VS" xml:space="preserve">
+  <data name="VS" xml:space="preserve">
     <value>VS</value>
     <comment>VS</comment>
   </data>

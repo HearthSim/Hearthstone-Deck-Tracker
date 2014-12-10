@@ -101,7 +101,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="0" Grid.ColumnSpan="2">
-                <MenuItem Header="_DECKS">
+                <MenuItem Header="{lex:Loc MainWindow_DECK}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
