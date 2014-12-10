@@ -111,6 +111,9 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Setting deck name...", "DeckExporter");
 			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
+			//send enter and second click to make sure the current name gets selected
+			SendKeys.SendWait("{ENTER}");
+			await ClickOnPoint(hsHandle, nameDeckPos);
 			if(Config.Instance.ExportPasteClipboard)
 			{
 				Clipboard.SetText(name);
