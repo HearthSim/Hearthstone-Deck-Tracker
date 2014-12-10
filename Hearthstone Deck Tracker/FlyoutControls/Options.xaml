@@ -333,15 +333,6 @@
                                                      Height="auto" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"
-                                  Height="72" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
-                            <StackPanel>
-                                <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxDeckSortingClassFirst_Checked"
-                                          Unchecked="CheckboxDeckSortingClassFirst_Unchecked" />
-                            </StackPanel>
-                        </GroupBox>
                     </Grid>
                 </ScrollViewer>
             </TabItem>

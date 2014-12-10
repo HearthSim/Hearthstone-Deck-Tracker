@@ -110,6 +110,10 @@
                     <Separator />
                     <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                     </MenuItem>
+                    <CheckBox x:Name="CheckboxClassCardsFirst" Margin="-24,0,0,0" Content="CLASS CARDS FIRST"
+                              FontSize="14"
+                              Checked="CheckboxClassCardsFirst_Checked"
+                              Unchecked="CheckboxClassCardsFirst_Unchecked" />
                 </MenuItem>
                 <MenuItem Header="_NEW">
                     <MenuItem.Icon>
