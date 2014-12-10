@@ -267,7 +267,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_powerCount++;
 				
-					if(logLine.Contains("Begin Spectating"))
+					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
 					{
 						Game.CurrentGameMode = Game.GameMode.Spectator;
 						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
