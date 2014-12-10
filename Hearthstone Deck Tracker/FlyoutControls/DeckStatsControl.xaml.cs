@@ -168,35 +168,61 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
 			DataGridGames.Items.Refresh();
 		}
-		
+
 		private IEnumerable<GameStats> FilterGames(IEnumerable<GameStats> games)
 		{
 			var selectedGameMode = (Game.GameMode)ComboboxGameMode.SelectedItem;
 			var noteFilter = TextboxNoteFilter.Text;
 			var comboboxString = ComboboxTime.SelectedValue.ToString();
-			var timeFrame = DateTime.Now.Date;
+
+			var endTime = DateTime.Today + new TimeSpan(0, 23, 59, 59, 999);
+			var startTime = DateTime.Today;
 
             switch(comboboxString)
 			{
 				case "Today":
-					//timeFrame -= new TimeSpan(0, 0, 0, 0);
+					endTime = DateTime.Now;
 					break;
-				case "Last Week":
-					timeFrame -= new TimeSpan(7, 0, 0, 0);
+				case "Yesterday":
+					startTime -= new TimeSpan(1, 0, 0, 0);
+					endTime -= new TimeSpan(1, 0, 0, 0);
 					break;
-				case "Last Month":
-					timeFrame -= new TimeSpan(30, 0, 0, 0);
+				case "Last 24 Hours":
+					startTime = DateTime.Now - new TimeSpan(1, 0, 0, 0);
+					endTime = DateTime.Now;
 					break;
-				case "Last Year":
-					timeFrame -= new TimeSpan(365, 0, 0, 0);
+				case "This Week":
+					startTime -= new TimeSpan(((int)(startTime.DayOfWeek) - 1), 0, 0, 0);
+					break;
+				case "Previous Week":
+					startTime -= new TimeSpan(7 + ((int)(startTime.DayOfWeek) - 1), 0, 0, 0);
+					endTime -= new TimeSpan(((int)(endTime.DayOfWeek)), 0, 0, 0);
+					break;
+				case "Last 7 Days":
+					startTime -= new TimeSpan(7, 0, 0, 0);
+					break;
+				case "This Month":
+					startTime -= new TimeSpan(startTime.Day - 1, 0, 0, 0);
+					break;
+				case "Previous Month":
+					startTime -= new TimeSpan(startTime.Day - 1 + DateTime.DaysInMonth(startTime.AddMonths(-1).Year, startTime.AddMonths(-1).Month), 0, 0, 0);
+					endTime -= new TimeSpan(endTime.Day, 0, 0, 0);
+					break;
+				case "This Year":
+					startTime -= new TimeSpan(startTime.DayOfYear -1, 0, 0, 0);
+					break;
+				case "Previous Year":
+					startTime -= new TimeSpan(startTime.DayOfYear - 1 + (DateTime.IsLeapYear(startTime.Year) ? 366 : 365), 0, 0, 0);
+					endTime -= new TimeSpan(startTime.DayOfYear, 0, 0, 0);
 					break;
 				case "All Time":
-					timeFrame = new DateTime();
+					startTime = new DateTime();
 					break;
 			}
+
 			return
 				games.Where(g =>
-				            (g.GameMode == selectedGameMode || selectedGameMode == Game.GameMode.All) && g.StartTime > timeFrame &&
+				            (g.GameMode == selectedGameMode || selectedGameMode == Game.GameMode.All) && g.StartTime >= startTime && g.StartTime <= endTime &&
 				            (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.Contains(noteFilter)));
 		} 
 
@@ -651,3 +677,4 @@ namespace Hearthstone_Deck_Tracker
 
 	}
 }
+ 

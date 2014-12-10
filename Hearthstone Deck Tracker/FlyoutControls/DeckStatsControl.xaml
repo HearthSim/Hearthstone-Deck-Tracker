@@ -26,9 +26,15 @@
                     <ComboBox x:Name="ComboboxTime" SelectedIndex="6" VerticalAlignment="Bottom" Width="90"
                               SelectionChanged="ComboboxTime_SelectionChanged">
                         <system:String>Today</system:String>
-                        <system:String>Last Week</system:String>
-                        <system:String>Last Month</system:String>
-                        <system:String>Last Year</system:String>
+                        <system:String>Yesterday</system:String>
+                        <system:String>Last 24 Hours</system:String>
+                        <system:String>This Week</system:String>
+                        <system:String>Previous Week</system:String>
+                        <system:String>Last 7 Days</system:String>
+                        <system:String>This Month</system:String>
+                        <system:String>Previous Month</system:String>
+                        <system:String>This Year</system:String>
+                        <system:String>Previous Year</system:String>
                         <system:String>All Time</system:String>
                     </ComboBox>
                 </StackPanel>
