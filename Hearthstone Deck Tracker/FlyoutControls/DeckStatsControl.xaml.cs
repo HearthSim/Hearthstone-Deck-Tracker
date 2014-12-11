@@ -67,11 +67,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_deck == null)
 				return;
-			DeleteGames(DataGridGames);
+			DeleteGames(DataGridGames, false);
 
 		}
 
-		private async void DeleteGames(DataGrid dataGrid)
+		private async void DeleteGames(DataGrid dataGrid, bool overall)
 		{
 			MetroWindow window;
 			if(Config.Instance.StatsInWindow)
@@ -88,22 +88,40 @@ namespace Hearthstone_Deck_Tracker
 
 				if(await window.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
 					return;
-				if(_deck.DeckStats.Games.Contains(selectedGame))
+				if(!overall)
 				{
-					selectedGame.DeleteGameFile();
-					_deck.DeckStats.Games.Remove(selectedGame);
-					Logger.WriteLine("Deleted game: " + selectedGame);
-					DeckStatsList.Save();
+					if(_deck.DeckStats.Games.Contains(selectedGame))
+					{
+						selectedGame.DeleteGameFile();
+						_deck.DeckStats.Games.Remove(selectedGame);
+						Logger.WriteLine("Deleted game: " + selectedGame);
+						DeckStatsList.Save();
+					}
 				}
 				else
 				{
-					var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
-					if(deckstats != null)
+					var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+					if(deck != null)
 					{
-						selectedGame.DeleteGameFile();
-						deckstats.Games.Remove(selectedGame);
-						Logger.WriteLine("Deleted game: " + selectedGame);
-						DefaultDeckStats.Save();
+						if(deck.DeckStats.Games.Contains(selectedGame))
+						{
+							selectedGame.DeleteGameFile();
+							deck.DeckStats.Games.Remove(selectedGame);
+                            Logger.WriteLine("Deleted game: " + selectedGame);
+							DefaultDeckStats.Save();
+						}
+						
+					}
+					else
+					{
+						var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
+						if(deckstats != null)
+						{
+							selectedGame.DeleteGameFile();
+							deckstats.Games.Remove(selectedGame);
+							Logger.WriteLine("Deleted game: " + selectedGame);
+							DefaultDeckStats.Save();
+						}
 					}
 				}
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
@@ -294,7 +312,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnOverallDelete_Click(object sender, RoutedEventArgs e)
 		{
-			DeleteGames(DataGridOverallGames);
+			DeleteGames(DataGridOverallGames, true);
 		}
 
 		private void DGridOverall_MouseDoubleClick(object sender, MouseButtonEventArgs e)
