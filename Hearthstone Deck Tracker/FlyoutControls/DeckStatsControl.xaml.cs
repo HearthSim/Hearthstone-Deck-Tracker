@@ -135,18 +135,38 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var selectedGame = selectedItem as GameStats;
 					if(selectedGame == null) continue;
-					if(_deck.DeckStats.Games.Contains(selectedGame))
+
+					if(!overall)
 					{
-						selectedGame.DeleteGameFile();
-						_deck.DeckStats.Games.Remove(selectedGame);
+						if(_deck.DeckStats.Games.Contains(selectedGame))
+						{
+							selectedGame.DeleteGameFile();
+							_deck.DeckStats.Games.Remove(selectedGame);
+							Logger.WriteLine("Deleted game: " + selectedGame);
+						}
 					}
 					else
 					{
-						var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
-						if(deckstats != null)
+						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+						if(deck != null)
 						{
-							selectedGame.DeleteGameFile();
-							deckstats.Games.Remove(selectedGame);
+							if(deck.DeckStats.Games.Contains(selectedGame))
+							{
+								selectedGame.DeleteGameFile();
+								deck.DeckStats.Games.Remove(selectedGame);
+								Logger.WriteLine("Deleted game: " + selectedGame);
+							}
+
+						}
+						else
+						{
+							var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
+							if(deckstats != null)
+							{
+								selectedGame.DeleteGameFile();
+								deckstats.Games.Remove(selectedGame);
+								Logger.WriteLine("Deleted game: " + selectedGame);
+							}
 						}
 					}
 
