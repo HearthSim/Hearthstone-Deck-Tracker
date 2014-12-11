@@ -622,7 +622,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
-			if(!_initialized) return;
 			if(deck != null)
 			{
 				//set up notes
