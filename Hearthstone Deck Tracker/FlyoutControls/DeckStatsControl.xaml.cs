@@ -541,7 +541,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				get
 				{
-					if(Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
+					if(!Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
 						return new BitmapImage();
 					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
 					return new BitmapImage(uri);
