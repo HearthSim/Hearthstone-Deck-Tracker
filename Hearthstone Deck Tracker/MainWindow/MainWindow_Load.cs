@@ -558,6 +558,12 @@ namespace Hearthstone_Deck_Tracker
 			StatsWindow.GameDetailsFlyout.LoadConfig();
 		}
 
+		public void ReloadTags()
+		{
+			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All").ToList());
+		}
+
 
 		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
 		{

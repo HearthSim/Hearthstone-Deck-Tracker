@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -55,6 +56,10 @@ namespace Hearthstone_Deck_Tracker
 			TextboxNewTag.Visibility = Visibility.Hidden;
 			BtnAddTag.Visibility = Visibility.Hidden;
 			BtnDeleteTag.Visibility = Visibility.Hidden;
+			BtnUp.Visibility = Visibility.Hidden;
+			BtnDown.Visibility = Visibility.Hidden;
+			BtnTop.Visibility = Visibility.Hidden;
+			BtnBottom.Visibility = Visibility.Hidden;
 		}
 
 		public void LoadTags(List<string> tags)
@@ -279,6 +284,53 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckPickerList.UpdateList();
 				Helper.MainWindow.WriteDecks();
 			}
+		}
+
+		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = _tags.IndexOf(selectedTag) + 1; //decklist.alltags includes "all", this does not
+			if(index > 1)
+				MoveTag(selectedTag.Name, index, index - 1);
+		}
+
+		private void BtnDown_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = _tags.IndexOf(selectedTag) +  1;
+			if(index < _tags.Count)
+				MoveTag(selectedTag.Name, index, index+1);
+		}
+
+		private void BtnTop_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = _tags.IndexOf(selectedTag) + 1;
+			MoveTag(selectedTag.Name, index, 1);
+		}
+
+		private void BtnBottom_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = _tags.IndexOf(selectedTag) + 1;
+			MoveTag(selectedTag.Name, index, _tags.Count);
+		}
+
+		private void MoveTag(string tagName, int from, int to)
+		{
+			Helper.MainWindow.DeckList.AllTags.RemoveAt(from);
+			Helper.MainWindow.DeckList.AllTags.Insert(to, tagName);
+			Helper.MainWindow.WriteDecks();
+			Helper.MainWindow.ReloadTags();
+			ListboxTags.SelectedIndex = to - 1;
 		}
 	}
 }
