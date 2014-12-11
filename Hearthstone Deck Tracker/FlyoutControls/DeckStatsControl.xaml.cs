@@ -663,16 +663,23 @@ namespace Hearthstone_Deck_Tracker
 
 		}
 
+		private string _opponentCb; 
 		private void ComboBoxOpponentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			var selectedValue = ((ComboBox)sender).SelectedValue.ToString();
-			ComboBoxOpponentClassD.SelectedValue = selectedValue;
-			ComboBoxOpponentClassOG.SelectedValue = selectedValue;
-			Config.Instance.StatsFilterOpponentClass = selectedValue;
-			Config.Save();
-			LoadOverallStats();
+			if(_opponentCb == null)
+			{
+				_opponentCb = ((ComboBox)sender).SelectedValue.ToString();
+				if(!Equals(sender, ComboBoxOpponentClassD))
+					ComboBoxOpponentClassD.SelectedValue = _opponentCb;
+				if(!Equals(sender, ComboBoxOpponentClassOG))
+					ComboBoxOpponentClassOG.SelectedValue = _opponentCb;
+				Config.Instance.StatsFilterOpponentClass = _opponentCb;
+				Config.Save();
+				Refresh();
+				_opponentCb = null;
+			}
 		}
 
 	}
