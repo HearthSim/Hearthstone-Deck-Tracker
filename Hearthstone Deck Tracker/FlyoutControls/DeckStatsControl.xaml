@@ -6,9 +6,12 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
              d:DesignHeight="600" d:Width="500">
-
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -25,17 +28,11 @@
                     <Label Content="Timeframe:" />
                     <ComboBox x:Name="ComboboxTime" SelectedIndex="6" VerticalAlignment="Bottom" Width="90"
                               SelectionChanged="ComboboxTime_SelectionChanged">
-                        <system:String>Today</system:String>
-                        <system:String>Yesterday</system:String>
-                        <system:String>Last 24 Hours</system:String>
-                        <system:String>This Week</system:String>
-                        <system:String>Previous Week</system:String>
-                        <system:String>Last 7 Days</system:String>
-                        <system:String>This Month</system:String>
-                        <system:String>Previous Month</system:String>
-                        <system:String>This Year</system:String>
-                        <system:String>Previous Year</system:String>
-                        <system:String>All Time</system:String>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
                 <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="3"
@@ -44,15 +41,17 @@
                     <Label Content="Games:" />
                     <ComboBox x:Name="ComboboxUnassigned" VerticalAlignment="Bottom" Width="90"
                               SelectionChanged="ComboboxUnassigned_SelectionChanged" ToolTip="Show games with a/no associated deck.">
-                        <system:String>With deck</system:String>
-                        <system:String>Without deck</system:String>
-                        <system:String>All</system:String>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
             </WrapPanel>
         </GroupBox>
         <TabControl Grid.Row="1" Name="TabControlCurrentOverall">
-            <TabItem Name="TabItemDeck" Header="Deck">
+            <TabItem Name="TabItemDeck" Header="Deck" PreviewMouseDown="TabItemDeck_OnPreviewMouseDown">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -329,18 +328,7 @@
                             </Grid.RowDefinitions>
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Opponent:" />
-                                <ComboBox x:Name="ComboBoxOpponentClassD" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboBoxOpponentClass_SelectionChanged">
-                                    <system:String>All</system:String>
-                                    <system:String>Druid</system:String>
-                                    <system:String>Hunter</system:String>
-                                    <system:String>Mage</system:String>
-                                    <system:String>Paladin</system:String>
-                                    <system:String>Priest</system:String>
-                                    <system:String>Rogue</system:String>
-                                    <system:String>Shaman</system:String>
-                                    <system:String>Warlock</system:String>
-                                    <system:String>Warrior</system:String>
-                                </ComboBox>
+                                <ComboBox x:Name="ComboBoxOpponentClassD" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboBoxOpponentClass_SelectionChanged"/>
                             </StackPanel>
                             <DataGrid IsReadOnly="True" Grid.Row="1" Margin="0,5" CanUserAddRows="False"
                                       Name="DataGridGames"
@@ -422,7 +410,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Name="TabItemOverall" Header="Overall">
+            <TabItem Name="TabItemOverall" Header="Overall" PreviewMouseDown="TabItemOverall_OnPreviewMouseDown">
                 <Grid>
                     <TabControl Grid.Row="0">
                         <TabItem Header="Stats" Height="41" VerticalAlignment="Bottom">
@@ -616,32 +604,11 @@
                                             <CheckBox Name="CheckBoxApplyTagFiltersOG"  Content="Apply tag filters" ToolTip="Tags selected in DECKS > SORT / FILTER" Checked="CheckBoxApplyTagFilters_OnChecked" Unchecked="CheckBoxApplyTagFilters_OnUnchecked"/>
                                                 <Label Content="Opponent:" Margin="5,0,0,0"/>
                                                 <ComboBox x:Name="ComboBoxOpponentClassOG" VerticalAlignment="Bottom" Width="90"
-                              SelectionChanged="ComboBoxOpponentClass_SelectionChanged">
-                                                    <system:String>All</system:String>
-                                                    <system:String>Druid</system:String>
-                                                    <system:String>Hunter</system:String>
-                                                    <system:String>Mage</system:String>
-                                                    <system:String>Paladin</system:String>
-                                                    <system:String>Priest</system:String>
-                                                    <system:String>Rogue</system:String>
-                                                    <system:String>Shaman</system:String>
-                                                    <system:String>Warlock</system:String>
-                                                    <system:String>Warrior</system:String>
-                                                </ComboBox>
+                              SelectionChanged="ComboBoxOpponentClass_SelectionChanged"/>
+                                            
                                             <Label Content="Player:" />
                                             <ComboBox x:Name="ComboBoxPlayerClass" VerticalAlignment="Bottom" Width="90"
-                              SelectionChanged="ComboBoxPlayerClass_SelectionChanged">
-                                                <system:String>All</system:String>
-                                                <system:String>Druid</system:String>
-                                                <system:String>Hunter</system:String>
-                                                <system:String>Mage</system:String>
-                                                <system:String>Paladin</system:String>
-                                                <system:String>Priest</system:String>
-                                                <system:String>Rogue</system:String>
-                                                <system:String>Shaman</system:String>
-                                                <system:String>Warlock</system:String>
-                                                <system:String>Warrior</system:String>
-                                            </ComboBox>
+                              SelectionChanged="ComboBoxPlayerClass_SelectionChanged"/>
                                         </StackPanel>
                                         <DataGrid IsReadOnly="True" Grid.Row="1" Margin="0,5" CanUserAddRows="False"
                                                   Name="DataGridOverallGames"
@@ -741,3 +708,4 @@
 
     </Grid>
 </UserControl>
+    

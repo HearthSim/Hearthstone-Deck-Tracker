@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 
@@ -421,13 +422,13 @@ namespace Hearthstone_Deck_Tracker
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
-			if(Game.CurrentGameMode == Game.GameMode.None && Config.Instance.RecordOther
-			   || Game.CurrentGameMode == Game.GameMode.Practice && Config.Instance.RecordPractice
-			   || Game.CurrentGameMode == Game.GameMode.Arena && Config.Instance.RecordArena
-			   || Game.CurrentGameMode == Game.GameMode.Ranked && Config.Instance.RecordRanked
-			   || Game.CurrentGameMode == Game.GameMode.Friendly && Config.Instance.RecordFriendly
-			   || Game.CurrentGameMode == Game.GameMode.Casual && Config.Instance.RecordCasual
-			   || Game.CurrentGameMode == Game.GameMode.Spectator && Config.Instance.RecordSpectator)
+			if(Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
+			   || Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice
+			   || Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena
+			   || Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked
+			   || Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly
+			   || Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual
+			   || Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator)
 			{
 				if(Game.CurrentGameStats != null)
 				{

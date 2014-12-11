@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,29 +13,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public static class Game
 	{
-		public enum CardMark
-		{
-			None = ' ',
-			Coin = 'C',
-			Returned = 'R',
-			Mulliganed = 'M',
-			Stolen = 'S',
-			Kept = 'K'
-		}
-
-		public enum GameMode
-		{
-			All, //for filtering @ deck stats
-			Ranked,
-			Casual,
-			Arena,
-			Friendly,
-			Practice,
-			Spectator,
-            None
-		}
-
-		public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
+		//public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
 
 		#region Properties
 

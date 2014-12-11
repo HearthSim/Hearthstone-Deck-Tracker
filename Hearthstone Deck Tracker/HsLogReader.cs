@@ -6,18 +6,13 @@ using System.IO;
 using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker
 {
-	public enum Turn
-	{
-		Player,
-		Opponent
-	}
-
 	public class HsLogReader
 	{
 		#region Properties
@@ -269,7 +264,7 @@ namespace Hearthstone_Deck_Tracker
 				
 					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
 					{
-						Game.CurrentGameMode = Game.GameMode.Spectator;
+						Game.CurrentGameMode = GameMode.Spectator;
 						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
 						return;
 					}
@@ -306,7 +301,7 @@ namespace Hearthstone_Deck_Tracker
 						_gameHandler.HandleLoss();
 					else if(logLine.Contains("rank_window"))
 					{
-						Game.CurrentGameMode = Game.GameMode.Ranked;
+						Game.CurrentGameMode = GameMode.Ranked;
 						Logger.WriteLine(">>> GAME MODE: RANKED");
 					}
 				}
@@ -317,29 +312,29 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Practice;
+					Game.CurrentGameMode = GameMode.Practice;
 					Logger.WriteLine(">>> GAME MODE: PRACTICE");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Casual;
+					Game.CurrentGameMode = GameMode.Casual;
 					Logger.WriteLine(">>> GAME MODE: CASUAL (RANKED)");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Arena;
+					Game.CurrentGameMode = GameMode.Arena;
 					Logger.WriteLine(">>> GAME MODE: ARENA");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Friendly;
+					Game.CurrentGameMode = GameMode.Friendly;
 					Logger.WriteLine(">>> GAME MODE: FRIENDLY");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
 
-					Game.CurrentGameMode = Game.GameMode.None;
+					Game.CurrentGameMode = GameMode.None;
 					Logger.WriteLine(">>> GAME MODE: NONE");
 
 					_gameHandler.HandleGameEnd(true);

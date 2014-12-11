@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 
@@ -623,14 +624,14 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null)
 				return;
 
-			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
-			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
 
 			if(Game.PlayingAgainst != string.Empty)
 			{
-				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
-				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
 				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
 			}
@@ -796,7 +797,7 @@ namespace Hearthstone_Deck_Tracker
 			ShowOverlay(!(
 				             (Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 				             || (Config.Instance.HideInMenu && Game.IsInMenu)
-							 || (Config.Instance.HideOverlayInSpectator && Game.CurrentGameMode == Game.GameMode.Spectator)
+							 || (Config.Instance.HideOverlayInSpectator && Game.CurrentGameMode == GameMode.Spectator)
 				             || Config.Instance.HideOverlay || ForceHidden));
 
 

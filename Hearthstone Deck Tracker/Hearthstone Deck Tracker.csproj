@@ -115,6 +115,12 @@
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\EnumDescriptionConverter.cs" />
+    <Compile Include="Enums\FilterDeckMode.cs" />
+    <Compile Include="Enums\HeroClass.cs" />
+    <Compile Include="Enums\SortDirection.cs" />
+    <Compile Include="Enums\TagFilterOperation.cs" />
+    <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
       <DependentUpon>DeckStatsControl.xaml</DependentUpon>
     </Compile>
@@ -155,12 +161,17 @@
       <DependentUpon>SortFilterDecks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\CardIds.cs" />
+    <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
+    <Compile Include="Enums\GameMode.cs" />
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
+    <Compile Include="Enums\PlayType.cs" />
+    <Compile Include="Enums\GameResult.cs" />
+    <Compile Include="Enums\Turn.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

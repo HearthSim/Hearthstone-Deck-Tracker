@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 //using System.ComponentModel;
@@ -350,11 +351,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";
 
-		[DefaultValue(Game.GameMode.All)]
-		public Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;
+		[DefaultValue(GameMode.All)]
+		public GameMode SelectedStatsFilterGameMode = GameMode.All;
 
-		[DefaultValue("All Time")]
-		public string SelectedStatsFilterTime = "All Time";
+		[DefaultValue(TimeFrame.AllTime)]
+		public TimeFrame SelectedStatsFilterTimeFrame = TimeFrame.AllTime;
 
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -396,8 +397,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool StatsDeckOverviewIsExpanded = true;
 
-		[DefaultValue("All")]
-		public string StatsFilterOpponentClass = "All";
+		[DefaultValue(HeroClassAll.All)]
+		public HeroClassAll StatsFilterOpponentHeroClass = HeroClassAll.All;
 
 		[DefaultValue(false)]
 		public bool StatsInWindow = false;
@@ -405,11 +406,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool StatsOverallApplyTagFilters = false;
 
-		[DefaultValue("With deck")]
-		public string StatsOverallAssignedOnly = "With deck";
+		[DefaultValue(FilterDeckMode.WithDeck)]
+		public FilterDeckMode StatsOverallFilterDeckMode = FilterDeckMode.WithDeck;
 
-		[DefaultValue("All")]
-		public string StatsOverallFilterPlayerClass = "All";
+		[DefaultValue(HeroClassAll.All)]
+		public HeroClassAll StatsOverallFilterPlayerHeroClass = HeroClassAll.All;
 
 		[DefaultValue(672)]
 		public int StatsWindowHeight = 672;
@@ -426,8 +427,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool TagDecksOnImport = true;
 
-		[DefaultValue(Operation.Or)]
-		public Operation TagOperation = Operation.Or;
+		[DefaultValue(TagFilerOperation.Or)]
+		public TagFilerOperation TagOperation = TagFilerOperation.Or;
 
 		[DefaultValue("")]
 		public string ThemeName = "";

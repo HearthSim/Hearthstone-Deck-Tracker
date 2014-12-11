@@ -1,3 +1,5 @@
+using Hearthstone_Deck_Tracker.Enums;
+
 namespace Hearthstone_Deck_Tracker
 {
 

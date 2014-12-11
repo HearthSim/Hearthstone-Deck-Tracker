@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Stats
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Coin = false;
 			Result = result;
-			GameMode = Game.GameMode.None;
+			GameMode = GameMode.None;
 			OpponentHero = opponentHero;
 			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string PlayerHero { get; set; }
 		public string OpponentHero { get; set; }
 		public bool Coin { get; set; }
-		public Game.GameMode GameMode { get; set; }
+		public GameMode GameMode { get; set; }
 		public GameResult Result { get; set; }
 		public int Turns { get; set; }
 		public DateTime StartTime { get; set; }
@@ -215,37 +216,5 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			return Result + " vs " + OpponentHero + ", " + StartTime;
 		}
-	}
-
-	public enum GameResult
-	{
-		None,
-		Win,
-		Loss
-	}
-
-	public enum PlayType
-	{
-		PlayerPlay,
-		PlayerDraw,
-		PlayerGet,
-		PlayerMulligan,
-		PlayerHandDiscard,
-		PlayerDeckDiscard,
-		PlayerBackToHand,
-		PlayerSecretPlayed,
-		PlayerHeroPower,
-		PlayerPlayToDeck,
-        OpponentPlay,
-		OpponentDraw,
-		OpponentGet,
-		OpponentMulligan,
-		OpponentHandDiscard,
-		OpponentDeckDiscard,
-		OpponentPlayToDeck,
-		OpponentBackToHand,
-		OpponentSecretPlayed,
-        OpponentSecretTriggered,
-		OpponentHeroPower,
 	}
 }

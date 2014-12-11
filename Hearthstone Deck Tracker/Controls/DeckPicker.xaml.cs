@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker
 			public List<Deck> Decks;
 			public string Name;
 			public List<string> SelectedTags;
-			public Operation TagOperation;
+			public TagFilerOperation TagOperation;
 
 			public HsClass(string name)
 			{
@@ -46,7 +47,7 @@ namespace Hearthstone_Deck_Tracker
 						         Decks.Count(
 							         d =>
 							         SelectedTags.Any(t => t == "All") ||
-							         (TagOperation == Operation.Or
+							         (TagOperation == TagFilerOperation.Or
 								          ? SelectedTags.Any(t => d.Tags.Contains(t))
 								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
 				}
@@ -132,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 		public Deck SelectedDeck;
 		public List<string> SelectedTags;
 		public bool ShowAll;
-		public Operation TagOperation;
+		public TagFilerOperation TagOperation;
 		private bool _inClassSelect;
 		private HsClass _selectedClass;
 
@@ -217,7 +218,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool DeckMatchesSelectedTags(Deck deck)
 		{
 			return SelectedTags.Any(t => t == "All") ||
-			       (TagOperation == Operation.Or
+			       (TagOperation == TagFilerOperation.Or
 				        ? SelectedTags.Any(t => deck.Tags.Contains(t))
 				        : SelectedTags.All(t => deck.Tags.Contains(t)));
 		}
@@ -346,7 +347,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void SetTagOperation(Operation o)
+		public void SetTagOperation(TagFilerOperation o)
 		{
 			TagOperation = o;
 			foreach(var hsClass in _hsClasses)

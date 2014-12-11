@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
@@ -519,7 +520,7 @@ namespace Hearthstone_Deck_Tracker
 			tags.Remove("All");
 			TagControlEdit.LoadTags(tags);
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
-			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
+			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 

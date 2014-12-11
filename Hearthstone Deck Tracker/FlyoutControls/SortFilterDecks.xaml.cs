@@ -4,16 +4,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public enum Operation
-	{
-		And,
-		Or
-	}
-
 	/// <summary>
 	/// Interaction logic for TagControl.xaml
 	/// </summary>
@@ -191,13 +186,13 @@ namespace Hearthstone_Deck_Tracker
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
 			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, Operation.And);
+			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.And);
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, Operation.Or);
+			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.Or);
 		}
 
 		#endregion
@@ -258,7 +253,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.SortDecks();
 		}
 
-		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, Operation operation)
+		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)
 		{
 			Config.Instance.TagOperation = operation;
 			Helper.MainWindow.DeckPickerList.SetTagOperation(operation);
