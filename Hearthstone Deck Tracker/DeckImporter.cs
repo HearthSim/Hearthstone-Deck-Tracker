@@ -189,7 +189,7 @@ namespace Hearthstone_Deck_Tracker
 					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//span[contains(@class, 'deckName')]").InnerText).Trim();
 				deck.Name = deckName;
 
-				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td[4]/a");
+				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td/a[@class='real_id']");
 
 				foreach(var cardNode in cardNodes)
 				{
