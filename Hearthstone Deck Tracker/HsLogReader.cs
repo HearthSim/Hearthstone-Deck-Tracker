@@ -415,10 +415,10 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "FRIENDLY SECRET")
 									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
-								else if(to == "FRIENDLY GRAVEYARD")
-									//player discard from deck
+								else if(to == "FRIENDLY GRAVEYARD" || to == "FRIENDLY PLAY")
+									//player discard from deck                 (deathlord)
 									_gameHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
-								break;
+                                break;
 							case "FRIENDLY HAND":
 								if(to == "FRIENDLY DECK")
 								{
@@ -476,8 +476,8 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "OPPOSING SECRET")
 									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
-								else if(to == "OPPOSING GRAVEYARD")
-									//opponent discard from deck
+								else if(to == "OPPOSING GRAVEYARD" || to == "OPPOSING PLAY")
+									//opponent discard from deck              (deathlord)
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 								else if(string.IsNullOrEmpty(to.Trim()) && logLine.Contains("zone=SETASIDE")) //tracking
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
