@@ -479,8 +479,9 @@ namespace Hearthstone_Deck_Tracker
 								else if(to == "OPPOSING GRAVEYARD")
 									//opponent discard from deck
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
+								else if(string.IsNullOrEmpty(to.Trim()) && logLine.Contains("zone=SETASIDE")) //tracking
+									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 
-								
 								break;
 							case "OPPOSING SECRET":
 								if(to == "OPPOSING GRAVEYARD")
