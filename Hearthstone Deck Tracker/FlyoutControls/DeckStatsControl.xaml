@@ -35,7 +35,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
-                <TextBox Name="TextboxNoteFilter" controls:TextboxHelper.Watermark="Note filter" Margin="3"
+                <TextBox Name="TextboxNoteFilter" controls:TextBoxHelper.Watermark="Note filter" Margin="3"
                          TextChanged="TextBox_TextChanged" Width="120" />
                 <StackPanel Name="StackPanelUnassignedFilter" Orientation="Horizontal" Margin="3" Visibility="Collapsed">
                     <Label Content="Games:" />

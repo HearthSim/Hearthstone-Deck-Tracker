@@ -362,7 +362,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
                             Width="240">
-                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
+                    <TextBox controls:TextBoxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
@@ -372,7 +372,7 @@
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox controls:TextboxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
+                    <TextBox controls:TextBoxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDBFilter_TextChanged"

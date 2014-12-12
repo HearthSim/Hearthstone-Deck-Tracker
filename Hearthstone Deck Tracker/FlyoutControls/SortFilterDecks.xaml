@@ -40,7 +40,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBox controls:TextboxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
+                <TextBox controls:TextBoxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
                          Grid.Column="0" Width="auto" Margin="0,0,3,0" />
                 <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
                         Margin="3,0,0,0" Width="auto" />
