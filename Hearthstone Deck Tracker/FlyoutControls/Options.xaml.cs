@@ -1005,6 +1005,21 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+        private void CheckboxDiscardZeroTurnGame_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.DiscardZeroTurnGame = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxDiscardZeroTurnGame_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.DiscardZeroTurnGame = false;
+            SaveConfig(false);
+        }
+
+
 		private void ComboboxExportSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)

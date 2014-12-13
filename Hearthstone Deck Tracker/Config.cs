@@ -321,6 +321,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool RecordRanked = true;
 
+        [DefaultValue(false)]
+        public bool DiscardZeroTurnGame = false;
+
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
