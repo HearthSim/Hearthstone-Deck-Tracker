@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker
 
 			WindowStartupLocation = WindowStartupLocation.CenterOwner;
 			ListboxPicker.Items.Clear();
-			foreach(var deck in decks)
+			foreach(var deck in decks.OrderByDescending(d => d.Name))
 				ListboxPicker.Items.Add(deck);
 		}
 
