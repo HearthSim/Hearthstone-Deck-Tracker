@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -116,8 +117,17 @@ namespace Hearthstone_Deck_Tracker
 							var lines = sr.ReadToEnd().Split('\n');
 							foreach(var line in lines)
 							{
-								var card = Game.GetCardFromName(line.Trim());
-								if(card.Name == "") continue;
+								var count = 1;
+								var cardName = line.Trim();
+								if(Regex.IsMatch(line, @"\d\ \w+"))
+								{
+									count = int.Parse(line[0].ToString());
+									cardName = line.Substring(2).Trim();
+								}
+								var card = Game.GetCardFromName(cardName);
+								if(card == null || string.IsNullOrEmpty(card.Name))
+									continue;
+								card.Count = count;
 
 								if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 									deck.Class = card.PlayerClass;
@@ -126,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 								{
 									var deckCard = deck.Cards.First(c => c.Equals(card));
 									deck.Cards.Remove(deckCard);
-									deckCard.Count++;
+									deckCard.Count += count;
 									deck.Cards.Add(deckCard);
 								}
 								else
