@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker
 			var correctDeck = Game.PlayerDraw(cardId);
 
 			if(!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//don't think this will ever detect an incorrect deck but who knows...
 			if(!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade)
+			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -345,6 +345,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 				{
 					Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+					_assignedDeck = null;
 					return;
 				}
 				Game.CurrentGameStats.GameEnd();
