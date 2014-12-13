@@ -43,23 +43,26 @@ namespace Hearthstone_Deck_Tracker
 			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
 			if(deckStats != null)
 			{
-				if(Config.Instance.KeepStatsWhenDeletingDeck)
+				if(deckStats.Games.Any())
 				{
-					DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
-					DefaultDeckStats.Save();
-					Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
-				}
-				else
-				{
-					try
+					if(Config.Instance.KeepStatsWhenDeletingDeck)
 					{
-						foreach(var game in deckStats.Games)
-							game.DeleteGameFile();
-						Logger.WriteLine("Deleted games from deck: " + deck.Name);
+						DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
+						DefaultDeckStats.Save();
+						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
 					}
-					catch (Exception)
+					else
 					{
-						Logger.WriteLine("Error deleting games");
+						try
+						{
+							foreach(var game in deckStats.Games)
+								game.DeleteGameFile();
+							Logger.WriteLine("Deleted games from deck: " + deck.Name);
+						}
+						catch (Exception)
+						{
+							Logger.WriteLine("Error deleting games");
+						}
 					}
 				}
 				DeckStatsList.Instance.DeckStats.Remove(deckStats);
