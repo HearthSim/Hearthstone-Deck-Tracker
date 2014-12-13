@@ -342,8 +342,12 @@ namespace Hearthstone_Deck_Tracker
 				if(Game.CurrentGameStats == null)
 					return;
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
+				if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+				{
+					Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+					return;
+				}
 				Game.CurrentGameStats.GameEnd();
-
 				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if(selectedDeck != null)
 				{
@@ -422,18 +426,21 @@ namespace Hearthstone_Deck_Tracker
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
-			if((Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
+			if(Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
 			   || Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice
 			   || Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena
 			   || Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked
 			   || Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly
 			   || Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual
 			   || Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator)
-               && !(Game.CurrentGameStats != null && Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1))
-
 			{
 				if(Game.CurrentGameStats != null)
 				{
+					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+					{
+						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+						return;
+					}
 					Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
 					Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
 				}
