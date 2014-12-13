@@ -422,13 +422,15 @@ namespace Hearthstone_Deck_Tracker
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
-			if(Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
+			if((Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
 			   || Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice
 			   || Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena
 			   || Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked
 			   || Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly
 			   || Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual
 			   || Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator)
+               && !(Game.CurrentGameStats != null && Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1))
+
 			{
 				if(Game.CurrentGameStats != null)
 				{

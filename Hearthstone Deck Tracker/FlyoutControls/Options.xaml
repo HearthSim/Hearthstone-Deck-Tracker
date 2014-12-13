@@ -502,7 +502,7 @@
 
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Record Games" Height="230" Width="235" VerticalAlignment="Top"
+                            <GroupBox Header="Record Games" Height="250" Width="235" VerticalAlignment="Top"
                                       Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
@@ -538,6 +538,11 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
                                               Unchecked="CheckboxDiscardGame_Unchecked" />
+                                    <CheckBox x:Name="CheckboxDiscardZeroTurnGame"
+                                              Content="Discard games with zero turns"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
+                                              Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
