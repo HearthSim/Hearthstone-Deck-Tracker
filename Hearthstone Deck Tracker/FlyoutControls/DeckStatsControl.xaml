@@ -372,7 +372,7 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Time" Binding="{Binding Duration}">
+                                    <DataGridTextColumn Header="Time" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -662,7 +662,7 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="Time" Binding="{Binding Duration}">
+                                                <DataGridTextColumn Header="Time" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />

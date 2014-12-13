@@ -92,6 +92,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+		public int SortableDuration
+		{
+			get { return (EndTime - StartTime).Minutes; }
+		}
+
+		[XmlIgnore]
 		public string GotCoin
 		{
 			get { return Coin ? "Yes" : "No"; }
