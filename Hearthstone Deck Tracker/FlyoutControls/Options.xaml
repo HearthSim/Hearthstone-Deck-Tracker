@@ -93,7 +93,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="458" Width="235"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="480" Width="235"
                                   Margin="5,0,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)"
@@ -104,6 +104,10 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxHideOverlayInMenu_Checked"
                                           Unchecked="CheckboxHideOverlayInMenu_Unchecked" />
+                                <CheckBox x:Name="CheckboxHideOverlayInSpectator" Content="Hide in spectator"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxHideOverlayInSpectator_Checked"
+                                          Unchecked="CheckboxHideOverlayInSpectator_Unchecked" />
                                 <CheckBox x:Name="CheckboxHideOverlayInBackground"
                                           Content="Hide if HS in background" HorizontalAlignment="Left"
                                           Margin="10,5,0,0" VerticalAlignment="Top"
@@ -329,15 +333,6 @@
                                                      Height="auto" />
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Sorting" Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"
-                                  Height="72" Width="235" HorizontalAlignment="Center" Margin="5,5,5,0">
-                            <StackPanel>
-                                <CheckBox Name="CheckboxDeckSortingClassFirst" Content="Class cards first"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxDeckSortingClassFirst_Checked"
-                                          Unchecked="CheckboxDeckSortingClassFirst_Unchecked" />
-                            </StackPanel>
-                        </GroupBox>
                     </Grid>
                 </ScrollViewer>
             </TabItem>
@@ -455,7 +450,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
-                                      Width="235" Height="215" Margin="10,10,0,0">
+                                      Width="235" Height="240" Margin="10,10,0,0">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
@@ -469,6 +464,14 @@
                                             <system:String>Very Slow (150ms)</system:String>
                                         </ComboBox>
                                     </DockPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="10,5,0,0" >
+                                        <Label Content="Wait"></Label>
+                                        <TextBox x:Name="TextboxExportDelay" 
+                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                             TextWrapping="Wrap" Text="0" VerticalAlignment="Top"
+                                             Width="27" TextChanged="TextboxExportDelay_TextChanged" PreviewTextInput="TextboxExportDelay_PreviewTextInput"/>
+                                        <Label Content="seconds before starting"></Label>
+                                    </StackPanel>
                                     <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked"
@@ -499,7 +502,7 @@
 
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Record Games" Height="205" Width="235" VerticalAlignment="Top"
+                            <GroupBox Header="Record Games" Height="230" Width="235" VerticalAlignment="Top"
                                       Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
@@ -522,6 +525,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
                                               Unchecked="CheckboxRecordPractice_Unchecked" />
+                                    <CheckBox x:Name="CheckboxRecordSpectator" Content="Record Spectator"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
+                                              Unchecked="CheckboxRecordSpectator_Unchecked" />
                                     <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"

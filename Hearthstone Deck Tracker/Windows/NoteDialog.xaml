@@ -8,7 +8,7 @@
                       WindowStartupLocation="CenterScreen">
     <Grid>
         <Button Content="Set" Margin="10,140,158,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox Name="TextBoxNote" controls:TextboxHelper.Watermark="Note..." Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Note..." Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
         <CheckBox Name="CheckBoxEnterToSave" Content="Save with ENTER" HorizontalAlignment="Right" Margin="0,0,10,10" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom"/>
     </Grid>
 </controls:MetroWindow>

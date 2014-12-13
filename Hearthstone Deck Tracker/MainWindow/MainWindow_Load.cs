@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
@@ -492,6 +493,9 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
 			Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			Options.CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
+			Options.CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
+			Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
+			Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -516,7 +520,7 @@ namespace Hearthstone_Deck_Tracker
 			tags.Remove("All");
 			TagControlEdit.LoadTags(tags);
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
-			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
+			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 
@@ -547,12 +551,18 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
 			Options.CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
-			Options.CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
+			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 
 			DeckStatsFlyout.LoadConfig();
 			GameDetailsFlyout.LoadConfig();
 			StatsWindow.StatsControl.LoadConfig();
 			StatsWindow.GameDetailsFlyout.LoadConfig();
+		}
+
+		public void ReloadTags()
+		{
+			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All").ToList());
 		}
 
 

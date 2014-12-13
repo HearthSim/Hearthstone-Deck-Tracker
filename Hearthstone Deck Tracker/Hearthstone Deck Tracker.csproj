@@ -61,9 +61,9 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=0.13.1.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+    <Reference Include="MahApps.Metro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.1.0.0.0\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -78,8 +78,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MahApps.Metro.0.13.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.1.0.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -115,6 +114,12 @@
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\EnumDescriptionConverter.cs" />
+    <Compile Include="Enums\FilterDeckMode.cs" />
+    <Compile Include="Enums\HeroClass.cs" />
+    <Compile Include="Enums\SortDirection.cs" />
+    <Compile Include="Enums\TagFilterOperation.cs" />
+    <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
       <DependentUpon>DeckStatsControl.xaml</DependentUpon>
     </Compile>
@@ -155,12 +160,17 @@
       <DependentUpon>SortFilterDecks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\CardIds.cs" />
+    <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
+    <Compile Include="Enums\GameMode.cs" />
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
+    <Compile Include="Enums\PlayType.cs" />
+    <Compile Include="Enums\GameResult.cs" />
+    <Compile Include="Enums\Turn.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -2392,6 +2402,7 @@
     <Content Include="Files\cardsDB.ptPT.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone

@@ -57,7 +57,7 @@
 
                 <GroupBox Header="Card Marks">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="(C)oin, (R)eturned, (M)ulliganed, (S)tolen" />
+                                    <Run Text="(C)oin, (R)eturned, (K)ept, (M)ulliganed, (S)tolen" />
                     </TextBlock>
                 </GroupBox>
                 <GroupBox Header="I found a bug, what do I do?">

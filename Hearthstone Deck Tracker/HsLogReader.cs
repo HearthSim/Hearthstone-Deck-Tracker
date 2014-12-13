@@ -6,18 +6,13 @@ using System.IO;
 using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker
 {
-	public enum Turn
-	{
-		Player,
-		Opponent
-	}
-
 	public class HsLogReader
 	{
 		#region Properties
@@ -266,7 +261,13 @@ namespace Hearthstone_Deck_Tracker
 				if(logLine.StartsWith("[Power]"))
 				{
 					_powerCount++;
-
+				
+					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
+					{
+						Game.CurrentGameMode = GameMode.Spectator;
+						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
+						return;
+					}
 					if((_currentPlayer == Turn.Player && !_playerUsedHeroPower) || _currentPlayer == Turn.Opponent && !_opponentUsedHeroPower)
 					{
 						if(_heroPowerRegex.IsMatch(logLine))
@@ -300,7 +301,7 @@ namespace Hearthstone_Deck_Tracker
 						_gameHandler.HandleLoss();
 					else if(logLine.Contains("rank_window"))
 					{
-						Game.CurrentGameMode = Game.GameMode.Ranked;
+						Game.CurrentGameMode = GameMode.Ranked;
 						Logger.WriteLine(">>> GAME MODE: RANKED");
 					}
 				}
@@ -311,29 +312,29 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Practice;
+					Game.CurrentGameMode = GameMode.Practice;
 					Logger.WriteLine(">>> GAME MODE: PRACTICE");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Casual;
+					Game.CurrentGameMode = GameMode.Casual;
 					Logger.WriteLine(">>> GAME MODE: CASUAL (RANKED)");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Arena;
+					Game.CurrentGameMode = GameMode.Arena;
 					Logger.WriteLine(">>> GAME MODE: ARENA");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
 				{
-					Game.CurrentGameMode = Game.GameMode.Friendly;
+					Game.CurrentGameMode = GameMode.Friendly;
 					Logger.WriteLine(">>> GAME MODE: FRIENDLY");
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended
 
-					Game.CurrentGameMode = Game.GameMode.None;
+					Game.CurrentGameMode = GameMode.None;
 					Logger.WriteLine(">>> GAME MODE: NONE");
 
 					_gameHandler.HandleGameEnd(true);
@@ -414,10 +415,10 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "FRIENDLY SECRET")
 									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
-								else if(to == "FRIENDLY GRAVEYARD")
-									//player discard from deck
+								else if(to == "FRIENDLY GRAVEYARD" || to == "FRIENDLY PLAY")
+									//player discard from deck                 (deathlord)
 									_gameHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
-								break;
+                                break;
 							case "FRIENDLY HAND":
 								if(to == "FRIENDLY DECK")
 								{
@@ -437,6 +438,8 @@ namespace Hearthstone_Deck_Tracker
 							case "FRIENDLY PLAY":
 								if(to == "FRIENDLY HAND")
 									_gameHandler.HandlePlayerBackToHand(id, GetTurnNumber());
+								else if(to == "FRIENDLY DECK")
+									_gameHandler.HandlePlayerPlayToDeck(id, GetTurnNumber());
 								break;
 							case "OPPOSING HAND":
 								if(to == "OPPOSING DECK")
@@ -473,11 +476,12 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(to == "OPPOSING SECRET")
 									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
-								else if(to == "OPPOSING GRAVEYARD")
-									//opponent discard from deck
+								else if(to == "OPPOSING GRAVEYARD" || to == "OPPOSING PLAY")
+									//opponent discard from deck              (deathlord)
+									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
+								else if(string.IsNullOrEmpty(to.Trim()) && logLine.Contains("zone=SETASIDE")) //tracking
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
 
-								
 								break;
 							case "OPPOSING SECRET":
 								if(to == "OPPOSING GRAVEYARD")
@@ -487,6 +491,8 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
 									_gameHandler.HandleOpponentPlayToHand(id, GetTurnNumber());
+								else if(to == "OPPOSING DECK")
+									_gameHandler.HandleOpponentPlayToDeck(id, GetTurnNumber());
 								break;
 							default:
 								if(to == "OPPOSING HAND")

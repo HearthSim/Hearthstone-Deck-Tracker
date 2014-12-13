@@ -37,6 +37,9 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 
+				Logger.WriteLine("Waiting for " + Config.Instance.ExportStartDelay + " seconds before starting the export process");
+				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
+
 				var hsRect = User32.GetHearthstoneRect(false);
 				var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 
@@ -110,6 +113,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Logger.WriteLine("Setting deck name...", "DeckExporter");
 			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
+			await ClickOnPoint(hsHandle, nameDeckPos);
+			//send enter and second click to make sure the current name gets selected
+			SendKeys.SendWait("{ENTER}");
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			if(Config.Instance.ExportPasteClipboard)
 			{

@@ -20,14 +20,27 @@
                 </ComboBox>
             </DockPanel>
             <Label Content="Filter by tags:" FontSize="14" DockPanel.Dock="Top" />
+            <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Name="BtnUp"  Margin="0,0,3,0" Grid.Column="0" Content="up" Click="BtnUp_OnClick"></Button>
+                <Button Name="BtnDown" Margin="3,0,3,0" Grid.Column="1" Content="down" Click="BtnDown_OnClick"></Button>
+                <Button Name="BtnTop"  Margin="3,0,3,0" Grid.Column="2" Content="top" Click="BtnTop_OnClick"></Button>
+                <Button Name="BtnBottom" Margin="3,0,0,0" Grid.Column="3" Content="bottom" Click="BtnBottom_OnClick"></Button>
+            </Grid>
             <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom" Margin="0,3,0,0" Content="Delete Selected"
                     VerticalAlignment="Bottom" Width="auto" Click="BtnDeteleTag_Click" Height="26" />
+
             <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBox controls:TextboxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
+                <TextBox controls:TextBoxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
                          Grid.Column="0" Width="auto" Margin="0,0,3,0" />
                 <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
                         Margin="3,0,0,0" Width="auto" />

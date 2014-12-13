@@ -473,8 +473,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if(!_initialized || CheckboxTimerAlert.IsChecked != true) return;
             int mTimerAlertValue;
-            int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue);
-            if (mTimerAlertValue != null)
+            if (int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue))
             {
                 if (mTimerAlertValue < 0)
                 {
@@ -1298,5 +1297,66 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Process.Start(Config.Instance.AppDataPath);
 		}
+
+		private void CheckboxRecordSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = false;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = false;
+			Config.Save();
+		}
+
+		private void TextboxExportDelay_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			int exportStartDelay;
+			if(int.TryParse(TextboxExportDelay.Text, out exportStartDelay))
+			{
+				if(exportStartDelay < 0)
+				{
+					TextboxExportDelay.Text = "0";
+					exportStartDelay = 0;
+				}
+
+				if(exportStartDelay > 60)
+				{
+					TextboxExportDelay.Text = "60";
+					exportStartDelay = 60;
+				}
+
+				Config.Instance.ExportStartDelay = exportStartDelay;
+				SaveConfig(false);
+			}
+		}
+
+		private void TextboxExportDelay_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+			{
+				e.Handled = true;
+			}
+		}
 	}
 }
+ 
