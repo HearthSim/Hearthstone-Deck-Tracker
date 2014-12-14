@@ -129,25 +129,15 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var count = 1;
 					var cardName = line.Trim();
+					Match match = null;
 					if(_cardLineRegexCountFirst.IsMatch(cardName))
-					{
-						var match = _cardLineRegexCountFirst.Match(cardName);
-						var tmpCount = match.Groups["count"];
-						if(tmpCount.Success)
-							count = int.Parse(tmpCount.Value);
-						cardName = match.Groups["cardname"].Value.Trim();
-					}
+						match = _cardLineRegexCountFirst.Match(cardName);
 					else if(_cardLineRegexCountLast.IsMatch(cardName))
-					{
-						var match = _cardLineRegexCountLast.Match(cardName);
-						var tmpCount = match.Groups["count"];
-						if(tmpCount.Success)
-							count = int.Parse(tmpCount.Value);
-						cardName = match.Groups["cardname"].Value.Trim();
-					}
+						match = _cardLineRegexCountLast.Match(cardName);
 					else if(_cardLineRegexCountLast2.IsMatch(cardName))
+						match = _cardLineRegexCountLast2.Match(cardName);
+					if(match != null)
 					{
-						var match = _cardLineRegexCountLast2.Match(cardName);
 						var tmpCount = match.Groups["count"];
 						if(tmpCount.Success)
 							count = int.Parse(tmpCount.Value);
