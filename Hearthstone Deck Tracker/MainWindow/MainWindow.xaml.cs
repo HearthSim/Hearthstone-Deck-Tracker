@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Forms.ContextMenu;
@@ -77,7 +78,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public MainWindow()
 		{
-
 			// Set working directory to path of executable
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
@@ -439,7 +439,8 @@ namespace Hearthstone_Deck_Tracker
 		private void MinimizeToTray()
 		{
 			_notifyIcon.Visible = true;
-			Hide();
+			Visibility = Visibility.Collapsed;
+			ShowInTaskbar = false;
 		}
 
 		private async void UpdateOverlayAsync()
@@ -573,6 +574,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Show();
 			WindowState = WindowState.Normal;
+			ShowInTaskbar = true;
 			Activate();
 		}
 
