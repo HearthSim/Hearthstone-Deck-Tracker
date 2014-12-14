@@ -64,35 +64,122 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)
 		{
-			var settings = new MetroDialogSettings();
-			var clipboard = Clipboard.GetText();
-			if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
-				settings.DefaultText = clipboard;
-
-			//import dialog
-			var idString = await this.ShowInputAsync("Import deck", "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD", settings);
-			if(string.IsNullOrEmpty(idString))
-				return;
-			var deck = new Deck();
-			foreach(var entry in idString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries))
+			try
 			{
-				var splitEntry = entry.Split(':');
-				if(splitEntry.Length != 2)
-					continue;
-				var card = Game.GetCardFromId(splitEntry[0]);
-				if(card.Id == "UNKNOWN")
-					continue;
-				int count;
-				int.TryParse(splitEntry[1], out count);
-				card.Count = count;
+				var settings = new MetroDialogSettings();
+				var clipboard = Clipboard.GetText();
+				if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
+					settings.DefaultText = clipboard;
 
-				if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
-					deck.Class = card.GetPlayerClass;
+				//import dialog
+				var idString = await this.ShowInputAsync("Import deck", "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD", settings);
+				if(string.IsNullOrEmpty(idString))
+					return;
+				var deck = new Deck();
+				foreach(var entry in idString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries))
+				{
+					var splitEntry = entry.Split(':');
+					if(splitEntry.Length != 2)
+						continue;
+					var card = Game.GetCardFromId(splitEntry[0]);
+					if(card.Id == "UNKNOWN")
+						continue;
+					int count;
+					int.TryParse(splitEntry[1], out count);
+					card.Count = count;
 
-				deck.Cards.Add(card);
+					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+						deck.Class = card.GetPlayerClass;
+
+					deck.Cards.Add(card);
+				}
+				SetNewDeck(deck);
 			}
-			SetNewDeck(deck);
+			catch (Exception ex)
+			{
+				Logger.WriteLine("Error importing deck from clipboard(id string): " + ex);
+			}
 		}
+
+
+		private void BtnClipboardText_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var deck = ParseCardString(Clipboard.GetText());
+				if(deck != null)
+					SetNewDeck(deck);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error importing deck from clipboard(text): " + ex);
+			}
+		}
+
+		private readonly Regex _cardLineRegexCountFirst = new Regex(@"((?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s]+)");
+		private readonly Regex _cardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s]+)(\s+(x\s*)(?<count>\d))");
+		private readonly Regex _cardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s]+)(\s+(?<count>\d))");
+		private Deck ParseCardString(string cards)
+		{
+			try
+			{
+				var deck = new Deck();
+				var lines = cards.Split('\n');
+				foreach(var line in lines)
+				{
+					var count = 1;
+					var cardName = line.Trim();
+					if(_cardLineRegexCountFirst.IsMatch(cardName))
+					{
+						var match = _cardLineRegexCountFirst.Match(cardName);
+						var tmpCount = match.Groups["count"];
+						if(tmpCount.Success)
+							count = int.Parse(tmpCount.Value);
+						cardName = match.Groups["cardname"].Value.Trim();
+					}
+					else if(_cardLineRegexCountLast.IsMatch(cardName))
+					{
+						var match = _cardLineRegexCountLast.Match(cardName);
+						var tmpCount = match.Groups["count"];
+						if(tmpCount.Success)
+							count = int.Parse(tmpCount.Value);
+						cardName = match.Groups["cardname"].Value.Trim();
+					}
+					else if(_cardLineRegexCountLast2.IsMatch(cardName))
+					{
+						var match = _cardLineRegexCountLast2.Match(cardName);
+						var tmpCount = match.Groups["count"];
+						if(tmpCount.Success)
+							count = int.Parse(tmpCount.Value);
+						cardName = match.Groups["cardname"].Value.Trim();
+					}
+
+					var card = Game.GetCardFromName(cardName);
+					if(card == null || string.IsNullOrEmpty(card.Name))
+						continue;
+					card.Count = count;
+
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
+
+					if(deck.Cards.Contains(card))
+					{
+						var deckCard = deck.Cards.First(c => c.Equals(card));
+						deck.Cards.Remove(deckCard);
+						deckCard.Count += count;
+						deck.Cards.Add(deckCard);
+					}
+					else
+						deck.Cards.Add(card);
+				}
+				return deck;
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error parsing card string: " + ex);
+				return null;
+			}
+        }
 
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
@@ -112,37 +199,7 @@ namespace Hearthstone_Deck_Tracker
 					if(dialog.FileName.EndsWith(".txt"))
 					{
 						using(var sr = new StreamReader(dialog.FileName))
-						{
-							deck = new Deck();
-							var lines = sr.ReadToEnd().Split('\n');
-							foreach(var line in lines)
-							{
-								var count = 1;
-								var cardName = line.Trim();
-								if(Regex.IsMatch(line, @"\d\ \w+"))
-								{
-									count = int.Parse(line[0].ToString());
-									cardName = line.Substring(2).Trim();
-								}
-								var card = Game.GetCardFromName(cardName);
-								if(card == null || string.IsNullOrEmpty(card.Name))
-									continue;
-								card.Count = count;
-
-								if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-									deck.Class = card.PlayerClass;
-
-								if(deck.Cards.Contains(card))
-								{
-									var deckCard = deck.Cards.First(c => c.Equals(card));
-									deck.Cards.Remove(deckCard);
-									deckCard.Count += count;
-									deck.Cards.Add(deckCard);
-								}
-								else
-									deck.Cards.Add(card);
-							}
-						}
+							deck = ParseCardString(sr.ReadToEnd());
 					}
 					else if(dialog.FileName.EndsWith(".xml"))
 					{
