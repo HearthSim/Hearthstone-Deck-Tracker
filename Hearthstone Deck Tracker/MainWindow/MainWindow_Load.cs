@@ -223,6 +223,24 @@ namespace Hearthstone_Deck_Tracker
 					converted = true;
 #pragma warning restore 612
 				}
+				if(configVersion <= new Version(0, 6, 6, 0))
+				{
+					if(Config.Instance.ExportClearX == 0.86)
+					{
+						Config.Instance.Reset("ExportClearX");
+						converted = true;
+					}
+					if(Config.Instance.ExportClearY == 0.16)
+					{
+						Config.Instance.Reset("ExportClearY");
+						converted = true;
+					}
+					if(Config.Instance.ExportClearCheckYFixed == 0.2)
+					{
+						Config.Instance.Reset("ExportClearCheckYFixed");
+						converted = true;
+					}
+				}
 			}
 
 			if(converted)
