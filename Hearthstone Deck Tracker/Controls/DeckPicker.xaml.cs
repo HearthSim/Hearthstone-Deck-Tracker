@@ -48,8 +48,8 @@ namespace Hearthstone_Deck_Tracker
 							         d =>
 							         SelectedTags.Any(t => t == "All") ||
 							         (TagOperation == TagFilerOperation.Or
-								          ? SelectedTags.Any(t => d.Tags.Contains(t))
-								          : SelectedTags.All(t => d.Tags.Contains(t)))) + ")";
+								          ? SelectedTags.Any(t => d.Tags.Contains(t) || t == "None" && d.Tags.Count == 0) 
+								          : SelectedTags.All(t => d.Tags.Contains(t) || t == "None" && d.Tags.Count == 0))) + ")";
 				}
 			}
 
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker
 				get
 				{
 					if(Name == "Back" || Name == "All") return "win%";
-					var filteredDecks = Decks.Where(d => Config.Instance.SelectedTags.Any(t => t == "All" || d.Tags.Contains(t))).ToList();
+					var filteredDecks = Decks.Where(d => Config.Instance.SelectedTags.Any(t => t == "All" || d.Tags.Contains(t) || t == "None" && d.Tags.Count == 0)).ToList();
 					var total = filteredDecks.Sum(d => d.DeckStats.Games.Count);
 					if(total == 0) return "-%";
 					return Math.Round(100.0 * filteredDecks.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / total, 0) + "%";
@@ -219,8 +219,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return SelectedTags.Any(t => t == "All") ||
 			       (TagOperation == TagFilerOperation.Or
-				        ? SelectedTags.Any(t => deck.Tags.Contains(t))
-				        : SelectedTags.All(t => deck.Tags.Contains(t)));
+				        ? SelectedTags.Any(t => deck.Tags.Contains(t) || t == "None" && deck.Tags.Count == 0)
+				        : SelectedTags.All(t => deck.Tags.Contains(t) || t == "None" && deck.Tags.Count == 0));
 		}
 
 		public void RemoveDeck(Deck deck)

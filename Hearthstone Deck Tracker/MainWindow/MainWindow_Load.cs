@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using Microsoft.Win32;
@@ -510,13 +511,14 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
 
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
-			MenuItemQuickSelectFilter.ItemsSource = DeckList.AllTags.Select(x => x.ToUpperInvariant());
+
+			UpdateQuickFilterItemSource();
 
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 			
-			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All").ToList());
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
 			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
@@ -557,10 +559,17 @@ namespace Hearthstone_Deck_Tracker
 			StatsWindow.GameDetailsFlyout.LoadConfig();
 		}
 
+		public void UpdateQuickFilterItemSource()
+		{
+			MenuItemQuickSelectFilter.ItemsSource =
+				DeckList.AllTags.Where(t => DeckList.DecksList.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
+				        .Select(x => x.ToUpperInvariant());
+		}
+
 		public void ReloadTags()
 		{
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
-			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All").ToList());
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 		}
 
 

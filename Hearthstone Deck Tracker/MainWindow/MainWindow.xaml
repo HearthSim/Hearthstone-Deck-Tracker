@@ -110,7 +110,7 @@
                     <Separator />
                     <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                     </MenuItem>
-                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK SELECT FILTER">
+                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK FILTER">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click"></TextBlock>

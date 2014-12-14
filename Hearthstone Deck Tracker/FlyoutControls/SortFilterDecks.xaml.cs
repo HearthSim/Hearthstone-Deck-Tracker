@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckList.AllTags.Add(tag);
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All" && t != "None").ToList());
 			}
 		}
 
@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker
 
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All" && t != "None").ToList());
 				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
 		}
@@ -277,6 +277,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckPickerList.SelectedDeck.Tags = new List<string>(tags);
 				Helper.MainWindow.DeckPickerList.UpdateList();
 				Helper.MainWindow.WriteDecks();
+				Helper.MainWindow.UpdateQuickFilterItemSource();
 			}
 		}
 

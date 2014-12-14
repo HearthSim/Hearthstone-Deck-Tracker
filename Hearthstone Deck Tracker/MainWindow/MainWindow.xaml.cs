@@ -235,6 +235,11 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.AllTags.Add("Constructed");
 				WriteDecks();
 			}
+			if(!DeckList.AllTags.Contains("None"))
+			{
+				DeckList.AllTags.Add("None");
+				WriteDecks();
+			}
 
 			Options.ComboboxAccent.ItemsSource = ThemeManager.Accents;
 			Options.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
