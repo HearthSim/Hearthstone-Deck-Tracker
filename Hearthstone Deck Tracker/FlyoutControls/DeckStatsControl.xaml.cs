@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLossClass.Items.Clear();
 			var allGames = Helper.MainWindow.DeckList.DecksList
 			                     .Where(d => d.GetClass == _deck.GetClass)
-			                     .SelectMany(d => FilterGames(d.DeckStats.Games))
+			                     .SelectMany(d => FilterGames(d.DeckStats.Games).Where(g => !g.IsClone))
 								 .Concat(FilterGames(defaultStats.Games)).ToList();
 
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
@@ -503,7 +503,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithoutDeck || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
 					allGames.AddRange(DefaultDeckStats.Instance.GetDeckStats(@class).Games);
 
-				allGames = FilterGames(allGames).ToList();
+				allGames = FilterGames(allGames).Where(g => !g.IsClone).ToList();
 
 				total.AddRange(allGames);
 				DataGridOverallWinLoss.Items.Add(new WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));

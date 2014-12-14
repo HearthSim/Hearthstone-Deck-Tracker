@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public string Note { get; set; }
+		public bool IsClone { get; set; }
 		
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
@@ -106,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats CloneWithNewId()
 		{
-			var newGame = new GameStats(Result, OpponentHero, PlayerHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats()};
+			var newGame = new GameStats(Result, OpponentHero, PlayerHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats(), IsClone = true};
 			newGame.Save();
 			return newGame;
 		}

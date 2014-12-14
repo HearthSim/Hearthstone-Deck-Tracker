@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Forms.VisualStyles;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -79,6 +81,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
+			var cloneStats = (await this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))== MessageDialogResult.Affirmative;
+
 			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
 			var originalStatsEntry = clone.DeckStats;
 
@@ -100,16 +104,20 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.AddAndSelectDeck(clone);
 			WriteDecks();
 
-			//clone game stats
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
 			if(newStatsEntry == null)
 			{
 				newStatsEntry = new DeckStats(clone.Name);
 				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 			}
-			foreach(var game in originalStatsEntry.Games)
-				newStatsEntry.AddGameResult(game.CloneWithNewId());
-			Logger.WriteLine("cloned gamestats");
+
+			//clone game stats
+			if(cloneStats)
+			{
+				foreach(var game in originalStatsEntry.Games)
+					newStatsEntry.AddGameResult(game.CloneWithNewId());
+				Logger.WriteLine("cloned gamestats");
+			}
 
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
