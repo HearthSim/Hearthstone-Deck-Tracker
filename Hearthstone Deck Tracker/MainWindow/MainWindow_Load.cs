@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using Microsoft.Win32;
@@ -513,13 +510,13 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
 
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
+			MenuItemQuickSelectFilter.ItemsSource = DeckList.AllTags.Select(x => x.ToUpperInvariant());
 
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
-			var tags = new List<string>(DeckList.AllTags);
-			tags.Remove("All");
-			TagControlEdit.LoadTags(tags);
+			
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All").ToList());
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
 			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 

@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -216,6 +215,14 @@ namespace Hearthstone_Deck_Tracker
 			if(!DeckList.AllTags.Contains("All"))
 			{
 				DeckList.AllTags.Add("All");
+				WriteDecks();
+			}
+			if(!DeckList.AllTags.Contains("Favorite"))
+			{
+				if(DeckList.AllTags.Count > 1)
+					DeckList.AllTags.Insert(1, "Favorite");
+				else
+					DeckList.AllTags.Add("Favorite");
 				WriteDecks();
 			}
 			if(!DeckList.AllTags.Contains("Arena"))
@@ -666,7 +673,9 @@ namespace Hearthstone_Deck_Tracker
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
 				TagControlEdit.SetSelectedTags(deck.Tags);
-			}
+				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
+				MenuItemQuickSetTag.Items.Refresh();
+            }
 			else
 			{
 				EnableMenuItems(false);
@@ -746,6 +755,22 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
+		}
+
+		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
+		{
+			var tag = ((TextBlock)sender).Text;
+			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
+			if(actualTag != null)
+			{
+				var tags = new List<string>() {actualTag.Name};
+				SortFilterDecksFlyout.SetSelectedTags(tags);
+				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
+				Config.Instance.SelectedTags = tags;
+				Config.Save();
+				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
+				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
+			}
 		}
 	}
 }

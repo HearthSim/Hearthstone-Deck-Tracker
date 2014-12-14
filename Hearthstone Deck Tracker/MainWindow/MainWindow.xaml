@@ -110,6 +110,14 @@
                     <Separator />
                     <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
                     </MenuItem>
+                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK SELECT FILTER">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click"></TextBlock>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                    <Separator />
                     <CheckBox x:Name="CheckboxClassCardsFirst" Margin="-24,0,0,0" Content="CLASS CARDS FIRST"
                               FontSize="14"
                               Checked="CheckboxClassCardsFirst_Checked"
@@ -179,9 +187,16 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_DECK" Click="BtnEditDeck_Click">
                     </MenuItem>
+                    <MenuItem Header="_NOTES" Click="BtnNotes_Click">
+                    </MenuItem>
                     <MenuItem Header="_TAGS" Click="BtnTags_Click">
                     </MenuItem>
-                    <MenuItem Header="_NOTES" Click="BtnNotes_Click">
+                    <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" ></CheckBox>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click">
