@@ -556,7 +556,8 @@ namespace Hearthstone_Deck_Tracker
 			if(e.Key == Key.Enter)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
-				if(string.IsNullOrEmpty(card.Name)) return;
+				if(card == null || string.IsNullOrEmpty(card.Name))
+					return;
 				AddCardToDeck((Card)card.Clone());
 			}
 		}
