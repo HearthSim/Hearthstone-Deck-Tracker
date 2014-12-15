@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 
@@ -226,8 +227,19 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void BtnArena_Click(object sender, RoutedEventArgs e)
+		private async void BtnArena_Click(object sender, RoutedEventArgs e)
 		{
+			if(Config.Instance.ShowArenaImportMessage)
+			{
+				await
+					this.ShowMessageAsync("How this works:",
+										  "Looks like this is your first time using this feature, so let me explain:\n\n1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.");
+				Config.Instance.ShowArenaImportMessage = false;
+				Config.Save();
+				MenuItemImportArena.IsEnabled = Game.PossibleArenaCards.Count > 0;
+				return;
+			}
+
 			var deck = new Deck { Name = "Arena " + DateTime.Now.ToString("dd-MM hh:mm") };
 			foreach(var card in Game.PossibleArenaCards)
 			{

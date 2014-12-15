@@ -382,6 +382,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowLogTab = false;
 
+		[DefaultValue(true)]
+		public bool ShowArenaImportMessage = true;
+
 		[DefaultValue(false)]
 		public bool ShowNoteDialogAfterGame = false;
 

@@ -575,6 +575,8 @@ namespace Hearthstone_Deck_Tracker
 			GameDetailsFlyout.LoadConfig();
 			StatsWindow.StatsControl.LoadConfig();
 			StatsWindow.GameDetailsFlyout.LoadConfig();
+
+			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 
 		public void UpdateQuickFilterItemSource()

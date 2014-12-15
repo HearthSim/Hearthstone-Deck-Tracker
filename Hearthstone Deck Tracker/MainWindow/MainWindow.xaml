@@ -208,8 +208,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="FROM _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena"/>
                     <MenuItem Header="FROM _WEB" Click="BtnWeb_Click" />
+                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" />
                     <MenuItem Header="FROM _FILE" Click="BtnFile_Click" />
                     <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
                     <MenuItem Header="FROM CLIPBOARD: _CARD NAMES" Click="BtnClipboardText_Click" />

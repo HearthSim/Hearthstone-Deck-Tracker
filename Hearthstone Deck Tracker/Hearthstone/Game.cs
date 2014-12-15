@@ -655,7 +655,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void ResetArenaCards()
 		{
 			PossibleArenaCards.Clear();
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = false;
+			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 	}
 }
