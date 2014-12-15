@@ -164,6 +164,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//if (TagControlOnNewTag != null)
 			TagControlOnNewTag(this, tag);
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
@@ -180,6 +181,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//if (DeleteTag != null)
 			TagControlOnDeleteTag(this, tag.Name);
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
@@ -326,6 +328,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.WriteDecks();
 			Helper.MainWindow.ReloadTags();
 			ListboxTags.SelectedIndex = to - 1;
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 	}
 }
