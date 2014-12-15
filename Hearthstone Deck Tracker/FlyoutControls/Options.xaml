@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="650" d:DesignWidth="515">
+             d:DesignHeight="700" d:DesignWidth="515">
     <Grid>
         <TabControl Width="auto">
             <TabItem Header="General" Background="{x:Null}">
@@ -93,7 +93,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Overlay" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
-                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="480" Width="235"
+                                  HorizontalAlignment="Left" VerticalAlignment="Top" Height="491" Width="235"
                                   Margin="5,0,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)"
@@ -183,7 +183,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Height="282" Width="235" Margin="10,10,0,0">
+                                  VerticalAlignment="Top" Height="312" Width="235" Margin="10,10,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -241,6 +241,11 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxNoteDialog_Checked"
                                           Unchecked="CheckboxNoteDialog_Unchecked" />
+                                <CheckBox x:Name="CheckboxNoteDialogDelayed"
+                                          Content="Wait until back in menu"
+                                          HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxNoteDialogDelay_Checked"
+                                          Unchecked="CheckboxNoteDialogDelay_Unchecked" />
                             </StackPanel>
                         </GroupBox>
                     </Grid>

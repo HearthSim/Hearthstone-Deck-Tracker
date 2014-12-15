@@ -216,6 +216,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool MinimizeToTray = false;
 
+		[DefaultValue(false)]
+		public bool NoteDialogDelayed = false;
+
 		[DefaultValue(0)]
 		public int OffsetX = 0;
 

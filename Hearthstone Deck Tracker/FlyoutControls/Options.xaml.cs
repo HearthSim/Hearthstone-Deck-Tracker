@@ -1221,6 +1221,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ShowNoteDialogAfterGame = true;
+			CheckboxNoteDialogDelayed.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -1228,6 +1229,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ShowNoteDialogAfterGame = false;
+			CheckboxNoteDialogDelayed.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -1371,6 +1373,22 @@ namespace Hearthstone_Deck_Tracker
 			{
 				e.Handled = true;
 			}
+		}
+
+		private void CheckboxNoteDialogDelay_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = false;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialogDelay_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = true;
+			Config.Save();
 		}
 	}
 }

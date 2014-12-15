@@ -365,7 +365,7 @@ namespace Hearthstone_Deck_Tracker
 						return;
 					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
-					if(Config.Instance.ShowNoteDialogAfterGame)
+					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed)
 						new NoteDialog(Game.CurrentGameStats);
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 					_assignedDeck = selectedDeck;
@@ -441,6 +441,10 @@ namespace Hearthstone_Deck_Tracker
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
 			if(RecordCurrentGameMode)
 			{
+
+				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed)
+					new NoteDialog(Game.CurrentGameStats);
+
 				if(Game.CurrentGameStats != null)
 				{
 					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
