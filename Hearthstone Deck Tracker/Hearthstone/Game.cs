@@ -59,6 +59,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
+		public static List<Card> PossibleArenaCards { get; set; }
 
 		#endregion
 
@@ -71,6 +72,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PlayerDeck = new ObservableCollection<Card>();
 			PlayerDrawn = new ObservableCollection<Card>();
 			OpponentCards = new ObservableCollection<Card>();
+			PossibleArenaCards = new List<Card>();
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
@@ -648,6 +650,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
 				   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
 				   && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
+		}
+
+		public static void ResetArenaCards()
+		{
+			PossibleArenaCards.Clear();
+			Helper.MainWindow.MenuItemImportArena.IsEnabled = false;
 		}
 	}
 }

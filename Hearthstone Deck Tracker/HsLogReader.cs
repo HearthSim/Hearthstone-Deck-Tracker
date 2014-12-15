@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.IO;
-using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
@@ -69,6 +69,8 @@ namespace Hearthstone_Deck_Tracker
 				{"NAX15_01H", "Kel'Thuzad"}
 			};
 
+		private readonly Regex _cardAlreadyInCacheRegex = new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
+		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 
 		private readonly int _updateDelay;
@@ -304,6 +306,10 @@ namespace Hearthstone_Deck_Tracker
 						Game.CurrentGameMode = GameMode.Ranked;
 						Logger.WriteLine(">>> GAME MODE: RANKED");
 					}
+					else if(_unloadCardRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
+					{
+						_gameHandler.HandlePossibleArenaCard(_unloadCardRegex.Match(logLine).Groups["id"].Value);
+					}
 				}
 				else if(logLine.StartsWith("[Bob] legend rank"))
 				{
@@ -324,6 +330,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Game.CurrentGameMode = GameMode.Arena;
 					Logger.WriteLine(">>> GAME MODE: ARENA");
+					Game.ResetArenaCards();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
 				{
@@ -344,6 +351,14 @@ namespace Hearthstone_Deck_Tracker
 					_lastOpponentDrawIncrementedTurn = false;
 					_lastPlayerDrawIncrementedTurn = false;
 					ClearLog();
+				}
+				else if(logLine.StartsWith("[Rachelle]"))
+				{
+					if(_cardAlreadyInCacheRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
+					{
+						//Console.WriteLine();
+						_gameHandler.HandlePossibleArenaCard(_cardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value);
+					}
 				}
 				else if(logLine.StartsWith("[Zone]"))
 				{

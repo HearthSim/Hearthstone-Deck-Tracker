@@ -42,5 +42,6 @@ namespace Hearthstone_Deck_Tracker
 		void PlayerSetAside(string id);
 
 
+		void HandlePossibleArenaCard(string id);
 	}
 }

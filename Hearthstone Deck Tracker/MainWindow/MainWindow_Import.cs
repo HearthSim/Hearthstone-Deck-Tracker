@@ -224,5 +224,19 @@ namespace Hearthstone_Deck_Tracker
 
 			SetNewDeck(deck);
 		}
+
+
+		private void BtnArena_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = new Deck { Name = "Arena " + DateTime.Now.ToString("dd-MM hh:mm") };
+			foreach(var card in Game.PossibleArenaCards)
+			{
+				deck.Cards.Add(card);
+				if(deck.Class == null && card.GetPlayerClass != "Neutral")
+					deck.Class = card.GetPlayerClass;
+
+			}
+			SetNewDeck(deck);
+		}
 	}
 }

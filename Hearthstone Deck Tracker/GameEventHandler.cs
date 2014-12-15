@@ -412,7 +412,13 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("set aside: " + id);
 		}
 
-		public static void HandleWin()
+		public void HandlePossibleArenaCard(string id)
+		{
+			Game.PossibleArenaCards.Add(Game.GetCardFromId(id));
+			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
+		}
+
+	    public static void HandleWin()
 		{
 			if(!Game.IsInMenu || Game.CurrentGameStats == null)
 				return;
