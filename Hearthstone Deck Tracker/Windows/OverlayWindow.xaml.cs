@@ -1016,27 +1016,47 @@ namespace Hearthstone_Deck_Tracker
 					ShowTimers();
 				foreach(var movableElement in _movableElements)
 				{
-					if(!CanvasInfo.Children.Contains(movableElement.Value))
-						CanvasInfo.Children.Add(movableElement.Value);
 
-					movableElement.Value.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
+					try
+					{
+						if(!CanvasInfo.Children.Contains(movableElement.Value))
+							CanvasInfo.Children.Add(movableElement.Value);
 
-					Canvas.SetTop(movableElement.Value, Canvas.GetTop(movableElement.Key));
-					Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
+						movableElement.Value.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
 
-					var elementSize = GetUiElementSize(movableElement.Key);
-					if(movableElement.Key == StackPanelPlayer)
-						movableElement.Value.Height = Config.Instance.PlayerDeckHeight * Height / 100;
-					else if(movableElement.Key == StackPanelOpponent)
-						movableElement.Value.Height = Config.Instance.OpponentDeckHeight * Height / 100;
-					else if(movableElement.Key == StackPanelSecrets)
-						movableElement.Value.Height = StackPanelSecrets.ActualHeight;
-					else
-						movableElement.Value.Height = elementSize.Height;
+						Canvas.SetTop(movableElement.Value, Canvas.GetTop(movableElement.Key));
+						Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
 
-					movableElement.Value.Width = elementSize.Width;
+						var elementSize = GetUiElementSize(movableElement.Key);
+						if(movableElement.Key == StackPanelPlayer)
+						{
+							if(!TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100))
+							{
+								Config.Instance.Reset("PlayerDeckHeight");
+								TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100);
+							}
+						}
+						else if(movableElement.Key == StackPanelOpponent)
+						{
+							if(!TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100))
+							{
+								Config.Instance.Reset("OpponentDeckHeight");
+								TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100);
+							}
+						}
+						else if(movableElement.Key == StackPanelSecrets)
+							movableElement.Value.Height = StackPanelSecrets.ActualHeight > 0 ? StackPanelSecrets.ActualHeight : 0;
+						else
+							movableElement.Value.Height = elementSize.Height > 0 ? elementSize.Height : 0;
 
-					movableElement.Value.Visibility = Visibility.Visible;
+						movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
+
+						movableElement.Value.Visibility = Visibility.Visible;
+					}
+					catch(Exception ex)
+					{
+						Logger.WriteLine(ex.ToString());
+					}
 				}
 			}
 			else
@@ -1053,6 +1073,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			return _uiMovable;
+		}
+
+		private bool TrySetResizeGripHeight(ResizeGrip element, double height)
+		{
+			if(height <= 0)
+				return false;
+			element.Height = height;
+			return true;
 		}
 
 		private Size GetUiElementSize(UIElement element)
