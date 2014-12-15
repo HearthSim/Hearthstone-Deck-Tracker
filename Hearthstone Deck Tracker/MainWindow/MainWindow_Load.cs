@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using Microsoft.Win32;

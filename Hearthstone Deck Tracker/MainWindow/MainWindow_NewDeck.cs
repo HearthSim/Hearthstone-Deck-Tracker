@@ -148,7 +148,6 @@ namespace Hearthstone_Deck_Tracker
 			var oldDeckName = _newDeck.Name;
 
 			_newDeck.Name = deckName;
-			_newDeck.Tags = TagControlEdit.GetTags();
 
 			var newDeckClone = (Deck)_newDeck.Clone();
 			DeckList.DecksList.Add(newDeckClone);
