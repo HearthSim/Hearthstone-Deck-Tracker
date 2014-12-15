@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				return;
 
+			DeselectDeck();
 			DeleteDeck(deck);
 		}
 
@@ -135,6 +136,36 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = DeckPickerList.SelectedDeck;
 			if(selectedDeck == null) return;
 			SetNewDeck(selectedDeck, true);
+		}
+
+		private async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var selectedDeck = DeckPickerList.SelectedDeck;
+			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
+				return;
+			var deck = await DeckImporter.Import(selectedDeck.Url);
+			if(deck == null)
+			{
+				await this.ShowMessageAsync("Error", "Could not load deck from specified url.");
+				return;
+			}
+			if(deck.Cards.All(c1 => selectedDeck.Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
+			{
+				await this.ShowMessageAsync("Already up to date.", "No changes found.");
+				return;
+			}
+
+			SetNewDeck(selectedDeck, true);
+			TextBoxDeckName.Text = deck.Name;
+			_newDeck.Cards.Clear();
+			foreach(var card in deck.Cards)
+				_newDeck.Cards.Add(card);
+
+			UpdateTitle();
+			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			ManaCurveMyDecks.UpdateValues();
+
+			TagControlEdit.SetSelectedTags(deck.Tags);
 		}
 	}
 }

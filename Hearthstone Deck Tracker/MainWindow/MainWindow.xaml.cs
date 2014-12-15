@@ -682,7 +682,8 @@ namespace Hearthstone_Deck_Tracker
 				TagControlEdit.SetSelectedTags(deck.Tags);
 				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				MenuItemQuickSetTag.Items.Refresh();
-            }
+				MenuItemUpdateDeck.IsEnabled = !string.IsNullOrEmpty(deck.Url);
+			}
 			else
 			{
 				EnableMenuItems(false);
