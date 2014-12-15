@@ -499,8 +499,8 @@ namespace Hearthstone_Deck_Tracker
 
 								break;
 							case "OPPOSING SECRET":
-								if(to == "OPPOSING GRAVEYARD")
-									//opponent secret triggered
+								if(to == "OPPOSING GRAVEYARD" || to == "FRIENDLY SECRET")
+									//opponent secret triggered || stolen
 									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
 								break;
 							case "OPPOSING PLAY":
