@@ -61,10 +61,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public Secret[] GetDefaultSecrets(HeroClass heroClass)
 		{
-			var count = SecretHelper.GetMaxSecretCount(HeroClass);
+			var count = SecretHelper.GetMaxSecretCount(heroClass);
 			var returnThis = new Secret[count];
 			for(int i = 0; i < count; i++)
-				returnThis[i] = new Secret(SecretHelper.GetSecretIds(HeroClass)[i], 1);
+				returnThis[i] = new Secret(SecretHelper.GetSecretIds(heroClass)[i], 1);
 			return returnThis;
 		}
 
