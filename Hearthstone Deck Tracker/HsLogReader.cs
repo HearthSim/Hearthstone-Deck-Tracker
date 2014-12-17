@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int MaxFileLength = 6000000;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+		private readonly Regex _otherIdRegex = new Regex(@".*\[.*(id=(?<Id>(\d+))).*");
 
 		private readonly string _fullOutputPath;
 
@@ -369,6 +370,7 @@ namespace Hearthstone_Deck_Tracker
 						var id = match.Groups["Id"].Value.Trim();
 						var from = match.Groups["from"].Value.Trim();
 						var to = match.Groups["to"].Value.Trim();
+						var otherId = -1;
 
 						var zonePos = -1;
 						//var zone = string.Empty;
@@ -465,7 +467,11 @@ namespace Hearthstone_Deck_Tracker
 									_gameHandler.HandleOpponentMulligan(zonePos);
 								}
 								else if(to == "OPPOSING SECRET")
-									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), false);
+								{
+									if(_otherIdRegex.IsMatch(logLine))
+										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
+									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), false, otherId);
+								}
 								else if(to == "OPPOSING PLAY")
 									_gameHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
 								else
@@ -490,7 +496,12 @@ namespace Hearthstone_Deck_Tracker
 									_gameHandler.HandleOpponentDraw(GetTurnNumber());
 								}
 								else if(to == "OPPOSING SECRET")
-									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true);
+								{
+									if(_otherIdRegex.IsMatch(logLine))
+										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
+
+									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true, otherId);
+								}
 								else if(to == "OPPOSING GRAVEYARD" || to == "OPPOSING PLAY")
 									//opponent discard from deck              (deathlord)
 									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
@@ -500,8 +511,12 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							case "OPPOSING SECRET":
 								if(to == "OPPOSING GRAVEYARD" || to == "FRIENDLY SECRET")
+								{
 									//opponent secret triggered || stolen
-									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber());
+									if(_otherIdRegex.IsMatch(logLine))
+										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
+									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber(), otherId);
+								}
 								break;
 							case "OPPOSING PLAY":
 								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
@@ -187,7 +188,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 		}
 
-		public static void HandleOpponentSecretPlayed(string cardId, int from, int turn, bool fromDeck)
+		public static void HandleOpponentSecretPlayed(string cardId, int from, int turn, bool fromDeck, int otherId)
 		{
 			LogEvent("OpponentSecretPlayed");
 			Game.OpponentSecretCount++;
@@ -196,7 +197,8 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretPlayed, turn, cardId);
-			Helper.MainWindow.Overlay.ShowSecrets(Game.PlayingAgainst);
+			Game.OpponentSecrets.NewSecretPlayed(otherId);
+			Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
 		public static void HandleOpponentPlayToHand(string cardId, int turn)
@@ -218,13 +220,16 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 		}
 
-	    public static void HandleOpponentSecretTrigger(string cardId, int turn)
+	    public static void HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
 		{
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
+			Game.OpponentSecrets.SecretRemoved(otherId);
 			if(Game.OpponentSecretCount <= 0)
 				Helper.MainWindow.Overlay.HideSecrets();
+			else 
+				Helper.MainWindow.Overlay.ShowSecrets();
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 		}
 
@@ -248,8 +253,11 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Game.CurrentGameStats != null)
 				Game.CurrentGameStats.OpponentHero = hero;
-
 			Logger.WriteLine("Playing against " + hero, "Hearthstone");
+
+			HeroClass heroClass;
+			if(Enum.TryParse(hero, true, out heroClass))
+				Game.OpponentSecrets.HeroClass = heroClass;
 		}
 
 		public static void SetPlayerHero(string hero)
@@ -572,9 +580,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentGet(turn);
         }
 
-        void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck)
+        void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck, int otherId)
         {
-            HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck);
+            HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck, otherId);
         }
 
         void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn)
@@ -582,9 +590,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentPlayToHand(cardId, turn);
         }
 
-        void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn)
+        void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
         {
-            HandleOpponentSecretTrigger(cardId, turn);
+            HandleOpponentSecretTrigger(cardId, turn, otherId);
         }
 
         void IGameHandler.HandleOpponentDeckDiscard(string cardId, int turn)

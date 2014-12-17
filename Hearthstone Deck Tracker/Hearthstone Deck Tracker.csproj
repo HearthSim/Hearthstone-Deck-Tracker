@@ -165,7 +165,10 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretHelper.cs" />
     <Compile Include="IGameHandler.cs" />
+    <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
+    <Compile Include="Hearthstone\Secrets\Secret.cs" />
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Enums\PlayType.cs" />

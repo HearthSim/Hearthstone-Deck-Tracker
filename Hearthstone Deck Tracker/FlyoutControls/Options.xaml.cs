@@ -721,7 +721,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
 			if(!Game.IsInMenu)
-				Helper.MainWindow.Overlay.ShowSecrets(Game.PlayingAgainst);
+				Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
 		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)

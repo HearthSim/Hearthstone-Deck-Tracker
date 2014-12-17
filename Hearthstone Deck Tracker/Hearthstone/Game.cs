@@ -43,7 +43,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static string PlayingAs;
 
 		public static List<string> SetAsideCards;
-		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck; 
+		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck;
+
+		public static OpponentSecrets OpponentSecrets;
 
 		private static readonly List<string> ValidCardSets = new List<string>
 			{
@@ -76,6 +78,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentSecrets = new OpponentSecrets();
 			for(var i = 0; i < MaxHandSize; i++)
 			{
 				OpponentHandAge[i] = -1;
@@ -99,6 +102,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentDeckCount = 30;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentSecrets.ClearSecrets();
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{

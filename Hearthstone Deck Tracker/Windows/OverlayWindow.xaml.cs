@@ -28,12 +28,10 @@ namespace Hearthstone_Deck_Tracker
 		private readonly int _offsetY;
 		private readonly List<StackPanel> _stackPanelsMarks;
 		private int _cardCount;
-		private string _lastSecretsClass;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;
 		private User32.MouseInput _mouseInput;
 		private Point _mousePos;
-		private bool _needToRefreshSecrets;
 		private int _opponentCardCount;
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
@@ -331,23 +329,8 @@ namespace Hearthstone_Deck_Tracker
 			var card = ToolTipCard.DataContext as Card;
 			if(card == null) return;
 
-			// 1: normal, 0: grayed out
-			card.Count = card.Count == 0 ? 1 : 0;
-
-
-			//reload secrets panel
-			var cards = StackPanelSecrets.Children.OfType<Controls.Card>().Select(c => c.DataContext).OfType<Card>().ToList();
-
-			StackPanelSecrets.Children.Clear();
-			foreach(var c in cards)
-			{
-				var cardObj = new Controls.Card();
-				cardObj.SetValue(DataContextProperty, c);
-				StackPanelSecrets.Children.Add(cardObj);
-			}
-
-			//reset secrets when new secret is played
-			_needToRefreshSecrets = true;
+			Game.OpponentSecrets.Trigger(card.Id);
+			ShowSecrets();
 		}
 
 		public void SortViews()
@@ -913,39 +896,24 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void ShowSecrets(string hsClass, bool force = false)
+		public void ShowSecrets(bool force = false, HeroClass? heroClass = null)
 		{
-			if(Config.Instance.HideSecrets && !force) return;
-			if(_lastSecretsClass != hsClass || _needToRefreshSecrets)
+			if(Config.Instance.HideSecrets && !force)
+				return;
+
+			StackPanelSecrets.Children.Clear();
+			var secrets = heroClass == null
+				              ? Game.OpponentSecrets.GetSecrets()
+				              : Game.OpponentSecrets.GetDefaultSecrets(heroClass.Value);
+			foreach(var id in secrets)
 			{
-				List<string> ids;
-				switch(hsClass)
-				{
-					case "Hunter":
-						ids = CardIds.SecretIdsHunter;
-						break;
-					case "Mage":
-						ids = CardIds.SecretIdsMage;
-						break;
-					case "Paladin":
-						ids = CardIds.SecretIdsPaladin;
-						break;
-					default:
-						return;
-				}
-				StackPanelSecrets.Children.Clear();
-
-
-				foreach(var id in ids)
-				{
-					var cardObj = new Controls.Card();
-					cardObj.SetValue(DataContextProperty, Game.GetCardFromId(id));
-					StackPanelSecrets.Children.Add(cardObj);
-				}
-
-				_lastSecretsClass = hsClass;
-				_needToRefreshSecrets = false;
+				var cardObj = new Controls.Card();
+				var card = Game.GetCardFromId(id.CardId);
+				card.Count = id.Count;
+				cardObj.SetValue(DataContextProperty, card);
+				StackPanelSecrets.Children.Add(cardObj);
 			}
+
 			StackPanelSecrets.Visibility = Visibility.Visible;
 		}
 
@@ -1008,7 +976,7 @@ namespace Hearthstone_Deck_Tracker
 				if(StackPanelSecrets.Visibility != Visibility.Visible)
 				{
 					_secretsTempVisible = true;
-					ShowSecrets("Mage", true);
+					ShowSecrets(true, HeroClass.Mage);
 					//need to wait for panel to actually show up
 					await Task.Delay(50);
 				}
