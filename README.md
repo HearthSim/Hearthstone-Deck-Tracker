@@ -62,6 +62,16 @@ Is Blizzard okay with this?
 =============
 [Yes](https://twitter.com/bdbrode/status/511151446038179840)
 
+
+How to start Hearthstone-Deck-Tracker automatically when HS boots up?
+=============
+- Create a .bat file with this code inside:
+
+  @echo off
+  start "" "C:\Program Files (x86)\Hearthstone\Hearthstone Beta Launcher.exe"
+  start "" "C:\Program Files (x86)\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe"
+
+
 Requirements:
 =============
 - Windows Vista or higher
