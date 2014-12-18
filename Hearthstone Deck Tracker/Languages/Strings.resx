@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -250,7 +250,7 @@
     <comment>Form Title</comment>
   </data>
   <data name="MainWindow_TOHEARTHSTONE" xml:space="preserve">
-    <value>TO _HEARTHSTON</value>
+    <value>TO _HEARTHSTONE</value>
     <comment>To Hearth Stone</comment>
   </data>
   <data name="MainWindow_TOHEARTHSTONEFROMWEB" xml:space="preserve">
@@ -402,8 +402,8 @@
     <comment>contains a brief overview of all the features.</comment>
   </data>
   <data name="Help_CRMS" xml:space="preserve">
-    <value>(C)oin, (R)eturned, (M)ulliganed, (S)tolen</value>
-    <comment>(C)oin, (R)eturned, (M)ulliganed, (S)tolen</comment>
+    <value>(C)oin, (R)eturned, (M)ulliganed, (K)ept, (S)tolen</value>
+    <comment>(C)oin, (R)eturned, (M)ulliganed, (K)ept, (S)tolen</comment>
   </data>
   <data name="Help_DRAWCARD" xml:space="preserve">
     <value>The chances of drawing a card with [2] or [1] copies left in the deck.</value>
@@ -898,8 +898,8 @@
     <comment>Mode:</comment>
   </data>
   <data name="DeckSelectionDialog_SHOWGAMEWITHNODECK" xml:space="preserve">
-    <value>Show games with an/no associated deck.</value>
-    <comment>Show games with an/no associated deck.</comment>
+    <value>Show games with a/no associated deck.</value>
+    <comment>Show games with a/no associated deck.</comment>
   </data>
   <data name="DeckSelectionDialog_TIMEFRAME" xml:space="preserve">
     <value>Timeframe:</value>
@@ -1004,5 +1004,9 @@
   <data name="Help_PLAYER" xml:space="preserve">
     <value>Player: </value>
     <comment>Player: </comment>
+  </data>
+  <data name="MainWindow_UPDATEWEB" xml:space="preserve">
+    <value>_UPDATE (WEB)</value>
+    <comment>Edit update (web)</comment>
   </data>
 </root>
