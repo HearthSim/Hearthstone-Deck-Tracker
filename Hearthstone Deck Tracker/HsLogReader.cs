@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
-		private const int PowerCountTreshold = 14;
+		private const int PowerCountThreshold = 30;
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
@@ -418,7 +418,7 @@ namespace Hearthstone_Deck_Tracker
 								if(to == "FRIENDLY HAND")
 								{
 									//player draw
-									if(_powerCount >= PowerCountTreshold)
+									if(_powerCount >= PowerCountThreshold)
 									{
 										_turnCount++;
 										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
@@ -481,7 +481,7 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING DECK":
 								if(to == "OPPOSING HAND")
 								{
-									if(_powerCount >= PowerCountTreshold)
+									if(_powerCount >= PowerCountThreshold)
 									{
 										_turnCount++;
 										_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
