@@ -507,6 +507,14 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.SelectedLanguage = selectedLanguage;
 			Config.Save();
 
+			var dirName = selectedLanguage.Insert(2, "-");
+
+			if(!Directory.Exists(dirName))
+			{
+				var langPath = Path.Combine("Lang", dirName);
+				if(Directory.Exists(langPath))
+					Helper.CopyFolder(langPath, dirName);
+			}
 
 			await Helper.MainWindow.Restart();
 		}

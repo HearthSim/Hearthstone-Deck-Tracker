@@ -65,8 +65,9 @@ namespace Hearthstone_Deck_Tracker
         private bool _newDeckUnsavedChanges;
         private bool _tempUpdateCheckDisabled;
         private Version _updatedVersion;
+	    private bool _showRestartMessage;
 
-        public bool ShowToolTip
+		public bool ShowToolTip
         {
             get { return Config.Instance.TrackerCardToolTips; }
         }
@@ -285,8 +286,17 @@ namespace Hearthstone_Deck_Tracker
             DeckPickerList.SortDecks();
 
             // Set Language
-            var culture = Config.Instance.SelectedLanguage;
-            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = System.Globalization.CultureInfo.GetCultureInfo(culture.Insert(2, "-"));
+            var culture = Config.Instance.SelectedLanguage.Insert(2, "-");
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = System.Globalization.CultureInfo.GetCultureInfo(culture);
+	        if(!Directory.Exists(culture))
+	        {
+		        var langPath = Path.Combine("Lang", culture);
+		        if(Directory.Exists(langPath))
+		        {
+			        Helper.CopyFolder(langPath, culture);
+			        _showRestartMessage = true;
+				}
+	        }
         }
 
         #endregion
