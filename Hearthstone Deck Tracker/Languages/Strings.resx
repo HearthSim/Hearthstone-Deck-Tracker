@@ -1009,4 +1009,60 @@
     <value>_UPDATE (WEB)</value>
     <comment>Edit update (web)</comment>
   </data>
+  <data name="ENUM_WithDeck" xml:space="preserve">
+    <value>With deck</value>
+    <comment>With deck</comment>
+  </data>
+  <data name="ENUM_WithoutDeck" xml:space="preserve">
+    <value>Without Deck</value>
+    <comment>Without Deck</comment>
+  </data>
+  <data name="ENUM_All" xml:space="preserve">
+    <value>All</value>
+    <comment>All</comment>
+  </data>
+  <data name="ENUM_Today" xml:space="preserve">
+    <value>Today</value>
+    <comment>Today</comment>
+  </data>
+  <data name="ENUM_Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+    <comment>Yesterday</comment>
+  </data>
+  <data name="ENUM_Last24Hours" xml:space="preserve">
+    <value>Last 24 Hours</value>
+    <comment>Last 24 Hours</comment>
+  </data>
+  <data name="ENUM_ThisWeek" xml:space="preserve">
+    <value>This Week</value>
+    <comment>This Week</comment>
+  </data>
+  <data name="ENUM_PreviousWeek" xml:space="preserve">
+    <value>Previous Week</value>
+    <comment>Previous Week</comment>
+  </data>
+  <data name="ENUM_Last7Days" xml:space="preserve">
+    <value>Last 7 Days</value>
+    <comment>Last 7 Days</comment>
+  </data>
+  <data name="ENUM_ThisMonth" xml:space="preserve">
+    <value>This Month</value>
+    <comment>This Month</comment>
+  </data>
+  <data name="ENUM_PreviousMonth" xml:space="preserve">
+    <value>Previous Month</value>
+    <comment>Previous Month</comment>
+  </data>
+  <data name="ENUM_ThisYear" xml:space="preserve">
+    <value>This Year</value>
+    <comment>This Year</comment>
+  </data>
+  <data name="ENUM_PreviousYear" xml:space="preserve">
+    <value>Previous Year</value>
+    <comment>Previous Year</comment>
+  </data>
+  <data name="ENUM_AllTime" xml:space="preserve">
+    <value>All Time</value>
+    <comment>All Time</comment>
+  </data>
 </root>

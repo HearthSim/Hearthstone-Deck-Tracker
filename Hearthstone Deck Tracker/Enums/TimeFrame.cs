@@ -4,27 +4,27 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum TimeFrame
 	{
-		[Description("Today")]
+		[Description("ENUM_Today")]
 		Today,
-		[Description("Yesterday")]
+		[Description("ENUM_Yesterday")]
 		Yesterday,
-		[Description("Last 24 Hours")]
+		[Description("ENUM_Last24Hours")]
 		Last24Hours,
-		[Description("This Week")]
+		[Description("ENUM_ThisWeek")]
 		ThisWeek,
-		[Description("Previous Week")]
+		[Description("ENUM_PreviousWeek")]
 		PreviousWeek,
-		[Description("Last 7 Days")]
+		[Description("ENUM_Last7Days")]
 		Last7Days,
-		[Description("This Month")]
+		[Description("ENUM_ThisMonth")]
 		ThisMonth,
-		[Description("Previous Month")]
+		[Description("ENUM_PreviousMonth")]
 		PreviousMonth,
-		[Description("This Year")]
+		[Description("ENUM_ThisYear")]
 		ThisYear,
-		[Description("Previous Year")]
+		[Description("ENUM_PreviousYear")]
 		PreviousYear,
-		[Description("All Time")]
+		[Description("ENUM_AllTime")]
 		AllTime
 	}
 }

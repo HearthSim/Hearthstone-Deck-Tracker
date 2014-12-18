@@ -4,11 +4,11 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum FilterDeckMode
 	{
-		[Description("With deck")]
+		[Description("ENUM_WithDeck")]
 		WithDeck,
-		[Description("Without deck")]
+		[Description("ENUM_WithoutDeck")]
 		WithoutDeck,
-		[Description("All")]
+		[Description("ENUM_All")]
 		All
 	}
 }

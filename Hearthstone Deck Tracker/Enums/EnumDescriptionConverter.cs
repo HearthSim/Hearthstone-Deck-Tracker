@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -30,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 				object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 				if(attrs.Length > 0)
 				{
-					return ((DescriptionAttribute)attrs[0]).Description;
+					return Lang.GetLocalizedString(((DescriptionAttribute)attrs[0]).Description);
 				}
 			}
 			return en.ToString();

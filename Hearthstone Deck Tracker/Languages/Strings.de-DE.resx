@@ -1008,4 +1008,46 @@
   <data name="MainWindow_UPDATEWEB" xml:space="preserve">
     <value>_UPDATE (WEB)</value>
   </data>
+  <data name="ENUM_WithDeck" xml:space="preserve">
+    <value>Mit Deck</value>
+  </data>
+  <data name="ENUM_WithoutDeck" xml:space="preserve">
+    <value>Ohne Deck</value>
+  </data>
+  <data name="ENUM_All" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="ENUM_AllTime" xml:space="preserve">
+    <value>All Time</value>
+  </data>
+  <data name="ENUM_Last24Hours" xml:space="preserve">
+    <value>Last 24 Hours</value>
+  </data>
+  <data name="ENUM_Last7Days" xml:space="preserve">
+    <value>Last 7 Days</value>
+  </data>
+  <data name="ENUM_PreviousMonth" xml:space="preserve">
+    <value>Previous Month</value>
+  </data>
+  <data name="ENUM_PreviousWeek" xml:space="preserve">
+    <value>Previous Week</value>
+  </data>
+  <data name="ENUM_PreviousYear" xml:space="preserve">
+    <value>Previous Year</value>
+  </data>
+  <data name="ENUM_ThisMonth" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="ENUM_ThisWeek" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="ENUM_ThisYear" xml:space="preserve">
+    <value>This Year</value>
+  </data>
+  <data name="ENUM_Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="ENUM_Yesterday" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
 </root>
