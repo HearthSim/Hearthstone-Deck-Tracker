@@ -181,6 +181,7 @@
     <Compile Include="Enums\PlayType.cs" />
     <Compile Include="Enums\GameResult.cs" />
     <Compile Include="Enums\Turn.cs" />
+    <Compile Include="Utility\Lang.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
