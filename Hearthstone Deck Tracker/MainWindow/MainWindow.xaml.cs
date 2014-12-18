@@ -41,7 +41,6 @@ namespace Hearthstone_Deck_Tracker
         public readonly TimerWindow TimerWindow;
         //private readonly string _configPath;
         private readonly string _decksPath;
-        private readonly string _defaultDecksPath;
         private readonly bool _foundHsDirectory;
         private readonly bool _initialized;
 
