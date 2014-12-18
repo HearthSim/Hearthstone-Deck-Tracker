@@ -182,7 +182,7 @@
                                             2) Hide leftmost cards when friendslist is open
                                         </TextBlock>
                                         <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures"
-                                                               OnLabel="Enabled" OffLabel="Disabled"
+                                                               OnLabel="{lex:Loc Options_ENABLED}" OffLabel="{lex:Loc Options_DISABLED}"
                                                                Checked="ToggleSwitchExtraFeatures_Checked"
                                                                Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
                                     </StackPanel>
@@ -249,7 +249,7 @@
                                           Checked="CheckboxNoteDialog_Checked"
                                           Unchecked="CheckboxNoteDialog_Unchecked" />
                                 <CheckBox x:Name="CheckboxNoteDialogDelayed"
-                                          Content="Wait until back in menu"
+                                          Content="{lex:Loc Options_WAITUNTILBACKINMENU}"
                                           HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxNoteDialogDelay_Checked"
                                           Unchecked="CheckboxNoteDialogDelay_Unchecked" />
@@ -450,8 +450,8 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
                                               Unchecked="CheckboxLogTab_Unchecked" />
-                                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
-                                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
+                                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="{lex:Loc Options_SETHEARTHSTONEPATH}" Click="ButtonGamePath_OnClick"/>
+                                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="{lex:Loc Options_OPENAPPDATAFOLDER}" Click="ButtonOpenAppData_OnClick"/>
                                 </StackPanel>
                             </GroupBox>
                         </Grid>
@@ -541,7 +541,7 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
                                               Unchecked="CheckboxRecordSpectator_Unchecked" />
-                                    <CheckBox x:Name="CheckboxRecordSpectator" Content="Record Spectator"
+                                    <CheckBox x:Name="CheckboxRecordSpectator" Content="{lex:Loc Options_RECORDSPECTATOR}"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
                                               Unchecked="CheckboxRecordOther_Unchecked" />
@@ -551,7 +551,7 @@
                                               VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
                                               Unchecked="CheckboxDiscardGame_Unchecked" />
                                     <CheckBox x:Name="CheckboxDiscardZeroTurnGame"
-                                              Content="Discard games with zero turns"
+                                              Content="{lex:Loc OPTIONS_DISCARDZEROTURNS}"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
                                               Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />

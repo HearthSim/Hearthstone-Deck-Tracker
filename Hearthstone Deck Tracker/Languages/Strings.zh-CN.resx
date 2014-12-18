@@ -1049,4 +1049,43 @@
   <data name="ENUM_Yesterday" xml:space="preserve">
     <value>Yesterday</value>
   </data>
+  <data name="DeckStatsControl_APPLYTAGFILTERS" xml:space="preserve">
+    <value>Apply tag filters</value>
+  </data>
+  <data name="DeckStatsControl_APPLYTAGFILTERS_TOOLTIP" xml:space="preserve">
+    <value>Tags selected in DECKS &gt; SORT / FILTER</value>
+  </data>
+  <data name="TURNS" xml:space="preserve">
+    <value>Turns</value>
+  </data>
+  <data name="STARTED" xml:space="preserve">
+    <value>Started</value>
+  </data>
+  <data name="DeckStatsControl_PLAYER" xml:space="preserve">
+    <value>Player:</value>
+  </data>
+  <data name="DeckStatsControl_OPPONENT" xml:space="preserve">
+    <value>Opponent:</value>
+  </data>
+  <data name="Options_DISABLED" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Options_ENABLED" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Options_WAITUNTILBACKINMENU" xml:space="preserve">
+    <value>Wait until back in menu</value>
+  </data>
+  <data name="Options_SETHEARTHSTONEPATH" xml:space="preserve">
+    <value>Set Hearthstone path</value>
+  </data>
+  <data name="Options_OPENAPPDATAFOLDER" xml:space="preserve">
+    <value>Open AppData folder</value>
+  </data>
+  <data name="OPTIONS_DISCARDZEROTURNS" xml:space="preserve">
+    <value>Discard games with zero turns</value>
+  </data>
+  <data name="Options_RECORDSPECTATOR" xml:space="preserve">
+    <value>Record Spectator</value>
+  </data>
 </root>

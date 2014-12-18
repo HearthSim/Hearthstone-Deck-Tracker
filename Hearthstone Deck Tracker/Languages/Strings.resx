@@ -1065,4 +1065,56 @@
     <value>All Time</value>
     <comment>All Time</comment>
   </data>
+  <data name="DeckStatsControl_APPLYTAGFILTERS" xml:space="preserve">
+    <value>Apply tag filters</value>
+    <comment>Apply tag filters</comment>
+  </data>
+  <data name="DeckStatsControl_APPLYTAGFILTERS_TOOLTIP" xml:space="preserve">
+    <value>Tags selected in DECKS &gt; SORT / FILTER</value>
+    <comment>Tags selected in DECKS &gt; SORT / FILTER</comment>
+  </data>
+  <data name="TURNS" xml:space="preserve">
+    <value>Turns</value>
+    <comment>Turns</comment>
+  </data>
+  <data name="STARTED" xml:space="preserve">
+    <value>Started</value>
+    <comment>Started</comment>
+  </data>
+  <data name="DeckStatsControl_PLAYER" xml:space="preserve">
+    <value>Player:</value>
+    <comment>Player:</comment>
+  </data>
+  <data name="DeckStatsControl_OPPONENT" xml:space="preserve">
+    <value>Opponent:</value>
+    <comment>Opponent:</comment>
+  </data>
+  <data name="Options_ENABLED" xml:space="preserve">
+    <value>Enabled</value>
+    <comment>Enabled</comment>
+  </data>
+  <data name="Options_DISABLED" xml:space="preserve">
+    <value>Disabled</value>
+    <comment>Disabled</comment>
+  </data>
+  <data name="Options_WAITUNTILBACKINMENU" xml:space="preserve">
+    <value>Wait until back in menu</value>
+    <comment>Wait until back in menu</comment>
+  </data>
+  <data name="Options_SETHEARTHSTONEPATH" xml:space="preserve">
+    <value>Set Hearthstone path</value>
+    <comment>Set Hearthstone path</comment>
+  </data>
+  <data name="Options_OPENAPPDATAFOLDER" xml:space="preserve">
+    <value>Open AppData folder</value>
+    <comment>Open AppData folder</comment>
+  </data>
+  <data name="OPTIONS_DISCARDZEROTURNS" xml:space="preserve">
+    <value>Discard games with zero turns</value>
+    <comment>Discard games with zero turns</comment>
+  </data>
+  <data name="Options_RECORDSPECTATOR" xml:space="preserve">
+    <value>Record Spectator</value>
+    <comment>Record Spectator</comment>
+  </data>
 </root>
