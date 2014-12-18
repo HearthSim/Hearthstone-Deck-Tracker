@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {

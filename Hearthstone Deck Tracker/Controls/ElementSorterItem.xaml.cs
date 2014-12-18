@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -28,13 +29,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, Direction.Up);
+				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, SortDirection.Up);
 				Helper.MainWindow.Overlay.UpdatePlayerLayout();
 				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, Direction.Up);
+				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, SortDirection.Up);
 				Helper.MainWindow.Overlay.UpdateOpponentLayout();
 				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
 			}
@@ -44,13 +45,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, Direction.Down);
+				Helper.MainWindow.Options.ElementSorterPlayer.MoveItem(this, SortDirection.Down);
 				Helper.MainWindow.Overlay.UpdatePlayerLayout();
 				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, Direction.Down);
+				Helper.MainWindow.Options.ElementSorterOpponent.MoveItem(this, SortDirection.Down);
 				Helper.MainWindow.Overlay.UpdateOpponentLayout();
 				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
 			}

@@ -4,15 +4,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public enum Operation
-	{
-		And,
-		Or
-	}
-
 	/// <summary>
 	/// Interaction logic for TagControl.xaml
 	/// </summary>
@@ -20,7 +15,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Tag
 
-		private new class Tag
+		public new class Tag
 		{
 			public Tag(string name, bool selected = false)
 			{
@@ -46,7 +41,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		private readonly ObservableCollection<Tag> _tags = new ObservableCollection<Tag>();
+		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
 
 		#region Methods
 
@@ -55,38 +50,42 @@ namespace Hearthstone_Deck_Tracker
 			TextboxNewTag.Visibility = Visibility.Hidden;
 			BtnAddTag.Visibility = Visibility.Hidden;
 			BtnDeleteTag.Visibility = Visibility.Hidden;
+			BtnUp.Visibility = Visibility.Hidden;
+			BtnDown.Visibility = Visibility.Hidden;
+			BtnTop.Visibility = Visibility.Hidden;
+			BtnBottom.Visibility = Visibility.Hidden;
 		}
 
 		public void LoadTags(List<string> tags)
 		{
-			var oldTag = new List<Tag>(_tags);
-			_tags.Clear();
+			var oldTag = new List<Tag>(Tags);
+			Tags.Clear();
 			foreach(var tag in tags)
 			{
 				var old = oldTag.FirstOrDefault(t => t.Name == tag);
-				_tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
+				Tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
 			}
 		}
 
 		public List<string> GetTags()
 		{
-			return _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+			return Tags.Where(t => t.Selected).Select(t => t.Name).ToList();
 		}
 
 		public void SetSelectedTags(List<string> tags)
 		{
 			if(tags == null) return;
-			foreach(var tag in _tags)
+			foreach(var tag in Tags)
 				tag.Selected = tags.Contains(tag.Name);
 			ListboxTags.Items.Refresh();
 		}
 
 		public void AddSelectedTag(string tag)
 		{
-			if(_tags.All(t => t.Name != tag)) return;
-			if(_tags.First(t => t.Name == "All").Selected) return;
+			if(Tags.All(t => t.Name != tag)) return;
+			if(Tags.First(t => t.Name == "All").Selected) return;
 
-			_tags.First(t => t.Name == tag).Selected = true;
+			Tags.First(t => t.Name == tag).Selected = true;
 
 			//if (SelectedTagsChanged != null)
 			//{
@@ -112,20 +111,19 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var selectedValue = checkBox.Content.ToString();
 
-					_tags.First(t => t.Name == selectedValue).Selected = true;
-					if(_tags.Any(t => t.Name == "All"))
+					Tags.First(t => t.Name == selectedValue).Selected = true;
+					if(Tags.Any(t => t.Name == "All"))
 					{
 						if(selectedValue == "All")
 						{
-							foreach(var tag in _tags.Where(tag => tag.Name != "All"))
+							foreach(var tag in Tags.Where(tag => tag.Name != "All"))
 								tag.Selected = false;
 						}
 						else
-							_tags.First(t => t.Name == "All").Selected = false;
+							Tags.First(t => t.Name == "All").Selected = false;
 					}
 				}
 				ListboxTags.Items.Refresh();
-
 				//if (SelectedTagsChanged != null)
 				//{
 				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
@@ -146,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 				if(checkBox != null)
 				{
 					var selectedValue = checkBox.Content.ToString();
-					_tags.First(t => t.Name == selectedValue).Selected = false;
+					Tags.First(t => t.Name == selectedValue).Selected = false;
 				}
 
 				//if (SelectedTagsChanged != null)
@@ -160,12 +158,13 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnAddTag_Click(object sender, RoutedEventArgs e)
 		{
 			var tag = TextboxNewTag.Text;
-			if(_tags.Any(t => t.Name == tag)) return;
+			if(Tags.Any(t => t.Name == tag)) return;
 
-			_tags.Add(new Tag(tag));
+			Tags.Add(new Tag(tag));
 
 			//if (TagControlOnNewTag != null)
 			TagControlOnNewTag(this, tag);
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
@@ -176,24 +175,25 @@ namespace Hearthstone_Deck_Tracker
 
 			var tag = ListboxTags.SelectedItem as Tag;
 			if(tag == null) return;
-			if(_tags.All(t => t.Equals(tag))) return;
+			if(Tags.All(t => t.Equals(tag))) return;
 
-			_tags.Remove(_tags.First(t => t.Equals(tag)));
+			Tags.Remove(Tags.First(t => t.Equals(tag)));
 
 			//if (DeleteTag != null)
 			TagControlOnDeleteTag(this, tag.Name);
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
 			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, Operation.And);
+			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.And);
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, Operation.Or);
+			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.Or);
 		}
 
 		#endregion
@@ -202,7 +202,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 
-			ListboxTags.ItemsSource = _tags;
+			ListboxTags.ItemsSource = Tags;
 
 			//TagControlOnNewTag += TagControlOnNewTag;
 			//SelectedTagsChanged += TagControlOnSelectedTagsChanged;
@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckList.AllTags.Add(tag);
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All" && t != "None").ToList());
 			}
 		}
 
@@ -238,7 +238,7 @@ namespace Hearthstone_Deck_Tracker
 
 				Helper.MainWindow.WriteDecks();
 				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+				Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All" && t != "None").ToList());
 				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
 		}
@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.SortDecks();
 		}
 
-		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, Operation operation)
+		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)
 		{
 			Config.Instance.TagOperation = operation;
 			Helper.MainWindow.DeckPickerList.SetTagOperation(operation);
@@ -266,18 +266,69 @@ namespace Hearthstone_Deck_Tracker
 			//only set tags if tags were changed in "My Decks"
 			if(Name == "SortFilterDecksFlyout")
 			{
-				var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				var tags = Tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
+			    Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
+				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 			else if(Name == "TagControlEdit")
 			{
-				var tags = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				var tags = Tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				Helper.MainWindow.DeckPickerList.SelectedDeck.Tags = new List<string>(tags);
 				Helper.MainWindow.DeckPickerList.UpdateList();
 				Helper.MainWindow.WriteDecks();
+				Helper.MainWindow.UpdateQuickFilterItemSource();
 			}
+		}
+
+		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 1; //decklist.alltags includes "all", this does not
+			if(index > 1)
+				MoveTag(selectedTag.Name, index, index - 1);
+		}
+
+		private void BtnDown_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) +  1;
+			if(index < Tags.Count)
+				MoveTag(selectedTag.Name, index, index+1);
+		}
+
+		private void BtnTop_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 1;
+			MoveTag(selectedTag.Name, index, 1);
+		}
+
+		private void BtnBottom_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 1;
+			MoveTag(selectedTag.Name, index, Tags.Count);
+		}
+
+		private void MoveTag(string tagName, int from, int to)
+		{
+			Helper.MainWindow.DeckList.AllTags.RemoveAt(from);
+			Helper.MainWindow.DeckList.AllTags.Insert(to, tagName);
+			Helper.MainWindow.WriteDecks();
+			Helper.MainWindow.ReloadTags();
+			ListboxTags.SelectedIndex = to - 1;
+			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 	}
 }

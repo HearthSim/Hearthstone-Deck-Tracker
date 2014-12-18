@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -472,8 +473,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if(!_initialized || CheckboxTimerAlert.IsChecked != true) return;
             int mTimerAlertValue;
-            int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue);
-            if (mTimerAlertValue != null)
+            if (int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue))
             {
                 if (mTimerAlertValue < 0)
                 {
@@ -721,7 +721,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
 			if(!Game.IsInMenu)
-				Helper.MainWindow.Overlay.ShowSecrets(Game.PlayingAgainst);
+				Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
 		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)
@@ -1005,6 +1005,21 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
+        private void CheckboxDiscardZeroTurnGame_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.DiscardZeroTurnGame = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxDiscardZeroTurnGame_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.DiscardZeroTurnGame = false;
+            SaveConfig(false);
+        }
+
+
 		private void ComboboxExportSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
@@ -1206,6 +1221,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ShowNoteDialogAfterGame = true;
+			CheckboxNoteDialogDelayed.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -1213,6 +1229,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ShowNoteDialogAfterGame = false;
+			CheckboxNoteDialogDelayed.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -1292,5 +1309,87 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.KeepStatsWhenDeletingDeck = false;
 			Config.Save();
 		}
+
+		private void ButtonOpenAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(Config.Instance.AppDataPath);
+		}
+
+		private void CheckboxRecordSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.RecordSpectator = false;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = true;
+			Config.Save();
+		}
+
+		private void CheckboxHideOverlayInSpectator_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized) return;
+			Config.Instance.HideOverlayInSpectator = false;
+			Config.Save();
+		}
+
+		private void TextboxExportDelay_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			int exportStartDelay;
+			if(int.TryParse(TextboxExportDelay.Text, out exportStartDelay))
+			{
+				if(exportStartDelay < 0)
+				{
+					TextboxExportDelay.Text = "0";
+					exportStartDelay = 0;
+				}
+
+				if(exportStartDelay > 60)
+				{
+					TextboxExportDelay.Text = "60";
+					exportStartDelay = 60;
+				}
+
+				Config.Instance.ExportStartDelay = exportStartDelay;
+				SaveConfig(false);
+			}
+		}
+
+		private void TextboxExportDelay_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+			{
+				e.Handled = true;
+			}
+		}
+
+		private void CheckboxNoteDialogDelay_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = false;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialogDelay_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = true;
+			Config.Save();
+		}
 	}
 }
+ 

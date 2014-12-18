@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Forms.VisualStyles;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -32,6 +34,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				return;
 
+			DeselectDeck();
 			DeleteDeck(deck);
 		}
 
@@ -43,23 +46,26 @@ namespace Hearthstone_Deck_Tracker
 			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
 			if(deckStats != null)
 			{
-				if(Config.Instance.KeepStatsWhenDeletingDeck)
+				if(deckStats.Games.Any())
 				{
-					DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
-					DefaultDeckStats.Save();
-					Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
-				}
-				else
-				{
-					try
+					if(Config.Instance.KeepStatsWhenDeletingDeck)
 					{
-						foreach(var game in deckStats.Games)
-							game.DeleteGameFile();
-						Logger.WriteLine("Deleted games from deck: " + deck.Name);
+						DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
+						DefaultDeckStats.Save();
+						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
 					}
-					catch (Exception)
+					else
 					{
-						Logger.WriteLine("Error deleting games");
+						try
+						{
+							foreach(var game in deckStats.Games)
+								game.DeleteGameFile();
+							Logger.WriteLine("Deleted games from deck: " + deck.Name);
+						}
+						catch (Exception)
+						{
+							Logger.WriteLine("Error deleting games");
+						}
 					}
 				}
 				DeckStatsList.Instance.DeckStats.Remove(deckStats);
@@ -76,6 +82,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
+			var cloneStats = (await this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))== MessageDialogResult.Affirmative;
+
 			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
 			var originalStatsEntry = clone.DeckStats;
 
@@ -97,16 +105,20 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.AddAndSelectDeck(clone);
 			WriteDecks();
 
-			//clone game stats
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
 			if(newStatsEntry == null)
 			{
 				newStatsEntry = new DeckStats(clone.Name);
 				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 			}
-			foreach(var game in originalStatsEntry.Games)
-				newStatsEntry.AddGameResult(game.CloneWithNewId());
-			Logger.WriteLine("cloned gamestats");
+
+			//clone game stats
+			if(cloneStats)
+			{
+				foreach(var game in originalStatsEntry.Games)
+					newStatsEntry.AddGameResult(game.CloneWithNewId());
+				Logger.WriteLine("cloned gamestats");
+			}
 
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
@@ -124,6 +136,36 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = DeckPickerList.SelectedDeck;
 			if(selectedDeck == null) return;
 			SetNewDeck(selectedDeck, true);
+		}
+
+		private async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var selectedDeck = DeckPickerList.SelectedDeck;
+			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
+				return;
+			var deck = await DeckImporter.Import(selectedDeck.Url);
+			if(deck == null)
+			{
+				await this.ShowMessageAsync("Error", "Could not load deck from specified url.");
+				return;
+			}
+			if(deck.Cards.All(c1 => selectedDeck.Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
+			{
+				await this.ShowMessageAsync("Already up to date.", "No changes found.");
+				return;
+			}
+
+			SetNewDeck(selectedDeck, true);
+			TextBoxDeckName.Text = deck.Name;
+			_newDeck.Cards.Clear();
+			foreach(var card in deck.Cards)
+				_newDeck.Cards.Add(card);
+
+			UpdateTitle();
+			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			ManaCurveMyDecks.UpdateValues();
+
+			TagControlEdit.SetSelectedTags(deck.Tags);
 		}
 	}
 }

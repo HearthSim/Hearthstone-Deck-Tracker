@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Stats
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Coin = false;
 			Result = result;
-			GameMode = Game.GameMode.None;
+			GameMode = GameMode.None;
 			OpponentHero = opponentHero;
 			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
@@ -44,12 +45,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string PlayerHero { get; set; }
 		public string OpponentHero { get; set; }
 		public bool Coin { get; set; }
-		public Game.GameMode GameMode { get; set; }
+		public GameMode GameMode { get; set; }
 		public GameResult Result { get; set; }
 		public int Turns { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 		public string Note { get; set; }
+		public bool IsClone { get; set; }
 		
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
@@ -91,6 +93,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+		public int SortableDuration
+		{
+			get { return (EndTime - StartTime).Minutes; }
+		}
+
+		[XmlIgnore]
 		public string GotCoin
 		{
 			get { return Coin ? "Yes" : "No"; }
@@ -99,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats CloneWithNewId()
 		{
-			var newGame = new GameStats(Result, OpponentHero, PlayerHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats()};
+			var newGame = new GameStats(Result, OpponentHero, PlayerHero) {StartTime = StartTime, EndTime = EndTime, Coin = Coin, GameMode = GameMode, Turns = Turns, _turnStats = LoadTurnStats(), IsClone = true};
 			newGame.Save();
 			return newGame;
 		}
@@ -215,35 +223,5 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			return Result + " vs " + OpponentHero + ", " + StartTime;
 		}
-	}
-
-	public enum GameResult
-	{
-		None,
-		Win,
-		Loss
-	}
-
-	public enum PlayType
-	{
-		PlayerPlay,
-		PlayerDraw,
-		PlayerGet,
-		PlayerMulligan,
-		PlayerHandDiscard,
-		PlayerDeckDiscard,
-		PlayerBackToHand,
-		PlayerSecretPlayed,
-		PlayerHeroPower,
-        OpponentPlay,
-		OpponentDraw,
-		OpponentGet,
-		OpponentMulligan,
-		OpponentHandDiscard,
-		OpponentDeckDiscard,
-		OpponentBackToHand,
-		OpponentSecretPlayed,
-        OpponentSecretTriggered,
-		OpponentHeroPower,
 	}
 }

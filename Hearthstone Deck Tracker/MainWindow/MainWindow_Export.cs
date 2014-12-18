@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker
 					await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
 				Topmost = false;
 				await Task.Delay(500);
-				await DeckExporter.Export(deck);
+                await DeckExporter.Export(deck);
 				await controller.CloseAsync();
 			}
 		}

@@ -30,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public static void Load()
 		{
 			var file = Config.Instance.DataDir + "DeckStats.xml";
+			if(!File.Exists(file))
+				return;
 			try
 			{
 				_instance = XmlManager<DeckStatsList>.Load(file);

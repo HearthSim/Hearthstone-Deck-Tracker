@@ -148,7 +148,6 @@ namespace Hearthstone_Deck_Tracker
 			var oldDeckName = _newDeck.Name;
 
 			_newDeck.Name = deckName;
-			_newDeck.Tags = TagControlEdit.GetTags();
 
 			var newDeckClone = (Deck)_newDeck.Clone();
 			DeckList.DecksList.Add(newDeckClone);
@@ -556,7 +555,8 @@ namespace Hearthstone_Deck_Tracker
 			if(e.Key == Key.Enter)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
-				if(string.IsNullOrEmpty(card.Name)) return;
+				if(card == null || string.IsNullOrEmpty(card.Name))
+					return;
 				AddCardToDeck((Card)card.Clone());
 			}
 		}

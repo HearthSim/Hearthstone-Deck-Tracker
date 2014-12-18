@@ -118,6 +118,18 @@
                     <Separator />
                     <MenuItem Header="{lex:Loc MainWindow_SORTFILTER}" Click="BtnSortFilter_Click">
                     </MenuItem>
+                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK FILTER">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click"></TextBlock>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                    <Separator />
+                    <CheckBox x:Name="CheckboxClassCardsFirst" Margin="-24,0,0,0" Content="CLASS CARDS FIRST"
+                              FontSize="14"
+                              Checked="CheckboxClassCardsFirst_Checked"
+                              Unchecked="CheckboxClassCardsFirst_Unchecked" />
                 </MenuItem>
                 <MenuItem Header="{lex:Loc MainWindow_NEW}">
                     <MenuItem.Icon>
@@ -181,17 +193,21 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="{lex:Loc MainWindow_DECK}" Click="BtnEditDeck_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_EDITTAGS}" Click="BtnTags_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_EDITNOTES}" Click="BtnNotes_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_DECK}" Click="BtnEditDeck_Click" />
+                    <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITTAGS}" Click="BtnTags_Click" />
+                    <MenuItem Header="_TAGS" Click="BtnTags_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITNOTES}" Click="BtnNotes_Click" />
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" ></CheckBox>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="{lex:Loc MainWindow_EDITDELETE}" Click="BtnDeleteDeck_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_EDITCLONE}" Click="BtnCloneDeck_Click">
-                    </MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_EDITDELETE}" Click="BtnDeleteDeck_Click" />
+                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITCLONE}" Click="BtnCloneDeck_Click" />
                 </MenuItem>
                 <MenuItem Header="{lex:Loc MainWindow_IMPORT}">
                     <MenuItem.Icon>
@@ -201,14 +217,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="{lex:Loc MainWindow_FROMWEB}" Click="BtnWeb_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_FROMFILE}" Click="BtnFile_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_FROMIDSTRING}" Click="BtnIdString_Click">
-                    </MenuItem>
-                    <MenuItem Header="{lex:Loc MainWindow_FROMLASTGAME}" Click="BtnLastGame_Click">
-                    </MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_FROMWEB}" Click="BtnWeb_Click" />
+                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMFILE}" Click="BtnFile_Click" />
+                    <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMIDSTRING}" Click="BtnIdString_Click" />
+                    <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMLASTGAME}" Click="BtnLastGame_Click" />
                 </MenuItem>
                 <MenuItem Header="{lex:Loc MainWindow_EXPORT}" Name="MenuItemExport">
                     <MenuItem.Icon>
@@ -366,7 +381,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
                             Width="240">
-                    <TextBox controls:TextboxHelper.Watermark="{lex:Loc MainWindow_DECKNAME}" x:Name="TextBoxDeckName" Width="107"
+                    <TextBox controls:TextBoxHelper.Watermark="{lex:Loc MainWindow_DECKNAME}" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
@@ -376,7 +391,7 @@
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox controls:TextboxHelper.Watermark="{lex:Loc MainWindow_SEARCH}" x:Name="TextBoxDBFilter"
+                    <TextBox controls:TextBoxHelper.Watermark="{lex:Loc MainWindow_SEARCH}" x:Name="TextBoxDBFilter"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDBFilter_TextChanged"

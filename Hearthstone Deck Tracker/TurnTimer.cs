@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Media;
 using System.Timers;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker
 {

@@ -8,14 +8,18 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
+using ContextMenu = System.Windows.Forms.ContextMenu;
+using MenuItem = System.Windows.Forms.MenuItem;
 using MessageBox = System.Windows.MessageBox;
 
 namespace Hearthstone_Deck_Tracker
@@ -158,8 +162,6 @@ namespace Hearthstone_Deck_Tracker
             foreach (var deck in DeckList.DecksList)
                 DeckPickerList.AddDeck(deck);
 
-            _defaultDecksPath = Config.Instance.DataDir + "DefaultDecks.xml";
-
             SetupDefaultDeckStatsFile();
             DefaultDeckStats.Load();
 
@@ -168,6 +170,30 @@ namespace Hearthstone_Deck_Tracker
             DeckStatsList.Load();
 
             _notifyIcon = new NotifyIcon { Icon = new Icon(@"Images/HearthstoneDeckTracker16.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString };
+			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => DeselectDeck());
+			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect deck")
+			{
+				MenuItems =
+													  {
+														  new MenuItem("On",
+																	   (sender, args) =>
+																	   AutoDeckDetection(true)),
+														  new MenuItem("Off",
+																	   (sender, args) =>
+																	   AutoDeckDetection(false))
+													  }
+			}); _notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Class cards first")
+			{
+				MenuItems =
+													  {
+														  new MenuItem("Yes",
+																	   (sender, args) =>
+																	   SortClassCardsFirst(true)),
+														  new MenuItem("No",
+																	   (sender, args) =>
+																	   SortClassCardsFirst(false))
+													  }
+			});
             _notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
             _notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
             _notifyIcon.MouseClick += (sender, args) => { if (args.Button == MouseButtons.Left) ActivateWindow(); };
@@ -191,6 +217,14 @@ namespace Hearthstone_Deck_Tracker
                 DeckList.AllTags.Add("All");
                 WriteDecks();
             }
+			if(!DeckList.AllTags.Contains("Favorite"))
+			{
+				if(DeckList.AllTags.Count > 1)
+					DeckList.AllTags.Insert(1, "Favorite");
+				else
+					DeckList.AllTags.Add("Favorite");
+				WriteDecks();
+			}
             if (!DeckList.AllTags.Contains("Arena"))
             {
                 DeckList.AllTags.Add("Arena");
@@ -201,6 +235,11 @@ namespace Hearthstone_Deck_Tracker
                 DeckList.AllTags.Add("Constructed");
                 WriteDecks();
             }
+			if(!DeckList.AllTags.Contains("None"))
+			{
+				DeckList.AllTags.Add("None");
+				WriteDecks();
+			}
 
             Options.ComboboxAccent.ItemsSource = ThemeManager.Accents;
             Options.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
@@ -404,7 +443,8 @@ namespace Hearthstone_Deck_Tracker
         private void MinimizeToTray()
         {
             _notifyIcon.Visible = true;
-            Hide();
+			Visibility = Visibility.Collapsed;
+			ShowInTaskbar = false;
         }
 
         private async void UpdateOverlayAsync()
@@ -495,6 +535,13 @@ namespace Hearthstone_Deck_Tracker
 
                 if (result == MessageDialogResult.Affirmative)
                 {
+					//recheck, in case there was no immediate response to the dialog
+					if((DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
+					{
+						Helper.CheckForUpdates(out version);
+						if(version != null)
+							newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+					}
                     try
                     {
                         Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
@@ -531,6 +578,7 @@ namespace Hearthstone_Deck_Tracker
         {
             Show();
             WindowState = WindowState.Normal;
+			ShowInTaskbar = true;
             Activate();
         }
 
@@ -593,7 +641,6 @@ namespace Hearthstone_Deck_Tracker
 
         private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
         {
-            if (!_initialized) return;
             if (deck != null)
             {
                 //set up notes
@@ -637,6 +684,9 @@ namespace Hearthstone_Deck_Tracker
                 EnableMenuItems(true);
                 ManaCurveMyDecks.SetDeck(deck);
                 TagControlEdit.SetSelectedTags(deck.Tags);
+				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
+				MenuItemQuickSetTag.Items.Refresh();
+				MenuItemUpdateDeck.IsEnabled = !string.IsNullOrEmpty(deck.Url);
             }
             else
             {
@@ -690,5 +740,49 @@ namespace Hearthstone_Deck_Tracker
             Config.Save();
         }
 
+		private void AutoDeckDetection(bool enable)
+		{
+			CheckboxDeckDetection.IsChecked = enable;
+            Config.Instance.AutoDeckDetection = enable;
+			Config.Save();
+		}
+
+		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			SortClassCardsFirst(true);
+		}
+
+		private void CheckboxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			SortClassCardsFirst(false);
+		}
+
+		private void SortClassCardsFirst(bool classFirst)
+		{
+			CheckboxClassCardsFirst.IsChecked = classFirst;
+			Config.Instance.CardSortingClassFirst = classFirst;
+			Config.Save();
+			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
+		}
+
+		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
+		{
+			var tag = ((TextBlock)sender).Text;
+			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
+			if(actualTag != null)
+			{
+				var tags = new List<string>() {actualTag.Name};
+				SortFilterDecksFlyout.SetSelectedTags(tags);
+				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
+				Config.Instance.SelectedTags = tags;
+				Config.Save();
+				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
+				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
+			}
+		}
     }
 }

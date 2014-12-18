@@ -206,10 +206,18 @@ namespace Hearthstone_Deck_Tracker
 			User32.ClientToScreen(wndHandle, ref point);
 			if(!User32.IsHearthstoneInForeground()) return null;
 
-			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-			var graphics = Graphics.FromImage(bmp);
-			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
-			return bmp;
+			try
+			{
+				var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+				var graphics = Graphics.FromImage(bmp);
+				graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+				return bmp;
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error capturing hearthstone: " + ex);
+				return null;
+			}
 		}
 
 		public static async Task<bool> FriendsListOpen()
