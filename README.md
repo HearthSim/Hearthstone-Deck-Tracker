@@ -45,10 +45,12 @@ Features:
 How to use: 
 ===========
 1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
-2) Extract file 
+2) Extract file  
 3) Run "Hearthstone Deck Tracker.exe"  
-4) Create your decks under "New Deck" (or import from any of the supported websites), click save.  
+4) Create your decks under "New" (or import from any of the supported websites), click save.  
 5) Play!
+
+[Video guide / feature overview by TheAdipose](https://www.youtube.com/watch?v=gNVlF83w-wY) (v0.5.6)
 
 
 How it works:
@@ -56,6 +58,19 @@ How it works:
 The automated tracking is done my reading out Hearthstone logfile.  
 More information on that here:  http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
 
+Is Blizzard okay with this?
+=============
+[Yes](https://twitter.com/bdbrode/status/511151446038179840)
+
+How to start Hearthstone-Deck-Tracker with the launcher?
+=============
+- Create a .bat file with this code inside:
+```
+@echo off
+start "" "C:\Program Files (x86)\Hearthstone\Hearthstone Beta Launcher.exe"
+start "" "C:\Program Files (x86)\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe"
+```
+  
 Requirements:
 =============
 - Windows Vista or higher

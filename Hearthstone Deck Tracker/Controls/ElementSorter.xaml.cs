@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -19,9 +20,9 @@ namespace Hearthstone_Deck_Tracker
 			StackPanel.Children.Add(item);
 		}
 
-		public void MoveItem(ElementSorterItem item, Direction direction)
+		public void MoveItem(ElementSorterItem item, SortDirection direction)
 		{
-			var index = StackPanel.Children.IndexOf(item) + (direction == Direction.Up ? -1 : 1);
+			var index = StackPanel.Children.IndexOf(item) + (direction == SortDirection.Up ? -1 : 1);
 
 			if(index < 0)
 				index = 0;
@@ -36,11 +37,5 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Config.Instance.PanelOrderOpponent = StackPanel.Children.Cast<ElementSorterItem>().Select(x => x.ItemName).ToArray();
 		}
-	}
-
-	public enum Direction
-	{
-		Up,
-		Down
 	}
 }

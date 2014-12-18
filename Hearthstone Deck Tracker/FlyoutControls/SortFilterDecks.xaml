@@ -6,11 +6,19 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Grid>
         <DockPanel Margin="6,0,6,6">
             <DockPanel x:Name="PnlSortDecks" DockPanel.Dock="Top">
-                <Label Content="Sort decks by:" FontSize="14" />
+                <Label Content="{lex:Loc SortFilterDecks_SORTDECKSBY}" FontSize="14" />
                 <ComboBox Name="ComboboxDeckSorting" Width="120" HorizontalAlignment="Right"
                           SelectionChanged="Selector_OnSelectionChanged">
                     <system:String>Name</system:String>
@@ -19,20 +27,34 @@
                     <system:String>Win Rate</system:String>
                 </ComboBox>
             </DockPanel>
-            <Label Content="Filter by tags:" FontSize="14" DockPanel.Dock="Top" />
-            <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom" Margin="0,3,0,0" Content="Delete Selected"
+            <Label Content="{lex:Loc SortFilterDecks_FILTERBYTAGS}" FontSize="14" DockPanel.Dock="Top" />
+            <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom">
+            
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Name="BtnUp"  Margin="0,0,3,0" Grid.Column="0" Content="up" Click="BtnUp_OnClick"></Button>
+                <Button Name="BtnDown" Margin="3,0,3,0" Grid.Column="1" Content="down" Click="BtnDown_OnClick"></Button>
+                <Button Name="BtnTop"  Margin="3,0,3,0" Grid.Column="2" Content="top" Click="BtnTop_OnClick"></Button>
+                <Button Name="BtnBottom" Margin="3,0,0,0" Grid.Column="3" Content="bottom" Click="BtnBottom_OnClick"></Button>
+            </Grid>
+	    <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom" Margin="0,3,0,0" Content="{lex:Loc SortFilterDecks_DELETESELECTED}"
                     VerticalAlignment="Bottom" Width="auto" Click="BtnDeteleTag_Click" Height="26" />
+
             <Grid Margin="0,3,0,0" DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBox controls:TextboxHelper.Watermark="New Tag" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
+                <TextBox controls:TextBoxHelper.Watermark="{lex:Loc SortFilterDecks_NEWTAG}" Name="TextboxNewTag" TextWrapping="NoWrap" Text=""
                          Grid.Column="0" Width="auto" Margin="0,0,3,0" />
-                <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
+                <Button Name="BtnAddTag" Content="{lex:Loc ADD}" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
                         Margin="3,0,0,0" Width="auto" />
             </Grid>
-            <controls:ToggleSwitch Name="OperationSwitch" Header="Filter operation" DockPanel.Dock="Bottom"
+            <controls:ToggleSwitch Name="OperationSwitch" Header="{lex:Loc SortFilterDecks_FILTEROPERATION}" DockPanel.Dock="Bottom"
                                    OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right"
                                    Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
 

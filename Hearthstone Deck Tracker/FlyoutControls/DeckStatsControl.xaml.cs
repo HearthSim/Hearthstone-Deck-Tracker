@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
@@ -22,67 +25,154 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
 		private Deck _deck;
 		private bool _initialized;
+		
+		public Visibility OnlyOverallVisible
+		{
+			get { return TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible; }
+		}
 
 		public DeckStatsControl()
 		{
 			InitializeComponent();
-			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(Game.GameMode));
-			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxDeckOverview, true}, {GroupboxClassOverview, true}};
+			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(GameMode));
+			ComboboxTime.ItemsSource = Enum.GetValues(typeof(TimeFrame));
+			ComboBoxOpponentClassD.ItemsSource = Enum.GetValues(typeof(HeroClassAll));
+			ComboBoxOpponentClassOG.ItemsSource = Enum.GetValues(typeof(HeroClassAll));
+			ComboBoxPlayerClass.ItemsSource = Enum.GetValues(typeof(HeroClassAll));
+			ComboboxUnassigned.ItemsSource = Enum.GetValues(typeof(FilterDeckMode));
+			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxClassOverview, true}};
 		}
 
 		public void LoadConfig()
 		{
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
-			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTime;
+			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTimeFrame;
+			ComboboxUnassigned.SelectedValue = Config.Instance.StatsOverallFilterDeckMode;
+			ComboBoxPlayerClass.SelectedValue = Config.Instance.StatsOverallFilterPlayerHeroClass;
+			ComboBoxOpponentClassD.SelectedValue = Config.Instance.StatsFilterOpponentHeroClass;
+			ComboBoxOpponentClassOG.SelectedValue = Config.Instance.StatsFilterOpponentHeroClass;
+			CheckBoxApplyTagFiltersOS.IsChecked = Config.Instance.StatsOverallApplyTagFilters;
+			CheckBoxApplyTagFiltersOG.IsChecked = Config.Instance.StatsOverallApplyTagFilters;
 			_initialized = true;
 			ExpandCollapseGroupBox(GroupboxDeckOverview, Config.Instance.StatsDeckOverviewIsExpanded);
 			ExpandCollapseGroupBox(GroupboxClassOverview, Config.Instance.StatsClassOverviewIsExpanded);
+
+			LoadOverallStats();
+
+			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+			DataGridOverallGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 		}
 
-		private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+		private void BtnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			if(_deck == null)
 				return;
+			DeleteGames(DataGridGames, false);
 
+		}
+
+		private async void DeleteGames(DataGrid dataGrid, bool overall)
+		{
 			MetroWindow window;
 			if(Config.Instance.StatsInWindow)
 				window = Helper.MainWindow.StatsWindow;
 			else
 				window = Helper.MainWindow;
 
-			var count = DataGridGames.SelectedItems.Count;
+			var count = dataGrid.SelectedItems.Count;
 			if(count == 1)
 			{
-				var selectedGame = DataGridGames.SelectedItem as GameStats;
+				var selectedGame = dataGrid.SelectedItem as GameStats;
 				if(selectedGame == null)
 					return;
 
 				if(await window.ShowDeleteGameStatsMessage(selectedGame) != MessageDialogResult.Affirmative)
 					return;
-
-				if(_deck.DeckStats.Games.Contains(selectedGame))
+				if(!overall)
 				{
-					selectedGame.DeleteGameFile();
-					_deck.DeckStats.Games.Remove(selectedGame);
-					DeckStatsList.Save();
-					Logger.WriteLine("Deleted game: " + selectedGame);
-					Helper.MainWindow.DeckPickerList.Items.Refresh();
-					Refresh();
+					if(_deck.DeckStats.Games.Contains(selectedGame))
+					{
+						selectedGame.DeleteGameFile();
+						_deck.DeckStats.Games.Remove(selectedGame);
+						Logger.WriteLine("Deleted game: " + selectedGame);
+						DeckStatsList.Save();
+					}
 				}
+				else
+				{
+					var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+					if(deck != null)
+					{
+						if(deck.DeckStats.Games.Contains(selectedGame))
+						{
+							selectedGame.DeleteGameFile();
+							deck.DeckStats.Games.Remove(selectedGame);
+                            Logger.WriteLine("Deleted game: " + selectedGame);
+							DefaultDeckStats.Save();
+						}
+						
+					}
+					else
+					{
+						var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
+						if(deckstats != null)
+						{
+							selectedGame.DeleteGameFile();
+							deckstats.Games.Remove(selectedGame);
+							Logger.WriteLine("Deleted game: " + selectedGame);
+							DefaultDeckStats.Save();
+						}
+					}
+				}
+				Helper.MainWindow.DeckPickerList.Items.Refresh();
+				Refresh();
 			}
 			else if(count > 1)
 			{
 				if(await window.ShowDeleteMultipleGameStatsMessage(count) != MessageDialogResult.Affirmative)
 					return;
-				foreach(var selectedItem in DataGridGames.SelectedItems)
+				foreach(var selectedItem in dataGrid.SelectedItems)
 				{
 					var selectedGame = selectedItem as GameStats;
 					if(selectedGame == null) continue;
-					if(!_deck.DeckStats.Games.Contains(selectedGame)) continue;
-					selectedGame.DeleteGameFile();
-					_deck.DeckStats.Games.Remove(selectedGame);
+
+					if(!overall)
+					{
+						if(_deck.DeckStats.Games.Contains(selectedGame))
+						{
+							selectedGame.DeleteGameFile();
+							_deck.DeckStats.Games.Remove(selectedGame);
+							Logger.WriteLine("Deleted game: " + selectedGame);
+						}
+					}
+					else
+					{
+						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+						if(deck != null)
+						{
+							if(deck.DeckStats.Games.Contains(selectedGame))
+							{
+								selectedGame.DeleteGameFile();
+								deck.DeckStats.Games.Remove(selectedGame);
+								Logger.WriteLine("Deleted game: " + selectedGame);
+							}
+
+						}
+						else
+						{
+							var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
+							if(deckstats != null)
+							{
+								selectedGame.DeleteGameFile();
+								deckstats.Games.Remove(selectedGame);
+								Logger.WriteLine("Deleted game: " + selectedGame);
+							}
+						}
+					}
+
 				}
 				DeckStatsList.Save();
+				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games");
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Refresh();
@@ -92,78 +182,122 @@ namespace Hearthstone_Deck_Tracker
 		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
-			if(deck == null) return;
-			var selectedGameMode = (Game.GameMode)ComboboxGameMode.SelectedItem;
-			var comboboxString = ComboboxTime.SelectedValue.ToString();
-			var timeFrame = DateTime.Now.Date;
-			switch(comboboxString)
+			if(deck == null)
 			{
-				case "Today":
-					//timeFrame -= new TimeSpan(0, 0, 0, 0);
-					break;
-				case "Last Week":
-					timeFrame -= new TimeSpan(7, 0, 0, 0);
-					break;
-				case "Last Month":
-					timeFrame -= new TimeSpan(30, 0, 0, 0);
-					break;
-				case "Last Year":
-					timeFrame -= new TimeSpan(365, 0, 0, 0);
-					break;
-				case "All Time":
-					timeFrame = new DateTime();
-					break;
+				TabControlCurrentOverall.SelectedIndex = 1;
+				TabItemDeck.Visibility = Visibility.Collapsed;
+				TabItemOverall.Visibility = Visibility.Collapsed;
+				StackPanelUnassignedFilter.Visibility = Visibility.Visible;
+				return;
 			}
-			var noteFilter = TextboxNoteFilter.Text;
+			TabItemDeck.Visibility = Visibility.Visible;
+			TabItemOverall.Visibility = Visibility.Visible;
+			StackPanelUnassignedFilter.Visibility = TabControlCurrentOverall.SelectedIndex == 1 ? Visibility.Visible : Visibility.Collapsed;
 			DataGridGames.Items.Clear();
-			var filteredGames = deck.DeckStats.Games.Where(g => (g.GameMode == selectedGameMode
-			                                                     || selectedGameMode == Game.GameMode.All)
-			                                                    && g.StartTime > timeFrame
-			                                                    && (g.Note == null && noteFilter == string.Empty
-			                                                        || g.Note != null && g.Note.Contains(noteFilter))).ToList();
+			var filteredGames = FilterGames(deck.DeckStats.Games).ToList();
 			foreach(var game in filteredGames)
-				DataGridGames.Items.Add(game);
+				if(Config.Instance.StatsFilterOpponentHeroClass == HeroClassAll.All || game.OpponentHero == Config.Instance.StatsFilterOpponentHeroClass.ToString())
+					DataGridGames.Items.Add(game);
 			DataGridWinLoss.Items.Clear();
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
 
+			var defaultStats = DefaultDeckStats.Instance.GetDeckStats(deck.Class) ?? new DeckStats();
+
 			DataGridWinLossClass.Items.Clear();
 			var allGames = Helper.MainWindow.DeckList.DecksList
 			                     .Where(d => d.GetClass == _deck.GetClass)
-			                     .SelectMany(d => d.DeckStats.Games
-			                                       .Where(g => (g.GameMode == selectedGameMode
-			                                                    || selectedGameMode == Game.GameMode.All)
-			                                                   && g.StartTime > timeFrame
-			                                                   && (g.Note == null && noteFilter == string.Empty
-			                                                       || g.Note != null && g.Note.Contains(noteFilter)))).ToList();
+			                     .SelectMany(d => FilterGames(d.DeckStats.Games).Where(g => !g.IsClone))
+								 .Concat(FilterGames(defaultStats.Games)).ToList();
+
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
-			DataGridGames.Items.SortDescriptions.Clear();
-			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+			DataGridGames.Items.Refresh();
 		}
+
+		private IEnumerable<GameStats> FilterGames(IEnumerable<GameStats> games)
+		{
+			var selectedGameMode = (GameMode)ComboboxGameMode.SelectedItem;
+			var noteFilter = TextboxNoteFilter.Text;
+			var comboboxString = (TimeFrame)ComboboxTime.SelectedItem;
+
+			var endTime = DateTime.Today + new TimeSpan(0, 23, 59, 59, 999);
+			var startTime = DateTime.Today;
+
+            switch(comboboxString)
+			{
+				case TimeFrame.Today:
+					endTime = DateTime.Now;
+					break;
+				case TimeFrame.Yesterday:
+					startTime -= new TimeSpan(1, 0, 0, 0);
+					endTime -= new TimeSpan(1, 0, 0, 0);
+					break;
+				case TimeFrame.Last24Hours:
+					startTime = DateTime.Now - new TimeSpan(1, 0, 0, 0);
+					endTime = DateTime.Now;
+					break;
+				case TimeFrame.ThisWeek:
+					startTime -= new TimeSpan(((int)(startTime.DayOfWeek) - 1), 0, 0, 0);
+					break;
+				case TimeFrame.PreviousWeek:
+					startTime -= new TimeSpan(7 + ((int)(startTime.DayOfWeek) - 1), 0, 0, 0);
+					endTime -= new TimeSpan(((int)(endTime.DayOfWeek)), 0, 0, 0);
+					break;
+				case TimeFrame.Last7Days:
+					startTime -= new TimeSpan(7, 0, 0, 0);
+					break;
+				case TimeFrame.ThisMonth:
+					startTime -= new TimeSpan(startTime.Day - 1, 0, 0, 0);
+					break;
+				case TimeFrame.PreviousMonth:
+					startTime -= new TimeSpan(startTime.Day - 1 + DateTime.DaysInMonth(startTime.AddMonths(-1).Year, startTime.AddMonths(-1).Month), 0, 0, 0);
+					endTime -= new TimeSpan(endTime.Day, 0, 0, 0);
+					break;
+				case TimeFrame.ThisYear:
+					startTime -= new TimeSpan(startTime.DayOfYear -1, 0, 0, 0);
+					break;
+				case TimeFrame.PreviousYear:
+					startTime -= new TimeSpan(startTime.DayOfYear - 1 + (DateTime.IsLeapYear(startTime.Year) ? 366 : 365), 0, 0, 0);
+					endTime -= new TimeSpan(startTime.DayOfYear, 0, 0, 0);
+					break;
+				case TimeFrame.AllTime:
+					startTime = new DateTime();
+					break;
+			}
+
+			return
+				games.Where(g =>
+				            (g.GameMode == selectedGameMode || selectedGameMode == GameMode.All) && g.StartTime >= startTime && g.StartTime <= endTime &&
+				            (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.Contains(noteFilter)));
+		} 
 
 		public void Refresh()
 		{
+			var oldSelectionOverall = DataGridOverallGames.SelectedItem;
+			LoadOverallStats();
+			if(oldSelectionOverall != null)
+				DataGridOverallGames.SelectedItem = oldSelectionOverall;
+
 			if(_deck == null) return;
-			var oldSelection = DataGridGames.SelectedItem;
+			var oldSelectionCurrent = DataGridGames.SelectedItem;
 			SetDeck(_deck);
-			if(oldSelection != null)
-				DataGridGames.SelectedItem = oldSelection;
+            if(oldSelectionCurrent != null)
+				DataGridGames.SelectedItem = oldSelectionCurrent;
 		}
 
 		private void BtnDetails_Click(object sender, RoutedEventArgs e)
 		{
-			OpenGameDetails();
-		}
+			OpenGameDetails(DataGridGames.SelectedItem as GameStats);
+        }
 
 		private void DGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			OpenGameDetails();
+			OpenGameDetails(DataGridGames.SelectedItem as GameStats);
 		}
 
-		private void OpenGameDetails()
+		private void OpenGameDetails(GameStats selected)
 		{
-			var selected = DataGridGames.SelectedItem as GameStats;
 			if(selected != null)
 			{
 				if(Config.Instance.StatsInWindow)
@@ -181,10 +315,44 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private void BtnOverallMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
+		{
+			MoveGameToOtherDeck(DataGridOverallGames.SelectedItem as GameStats);
+		}
+
+		private void BtnOverallDetails_Click(object sender, RoutedEventArgs e)
+		{
+			OpenGameDetails(DataGridOverallGames.SelectedItem as GameStats);
+		}
+
+		private void BtnOverallEditNote_Click(object sender, RoutedEventArgs e)
+		{
+			EditNote(DataGridOverallGames.SelectedItem as GameStats);
+		}
+
+		private void BtnOverallDelete_Click(object sender, RoutedEventArgs e)
+		{
+			DeleteGames(DataGridOverallGames, true);
+		}
+
+		private void DGridOverall_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			OpenGameDetails(DataGridOverallGames.SelectedItem as GameStats);
+		}
+
+		private void DGridOverall_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var enabled = DataGridOverallGames.SelectedItems.Count > 0;
+			BtnOverallDelete.IsEnabled = enabled;
+			BtnOverallDetails.IsEnabled = enabled;
+			BtnOverallNote.IsEnabled = enabled;
+			BtnOverallMoveToOtherDeck.IsEnabled = enabled;
+		}
+
 		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SelectedStatsFilterGameMode = (Game.GameMode)ComboboxGameMode.SelectedValue;
+			Config.Instance.SelectedStatsFilterGameMode = (GameMode)ComboboxGameMode.SelectedValue;
 			Config.Save();
 			Refresh();
 		}
@@ -192,7 +360,7 @@ namespace Hearthstone_Deck_Tracker
 		private void ComboboxTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SelectedStatsFilterTime = (string)ComboboxTime.SelectedValue;
+			Config.Instance.SelectedStatsFilterTimeFrame = (TimeFrame)ComboboxTime.SelectedItem;
 			Config.Save();
 			Refresh();
 		}
@@ -206,11 +374,15 @@ namespace Hearthstone_Deck_Tracker
 			BtnMoveToOtherDeck.IsEnabled = enabled;
 		}
 
-		private async void BtnEditNote_Click(object sender, RoutedEventArgs e)
+		private void BtnEditNote_Click(object sender, RoutedEventArgs e)
 		{
-			var selected = DataGridGames.SelectedItem as GameStats;
+			EditNote(DataGridGames.SelectedItem as GameStats);
+		}
+
+		private async void EditNote(GameStats selected)
+		{
 			if(selected == null) return;
-			var settings = new MetroDialogSettings {DefaultText = selected.Note};
+			var settings = new MetroDialogSettings { DefaultText = selected.Note };
 			string newNote;
 			if(Config.Instance.StatsInWindow)
 				newNote = await Helper.MainWindow.StatsWindow.ShowInputAsync("Note", "", settings);
@@ -223,7 +395,6 @@ namespace Hearthstone_Deck_Tracker
 			Refresh();
 		}
 
-
 		private void GroupBoxDeckOverview_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			if(e.GetPosition(GroupboxDeckOverview).Y < GroupBoxHeaderHeight)
@@ -232,7 +403,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 			}
 		}
-
 		private void GroupboxClassOverview_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			if(e.GetPosition(GroupboxClassOverview).Y < GroupBoxHeaderHeight)
@@ -261,17 +431,24 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var selectedGame = DataGridGames.SelectedItem as GameStats;
-			if(selectedGame == null) return;
+			MoveGameToOtherDeck(DataGridGames.SelectedItem as GameStats);
+		}
+
+		private void MoveGameToOtherDeck(GameStats selectedGame)
+		{
+			if(selectedGame == null)
+				return;
 
 			var heroes = new Dictionary<string, int>();
 			foreach(var turn in selectedGame.TurnStats)
 			{
 				foreach(var play in turn.Plays)
 				{
-					if(!play.Type.ToString().Contains("Player")) continue;
+					if(!play.Type.ToString().Contains("Player"))
+						continue;
 					var hero = Game.GetCardFromId(play.CardId).PlayerClass;
-					if(hero == null) continue;
+					if(hero == null)
+						continue;
 					if(!heroes.ContainsKey(hero))
 						heroes.Add(hero, 0);
 					heroes[hero]++;
@@ -285,14 +462,24 @@ namespace Hearthstone_Deck_Tracker
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
 				dialog.Owner = Helper.MainWindow.StatsWindow;
-			else dialog.Owner = Helper.MainWindow;
+			else
+				dialog.Owner = Helper.MainWindow;
 
 			dialog.ShowDialog();
 			var selectedDeck = dialog.SelectedDeck;
 
-			if(selectedDeck == null) return;
-
-			_deck.DeckStats.Games.Remove(selectedGame);
+			if(selectedDeck == null)
+				return;
+			var defaultDeck = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
+            if(defaultDeck != null)
+            {
+	            defaultDeck.Games.Remove(selectedGame);
+				DefaultDeckStats.Save();
+            }
+			else
+			{
+				_deck.DeckStats.Games.Remove(selectedGame);
+			}
 			selectedDeck.DeckStats.Games.Add(selectedGame);
 			DeckStatsList.Save();
 			Helper.MainWindow.WriteDecks();
@@ -300,16 +487,117 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.UpdateList();
 		}
 
-		private class WinLoss
+
+		public void LoadOverallStats()
+		{
+			var needToSaveDeckStats = false;
+			DataGridOverallWinLoss.Items.Clear();
+			DataGridOverallGames.Items.Clear();
+			var sortedCol = DataGridOverallGames.Columns.FirstOrDefault(col => col.SortDirection != null);
+			var total = new List<GameStats>();
+			foreach(var @class in Enum.GetNames(typeof(HeroClass)))
+			{
+				var allGames = new List<GameStats>();
+				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithDeck || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
+					allGames.AddRange(Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class && MatchesTagFilters(x)).SelectMany(d => d.DeckStats.Games));
+				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithoutDeck || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
+					allGames.AddRange(DefaultDeckStats.Instance.GetDeckStats(@class).Games);
+
+				allGames = FilterGames(allGames).Where(g => !g.IsClone).ToList();
+
+				total.AddRange(allGames);
+				DataGridOverallWinLoss.Items.Add(new WinLoss(allGames, CheckboxPercent.IsChecked ?? true, @class));
+
+				foreach(var game in allGames)
+				{
+					if(string.IsNullOrEmpty(game.PlayerHero))
+					{
+						//for some reason this does not get loaded after saving it to the xml
+						game.PlayerHero = @class;
+						needToSaveDeckStats = true;
+					}
+					if((Config.Instance.StatsOverallFilterPlayerHeroClass == HeroClassAll.All || game.PlayerHero == Config.Instance.StatsOverallFilterPlayerHeroClass.ToString())
+						&& (Config.Instance.StatsFilterOpponentHeroClass == HeroClassAll.All || game.OpponentHero == Config.Instance.StatsFilterOpponentHeroClass.ToString()))
+						DataGridOverallGames.Items.Add(game);
+				}
+			}
+			if(needToSaveDeckStats)
+			{
+				DeckStatsList.Save();
+			}
+			DataGridOverallWinLoss.Items.Add(new WinLoss(total, CheckboxPercent.IsChecked ?? true, "Total"));
+			if(sortedCol != null)
+			{
+				var prevSorted = DataGridOverallGames.Columns.FirstOrDefault(col => col.Header == sortedCol.Header);
+				if(prevSorted != null)
+					prevSorted.SortDirection = sortedCol.SortDirection;
+			}
+			DataGridOverallGames.Items.Refresh();
+        }
+
+
+		private bool MatchesTagFilters(Deck deck)
+		{
+			return !Config.Instance.StatsOverallApplyTagFilters || Config.Instance.SelectedTags.Contains("All") || deck.Tags.Any(tag => Config.Instance.SelectedTags.Contains(tag));
+		}
+
+		private void CheckboxPercent_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			LoadOverallStats();
+		}
+
+		private void CheckboxPercent_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			LoadOverallStats();
+		}
+		
+		public class WinLoss
 		{
 			private readonly bool _percent;
 			private readonly List<GameStats> _stats;
+			private readonly string _playerHero;
 
 			public WinLoss(List<GameStats> stats, string text)
 			{
 				_percent = text == "%";
 				_stats = stats;
 				Text = text;
+			}
+
+			public WinLoss(List<GameStats> stats, bool percent, string playerHero)
+			{
+				_percent = percent;
+				_stats = stats;
+				_playerHero = playerHero;
+			}
+
+			public BitmapImage PlayerHeroImage
+			{
+				get
+				{
+					if(!Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
+						return new BitmapImage();
+					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
+					return new BitmapImage(uri);
+				}
+			}
+
+			public Visibility VisibilityImage
+			{
+				get { return _playerHero != "Total" ? Visibility.Visible : Visibility.Collapsed; }
+			}
+
+			public Visibility VisibilityText
+			{
+				get { return _playerHero == "Total" ? Visibility.Visible : Visibility.Collapsed; }
+			}
+			public string PlayerText
+			{
+				get { return _playerHero.ToUpper(); }
 			}
 
 			public string Text { get; private set; }
@@ -375,8 +663,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
 				var total = _stats.Count(s => (hsClass == null || s.OpponentHero == hsClass));
-				var percent = total > 0 ? Math.Round(100.0 * wins / total, 1).ToString() : "-";
-				return string.Format("{0}%", percent);
+				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";
 			}
 
 			private string GetClassDisplayString(string hsClass)
@@ -384,5 +671,72 @@ namespace Hearthstone_Deck_Tracker
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
 		}
+		
+		private void ComboboxUnassigned_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallFilterDeckMode = (FilterDeckMode)ComboboxUnassigned.SelectedItem;
+			Config.Save();
+			LoadOverallStats();
+		}
+		
+		private void CheckBoxApplyTagFilters_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallApplyTagFilters = true;
+			Config.Save();
+			LoadOverallStats();
+		}
+
+		private void CheckBoxApplyTagFilters_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallApplyTagFilters = false;
+			Config.Save();
+			LoadOverallStats();
+		}
+
+		private void ComboBoxPlayerClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsOverallFilterPlayerHeroClass = (HeroClassAll)ComboBoxPlayerClass.SelectedItem;
+			Config.Save();
+			LoadOverallStats();
+
+		}
+
+		private HeroClassAll? _opponentCb; 
+		private void ComboBoxOpponentClass_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(_opponentCb == null)
+			{
+				_opponentCb = (HeroClassAll)((ComboBox)sender).SelectedItem;
+				if(!Equals(sender, ComboBoxOpponentClassD))
+					ComboBoxOpponentClassD.SelectedItem = _opponentCb.Value;
+				if(!Equals(sender, ComboBoxOpponentClassOG))
+					ComboBoxOpponentClassOG.SelectedItem = _opponentCb.Value;
+				Config.Instance.StatsFilterOpponentHeroClass = _opponentCb.Value;
+				Config.Save();
+				Refresh();
+				_opponentCb = null;
+			}
+		}
+
+		private void TabItemDeck_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			StackPanelUnassignedFilter.Visibility= Visibility.Collapsed;
+		}
+
+		private void TabItemOverall_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			StackPanelUnassignedFilter.Visibility = Visibility.Visible;
+		}
 	}
 }
+ 

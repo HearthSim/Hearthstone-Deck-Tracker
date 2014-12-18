@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -222,6 +222,24 @@ namespace Hearthstone_Deck_Tracker
 					converted = true;
 #pragma warning restore 612
 				}
+				if(configVersion <= new Version(0, 6, 6, 0))
+				{
+					if(Config.Instance.ExportClearX == 0.86)
+					{
+						Config.Instance.Reset("ExportClearX");
+						converted = true;
+					}
+					if(Config.Instance.ExportClearY == 0.16)
+					{
+						Config.Instance.Reset("ExportClearY");
+						converted = true;
+					}
+					if(Config.Instance.ExportClearCheckYFixed == 0.2)
+					{
+						Config.Instance.Reset("ExportClearCheckYFixed");
+						converted = true;
+					}
+				}
 			}
 
 			if(converted)
@@ -275,7 +293,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					updated = true;
 					File.Copy("Files/log.config", _logConfigPath, true);
-					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", Config.Instance.ConfigPath));
+					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _logConfigPath));
 				}
 				else
 				{
@@ -286,12 +304,12 @@ namespace Hearthstone_Deck_Tracker
 					{
 						updated = true;
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", Config.Instance.ConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _logConfigPath));
 					}
 					else if(Config.Instance.AlwaysOverwriteLogConfig)
 					{
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", Config.Instance.ConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _logConfigPath));
 					}
 				}
 			}
@@ -345,6 +363,50 @@ namespace Hearthstone_Deck_Tracker
 			else if(!File.Exists(_decksPath + ".old"))
 				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
 				File.Copy(_decksPath, _decksPath + ".old");
+		}
+
+		private void SetupDefaultDeckStatsFile()
+		{
+			if(Config.Instance.SaveDataInAppData == null)
+				return;
+			var appDataPath = Config.Instance.AppDataPath + @"\DefaultDeckStats.xml";
+			const string localPath = "DefaultDeckStats.xml";
+			if(Config.Instance.SaveDataInAppData.Value)
+			{
+				if(File.Exists(localPath))
+				{
+					if(File.Exists(appDataPath))
+					{
+						//backup in case the file already exists
+						var time = DateTime.Now.ToFileTime();
+						File.Move(appDataPath, appDataPath + time);
+						Logger.WriteLine("Created backups of DefaultDeckStats in appdata");
+					}
+					File.Move(localPath, appDataPath);
+					Logger.WriteLine("Moved DefaultDeckStats to appdata");
+				}
+			}
+			else if(File.Exists(appDataPath))
+			{
+				if(File.Exists(localPath))
+				{
+					//backup in case the file already exists
+					var time = DateTime.Now.ToFileTime();
+					File.Move(localPath, localPath + time);
+					Logger.WriteLine("Created backups of DefaultDeckStats locally");
+				}
+				File.Move(appDataPath, localPath);
+				Logger.WriteLine("Moved DefaultDeckStats to local");
+			}
+
+			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";
+			//load saved decks
+			if(!File.Exists(filePath))
+			{
+				//avoid overwriting file with new releases.
+				using (var sr = new StreamWriter(filePath, false))
+					sr.WriteLine("<DefaultDeckStats></DefaultDeckStats>");
+			}
 		}
 
 		private void LoadConfig()
@@ -441,7 +503,17 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
+			Options.CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
 			Options.CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
+			Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
+			Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
+			Options.CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
+			Options.CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
+			Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
+			Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
+			Options.CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
+			Options.CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
+			Options.CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
@@ -459,14 +531,15 @@ namespace Hearthstone_Deck_Tracker
 
 			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
 
+			UpdateQuickFilterItemSource();
+
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
-			var tags = new List<string>(DeckList.AllTags);
-			tags.Remove("All");
-			TagControlEdit.LoadTags(tags);
+			
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
-			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == Operation.And;
+			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 
@@ -497,12 +570,27 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
 			Options.CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
-			Options.CheckboxDeckSortingClassFirst.IsChecked = Config.Instance.CardSortingClassFirst;
+			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 
 			DeckStatsFlyout.LoadConfig();
 			GameDetailsFlyout.LoadConfig();
 			StatsWindow.StatsControl.LoadConfig();
 			StatsWindow.GameDetailsFlyout.LoadConfig();
+
+			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
+		}
+
+		public void UpdateQuickFilterItemSource()
+		{
+			MenuItemQuickSelectFilter.ItemsSource =
+				DeckList.AllTags.Where(t => DeckList.DecksList.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
+				        .Select(x => x.ToUpperInvariant());
+		}
+
+		public void ReloadTags()
+		{
+			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
+			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 		}
 
 
@@ -530,7 +618,15 @@ namespace Hearthstone_Deck_Tracker
 								 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
 			}
 
+			if(_showRestartMessage)
+				ShowRestartMessage();
+
 			ManaCurveMyDecks.UpdateValues();
+		}
+
+		private async void ShowRestartMessage()
+		{
+			await Restart();
 		}
 	}
 }

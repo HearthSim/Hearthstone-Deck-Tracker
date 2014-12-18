@@ -5,10 +5,18 @@
           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
           xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
           mc:Ignorable="d"
-          d:DesignHeight="300" d:DesignWidth="300" Height="auto" Background="Transparent">
+          d:DesignHeight="300" d:DesignWidth="300" Height="auto" Background="Transparent"
+          
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker" >
+    
     <ListView.View>
         <GridView>
-            <GridViewColumn Header="cost" Width="32">
+            <GridViewColumn Header="{lex:Loc COST}" Width="32">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
                         <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="1,-3,0,0" Width="32" Height="25"
@@ -19,7 +27,7 @@
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
-            <GridViewColumn Header="name" Width="155">
+            <GridViewColumn Header="{lex:Loc NAME}" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
                         <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-2,0,0,0" Height="16"

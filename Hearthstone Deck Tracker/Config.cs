@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 //using System.ComponentModel;
@@ -29,6 +30,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
+
+		[DefaultValue(true)]
+		public bool AutoClearDeck = true;
 
 		[DefaultValue(true)]
 		public bool AutoDeckDetection = true;
@@ -88,6 +92,15 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.32)]
 		public double ExportCardsY = 0.32;
 
+		[DefaultValue(0.83)]
+		public double ExportClearX = 0.83;
+
+		[DefaultValue(0.13)]
+		public double ExportClearY = 0.13;
+
+		[DefaultValue(0.185)]
+		public double ExportClearCheckYFixed = 0.185;
+
 		[DefaultValue(0.85)]
 		public double ExportNameDeckX = 0.85;
 
@@ -96,6 +109,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ExportPasteClipboard = false;
+
+		[DefaultValue(0)]
+		public int ExportStartDelay = 0;
 
 		[DefaultValue(0.5)]
 		public double ExportSearchBoxX = 0.5;
@@ -118,10 +134,7 @@ namespace Hearthstone_Deck_Tracker
 			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
 			set { _gameDetails = value; }
 		}
-
-		[DefaultValue(false)]
-		public bool GenerateLog = false;
-
+		
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 
@@ -156,6 +169,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideOverlay = false;
 
 		[DefaultValue(false)]
+		public bool HideOverlayInSpectator = false;
+
+		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
 
 		[DefaultValue(false)]
@@ -179,6 +195,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool KeepDecksVisible = true;
 
+		[DefaultValue(true)]
+		public bool KeepStatsWhenDeletingDeck = true;
+
 		[DefaultValue("None")]
 		public string KeyPressOnGameEnd = "None";
 
@@ -196,6 +215,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool MinimizeToTray = false;
+
+		[DefaultValue(false)]
+		public bool NoteDialogDelayed = false;
 
 		[DefaultValue(0)]
 		public int OffsetX = 0;
@@ -296,8 +318,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RecordPractice = false;
 
+		[DefaultValue(false)]
+		public bool RecordSpectator = false;
+
 		[DefaultValue(true)]
 		public bool RecordRanked = true;
+
+        [DefaultValue(false)]
+        public bool DiscardZeroTurnGame = false;
 
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
@@ -329,11 +357,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";
 
-		[DefaultValue(Game.GameMode.All)]
-		public Game.GameMode SelectedStatsFilterGameMode = Game.GameMode.All;
+		[DefaultValue(GameMode.All)]
+		public GameMode SelectedStatsFilterGameMode = GameMode.All;
 
-		[DefaultValue("All Time")]
-		public string SelectedStatsFilterTime = "All Time";
+		[DefaultValue(TimeFrame.AllTime)]
+		public TimeFrame SelectedStatsFilterTimeFrame = TimeFrame.AllTime;
 
 		[XmlArray(ElementName = "SelectedTags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -355,6 +383,12 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowInTaskbar = false;
 
 		[DefaultValue(false)]
+		public bool ShowLogTab = false;
+
+		[DefaultValue(true)]
+		public bool ShowArenaImportMessage = true;
+
+		[DefaultValue(false)]
 		public bool ShowNoteDialogAfterGame = false;
 
 		[DefaultValue(false)]
@@ -372,8 +406,20 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool StatsDeckOverviewIsExpanded = true;
 
+		[DefaultValue(HeroClassAll.All)]
+		public HeroClassAll StatsFilterOpponentHeroClass = HeroClassAll.All;
+
 		[DefaultValue(false)]
 		public bool StatsInWindow = false;
+
+		[DefaultValue(false)]
+		public bool StatsOverallApplyTagFilters = false;
+
+		[DefaultValue(FilterDeckMode.WithDeck)]
+		public FilterDeckMode StatsOverallFilterDeckMode = FilterDeckMode.WithDeck;
+
+		[DefaultValue(HeroClassAll.All)]
+		public HeroClassAll StatsOverallFilterPlayerHeroClass = HeroClassAll.All;
 
 		[DefaultValue(672)]
 		public int StatsWindowHeight = 672;
@@ -390,8 +436,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool TagDecksOnImport = true;
 
-		[DefaultValue(Operation.Or)]
-		public Operation TagOperation = Operation.Or;
+		[DefaultValue(TagFilerOperation.Or)]
+		public TagFilerOperation TagOperation = TagFilerOperation.Or;
 
 		[DefaultValue("")]
 		public string ThemeName = "";

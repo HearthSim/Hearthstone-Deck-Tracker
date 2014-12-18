@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,27 +13,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public static class Game
 	{
-		public enum CardMark
-		{
-			None = ' ',
-			Coin = 'C',
-			Returned = 'R',
-			Mulliganed = 'M',
-			Stolen = 'S'
-		}
-
-		public enum GameMode
-		{
-			All, //for filtering @ deck stats
-			Ranked,
-			Casual,
-			Arena,
-			Friendly,
-			Practice,
-			None
-		}
-
-		public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
+		//public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
 
 		#region Properties
 
@@ -62,6 +43,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static string PlayingAs;
 
 		public static List<string> SetAsideCards;
+		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck;
+
+		public static OpponentSecrets OpponentSecrets;
 
 		private static readonly List<string> ValidCardSets = new List<string>
 			{
@@ -69,13 +53,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				"Reward",
 				"Expert",
 				"Promotion",
-				"Curse of Naxxramas"
+				"Curse of Naxxramas",
+				"Goblins vs Gnomes"
 			};
 
 		public static List<Card> DrawnLastGame;
 
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
+		public static List<Card> PossibleArenaCards { get; set; }
 
 		#endregion
 
@@ -84,12 +70,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			SetAsideCards = new List<string>();
+			OpponentReturnedToDeck = new List<KeyValuePair<string, int>>();
 			PlayerDeck = new ObservableCollection<Card>();
 			PlayerDrawn = new ObservableCollection<Card>();
 			OpponentCards = new ObservableCollection<Card>();
+			PossibleArenaCards = new List<Card>();
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentSecrets = new OpponentSecrets();
 			for(var i = 0; i < MaxHandSize; i++)
 			{
 				OpponentHandAge[i] = -1;
@@ -113,6 +102,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentDeckCount = 30;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentSecrets.ClearSecrets();
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{
@@ -124,8 +114,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
 			OpponentHandAge[DefaultCoinPosition] = 0;
 			OpponentHasCoin = true;
+
+			SetAsideCards.Clear();
+			OpponentReturnedToDeck.Clear();
+
 			if(!IsInMenu && resetStats)
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst);
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs);
 		}
 
 		public static void SetPremadeDeck(Deck deck)
@@ -226,6 +220,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(fromSetAside)
 			{
 				Logger.WriteLine("Got card from setaside: " + cardId);
+				foreach(var c in SetAsideCards)
+					PlayerDeckDiscard(c);
 				SetAsideCards.Clear();
 			}
 
@@ -349,6 +345,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return true;
 		}
 
+		public static void PlayerPlayToDeck(string cardId)
+		{
+
+			if(string.IsNullOrEmpty(cardId))
+				return;
+
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+			if(deckCard != null)
+			{
+				deckCard.Count++;
+				LogDeckChange(false, deckCard, false);
+			}
+			else if(Config.Instance.RemoveCardsFromDeck)
+			{
+				deckCard = GetCardFromId(cardId);
+				PlayerDeck.Add(deckCard);
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)");
+			}
+		}
+
 		#endregion
 
 		#region Opponent
@@ -356,6 +372,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void OpponentDraw(int turn)
 		{
 			OpponentHandCount++;
+			if(turn == 0 && OpponentHandCount == 5)
+				//coin draw
+				return;
 			OpponentDeckCount--;
 
 			if(!ValidateOpponentHandCount())
@@ -367,7 +386,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Logger.WriteLine(string.Format("Set card {0} to age {1}", OpponentHandCount - 1, turn), "Hearthstone");
 
 				OpponentHandAge[OpponentHandCount - 1] = turn;
-				OpponentHandMarks[OpponentHandCount - 1] = CardMark.None;
+				OpponentHandMarks[OpponentHandCount - 1] = turn == 0 ? CardMark.Kept :  CardMark.None;
 
 				LogOpponentHand();
 			}
@@ -381,8 +400,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHasCoin = false;
 			if(!string.IsNullOrEmpty(id))
 			{
-				var stolen = from != -1 && OpponentHandMarks[from - 1] == CardMark.Stolen;
+				//key: cardid, value: turn when returned to deck
+				var wasReturnedToDeck = OpponentReturnedToDeck.Any(p => p.Key == id && p.Value <= OpponentHandAge[from - 1]);
+				var stolen = from != -1 && (OpponentHandMarks[from - 1] == CardMark.Stolen || OpponentHandMarks[from - 1] == CardMark.Returned || wasReturnedToDeck);
 				var card = OpponentCards.FirstOrDefault(c => c.Id == id && c.IsStolen == stolen && !c.WasDiscarded);
+
+				//card can't be marked stolen or returned, since it was returned to the deck
+				if(wasReturnedToDeck && stolen && !(OpponentHandMarks[from - 1] == CardMark.Stolen || OpponentHandMarks[from - 1] == CardMark.Returned))
+				{
+					OpponentReturnedToDeck.Remove(OpponentReturnedToDeck.First(p => p.Key == id && p.Value <= OpponentHandAge[from - 1]));
+				}
 
 				if(card != null)
 					card.Count++;
@@ -447,6 +474,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHandAge[OpponentHandCount - 1] = turn;
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
 			}
+		}
+
+		public static void OpponentPlayToDeck(string cardId, int turn)
+		{
+			OpponentDeckCount++;
+
+			if(string.IsNullOrEmpty(cardId))
+				return;
+
+			OpponentReturnedToDeck.Add(new KeyValuePair<string, int>(cardId, turn));
+
 		}
 
 		public static void OpponentDeckDiscard(string cardId)
@@ -524,6 +562,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							}
 						}
 					}
+					Logger.WriteLine("Done loading localized card database (" + languageTag + ")", "Hearthstone");
 				}
 
 
@@ -535,7 +574,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var obj = JObject.Parse(File.ReadAllText(fileEng));
 					foreach(var cardType in obj)
 					{
-						if(!ValidCardSets.Any(cs => cs.Equals(cardType.Key))) continue;
+						var set = ValidCardSets.FirstOrDefault(cs => cs.Equals(cardType.Key));
+						if(set == null)
+							continue;
 
 						foreach(var card in cardType.Value)
 						{
@@ -546,13 +587,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								tmp.LocalizedName = localizedCard.Name;
 								tmp.Text = localizedCard.Text;
 							}
+							tmp.Set = set;
 							tempDb.Add(tmp.Id, tmp);
 						}
 					}
+					Logger.WriteLine("Done loading card database (enUS)", "Hearthstone");
 				}
 				_cardDb = new Dictionary<string, Card>(tempDb);
 
-				Logger.WriteLine("Done loading card database (" + languageTag + ")", "Hearthstone");
 			}
 			catch(Exception e)
 			{
@@ -573,7 +615,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromName(string name)
 		{
-			if(GetActualCards().Any(c => c.Name.Equals(name)))
+			if(GetActualCards().Any(c => string.Equals(c.Name, name, StringComparison.InvariantCultureIgnoreCase)))
 			{
 				var card = GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 				if(card != null)
@@ -612,6 +654,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
 				   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
 				   && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
+		}
+
+		public static void ResetArenaCards()
+		{
+			PossibleArenaCards.Clear();
+			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 	}
 }

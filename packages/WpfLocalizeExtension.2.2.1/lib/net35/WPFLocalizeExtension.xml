@@ -1,0 +1,2529 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WPFLocalizeExtension</name>
+    </assembly>
+    <members>
+        <member name="T:WPFLocalizeExtension.Engine.EnumComboBox">
+            <summary>
+            An extended combobox that is enumerating Enum values.
+            <para>Use the <see cref="T:System.ComponentModel.BrowsableAttribute"/> to hide specific entries.</para>
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.EnumComboBox.TypeProperty">
+            <summary>
+            The Type.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.EnumComboBox.Type">
+            <summary>
+            The backing property for <see cref="F:WPFLocalizeExtension.Engine.EnumComboBox.TypeProperty"/>
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey">
+            <summary>
+            A class that bundles the key, assembly and dictionary information.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.FullyQualifiedResourceKeyBase">
+            <summary>
+            An abstract class for key identification.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.FullyQualifiedResourceKeyBase.op_Implicit(WPFLocalizeExtension.Providers.FullyQualifiedResourceKeyBase)~System.String">
+            <summary>
+            Implicit string operator.
+            </summary>
+            <param name="fullyQualifiedResourceKey">The object.</param>
+            <returns>The joined version of the assembly, dictionary and key.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:WPFLocalizeExtension.Providers.FullyQualifiedResourceKeyBase"/>.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="assembly">The assembly of the dictionary.</param>
+            <param name="dictionary">The resource dictionary.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey.ToString">
+            <summary>
+            Converts the object to a string.
+            </summary>
+            <returns>The joined version of the assembly, dictionary and key.</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey.Assembly">
+            <summary>
+            The assembly of the dictionary.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.FQAssemblyDictionaryKey.Dictionary">
+            <summary>
+            The resource dictionary.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.IDictionaryEventListener">
+            <summary>
+            Interface for listeners on dictionary events of the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/> class.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.IDictionaryEventListener.ResourceChanged(System.Windows.DependencyObject,WPFLocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.DictionaryEventType">
+            <summary>
+            An enumeration of dictionary event types.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.DictionaryEventType.SeparationChanged">
+            <summary>
+            The separation changed.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.DictionaryEventType.ProviderChanged">
+            <summary>
+            The provider changed.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.DictionaryEventType.ProviderUpdated">
+            <summary>
+            A provider reports an update.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.DictionaryEventType.CultureChanged">
+            <summary>
+            The culture changed.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.DictionaryEventType.ValueChanged">
+            <summary>
+            A certain value changed.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.DictionaryEventArgs">
+            <summary>
+            Event argument for dictionary events.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.DictionaryEventArgs.#ctor(WPFLocalizeExtension.Engine.DictionaryEventType,System.Object)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="type">The type of the event.</param>
+            <param name="tag">The corresponding tag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.DictionaryEventArgs.ToString">
+            <summary>
+            Returns the type and tag as a string.
+            </summary>
+            <returns>The type and tag as a string.</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.DictionaryEventArgs.Type">
+            <summary>
+            The type of the event.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.DictionaryEventArgs.Tag">
+            <summary>
+            A corresponding tag.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.LocProxy">
+            <summary>
+            A proxy class to localize object strings.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocProxy.ext">
+            <summary>
+            Our own <see cref="T:WPFLocalizeExtension.Extensions.LocExtension"/> instance.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocProxy.SourceProperty">
+            <summary>
+            The source.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocProxy.PrependTypeProperty">
+            <summary>
+            This flag determines, if the type should be added using the given separator.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocProxy.SeparatorProperty">
+            <summary>
+            The Separator.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocProxy.ResultProperty">
+            <summary>
+            The result.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocProxy.PropertiesChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            A notification handler for the <see cref="F:WPFLocalizeExtension.Engine.LocProxy.SourceProperty"/>.
+            </summary>
+            <param name="d">The object.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocProxy.#ctor">
+            <summary>
+            Creates a new enum localizer.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocProxy.Source">
+            <summary>
+            The backing property for <see cref="F:WPFLocalizeExtension.Engine.LocProxy.SourceProperty"/>
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocProxy.PrependType">
+            <summary>
+            The backing property for <see cref="F:WPFLocalizeExtension.Engine.LocProxy.PrependTypeProperty"/>
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocProxy.Separator">
+            <summary>
+            The backing property for <see cref="F:WPFLocalizeExtension.Engine.LocProxy.SeparatorProperty"/>
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocProxy.Result">
+            <summary>
+            The backing property for <see cref="F:WPFLocalizeExtension.Engine.LocProxy.ResultProperty"/>
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.MissingKeyEventArgs">
+            <summary>
+            Event arguments for a missing key event.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.MissingKeyEventArgs.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:WPFLocalizeExtension.Engine.MissingKeyEventArgs"/>.
+            </summary>
+            <param name="key">The missing key.</param>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.MissingKeyEventArgs.Key">
+            <summary>
+            The key that is missing or has no data.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.MissingKeyEventArgs.Reload">
+            <summary>
+            A flag indicating that a reload should be performed.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.SafeTargetInfo">
+            <summary>
+            An extension to the <see cref="T:XAMLMarkupExtensions.Base.TargetInfo"/> class with WeakReference instead of direct object linking.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.SafeTargetInfo.#ctor(System.Object,System.Object,System.Type,System.Int32)">
+            <summary>
+            Creates a new TargetInfo instance.
+            </summary>
+            <param name="targetObject">The target object.</param>
+            <param name="targetProperty">The target property.</param>
+            <param name="targetPropertyType">The target property type.</param>
+            <param name="targetPropertyIndex">The target property index.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.SafeTargetInfo.FromTargetInfo(XAMLMarkupExtensions.Base.TargetInfo)">
+            <summary>
+            Creates a new <see cref="T:WPFLocalizeExtension.Engine.SafeTargetInfo"/> based on a <see cref="T:XAMLMarkupExtensions.Base.TargetInfo"/> template.
+            </summary>
+            <param name="targetInfo">The target information.</param>
+            <returns>A new instance with safe references.</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.SafeTargetInfo.TargetObjectReference">
+            <summary>
+            Gets the target object reference.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Extensions.BLoc">
+            <summary>
+            A localization extension based on <see cref="T:System.Windows.Data.Binding"/>.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.RaisePropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.ClearResourceBuffer">
+            <summary>
+            Clears the common resource buffer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.SafeAddItemToResourceBuffer(System.String,System.Object)">
+            <summary>
+            Adds an item to the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.SafeRemoveItemFromResourceBuffer(System.String)">
+            <summary>
+            Removes an item from the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+            <param name="key">The resource identifier.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.Dispose">
+            <summary>
+            Removes the listener from the dictionary.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.Finalize">
+            <summary>
+            The finalizer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.GetForcedCultureOrDefault">
+            <summary>
+            If Culture property defines a valid <see cref="T:System.Globalization.CultureInfo"/>, a <see cref="T:System.Globalization.CultureInfo"/> instance will get
+            created and returned, otherwise <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture will get returned.
+            </summary>
+            <returns>The <see cref="T:System.Globalization.CultureInfo"/></returns>
+            <exception cref="T:System.ArgumentException">
+            thrown if the parameter Culture don't defines a valid <see cref="T:System.Globalization.CultureInfo"/>
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.ResourceChanged(System.Windows.DependencyObject,WPFLocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.BLoc.FormatOutput">
+            <summary>
+            This function returns the properly prepared output of the markup extension.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Extensions.BLoc.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.BLoc.Value">
+            <summary>
+            The value, the internal binding is pointing at.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.BLoc.Key">
+            <summary>
+            Gets or sets the Key to a .resx object
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.BLoc.ForceCulture">
+            <summary>
+            Gets or sets the culture to force a fixed localized object
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Extensions.FELoc">
+            <summary>
+            A localization utility based on <see cref="T:System.Windows.FrameworkElement"/>.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.RaisePropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.ClearResourceBuffer">
+            <summary>
+            Clears the common resource buffer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.SafeAddItemToResourceBuffer(System.String,System.Object)">
+            <summary>
+            Adds an item to the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.SafeRemoveItemFromResourceBuffer(System.String)">
+            <summary>
+            Removes an item from the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.FELoc.KeyProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Key to set the resource key.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.FELoc.ConverterProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Converter to set the <see cref="T:System.Windows.Data.IValueConverter"/> used to adapt to the target.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.FELoc.ConverterParameterProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> ConverterParameter.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.FELoc.ForceCultureProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> ForceCulture.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.DependencyPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that the key changed.
+            </summary>
+            <param name="obj">The FELoc object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.GetDependencyProperties(System.Object)">
+            <summary>
+            Based on http://social.msdn.microsoft.com/Forums/en/wpf/thread/580234cb-e870-4af1-9a91-3e3ba118c89c
+            </summary>
+            <param name="element">The target object.</param>
+            <returns>The list of DependencyProperties of the object.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+            <param name="key">The resource identifier.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.Dispose">
+            <summary>
+            Removes the listener from the dictionary.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.Finalize">
+            <summary>
+            The finalizer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.GetForcedCultureOrDefault">
+            <summary>
+            If Culture property defines a valid <see cref="T:System.Globalization.CultureInfo"/>, a <see cref="T:System.Globalization.CultureInfo"/> instance will get
+            created and returned, otherwise <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture will get returned.
+            </summary>
+            <returns>The <see cref="T:System.Globalization.CultureInfo"/></returns>
+            <exception cref="T:System.ArgumentException">
+            thrown if the parameter Culture don't defines a valid <see cref="T:System.Globalization.CultureInfo"/>
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.ResourceChanged(System.Windows.DependencyObject,WPFLocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.FELoc.FormatOutput">
+            <summary>
+            This function returns the properly prepared output of the markup extension.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Extensions.FELoc.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.FELoc.Key">
+            <summary>
+            The resource key.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.FELoc.Converter">
+            <summary>
+            Gets or sets the custom value converter.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.FELoc.ConverterParameter">
+            <summary>
+            Gets or sets the converter parameter.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.FELoc.ForceCulture">
+            <summary>
+            Gets or sets the forced culture.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.FELoc.Content">
+            <summary>
+            Gets or sets the content.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider">
+            <summary>
+            A singleton CSV provider that uses attached properties and the Parent property to iterate through the visual tree.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase">
+            <summary>
+            The base for CSV file providers.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ILocalizationProvider">
+            <summary>
+            An interface describing classes that provide localized values based on a source/dictionary/key combination.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ILocalizationProvider.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ILocalizationProvider.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ILocalizationProvider.AvailableCultures">
+            <summary>
+            An observable list of available cultures.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderChanged">
+            <summary>
+            An event that is fired when the provider changed.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderError">
+            <summary>
+            An event that is fired when an error occurred.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ValueChanged">
+            <summary>
+            An event that is fired when a value changed.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ResourceManagerName">
+            <summary>
+            Holds the name of the Resource Manager.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ResourceFileExtension">
+            <summary>
+            Holds the extension of the resource files.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ResourceBindingFlags">
+            <summary>
+            Holds the binding flags for the reflection to find the resource files.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ResourceManagerList">
+            <summary>
+            Gets the used ResourceManagers with their corresponding <c>namespaces</c>.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ResourceManagerListLock">
+            <summary>
+            Lock object for concurrent access to the resource manager list.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.AvailableCultureListLock">
+            <summary>
+            Lock object for concurrent access to the available culture list.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.GetAssemblyName(System.Reflection.Assembly)">
+            <summary>
+            Returns the <see cref="T:System.Reflection.AssemblyName"/> of the passed assembly instance
+            </summary>
+            <param name="assembly">The Assembly where to get the name from</param>
+            <returns>The Assembly name</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ParseKey(System.String,System.String@,System.String@,System.String@)">
+            <summary>
+            Parses a key ([[Assembly:]Dict:]Key and return the parts of it.
+            </summary>
+            <param name="inKey">The key to parse.</param>
+            <param name="outAssembly">The found or default assembly.</param>
+            <param name="outDict">The found or default dictionary.</param>
+            <param name="outKey">The found or default key.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.AddCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Thread-safe access to the AvailableCultures list.
+            </summary>
+            <param name="c">The CultureInfo.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.OnProviderChanged(System.Windows.DependencyObject)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderChanged"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.OnProviderError(System.Windows.DependencyObject,System.String,System.String)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderError"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="key">The key.</param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.OnValueChanged(System.String,System.Object,System.Object)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ValueChanged"/> event.
+            </summary>
+            <param name="key">The key where the value was changed.</param>
+            <param name="value">The new value.</param>
+            <param name="tag">A custom tag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target object.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ProviderChanged">
+            <summary>
+            Gets fired when the provider changed.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ProviderError">
+            <summary>
+            An event that is fired when an error occurred.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.ValueChanged">
+            <summary>
+            An event that is fired when a value changed.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.CSVLocalizationProviderBase.AvailableCultures">
+            <summary>
+            An observable list of available cultures.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.DefaultDictionaryProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultDictionary to set the fallback resource dictionary.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.DefaultAssemblyProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultAssembly to set the fallback assembly.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.AttachedPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that one of the attached properties changed.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.GetDefaultDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to get the default dictionary from.</param>
+            <returns>The default dictionary.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.GetDefaultAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to get the default assembly from.</param>
+            <returns>The default assembly.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.SetDefaultDictionary(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to set the default dictionary to.</param>
+            <param name="value">The dictionary.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.SetDefaultAssembly(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to set the default assembly to.</param>
+            <param name="value">The assembly.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.parentNotifiers">
+            <summary>
+            A dictionary for notification classes for changes of the individual target Parent changes.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.instance">
+            <summary>
+            The instance of the singleton.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.InstanceLock">
+            <summary>
+            Lock object for the creation of the singleton instance.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.#ctor">
+            <summary>
+            The singleton constructor.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.ParentChangedAction(System.Windows.DependencyObject)">
+            <summary>
+            An action that will be called when a parent of one of the observed target objects changed.
+            </summary>
+            <param name="obj">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target object.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.Instance">
+            <summary>
+            Gets the <see cref="T:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider"/> singleton.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.CSVEmbeddedLocalizationProvider.HasHeader">
+            <summary>
+            A flag indicating, if it has a header row.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.CSVLocalizationProvider">
+            <summary>
+            A singleton CSV provider that uses attached properties and the Parent property to iterate through the visual tree.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProvider.DefaultDictionaryProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultDictionary to set the fallback resource dictionary.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.AttachedPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that one of the attached properties changed.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.GetDefaultDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to get the default dictionary from.</param>
+            <returns>The default dictionary.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.SetDefaultDictionary(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to set the default dictionary to.</param>
+            <param name="value">The dictionary.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProvider.parentNotifiers">
+            <summary>
+            A dictionary for notification classes for changes of the individual target Parent changes.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProvider.instance">
+            <summary>
+            The instance of the singleton.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.CSVLocalizationProvider.InstanceLock">
+            <summary>
+            Lock object for the creation of the singleton instance.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.#ctor">
+            <summary>
+            The singleton constructor.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.ParentChangedAction(System.Windows.DependencyObject)">
+            <summary>
+            An action that will be called when a parent of one of the observed target objects changed.
+            </summary>
+            <param name="obj">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.CSVLocalizationProvider.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target object.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.CSVLocalizationProvider.Instance">
+            <summary>
+            Gets the <see cref="T:WPFLocalizeExtension.Providers.CSVLocalizationProvider"/> singleton.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.CSVLocalizationProvider.HasHeader">
+            <summary>
+            A flag indicating, if it has a header row.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider">
+            <summary>
+            A singleton RESX provider that uses inheriting attached properties.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase">
+            <summary>
+            The base for RESX file providers.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerName">
+            <summary>
+            Holds the name of the Resource Manager.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceFileExtension">
+            <summary>
+            Holds the extension of the resource files.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceBindingFlags">
+            <summary>
+            Holds the binding flags for the reflection to find the resource files.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerList">
+            <summary>
+            Gets the used ResourceManagers with their corresponding <c>namespaces</c>.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerListLock">
+            <summary>
+            Lock object for concurrent access to the resource manager list.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.AvailableCultureListLock">
+            <summary>
+            Lock object for concurrent access to the available culture list.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetAssemblyName(System.Reflection.Assembly)">
+            <summary>
+            Returns the <see cref="T:System.Reflection.AssemblyName"/> of the passed assembly instance
+            </summary>
+            <param name="assembly">The Assembly where to get the name from</param>
+            <returns>The Assembly name</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ParseKey(System.String,System.String@,System.String@,System.String@)">
+            <summary>
+            Parses a key ([[Assembly:]Dict:]Key and return the parts of it.
+            </summary>
+            <param name="inKey">The key to parse.</param>
+            <param name="outAssembly">The found or default assembly.</param>
+            <param name="outDict">The found or default dictionary.</param>
+            <param name="outKey">The found or default key.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.TryGetValue(System.String,System.Resources.ResourceManager@)">
+            <summary>
+            Thread-safe access to the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+            <param name="result">Value.</param>
+            <returns>Success of the operation.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.Add(System.String,System.Resources.ResourceManager)">
+            <summary>
+            Thread-safe access to the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+            <param name="value">Value.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.TryRemove(System.String)">
+            <summary>
+            Tries to remove a key from the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ClearResourceManagerList">
+            <summary>
+            Clears the whole list of cached resource managers.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.AddCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Thread-safe access to the AvailableCultures list.
+            </summary>
+            <param name="c">The CultureInfo.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.UpdateCultureList(System.String,System.String)">
+            <summary>
+            Updates the list of available cultures using the given resource location.
+            </summary>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <param name="resourceDictionary">The dictionary to look up.</param>
+            <returns>True, if the update was successful.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetExecutablePath(System.Int32)">
+            <summary>
+            Get the executable path for both x86 and x64 processes.
+            </summary>
+            <param name="processId">The process id.</param>
+            <returns>The path if found; otherwise, null.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetResourceManager(System.String,System.String)">
+            <summary>
+            Looks up in the cached <see cref="T:System.Resources.ResourceManager"/> list for the searched <see cref="T:System.Resources.ResourceManager"/>.
+            </summary>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <param name="resourceDictionary">The dictionary to look up.</param>
+            <returns>
+            The found <see cref="T:System.Resources.ResourceManager"/>
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            If the ResourceManagers cannot be looked up
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            If the searched <see cref="T:System.Resources.ResourceManager"/> wasn't found
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.OnProviderChanged(System.Windows.DependencyObject)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderChanged"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.OnProviderError(System.Windows.DependencyObject,System.String,System.String)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ProviderError"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="key">The key.</param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.OnValueChanged(System.String,System.Object,System.Object)">
+            <summary>
+            Calls the <see cref="E:WPFLocalizeExtension.Providers.ILocalizationProvider.ValueChanged"/> event.
+            </summary>
+            <param name="key">The key where the value was changed.</param>
+            <param name="value">The new value.</param>
+            <param name="tag">A custom tag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target object.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ProviderChanged">
+            <summary>
+            Gets fired when the provider changed.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ProviderError">
+            <summary>
+            An event that is fired when an error occurred.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.ValueChanged">
+            <summary>
+            An event that is fired when a value changed.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ResxLocalizationProviderBase.AvailableCultures">
+            <summary>
+            An observable list of available cultures.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.DefaultDictionaryProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultDictionary to set the fallback resource dictionary.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.DefaultAssemblyProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultAssembly to set the fallback assembly.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.AttachedPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that one of the attached properties changed.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.GetDefaultDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to get the default dictionary from.</param>
+            <returns>The default dictionary.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.GetDefaultAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to get the default assembly from.</param>
+            <returns>The default assembly.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.SetDefaultDictionary(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to set the default dictionary to.</param>
+            <param name="value">The dictionary.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.SetDefaultAssembly(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to set the default assembly to.</param>
+            <param name="value">The assembly.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.instance">
+            <summary>
+            The instance of the singleton.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.InstanceLock">
+            <summary>
+            Lock object for the creation of the singleton instance.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.#ctor">
+            <summary>
+            The singleton constructor.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.InheritingResxLocalizationProvider.Instance">
+            <summary>
+            Gets the <see cref="T:WPFLocalizeExtension.Providers.ResxLocalizationProvider"/> singleton.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.LocBinding">
+            <summary>
+            A binding proxy class that accepts bindings and forwards them to the LocExtension.
+            Based on: http://www.codeproject.com/Articles/71348/Binding-on-a-Property-which-is-not-a-DependencyPro
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocBinding.SourceProperty">
+            <summary>
+            We don't know what will be the Source/target type so we keep 'object'.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocBinding.Source">
+            <summary>
+            The source.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocBinding.Target">
+            <summary>
+            The target extension.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.LocalizeDictionary">
+            <summary>
+            Represents the culture interface for localization
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.RaisePropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.DefaultProviderProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider to set the default ILocalizationProvider.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.ProviderProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Provider to set the ILocalizationProvider.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.DesignCultureProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DesignCulture to set the Culture.
+            Only supported at DesignTime.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.SeparationProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Separation to set the separation character/string for resource name patterns.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.IncludeInvariantCultureProperty">
+            <summary>
+            A flag indicating that the invariant culture should be included.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.DisableCacheProperty">
+            <summary>
+            A flag indicating that the cache is disabled.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.OutputMissingKeysProperty">
+            <summary>
+            A flag indicating that missing keys should be output.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetCultureFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture if set in Xaml.
+            Only supported at DesignTime.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetProviderFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Provider if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetDefaultProviderFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.DefaultProvider if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetSeparationFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Separation if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetIncludeInvariantCultureFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.IncludeInvariantCulture if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetDisableCacheFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.DisableCache if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetOutputMissingKeysFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.OutputMissingKeys if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetProvider(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> Provider.
+            </summary>
+            <param name="obj">The dependency object to get the provider from.</param>
+            <returns>The provider.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetDefaultProvider(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider.
+            </summary>
+            <param name="obj">The dependency object to get the default provider from.</param>
+            <returns>The default provider.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetSeparation(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the separation from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The separation of the given context or the default.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetIncludeInvariantCulture(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetDisableCache(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetOutputMissingKeys(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetDesignCulture(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> DesignCulture.
+            Only supported at DesignTime.
+            If its in Runtime, <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture will be returned.
+            </summary>
+            <param name="obj">The dependency object to get the design culture from.</param>
+            <returns>The design culture at design time or the current culture at runtime.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetProvider(System.Windows.DependencyObject,WPFLocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> Provider.
+            </summary>
+            <param name="obj">The dependency object to set the provider to.</param>
+            <param name="value">The provider.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetDefaultProvider(System.Windows.DependencyObject,WPFLocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider.
+            </summary>
+            <param name="obj">The dependency object to set the default provider to.</param>
+            <param name="value">The default provider.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetSeparation(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> Separation.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The separation.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetIncludeInvariantCulture(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> IncludeInvariantCulture.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetDisableCache(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DisableCache.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetOutputMissingKeys(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> OutputMissingKeys.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.SetDesignCulture(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DesignCulture.
+            Only supported at DesignTime.
+            </summary>
+            <param name="obj">The dependency object to set the culture to.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.SyncRoot">
+            <summary>
+            Holds a SyncRoot to be thread safe
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.instance">
+            <summary>
+            Holds the instance of singleton
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.culture">
+            <summary>
+            Holds the current chosen <see cref="T:System.Globalization.CultureInfo"/>
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.separation">
+            <summary>
+            Holds the separation char/string.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.includeInvariantCulture">
+            <summary>
+            Determines, if the <see cref="P:WPFLocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures"/> contains the invariant culture.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.disableCache">
+            <summary>
+            Determines, if the cache is disabled.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.outputMissingKeys">
+            <summary>
+            Determines, if missing keys should be output.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.defaultProvider">
+            <summary>
+            A default provider.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.setCurrentThreadCulture">
+            <summary>
+            Determines, if the CurrentThread culture is set along with the Culture property.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.parentNotifiers">
+            <summary>
+            A dictionary for notification classes for changes of the individual target Parent changes.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/> class from being created.
+            Static Constructor
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.Finalize">
+            <summary>
+            Destructor code.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.String,System.String,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object using the built-in ResxLocalizationProvider.
+            </summary>
+            <param name="source">The source of the dictionary.</param>
+            <param name="dictionary">The dictionary with key/value pairs.</param>
+            <param name="key">The key to the value.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object using the given target for context information.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo,WPFLocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Get the localized object using the given target and provider.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <param name="provider">The provider to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject,WPFLocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <param name="provider">Provider to use</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.String,System.String)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="resourceKey"/> 
+            in the <paramref name="resourceDictionary"/> in the <paramref name="resourceAssembly"/>
+            with an Invariant Culture.
+            </summary>
+            <param name="resourceAssembly">The resource assembly</param>
+            <param name="resourceDictionary">The dictionary to look up</param>
+            <param name="resourceKey">The key of the searched entry</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.String,System.String,System.Globalization.CultureInfo)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="resourceKey"/>
+            in the <paramref name="resourceDictionary"/> in the <paramref name="resourceAssembly"/>
+            with the passed culture. If the searched one does not exists with the passed culture, is will searched
+            until the invariant culture is used.
+            </summary>
+            <param name="resourceAssembly">The resource assembly</param>
+            <param name="resourceDictionary">The dictionary to look up</param>
+            <param name="resourceKey">The key of the searched entry</param>
+            <param name="cultureToUse">The culture to use.</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.Globalization.CultureInfo,WPFLocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="key"/>
+            with the passed culture. If the searched one does not exists with the passed culture, is will searched
+            until the invariant culture is used.
+            </summary>
+            <param name="key">The key of the searched entry</param>
+            <param name="cultureToUse">The culture to use.</param>
+            <param name="provider">The localization provider.</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.GetIsInDesignMode">
+            <summary>
+            Gets the status of the design mode
+            </summary>
+            <returns>TRUE if in design mode, else FALSE</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.OnNewMissingKeyEvent(System.Object,System.String)">
+            <summary>
+            Triggers a MissingKeyEvent.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="key">The missing key.</param>
+            <returns>True, if a reload should be performed.</returns>
+        </member>
+        <member name="E:WPFLocalizeExtension.Engine.LocalizeDictionary.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.DefaultCultureInfo">
+            <summary>
+            Gets the default <see cref="T:System.Globalization.CultureInfo"/> to initialize the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.<see cref="T:System.Globalization.CultureInfo"/>
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.DefaultSeparation">
+            <summary>
+            Gets the default separation char/string.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.Instance">
+            <summary>
+            Gets the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/> singleton.
+            If the underlying instance is null, a instance will be created.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.CurrentCulture">
+            <summary>
+            Gets the culture of the singleton instance.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.Culture">
+            <summary>
+            Gets or sets the <see cref="T:System.Globalization.CultureInfo"/> for localization.
+            On set, <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent"/> is raised.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            You have to set <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture first or 
+            wait until System.Windows.Application.Current.MainWindow is created.
+            Otherwise you will get an Exception.</exception>
+            <exception cref="T:System.ArgumentNullException">thrown if Culture will be set to null</exception>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.SetCurrentThreadCulture">
+            <summary>
+            Gets or sets a flag that determines, if the CurrentThread culture should be changed along with the Culture property.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.IncludeInvariantCulture">
+            <summary>
+            Gets or sets the flag indicating if the invariant culture is included in the <see cref="P:WPFLocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures"/> list.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.DisableCache">
+            <summary>
+            Gets or sets the flag that disables the cache.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.OutputMissingKeys">
+            <summary>
+            Gets or sets the flag that controls the output of missing keys.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.Separation">
+            <summary>
+            The separation char for automatic key retrieval.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.DefaultProvider">
+            <summary>
+            Gets or sets the default <see cref="T:WPFLocalizeExtension.Providers.ILocalizationProvider"/>.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures">
+            <summary>
+            Gets the merged list of all available cultures.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.SetCultureCommand">
+            <summary>
+            A command for culture changes.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Engine.LocalizeDictionary.SpecificCulture">
+            <summary>
+            Gets the specific <see cref="T:System.Globalization.CultureInfo"/> of the current culture.
+            This can be used for format manners.
+            If the Culture is an invariant <see cref="T:System.Globalization.CultureInfo"/>, 
+            SpecificCulture will also return an invariant <see cref="T:System.Globalization.CultureInfo"/>.
+            </summary>
+        </member>
+        <member name="E:WPFLocalizeExtension.Engine.LocalizeDictionary.MissingKeyEvent">
+            <summary>
+            An event for missing keys.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.listeners">
+            <summary>
+            The list of listeners
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.Invoke(System.Windows.DependencyObject,WPFLocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            Fire the event.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.AddListener(WPFLocalizeExtension.Engine.IDictionaryEventListener)">
+            <summary>
+            Adds a listener to the inner list of listeners.
+            </summary>
+            <param name="listener">The listener to add.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.RemoveListener(WPFLocalizeExtension.Engine.IDictionaryEventListener)">
+            <summary>
+            Removes a listener from the inner list of listeners.
+            </summary>
+            <param name="listener">The listener to remove.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.EnumerateListeners``1">
+            <summary>
+            Enumerates all listeners of type T.
+            </summary>
+            <typeparam name="T">The listener type.</typeparam>
+            <returns>An enumeration of listeners.</returns>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand">
+            <summary>
+            A class for culture commands.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.canExecute">
+            <summary>
+            Predicate that determines if an object can execute
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.execute">
+            <summary>
+            The action to execute when the command is invoked
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.#ctor(System.Action{System.Globalization.CultureInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand"/> class. 
+            Creates a new command that can always execute.
+            </summary>
+            <param name="execute">
+            The execution logic.
+            </param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.#ctor(System.Action{System.Globalization.CultureInfo},System.Predicate{System.Globalization.CultureInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand"/> class. 
+            Creates a new command.
+            </summary>
+            <param name="execute">
+            The execution logic.
+            </param>
+            <param name="canExecute">
+            The execution status logic.
+            </param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.CanExecute(System.Object)">
+            <summary>
+            Determines whether the command can execute in its current state.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+            <returns>true if this command can be executed; otherwise, false.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.Execute(System.Object)">
+            <summary>
+            Is called when the command is invoked.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+        </member>
+        <member name="E:WPFLocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.CanExecuteChanged">
+            <summary>
+            Occurs when changes occur that affect whether or not the command should execute. 
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Engine.ObjectDependencyManager">
+            <summary>
+            This class ensures, that a specific object lives as long a associated object is alive.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Engine.ObjectDependencyManager.internalList">
+            <summary>
+            This member holds the list of all <see cref="T:System.WeakReference"/>s and their appropriate objects.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.ObjectDependencyManager.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:WPFLocalizeExtension.Engine.ObjectDependencyManager"/> class. 
+            Static Constructor. Creates a new instance of 
+            Dictionary(object, <see cref="T:System.WeakReference"/>) and set it to the <see cref="F:WPFLocalizeExtension.Engine.ObjectDependencyManager.internalList"/>.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.ObjectDependencyManager.AddObjectDependency(System.WeakReference,System.Object)">
+            <summary>
+            This method adds a new object dependency
+            </summary>
+            <param name="weakRefDp">The <see cref="T:System.WeakReference"/>, which ensures the live cycle of <paramref name="objToHold"/></param>
+            <param name="objToHold">The object, which should stay alive as long <paramref name="weakRefDp"/> is alive</param>
+            <returns>
+            true, if the binding was successfully, otherwise false
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="objToHold"/> cannot be null
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="objToHold"/> cannot be type of <see cref="T:System.WeakReference"/>
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            The <see cref="T:System.WeakReference"/>.Target cannot be the same as <paramref name="objToHold"/>
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.ObjectDependencyManager.CleanUp">
+            <summary>
+            This method cleans up all independent (!<see cref="T:System.WeakReference"/>.IsAlive) objects.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Engine.ObjectDependencyManager.CleanUp(System.Object)">
+            <summary>
+            This method cleans up all independent (!<see cref="T:System.WeakReference"/>.IsAlive) objects or a single object.
+            </summary>
+            <param name="objToRemove">
+            If defined, the associated object dependency will be removed instead of a full CleanUp
+            </param>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ParentChangedNotifierHelper">
+            <summary>
+            Extension methods for <see cref="T:System.Windows.DependencyObject"/> in conjunction with the <see cref="T:XAMLMarkupExtensions.Base.ParentChangedNotifier"/>.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ParentChangedNotifierHelper.GetValueOrRegisterParentNotifier``1(System.Windows.DependencyObject,System.Func{System.Windows.DependencyObject,``0},System.Action{System.Windows.DependencyObject},System.Collections.Generic.Dictionary{System.Windows.DependencyObject,XAMLMarkupExtensions.Base.ParentChangedNotifier})">
+            <summary>
+            Tries to get a value that is stored somewhere in the visual tree above this <see cref="T:System.Windows.DependencyObject"/>.
+            <para>If this is not available, it will register a <see cref="T:XAMLMarkupExtensions.Base.ParentChangedNotifier"/> on the last element.</para>
+            </summary>
+            <typeparam name="T">The return type.</typeparam>
+            <param name="target">The <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="GetFunction">The function that gets the value from a <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="ParentChangedAction">The notification action on the change event of the Parent property.</param>
+            <param name="parentNotifiers">A dictionary of already registered notifiers.</param>
+            <returns>The value, if possible.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ParentChangedNotifierHelper.GetValue``1(System.Windows.DependencyObject,System.Func{System.Windows.DependencyObject,``0})">
+            <summary>
+            Tries to get a value that is stored somewhere in the visual tree above this <see cref="T:System.Windows.DependencyObject"/>.
+            </summary>
+            <typeparam name="T">The return type.</typeparam>
+            <param name="target">The <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="GetFunction">The function that gets the value from a <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <returns>The value, if possible.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ParentChangedNotifierHelper.GetValueOrRegisterParentNotifier``1(System.Windows.DependencyObject,System.Windows.DependencyProperty,System.Action{System.Windows.DependencyObject},System.Collections.Generic.Dictionary{System.Windows.DependencyObject,XAMLMarkupExtensions.Base.ParentChangedNotifier})">
+            <summary>
+            Tries to get a value from a <see cref="T:System.Windows.DependencyProperty"/> that is stored somewhere in the visual tree above this <see cref="T:System.Windows.DependencyObject"/>.
+            If this is not available, it will register a <see cref="T:XAMLMarkupExtensions.Base.ParentChangedNotifier"/> on the last element.
+            </summary>
+            <typeparam name="T">The return type.</typeparam>
+            <param name="target">The <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="property">A <see cref="T:System.Windows.DependencyProperty"/> that will be read out.</param>
+            <param name="ParentChangedAction">The notification action on the change event of the Parent property.</param>
+            <param name="parentNotifiers">A dictionary of already registered notifiers.</param>
+            <returns>The value, if possible.</returns>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ProviderChangedEventArgs">
+            <summary>
+            Events arguments for a ProviderChangedEventHandler.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ProviderChangedEventArgs.#ctor(System.Windows.DependencyObject)">
+            <summary>
+            Creates a new <see cref="T:WPFLocalizeExtension.Providers.ProviderChangedEventArgs"/> instance.
+            </summary>
+            <param name="obj">The target object.</param>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ProviderChangedEventArgs.Object">
+            <summary>
+            The target object.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ProviderChangedEventHandler">
+            <summary>
+            An event handler for notification of provider changes.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ProviderErrorEventArgs">
+            <summary>
+            Events arguments for a ProviderErrorEventHandler.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ProviderErrorEventArgs.#ctor(System.Windows.DependencyObject,System.String,System.String)">
+            <summary>
+            Creates a new <see cref="T:WPFLocalizeExtension.Providers.ProviderErrorEventArgs"/> instance.
+            </summary>
+            <param name="obj">The target object.</param>
+            <param name="key">The key that caused the error.</param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ProviderErrorEventArgs.Object">
+            <summary>
+            The target object.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ProviderErrorEventArgs.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ProviderErrorEventArgs.Message">
+            <summary>
+            The message.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ProviderErrorEventHandler">
+            <summary>
+            An event handler for notification of provider erorrs.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ValueChangedEventArgs">
+            <summary>
+            Events arguments for a ValueChangedEventHandler.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ValueChangedEventArgs.#ctor(System.String,System.Object,System.Object)">
+            <summary>
+            Creates a new <see cref="T:WPFLocalizeExtension.Providers.ValueChangedEventArgs"/> instance.
+            </summary>
+            <param name="key">The key where the value was changed.</param>
+            <param name="value">The new value.</param>
+            <param name="tag">A custom tag.</param>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ValueChangedEventArgs.Tag">
+            <summary>
+            A custom tag.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ValueChangedEventArgs.Value">
+            <summary>
+            The new value.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ValueChangedEventArgs.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ValueChangedEventHandler">
+            <summary>
+            An event handler for notification of changes of localized values.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WPFLocalizeExtension.Providers.ResxLocalizationProvider">
+            <summary>
+            A singleton RESX provider that uses attached properties and the Parent property to iterate through the visual tree.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProvider.DefaultDictionaryProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultDictionary to set the fallback resource dictionary.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProvider.DefaultAssemblyProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultAssembly to set the fallback assembly.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.AttachedPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that one of the attached properties changed.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.GetDefaultDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to get the default dictionary from.</param>
+            <returns>The default dictionary.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.GetDefaultAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to get the default assembly from.</param>
+            <returns>The default assembly.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.SetDefaultDictionary(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to set the default dictionary to.</param>
+            <param name="value">The dictionary.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.SetDefaultAssembly(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to set the default assembly to.</param>
+            <param name="value">The assembly.</param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProvider.parentNotifiers">
+            <summary>
+            A dictionary for notification classes for changes of the individual target Parent changes.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProvider.instance">
+            <summary>
+            The instance of the singleton.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Providers.ResxLocalizationProvider.InstanceLock">
+            <summary>
+            Lock object for the creation of the singleton instance.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.Reset">
+            <summary>
+            Resets the instance that is used for the ResxLocationProvider
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.#ctor">
+            <summary>
+            The singleton constructor.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.ParentChangedAction(System.Windows.DependencyObject)">
+            <summary>
+            An action that will be called when a parent of one of the observed target objects changed.
+            </summary>
+            <param name="obj">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Providers.ResxLocalizationProvider.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="P:WPFLocalizeExtension.Providers.ResxLocalizationProvider.Instance">
+            <summary>
+            Gets the <see cref="T:WPFLocalizeExtension.Providers.ResxLocalizationProvider"/> singleton.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter">
+            <summary>
+            A type converter class for Bitmap resources that are used in WPF.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert the object to the specified type, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="destinationType">A <see cref="T:System.Type"/> that represents the type you want to convert to.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter.DeleteObject(System.IntPtr)">
+            <summary>
+            Frees memory of a pointer.
+            </summary>
+            <param name="o">Object to remove from memory.</param>
+            <returns>0 if the removing was success, otherwise another number.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.BitmapSourceTypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            Converts the given value object to the specified type, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <param name="destinationType">The <see cref="T:System.Type"/> to convert the value parameter to.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="T:WPFLocalizeExtension.Extensions.LocExtension">
+            <summary>
+            A generic localization extension.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.OnNotifyPropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.assembly">
+            <summary>
+            Holds the name of the Assembly where the .resx is located
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.dict">
+            <summary>
+            Holds the Name of the .resx dictionary.
+            If it's null, "Resources" will get returned
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.key">
+            <summary>
+            Holds the Key to a .resx object
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.converter">
+            <summary>
+            A custom converter, supplied in the XAML code.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.converterParameter">
+            <summary>
+            A parameter that can be supplied along with the converter object.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocExtension.lastEndpoint">
+            <summary>
+            The last endpoint that was used for this extension.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ClearResourceBuffer">
+            <summary>
+            Clears the common resource buffer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SafeAddItemToResourceBuffer(System.String,System.Object)">
+            <summary>
+            Adds an item to the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SafeRemoveItemFromResourceBuffer(System.String)">
+            <summary>
+            Removes an item from the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetBoundExtension(System.Object,System.String,System.Int32)">
+            <summary>
+            Gets the extension that is bound to a given target. Please note, that only the last endpoint of each extension can be evaluated.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="property">The target property name.</param>
+            <param name="propertyIndex">The index in the property (if applicable).</param>
+            <returns>The bound extension or null, if not available.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetPropertyName(System.Object)">
+            <summary>
+            Get the name of a property (regular or DependencyProperty).
+            </summary>
+            <param name="property">The property object.</param>
+            <returns>The name of the property.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.LocExtension"/> class.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WPFLocalizeExtension.Extensions.LocExtension"/> class.
+            </summary>
+            <param name="key">The resource identifier.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.Dispose">
+            <summary>
+            Removes the listener from the dictionary.
+            <para>The "new" keyword is just a temporary hack in order to keep XAMLMarkupExtensions on the current version.</para>
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.Finalize">
+            <summary>
+            The finalizer.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ResourceChanged(System.Windows.DependencyObject,WPFLocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetForcedCultureOrDefault">
+            <summary>
+            If Culture property defines a valid <see cref="T:System.Globalization.CultureInfo"/>, a <see cref="T:System.Globalization.CultureInfo"/> instance will get
+            created and returned, otherwise <see cref="T:WPFLocalizeExtension.Engine.LocalizeDictionary"/>.Culture will get returned.
+            </summary>
+            <returns>The <see cref="T:System.Globalization.CultureInfo"/></returns>
+            <exception cref="T:System.ArgumentException">
+            thrown if the parameter Culture don't defines a valid <see cref="T:System.Globalization.CultureInfo"/>
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.FormatOutput(XAMLMarkupExtensions.Base.TargetInfo,XAMLMarkupExtensions.Base.TargetInfo)">
+            <summary>
+            This function returns the properly prepared output of the markup extension.
+            </summary>
+            <param name="info">Information about the target.</param>
+            <param name="endPoint">Information about the endpoint.</param>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.UpdateOnEndpoint(XAMLMarkupExtensions.Base.TargetInfo)">
+            <summary>
+            This method must return true, if an update shall be executed when the given endpoint is reached.
+            This method is called each time an endpoint is reached.
+            </summary>
+            <param name="endpoint">Information on the specific endpoint.</param>
+            <returns>True, if an update of the path to this endpoint shall be performed.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetLocalizedValue``1(System.String,System.Windows.Data.IValueConverter,System.Object)">
+            <summary>
+            Gets a localized value.
+            </summary>
+            <typeparam name="TValue">The type of the returned value.</typeparam>
+            <param name="key">The key.</param>
+            <param name="converter">An optional converter.</param>
+            <param name="converterParameter">An optional converter parameter.</param>
+            <returns>The resolved localized object.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetLocalizedValue``1(System.String,System.Globalization.CultureInfo,System.Windows.Data.IValueConverter,System.Object)">
+            <summary>
+            Gets a localized value.
+            </summary>
+            <typeparam name="TValue">The type of the returned value.</typeparam>
+            <param name="key">The key.</param>
+            <param name="targetCulture">The target culture.</param>
+            <param name="converter">An optional converter.</param>
+            <param name="converterParameter">An optional converter parameter.</param>
+            <returns>The resolved localized object.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetLocalizedValue``1(System.String,System.Windows.DependencyObject,System.Windows.Data.IValueConverter,System.Object)">
+            <summary>
+            Gets a localized value.
+            </summary>
+            <typeparam name="TValue">The type of the returned value.</typeparam>
+            <param name="key">The key.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="converter">An optional converter.</param>
+            <param name="converterParameter">An optional converter parameter.</param>
+            <returns>The resolved localized object.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.GetLocalizedValue``1(System.String,System.Globalization.CultureInfo,System.Windows.DependencyObject,System.Windows.Data.IValueConverter,System.Object)">
+            <summary>
+            Gets a localized value.
+            </summary>
+            <typeparam name="TValue">The type of the returned value.</typeparam>
+            <param name="key">The key.</param>
+            <param name="targetCulture">The target culture.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="converter">An optional converter.</param>
+            <param name="converterParameter">An optional converter parameter.</param>
+            <returns>The resolved localized object.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ResolveLocalizedValue``1(``0@)">
+            <summary>
+            Resolves the localized value of the current Assembly, Dict, Key pair.
+            </summary>
+            <param name="resolvedValue">The resolved value.</param>
+            <typeparam name="TValue">The type of the return value.</typeparam>
+            <returns>
+            True if the resolve was success, otherwise false.
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ResolveLocalizedValue``1(``0@,System.Windows.DependencyObject)">
+            <summary>
+            Resolves the localized value of the current Assembly, Dict, Key pair and the given target.
+            </summary>
+            <param name="resolvedValue">The resolved value.</param>
+            <typeparam name="TValue">The type of the return value.</typeparam>
+            <param name="target">The target object.</param>
+            <returns>
+            True if the resolve was success, otherwise false.
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ResolveLocalizedValue``1(``0@,System.Globalization.CultureInfo)">
+            <summary>
+            Resolves the localized value of the current Assembly, Dict, Key pair.
+            </summary>
+            <param name="resolvedValue">The resolved value.</param>
+            <param name="targetCulture">The target culture.</param>
+            <typeparam name="TValue">The type of the return value.</typeparam>
+            <returns>
+            True if the resolve was success, otherwise false.
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ResolveLocalizedValue``1(``0@,System.Globalization.CultureInfo,System.Windows.DependencyObject)">
+            <summary>
+            Resolves the localized value of the current Assembly, Dict, Key pair and the given target.
+            </summary>
+            <param name="resolvedValue">The resolved value.</param>
+            <param name="targetCulture">The target culture.</param>
+            <param name="target">The target object.</param>
+            <typeparam name="TValue">The type of the return value.</typeparam>
+            <returns>
+            True if the resolve was success, otherwise false.
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SetBinding(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets a binding between a <see cref="T:System.Windows.DependencyObject"/> with its <see cref="T:System.Windows.DependencyProperty"/>
+            or <see cref="T:System.Reflection.PropertyInfo"/> and the <c>LocExtension</c>.
+            </summary>
+            <param name="targetObject">The target dependency object</param>
+            <param name="targetProperty">The target property</param>
+            <returns>
+            TRUE if the binding was setup successfully, otherwise FALSE (Binding already exists).
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            If the <paramref name="targetProperty"/> is
+            not a <see cref="T:System.Windows.DependencyProperty"/> or <see cref="T:System.Reflection.PropertyInfo"/>.
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SetBinding(System.Object,System.Object)">
+            <summary>
+            Sets a binding between a <see cref="T:System.Windows.DependencyObject"/> with its <see cref="T:System.Windows.DependencyProperty"/>
+            or <see cref="T:System.Reflection.PropertyInfo"/> and the <c>LocExtension</c>.
+            </summary>
+            <param name="targetObject">The target object</param>
+            <param name="targetProperty">The target property</param>
+            <returns>
+            TRUE if the binding was setup successfully, otherwise FALSE (Binding already exists).
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            If the <paramref name="targetProperty"/> is
+            not a <see cref="T:System.Windows.DependencyProperty"/> or <see cref="T:System.Reflection.PropertyInfo"/>.
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SetBinding(System.Windows.DependencyObject,System.Object,System.Int32)">
+            <summary>
+            Sets a binding between a <see cref="T:System.Windows.DependencyObject"/> with its <see cref="T:System.Windows.DependencyProperty"/>
+            or <see cref="T:System.Reflection.PropertyInfo"/> and the <c>LocExtension</c>.
+            </summary>
+            <param name="targetObject">The target dependency object</param>
+            <param name="targetProperty">The target property</param>
+            <param name="targetPropertyIndex">The index of the target property. (only used for Lists)</param>
+            <returns>
+            TRUE if the binding was setup successfully, otherwise FALSE (Binding already exists).
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            If the <paramref name="targetProperty"/> is
+            not a <see cref="T:System.Windows.DependencyProperty"/> or <see cref="T:System.Reflection.PropertyInfo"/>.
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.SetBinding(System.Object,System.Object,System.Int32)">
+            <summary>
+            Sets a binding between a <see cref="T:System.Windows.DependencyObject"/> with its <see cref="T:System.Windows.DependencyProperty"/>
+            or <see cref="T:System.Reflection.PropertyInfo"/> and the <c>LocExtension</c>.
+            </summary>
+            <param name="targetObject">The target object</param>
+            <param name="targetProperty">The target property</param>
+            <param name="targetPropertyIndex">The index of the target property. (only used for Lists)</param>
+            <returns>
+            TRUE if the binding was setup successfully, otherwise FALSE (Binding already exists).
+            </returns>
+            <exception cref="T:System.ArgumentException">
+            If the <paramref name="targetProperty"/> is
+            not a <see cref="T:System.Windows.DependencyProperty"/> or <see cref="T:System.Reflection.PropertyInfo"/>.
+            </exception>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocExtension.ToString">
+            <summary>
+            Overridden, to return the key of this instance.
+            </summary>
+            <returns>Loc: + key</returns>
+        </member>
+        <member name="E:WPFLocalizeExtension.Extensions.LocExtension.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.Key">
+            <summary>
+            Gets or sets the Key to a .resx object
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.Assembly">
+            <summary>
+            Gets or sets the name of the Assembly where the .resx is located.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.Dict">
+            <summary>
+            Gets or sets the name of the Dict where the .resx is located.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.Converter">
+            <summary>
+            Gets or sets the custom value converter.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.ConverterParameter">
+            <summary>
+            Gets or sets the converter parameter.
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.ForceCulture">
+            <summary>
+            Gets or sets the culture to force a fixed localized object
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.InitializeValue">
+            <summary>
+            Gets or sets the initialize value.
+            This is ONLY used to support the localize extension in blend!
+            </summary>
+            <value>The initialize value.</value>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocExtension.ResourceIdentifierKey">
+            <summary>
+            Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocTextExtension.prefix">
+            <summary>
+            Holds the local prefix value
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocTextExtension.suffix">
+            <summary>
+            Holds the local suffix value
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocTextExtension.formatSegments">
+            <summary>
+            Holds the local format segment array
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocTextExtension.GetAppendText(WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType)">
+            <summary>
+            Returns the prefix or suffix text, depending on the supplied <see cref="T:WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType"/>.
+            If the prefix or suffix is null, it will be returned a string.empty.
+            </summary>
+            <param name="at">The <see cref="T:WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType"/> defines the format of the return value</param>
+            <returns>Returns the formated prefix or suffix</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocTextExtension.FormatText(System.String)">
+            <summary>
+            This method formats the localized text.
+            If the passed target text is null, string.empty will be returned.
+            </summary>
+            <param name="target">The text to format.</param>
+            <returns>Returns the formated text or string.empty, if the target text was null.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocTextExtension.FormatOutput(XAMLMarkupExtensions.Base.TargetInfo,XAMLMarkupExtensions.Base.TargetInfo)">
+            <summary>
+            This function returns the properly prepared output of the markup extension.
+            </summary>
+            <param name="info">Information about the target.</param>
+            <param name="endPoint">Information about the endpoint.</param>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.Prefix">
+            <summary>
+            Gets or sets a prefix for the localized text
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.Suffix">
+            <summary>
+            Gets or sets a suffix for the localized text
+            </summary>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.FormatSegment1">
+            <summary>
+            Gets or sets the format segment 1.
+            This will be used to replace format place holders from the localized text.
+            <see cref="T:WPFLocalizeExtension.Extensions.LocTextLowerExtension"/> and <see cref="T:WPFLocalizeExtension.Extensions.LocTextUpperExtension"/> will format this segment.
+            </summary>
+            <value>The format segment 1.</value>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.FormatSegment2">
+            <summary>
+            Gets or sets the format segment 2.
+            This will be used to replace format place holders from the localized text.
+            <see cref="T:WPFLocalizeExtension.Extensions.LocTextUpperExtension"/> and <see cref="T:WPFLocalizeExtension.Extensions.LocTextLowerExtension"/> will format this segment.
+            </summary>
+            <value>The format segment 2.</value>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.FormatSegment3">
+            <summary>
+            Gets or sets the format segment 3.
+            This will be used to replace format place holders from the localized text.
+            <see cref="T:WPFLocalizeExtension.Extensions.LocTextUpperExtension"/> and <see cref="T:WPFLocalizeExtension.Extensions.LocTextLowerExtension"/> will format this segment.
+            </summary>
+            <value>The format segment 3.</value>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.FormatSegment4">
+            <summary>
+            Gets or sets the format segment 4.
+            This will be used to replace format place holders from the localized text.
+            <see cref="T:WPFLocalizeExtension.Extensions.LocTextUpperExtension"/> and <see cref="T:WPFLocalizeExtension.Extensions.LocTextLowerExtension"/> will format this segment.
+            </summary>
+            <value>The format segment 4.</value>
+        </member>
+        <member name="P:WPFLocalizeExtension.Extensions.LocTextExtension.FormatSegment5">
+            <summary>
+            Gets or sets the format segment 5.
+            This will be used to replace format place holders from the localized text.
+            <see cref="T:WPFLocalizeExtension.Extensions.LocTextUpperExtension"/> and <see cref="T:WPFLocalizeExtension.Extensions.LocTextLowerExtension"/> will format this segment.
+            </summary>
+            <value>The format segment 5.</value>
+        </member>
+        <member name="T:WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType">
+            <summary>
+            This enumeration is used to determine the type 
+            of the return value of <see cref="M:WPFLocalizeExtension.Extensions.LocTextExtension.GetAppendText(WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType)"/>
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType.Prefix">
+            <summary>
+            The return value is used as prefix
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.Extensions.LocTextExtension.TextAppendType.Suffix">
+            <summary>
+            The return value is used as suffix
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocTextLowerExtension.FormatText(System.String)">
+            <summary>
+            This method formats the localized text.
+            If the passed target text is null, string.empty will be returned.
+            </summary>
+            <param name="target">The text to format.</param>
+            <returns>
+            Returns the formated text or string.empty, if the target text was null.
+            </returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.Extensions.LocTextUpperExtension.FormatText(System.String)">
+            <summary>
+            This method formats the localized text.
+            If the passed target text is null, string.empty will be returned.
+            </summary>
+            <param name="target">The text to format.</param>
+            <returns>
+            Returns the formated text or string.empty, if the target text was null.
+            </returns>
+        </member>
+        <member name="T:WPFLocalizeExtension.TypeConverters.DefaultConverter">
+            <summary>
+            Implements a standard converter that calls itself all known type converters.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.DefaultConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the source data before passing it to the target for display in the UI.
+            </summary>
+            <param name="value">The source data being passed to the target.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the target dependency property.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>The value to be passed to the target dependency property.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.DefaultConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the target data before passing it to the source object.
+            </summary>
+            <param name="value">The target data being passed to the source.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the source object.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>The value to be passed to the source object.</returns>
+        </member>
+        <member name="T:WPFLocalizeExtension.TypeConverters.RegisterMissingTypeConverters">
+            <summary>
+            Register missing type converters here.
+            </summary>
+        </member>
+        <member name="F:WPFLocalizeExtension.TypeConverters.RegisterMissingTypeConverters.registered">
+            <summary>
+            A flag indication if the registration was successful.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.RegisterMissingTypeConverters.Register">
+            <summary>
+            Registers the missing type converters.
+            </summary>
+        </member>
+        <member name="T:WPFLocalizeExtension.TypeConverters.ThicknessConverter">
+            <summary>
+            A converter for the type <see cref="T:System.Windows.Thickness"/>.
+            </summary>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.ThicknessConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WPFLocalizeExtension.TypeConverters.ThicknessConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+    </members>
+</doc>

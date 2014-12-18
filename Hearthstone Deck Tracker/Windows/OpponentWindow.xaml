@@ -3,11 +3,19 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226"
+                      Title="{lex:Loc OpponentWindow_TITLE}" Height="440" Width="226" MinWidth="226" MaxWidth="226"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
                       Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico"
-                      Deactivated="MetroWindow_Deactivated">
+                      Deactivated="MetroWindow_Deactivated"
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker" >
+    
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
             <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"></local:HearthstoneTextBlock>

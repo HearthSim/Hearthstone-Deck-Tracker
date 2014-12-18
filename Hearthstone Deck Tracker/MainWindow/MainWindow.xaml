@@ -4,13 +4,20 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
+                      Title="{lex:Loc MainWindow_TITLE}" Height="620" Width="550"
                       MinHeight="525" MinWidth="515"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,7 +34,7 @@
                             <VisualBrush Visual="{StaticResource appbar_settings}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Margin="4" VerticalAlignment="Center" Text="options" />
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:Loc OPTIONS}" />
                 </StackPanel>
             </Button>
             <Button Click="BtnHelp_OnClick">
@@ -37,7 +44,7 @@
                             <VisualBrush Visual="{StaticResource appbar_question}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Margin="4" VerticalAlignment="Center" Text="help" />
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:Loc HELP}" />
                 </StackPanel>
             </Button>
             <Button Click="BtnDonate_OnClick">
@@ -47,18 +54,18 @@
                             <VisualBrush Visual="{StaticResource appbar_heart}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Margin="4" VerticalAlignment="Center" Text="donate" />
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:Loc DONATE}" />
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <Grid>
 
-        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
+        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="{lex:Loc OPTIONS}"
                          Width="515">
             <local:Options x:Name="Options" Margin="0,-35,0,0"></local:Options>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
+        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="{lex:Loc HELP}"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:Help x:Name="Help"></local:Help>
         </controls:Flyout>
@@ -70,15 +77,15 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
+        <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_SORTFILTERDECKS}" Position="Right"
                          Width="255" Height="auto" Panel.ZIndex="100">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
+        <controls:Flyout x:Name="FlyoutNotes" Header="{lex:Loc MainWindow_NOTES}" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
             <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
+        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="{lex:Loc MainWindow_SETTAGS}" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
         </controls:Flyout>
@@ -93,7 +100,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="0" Grid.ColumnSpan="2">
-                <MenuItem Header="_DECKS">
+                <MenuItem Header="{lex:Loc MainWindow_DECK}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -101,17 +108,29 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_USENODECK}" Click="ButtonNoDeck_Click">
                     </MenuItem>
-                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="AUTO DECK SELECTION"
+                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="{lex:Loc MainWindow_AUTODECKSELECTION}"
                               FontSize="14"
                               Checked="CheckboxDeckDetection_Checked"
                               Unchecked="CheckboxDeckDetection_Unchecked" />
                     <Separator />
-                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_SORTFILTER}" Click="BtnSortFilter_Click">
                     </MenuItem>
+                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK FILTER">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click"></TextBlock>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                    <Separator />
+                    <CheckBox x:Name="CheckboxClassCardsFirst" Margin="-24,0,0,0" Content="CLASS CARDS FIRST"
+                              FontSize="14"
+                              Checked="CheckboxClassCardsFirst_Checked"
+                              Unchecked="CheckboxClassCardsFirst_Unchecked" />
                 </MenuItem>
-                <MenuItem Header="_NEW">
+                <MenuItem Header="{lex:Loc MainWindow_NEW}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -119,53 +138,53 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_DRUID}" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_HUNTER}" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_MAGE}" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_PRIEST}" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_PALADIN}" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_ROGUE}" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_SHAMAN}" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_WARLOCK}" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_WARRIOR}" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
                             <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_EDIT" Name="MenuItemEdit">
+                <MenuItem Header="{lex:Loc MainWindow_EDIT}" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -173,19 +192,22 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DECK" Click="BtnEditDeck_Click">
-                    </MenuItem>
-                    <MenuItem Header="_TAGS" Click="BtnTags_Click">
-                    </MenuItem>
-                    <MenuItem Header="_NOTES" Click="BtnNotes_Click">
+                    <MenuItem Header="{lex:Loc MainWindow_DECK}" Click="BtnEditDeck_Click" />
+                    <MenuItem Name="MenuItemUpdateDeck" Header="{lex:Loc MainWindow_UPDATEWEB}" Click="BtnUpdateDeck_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITNOTES}" Click="BtnNotes_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITTAGS}" Click="BtnTags_Click" />
+                    <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" ></CheckBox>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click">
-                    </MenuItem>
-                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click">
-                    </MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_EDITDELETE}" Click="BtnDeleteDeck_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_EDITCLONE}" Click="BtnCloneDeck_Click" />
                 </MenuItem>
-                <MenuItem Header="_IMPORT">
+                <MenuItem Header="{lex:Loc MainWindow_IMPORT}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -193,16 +215,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="FROM _WEB" Click="BtnWeb_Click">
-                    </MenuItem>
-                    <MenuItem Header="FROM _FILE" Click="BtnFile_Click">
-                    </MenuItem>
-                    <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click">
-                    </MenuItem>
-                    <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click">
-                    </MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_FROMWEB}" Click="BtnWeb_Click" />
+                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMFILE}" Click="BtnFile_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMIDSTRING}" Click="BtnIdString_Click" />
+                    <MenuItem Header="{lex:Loc MainWindow_FROMLASTGAME}" Click="BtnLastGame_Click" />
                 </MenuItem>
-                <MenuItem Header="E_XPORT" Name="MenuItemExport">
+                <MenuItem Header="{lex:Loc MainWindow_EXPORT}" Name="MenuItemExport">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -210,13 +229,13 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
-                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
-                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
+                    <MenuItem Name="MenuItemExportToHs" Header="{lex:Loc MainWindow_TOHEARTHSTONE}" Click="BtnExport_Click"></MenuItem>
+                    <MenuItem Header="{lex:Loc MainWindow_TOHEARTHSTONEFROMWEB}" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
+                    <MenuItem Name="MenuItemExportXml" Header="{lex:Loc MainWindow_SAVEASXML}" Click="BtnSaveToFile_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportIds" Header="{lex:Loc MainWindow_COPYIDSTOCLIPBOARD}" Click="BtnClipboard_OnClick"></MenuItem>
+                    <MenuItem Name="MenuItemExportScreenshot" Header="{lex:Loc MainWindow_SCREENSHOT}" Click="BtnScreenhot_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="_STATS" Click="BtnDeckStats_Click">
+                <MenuItem Header="{lex:Loc MainWindow_STATS}"  Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -225,7 +244,8 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-            </Menu>
+            
+                </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
             <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
@@ -292,7 +312,7 @@
 
 
             <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
-                <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
+                <MenuItem Header="{lex:Loc SAVE}" Click="BtnSaveDeck_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -301,7 +321,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
+                <MenuItem Header="{lex:Loc CANCEL}" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -312,7 +332,7 @@
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="FILTER"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="{lex:Loc FILTER}"></TextBlock>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -321,7 +341,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuFilterMana" Header="MANA">
+                    <MenuItem Name="MenuFilterMana" Header="{lex:Loc MANA}">
                         <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
                                      FontSize="14" />
                         <RadioButton Content="0" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
@@ -335,11 +355,19 @@
                         <RadioButton Content="8" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="9+" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
-                    <MenuItem Name="MenuFilterType" Header="TYPE">
-                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
+                    <MenuItem Name="MenuFilterType" Header="{lex:Loc TYPE}">
+                        <RadioButton Content="{lex:Loc ALL}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
                                      FontSize="14" />
-                        <RadioButton Content="CLASS ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="NEUTRAL ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc CLASSONLY}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc NEUTRALONLY}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                    </MenuItem>
+                    <MenuItem Name="MenuFilterSet" Header="SET">
+                        <RadioButton Content="{lex:Loc ALL}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc BASIC}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc EXPERT}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc PROMOTION}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc MainWindow_CARSEOFNAXXRAMAS}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:Loc MainWindow_GOBLINSVSGNOMES}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>
@@ -350,17 +378,17 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
                             Width="240">
-                    <TextBox controls:TextboxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
+                    <TextBox controls:TextBoxHelper.Watermark="{lex:Loc MainWindow_DECKNAME}" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
 
-                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="Name already exists" Visibility="Collapsed" Margin="3,0,0,0">
+                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="{lex:Loc MainWindow_NAMEALREADYEXISTS}" Visibility="Collapsed" Margin="3,0,0,0">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox controls:TextboxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
+                    <TextBox controls:TextBoxHelper.Watermark="{lex:Loc MainWindow_SEARCH}" x:Name="TextBoxDBFilter"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDBFilter_TextChanged"

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Point = System.Drawing.Point;
@@ -55,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Update()
 		{
-			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst ? Visibility.Visible : Visibility.Collapsed;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
@@ -67,8 +68,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			if(Game.PlayingAgainst != string.Empty)
 			{
-				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
-				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == Game.GameMode.All));
+				var winsVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				var lossesVS = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
 				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
 			}

@@ -1,0 +1,1361 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WP7LocalizeExtension</name>
+    </assembly>
+    <members>
+        <member name="T:WP7LocalizeExtension.Engine.IDictionaryEventListener">
+            <summary>
+            Interface for listeners on dictionary events of the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/> class.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.IDictionaryEventListener.ResourceChanged(System.Windows.DependencyObject,WP7LocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.DictionaryEventType">
+            <summary>
+            An enumeration of dictionary event types.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.DictionaryEventType.SeparationChanged">
+            <summary>
+            The separation changed.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.DictionaryEventType.ProviderChanged">
+            <summary>
+            The provider changed.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.DictionaryEventType.ProviderUpdated">
+            <summary>
+            A provider reports an update.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.DictionaryEventType.CultureChanged">
+            <summary>
+            The culture changed.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.DictionaryEventType.ValueChanged">
+            <summary>
+            A certain value changed.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.DictionaryEventArgs">
+            <summary>
+            Event argument for dictionary events.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.DictionaryEventArgs.#ctor(WP7LocalizeExtension.Engine.DictionaryEventType,System.Object)">
+            <summary>
+            The constructor.
+            </summary>
+            <param name="type">The type of the event.</param>
+            <param name="tag">The corresponding tag.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.DictionaryEventArgs.ToString">
+            <summary>
+            Returns the type and tag as a string.
+            </summary>
+            <returns>The type and tag as a string.</returns>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.DictionaryEventArgs.Type">
+            <summary>
+            The type of the event.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.DictionaryEventArgs.Tag">
+            <summary>
+            A corresponding tag.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.LocalizeDictionary">
+            <summary>
+            Represents the culture interface for localization
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.RaisePropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.DefaultProviderProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider to set the default ILocalizationProvider.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.ProviderProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Provider to set the ILocalizationProvider.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.DesignCultureProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DesignCulture to set the Culture.
+            Only supported at DesignTime.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.SeparationProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> Separation to set the separation character/string for resource name patterns.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.IncludeInvariantCultureProperty">
+            <summary>
+            A flag indicating that the invariant culture should be included.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.DisableCacheProperty">
+            <summary>
+            A flag indicating that the cache is disabled.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.OutputMissingKeysProperty">
+            <summary>
+            A flag indicating that missing keys should be output.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetCultureFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Culture if set in Xaml.
+            Only supported at DesignTime.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetProviderFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Provider if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetDefaultProviderFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.DefaultProvider if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetSeparationFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Separation if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetIncludeInvariantCultureFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.IncludeInvariantCulture if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetDisableCacheFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.DisableCache if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetOutputMissingKeysFromDependencyProperty(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Callback function. Used to set the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.OutputMissingKeys if set in Xaml.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetProvider(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> Provider.
+            </summary>
+            <param name="obj">The dependency object to get the provider from.</param>
+            <returns>The provider.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetDefaultProvider(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider.
+            </summary>
+            <param name="obj">The dependency object to get the default provider from.</param>
+            <returns>The default provider.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetSeparation(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the separation from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The separation of the given context or the default.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetIncludeInvariantCulture(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetDisableCache(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetOutputMissingKeys(System.Windows.DependencyObject)">
+            <summary>
+            Tries to get the flag from the given target object or of one of its parents.
+            </summary>
+            <param name="target">The target object for context.</param>
+            <returns>The flag.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetDesignCulture(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> DesignCulture.
+            Only supported at DesignTime.
+            If its in Runtime, <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Culture will be returned.
+            </summary>
+            <param name="obj">The dependency object to get the design culture from.</param>
+            <returns>The design culture at design time or the current culture at runtime.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetProvider(System.Windows.DependencyObject,WP7LocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> Provider.
+            </summary>
+            <param name="obj">The dependency object to set the provider to.</param>
+            <param name="value">The provider.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetDefaultProvider(System.Windows.DependencyObject,WP7LocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DefaultProvider.
+            </summary>
+            <param name="obj">The dependency object to set the default provider to.</param>
+            <param name="value">The default provider.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetSeparation(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> Separation.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The separation.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetIncludeInvariantCulture(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> IncludeInvariantCulture.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetDisableCache(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DisableCache.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetOutputMissingKeys(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> OutputMissingKeys.
+            </summary>
+            <param name="obj">The dependency object to set the separation to.</param>
+            <param name="value">The flag.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.SetDesignCulture(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> DesignCulture.
+            Only supported at DesignTime.
+            </summary>
+            <param name="obj">The dependency object to set the culture to.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.SyncRoot">
+            <summary>
+            Holds a SyncRoot to be thread safe
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.instance">
+            <summary>
+            Holds the instance of singleton
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.culture">
+            <summary>
+            Holds the current chosen <see cref="T:System.Globalization.CultureInfo"/>
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.separation">
+            <summary>
+            Holds the separation char/string.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.includeInvariantCulture">
+            <summary>
+            Determines, if the <see cref="P:WP7LocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures"/> contains the invariant culture.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.disableCache">
+            <summary>
+            Determines, if the cache is disabled.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.outputMissingKeys">
+            <summary>
+            Determines, if missing keys should be output.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.defaultProvider">
+            <summary>
+            A default provider.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.setCurrentThreadCulture">
+            <summary>
+            Determines, if the CurrentThread culture is set along with the Culture property.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/> class from being created.
+            Static Constructor
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.Finalize">
+            <summary>
+            Destructor code.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.String,System.String,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object using the built-in ResxLocalizationProvider.
+            </summary>
+            <param name="source">The source of the dictionary.</param>
+            <param name="dictionary">The dictionary with key/value pairs.</param>
+            <param name="key">The key to the value.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object using the given target for context information.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo,WP7LocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Get the localized object using the given target and provider.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <param name="provider">The provider to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject,WP7LocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <param name="provider">Provider to use</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.String,System.String)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="resourceKey"/> 
+            in the <paramref name="resourceDictionary"/> in the <paramref name="resourceAssembly"/>
+            with an Invariant Culture.
+            </summary>
+            <param name="resourceAssembly">The resource assembly</param>
+            <param name="resourceDictionary">The dictionary to look up</param>
+            <param name="resourceKey">The key of the searched entry</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.String,System.String,System.Globalization.CultureInfo)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="resourceKey"/>
+            in the <paramref name="resourceDictionary"/> in the <paramref name="resourceAssembly"/>
+            with the passed culture. If the searched one does not exists with the passed culture, is will searched
+            until the invariant culture is used.
+            </summary>
+            <param name="resourceAssembly">The resource assembly</param>
+            <param name="resourceDictionary">The dictionary to look up</param>
+            <param name="resourceKey">The key of the searched entry</param>
+            <param name="cultureToUse">The culture to use.</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.ResourceKeyExists(System.String,System.Globalization.CultureInfo,WP7LocalizeExtension.Providers.ILocalizationProvider)">
+            <summary>
+            Looks up the ResourceManagers for the searched <paramref name="key"/>
+            with the passed culture. If the searched one does not exists with the passed culture, is will searched
+            until the invariant culture is used.
+            </summary>
+            <param name="key">The key of the searched entry</param>
+            <param name="cultureToUse">The culture to use.</param>
+            <param name="provider">The localization provider.</param>
+            <returns>
+            TRUE if the searched one is found, otherwise FALSE
+            </returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.GetIsInDesignMode">
+            <summary>
+            Gets the status of the design mode
+            </summary>
+            <returns>TRUE if in design mode, else FALSE</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.OnNewMissingKeyEvent(System.Object,System.String)">
+            <summary>
+            Triggers a MissingKeyEvent.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="key">The missing key.</param>
+            <returns>True, if a reload should be performed.</returns>
+        </member>
+        <member name="E:WP7LocalizeExtension.Engine.LocalizeDictionary.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.DefaultCultureInfo">
+            <summary>
+            Gets the default <see cref="T:System.Globalization.CultureInfo"/> to initialize the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.<see cref="T:System.Globalization.CultureInfo"/>
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.DefaultSeparation">
+            <summary>
+            Gets the default separation char/string.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.Instance">
+            <summary>
+            Gets the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/> singleton.
+            If the underlying instance is null, a instance will be created.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.CurrentCulture">
+            <summary>
+            Gets the culture of the singleton instance.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.Culture">
+            <summary>
+            Gets or sets the <see cref="T:System.Globalization.CultureInfo"/> for localization.
+            On set, <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent"/> is raised.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            You have to set <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Culture first or 
+            wait until System.Windows.Application.Current.MainWindow is created.
+            Otherwise you will get an Exception.</exception>
+            <exception cref="T:System.ArgumentNullException">thrown if Culture will be set to null</exception>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.SetCurrentThreadCulture">
+            <summary>
+            Gets or sets a flag that determines, if the CurrentThread culture should be changed along with the Culture property.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.IncludeInvariantCulture">
+            <summary>
+            Gets or sets the flag indicating if the invariant culture is included in the <see cref="P:WP7LocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures"/> list.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.DisableCache">
+            <summary>
+            Gets or sets the flag that disables the cache.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.OutputMissingKeys">
+            <summary>
+            Gets or sets the flag that controls the output of missing keys.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.Separation">
+            <summary>
+            The separation char for automatic key retrieval.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.DefaultProvider">
+            <summary>
+            Gets or sets the default <see cref="T:WP7LocalizeExtension.Providers.ILocalizationProvider"/>.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.MergedAvailableCultures">
+            <summary>
+            Gets the merged list of all available cultures.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.LocalizeDictionary.SetCultureCommand">
+            <summary>
+            A command for culture changes.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Engine.LocalizeDictionary.MissingKeyEvent">
+            <summary>
+            An event for missing keys.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.listeners">
+            <summary>
+            The list of listeners
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.Invoke(System.Windows.DependencyObject,WP7LocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            Fire the event.
+            </summary>
+            <param name="sender">The sender of the event.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.AddListener(WP7LocalizeExtension.Engine.IDictionaryEventListener)">
+            <summary>
+            Adds a listener to the inner list of listeners.
+            </summary>
+            <param name="listener">The listener to add.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.RemoveListener(WP7LocalizeExtension.Engine.IDictionaryEventListener)">
+            <summary>
+            Removes a listener from the inner list of listeners.
+            </summary>
+            <param name="listener">The listener to remove.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.DictionaryEvent.EnumerateListeners``1">
+            <summary>
+            Enumerates all listeners of type T.
+            </summary>
+            <typeparam name="T">The listener type.</typeparam>
+            <returns>An enumeration of listeners.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand">
+            <summary>
+            A class for culture commands.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.canExecute">
+            <summary>
+            Predicate that determines if an object can execute
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.execute">
+            <summary>
+            The action to execute when the command is invoked
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.#ctor(System.Action{System.Globalization.CultureInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand"/> class. 
+            Creates a new command that can always execute.
+            </summary>
+            <param name="execute">
+            The execution logic.
+            </param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.#ctor(System.Action{System.Globalization.CultureInfo},System.Predicate{System.Globalization.CultureInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand"/> class. 
+            Creates a new command.
+            </summary>
+            <param name="execute">
+            The execution logic.
+            </param>
+            <param name="canExecute">
+            The execution status logic.
+            </param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.CanExecute(System.Object)">
+            <summary>
+            Determines whether the command can execute in its current state.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+            <returns>true if this command can be executed; otherwise, false.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.Execute(System.Object)">
+            <summary>
+            Is called when the command is invoked.
+            </summary>
+            <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
+        </member>
+        <member name="E:WP7LocalizeExtension.Engine.LocalizeDictionary.CultureInfoDelegateCommand.CanExecuteChanged">
+            <summary>
+            Occurs when changes occur that affect whether or not the command should execute. 
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.MissingKeyEventArgs">
+            <summary>
+            Event arguments for a missing key event.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.MissingKeyEventArgs.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:WP7LocalizeExtension.Engine.MissingKeyEventArgs"/>.
+            </summary>
+            <param name="key">The missing key.</param>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.MissingKeyEventArgs.Key">
+            <summary>
+            The key that is missing or has no data.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Engine.MissingKeyEventArgs.Reload">
+            <summary>
+            A flag indicating that a reload should be performed.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Engine.ObjectDependencyManager">
+            <summary>
+            This class ensures, that a specific object lives as long a associated object is alive.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Engine.ObjectDependencyManager.internalList">
+            <summary>
+            This member holds the list of all <see cref="T:System.WeakReference"/>s and their appropriate objects.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.ObjectDependencyManager.#cctor">
+            <summary>
+            Initializes static members of the <see cref="T:WP7LocalizeExtension.Engine.ObjectDependencyManager"/> class. 
+            Static Constructor. Creates a new instance of 
+            Dictionary(object, <see cref="T:System.WeakReference"/>) and set it to the <see cref="F:WP7LocalizeExtension.Engine.ObjectDependencyManager.internalList"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.ObjectDependencyManager.AddObjectDependency(System.WeakReference,System.Object)">
+            <summary>
+            This method adds a new object dependency
+            </summary>
+            <param name="weakRefDp">The <see cref="T:System.WeakReference"/>, which ensures the live cycle of <paramref name="objToHold"/></param>
+            <param name="objToHold">The object, which should stay alive as long <paramref name="weakRefDp"/> is alive</param>
+            <returns>
+            true, if the binding was successfully, otherwise false
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            The <paramref name="objToHold"/> cannot be null
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="objToHold"/> cannot be type of <see cref="T:System.WeakReference"/>
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            The <see cref="T:System.WeakReference"/>.Target cannot be the same as <paramref name="objToHold"/>
+            </exception>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.ObjectDependencyManager.CleanUp">
+            <summary>
+            This method cleans up all independent (!<see cref="T:System.WeakReference"/>.IsAlive) objects.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Engine.ObjectDependencyManager.CleanUp(System.Object)">
+            <summary>
+            This method cleans up all independent (!<see cref="T:System.WeakReference"/>.IsAlive) objects or a single object.
+            </summary>
+            <param name="objToRemove">
+            If defined, the associated object dependency will be removed instead of a full CleanUp
+            </param>
+        </member>
+        <member name="T:WP7LocalizeExtension.Extensions.BLoc">
+            <summary>
+            A localization extension based on <see cref="T:System.Windows.Data.Binding"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.RaisePropertyChanged(System.String)">
+            <summary>
+            Notify that a property has changed
+            </summary>
+            <param name="property">
+            The property that changed
+            </param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.ClearResourceBuffer">
+            <summary>
+            Clears the common resource buffer.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.SafeAddItemToResourceBuffer(System.String,System.Object)">
+            <summary>
+            Adds an item to the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+            <param name="item">The item.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.SafeRemoveItemFromResourceBuffer(System.String)">
+            <summary>
+            Removes an item from the resource buffer (threadsafe).
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WP7LocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WP7LocalizeExtension.Extensions.BLoc"/> class.
+            </summary>
+            <param name="key">The resource identifier.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.Dispose">
+            <summary>
+            Removes the listener from the dictionary.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.Finalize">
+            <summary>
+            The finalizer.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.GetForcedCultureOrDefault">
+            <summary>
+            If Culture property defines a valid <see cref="T:System.Globalization.CultureInfo"/>, a <see cref="T:System.Globalization.CultureInfo"/> instance will get
+            created and returned, otherwise <see cref="T:WP7LocalizeExtension.Engine.LocalizeDictionary"/>.Culture will get returned.
+            </summary>
+            <returns>The <see cref="T:System.Globalization.CultureInfo"/></returns>
+            <exception cref="T:System.ArgumentException">
+            thrown if the parameter Culture don't defines a valid <see cref="T:System.Globalization.CultureInfo"/>
+            </exception>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.ResourceChanged(System.Windows.DependencyObject,WP7LocalizeExtension.Engine.DictionaryEventArgs)">
+            <summary>
+            This method is called when the resource somehow changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The event arguments.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Extensions.BLoc.FormatOutput">
+            <summary>
+            This function returns the properly prepared output of the markup extension.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Extensions.BLoc.PropertyChanged">
+            <summary>
+            Informiert über sich ändernde Eigenschaften.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Extensions.BLoc.Value">
+            <summary>
+            The value, the internal binding is pointing at.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Extensions.BLoc.Key">
+            <summary>
+            Gets or sets the Key to a .resx object
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Extensions.BLoc.ForceCulture">
+            <summary>
+            Gets or sets the culture to force a fixed localized object
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey">
+            <summary>
+            A class that bundles the key, assembly and dictionary information.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.FullyQualifiedResourceKeyBase">
+            <summary>
+            An abstract class for key identification.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.FullyQualifiedResourceKeyBase.op_Implicit(WP7LocalizeExtension.Providers.FullyQualifiedResourceKeyBase)~System.String">
+            <summary>
+            Implicit string operator.
+            </summary>
+            <param name="fullyQualifiedResourceKey">The object.</param>
+            <returns>The joined version of the assembly, dictionary and key.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:WP7LocalizeExtension.Providers.FullyQualifiedResourceKeyBase"/>.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="assembly">The assembly of the dictionary.</param>
+            <param name="dictionary">The resource dictionary.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey.ToString">
+            <summary>
+            Converts the object to a string.
+            </summary>
+            <returns>The joined version of the assembly, dictionary and key.</returns>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey.Assembly">
+            <summary>
+            The assembly of the dictionary.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.FQAssemblyDictionaryKey.Dictionary">
+            <summary>
+            The resource dictionary.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider">
+            <summary>
+            A singleton RESX provider that uses attached properties that are stored in static variables.
+            Needed for Windows Phone support.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase">
+            <summary>
+            The base for RESX file providers.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ILocalizationProvider">
+            <summary>
+            An interface describing classes that provide localized values based on a source/dictionary/key combination.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ILocalizationProvider.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ILocalizationProvider.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target <see cref="T:System.Windows.DependencyObject"/>.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ILocalizationProvider.AvailableCultures">
+            <summary>
+            An observable list of available cultures.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ProviderChanged">
+            <summary>
+            An event that is fired when the provider changed.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ProviderError">
+            <summary>
+            An event that is fired when an error occurred.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ValueChanged">
+            <summary>
+            An event that is fired when a value changed.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerName">
+            <summary>
+            Holds the name of the Resource Manager.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceFileExtension">
+            <summary>
+            Holds the extension of the resource files.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceBindingFlags">
+            <summary>
+            Holds the binding flags for the reflection to find the resource files.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerList">
+            <summary>
+            Gets the used ResourceManagers with their corresponding <c>namespaces</c>.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ResourceManagerListLock">
+            <summary>
+            Lock object for concurrent access to the resource manager list.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.AvailableCultureListLock">
+            <summary>
+            Lock object for concurrent access to the available culture list.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetAssemblyName(System.Reflection.Assembly)">
+            <summary>
+            Returns the <see cref="T:System.Reflection.AssemblyName"/> of the passed assembly instance
+            </summary>
+            <param name="assembly">The Assembly where to get the name from</param>
+            <returns>The Assembly name</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ParseKey(System.String,System.String@,System.String@,System.String@)">
+            <summary>
+            Parses a key ([[Assembly:]Dict:]Key and return the parts of it.
+            </summary>
+            <param name="inKey">The key to parse.</param>
+            <param name="outAssembly">The found or default assembly.</param>
+            <param name="outDict">The found or default dictionary.</param>
+            <param name="outKey">The found or default key.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.TryGetValue(System.String,System.Resources.ResourceManager@)">
+            <summary>
+            Thread-safe access to the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+            <param name="result">Value.</param>
+            <returns>Success of the operation.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.Add(System.String,System.Resources.ResourceManager)">
+            <summary>
+            Thread-safe access to the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+            <param name="value">Value.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.TryRemove(System.String)">
+            <summary>
+            Tries to remove a key from the resource manager dictionary.
+            </summary>
+            <param name="thekey">Key.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ClearResourceManagerList">
+            <summary>
+            Clears the whole list of cached resource managers.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.AddCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Thread-safe access to the AvailableCultures list.
+            </summary>
+            <param name="c">The CultureInfo.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.UpdateCultureList(System.String,System.String)">
+            <summary>
+            Updates the list of available cultures using the given resource location.
+            </summary>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <param name="resourceDictionary">The dictionary to look up.</param>
+            <returns>True, if the update was successful.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetResourceManager(System.String,System.String)">
+            <summary>
+            Looks up in the cached <see cref="T:System.Resources.ResourceManager"/> list for the searched <see cref="T:System.Resources.ResourceManager"/>.
+            </summary>
+            <param name="resourceAssembly">The resource assembly.</param>
+            <param name="resourceDictionary">The dictionary to look up.</param>
+            <returns>
+            The found <see cref="T:System.Resources.ResourceManager"/>
+            </returns>
+            <exception cref="T:System.InvalidOperationException">
+            If the ResourceManagers cannot be looked up
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            If the searched <see cref="T:System.Resources.ResourceManager"/> wasn't found
+            </exception>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetFullyQualifiedResourceKey(System.String,System.Windows.DependencyObject)">
+            <summary>
+            Uses the key and target to build a fully qualified resource key (Assembly, Dictionary, Key)
+            </summary>
+            <param name="key">Key used as a base to find the full key</param>
+            <param name="target">Target used to help determine key information</param>
+            <returns>Returns an object with all possible pieces of the given key (Assembly, Dictionary, Key)</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.OnProviderChanged(System.Windows.DependencyObject)">
+            <summary>
+            Calls the <see cref="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ProviderChanged"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.OnProviderError(System.Windows.DependencyObject,System.String,System.String)">
+            <summary>
+            Calls the <see cref="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ProviderError"/> event.
+            </summary>
+            <param name="target">The target object.</param>
+            <param name="key">The key.</param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.OnValueChanged(System.String,System.Object,System.Object)">
+            <summary>
+            Calls the <see cref="E:WP7LocalizeExtension.Providers.ILocalizationProvider.ValueChanged"/> event.
+            </summary>
+            <param name="key">The key where the value was changed.</param>
+            <param name="value">The new value.</param>
+            <param name="tag">A custom tag.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.GetLocalizedObject(System.String,System.Windows.DependencyObject,System.Globalization.CultureInfo)">
+            <summary>
+            Get the localized object.
+            </summary>
+            <param name="key">The key to the value.</param>
+            <param name="target">The target object.</param>
+            <param name="culture">The culture to use.</param>
+            <returns>The value corresponding to the source/dictionary/key path for the given culture (otherwise NULL).</returns>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ProviderChanged">
+            <summary>
+            Gets fired when the provider changed.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ProviderError">
+            <summary>
+            An event that is fired when an error occurred.
+            </summary>
+        </member>
+        <member name="E:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.ValueChanged">
+            <summary>
+            An event that is fired when a value changed.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ResxLocalizationProviderBase.AvailableCultures">
+            <summary>
+            An observable list of available cultures.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.DefaultDictionaryProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultDictionary to set the fallback resource dictionary.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.DefaultAssemblyProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> DefaultAssembly to set the fallback assembly.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.AttachedPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Indicates, that one of the attached properties changed.
+            </summary>
+            <param name="obj">The dependency object.</param>
+            <param name="args">The event argument.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.GetDefaultDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to get the default dictionary from.</param>
+            <returns>The default dictionary.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.GetDefaultAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Getter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to get the default assembly from.</param>
+            <returns>The default assembly.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.SetDefaultDictionary(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default dictionary.
+            </summary>
+            <param name="obj">The dependency object to set the default dictionary to.</param>
+            <param name="value">The dictionary.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.SetDefaultAssembly(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Setter of <see cref="T:System.Windows.DependencyProperty"/> default assembly.
+            </summary>
+            <param name="obj">The dependency object to set the default assembly to.</param>
+            <param name="value">The assembly.</param>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.instance">
+            <summary>
+            The instance of the singleton.
+            </summary>
+        </member>
+        <member name="F:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.InstanceLock">
+            <summary>
+            Lock object for the creation of the singleton instance.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.#ctor">
+            <summary>
+            The singleton constructor.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.GetAssembly(System.Windows.DependencyObject)">
+            <summary>
+            Get the assembly from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The assembly name, if available.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.GetDictionary(System.Windows.DependencyObject)">
+            <summary>
+            Get the dictionary from the context, if possible.
+            </summary>
+            <param name="target">The target object.</param>
+            <returns>The dictionary name, if available.</returns>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider.Instance">
+            <summary>
+            Gets the <see cref="T:WP7LocalizeExtension.Providers.StaticResxLocalizationProvider"/> singleton.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.CultureInfoHelper">
+            <summary>
+            A helper class for <see cref="T:System.Globalization.CultureInfo"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.CultureInfoHelper.GetCultures">
+            <summary>
+            Enumerates all cultures. Based on http://awkwardcoder.blogspot.de/2011/09/supported-cultures-in-windows-phone-7.html
+            </summary>
+            <returns>All supported cultures.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ProviderChangedEventArgs">
+            <summary>
+            Events arguments for a ProviderChangedEventHandler.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ProviderChangedEventArgs.#ctor(System.Windows.DependencyObject)">
+            <summary>
+            Creates a new <see cref="T:WP7LocalizeExtension.Providers.ProviderChangedEventArgs"/> instance.
+            </summary>
+            <param name="obj">The target object.</param>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ProviderChangedEventArgs.Object">
+            <summary>
+            The target object.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ProviderChangedEventHandler">
+            <summary>
+            An event handler for notification of provider changes.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ProviderErrorEventArgs">
+            <summary>
+            Events arguments for a ProviderErrorEventHandler.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ProviderErrorEventArgs.#ctor(System.Windows.DependencyObject,System.String,System.String)">
+            <summary>
+            Creates a new <see cref="T:WP7LocalizeExtension.Providers.ProviderErrorEventArgs"/> instance.
+            </summary>
+            <param name="obj">The target object.</param>
+            <param name="key">The key that caused the error.</param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ProviderErrorEventArgs.Object">
+            <summary>
+            The target object.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ProviderErrorEventArgs.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ProviderErrorEventArgs.Message">
+            <summary>
+            The message.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ProviderErrorEventHandler">
+            <summary>
+            An event handler for notification of provider erorrs.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ValueChangedEventArgs">
+            <summary>
+            Events arguments for a ValueChangedEventHandler.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.Providers.ValueChangedEventArgs.#ctor(System.String,System.Object,System.Object)">
+            <summary>
+            Creates a new <see cref="T:WP7LocalizeExtension.Providers.ValueChangedEventArgs"/> instance.
+            </summary>
+            <param name="key">The key where the value was changed.</param>
+            <param name="value">The new value.</param>
+            <param name="tag">A custom tag.</param>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ValueChangedEventArgs.Tag">
+            <summary>
+            A custom tag.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ValueChangedEventArgs.Value">
+            <summary>
+            The new value.
+            </summary>
+        </member>
+        <member name="P:WP7LocalizeExtension.Providers.ValueChangedEventArgs.Key">
+            <summary>
+            The key.
+            </summary>
+        </member>
+        <member name="T:WP7LocalizeExtension.Providers.ValueChangedEventHandler">
+            <summary>
+            An event handler for notification of changes of localized values.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="args">The event arguments.</param>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.BrushConverter">
+            <summary>
+            A converter for the type <see cref="T:System.Windows.Media.Brush"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.BrushConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.BrushConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.ColorHelper">
+            <summary>
+            A class with color names.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.ColorHelper.FromArgb(System.UInt32)">
+            <summary>
+            Create a color from a 4 byte uint.
+            </summary>
+            <param name="code">The color code.</param>
+            <returns>The color</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.ColorHelper.FromName(System.String)">
+            <summary>
+            Select a color based on common names.
+            </summary>
+            <param name="name">The color name.</param>
+            <returns>The color.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.DoubleConverter">
+            <summary>
+            A converter for the type <see cref="T:System.Double"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.DoubleConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.DoubleConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.EnumConverter">
+            <summary>
+            A converter for enum types.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.EnumConverter.#ctor(System.Type)">
+            <summary>
+            Create a new <see cref="T:WP7LocalizeExtension.TypeConverters.EnumConverter"/>
+            </summary>
+            <param name="targetType">The target enum type.</param>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.EnumConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.EnumConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.DefaultConverter">
+            <summary>
+            Implements a standard converter that calls itself all known type converters.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.DefaultConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the source data before passing it to the target for display in the UI.
+            </summary>
+            <param name="value">The source data being passed to the target.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the target dependency property.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>The value to be passed to the target dependency property.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.DefaultConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the target data before passing it to the source object.
+            </summary>
+            <param name="value">The target data being passed to the source.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the source object.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>The value to be passed to the source object.</returns>
+        </member>
+        <member name="T:WP7LocalizeExtension.TypeConverters.ThicknessConverter">
+            <summary>
+            A converter for the type <see cref="T:System.Windows.Thickness"/>.
+            </summary>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.ThicknessConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:WP7LocalizeExtension.TypeConverters.ThicknessConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts the given object to the type of this converter, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+    </members>
+</doc>

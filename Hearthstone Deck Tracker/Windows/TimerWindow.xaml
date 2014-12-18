@@ -3,9 +3,18 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Timer" Height="130" Width="150"
+                      Title="{lex:Loc TimerWindow_TITLE}" Height="130" Width="150"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                      Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
+                      Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated"
+                                            
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
+    
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" />

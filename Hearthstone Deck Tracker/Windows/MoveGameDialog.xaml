@@ -3,8 +3,16 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Select target deck" Height="450" Width="280" Topmost="True" WindowStyle="ToolWindow"
-                      Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
+                      Title="{lex:Loc MoveGameDialog_TITLE}" Height="450" Width="280" Topmost="True" WindowStyle="ToolWindow"
+                      Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                      
+    xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+    xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+    xmlns:providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+       
+    Engine:LocalizeDictionary.DesignCulture="en-US"	
+    providers:ResxLocalizationProvider.DefaultDictionary="Strings"
+    providers:ResxLocalizationProvider.DefaultAssembly="Hearthstone Deck Tracker">
     <Grid>
         <ListBox Name="ListboxPicker" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                  Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"

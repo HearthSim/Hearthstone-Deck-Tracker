@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker
 			if(_newDeck == null) return;
 			var selectedClass = _newDeck.Class;
 			string selectedNeutral;
+			string selectedManaCost;
+			string selectedSet;
 			try
 			{
 				selectedNeutral = MenuFilterType.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
@@ -28,14 +30,21 @@ namespace Hearthstone_Deck_Tracker
 			{
 				selectedNeutral = "ALL";
 			}
-			string selectedManaCost;
 			try
 			{
 				selectedManaCost = MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
 			}
-			catch(Exception)
+			catch (Exception)
 			{
 				selectedManaCost = "ALL";
+			}
+			try
+			{
+				selectedSet = MenuFilterSet.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+			}
+			catch (Exception)
+			{
+				selectedSet = "ALL";
 			}
 			if(selectedClass == "Select a Class")
 				ListViewDB.Items.Clear();
@@ -49,7 +58,8 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var card in Game.GetActualCards())
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
-					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput))
+					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput) 
+						&& (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
 						continue;
 					if(Config.Instance.UseFullTextSearch && words.Any(w => !cardName.Contains(w)
 					                                                       && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
@@ -58,25 +68,25 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 
 					// mana filter
-					if(selectedManaCost == "ALL"
-					   || ((selectedManaCost == "9+" && card.Cost >= 9)
-					       || (selectedManaCost == card.Cost.ToString())))
+					if(selectedManaCost != "ALL" &&
+					   ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+						continue;
+					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
+						continue;
+					switch(selectedNeutral)
 					{
-						switch(selectedNeutral)
-						{
-							case "ALL":
-								if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
-									ListViewDB.Items.Add(card);
-								break;
-							case "CLASS ONLY":
-								if(card.GetPlayerClass == selectedClass)
-									ListViewDB.Items.Add(card);
-								break;
-							case "NEUTRAL ONLY":
-								if(card.GetPlayerClass == "Neutral")
-									ListViewDB.Items.Add(card);
-								break;
-						}
+						case "ALL":
+							if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
+								ListViewDB.Items.Add(card);
+							break;
+						case "CLASS ONLY":
+							if(card.GetPlayerClass == selectedClass)
+								ListViewDB.Items.Add(card);
+							break;
+						case "NEUTRAL ONLY":
+							if(card.GetPlayerClass == "Neutral")
+								ListViewDB.Items.Add(card);
+							break;
 					}
 				}
 
@@ -138,7 +148,6 @@ namespace Hearthstone_Deck_Tracker
 			var oldDeckName = _newDeck.Name;
 
 			_newDeck.Name = deckName;
-			_newDeck.Tags = TagControlEdit.GetTags();
 
 			var newDeckClone = (Deck)_newDeck.Clone();
 			DeckList.DecksList.Add(newDeckClone);
@@ -265,6 +274,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateDbListView();
 				ExpandNewDeck();
 				UpdateTitle();
+				ManaCurveMyDecks.SetDeck(deck);
 			}
 		}
 
@@ -299,6 +309,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void EnableMenuItems(bool enable)
 		{
+			//MenuItemSelectedDeckStats.IsEnabled = enable;
 			MenuItemEdit.IsEnabled = enable;
 			MenuItemExportIds.IsEnabled = enable;
 			MenuItemExportScreenshot.IsEnabled = enable;
@@ -417,27 +428,19 @@ namespace Hearthstone_Deck_Tracker
 			else if(DeckList.DecksList.Any(d => d.Name == deckName))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
+
+				var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
+										? "The stats will be moved to the default-deck (can be changed in options)"
+										: "The stats will be deleted (can be changed in options)";
 				var result =
 					await
-						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!",
+						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!\n" + keepStatsInfo,
 							MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					Deck oldDeck;
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
-					{
-						var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == oldDeck.Name);
-						if(deckStats != null)
-						{
-							foreach(var game in deckStats.Games)
-								game.DeleteGameFile();
-							DeckStatsList.Instance.DeckStats.Remove(deckStats);
-							DeckStatsList.Save();
-							Logger.WriteLine("Deleted deckstats for deck: " + oldDeck.Name);
-						}
-						DeckList.DecksList.Remove(oldDeck);
-						DeckPickerList.RemoveDeck(oldDeck);
-					}
+						DeleteDeck(oldDeck);
 
 					SaveDeck(true);
 				}
@@ -552,7 +555,8 @@ namespace Hearthstone_Deck_Tracker
 			if(e.Key == Key.Enter)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
-				if(string.IsNullOrEmpty(card.Name)) return;
+				if(card == null || string.IsNullOrEmpty(card.Name))
+					return;
 				AddCardToDeck((Card)card.Clone());
 			}
 		}

@@ -18,6 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static async Task<Deck> Import(string url)
 		{
+			Logger.WriteLine("Importing deck from " + url, "DeckImporter");
 			if(url.Contains("hearthstats") || url.Contains("hss.io"))
 				return await ImportHearthStats(url);
 			if(url.Contains("hearthpwn"))
@@ -38,6 +39,7 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportArenaValue(url);
 			if(url.Contains("hearthstone-decks"))
 				return await ImportHearthstoneDecks(url);
+			Logger.WriteLine("invalid url", "DeckImporter");
 			return null;
 		}
 
@@ -48,9 +50,8 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 
 				var deck = new Deck();
-
-				var deckName =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='deckname']/h1").InnerText).Split('-')[1].Trim();
+                var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='center']/div[1]/div[1]").InnerText).Split('-')[1].Trim();
 
 				deck.Name = deckName;
 
@@ -61,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
 					var count = int.Parse(text[0].Trim());
-					var name = string.Join(" ", text.Skip(1));
+					var name = string.Join(" ", text.Skip(1)).Trim();
 
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
@@ -165,7 +166,8 @@ namespace Hearthstone_Deck_Tracker
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
-
+				if(Helper.MainWindow.DeckList.AllTags.Contains("Arena"))
+					deck.Tags.Add("Arena");
 				return deck;
 			}
 			catch(Exception e)
@@ -187,7 +189,7 @@ namespace Hearthstone_Deck_Tracker
 					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//span[contains(@class, 'deckName')]").InnerText).Trim();
 				deck.Name = deckName;
 
-				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td[3]/a");
+				var cardNodes = doc.DocumentNode.SelectNodes("//table[@class='deck_card_list']/tbody/tr/td/a[@class='real_id']");
 
 				foreach(var cardNode in cardNodes)
 				{
