@@ -401,6 +401,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]
+		public bool StartWithWindows = false;
+
+		[DefaultValue(false)]
 		public bool StatsClassOverviewIsExpanded = false;
 
 		[DefaultValue(true)]
