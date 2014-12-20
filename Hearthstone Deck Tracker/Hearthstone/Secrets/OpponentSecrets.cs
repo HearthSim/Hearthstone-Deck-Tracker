@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 
@@ -39,11 +40,35 @@ namespace Hearthstone_Deck_Tracker
 			if(index == -1)
 				return;
 			if(Secrets.Any(s => s.PossibleSecrets[index]))
-				foreach(var secret in Secrets)
-					secret.PossibleSecrets[index] = false;
+				SetZero(index);
 			else
-				foreach(var secret in Secrets)
-					secret.PossibleSecrets[index] = true;
+				SetMax(index);
+		}
+
+		public void SetMax(string cardId)
+		{
+			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
+			if(index == -1)
+				SetMax(index);
+        }
+
+		public void SetMax(int index)
+		{
+			foreach(var secret in Secrets)
+				secret.PossibleSecrets[index] = true;
+		}
+
+		public void SetZero(string cardId)
+		{
+			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
+			if(index == -1)
+				SetZero(index);
+        }
+
+		public void SetZero(int index)
+		{
+			foreach(var secret in Secrets)
+				secret.PossibleSecrets[index] = false;
 		}
 
 		public Secret[] GetSecrets()

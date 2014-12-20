@@ -226,10 +226,13 @@ namespace Hearthstone_Deck_Tracker
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
 			Game.OpponentSecrets.SecretRemoved(otherId);
-			if(Game.OpponentSecretCount <= 0)
-				Helper.MainWindow.Overlay.HideSecrets();
-			else 
+		    if(Game.OpponentSecretCount <= 0)
+			    Helper.MainWindow.Overlay.HideSecrets();
+		    else
+		    {
+				Game.OpponentSecrets.SetZero(cardId);
 				Helper.MainWindow.Overlay.ShowSecrets();
+		    }
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 		}
 
