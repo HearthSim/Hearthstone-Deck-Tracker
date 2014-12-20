@@ -183,7 +183,7 @@
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="Other" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Height="312" Width="235" Margin="10,10,0,0">
+                                  VerticalAlignment="Top" Height="auto" Width="235" Margin="10,10,0,0">
                             <StackPanel>
                                 <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -235,7 +235,11 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxDeleteDeckKeepStats_Checked"
                                           Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
-
+                                <CheckBox x:Name="CheckboxAutoGrayoutSecrets"
+                                          Content="Automatically gray out secrets"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxAutoGrayoutSecrets_Checked"
+                                          Unchecked="CheckboxAutoGrayoutSecrets_Unchecked" />
                                 <CheckBox x:Name="CheckboxNoteDialog"
                                           Content="Show note dialog after game"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"

@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoDeckDetection = true;
 
 		[DefaultValue(true)]
+		public bool AutoGrayoutSecrets = true;
+
+		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
 
 		[DefaultValue(false)]

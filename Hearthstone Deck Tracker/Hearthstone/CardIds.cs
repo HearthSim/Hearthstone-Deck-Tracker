@@ -123,6 +123,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							"EX1_390",
 							"CS2_179"
 						}
+				},
+				{
+					//Dr. Boom
+					"GVG_110", new []
+					{ "GVG_110t" }
 				}
 			};
 	}

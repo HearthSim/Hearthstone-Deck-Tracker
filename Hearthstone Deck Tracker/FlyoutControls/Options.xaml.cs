@@ -1409,6 +1409,22 @@ namespace Hearthstone_Deck_Tracker
 			if(regKey != null)
 				regKey.DeleteValue("Hearthstone Deck Tracker", false);
 		}
+
+		private void CheckboxAutoGrayoutSecrets_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoGrayoutSecrets = true;
+			Config.Save();
+		}
+
+		private void CheckboxAutoGrayoutSecrets_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoGrayoutSecrets = false;
+			Config.Save();
+		}
 	}
 }
  

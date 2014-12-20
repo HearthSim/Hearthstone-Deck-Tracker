@@ -909,7 +909,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var cardObj = new Controls.Card();
 				var card = Game.GetCardFromId(id.CardId);
-				card.Count = id.Count;
+				card.Count = id.AdjustedCount;
 				cardObj.SetValue(DataContextProperty, card);
 				StackPanelSecrets.Children.Add(cardObj);
 			}

@@ -62,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
 		public static List<Card> PossibleArenaCards { get; set; }
+		public static string LastZoneChangedCardId;
 
 		#endregion
 
@@ -100,6 +101,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentCards.Clear();
 			OpponentHandCount = 0;
 			OpponentDeckCount = 30;
+			LastZoneChangedCardId = null;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
 			OpponentSecrets.ClearSecrets();

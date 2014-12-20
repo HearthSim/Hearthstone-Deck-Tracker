@@ -7,10 +7,23 @@ namespace Hearthstone_Deck_Tracker
 	public class SecretHelper
 	{
 		public int Id { get; private set; }
+		public bool Stolen { get; private set; }
+		public bool Returned { get; private set; }
+		public Card CreatedBy { get; private set; }
 		public bool[] PossibleSecrets { get; set; }
-		public SecretHelper(HeroClass heroClass, int id)
+		public SecretHelper(HeroClass heroClass, int id, bool stolen, bool returned, string cardId = null)
 		{
 			Id = id;
+			Stolen = stolen;
+			Returned = returned;
+			if(!string.IsNullOrEmpty(cardId))
+			{
+				var card = Game.GetCardFromId(cardId);
+				if(card != null)
+				{
+					CreatedBy = card;
+				}
+			}
 			PossibleSecrets = new bool[GetMaxSecretCount(heroClass)];
 
 			for(int i = 0; i < PossibleSecrets.Length; i++)

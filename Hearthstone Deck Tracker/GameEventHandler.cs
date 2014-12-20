@@ -197,7 +197,12 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretPlayed, turn, cardId);
-			Game.OpponentSecrets.NewSecretPlayed(otherId);
+
+			var isStolenCard = Game.OpponentHandMarks[from - 1] == CardMark.Stolen;
+			var isReturnedCard = Game.OpponentHandMarks[from - 1] == CardMark.Returned;
+			var id = isStolenCard || isReturnedCard ? Game.LastZoneChangedCardId : null;
+			Game.OpponentSecrets.NewSecretPlayed(otherId, isStolenCard, isReturnedCard, id);
+
 			Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
@@ -230,7 +235,8 @@ namespace Hearthstone_Deck_Tracker
 			    Helper.MainWindow.Overlay.HideSecrets();
 		    else
 		    {
-				Game.OpponentSecrets.SetZero(cardId);
+				if(Config.Instance.AutoGrayoutSecrets)
+					Game.OpponentSecrets.SetZero(cardId);
 				Helper.MainWindow.Overlay.ShowSecrets();
 		    }
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);

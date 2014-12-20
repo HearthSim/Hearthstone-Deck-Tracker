@@ -15,9 +15,9 @@ namespace Hearthstone_Deck_Tracker
 			Secrets = new List<SecretHelper>();
 		}
 
-		public void NewSecretPlayed(int id)
+		public void NewSecretPlayed(int id, bool stolen, bool returned, string cardId)
 		{
-			Secrets.Add(new SecretHelper(HeroClass, id));
+			Secrets.Add(new SecretHelper(HeroClass, id, stolen, returned, cardId));
 			Logger.WriteLine("Added secret with id:" + id, "OpponentSecrets");
 		}
 
