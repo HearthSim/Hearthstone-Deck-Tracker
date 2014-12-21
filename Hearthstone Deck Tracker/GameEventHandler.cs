@@ -198,7 +198,7 @@ namespace Hearthstone_Deck_Tracker
 				Game.OpponentPlay(cardId, from, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretPlayed, turn, cardId);
 
-			var isStolenCard = Game.OpponentHandMarks[from - 1] == CardMark.Stolen;
+			var isStolenCard = from > 0 && Game.OpponentHandMarks[from - 1] == CardMark.Stolen;
 			Game.OpponentSecrets.NewSecretPlayed(otherId, isStolenCard);
 
 			Helper.MainWindow.Overlay.ShowSecrets();

@@ -556,10 +556,8 @@ namespace Hearthstone_Deck_Tracker
 						}
 						_powerCount = 0;
 						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
-						{
 							Game.LastZoneChangedCardId = id;
-							Logger.WriteLine("Last zone change: " + id);
-						}
+						
 					}
 				}
 			}
