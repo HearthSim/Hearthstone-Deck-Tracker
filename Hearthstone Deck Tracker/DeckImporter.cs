@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportArenaValue(url);
 			if(url.Contains("hearthstone-decks"))
 				return await ImportHearthstoneDecks(url);
+			if(url.Contains("heartharena"))
+				return await ImportHearthArena(url);
 			Logger.WriteLine("invalid url", "DeckImporter");
 			return null;
 		}
@@ -66,6 +68,38 @@ namespace Hearthstone_Deck_Tracker
 
 					var card = Game.GetCardFromName(name);
 					card.Count = count;
+					deck.Cards.Add(card);
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
+				}
+
+				return deck;
+			}
+			catch (Exception e)
+			{
+				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
+				return null;
+			}
+		}
+
+		private static async Task<Deck> ImportHearthArena(string url)
+		{
+
+			try
+			{
+				var doc = await GetHtmlDoc(url);
+				var deck = new Deck();
+
+				var cardNodes = doc.DocumentNode.SelectSingleNode(".//ul[@class='deckList']");
+				var nameNodes = cardNodes.SelectNodes(".//span[@class='name']");
+				var countNodes = cardNodes.SelectNodes(".//span[@class='quantity']");
+				var numberOfCards = nameNodes.Count;
+				for(var i = 0; i < numberOfCards; i++)
+				{
+					var nameRaw = nameNodes.ElementAt(i).InnerText;
+					var name = HttpUtility.HtmlDecode(nameRaw);
+					var card = Game.GetCardFromName(name);
+					card.Count = int.Parse(countNodes.ElementAt(i).InnerText);
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
