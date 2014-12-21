@@ -356,11 +356,11 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.Overlay.HideTimers();
 				if(Game.CurrentGameStats == null)
 					return;
-				if(!RecordCurrentGameMode)
+				/*if(!RecordCurrentGameMode) // causes casual games to be discarded
 				{
 					Logger.WriteLine(Game.CurrentGameMode + " is set to not record games. Discarding game.");
 					return;
-				}
+				}*/
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 				{
