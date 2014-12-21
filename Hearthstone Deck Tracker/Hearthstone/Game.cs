@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
+		public static Card[] OpponentStolenCardsInformation { get; private set; }
 		public static List<Card> PossibleArenaCards { get; set; }
 		public static string LastZoneChangedCardId;
 
@@ -79,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets = new OpponentSecrets();
 			for(var i = 0; i < MaxHandSize; i++)
 			{
@@ -104,6 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastZoneChangedCardId = null;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets.ClearSecrets();
 
 			for(var i = 0; i < MaxHandSize; i++)
@@ -115,6 +118,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			// Assuming opponent has coin, corrected if we draw it
 			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
 			OpponentHandAge[DefaultCoinPosition] = 0;
+			OpponentStolenCardsInformation[DefaultCoinPosition] = GetCardFromId("GAME_005");
 			OpponentHasCoin = true;
 
 			SetAsideCards.Clear();
@@ -215,6 +219,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHasCoin = false;
 				OpponentHandMarks[DefaultCoinPosition] = CardMark.None;
 				OpponentHandAge[DefaultCoinPosition] = -1;
+				OpponentStolenCardsInformation[DefaultCoinPosition] = null;
 				Logger.WriteLine("Player got the coin", "Hearthstone");
 			}
 
@@ -432,10 +437,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				OpponentHandAge[i] = OpponentHandAge[i + 1];
 				OpponentHandMarks[i] = OpponentHandMarks[i + 1];
+				OpponentStolenCardsInformation[i] = OpponentStolenCardsInformation[i + 1];
 			}
 
 			OpponentHandAge[MaxHandSize - 1] = -1;
 			OpponentHandMarks[MaxHandSize - 1] = CardMark.None;
+			OpponentStolenCardsInformation[MaxHandSize - 1] = null;
+			
 
 			LogOpponentHand();
 		}
@@ -475,6 +483,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				OpponentHandAge[OpponentHandCount - 1] = turn;
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
+				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
+				{
+					var card = GetCardFromId(LastZoneChangedCardId);
+					if(card != null)
+						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
+				}
 			}
 		}
 
@@ -534,7 +548,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandAge[OpponentHandCount - 1] = turn;
 
 			if(OpponentHandMarks[OpponentHandCount - 1] != CardMark.Coin)
+			{
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Stolen;
+				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
+				{
+					var card = GetCardFromId(LastZoneChangedCardId);
+					if(card != null)
+						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
+				}
+			}
+
+			
 
 			LogOpponentHand();
 		}

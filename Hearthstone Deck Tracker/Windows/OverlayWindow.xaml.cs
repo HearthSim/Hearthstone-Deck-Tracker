@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,8 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -642,10 +645,26 @@ namespace Hearthstone_Deck_Tracker
 			var relativePlayerDeckPos = ListViewPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativeCardMark = _cardMarkLabels.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly) ? Visibility.Visible : Visibility.Hidden;
 
+			var cardMark = relativeCardMark.FirstOrDefault(x => x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight));
+			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
+			{
+				var card = Game.OpponentStolenCardsInformation[_cardMarkLabels.IndexOf(cardMark.Label)];
+				if(card != null)
+				{
+					ToolTipCard.SetValue(DataContextProperty, card);
+
+					//var markPos = cardMark.Label.PointToScreen(cardMark.Pos);
+                    var topOffset = pos.Y + cardMark.Label.ActualHeight + 10;
+					Canvas.SetTop(ToolTipCard, topOffset - ToolTipCard.ActualHeight);
+					Canvas.SetLeft(ToolTipCard, pos.X - ToolTipCard.ActualWidth/2);
+					ToolTipCard.Visibility = visibility;
+				}
+			}
 			//player card tooltips
-			if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
+			else if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewPlayer.ActualHeight / ListViewPlayer.Items.Count;
