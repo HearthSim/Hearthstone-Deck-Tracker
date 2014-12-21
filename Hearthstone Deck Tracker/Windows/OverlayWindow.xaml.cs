@@ -631,9 +631,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight)
 		{
-			if(pos.X > 0 && pos.X < actualWidth)
+			return PointInsideControl(pos, actualWidth, actualHeight, new Thickness(0));
+		}
+		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight, Thickness margin)
+		{
+			if(pos.X > 0 - margin.Left && pos.X < actualWidth + margin.Right)
 			{
-				if(pos.Y > 0 && pos.Y < actualHeight)
+				if(pos.Y > 0 - margin.Top && pos.Y < actualHeight + margin.Bottom)
 					return true;
 			}
 			return false;
@@ -648,19 +652,19 @@ namespace Hearthstone_Deck_Tracker
 			var relativeCardMark = _cardMarkLabels.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly) ? Visibility.Visible : Visibility.Hidden;
 
-			var cardMark = relativeCardMark.FirstOrDefault(x => x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight));
+			var cardMark = relativeCardMark.FirstOrDefault(x => x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3,1,7,1)));
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
-				var card = Game.OpponentStolenCardsInformation[_cardMarkLabels.IndexOf(cardMark.Label)];
+				var index = _cardMarkLabels.IndexOf(cardMark.Label);
+                var card = Game.OpponentStolenCardsInformation[index];
 				if(card != null)
 				{
 					ToolTipCard.SetValue(DataContextProperty, card);
-
-					//var markPos = cardMark.Label.PointToScreen(cardMark.Pos);
-                    var topOffset = pos.Y + cardMark.Label.ActualHeight + 10;
-					Canvas.SetTop(ToolTipCard, topOffset - ToolTipCard.ActualHeight);
-					Canvas.SetLeft(ToolTipCard, pos.X - ToolTipCard.ActualWidth/2);
-					ToolTipCard.Visibility = visibility;
+					var topOffset = Canvas.GetTop(LblGrid) + _stackPanelsMarks[index].Margin.Top + LblGrid.ActualHeight;
+					var leftOffset = Canvas.GetLeft(LblGrid) + _stackPanelsMarks[index].ActualWidth * index;
+					Canvas.SetTop(ToolTipCard, topOffset);
+					Canvas.SetLeft(ToolTipCard, leftOffset);
+					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visibility.Visible : Visibility.Hidden;
 				}
 			}
 			//player card tooltips

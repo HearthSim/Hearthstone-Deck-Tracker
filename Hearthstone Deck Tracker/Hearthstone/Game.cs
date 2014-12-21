@@ -118,7 +118,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			// Assuming opponent has coin, corrected if we draw it
 			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
 			OpponentHandAge[DefaultCoinPosition] = 0;
-			OpponentStolenCardsInformation[DefaultCoinPosition] = GetCardFromId("GAME_005");
 			OpponentHasCoin = true;
 
 			SetAsideCards.Clear();
