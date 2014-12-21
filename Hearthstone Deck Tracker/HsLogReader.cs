@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
-		private const int PowerCountThreshold = 30;
+		private const int PowerCountThreshold = 25;
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
@@ -555,6 +555,11 @@ namespace Hearthstone_Deck_Tracker
 								break;
 						}
 						_powerCount = 0;
+						if((from.Contains("PLAY") || from.Contains("HAND") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
+						{
+							Game.LastZoneChangedCardId = id;
+							Logger.WriteLine("Last zone change: " + id);
+						}
 					}
 				}
 			}

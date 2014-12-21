@@ -154,6 +154,11 @@
                                           Checked="CheckboxOverlayAdditionalCardToolTips_Checked"
                                           Unchecked="CheckboxOverlayAdditionalCardToolTips_Unchecked"
                                           HorizontalAlignment="Left" />
+                                <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="Card-mark tooltips*"
+                                          Margin="10,5,0,0" VerticalAlignment="Top" ToolTip="Displays the card *responsible* for stealing/returning"
+                                          Checked="CheckboxOverlayCardMarkToolTips_Checked"
+                                          Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
+                                          HorizontalAlignment="Left"/>
                                 <DockPanel>
                                     <Label Content="Opacity:" HorizontalAlignment="Left" Margin="5,5,0,0"
                                            VerticalAlignment="Center" />

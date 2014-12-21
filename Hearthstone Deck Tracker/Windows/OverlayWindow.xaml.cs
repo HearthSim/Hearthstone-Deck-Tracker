@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,8 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -628,9 +631,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight)
 		{
-			if(pos.X > 0 && pos.X < actualWidth)
+			return PointInsideControl(pos, actualWidth, actualHeight, new Thickness(0));
+		}
+		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight, Thickness margin)
+		{
+			if(pos.X > 0 - margin.Left && pos.X < actualWidth + margin.Right)
 			{
-				if(pos.Y > 0 && pos.Y < actualHeight)
+				if(pos.Y > 0 - margin.Top && pos.Y < actualHeight + margin.Bottom)
 					return true;
 			}
 			return false;
@@ -642,10 +649,26 @@ namespace Hearthstone_Deck_Tracker
 			var relativePlayerDeckPos = ListViewPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativeCardMark = _cardMarkLabels.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly) ? Visibility.Visible : Visibility.Hidden;
 
+			var cardMark = relativeCardMark.FirstOrDefault(x => x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3,1,7,1)));
+			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
+			{
+				var index = _cardMarkLabels.IndexOf(cardMark.Label);
+                var card = Game.OpponentStolenCardsInformation[index];
+				if(card != null)
+				{
+					ToolTipCard.SetValue(DataContextProperty, card);
+					var topOffset = Canvas.GetTop(LblGrid) + _stackPanelsMarks[index].Margin.Top + LblGrid.ActualHeight;
+					var leftOffset = Canvas.GetLeft(LblGrid) + _stackPanelsMarks[index].ActualWidth * index;
+					Canvas.SetTop(ToolTipCard, topOffset);
+					Canvas.SetLeft(ToolTipCard, leftOffset);
+					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visibility.Visible : Visibility.Hidden;
+				}
+			}
 			//player card tooltips
-			if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
+			else if(ListViewPlayer.Visibility == Visibility.Visible && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
 				var cardSize = ListViewPlayer.ActualHeight / ListViewPlayer.Items.Count;

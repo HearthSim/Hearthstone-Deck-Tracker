@@ -1425,6 +1425,22 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.AutoGrayoutSecrets = false;
 			Config.Save();
 		}
+
+		private void CheckboxOverlayCardMarkToolTips_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCardMarkToolTips = true;
+			Config.Save();
+		}
+
+		private void CheckboxOverlayCardMarkToolTips_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCardMarkToolTips = false;
+			Config.Save();
+		}
 	}
 }
  
