@@ -372,7 +372,7 @@ namespace Hearthstone_Deck_Tracker
 				var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if(selectedDeck != null)
 				{
-					if(Config.Instance.DiscardGameIfIncorrectDeck && !Game.PlayerDrawn.All(c => selectedDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
+					if(Config.Instance.DiscardGameIfIncorrectDeck && !Game.PlayerDrawn.All(c => c.IsStolen || selectedDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
 					{
 						Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
 						Game.CurrentGameStats.DeleteGameFile();
