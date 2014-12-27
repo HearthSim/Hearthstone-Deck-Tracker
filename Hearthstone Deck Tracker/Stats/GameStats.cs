@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool IsClone { get; set; }
 		public string PlayerName { get; set; }
 		public string OpponentName { get; set; }
+		public bool VerifiedHeroes { get; set; }
 		
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
