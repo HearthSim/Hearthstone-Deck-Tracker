@@ -81,6 +81,7 @@ namespace Hearthstone_Deck_Tracker
 
 			SetDeckTitle();
 			SetWinRates();
+			Scale();
 		}
 
 		private void SetWinRates()

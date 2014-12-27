@@ -652,16 +652,18 @@ namespace Hearthstone_Deck_Tracker
 					DeckStatsFlyout.SetDeck(deck);
 				}
 
+				UseDeck(deck);
+				Game.IsUsingPremade = true;
 				//change player deck itemsource
 				if(Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
 				{
 					Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					Overlay.ListViewPlayer.Items.Refresh();
 					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					PlayerWindow.ListViewPlayer.Items.Refresh();
 					Logger.WriteLine("Set player itemsource as playerdeck");
 				}
-				Game.IsUsingPremade = true;
 				UpdateDeckList(deck);
-				UseDeck(deck);
 				Logger.WriteLine("Switched to deck: " + deck.Name);
 
 				//set and save last used deck for class
