@@ -103,7 +103,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = await ImportDeckFromWeb();
+			var url = await InputDeckURL();
+			if (url == null)
+			    return;
+
+			var deck = await ImportDeckFromURL(url);
 
 			if(deck != null)
 				ExportDeck(deck);

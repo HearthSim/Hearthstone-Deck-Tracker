@@ -15,7 +15,11 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private async void BtnWeb_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = await ImportDeckFromWeb();
+			var url = await InputDeckURL();
+			if (url == null)
+			    return;
+
+			var deck = await ImportDeckFromURL(url);
 			if(deck != null)
 			{
 				var reimport = EditingDeck && _newDeck != null &&
@@ -34,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
 		}
 
-		private async Task<Deck> ImportDeckFromWeb()
+		private async Task<string> InputDeckURL()
 		{
 			var settings = new MetroDialogSettings();
 			var clipboard = Clipboard.GetText();
@@ -48,9 +52,11 @@ namespace Hearthstone_Deck_Tracker
 
 			//import dialog
 			var url = await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
-			if(string.IsNullOrEmpty(url))
-				return null;
+		    return url;
+		}
 
+		private async Task<Deck> ImportDeckFromURL(string url)
+		{
 			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 
 			//var deck = await this._deckImporter.Import(url);
