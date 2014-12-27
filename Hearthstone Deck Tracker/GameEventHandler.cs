@@ -12,6 +12,10 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Player
 
+		public void HandlePlayerName(string name)
+		{
+			Game.PlayerName = name;
+		}
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -148,7 +152,13 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Opponent
 
-		public static void HandleOpponentPlay(string cardId, int from, int turn)
+
+		public void HandleOpponentName(string name)
+		{
+			Game.OpponentName = name;
+		}
+
+	    public static void HandleOpponentPlay(string cardId, int from, int turn)
 		{
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
@@ -307,7 +317,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void TurnStart(Turn player, int turnNumber)
+	    public static void TurnStart(Turn player, int turnNumber)
 		{
 			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer

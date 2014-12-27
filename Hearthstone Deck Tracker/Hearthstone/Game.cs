@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int PlayerHandCount;
 		public static string PlayingAgainst;
 		public static string PlayingAs;
+		public static string PlayerName;
+		public static string OpponentName;
 
 		public static List<string> SetAsideCards;
 		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck;
@@ -124,7 +126,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentReturnedToDeck.Clear();
 
 			if(!IsInMenu && resetStats)
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs);
+			{
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
+				                   {
+					                   PlayerName = PlayerName,
+					                   OpponentName = OpponentName
+				                   };
+			}
 		}
 
 		public static void SetPremadeDeck(Deck deck)

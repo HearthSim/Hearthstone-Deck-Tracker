@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 
 #endregion
 
@@ -16,8 +17,6 @@ namespace Hearthstone_Deck_Tracker
 	public class HsLogReader
 	{
 		#region Properties
-
-		private const int PowerCountThreshold = 25;
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
@@ -73,6 +72,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _cardAlreadyInCacheRegex = new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
+		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
 
 		private readonly int _updateDelay;
 		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
@@ -82,9 +82,6 @@ namespace Hearthstone_Deck_Tracker
 		private bool _doUpdate;
 		private bool _first;
 		private long _lastGameEnd;
-		private bool _lastOpponentDrawIncrementedTurn;
-		private bool _lastPlayerDrawIncrementedTurn;
-		private int _powerCount;
 		private long _previousSize;
 		private int _turnCount;
 		private int _playerCount;
@@ -255,6 +252,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private bool _turnEnded;
 		private void Analyze(string log)
 		{
 			var logLines = log.Split('\n');
@@ -263,13 +261,32 @@ namespace Hearthstone_Deck_Tracker
 				_currentOffset += logLine.Length + 1;
 				if(logLine.StartsWith("[Power]"))
 				{
-					_powerCount++;
-				
+					if(logLine.Contains("END_TURN"))
+					{
+						_turnEnded = true;
+						continue;
+					}
+					if(logLine.Contains("tag=CURRENT_PLAYER"))
+					{
+						_turnEnded = true;
+						continue;
+					}
 					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
 					{
 						Game.CurrentGameMode = GameMode.Spectator;
 						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
-						return;
+						continue;
+					}
+					if(_entityNameRegex.IsMatch(logLine))
+					{
+						var match = _entityNameRegex.Match(logLine);
+						var name = match.Groups["name"].Value;
+						var player = int.Parse(match.Groups["value"].Value);
+						if(player == 1)
+							_gameHandler.HandlePlayerName(name);
+						else if(player == 2)
+							_gameHandler.HandleOpponentName(name);
+						continue;
 					}
 					if((_currentPlayer == Turn.Player && !_playerUsedHeroPower) || _currentPlayer == Turn.Opponent && !_opponentUsedHeroPower)
 					{
@@ -349,8 +366,6 @@ namespace Hearthstone_Deck_Tracker
 					_lastGameEnd = _currentOffset;
 					_turnCount = 0;
 					_playerCount = 0;
-					_lastOpponentDrawIncrementedTurn = false;
-					_lastPlayerDrawIncrementedTurn = false;
 					ClearLog();
 				}
 				else if(logLine.StartsWith("[Rachelle]"))
@@ -408,7 +423,6 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.SetOpponentHero(heroName);
 								}
 							}
-							_powerCount = 0;
 							continue;
 						}
 
@@ -417,17 +431,14 @@ namespace Hearthstone_Deck_Tracker
 							case "FRIENDLY DECK":
 								if(to == "FRIENDLY HAND")
 								{
-									//player draw
-									if(_powerCount >= PowerCountThreshold)
+									if(_turnEnded)
 									{
 										_turnCount++;
-										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
-										_currentPlayer = Turn.Player;
+										_turnEnded = false;
 										_playerUsedHeroPower = false;
-										_lastPlayerDrawIncrementedTurn = true;
+										_currentPlayer = Turn.Player;
+										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
 									}
-									else
-										_lastPlayerDrawIncrementedTurn = false;
 									_gameHandler.HandlePlayerDraw(id, GetTurnNumber());
 								}
 								else if(to == "FRIENDLY SECRET")
@@ -439,8 +450,6 @@ namespace Hearthstone_Deck_Tracker
 							case "FRIENDLY HAND":
 								if(to == "FRIENDLY DECK")
 								{
-									if(_lastPlayerDrawIncrementedTurn)
-										_turnCount--;
 									_gameHandler.HandlePlayerMulligan(id);
 								}
 								else if(to == "FRIENDLY PLAY")
@@ -461,8 +470,6 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING HAND":
 								if(to == "OPPOSING DECK")
 								{
-									if(_lastOpponentDrawIncrementedTurn)
-										_turnCount--;
 									//opponent mulligan
 									_gameHandler.HandleOpponentMulligan(zonePos);
 								}
@@ -481,17 +488,17 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING DECK":
 								if(to == "OPPOSING HAND")
 								{
-									if(_powerCount >= PowerCountThreshold)
+									if(_turnEnded)
 									{
-										_turnCount++;
-										_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
-										_currentPlayer = Turn.Opponent;
-										_opponentUsedHeroPower = false;
-										_lastOpponentDrawIncrementedTurn = true;
+										if(_turnEnded)
+										{
+											_turnCount++;
+											_turnEnded = false;
+											_opponentUsedHeroPower = false;
+											_currentPlayer = Turn.Opponent;
+											_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
+										}
 									}
-									else
-										_lastOpponentDrawIncrementedTurn = false;
-
 									//opponent draw
 									_gameHandler.HandleOpponentDraw(GetTurnNumber());
 								}
@@ -554,7 +561,6 @@ namespace Hearthstone_Deck_Tracker
 								}
 								break;
 						}
-						_powerCount = 0;
 						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
 							Game.LastZoneChangedCardId = id;
 						
@@ -585,19 +591,15 @@ namespace Hearthstone_Deck_Tracker
 		internal void Reset(bool full)
 		{
 			if(full)
-			{
 				_previousSize = 0;
-				_first = true;
-			}
 			else
 			{
 				_currentOffset = _lastGameEnd;
 				_previousSize = _lastGameEnd;
 			}
 			_turnCount = 0;
-			_lastOpponentDrawIncrementedTurn = false;
-			_lastPlayerDrawIncrementedTurn = false;
 			_first = true;
+			_turnEnded = false;
 		}
 	}
 }

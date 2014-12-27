@@ -52,6 +52,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime EndTime { get; set; }
 		public string Note { get; set; }
 		public bool IsClone { get; set; }
+		public string PlayerName { get; set; }
+		public string OpponentName { get; set; }
 		
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
