@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
+		private const int PowerCountThreshold = 50;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 		private readonly Regex _otherIdRegex = new Regex(@".*\[.*(id=(?<Id>(\d+))).*");
@@ -85,6 +86,7 @@ namespace Hearthstone_Deck_Tracker
 		private long _previousSize;
 		private int _turnCount;
 		private int _playerCount;
+		private int _powerCount;
 
 		#endregion
 
@@ -261,11 +263,8 @@ namespace Hearthstone_Deck_Tracker
 				_currentOffset += logLine.Length + 1;
 				if(logLine.StartsWith("[Power]"))
 				{
-					if(logLine.Contains("END_TURN"))
-					{
-						_turnEnded = true;
-						continue;
-					}
+					_powerCount++;
+
 					if(logLine.Contains("tag=CURRENT_PLAYER"))
 					{
 						_turnEnded = true;
@@ -423,6 +422,7 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.SetOpponentHero(heroName);
 								}
 							}
+							_powerCount = 0;
 							continue;
 						}
 
@@ -431,11 +431,16 @@ namespace Hearthstone_Deck_Tracker
 							case "FRIENDLY DECK":
 								if(to == "FRIENDLY HAND")
 								{
-									if(_turnEnded)
+									if(_turnEnded || _powerCount >= PowerCountThreshold)
 									{
+										if(_turnEnded)
+											Logger.WriteLine("--- Turn increment reason: turnEnded");
+										if(_powerCount >= PowerCountThreshold)
+											Logger.WriteLine("--- Turn increment reason: powerCount");
 										_turnCount++;
 										_turnEnded = false;
 										_playerUsedHeroPower = false;
+										_powerCount = 0;
 										_currentPlayer = Turn.Player;
 										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
 									}
@@ -488,16 +493,18 @@ namespace Hearthstone_Deck_Tracker
 							case "OPPOSING DECK":
 								if(to == "OPPOSING HAND")
 								{
-									if(_turnEnded)
+									if(_turnEnded || _powerCount >= PowerCountThreshold)
 									{
 										if(_turnEnded)
-										{
-											_turnCount++;
-											_turnEnded = false;
-											_opponentUsedHeroPower = false;
-											_currentPlayer = Turn.Opponent;
-											_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
-										}
+											Logger.WriteLine("--- Turn increment reason: turnEnded");
+										if(_powerCount >= PowerCountThreshold)
+											Logger.WriteLine("--- Turn increment reason: powerCount");
+										_turnCount++;
+										_turnEnded = false;
+										_powerCount = 0;
+										_opponentUsedHeroPower = false;
+										_currentPlayer = Turn.Opponent;
+										_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
 									}
 									//opponent draw
 									_gameHandler.HandleOpponentDraw(GetTurnNumber());
@@ -534,7 +541,8 @@ namespace Hearthstone_Deck_Tracker
 							default:
 								if(to == "OPPOSING HAND")
 								{
-
+									//if(id == "GAME_005")
+									//	_turnCount--;
 									if(GetTurnNumber() == 0) //coin is handled in Game.OpponentDraw()
 										_gameHandler.HandleOpponentDraw(GetTurnNumber());
 									else
@@ -561,6 +569,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								break;
 						}
+						_powerCount = 0;
 						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
 							Game.LastZoneChangedCardId = id;
 						
