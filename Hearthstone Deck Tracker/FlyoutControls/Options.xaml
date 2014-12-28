@@ -183,6 +183,7 @@
                                                                OnLabel="Enabled" OffLabel="Disabled"
                                                                Checked="ToggleSwitchExtraFeatures_Checked"
                                                                Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
+                                        <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force ON" Margin="10,0,0,0" Checked="CheckBoxForceExtraFeatures_OnChecked" Unchecked="CheckBoxForceExtraFeatures_OnUnchecked"></CheckBox>
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
@@ -587,6 +588,11 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Name="BtnSaveLog" Content="Save to file" Click="BtnSaveLog_OnClick"/>
                             <Button Name="BtnClear" Content="Clear" Click="BtnClear_OnClick" Margin="5,0,0,0"/>
+                            <Label Content="Log level:" Margin="5,0,0,0"></Label>
+                            <ComboBox Name="ComboBoxLogLevel" SelectionChanged="ComboBoxLogLevel_OnSelectionChanged" SelectedIndex="0">
+                                <system:String>0</system:String>
+                                <system:String>1</system:String>
+                            </ComboBox>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox  Grid.Row="1">

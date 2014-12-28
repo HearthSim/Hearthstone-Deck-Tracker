@@ -516,6 +516,9 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			Options.CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			Options.CheckboxOverlayCardMarkToolTips.IsChecked = Config.Instance.OverlayCardMarkToolTips;
+			Options.ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
+			Options.CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
+			Options.CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

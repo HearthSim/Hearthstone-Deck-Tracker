@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
-		private const int PowerCountThreshold = 50;
+		private const int PowerCountThreshold = 1;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 		private readonly Regex _otherIdRegex = new Regex(@".*\[.*(id=(?<Id>(\d+))).*");
@@ -74,6 +74,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
+		private readonly Regex _powerListRegex = new Regex(@"GameState.DebugPrintPowerList\(\)\ -\ Count=(?<count>(\d+))");
 
 		private readonly int _updateDelay;
 		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
@@ -263,11 +264,19 @@ namespace Hearthstone_Deck_Tracker
 				_currentOffset += logLine.Length + 1;
 				if(logLine.StartsWith("[Power]"))
 				{
-					_powerCount++;
-
 					if(logLine.Contains("tag=CURRENT_PLAYER"))
 					{
 						_turnEnded = true;
+						continue;
+					}
+					if(_powerListRegex.IsMatch(logLine))
+					{ 
+						var count = int.Parse(_powerListRegex.Match(logLine).Groups["count"].Value);
+						if(count > 30)
+						{
+							Logger.WriteLine("DebugPrintPowerList " + count, "HsLogReader", 1);
+							_powerCount++;
+						}
 						continue;
 					}
 					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
@@ -307,6 +316,7 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.HandleOpponentHeroPower(id, GetTurnNumber());
 										_opponentUsedHeroPower = true;
 									}
+									ResetPowerCount();
 								}
 							}
 						}
@@ -422,7 +432,7 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.SetOpponentHero(heroName);
 								}
 							}
-							_powerCount = 0;
+							ResetPowerCount();
 							continue;
 						}
 
@@ -440,7 +450,7 @@ namespace Hearthstone_Deck_Tracker
 										_turnCount++;
 										_turnEnded = false;
 										_playerUsedHeroPower = false;
-										_powerCount = 0;
+										ResetPowerCount();
 										_currentPlayer = Turn.Player;
 										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
 									}
@@ -501,7 +511,7 @@ namespace Hearthstone_Deck_Tracker
 											Logger.WriteLine("--- Turn increment reason: powerCount");
 										_turnCount++;
 										_turnEnded = false;
-										_powerCount = 0;
+										ResetPowerCount();
 										_opponentUsedHeroPower = false;
 										_currentPlayer = Turn.Opponent;
 										_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
@@ -569,13 +579,19 @@ namespace Hearthstone_Deck_Tracker
 								}
 								break;
 						}
-						_powerCount = 0;
+						ResetPowerCount();
 						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
 							Game.LastZoneChangedCardId = id;
 						
 					}
 				}
 			}
+		}
+
+		private void ResetPowerCount()
+		{
+			Logger.WriteLine("Reset powercount (was " + _powerCount + ")", "HsLogReader", 1);
+			_powerCount = 0;
 		}
 
 		public void ClearLog()

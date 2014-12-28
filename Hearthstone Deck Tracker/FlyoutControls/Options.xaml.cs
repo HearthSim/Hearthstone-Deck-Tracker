@@ -868,7 +868,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ExtraFeatures = true;
-			Helper.MainWindow.Overlay.HookMouse();
+			//Helper.MainWindow.Overlay.HookMouse();
+			CheckBoxForceExtraFeatures.IsEnabled = true;
 			SaveConfig(false);
 		}
 
@@ -876,7 +877,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized) return;
 			Config.Instance.ExtraFeatures = false;
-			Helper.MainWindow.Overlay.UnHookMouse();
+			//Helper.MainWindow.Overlay.UnHookMouse();
+			CheckBoxForceExtraFeatures.IsEnabled = false;
 			SaveConfig(false);
 		}
 
@@ -1439,6 +1441,32 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardMarkToolTips = false;
+			Config.Save();
+		}
+
+		private void ComboBoxLogLevel_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.LogLevel = int.Parse(ComboBoxLogLevel.SelectedValue.ToString());
+			Config.Save();
+		}
+
+		private void CheckBoxForceExtraFeatures_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ForceMouseHook = true;
+			Helper.MainWindow.Overlay.HookMouse();
+			Config.Save();
+		}
+
+		private void CheckBoxForceExtraFeatures_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ForceMouseHook = false;
+			Helper.MainWindow.Overlay.UnHookMouse();
 			Config.Save();
 		}
 	}
