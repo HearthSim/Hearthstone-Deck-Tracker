@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -67,10 +69,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static List<Card> PossibleArenaCards { get; set; }
 		public static string LastZoneChangedCardId;
 
+		//public static List<Entity> Entities;
+		public static Dictionary<int, Entity> Entities;
+		public static int PlayerId;
+		public static int OpponentId;
+		//public static Dictionary<string, int> PlayerIds; 
+
 		#endregion
 
 		static Game()
 		{
+			Entities = new Dictionary<int, Entity>();
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			SetAsideCards = new List<string>();
@@ -95,43 +104,61 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						   : "enUS");
 		}
 
+		public static bool IsMulliganDone
+		{
+			get
+			{
+				if(Entities.Count < 3)
+					return false;
+				return Entities[2].GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE &&
+				       Entities[3].GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE;
+			}
+		}
+
+		public static object ResetObject = new object();
 		public static void Reset(bool resetStats = true)
 		{
-			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
-
-			PlayerDrawn.Clear();
-			PlayerHandCount = 0;
-			OpponentSecretCount = 0;
-			OpponentCards.Clear();
-			OpponentHandCount = 0;
-			OpponentDeckCount = 30;
-			LastZoneChangedCardId = null;
-			OpponentHandAge = new int[MaxHandSize];
-			OpponentHandMarks = new CardMark[MaxHandSize];
-			OpponentStolenCardsInformation = new Card[MaxHandSize];
-			OpponentSecrets.ClearSecrets();
-
-			for(var i = 0; i < MaxHandSize; i++)
+			lock(ResetObject)
 			{
-				OpponentHandAge[i] = -1;
-				OpponentHandMarks[i] = CardMark.None;
-			}
+				Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
 
-			// Assuming opponent has coin, corrected if we draw it
-			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
-			OpponentHandAge[DefaultCoinPosition] = 0;
-			OpponentHasCoin = true;
+				PlayerDrawn.Clear();
+				Entities.Clear();
+				PlayerId = -1;
+				OpponentId = -1;
+				PlayerHandCount = 0;
+				OpponentSecretCount = 0;
+				OpponentCards.Clear();
+				OpponentHandCount = 0;
+				OpponentDeckCount = 30;
+				LastZoneChangedCardId = null;
+				OpponentHandAge = new int[MaxHandSize];
+				OpponentHandMarks = new CardMark[MaxHandSize];
+				OpponentStolenCardsInformation = new Card[MaxHandSize];
+				OpponentSecrets.ClearSecrets();
 
-			SetAsideCards.Clear();
-			OpponentReturnedToDeck.Clear();
+				for(var i = 0; i < MaxHandSize; i++)
+				{
+					OpponentHandAge[i] = -1;
+					OpponentHandMarks[i] = CardMark.None;
+				}
 
-			if(!IsInMenu && resetStats)
-			{
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
-				                   {
-					                   PlayerName = PlayerName,
-					                   OpponentName = OpponentName
-				                   };
+				// Assuming opponent has coin, corrected if we draw it
+				OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
+				OpponentHandAge[DefaultCoinPosition] = 0;
+				OpponentHasCoin = true;
+
+				SetAsideCards.Clear();
+				OpponentReturnedToDeck.Clear();
+
+				if(!IsInMenu && resetStats)
+				{
+					CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
+					                   {
+						                   PlayerName = PlayerName,
+						                   OpponentName = OpponentName
+					                   };
+				}
 			}
 		}
 

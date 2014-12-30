@@ -116,6 +116,11 @@
     </Compile>
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
+    <Compile Include="Enums\Hearthstone\GAME_TAG.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_CARDTYPE.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_MULLIGAN.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_PLAYSTATE.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_ZONE.cs" />
     <Compile Include="Enums\HeroClass.cs" />
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="Enums\TagFilterOperation.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
+    <Compile Include="Hearthstone\Entities\Entity.cs" />
     <Compile Include="Hearthstone\Secrets\SecretHelper.cs" />
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />

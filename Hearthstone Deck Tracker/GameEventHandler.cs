@@ -45,6 +45,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
+			if(cardId == "GAME_005")
+			{
+				HandlePlayerGet(cardId, turn);
+				return;
+			}
 			if(Game.SetAsideCards.Contains(cardId))
 				Game.SetAsideCards.Remove(cardId);
 			LogEvent("PlayerDraw", cardId);
@@ -159,7 +164,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 	    public static void HandleOpponentPlay(string cardId, int from, int turn)
-		{
+	    {
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
@@ -282,8 +287,8 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayingAs = hero;
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-			if(selectedDeck != null)
-				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
+			//if(selectedDeck != null)
+			//	Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			if(!string.IsNullOrEmpty(hero))
 			{
@@ -352,7 +357,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
 			}
-
+			_waitingForRankedMessage = false;
 			Game.IsInMenu = false;
 			Game.Reset();
 		}
@@ -371,6 +376,8 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine(Game.CurrentGameMode + " is set to not record games. Discarding game.");
 					return;
 				}*/
+				Game.CurrentGameStats.PlayerName = Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.Name;
+				Game.CurrentGameStats.OpponentName = Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId).Value.Name;
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 				{
@@ -403,6 +410,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 				return;
 			}
+			if(_waitingForRankedMessage)
+				return;
 			Logger.WriteLine("Game end");
 			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
@@ -445,7 +454,7 @@ namespace Hearthstone_Deck_Tracker
 
 	    public static void HandleWin()
 		{
-			if(!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
@@ -454,13 +463,32 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleLoss()
 		{
-			if(!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
 			SaveAndUpdateStats();
 		}
 
+	    public static void SetGameMode(GameMode mode)
+	    {
+			if(_waitingForRankedMessage && mode != GameMode.Ranked)
+			{
+				SaveAndUpdateStats();
+				_waitingForRankedMessage = false;
+				Game.CurrentGameStats = null;
+				HandleGameEnd(true);
+			}
+			Game.CurrentGameMode = mode;
+			Logger.WriteLine(">> GAME MODE: " + mode);
+		    if(Game.CurrentGameStats == null)
+			    return;
+		    Logger.WriteLine(">> GAME MODE: " + mode + "(saved to gamestats)");
+		    //Game.CurrentGameStats.GameMode = mode;
+		    SaveAndUpdateStats();
+	    }
+
+	    private static bool _waitingForRankedMessage;
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
@@ -472,13 +500,18 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Game.CurrentGameStats != null)
 				{
-					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+					Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
+                    if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 					{
 						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
 						return;
 					}
 					Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
 					Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
+					if(Game.CurrentGameMode == GameMode.Casual)
+						_waitingForRankedMessage = true;
+					else if(Game.CurrentGameMode != GameMode.None)
+					    Game.CurrentGameStats = null;
 				}
 
 				if(_assignedDeck == null)
@@ -491,7 +524,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Saving DeckStats", "GameStats");
 					DeckStatsList.Save();
 				}
-				Game.CurrentGameStats = null;
+				
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				statsControl.Refresh();
 			}
@@ -676,6 +709,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			HandleOpponentPlayToDeck(cardId, turn);
 		}
+
+	    void IGameHandler.SetGameMode(GameMode mode)
+	    {
+		    SetGameMode(mode);
+	    }
 
 		#endregion IGameHandlerImplementation
 
