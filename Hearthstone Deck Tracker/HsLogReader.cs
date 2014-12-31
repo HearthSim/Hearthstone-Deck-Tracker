@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Replay;
 
 #endregion
 
@@ -599,6 +600,7 @@ namespace Hearthstone_Deck_Tracker
 				switch((TAG_ZONE)prevZone)
 				{
 					case TAG_ZONE.DECK:
+						ReplayMaker.Generate(KeyPointType.Card, id);
 						switch((TAG_ZONE)value)
 						{
 							case TAG_ZONE.HAND:
@@ -624,8 +626,10 @@ namespace Hearthstone_Deck_Tracker
 						}
 						break;
 					case TAG_ZONE.GRAVEYARD:
+						ReplayMaker.Generate(KeyPointType.Card, id);
 						break;
 					case TAG_ZONE.HAND:
+						ReplayMaker.Generate(KeyPointType.Card, id);
 						switch((TAG_ZONE)value)
 						{
 							case TAG_ZONE.PLAY:
@@ -658,6 +662,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						break;
 					case TAG_ZONE.PLAY:
+						ReplayMaker.Generate(KeyPointType.Card, id);
 						switch((TAG_ZONE)value)
 						{
 							case TAG_ZONE.HAND:
@@ -675,6 +680,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						break;
 					case TAG_ZONE.SECRET:
+						ReplayMaker.Generate(KeyPointType.Card, id);
 						switch((TAG_ZONE)value)
 						{
 							case TAG_ZONE.SECRET:
@@ -688,6 +694,7 @@ namespace Hearthstone_Deck_Tracker
 						switch((TAG_ZONE)value)
 						{
 							case TAG_ZONE.HAND:
+								ReplayMaker.Generate(KeyPointType.Card, id);
 								if(controller == Game.PlayerId)
 									_gameHandler.HandlePlayerGet(cardId, GetTurnNumber());
 								else if(controller == Game.OpponentId)
@@ -711,7 +718,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else if(tag == GAME_TAG.CURRENT_PLAYER && value == 1)
-				_gameHandler.TurnStart(Game.Entities[id].IsPlayer ? Turn.Player : Turn.Opponent, GetTurnNumber());
+				_gameHandler.TurnStart(Game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent, GetTurnNumber());
+			else if(tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
+			{
+				ReplayMaker.Generate(KeyPointType.Attack, id);
+			}
 			if(_waitForController != null)
 			{
 				if(!isRecursive)

@@ -74,6 +74,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -175,11 +177,19 @@
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
     <Compile Include="Hearthstone\Secrets\Secret.cs" />
+    <Compile Include="Replay\Enums\KeyPointType.cs" />
+    <Compile Include="Replay\ReplayHelper.cs" />
+    <Compile Include="Replay\ReplayKeyPoint.cs" />
+    <Compile Include="Replay\ReplayMaker.cs" />
+    <Compile Include="Replay\ReplayReader.cs" />
+    <Compile Include="Replay\ReplayViewer.xaml.cs">
+      <DependentUpon>ReplayViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Enums\PlayType.cs" />
     <Compile Include="Enums\GameResult.cs" />
-    <Compile Include="Enums\Turn.cs" />
+    <Compile Include="Enums\ActivePlayer.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -300,6 +310,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Page Include="Replay\ReplayViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

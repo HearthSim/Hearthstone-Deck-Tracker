@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 {
+	[Serializable]
 	public class Entity
 	{
 		public Dictionary<GAME_TAG, int> Tags { get; set; }
@@ -19,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public Entity()
 		{
-			
+			Tags = new Dictionary<GAME_TAG, int>();
 		}
 		public Entity(int id)
 		{
@@ -52,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			if(tag == GAME_TAG.ZONE)
 				Zone = (TAG_ZONE)value;
 			
-			//Logger.WriteLine(string.Format("[id={0} cardId={1} name={2} TAG={3}] {4} -> {5}", Id, CardId, Name, tag, prevVal, value));
+			Logger.WriteLine(string.Format("[id={0} cardId={1} name={2} TAG={3}] {4} -> {5}", Id, CardId, Name, tag, prevVal, value));
 		}
 	}
 }

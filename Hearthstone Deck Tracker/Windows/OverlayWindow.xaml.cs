@@ -864,7 +864,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.Debug)
 				{
 					LblDebugLog.Text += string.Format("Current turn: {0} {1} {2} \n",
-					                                  timerEventArgs.CurrentTurn.ToString(),
+					                                  timerEventArgs.CurrentActivePlayer.ToString(),
 					                                  timerEventArgs.PlayerSeconds.ToString(),
 					                                  timerEventArgs.OpponentSeconds.ToString());
 					DebugViewer.ScrollToBottom();

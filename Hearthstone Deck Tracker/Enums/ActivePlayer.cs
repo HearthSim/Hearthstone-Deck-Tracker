@@ -1,8 +1,9 @@
 namespace Hearthstone_Deck_Tracker.Enums
 {
-	public enum Turn
+	public enum ActivePlayer
 	{
 		Player,
-		Opponent
+		Opponent,
+		None
 	}
 }

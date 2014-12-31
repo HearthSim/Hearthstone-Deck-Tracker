@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
@@ -71,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerMulligan", cardId);
-			TurnTimer.Instance.MulliganDone(Turn.Player);
+			TurnTimer.Instance.MulliganDone(ActivePlayer.Player);
 			Game.PlayerMulligan(cardId);
 
 			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
@@ -192,7 +193,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentMulligan", from: from);
 			Game.OpponentMulligan(from);
-			TurnTimer.Instance.MulliganDone(Turn.Opponent);
+			TurnTimer.Instance.MulliganDone(ActivePlayer.Opponent);
 			Game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 		}
 
@@ -322,14 +323,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-	    public static void TurnStart(Turn player, int turnNumber)
+	    public static void TurnStart(ActivePlayer player, int turnNumber)
 		{
 			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer
 			//maybe add timer to player/opponent windows
 			TurnTimer.Instance.SetCurrentPlayer(player);
 			TurnTimer.Instance.Restart();
-			if(player == Turn.Player && !Game.IsInMenu)
+			if(player == ActivePlayer.Player && !Game.IsInMenu)
 			{
 				if(Config.Instance.FlashHsOnTurnStart)
 					User32.FlashHs();
@@ -459,6 +460,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
 			SaveAndUpdateStats();
+			ReplayMaker.SaveToDisk();
 		}
 
 		public static void HandleLoss()
@@ -468,6 +470,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
 			SaveAndUpdateStats();
+			ReplayMaker.SaveToDisk();
 		}
 
 	    public static void SetGameMode(GameMode mode)
@@ -665,7 +668,7 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentHeroPower(cardId, turn);
         }
 
-        void IGameHandler.TurnStart(Turn player, int turnNumber)
+        void IGameHandler.TurnStart(ActivePlayer player, int turnNumber)
         {
             TurnStart(player, turnNumber);
         }

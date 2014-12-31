@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion OpponentHandlers
 
-		void TurnStart(Turn player, int turnNumber);
+		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
 		void HandleGameEnd(bool backInMenu);
 		void HandleLoss();

@@ -7,25 +7,25 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class TimerEventArgs : EventArgs
 	{
-		public TimerEventArgs(int seconds, int playerSeconds, int opponentSeconds, bool running, Turn turn)
+		public TimerEventArgs(int seconds, int playerSeconds, int opponentSeconds, bool running, ActivePlayer activePlayer)
 		{
 			Seconds = seconds;
 			Running = running;
 			PlayerSeconds = playerSeconds;
 			OpponentSeconds = opponentSeconds;
-			CurrentTurn = turn;
+			CurrentActivePlayer = activePlayer;
 		}
 
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
 		public bool Running { get; private set; }
-		public Turn CurrentTurn { get; private set; }
+		public ActivePlayer CurrentActivePlayer { get; private set; }
 	}
 
 	internal class TurnTimer
 	{
-		public Turn CurrentTurn;
+		public ActivePlayer CurrentActivePlayer;
 		private bool _opponentMulliganed;
 		private bool _playerMulliganed;
 		private Timer _timer;
@@ -59,12 +59,12 @@ namespace Hearthstone_Deck_Tracker
 				Seconds--;
 			if(_playerMulliganed && _opponentMulliganed)
 			{
-				if(CurrentTurn == Turn.Player)
+				if(CurrentActivePlayer == ActivePlayer.Player)
 					PlayerSeconds++;
 				else
 					OpponentSeconds++;
 			}
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentActivePlayer));
 		}
 
 		public void Restart()
@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 			   || (!_opponentMulliganed && !_playerMulliganed && Seconds < 85))
 				_playerMulliganed = _opponentMulliganed = true;
 
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, true, CurrentActivePlayer));
 		}
 
 		public void Stop()
@@ -87,19 +87,19 @@ namespace Hearthstone_Deck_Tracker
 			OpponentSeconds = 0;
 			_playerMulliganed = false;
 			_opponentMulliganed = false;
-			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, false, CurrentTurn));
+			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, false, CurrentActivePlayer));
 		}
 
-		public void SetCurrentPlayer(Turn turn)
+		public void SetCurrentPlayer(ActivePlayer activePlayer)
 		{
-			CurrentTurn = turn;
+			CurrentActivePlayer = activePlayer;
 		}
 
-		public void MulliganDone(Turn turn)
+		public void MulliganDone(ActivePlayer activePlayer)
 		{
-			if(turn.Equals(Turn.Player))
+			if(activePlayer.Equals(ActivePlayer.Player))
 				_playerMulliganed = true;
-			else if(turn.Equals(Turn.Opponent))
+			else if(activePlayer.Equals(ActivePlayer.Opponent))
 				_opponentMulliganed = true;
 		}
 
@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(
 				new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
 
-            if (CurrentTurn == Turn.Player)
+            if (CurrentActivePlayer == ActivePlayer.Player)
                 CheckForTimerAlarm();
 		}
 
