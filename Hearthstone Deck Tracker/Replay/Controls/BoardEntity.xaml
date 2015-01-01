@@ -1,0 +1,41 @@
+﻿<UserControl  x:Class="Hearthstone_Deck_Tracker.Replay.Controls.BoardEntity"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d" d:DesignWidth="200" Width="200" Background="Transparent" Height="68"
+              Visibility="{Binding RelativeSource={RelativeSource Self}, Path=EntityVisibility}" DataContextChanged="BoardEntity_OnDataContextChanged">
+    <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
+                <local:HearthstoneTextBlock Text="{Binding LocalizedName}" FontSize="14"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
+                                            TextAlignment="Center" Height="30"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="../../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <local:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Fill="{Binding AttackTextColor}"/>
+                <Image Source="../../Resources/health.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <local:HearthstoneTextBlock Text="{Binding Health}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding HealthTextColor}"/>
+            </Grid>
+            <!--<TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14"
+                       Foreground="{DynamicResource TextBrush}" VerticalAlignment="Top" FontWeight="Medium"
+                       HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0" TextAlignment="Center" />-->
+            <!--<Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
+                <local:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14"
+                                            VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
+                                            TextAlignment="Center" />
+            </Grid>-->
+        </Grid>
+    </Border>
+</UserControl>

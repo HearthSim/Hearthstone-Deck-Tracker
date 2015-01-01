@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
+	[Serializable]
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
 		public string Id;

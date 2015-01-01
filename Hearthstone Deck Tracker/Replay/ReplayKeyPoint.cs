@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Replay
                 else
                     additionalInfo = "Entity " + Id;
             }
-			return string.Format("({0}) - {1} {2} [{3}]", Turn, Player, Type, additionalInfo);
+			return string.Format("({0}) - {1} {2} \n[{3}]", Turn, Player, Type, additionalInfo);
 		}
 	}
 }

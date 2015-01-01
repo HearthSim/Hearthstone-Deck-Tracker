@@ -14,6 +14,9 @@ namespace Hearthstone_Deck_Tracker.Replay
         Attack,
         PlayToHand,
         PlayToDeck,
-        Obtain
+        Obtain,
+		Summon,
+	    HandPos,
+		BoardPos
     }
 }

@@ -16,13 +16,14 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Replay.Controls;
 
 namespace Hearthstone_Deck_Tracker.Replay
 {
 	/// <summary>
 	/// Interaction logic for ReplayViewer.xaml
 	/// </summary>
-	public partial class ReplayViewer : Window
+	public partial class ReplayViewer
 	{
 		public ReplayViewer()
 		{
@@ -59,12 +60,52 @@ namespace Hearthstone_Deck_Tracker.Replay
 		    foreach (var tvi in _treeViewTurnItems)
 		        TreeViewKeyPoints.Items.Add(tvi);
 			DataContext = this;
+			
 		}
 
+		private BoardEntity[] BoardEntites
+		{
+			get
+			{
+				return new[]
+				       {
+					       OpponentBoardEntity0, OpponentBoardEntity1, OpponentBoardEntity2, OpponentBoardEntity3, OpponentBoardEntity4,
+					       OpponentBoardEntity5, OpponentBoardEntity6, PlayerBoardEntity0, PlayerBoardEntity1, PlayerBoardEntity2,
+					       PlayerBoardEntity3, PlayerBoardEntity4, PlayerBoardEntity5, PlayerBoardEntity6
+				       };
+			}
+		}
 		private void Update()
 		{
 			DataContext = null;
 			DataContext = this;
+
+			if(_currentGameState.Type == KeyPointType.Attack)
+			{
+				var attackerId = _currentGameState.Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER);
+				var defenderId = _currentGameState.Data[0].GetTag(GAME_TAG.PROPOSED_DEFENDER);
+				var attacker = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == attackerId);
+				var defender = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == defenderId);
+				if(attacker != null && defender != null)
+				{
+					AttackLine.X1 = GetPosition(attacker).X + 50;
+					AttackLine.X2 = GetPosition(defender).X + 50;
+					AttackLine.Y1 = GetPosition(attacker).Y + 50;
+					AttackLine.Y2 = GetPosition(defender).Y + 50;
+					AttackLine.Visibility = Visibility.Visible;
+				}
+
+			}
+			else
+				AttackLine.Visibility = Visibility.Hidden;
+		}
+
+		private Point GetPosition(Visual element)
+		{
+			var positionTransform = element.TransformToAncestor(this);
+			var areaPosition = positionTransform.Transform(new Point(0, 0));
+
+			return areaPosition;
 		}
 		public void NextState()
 		{
@@ -141,24 +182,24 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return GetHero(_playerController).GetTag(GAME_TAG.ATK).ToString(); }
 		}
 
-		public IEnumerable<string> PlayerHand
+		public IEnumerable<Entity> PlayerHand
 		{
 			get
 			{
 				if(_currentGameState == null)
-					return null;
-				var hand = _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_playerController));
-				return hand.Select(x => Game.GetCardFromId(x.CardId).Name);
+					return new List<Entity>();
+				return _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_playerController));
+				//return hand.Select(x => Game.GetCardFromId(x.CardId).Name);
 			}
 		}
 
-		public IEnumerable<string> PlayerBoard {
+		public IEnumerable<Entity> PlayerBoard {
 			get
 			{
 				if(_currentGameState == null)
-					return null;
-				var board = _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_playerController) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO"));
-				return board.Select(x => Game.GetCardFromId(x.CardId).Name + " (" + x.GetTag(GAME_TAG.ATK) + " - " + x.GetTag(GAME_TAG.HEALTH) + ")");
+					return new List<Entity>();
+				return _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_playerController) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO"));
+				
 			}
 		}
 
@@ -212,26 +253,167 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return GetHero(_opponentController).GetTag(GAME_TAG.ATK).ToString(); }
 		}
 
-		public IEnumerable<string> OpponentHand
+		public IEnumerable<Entity> OpponentHand
 		{
 			get
 			{
 				if(_currentGameState == null)
-					return null;
-				var hand = _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_opponentController));
-				return hand.Select(x => string.IsNullOrEmpty(x.CardId) ? "[unknown]" :  Game.GetCardFromId(x.CardId).Name);
+					return new List<Entity>();
+				return _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_opponentController));
+				//return hand.Select(x => string.IsNullOrEmpty(x.CardId) ? "[unknown]" :  Game.GetCardFromId(x.CardId).Name);
 			}
 		}
 
-		public IEnumerable<string> OpponentBoard
+		public IEnumerable<Entity> OpponentBoard
 		{
 			get
 			{
 				if(_currentGameState == null)
-					return null;
-				var board = _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_opponentController) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO"));
-				return board.Select(x => Game.GetCardFromId(x.CardId).Name + " (" + x.GetTag(GAME_TAG.ATK) + " - " + x.GetTag(GAME_TAG.HEALTH) + ")");
+					return new List<Entity>();
+				return _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_opponentController) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO"));
+				//return board.Select(x => Game.GetCardFromId(x.CardId).Name + " (" + x.GetTag(GAME_TAG.ATK) + " - " + x.GetTag(GAME_TAG.HEALTH) + ")");
 			}
+		}
+		public Entity OpponentBoard0
+		{
+			get { return GetEntity(OpponentBoard, 0); }
+		}
+		public Entity OpponentBoard1
+		{
+			get { return GetEntity(OpponentBoard, 1); }
+		}
+		public Entity OpponentBoard2
+		{
+			get { return GetEntity(OpponentBoard, 2); }
+		}
+		public Entity OpponentBoard3
+		{
+			get { return GetEntity(OpponentBoard, 3); }
+		}
+		public Entity OpponentBoard4
+		{
+			get { return GetEntity(OpponentBoard, 4); }
+		}
+		public Entity OpponentBoard5
+		{
+			get { return GetEntity(OpponentBoard, 5); }
+		}
+		public Entity OpponentBoard6
+		{
+			get { return GetEntity(OpponentBoard, 6); }
+		}
+		public Entity PlayerBoard0
+		{
+			get { return GetEntity(PlayerBoard, 0); }
+		}
+		public Entity PlayerBoard1
+		{
+			get { return GetEntity(PlayerBoard, 1); }
+		}
+		public Entity PlayerBoard2
+		{
+			get { return GetEntity(PlayerBoard, 2); }
+		}
+		public Entity PlayerBoard3
+		{
+			get { return GetEntity(PlayerBoard, 3); }
+		}
+		public Entity PlayerBoard4
+		{
+			get { return GetEntity(PlayerBoard, 4); }
+		}
+		public Entity PlayerBoard5
+		{
+			get { return GetEntity(PlayerBoard, 5); }
+		}
+		public Entity PlayerBoard6
+		{
+			get { return GetEntity(PlayerBoard, 6); }
+		}
+		private Entity GetEntity(IEnumerable<Entity> zone, int index)
+		{
+			return zone.FirstOrDefault(x => x.HasTag(GAME_TAG.ZONE_POSITION) && x.GetTag(GAME_TAG.ZONE_POSITION) == index + 1);
+		}
+
+		public Entity PlayerCard0
+		{
+			get { return GetEntity(PlayerHand, 0); }
+		}
+		public Entity PlayerCard1
+		{
+			get { return GetEntity(PlayerHand, 1); }
+		}
+		public Entity PlayerCard2
+		{
+			get { return GetEntity(PlayerHand, 2); }
+		}
+		public Entity PlayerCard3
+		{
+			get { return GetEntity(PlayerHand, 3); }
+		}
+		public Entity PlayerCard4
+		{
+			get { return GetEntity(PlayerHand, 4); }
+		}
+		public Entity PlayerCard5
+		{
+			get { return GetEntity(PlayerHand, 5); }
+		}
+		public Entity PlayerCard6
+		{
+			get { return GetEntity(PlayerHand, 6); }
+		}
+		public Entity PlayerCard7
+		{
+			get { return GetEntity(PlayerHand, 7); }
+		}
+		public Entity PlayerCard8
+		{
+			get { return GetEntity(PlayerHand, 8); }
+		}
+		public Entity PlayerCard9
+		{
+			get { return GetEntity(PlayerHand, 9); }
+		}
+		public Entity OpponentCard0
+		{
+			get { return GetEntity(OpponentHand, 0); }
+		}
+		public Entity OpponentCard1
+		{
+			get { return GetEntity(OpponentHand, 1); }
+		}
+		public Entity OpponentCard2
+		{
+			get { return GetEntity(OpponentHand, 2); }
+		}
+		public Entity OpponentCard3
+		{
+			get { return GetEntity(OpponentHand, 3); }
+		}
+		public Entity OpponentCard4
+		{
+			get { return GetEntity(OpponentHand, 4); }
+		}
+		public Entity OpponentCard5
+		{
+			get { return GetEntity(OpponentHand, 5); }
+		}
+		public Entity OpponentCard6
+		{
+			get { return GetEntity(OpponentHand, 6); }
+		}
+		public Entity OpponentCard7
+		{
+			get { return GetEntity(OpponentHand, 7); }
+		}
+		public Entity OpponentCard8
+		{
+			get { return GetEntity(OpponentHand, 8); }
+		}
+		public Entity OpponentCard9
+		{
+			get { return GetEntity(OpponentHand, 9); }
 		}
 
 		private void BtnNext_Click(object sender, RoutedEventArgs e)

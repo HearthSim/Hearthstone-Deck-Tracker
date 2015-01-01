@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker
 		private long _lastGameEnd;
 		private long _previousSize;
 		private int _addToTurn;
+		private bool _gameEnded;
 
 		private bool _waitForModeDetection;
 		private int _currentEntityId;
@@ -162,6 +163,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public int GetTurnNumber()
 		{
+			if(!Game.IsMulliganDone)
+				return 0;
 			if(_addToTurn == -1)
 			{
 				var firstPlayer = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
@@ -184,6 +187,7 @@ namespace Hearthstone_Deck_Tracker
 	        _addToTurn = -1;
 			_first = true;
 			_doUpdate = true;
+	        _gameEnded = false;
 			_gameHandler = new GameEventHandler();
 			ReadFileAsync();
 		}
@@ -198,6 +202,7 @@ namespace Hearthstone_Deck_Tracker
 			_first = true;
 			_doUpdate = true;
 			_gameHandler = gh;
+			_gameEnded = false;
 			ReadFileAsync();
 		}
 		
@@ -249,10 +254,9 @@ namespace Hearthstone_Deck_Tracker
 								await Task.Delay(_updateDelay);
 								continue;
 							}
-							lock(Game.ResetObject)
-							{
-								Analyze(newLines);
-							}
+							
+							Analyze(newLines);
+							
 							if (_ifaceUpdateNeeded)
 								Helper.UpdateEverything();
 						}
@@ -585,7 +589,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("--------" + player + " " + Game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
 				                 (TAG_ZONE)value);
 				
-				if((TAG_ZONE)value == TAG_ZONE.HAND && _waitForController == null)
+				if(((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && Game.IsMulliganDone) && _waitForController == null)
 				{
 					if(!Game.IsMulliganDone)
 						prevZone = (int)TAG_ZONE.DECK;
@@ -611,7 +615,7 @@ namespace Hearthstone_Deck_Tracker
 								else if (controller == Game.OpponentId)
 								{
                                     _gameHandler.HandleOpponentDraw(GetTurnNumber());
-                                    ReplayMaker.Generate(KeyPointType.Draw, id, ActivePlayer.Opponent);
+									ReplayMaker.Generate(KeyPointType.Draw, id, ActivePlayer.Opponent);
 								}
 								break;
 							case TAG_ZONE.REMOVEDFROMGAME:
@@ -643,11 +647,6 @@ namespace Hearthstone_Deck_Tracker
 						}
 						break;
                     case TAG_ZONE.GRAVEYARD:
-                        if (controller == Game.PlayerId)
-                            ReplayMaker.Generate(KeyPointType.Death, id, ActivePlayer.Player);
-                        else
-                            if (controller == Game.OpponentId)
-                                ReplayMaker.Generate(KeyPointType.Death, id, ActivePlayer.Opponent);
 						break;
 					case TAG_ZONE.HAND:
 						switch((TAG_ZONE)value)
@@ -730,6 +729,13 @@ namespace Hearthstone_Deck_Tracker
 									_gameHandler.HandleOpponentPlayToDeck(cardId, GetTurnNumber());
                                     ReplayMaker.Generate(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
 								break;
+							case TAG_ZONE.GRAVEYARD:
+								if(controller == Game.PlayerId)
+									ReplayMaker.Generate(KeyPointType.Death, id, ActivePlayer.Player);
+								else
+									if(controller == Game.OpponentId)
+									ReplayMaker.Generate(KeyPointType.Death, id, ActivePlayer.Opponent);
+								break;
 						}
 						break;
 					case TAG_ZONE.SECRET:
@@ -747,36 +753,65 @@ namespace Hearthstone_Deck_Tracker
 								break;
 						}
 						break;
-					default:
+					case TAG_ZONE.SETASIDE:
+					case TAG_ZONE.CREATED:
+					case TAG_ZONE.INVALID:
+					case TAG_ZONE.REMOVEDFROMGAME:
 						switch((TAG_ZONE)value)
 						{
+							case TAG_ZONE.PLAY:
+								if(controller == Game.PlayerId)
+									ReplayMaker.Generate(KeyPointType.Summon, id, ActivePlayer.Player);
+								if(controller == Game.OpponentId)
+									ReplayMaker.Generate(KeyPointType.Summon, id, ActivePlayer.Opponent);
+								break;
 							case TAG_ZONE.HAND:
-								if (controller == Game.PlayerId)
-                                {
-                                    _gameHandler.HandlePlayerGet(cardId, GetTurnNumber());
-                                    ReplayMaker.Generate(KeyPointType.Obtain, id, ActivePlayer.Player);
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerGet(cardId, GetTurnNumber());
+									ReplayMaker.Generate(KeyPointType.Obtain, id, ActivePlayer.Player);
 								}
 								else if(controller == Game.OpponentId)
-						        {
-						            _gameHandler.HandleOpponentGet(GetTurnNumber());
-                                    ReplayMaker.Generate(KeyPointType.Obtain, id, ActivePlayer.Opponent);
-						        }
+								{
+									_gameHandler.HandleOpponentGet(GetTurnNumber());
+									ReplayMaker.Generate(KeyPointType.Obtain, id, ActivePlayer.Opponent);
+								}
 								break;
 						}
 						break;
 				}
 			}
-			else if(tag == GAME_TAG.PLAYSTATE && Game.Entities[id].IsPlayer)
+			else if(tag == GAME_TAG.PLAYSTATE && !_gameEnded)
 			{
-				if(value == (int)TAG_PLAYSTATE.WON)
+				if(Game.Entities[id].IsPlayer)
 				{
-					_gameHandler.HandleGameEnd(false);
-					_gameHandler.HandleWin();
+					if(value == (int)TAG_PLAYSTATE.WON)
+					{
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleWin();
+						_gameEnded = true;
+					}
+					else if(value == (int)TAG_PLAYSTATE.LOST)
+					{
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleLoss();
+						_gameEnded = true;
+					}
 				}
-				else if(value == (int)TAG_PLAYSTATE.LOST)
+				else
 				{
-					_gameHandler.HandleGameEnd(false);
-					_gameHandler.HandleLoss();
+					if(value == (int)TAG_PLAYSTATE.WON)
+					{
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleLoss();
+						_gameEnded = true;
+					}
+					else if(value == (int)TAG_PLAYSTATE.LOST)
+					{
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleWin();
+						_gameEnded = true;
+					}
 				}
 			}
 			else if(tag == GAME_TAG.CURRENT_PLAYER && value == 1)
@@ -788,6 +823,24 @@ namespace Hearthstone_Deck_Tracker
                 else if (controller == Game.OpponentId)
                     ReplayMaker.Generate(KeyPointType.Attack, id, ActivePlayer.Opponent);
 
+			}
+			else if(tag == GAME_TAG.ZONE_POSITION)
+			{
+				var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
+                if(zone == (int)TAG_ZONE.HAND)
+				{
+					if(controller == Game.PlayerId)
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player);
+					else if(controller == Game.OpponentId)
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent);
+				}
+				else if(zone == (int)TAG_ZONE.PLAY)
+				{
+					if(controller == Game.PlayerId)
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player);
+					else if(controller == Game.OpponentId)
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
+				}
 			}
 			if(_waitForController != null)
 			{
@@ -859,6 +912,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_first = true;
 			_addToTurn = -1;
+			_gameEnded = false;
 		}
 	}
 }
