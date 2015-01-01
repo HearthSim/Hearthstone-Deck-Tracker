@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Newtonsoft.Json;
 
@@ -91,7 +92,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 		private static void ResolveZonePos()
 		{
 			//ZONE_POSITION changes happen after draws, meaning drawn card will not appear. 
-			var handPos = new Dictionary<int, int>();
+
+			var playerController = Points[0].Data.First(x => x.IsPlayer).GetTag(GAME_TAG.CONTROLLER);
+            var handPos = new Dictionary<int, int>();
 			var boardPos = new Dictionary<int, int>();
 			Points.Reverse();
 			foreach(var kp in Points)
@@ -134,6 +137,102 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var toRemove = new List<ReplayKeyPoint>(Points.Where(x => x.Type == KeyPointType.BoardPos || x.Type == KeyPointType.HandPos));
 			foreach(var kp in toRemove)
 				Points.Remove(kp);
+
+			//resolve remaing zonepos issues ... there HAS to be a better way to do this, right...?
+			var occupiedPlayerHandZonePos = new List<int>();
+			var occupiedPlayerBoardZonePos = new List<int>();
+			var occupiedOpponentHandZonePos = new List<int>();
+			var occupiedOpponentBoardZonePos = new List<int>();
+			foreach(var kp in Points)
+			{
+				occupiedPlayerHandZonePos.Clear();
+				occupiedPlayerBoardZonePos.Clear();
+				occupiedOpponentHandZonePos.Clear();
+				occupiedOpponentBoardZonePos.Clear();
+				foreach(var entity in kp.Data)
+				{
+					if(entity.HasTag(GAME_TAG.ZONE_POSITION))
+					{
+						var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
+                        if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND)
+						{
+							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
+							{
+								if(!occupiedPlayerHandZonePos.Contains(zonePos))
+									occupiedPlayerHandZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedPlayerHandZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedPlayerHandZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
+								if(!occupiedOpponentHandZonePos.Contains(zonePos))
+									occupiedOpponentHandZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedOpponentHandZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedOpponentHandZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+							
+						}
+						else if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.PLAY)
+						{
+							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
+							{
+								if(!occupiedPlayerBoardZonePos.Contains(zonePos))
+									occupiedPlayerBoardZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedPlayerBoardZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedPlayerBoardZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
+								if(!occupiedOpponentBoardZonePos.Contains(zonePos))
+									occupiedOpponentBoardZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedOpponentBoardZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedOpponentBoardZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
 
 			//re-reverse
 			Points.Reverse();

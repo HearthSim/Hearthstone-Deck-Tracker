@@ -16,7 +16,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public ReplayKeyPoint(Entity[] data, KeyPointType type, int id, ActivePlayer player)
 		{
-			Data = ReplayMaker.DeepClone(data);
+			if(data != null)
+				Data = ReplayMaker.DeepClone(data);
 			Type = type;
 			Id = id;
 		    Player = player;
