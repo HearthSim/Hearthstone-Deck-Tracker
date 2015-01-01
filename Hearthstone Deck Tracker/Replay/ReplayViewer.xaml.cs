@@ -29,18 +29,35 @@ namespace Hearthstone_Deck_Tracker.Replay
 			InitializeComponent();
 		}
 
+	    private List<TreeViewItem> _treeViewTurnItems;
+	    private Entity _playerEntity;
+	    private Entity _opponentEntity;
 		private int _playerController;
 		private int _opponentController;
 		public void Load(List<ReplayKeyPoint> replay)
 		{
+		    if (replay == null || replay.Count == 0)
+		        return;
 			Replay = replay;
-			_currentGameState = Replay[0];
-			var player = _currentGameState.Data.First(x => x.IsPlayer);
-			var opponent = _currentGameState.Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
-            _playerController = player.GetTag(GAME_TAG.CONTROLLER);
-			_opponentController = opponent.GetTag(GAME_TAG.CONTROLLER);
-			foreach(var kp in Replay)
-				ListBoxKeyPoints.Items.Add(kp);
+            _currentGameState = Replay[0];
+            _playerEntity = _currentGameState.Data.First(x => x.IsPlayer);
+            _opponentEntity = _currentGameState.Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
+            _playerController = _playerEntity.GetTag(GAME_TAG.CONTROLLER);
+            _opponentController = _opponentEntity.GetTag(GAME_TAG.CONTROLLER);
+            _treeViewTurnItems = new List<TreeViewItem>();
+			foreach (var kp in Replay)
+			{
+
+			    var tvItem = _treeViewTurnItems.FirstOrDefault(x => (string) x.Header == "Turn " + kp.Turn);
+                if (tvItem == null)
+                {
+                    tvItem = new TreeViewItem() {Header = "Turn " + kp.Turn};
+                    _treeViewTurnItems.Add(tvItem);
+                }
+                tvItem.Items.Add(kp);
+			}
+		    foreach (var tvi in _treeViewTurnItems)
+		        TreeViewKeyPoints.Items.Add(tvi);
 			DataContext = this;
 		}
 
@@ -71,17 +88,29 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public List<ReplayKeyPoint> KeyPoints
 		{
 			get { return Replay; }
-		} 
-		public string PlayerHero
-		{
-			get
-			{
-				if(_currentGameState == null)
-					return string.Empty;
-				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : Game.GetCardFromId(cardId).Name;
-			} 
 		}
+
+
+        public string PlayerName
+        {
+            get
+            {
+                if (_currentGameState == null)
+                    return string.Empty;
+                return _playerEntity.Name;
+            }
+        }
+
+        public string PlayerHero
+        {
+            get
+            {
+                if (_currentGameState == null)
+                    return string.Empty;
+                var cardId = GetHero(_playerController).CardId;
+                return cardId == null ? null : Game.GetCardFromId(cardId).Name;
+            }
+        }
 
 		public string PlayerHealth
 		{
@@ -132,6 +161,17 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return board.Select(x => Game.GetCardFromId(x.CardId).Name + " (" + x.GetTag(GAME_TAG.ATK) + " - " + x.GetTag(GAME_TAG.HEALTH) + ")");
 			}
 		}
+
+        public string OpponentName
+        {
+            get
+            {
+                if (_currentGameState == null)
+                    return string.Empty;
+                return _opponentEntity.Name;
+            }
+        }
+
 		public string OpponentHero
 		{
 			get
@@ -179,7 +219,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var hand = _currentGameState.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_opponentController));
-				return hand.Select(x => string.IsNullOrEmpty(x.CardId) ? "" :  Game.GetCardFromId(x.CardId).Name);
+				return hand.Select(x => string.IsNullOrEmpty(x.CardId) ? "[unknown]" :  Game.GetCardFromId(x.CardId).Name);
 			}
 		}
 
@@ -204,5 +244,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 			_currentGameState = (ReplayKeyPoint)((ListBox)sender).SelectedItem;
 			Update();
 		}
+
+	    private void TreeViewKeyPoints_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+	    {
+	        var selected = ((TreeView) sender).SelectedItem as ReplayKeyPoint;
+	        if (selected == null)
+	            return;
+	        _currentGameState = selected;
+            Update();
+	    }
 	}
 }

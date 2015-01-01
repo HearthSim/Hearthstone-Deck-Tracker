@@ -782,7 +782,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemReplay_OnClick(object sender, RoutedEventArgs e)
 		{
-			if(!File.Exists("Replays\\replay.json"))
+			if(!File.Exists("Replays\\replay.hdtreplay"))
 				ReplayMaker.SaveToDisk();
 			else
 				ReplayReader.Read();

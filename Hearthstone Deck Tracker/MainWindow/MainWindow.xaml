@@ -238,7 +238,11 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_REPLAY" Click="MenuItemReplay_OnClick"></MenuItem>
+                <MenuItem Header="_REPLAY" Click="MenuItemReplay_OnClick">
+                    <MenuItem Header="_LAST GAME"></MenuItem>
+                    <MenuItem Header="_SELECT GAME"></MenuItem>
+                    <MenuItem Header="LOAD _FiLE"></MenuItem>
+                </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
             <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">

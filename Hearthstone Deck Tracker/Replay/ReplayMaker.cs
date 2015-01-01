@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Newtonsoft.Json;
 
@@ -30,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Points.Clear();
 		}
 
-		public static void Generate(KeyPointType type, int id)
+		public static void Generate(KeyPointType type, int id, ActivePlayer player)
 		{
-			Points.Add(new ReplayKeyPoint(Game.Entities.Values.ToArray(), type, id));
+			Points.Add(new ReplayKeyPoint(Game.Entities.Values.ToArray(), type, id, player));
 		}
 
 		public static void SaveToDisk()
