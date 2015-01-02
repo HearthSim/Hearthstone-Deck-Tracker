@@ -779,13 +779,40 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 		}
-
-		private void MenuItemReplay_OnClick(object sender, RoutedEventArgs e)
+		
+		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
 		{
-			if(!File.Exists("Replays\\replay.hdtreplay"))
-				ReplayMaker.SaveToDisk();
-			else
-				ReplayReader.Read();
+			try
+			{
+				var newest = Directory.GetFiles("Replays").Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
+				if(newest != null)
+					ReplayReader.Read(newest.FullName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+			}
+		}
+
+		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var dialog = new OpenFileDialog
+				             {
+					             Title = "Select Replay File",
+					             DefaultExt = "*.hdtreplay",
+					             Filter = "HDT Replay|*.hdtreplay",
+					             InitialDirectory = Directory.GetCurrentDirectory() + "\\Replays"
+				             };
+				var dialogResult = dialog.ShowDialog();
+				if(dialogResult == System.Windows.Forms.DialogResult.OK)
+					ReplayReader.Read(dialog.FileName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+			}
 		}
 	}
 }

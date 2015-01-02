@@ -279,7 +279,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var line in lines)
 				{
 					tempOffset += line.Length + 1;
-					if(line.StartsWith("[Bob] legend rank"))
+					if(line.Contains("CREATE_GAME"))
 						offset = tempOffset;
 				}
 
@@ -591,8 +591,8 @@ namespace Hearthstone_Deck_Tracker
 			var cardId = Game.Entities[id].CardId;
 			if(tag == GAME_TAG.ZONE)
 			{
-				Logger.WriteLine("--------" + player + " " + Game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
-				                 (TAG_ZONE)value);
+				//Logger.WriteLine("--------" + player + " " + Game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
+				//                 (TAG_ZONE)value);
 
 				if(((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && Game.IsMulliganDone) &&
 				   _waitForController == null)
@@ -848,13 +848,6 @@ namespace Hearthstone_Deck_Tracker
 						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player);
 					else if(controller == Game.OpponentId)
 						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
-				}
-				else if(zone == (int)TAG_ZONE.SECRET)
-				{
-					if(controller == Game.PlayerId)
-						ReplayMaker.Generate(KeyPointType.SecretPos, id, ActivePlayer.Player);
-					else if(controller == Game.OpponentId)
-						ReplayMaker.Generate(KeyPointType.SecretPos, id, ActivePlayer.Opponent);
 				}
 			}
 			else if(tag == GAME_TAG.CARD_TARGET && value > 0)

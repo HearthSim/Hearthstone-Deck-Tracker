@@ -18,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 		Summon,
 	    HandPos,
 		BoardPos,
-		SecretPos,
         PlaySpell,
 		Weapon,
 		WeaponDestroyed

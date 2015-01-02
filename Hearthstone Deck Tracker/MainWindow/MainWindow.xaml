@@ -4,6 +4,7 @@
                       xmlns:system="clr-namespace:System;assembly=mscorlib"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       Title="Hearthstone Deck Tracker" Height="620" Width="550"
                       MinHeight="525" MinWidth="515"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -238,10 +239,10 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="_REPLAY" Click="MenuItemReplay_OnClick">
-                    <MenuItem Header="_LAST GAME"></MenuItem>
-                    <MenuItem Header="_SELECT GAME"></MenuItem>
-                    <MenuItem Header="LOAD _FiLE"></MenuItem>
+                <MenuItem Header="_REPLAY">
+                    <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
+                    <MenuItem Header="_SELECT GAME" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"></MenuItem>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
@@ -250,16 +251,16 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <local:DeckListView x:Name="ListViewDeck" Grid.Row="0"
+                <ListView x:Name="ListViewDeck" Grid.Row="0"
                                     Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
-                                    HorizontalAlignment="Center" Width="240" Height="auto"
+                                    HorizontalAlignment="Center" Width="235" Height="auto"
                                     MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
                                     MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
-                    <local:DeckListView.Resources>
+                    <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
@@ -275,27 +276,22 @@
                                     </ToolTip>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Background" Value="{Binding Background}" />
-                            <Setter Property="Height" Value="35" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
                             <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Background}" />
-                                </Trigger>
                                 <Trigger Property="IsSelected"
                                          Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Background}" />
                                     <Setter Property="BorderBrush"
                                             Value="Blue" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </local:DeckListView.Resources>
-                </local:DeckListView>
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls1:Card/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
             </Grid>
 
@@ -393,19 +389,19 @@
                              PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"
                              DockPanel.Dock="Left" Width="130" />
                 </StackPanel>
-                <local:DeckListView x:Name="ListViewDB" Background="DimGray" Foreground="White"
+                <ListView x:Name="ListViewDB" Background="DimGray" Foreground="White"
                                     FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                                     HorizontalAlignment="Left"
-                                    Width="240" KeyDown="ListViewDB_KeyDown"
+                                    Width="235" KeyDown="ListViewDB_KeyDown"
                                     MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
                     <ListView.Resources>
-                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
-                        <Style TargetType="{x:Type ListViewItem}">
+                        <Style TargetType="ListViewItem">
                             <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                             <Setter Property="ToolTipService.ShowDuration" Value="60000" />
                             <Setter Property="ToolTipService.IsEnabled"
@@ -417,31 +413,22 @@
                                     </ToolTip>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="FontFamily"
-                                    Value="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT" />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Background" Value="{Binding Background}" />
-                            <Setter Property="Height" Value="35" />
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Margin" Value="0,0,0,0" />
+                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
                             <Style.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Background}" />
-                                </Trigger>
                                 <Trigger Property="IsSelected"
                                          Value="True">
-                                    <Setter Property="Background"
-                                            Value="{Binding Background}" />
                                     <Setter Property="BorderBrush"
                                             Value="Blue" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-
                     </ListView.Resources>
-                </local:DeckListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls1:Card/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
 
         </Grid>

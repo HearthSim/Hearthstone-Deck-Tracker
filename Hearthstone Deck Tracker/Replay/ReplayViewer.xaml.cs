@@ -70,7 +70,8 @@ namespace Hearthstone_Deck_Tracker.Replay
                     tvItem = new TreeViewItem() {Header = "Turn " + kp.Turn, IsExpanded = true};
                     _treeViewTurnItems.Add(tvItem);
                 }
-                tvItem.Items.Add(kp);
+				if(!string.IsNullOrEmpty(kp.Data.First(x => x.Id == kp.Id).CardId))
+					tvItem.Items.Add(kp);
 			}
 		    foreach (var tvi in _treeViewTurnItems)
 		        TreeViewKeyPoints.Items.Add(tvi);
@@ -461,8 +462,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				return _currentGameState == null
 					       ? new List<Entity>()
-					       : _currentGameState.Data.Where(x => x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET 
-															&& x.IsControlledBy(_opponentController));
+					       : _currentGameState.Data.Where(x => x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET &&
+															x.IsControlledBy(_opponentController));
 			}
 		}
 		private IEnumerable<Entity> PlayerSecrets
@@ -483,43 +484,73 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public Entity OpponentSecret0
 		{
-			get { return GetEntity(OpponentSecrets, 0); }
+			get
+			{
+				return OpponentSecrets.Any() ? OpponentSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity OpponentSecret1
 		{
-			get { return GetEntity(OpponentSecrets, 1); }
+			get
+			{
+				return OpponentSecrets.Count() > 1 ? OpponentSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity OpponentSecret2
 		{
-			get { return GetEntity(OpponentSecrets, 2); }
+			get
+			{
+				return OpponentSecrets.Count() > 2 ? OpponentSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity OpponentSecret3
 		{
-			get { return GetEntity(OpponentSecrets, 3); }
+			get
+			{
+				return OpponentSecrets.Count() > 3 ? OpponentSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity OpponentSecret4
 		{
-			get { return GetEntity(OpponentSecrets, 4); }
+			get
+			{
+				return OpponentSecrets.Count() > 4 ? OpponentSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity PlayerSecret0
 		{
-			get { return GetEntity(PlayerSecrets, 0); }
+			get
+			{
+				return PlayerSecrets.Any() ? PlayerSecrets.ToArray()[0] : null;
+			}
 		}
 		public Entity PlayerSecret1
 		{
-			get { return GetEntity(PlayerSecrets, 1); }
+			get
+			{
+				return PlayerSecrets.Count() > 1 ? PlayerSecrets.ToArray()[1] : null;
+			}
 		}
 		public Entity PlayerSecret2
 		{
-			get { return GetEntity(PlayerSecrets, 2); }
+			get
+			{
+				return PlayerSecrets.Count() > 2 ? PlayerSecrets.ToArray()[2] : null;
+			}
 		}
 		public Entity PlayerSecret3
 		{
-			get { return GetEntity(PlayerSecrets, 3); }
+			get
+			{
+				return PlayerSecrets.Count() > 3 ? PlayerSecrets.ToArray()[3] : null;
+			}
 		}
 		public Entity PlayerSecret4
 		{
-			get { return GetEntity(PlayerSecrets, 4); }
+			get
+			{
+				return PlayerSecrets.Count() > 4 ? PlayerSecrets.ToArray()[4] : null;
+			}
 		}
 
 		public SolidColorBrush PlayerHealthTextColor
@@ -545,7 +576,30 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 		}
 
-	    private void TreeViewKeyPoints_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		public string PlayerMana
+		{
+			get
+			{
+				if(_currentGameState == null)
+					return "0/0";
+				var total = PlayerEntity.GetTag(GAME_TAG.RESOURCES);
+				var current = total - PlayerEntity.GetTag(GAME_TAG.RESOURCES_USED);
+				return current + "/" + total;
+			}
+		}
+		public string OpponentMana
+		{
+			get
+			{
+				if(_currentGameState == null)
+					return "0/0";
+				var total = OpponentEntity.GetTag(GAME_TAG.RESOURCES);
+				var current = total - OpponentEntity.GetTag(GAME_TAG.RESOURCES_USED);
+				return current + "/" + total;
+			}
+		}
+
+		private void TreeViewKeyPoints_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 	    {
 	        var selected = ((TreeView) sender).SelectedItem as ReplayKeyPoint;
 	        if (selected == null)

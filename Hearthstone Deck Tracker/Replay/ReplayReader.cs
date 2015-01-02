@@ -14,10 +14,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 {
 	public static class ReplayReader
 	{
-		public static void Read()
+		public static void Read(string file)
 		{
+			if(!File.Exists(file))
+				return;
 			const string jsonFile = "replay.json";
-			const string file = "Replays\\replay.hdtreplay";
+			//const string file = "Replays\\replay.hdtreplay";
 			string json;
 
 			using(var fs = new FileStream(file,FileMode.Open))

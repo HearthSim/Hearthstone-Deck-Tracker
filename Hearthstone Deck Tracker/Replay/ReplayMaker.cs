@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -8,6 +9,7 @@ using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Replay
@@ -40,34 +42,39 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public static void SaveToDisk()
 		{
+			if(!Points.Any())
+				return;
+			ResolveZonePos();
+			ResolveCardIds();
+			RemoveObsoletePlays();
 
-			if(Points.Any())
-			{
-				ResolveZonePos();
-				ResolveCardIds();
-				RemoveObsoletePlays();
-			}
+			var player = Points.Last().Data.First(x => x.IsPlayer);
+			var opponent = Points.Last().Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
 
-			var path = Helper.GetValidFilePath("Replays", "replay", ".hdtreplay");
-			using (var ms = new MemoryStream())
+			var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, "HERO", opponent.Name,
+			                             "HERO", DateTime.Now.ToString("hhmm-ddMMyy"));
+
+
+			var path = Helper.GetValidFilePath("Replays", fileName, ".hdtreplay");
+			using(var ms = new MemoryStream())
 			{
-				using (var archive = new ZipArchive(ms, ZipArchiveMode.Create, true))
+				using(var archive = new ZipArchive(ms, ZipArchiveMode.Create, true))
 				{
 					var json = archive.CreateEntry("replay.json");
 
-					using (var stream = json.Open())
-					using (var sw = new StreamWriter(stream))
+					using(var stream = json.Open())
+					using(var sw = new StreamWriter(stream))
 						sw.Write(JsonConvert.SerializeObject(Points));
 				}
 
-				using (var fileStream = new FileStream(path, FileMode.Create))
+				using(var fileStream = new FileStream(path, FileMode.Create))
 				{
 					ms.Seek(0, SeekOrigin.Begin);
 					ms.CopyTo(fileStream);
 				}
 			}
 
-			
+
 		}
 
 		private static void ResolveCardIds()
@@ -97,7 +104,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var playerController = Points[0].Data.First(x => x.IsPlayer).GetTag(GAME_TAG.CONTROLLER);
             var handPos = new Dictionary<int, int>();
 			var boardPos = new Dictionary<int, int>();
-			var secretPos = new Dictionary<int, int>();
 			Points.Reverse();
 			foreach(var kp in Points)
 			{
@@ -117,14 +123,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 					else
 						boardPos[kp.Id] = pos;
 				}
-				else if(kp.Type == KeyPointType.SecretPos)
-				{
-					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GAME_TAG.ZONE_POSITION);
-					if(!secretPos.ContainsKey(kp.Id))
-						secretPos.Add(kp.Id, pos);
-					else
-						secretPos[kp.Id] = pos;
-				}
 				else if(kp.Type == KeyPointType.Draw || kp.Type == KeyPointType.Obtain)
 				{
 					int zp;
@@ -143,27 +141,16 @@ namespace Hearthstone_Deck_Tracker.Replay
 						boardPos.Remove(zp);
 					}
 				}
-				else if(kp.Type == KeyPointType.SecretPlayed)
-				{
-					int zp;
-					if(secretPos.TryGetValue(kp.Id, out zp))
-					{
-						kp.Data.First(x => x.Id == kp.Id).SetTag(GAME_TAG.ZONE_POSITION, zp);
-						secretPos.Remove(zp);
-					}
-				}
 			}
-			var toRemove = new List<ReplayKeyPoint>(Points.Where(x => x.Type == KeyPointType.BoardPos || x.Type == KeyPointType.HandPos || x.Type == KeyPointType.SecretPos));
+			var toRemove = new List<ReplayKeyPoint>(Points.Where(x => x.Type == KeyPointType.BoardPos || x.Type == KeyPointType.HandPos));
 			foreach(var kp in toRemove)
 				Points.Remove(kp);
 
 			//resolve remaing zonepos issues ... there HAS to be a better way to do this, right...?
 			var occupiedPlayerHandZonePos = new List<int>();
 			var occupiedPlayerBoardZonePos = new List<int>();
-			var occupiedPlayerSecretZonePos = new List<int>();
 			var occupiedOpponentHandZonePos = new List<int>();
 			var occupiedOpponentBoardZonePos = new List<int>();
-			var occupiedOpponentSecretZonePos = new List<int>();
 			foreach(var kp in Points)
 			{
 				occupiedPlayerHandZonePos.Clear();
@@ -244,43 +231,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 										{
 											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
 											occupiedOpponentBoardZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-						}
-						else if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET)
-						{
-							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
-							{
-								if(!occupiedPlayerSecretZonePos.Contains(zonePos))
-									occupiedPlayerSecretZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedPlayerSecretZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedPlayerSecretZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-							else
-							{
-								if(!occupiedOpponentSecretZonePos.Contains(zonePos))
-									occupiedOpponentSecretZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedOpponentSecretZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedOpponentSecretZonePos.Add(i);
 											break;
 										}
 									}
