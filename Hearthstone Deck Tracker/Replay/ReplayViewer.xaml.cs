@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,8 +32,24 @@ namespace Hearthstone_Deck_Tracker.Replay
 		}
 
 	    private List<TreeViewItem> _treeViewTurnItems;
-	    private Entity _playerEntity;
-	    private Entity _opponentEntity;
+
+		private Entity PlayerEntity
+		{
+			get
+			{
+				return _currentGameState == null ? null : _currentGameState.Data.First(x => x.IsPlayer);
+			}
+		}
+
+		private Entity OpponentEntity
+		{
+			get
+			{
+				return _currentGameState == null
+					       ? null
+					       : _currentGameState.Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
+			}			
+		}
 		private int _playerController;
 		private int _opponentController;
 		public void Load(List<ReplayKeyPoint> replay)
@@ -41,10 +58,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 		        return;
 			Replay = replay;
             _currentGameState = Replay[0];
-            _playerEntity = _currentGameState.Data.First(x => x.IsPlayer);
-            _opponentEntity = _currentGameState.Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
-            _playerController = _playerEntity.GetTag(GAME_TAG.CONTROLLER);
-            _opponentController = _opponentEntity.GetTag(GAME_TAG.CONTROLLER);
+            _playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
+            _opponentController = OpponentEntity.GetTag(GAME_TAG.CONTROLLER);
             _treeViewTurnItems = new List<TreeViewItem>();
 			foreach (var kp in Replay)
 			{
@@ -52,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			    var tvItem = _treeViewTurnItems.FirstOrDefault(x => (string) x.Header == "Turn " + kp.Turn);
                 if (tvItem == null)
                 {
-                    tvItem = new TreeViewItem() {Header = "Turn " + kp.Turn};
+                    tvItem = new TreeViewItem() {Header = "Turn " + kp.Turn, IsExpanded = true};
                     _treeViewTurnItems.Add(tvItem);
                 }
                 tvItem.Items.Add(kp);
@@ -60,10 +75,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 		    foreach (var tvi in _treeViewTurnItems)
 		        TreeViewKeyPoints.Items.Add(tvi);
 			DataContext = this;
-			
 		}
 
-		private BoardEntity[] BoardEntites
+		private IEnumerable<BoardEntity> BoardEntites
 		{
 			get
 			{
@@ -107,15 +121,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 			return areaPosition;
 		}
-		public void NextState()
-		{
-			if(Replay.Count > _index + 1)
-			_currentGameState = Replay[++_index];
-			Update();
-		}
+
 		public List<ReplayKeyPoint> Replay;
 		private ReplayKeyPoint _currentGameState;
-		private int _index;
 
 		private Entity GetHero(int controller)
 		{
@@ -138,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.Replay
             {
                 if (_currentGameState == null)
                     return string.Empty;
-                return _playerEntity.Name;
+                return PlayerEntity.Name;
             }
         }
 
@@ -209,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Replay
             {
                 if (_currentGameState == null)
                     return string.Empty;
-                return _opponentEntity.Name;
+                return OpponentEntity.Name;
             }
         }
 
@@ -416,15 +424,125 @@ namespace Hearthstone_Deck_Tracker.Replay
 			get { return GetEntity(OpponentHand, 9); }
 		}
 
-		private void BtnNext_Click(object sender, RoutedEventArgs e)
+		public Entity PlayerWeapon
 		{
-			NextState();
+			get
+			{
+				if(_currentGameState == null)
+					return null;
+				var weaponId = PlayerEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
+				if(weaponId == 0)
+					return null;
+				return _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+			}
 		}
 
-		private void ListBoxKeyPoints_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		public Entity OpponentWeapon
 		{
-			_currentGameState = (ReplayKeyPoint)((ListBox)sender).SelectedItem;
-			Update();
+			get
+			{
+				if(_currentGameState == null)
+					return null;
+				var weaponId = OpponentEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
+				if(weaponId == 0)
+					return null;
+				return _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+			}
+		}
+
+		public Visibility OpponentSecretVisibility
+		{
+			get { return OpponentSecrets.Any() ? Visibility.Visible : Visibility.Collapsed; }
+		}
+
+		private IEnumerable<Entity> OpponentSecrets
+		{
+			get
+			{
+				return _currentGameState == null
+					       ? new List<Entity>()
+					       : _currentGameState.Data.Where(x => x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET 
+															&& x.IsControlledBy(_opponentController));
+			}
+		}
+		private IEnumerable<Entity> PlayerSecrets
+		{
+			get
+			{
+				return _currentGameState == null
+						   ? new List<Entity>()
+						   : _currentGameState.Data.Where(x => x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET
+															&& x.IsControlledBy(_playerController));
+			}
+		}
+
+		public Visibility PlayerSecretVisibility
+		{
+			get { return PlayerSecrets.Any() ? Visibility.Visible : Visibility.Collapsed; }
+		}
+
+		public Entity OpponentSecret0
+		{
+			get { return GetEntity(OpponentSecrets, 0); }
+		}
+		public Entity OpponentSecret1
+		{
+			get { return GetEntity(OpponentSecrets, 1); }
+		}
+		public Entity OpponentSecret2
+		{
+			get { return GetEntity(OpponentSecrets, 2); }
+		}
+		public Entity OpponentSecret3
+		{
+			get { return GetEntity(OpponentSecrets, 3); }
+		}
+		public Entity OpponentSecret4
+		{
+			get { return GetEntity(OpponentSecrets, 4); }
+		}
+		public Entity PlayerSecret0
+		{
+			get { return GetEntity(PlayerSecrets, 0); }
+		}
+		public Entity PlayerSecret1
+		{
+			get { return GetEntity(PlayerSecrets, 1); }
+		}
+		public Entity PlayerSecret2
+		{
+			get { return GetEntity(PlayerSecrets, 2); }
+		}
+		public Entity PlayerSecret3
+		{
+			get { return GetEntity(PlayerSecrets, 3); }
+		}
+		public Entity PlayerSecret4
+		{
+			get { return GetEntity(PlayerSecrets, 4); }
+		}
+
+		public SolidColorBrush PlayerHealthTextColor
+		{
+			get
+			{
+				if(_currentGameState == null)
+					return new SolidColorBrush(Colors.White);
+				var hero = _currentGameState.Data.FirstOrDefault(x => x.IsControlledBy(_playerController) && !string.IsNullOrEmpty(x.CardId)
+																	&& x.CardId.Contains("HERO"));
+				return new SolidColorBrush((hero != null && hero.GetTag(GAME_TAG.DAMAGE) > 0) ? Colors.Red : Colors.White);
+			}
+		}
+		public SolidColorBrush OpponentHealthTextColor
+		{
+			get
+			{
+				if(_currentGameState == null)
+					return new SolidColorBrush(Colors.White);
+				var hero = _currentGameState.Data.FirstOrDefault(x => x.IsControlledBy(_opponentController) && !string.IsNullOrEmpty(x.CardId)
+																	&& x.CardId.Contains("HERO"));
+				return new SolidColorBrush((hero != null && hero.GetTag(GAME_TAG.DAMAGE) > 0) ? Colors.Red : Colors.White);
+			}
 		}
 
 	    private void TreeViewKeyPoints_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

@@ -367,6 +367,8 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
+			if(Game.Entities.Count > 0 && !Game.SavedReplay)
+				ReplayMaker.SaveToDisk();
 			if(!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
@@ -460,7 +462,6 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
 			SaveAndUpdateStats();
-			ReplayMaker.SaveToDisk();
 		}
 
 		public static void HandleLoss()
@@ -470,7 +471,6 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
 			SaveAndUpdateStats();
-			ReplayMaker.SaveToDisk();
 		}
 
 	    public static void SetGameMode(GameMode mode)

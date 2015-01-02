@@ -80,8 +80,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get
 			{
 				var color = Colors.White;
-				if(!string.IsNullOrEmpty(CardId) && Cost > Card.Cost)
-					color = Colors.LawnGreen;
+				if(!string.IsNullOrEmpty(CardId))
+				{
+					if(Cost < Card.Cost)
+						color = Colors.LawnGreen;
+					else if(Cost > Card.Cost)
+						color = Colors.Red;
+				}
 				return new SolidColorBrush(color);
 			}
 		}
@@ -90,24 +95,43 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			get
 			{
-				if(string.IsNullOrEmpty(CardId))
-					return new ImageBrush();
 				return Card.Background;
 			}
 		}
 
-		private string _name;
 		public string LocalizedName
 		{
 			get
 			{
-				if(!string.IsNullOrEmpty(_name))
-					return _name;
-				_name = string.IsNullOrEmpty(CardId) ? "-" : Card.LocalizedName;
-				return _name;
+				return Card.LocalizedName;
 			}
 		}
 
+		public string Effects
+		{
+			get
+			{
+				var effects = "";
+				if(HasTag(GAME_TAG.DIVINE_SHIELD))
+					effects += "Divine Shield";
+				if(HasTag(GAME_TAG.TAUNT))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Taunt";
+				if(HasTag(GAME_TAG.STEALTH))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Stealth";
+				if(HasTag(GAME_TAG.SILENCED))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Silenced";
+				if(HasTag(GAME_TAG.FROZEN))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Frozen";
+				if(HasTag(GAME_TAG.ENRAGED))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Enraged";
+				return effects;
+			}
+		}
+
+		public Visibility EffectsVisibility
+		{
+			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
+		}
 		public Entity()
 		{
 			Tags = new Dictionary<GAME_TAG, int>();

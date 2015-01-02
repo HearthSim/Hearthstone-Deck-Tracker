@@ -2381,6 +2381,7 @@
     <Resource Include="Resources\shaman_small.png" />
     <Resource Include="Resources\warlock_small.png" />
     <Resource Include="Resources\warrior_small.png" />
+    <Resource Include="Resources\armor.png" />
     <Content Include="Updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -40,6 +40,19 @@ namespace Hearthstone_Deck_Tracker.Replay
                 if (!string.IsNullOrEmpty(defenderCardId))
                     additionalInfo += Game.GetCardFromId(defenderCardId).LocalizedName;
             }
+			else if(Type == KeyPointType.PlaySpell)
+			{
+				var entity = Data.First(x => x.Id == Id);
+				if(!string.IsNullOrEmpty(entity.CardId))
+					additionalInfo += Game.GetCardFromId(entity.CardId).LocalizedName;
+
+				additionalInfo += " -> ";
+
+				var targetId = entity.GetTag(GAME_TAG.CARD_TARGET);
+				var targetCardId = Data.First(x => x.Id == targetId).CardId;
+				if(!string.IsNullOrEmpty(targetCardId))
+					additionalInfo += Game.GetCardFromId(targetCardId).LocalizedName;
+			}
             else
             {
                 

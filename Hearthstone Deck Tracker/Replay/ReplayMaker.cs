@@ -43,8 +43,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 			if(Points.Any())
 			{
-				ResolveCardIds();
 				ResolveZonePos();
+				ResolveCardIds();
+				RemoveObsoletePlays();
 			}
 
 			var path = Helper.GetValidFilePath("Replays", "replay", ".hdtreplay");
@@ -96,6 +97,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var playerController = Points[0].Data.First(x => x.IsPlayer).GetTag(GAME_TAG.CONTROLLER);
             var handPos = new Dictionary<int, int>();
 			var boardPos = new Dictionary<int, int>();
+			var secretPos = new Dictionary<int, int>();
 			Points.Reverse();
 			foreach(var kp in Points)
 			{
@@ -115,6 +117,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 					else
 						boardPos[kp.Id] = pos;
 				}
+				else if(kp.Type == KeyPointType.SecretPos)
+				{
+					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GAME_TAG.ZONE_POSITION);
+					if(!secretPos.ContainsKey(kp.Id))
+						secretPos.Add(kp.Id, pos);
+					else
+						secretPos[kp.Id] = pos;
+				}
 				else if(kp.Type == KeyPointType.Draw || kp.Type == KeyPointType.Obtain)
 				{
 					int zp;
@@ -133,16 +143,27 @@ namespace Hearthstone_Deck_Tracker.Replay
 						boardPos.Remove(zp);
 					}
 				}
+				else if(kp.Type == KeyPointType.SecretPlayed)
+				{
+					int zp;
+					if(secretPos.TryGetValue(kp.Id, out zp))
+					{
+						kp.Data.First(x => x.Id == kp.Id).SetTag(GAME_TAG.ZONE_POSITION, zp);
+						secretPos.Remove(zp);
+					}
+				}
 			}
-			var toRemove = new List<ReplayKeyPoint>(Points.Where(x => x.Type == KeyPointType.BoardPos || x.Type == KeyPointType.HandPos));
+			var toRemove = new List<ReplayKeyPoint>(Points.Where(x => x.Type == KeyPointType.BoardPos || x.Type == KeyPointType.HandPos || x.Type == KeyPointType.SecretPos));
 			foreach(var kp in toRemove)
 				Points.Remove(kp);
 
 			//resolve remaing zonepos issues ... there HAS to be a better way to do this, right...?
 			var occupiedPlayerHandZonePos = new List<int>();
 			var occupiedPlayerBoardZonePos = new List<int>();
+			var occupiedPlayerSecretZonePos = new List<int>();
 			var occupiedOpponentHandZonePos = new List<int>();
 			var occupiedOpponentBoardZonePos = new List<int>();
+			var occupiedOpponentSecretZonePos = new List<int>();
 			foreach(var kp in Points)
 			{
 				occupiedPlayerHandZonePos.Clear();
@@ -229,6 +250,43 @@ namespace Hearthstone_Deck_Tracker.Replay
 								}
 							}
 						}
+						else if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET)
+						{
+							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
+							{
+								if(!occupiedPlayerSecretZonePos.Contains(zonePos))
+									occupiedPlayerSecretZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedPlayerSecretZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedPlayerSecretZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+							else
+							{
+								if(!occupiedOpponentSecretZonePos.Contains(zonePos))
+									occupiedOpponentSecretZonePos.Add(zonePos);
+								else
+								{
+									for(int i = 1; i <= 10; i++)
+									{
+										if(!occupiedOpponentSecretZonePos.Contains(i))
+										{
+											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
+											occupiedOpponentSecretZonePos.Add(i);
+											break;
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
@@ -236,6 +294,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 			//re-reverse
 			Points.Reverse();
+		}
+
+		private static void RemoveObsoletePlays()
+		{
+			var spellsWithTarget = Points.Where(x => x.Type == KeyPointType.PlaySpell).Select(x => x.Id);
+			var obsoletePlays = Points.Where(x => x.Type == KeyPointType.Play && spellsWithTarget.Any(id => x.Id == id)).ToList();
+			foreach(var play in obsoletePlays)
+				Points.Remove(play);
 		}
 	}
 }

@@ -74,6 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static Dictionary<int, Entity> Entities;
 		public static int PlayerId;
 		public static int OpponentId;
+		public static bool SavedReplay;
 		//public static Dictionary<string, int> PlayerIds; 
 
 		#endregion
@@ -116,52 +117,52 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static object ResetObject = new object();
+		//public static object ResetObject = new object();
+
 		public static void Reset(bool resetStats = true)
 		{
-			lock(ResetObject)
+			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
+
+			ReplayMaker.Reset();
+			PlayerDrawn.Clear();
+			Entities.Clear();
+			PlayerId = -1;
+			OpponentId = -1;
+			SavedReplay = false;
+			PlayerHandCount = 0;
+			OpponentSecretCount = 0;
+			OpponentCards.Clear();
+			OpponentHandCount = 0;
+			OpponentDeckCount = 30;
+			LastZoneChangedCardId = null;
+			OpponentHandAge = new int[MaxHandSize];
+			OpponentHandMarks = new CardMark[MaxHandSize];
+			OpponentStolenCardsInformation = new Card[MaxHandSize];
+			OpponentSecrets.ClearSecrets();
+
+			for(var i = 0; i < MaxHandSize; i++)
 			{
-				Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
-
-				ReplayMaker.Reset();
-				PlayerDrawn.Clear();
-				Entities.Clear();
-				PlayerId = -1;
-				OpponentId = -1;
-				PlayerHandCount = 0;
-				OpponentSecretCount = 0;
-				OpponentCards.Clear();
-				OpponentHandCount = 0;
-				OpponentDeckCount = 30;
-				LastZoneChangedCardId = null;
-				OpponentHandAge = new int[MaxHandSize];
-				OpponentHandMarks = new CardMark[MaxHandSize];
-				OpponentStolenCardsInformation = new Card[MaxHandSize];
-				OpponentSecrets.ClearSecrets();
-
-				for(var i = 0; i < MaxHandSize; i++)
-				{
-					OpponentHandAge[i] = -1;
-					OpponentHandMarks[i] = CardMark.None;
-				}
-
-				// Assuming opponent has coin, corrected if we draw it
-				OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
-				OpponentHandAge[DefaultCoinPosition] = 0;
-				OpponentHasCoin = true;
-
-				SetAsideCards.Clear();
-				OpponentReturnedToDeck.Clear();
-
-				if(!IsInMenu && resetStats)
-				{
-					CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
-					                   {
-						                   PlayerName = PlayerName,
-						                   OpponentName = OpponentName
-					                   };
-				}
+				OpponentHandAge[i] = -1;
+				OpponentHandMarks[i] = CardMark.None;
 			}
+
+			// Assuming opponent has coin, corrected if we draw it
+			OpponentHandMarks[DefaultCoinPosition] = CardMark.Coin;
+			OpponentHandAge[DefaultCoinPosition] = 0;
+			OpponentHasCoin = true;
+
+			SetAsideCards.Clear();
+			OpponentReturnedToDeck.Clear();
+
+			if(!IsInMenu && resetStats)
+			{
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
+				                   {
+					                   PlayerName = PlayerName,
+					                   OpponentName = OpponentName
+				                   };
+			}
+
 		}
 
 		public static void SetPremadeDeck(Deck deck)

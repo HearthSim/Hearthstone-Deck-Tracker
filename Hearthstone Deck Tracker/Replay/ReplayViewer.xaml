@@ -4,110 +4,142 @@
         xmlns:replay="clr-namespace:Hearthstone_Deck_Tracker.Replay"
         xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Replay.Controls"
         xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="ReplayViewer" Height="665" Width="1269">
+        xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+        Title="ReplayViewer" Height="665" Width="1269" 
+        BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
         <Line Name="AttackLine" Stroke="Red" StrokeThickness="4"/>
         <DockPanel>
             <DockPanel Width="250">
-                <Button Content="Next" Name="BtnNext" Click="BtnNext_Click" DockPanel.Dock="Top"></Button>
-                <ScrollViewer>
-                    <TreeView Name="TreeViewKeyPoints" SelectedItemChanged="TreeViewKeyPoints_OnSelectedItemChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
-                </ScrollViewer>
+                <!--<Button Content="Next" Name="BtnNext" Click="BtnNext_Click" DockPanel.Dock="Top"></Button>-->
+                <TreeView Name="TreeViewKeyPoints" SelectedItemChanged="TreeViewKeyPoints_OnSelectedItemChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
             </DockPanel>
-            <StackPanel>
-                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Name" />
-                            <Label Content="{Binding OpponentName}" />
-                        </StackPanel>
+            <DockPanel>
+                <DockPanel Height="140" Dock="Top">
+                    <StackPanel Width="215" DockPanel.Dock="Left">
+                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Hero" />
                             <Label Content="{Binding OpponentHero}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Health" />
-                            <Label Content="{Binding OpponentHealth}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Armor" />
-                            <Label Content="{Binding OpponentArmor}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Attack" />
-                            <Label Content="{Binding OpponentAttack}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" />
+                            <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding OpponentHealthTextColor}"/>
+                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                        </Grid>
+                        <controls:CardEntity x:Name="OpponentCardEntityWeapon" DataContext="{Binding OpponentWeapon}"/>
                     </StackPanel>
-
-                    <WrapPanel Width="700">
-                        <controls:CardEntity x:Name="OpponentCardEntity0" DataContext="{Binding OpponentCard0}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity1" DataContext="{Binding OpponentCard1}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity2" DataContext="{Binding OpponentCard2}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity3" DataContext="{Binding OpponentCard3}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity4" DataContext="{Binding OpponentCard4}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity5" DataContext="{Binding OpponentCard5}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity6" DataContext="{Binding OpponentCard6}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity7" DataContext="{Binding OpponentCard7}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity8" DataContext="{Binding OpponentCard8}"/>
-                        <controls:CardEntity x:Name="OpponentCardEntity9" DataContext="{Binding OpponentCard9}"/>
-                    </WrapPanel>
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
-                    <controls:BoardEntity x:Name="OpponentBoardEntity0" DataContext="{Binding OpponentBoard0}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity1" DataContext="{Binding OpponentBoard1}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity2" DataContext="{Binding OpponentBoard2}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity3" DataContext="{Binding OpponentBoard3}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity4" DataContext="{Binding OpponentBoard4}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity5" DataContext="{Binding OpponentBoard5}"/>
-                    <controls:BoardEntity x:Name="OpponentBoardEntity6" DataContext="{Binding OpponentBoard6}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
-                    <controls:BoardEntity x:Name="PlayerBoardEntity0" DataContext="{Binding PlayerBoard0}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity1" DataContext="{Binding PlayerBoard1}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity2" DataContext="{Binding PlayerBoard2}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity3" DataContext="{Binding PlayerBoard3}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity4" DataContext="{Binding PlayerBoard4}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity5" DataContext="{Binding PlayerBoard5}"/>
-                    <controls:BoardEntity x:Name="PlayerBoardEntity6" DataContext="{Binding PlayerBoard6}"/>
-                </StackPanel>
-                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Name" />
-                            <Label Content="{Binding PlayerName}" />
-                        </StackPanel>
+                    <Border BorderBrush="DarkGray" BorderThickness="1" DockPanel.Dock="Right">
+                        <ScrollViewer>
+                            <StackPanel Width="215" Background="LightGray"  Visibility="{Binding PlayerSecretVisibility}">
+                                <controls:CardEntity x:Name="OpponentSecretEntity0" DataContext="{Binding OpponentSecret0}"/>
+                                <controls:CardEntity x:Name="OpponentSecretEntity1" DataContext="{Binding OpponentSecret1}"/>
+                                <controls:CardEntity x:Name="OpponentSecretEntity2" DataContext="{Binding OpponentSecret2}"/>
+                                <controls:CardEntity x:Name="OpponentSecretEntity3" DataContext="{Binding OpponentSecret3}"/>
+                                <controls:CardEntity x:Name="OpponentSecretEntity4" DataContext="{Binding OpponentSecret4}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                        <WrapPanel Background="LightGray" >
+                            <controls:CardEntity x:Name="OpponentCardEntity0" DataContext="{Binding OpponentCard0}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity1" DataContext="{Binding OpponentCard1}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity2" DataContext="{Binding OpponentCard2}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity3" DataContext="{Binding OpponentCard3}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity4" DataContext="{Binding OpponentCard4}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity5" DataContext="{Binding OpponentCard5}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity6" DataContext="{Binding OpponentCard6}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity7" DataContext="{Binding OpponentCard7}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity8" DataContext="{Binding OpponentCard8}"/>
+                            <controls:CardEntity x:Name="OpponentCardEntity9" DataContext="{Binding OpponentCard9}"/>
+                        </WrapPanel>
+                    </Border>
+                </DockPanel>
+                <DockPanel Height="140" Dock="Bottom">
+                    <StackPanel Width="215" DockPanel.Dock="Left">
+                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Hero" />
                             <Label Content="{Binding PlayerHero}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Health" />
-                            <Label Content="{Binding PlayerHealth}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Armor" />
-                            <Label Content="{Binding PlayerArmor}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Attack" />
-                            <Label Content="{Binding PlayerAttack}" />
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" />
+                            <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding PlayerHealthTextColor}"/>
+                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                        </Grid>
+                        <controls:CardEntity x:Name="PlayerCardEntityWeapon" DataContext="{Binding PlayerWeapon}"/>
                     </StackPanel>
-                    <WrapPanel Width="700">
-                        <controls:CardEntity x:Name="PlayerCardEntity0" DataContext="{Binding PlayerCard0}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity1" DataContext="{Binding PlayerCard1}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity2" DataContext="{Binding PlayerCard2}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity3" DataContext="{Binding PlayerCard3}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity4" DataContext="{Binding PlayerCard4}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity5" DataContext="{Binding PlayerCard5}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity6" DataContext="{Binding PlayerCard6}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity7" DataContext="{Binding PlayerCard7}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity8" DataContext="{Binding PlayerCard8}"/>
-                        <controls:CardEntity x:Name="PlayerCardEntity9" DataContext="{Binding PlayerCard9}"/>
-                    </WrapPanel>
-                </StackPanel>
-            </StackPanel>
+                    <Border BorderBrush="DarkGray" BorderThickness="1" DockPanel.Dock="Right">
+                        <ScrollViewer>
+                            <StackPanel Width="215" Background="LightGray" Visibility="{Binding PlayerSecretVisibility}">
+                                <controls:CardEntity x:Name="PlayerSecretEntity0" DataContext="{Binding PlayerSecret0}"/>
+                                <controls:CardEntity x:Name="PlayerSecretEntity1" DataContext="{Binding PlayerSecret1}"/>
+                                <controls:CardEntity x:Name="PlayerSecretEntity2" DataContext="{Binding PlayerSecret2}"/>
+                                <controls:CardEntity x:Name="PlayerSecretEntity3" DataContext="{Binding PlayerSecret3}"/>
+                                <controls:CardEntity x:Name="PlayerSecretEntity4" DataContext="{Binding PlayerSecret4}"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                        <WrapPanel Background="LightGray">
+                            <controls:CardEntity x:Name="PlayerCardEntity0" DataContext="{Binding PlayerCard0}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity1" DataContext="{Binding PlayerCard1}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity2" DataContext="{Binding PlayerCard2}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity3" DataContext="{Binding PlayerCard3}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity4" DataContext="{Binding PlayerCard4}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity5" DataContext="{Binding PlayerCard5}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity6" DataContext="{Binding PlayerCard6}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity7" DataContext="{Binding PlayerCard7}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity8" DataContext="{Binding PlayerCard8}"/>
+                            <controls:CardEntity x:Name="PlayerCardEntity9" DataContext="{Binding PlayerCard9}"/>
+                        </WrapPanel>
+                    </Border>
+                </DockPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="DarkGray" BorderThickness="1" Grid.Row="0"  Background="LightGray">
+                        <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
+                            <controls:BoardEntity x:Name="OpponentBoardEntity0" DataContext="{Binding OpponentBoard0}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity1" DataContext="{Binding OpponentBoard1}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity2" DataContext="{Binding OpponentBoard2}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity3" DataContext="{Binding OpponentBoard3}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity4" DataContext="{Binding OpponentBoard4}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity5" DataContext="{Binding OpponentBoard5}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="OpponentBoardEntity6" DataContext="{Binding OpponentBoard6}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderBrush="DarkGray" BorderThickness="1" Grid.Row="1" Background="LightGray">
+                        <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
+                            <controls:BoardEntity x:Name="PlayerBoardEntity0" DataContext="{Binding PlayerBoard0}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity1" DataContext="{Binding PlayerBoard1}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity2" DataContext="{Binding PlayerBoard2}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity3" DataContext="{Binding PlayerBoard3}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity4" DataContext="{Binding PlayerBoard4}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity5" DataContext="{Binding PlayerBoard5}" VerticalAlignment="Center"/>
+                            <controls:BoardEntity x:Name="PlayerBoardEntity6" DataContext="{Binding PlayerBoard6}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </DockPanel>
         </DockPanel>
 
 
