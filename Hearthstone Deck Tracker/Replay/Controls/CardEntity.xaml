@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=EntityVisibility}" DataContextChanged="CardEntity_OnDataContextChanged">
-    <Grid Background="{Binding Background}" Height="35" Width="215">
+    <Grid Height="35" Width="217">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Rectangle Fill="{Binding Background}" Height="35" Width="215" Grid.ColumnSpan="2"/>
         <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
                                  Text="{Binding Cost}" Fill="{Binding CostTextColor}"
                                  FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"
