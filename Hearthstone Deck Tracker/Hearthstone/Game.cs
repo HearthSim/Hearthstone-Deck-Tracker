@@ -499,7 +499,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 
-		public static void OpponentBackToHand(string cardId, int turn)
+		public static void OpponentBackToHand(string cardId, int turn, int id)
 		{
 			OpponentHandCount++;
 
@@ -522,7 +522,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
 				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
 				{
-					var card = GetCardFromId(LastZoneChangedCardId);
+					var card = GetCardFromId(cardId);
 					if(card != null)
 						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
 				}
@@ -575,7 +575,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LogDeckChange(true, card, false);
 		}
 
-		public static void OpponentGet(int turn)
+		public static void OpponentGet(int turn, int id)
 		{
 			OpponentHandCount++;
 
@@ -589,7 +589,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Stolen;
 				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
 				{
-					var card = GetCardFromId(LastZoneChangedCardId);
+					var cardId = Entities[id].CardId;
+					if(string.IsNullOrEmpty(cardId) && Entities[id].HasTag(GAME_TAG.LAST_AFFECTED_BY))
+						cardId = Entities[Entities[id].GetTag(GAME_TAG.LAST_AFFECTED_BY)].CardId;
+					if(string.IsNullOrEmpty(cardId))
+						cardId = LastZoneChangedCardId;
+					var card = GetCardFromId(cardId);
 					if(card != null)
 						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
 				}

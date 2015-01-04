@@ -467,8 +467,8 @@ namespace Hearthstone_Deck_Tracker
 						var from = match.Groups["from"].Value.Trim();
 						var to = match.Groups["to"].Value.Trim();
 
-						if(_zoneRegex.IsMatch(logLine))
-							_gameHandler.PlayerSetAside(id);
+						//if(_zoneRegex.IsMatch(logLine))
+						//	_gameHandler.PlayerSetAside(id);
 
 						//game start/end
 						if(id.Contains("HERO") || (id.Contains("NAX") && id.Contains("_01")))
@@ -599,6 +599,7 @@ namespace Hearthstone_Deck_Tracker
 								break;
 							case TAG_ZONE.REMOVEDFROMGAME:
 							case TAG_ZONE.GRAVEYARD:
+							case TAG_ZONE.SETASIDE:
 							case TAG_ZONE.PLAY:
 								if(controller == Game.PlayerId)
 								{
@@ -694,7 +695,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(controller == Game.OpponentId)
 								{
-									_gameHandler.HandleOpponentPlayToHand(cardId, GetTurnNumber());
+									_gameHandler.HandleOpponentPlayToHand(cardId, GetTurnNumber(), id);
 									ProposeKeyPoint(KeyPointType.PlayToHand, id, ActivePlayer.Opponent);
 								}
 								break;
@@ -754,7 +755,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(controller == Game.OpponentId)
 								{
-									_gameHandler.HandleOpponentGet(GetTurnNumber());
+									_gameHandler.HandleOpponentGet(GetTurnNumber(), id);
 									ProposeKeyPoint(KeyPointType.Obtain, id, ActivePlayer.Opponent);
 								}
 								break;

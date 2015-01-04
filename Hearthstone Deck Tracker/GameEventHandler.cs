@@ -197,10 +197,10 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 		}
 
-		public static void HandleOpponentGet(int turn)
+		public static void HandleOpponentGet(int turn, int id)
 		{
 			LogEvent("OpponentGet", turn: turn);
-			Game.OpponentGet(turn);
+			Game.OpponentGet(turn, id);
 			Game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 		}
 
@@ -220,10 +220,10 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
-		public static void HandleOpponentPlayToHand(string cardId, int turn)
+		public static void HandleOpponentPlayToHand(string cardId, int turn, int id)
 		{
 			LogEvent("OpponentBackToHand", cardId, turn);
-			Game.OpponentBackToHand(cardId, turn);
+			Game.OpponentBackToHand(cardId, turn, id);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
@@ -635,9 +635,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentMulligan(@from);
         }
 
-        void IGameHandler.HandleOpponentGet(int turn)
+        void IGameHandler.HandleOpponentGet(int turn, int id)
         {
-            HandleOpponentGet(turn);
+            HandleOpponentGet(turn, id);
         }
 
         void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck, int otherId)
@@ -645,9 +645,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck, otherId);
         }
 
-        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn)
+        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn, int id)
         {
-            HandleOpponentPlayToHand(cardId, turn);
+            HandleOpponentPlayToHand(cardId, turn, id);
         }
 
         void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
