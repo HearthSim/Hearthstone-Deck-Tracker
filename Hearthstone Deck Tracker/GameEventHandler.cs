@@ -343,7 +343,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandleGameStart()
 		{
 			//avoid new game being started when jaraxxus is played
-			if(!Game.IsInMenu) return;
+			//if(!Game.IsInMenu) return;
 			
 			Logger.WriteLine("Game start");
 
@@ -417,29 +417,28 @@ namespace Hearthstone_Deck_Tracker
 				}
 				return;
 			}
-			if(_waitingForRankedMessage)
-				return; 
-			HsLogReader.Instance.ClearLog();
-			Logger.WriteLine("Game end");
+			Game.IsInMenu = true;
+			TurnTimer.Instance.Stop();
+			Helper.MainWindow.Overlay.HideTimers();
+			Helper.MainWindow.Overlay.HideSecrets();
 			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
 			}
-			TurnTimer.Instance.Stop();
-			Helper.MainWindow.Overlay.HideTimers();
-			Helper.MainWindow.Overlay.HideSecrets();
-			if(!Game.IsUsingPremade)
-				Game.DrawnLastGame = new List<Card>(Game.PlayerDrawn);
 			if(!Config.Instance.KeepDecksVisible)
 			{
 				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 				if(deck != null)
 					Game.SetPremadeDeck((Deck)deck.Clone());
-
-				Game.Reset(false);
 			}
-			Game.IsInMenu = true;
+			if(!Game.IsUsingPremade)
+				Game.DrawnLastGame = new List<Card>(Game.PlayerDrawn);
+			if(_waitingForRankedMessage)
+				return; 
+			HsLogReader.Instance.ClearLog();
+			if(!Config.Instance.KeepDecksVisible)
+				Game.Reset(false);
 		}
 #pragma warning restore 4014
 
