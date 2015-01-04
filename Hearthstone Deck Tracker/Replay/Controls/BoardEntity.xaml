@@ -4,8 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-             mc:Ignorable="d" Width="200" Background="Transparent" Height="Auto"
-              Visibility="{Binding RelativeSource={RelativeSource Self}, Path=EntityVisibility}" DataContextChanged="BoardEntity_OnDataContextChanged">
+             xmlns:entities="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone.Entities"
+             mc:Ignorable="d" MinWidth="150" Background="Transparent" Height="Auto"
+              Visibility="{Binding RelativeSource={RelativeSource Self}, Path=EntityVisibility}" 
+              DataContextChanged="BoardEntity_OnDataContextChanged">
+    <UserControl.ToolTip>
+        <ToolTip Background="Transparent" BorderBrush="Transparent">
+            <local:CardToolTip DataContext="{Binding Card}"/>
+        </ToolTip>
+    </UserControl.ToolTip>
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
         <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
             <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">

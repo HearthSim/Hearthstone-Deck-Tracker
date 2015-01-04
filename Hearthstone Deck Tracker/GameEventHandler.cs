@@ -368,9 +368,9 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandleGameEnd(bool backInMenu)
 		{
 			if(Game.Entities.Count > 0 && !Game.SavedReplay && Game.CurrentGameStats != null &&
-			   Game.CurrentGameStats.ReplayFilePath == null && RecordCurrentGameMode)
+			   Game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
 			{
-				Game.CurrentGameStats.ReplayFilePath = ReplayMaker.SaveToDisk();
+				Game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 				SaveAndUpdateStats();
 			}
 			if(!backInMenu)
@@ -460,22 +460,24 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
-	    public static void HandleWin()
+	    public static void HandleWin(bool fromAssetUnload)
 		{
 			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
-			SaveAndUpdateStats();
+			if(fromAssetUnload)
+				SaveAndUpdateStats();
 		}
 
-		public static void HandleLoss()
+		public static void HandleLoss(bool fromAssetUnload)
 		{
 			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
-			SaveAndUpdateStats();
+			if(fromAssetUnload)
+				SaveAndUpdateStats();
 		}
 
 	    public static void SetGameMode(GameMode mode)
@@ -688,14 +690,14 @@ namespace Hearthstone_Deck_Tracker
             HandleGameEnd(backInMenu);
         }
 
-        void IGameHandler.HandleLoss()
+        void IGameHandler.HandleLoss(bool fromAssetUnload)
         {
-            HandleLoss();
+            HandleLoss(fromAssetUnload);
         }
 
-        void IGameHandler.HandleWin()
+        void IGameHandler.HandleWin(bool fromAssetUnload)
         {
-            HandleWin();
+            HandleWin(fromAssetUnload);
         }
 
         void IGameHandler.PlayerSetAside(string id)

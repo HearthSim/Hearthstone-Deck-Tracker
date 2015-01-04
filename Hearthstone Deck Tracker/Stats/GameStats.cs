@@ -56,12 +56,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string PlayerName { get; set; }
 		public string OpponentName { get; set; }
 		public bool VerifiedHeroes { get; set; }
-		public string ReplayFilePath { get; set; }
+		public string ReplayFile { get; set; }
 
 		[XmlIgnore]
 		public bool HasReplayFile
 		{
-			get { return ReplayFilePath != null && File.Exists(ReplayFilePath); }
+			get { return ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile)); }
 		}
 		
 		[XmlIgnore]

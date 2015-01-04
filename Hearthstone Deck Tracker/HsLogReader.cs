@@ -398,9 +398,9 @@ namespace Hearthstone_Deck_Tracker
 				else if(logLine.StartsWith("[Asset]"))
 				{
 					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
-                        _gameHandler.HandleWin();
+                        _gameHandler.HandleWin(true);
 					else if(logLine.ToLower().Contains("defeat_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
-						_gameHandler.HandleLoss();
+						_gameHandler.HandleLoss(true);
 					else if(logLine.Contains("rank"))
 					{
 						_gameHandler.SetGameMode(GameMode.Ranked);
@@ -515,26 +515,17 @@ namespace Hearthstone_Deck_Tracker
 		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
 			if(_proposedKeyPoint != null)
-			{
 				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
-				Console.WriteLine(_count + " tag changes since proposed kp (same id twice - " + type + ")");
-				_count = 0;
-			}
 			_proposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
 		}
 
-		private int _count;
 		private void TagChange(string rawTag, int id, string rawValue, bool isRecursive = false)
 		{
 			if(_lastId != id && _proposedKeyPoint != null)
 			{
 				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
 				_proposedKeyPoint = null;
-				Console.WriteLine(_count  + " tag changes since proposed kp");
-				_count = 0;
 			}
-			else
-				_count++;
 			_lastId = id;
 			if(!Game.Entities.ContainsKey(id))
 				Game.Entities.Add(id, new Entity(id));
@@ -779,14 +770,14 @@ namespace Hearthstone_Deck_Tracker
 					{
 						GameEndKeyPoint(true, id);
 						_gameHandler.HandleGameEnd(false);
-						_gameHandler.HandleWin();
+						_gameHandler.HandleWin(false);
 						_gameEnded = true;
 					}
 					else if(value == (int)TAG_PLAYSTATE.LOST)
 					{
 						GameEndKeyPoint(false, id);
 						_gameHandler.HandleGameEnd(false);
-						_gameHandler.HandleLoss();
+						_gameHandler.HandleLoss(false);
 						_gameEnded = true;
 					}
 				}
@@ -796,14 +787,14 @@ namespace Hearthstone_Deck_Tracker
 					{
 						GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
 						_gameHandler.HandleGameEnd(false);
-						_gameHandler.HandleLoss();
+						_gameHandler.HandleLoss(false);
 						_gameEnded = true;
 					}
 					else if(value == (int)TAG_PLAYSTATE.LOST)
 					{
 						GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
 						_gameHandler.HandleGameEnd(false);
-						_gameHandler.HandleWin();
+						_gameHandler.HandleWin(false);
 						_gameEnded = true;
 					}
 				}
@@ -820,21 +811,21 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(tag == GAME_TAG.ZONE_POSITION)
 			{
-				/*var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
+				var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
 				if(zone == (int)TAG_ZONE.HAND)
 				{
 					if(controller == Game.PlayerId)
-						ProposeKeyPoint(KeyPointType.HandPos, id, ActivePlayer.Player);
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player);
 					else if(controller == Game.OpponentId)
-						ProposeKeyPoint(KeyPointType.HandPos, id, ActivePlayer.Opponent);
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent);
 				}
 				else if(zone == (int)TAG_ZONE.PLAY)
 				{
 					if(controller == Game.PlayerId)
-						ProposeKeyPoint(KeyPointType.BoardPos, id, ActivePlayer.Player);
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player);
 					else if(controller == Game.OpponentId)
-						ProposeKeyPoint(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
-				}*/
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
+				}
 			}
 			else if(tag == GAME_TAG.CARD_TARGET && value > 0)
 			{

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,6 +22,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
 using Point = System.Windows.Point;
+using TreeView = System.Windows.Controls.TreeView;
 
 namespace Hearthstone_Deck_Tracker.Replay
 {
@@ -31,6 +34,25 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public ReplayViewer()
 		{
 			InitializeComponent();
+			Height = Config.Instance.ReplayWindowHeight;
+			Width = Config.Instance.ReplayWindowWidth;
+			if(Config.Instance.ReplayWindowLeft.HasValue)
+				Left = Config.Instance.ReplayWindowLeft.Value;
+			if(Config.Instance.ReplayWindowTop.HasValue)
+				Top = Config.Instance.ReplayWindowTop.Value;
+
+			var titleBarCorners = new[]
+				{
+					new System.Drawing.Point((int)Left + 5, (int)Top + 5),
+					new System.Drawing.Point((int)(Left + Width) - 5, (int)Top + 5),
+					new System.Drawing.Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+					new System.Drawing.Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
+				};
+			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
+			{
+				Top = 100;
+				Left = 100;
+			}
 		}
 
 	    private List<TreeViewItem> _treeViewTurnItems;
@@ -521,7 +543,10 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var weaponId = PlayerEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
 				if(weaponId == 0)
 					return null;
-				return _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+				var entity = _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+				if(entity != null)
+					entity.SetCardCount(entity.GetTag(GAME_TAG.DURABILITY) - entity.GetTag(GAME_TAG.DAMAGE));
+				return entity;
 			}
 		}
 
@@ -534,7 +559,10 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var weaponId = OpponentEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
 				if(weaponId == 0)
 					return null;
-				return _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+				var entity = _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
+				if(entity != null)
+					entity.SetCardCount(entity.GetTag(GAME_TAG.DURABILITY) - entity.GetTag(GAME_TAG.DAMAGE));
+				return entity;
 			}
 		}
 
@@ -696,5 +724,19 @@ namespace Hearthstone_Deck_Tracker.Replay
 	    }
 
 
+		private void ReplayViewer_OnClosing(object sender, CancelEventArgs e)
+		{
+			try
+			{
+				Config.Instance.ReplayWindowTop = (int)Top;
+				Config.Instance.ReplayWindowLeft = (int)Left;
+				Config.Instance.ReplayWindowWidth = (int)Width;
+				Config.Instance.ReplayWindowHeight = (int)Height;
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+			}
+		}
 	}
 }

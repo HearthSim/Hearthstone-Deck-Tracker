@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			SetAsideCards.Clear();
 			OpponentReturnedToDeck.Clear();
-
+			CurrentGameMode = GameMode.None;
 			if(!IsInMenu && resetStats)
 			{
 				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)

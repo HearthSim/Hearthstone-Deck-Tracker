@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Web.ModelBinding;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 {
@@ -14,27 +11,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 	public class Entity
 	{
 		public Dictionary<GAME_TAG, int> Tags { get; set; }
-		public TAG_ZONE Zone { get; set; }
 		public string Name { get; set; }
 		public int Id { get; set; }
 		public string CardId { get; set; }
-		public string Type { get; set; }
-		public int ZonePos { get; set; }
-		public int Player { get; set; }
 		public bool IsPlayer { get; set; }
 
 		private Card _cachedCard;
-		private Card Card
+		[JsonIgnore]
+		public Card Card
 		{
 			get { return _cachedCard ?? (_cachedCard = (Game.GetCardFromId(CardId) ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", 0, 0, "unknown", null, 0, ""))); }
 		}
 
-
+		[JsonIgnore]
 		public int Attack
 		{
 			get { return GetTag(GAME_TAG.ATK); }
 		}
 
+		[JsonIgnore]
 		public SolidColorBrush AttackTextColor
 		{
 			get
@@ -46,11 +41,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public int Health
 		{
 			get { return GetTag(GAME_TAG.HEALTH) - GetTag(GAME_TAG.DAMAGE); }
 		}
 
+		[JsonIgnore]
 		public SolidColorBrush HealthTextColor
 		{
 			get
@@ -65,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public int Cost
 		{
 			get
@@ -75,6 +73,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public SolidColorBrush CostTextColor
 		{
 			get
@@ -91,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public ImageBrush Background
 		{
 			get
@@ -99,6 +99,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public string LocalizedName
 		{
 			get
@@ -107,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public string Effects
 		{
 			get
@@ -128,19 +130,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		[JsonIgnore]
 		public Visibility EffectsVisibility
 		{
 			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
 		}
+
 		public Entity()
 		{
 			Tags = new Dictionary<GAME_TAG, int>();
 		}
+
 		public Entity(int id)
 		{
 			Tags = new Dictionary<GAME_TAG, int>();
 			Id = id;
 		}
+
 		public bool HasTag(GAME_TAG tag)
 		{
 			return GetTag(tag) > 0;
@@ -163,11 +169,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				prevVal = Tags[tag];
 				Tags[tag] = value;
 			}
-
-			if(tag == GAME_TAG.ZONE)
-				Zone = (TAG_ZONE)value;
-			
 			//Logger.WriteLine(string.Format("[id={0} cardId={1} name={2} TAG={3}] {4} -> {5}", Id, CardId, Name, tag, prevVal, value));
+		}
+
+		public void SetCardCount(int count)
+		{
+			Card.Count = count;
 		}
 	}
 }

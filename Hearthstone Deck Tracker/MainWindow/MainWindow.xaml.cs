@@ -319,6 +319,8 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(50);
 				}
 
+				ReplayReader.CloseViewers();
+
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 
@@ -784,7 +786,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var newest = Directory.GetFiles("Replays").Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
+				var newest = Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
 				if(newest != null)
 					ReplayReader.Read(newest.FullName);
 			}
@@ -803,7 +805,7 @@ namespace Hearthstone_Deck_Tracker
 					             Title = "Select Replay File",
 					             DefaultExt = "*.hdtreplay",
 					             Filter = "HDT Replay|*.hdtreplay",
-					             InitialDirectory = Directory.GetCurrentDirectory() + "\\Replays"
+					             InitialDirectory = Config.Instance.ReplayDir
 				             };
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)

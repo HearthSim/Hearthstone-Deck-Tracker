@@ -6,6 +6,11 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Visibility="{Binding RelativeSource={RelativeSource Self}, Path=EntityVisibility}" DataContextChanged="CardEntity_OnDataContextChanged">
+    <UserControl.ToolTip>
+        <ToolTip Background="Transparent" BorderBrush="Transparent">
+            <local:CardToolTip DataContext="{Binding Card}"/>
+        </ToolTip>
+    </UserControl.ToolTip>
     <Grid Height="35" Width="217">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35"></ColumnDefinition>

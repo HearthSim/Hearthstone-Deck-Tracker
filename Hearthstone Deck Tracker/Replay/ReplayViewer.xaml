@@ -5,8 +5,8 @@
         xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Replay.Controls"
         xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
-        Title="ReplayViewer" Height="665" Width="1269" 
-        BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        Title="ReplayViewer" Height="660" Width="1250" 
+        BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Closing="ReplayViewer_OnClosing">
     <Grid>
         <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1"></controls:Arrow>
         <DockPanel>
@@ -62,18 +62,18 @@
                     <Border BorderBrush="DarkGray" BorderThickness="1">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <WrapPanel Background="LightGray" >
-                            <controls:CardEntity x:Name="OpponentCardEntity0" DataContext="{Binding OpponentCard0}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity1" DataContext="{Binding OpponentCard1}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity2" DataContext="{Binding OpponentCard2}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity3" DataContext="{Binding OpponentCard3}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity4" DataContext="{Binding OpponentCard4}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity5" DataContext="{Binding OpponentCard5}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity6" DataContext="{Binding OpponentCard6}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity7" DataContext="{Binding OpponentCard7}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity8" DataContext="{Binding OpponentCard8}"/>
-                            <controls:CardEntity x:Name="OpponentCardEntity9" DataContext="{Binding OpponentCard9}"/>
-                        </WrapPanel>
-                            </ScrollViewer>
+                                <controls:CardEntity x:Name="OpponentCardEntity0" DataContext="{Binding OpponentCard0}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity1" DataContext="{Binding OpponentCard1}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity2" DataContext="{Binding OpponentCard2}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity3" DataContext="{Binding OpponentCard3}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity4" DataContext="{Binding OpponentCard4}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity5" DataContext="{Binding OpponentCard5}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity6" DataContext="{Binding OpponentCard6}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity7" DataContext="{Binding OpponentCard7}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity8" DataContext="{Binding OpponentCard8}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntity9" DataContext="{Binding OpponentCard9}"/>
+                            </WrapPanel>
+                        </ScrollViewer>
                     </Border>
                 </DockPanel>
                 <DockPanel Height="142" Dock="Bottom">
@@ -142,31 +142,30 @@
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Border BorderBrush="DarkGray" BorderThickness="1" Grid.Row="0"  Background="LightGray">
-
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
-                            <controls:BoardEntity x:Name="OpponentBoardEntity0" DataContext="{Binding OpponentBoard0}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity1" DataContext="{Binding OpponentBoard1}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity2" DataContext="{Binding OpponentBoard2}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity3" DataContext="{Binding OpponentBoard3}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity4" DataContext="{Binding OpponentBoard4}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity5" DataContext="{Binding OpponentBoard5}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="OpponentBoardEntity6" DataContext="{Binding OpponentBoard6}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                            </ScrollViewer>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity0" DataContext="{Binding OpponentBoard0}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity1" DataContext="{Binding OpponentBoard1}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity2" DataContext="{Binding OpponentBoard2}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity3" DataContext="{Binding OpponentBoard3}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity4" DataContext="{Binding OpponentBoard4}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity5" DataContext="{Binding OpponentBoard5}" VerticalAlignment="Center" Margin="2,0"/>
+                                <controls:BoardEntity x:Name="OpponentBoardEntity6" DataContext="{Binding OpponentBoard6}" VerticalAlignment="Center" Margin="2,0"/>
+                            </StackPanel>
+                        </ScrollViewer>
                     </Border>
                     <Border BorderBrush="DarkGray" BorderThickness="1" Grid.Row="1" Background="LightGray">
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
-                            <controls:BoardEntity x:Name="PlayerBoardEntity0" DataContext="{Binding PlayerBoard0}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity1" DataContext="{Binding PlayerBoard1}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity2" DataContext="{Binding PlayerBoard2}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity3" DataContext="{Binding PlayerBoard3}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity4" DataContext="{Binding PlayerBoard4}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity5" DataContext="{Binding PlayerBoard5}" VerticalAlignment="Center"/>
-                            <controls:BoardEntity x:Name="PlayerBoardEntity6" DataContext="{Binding PlayerBoard6}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                            </ScrollViewer>
+                            <StackPanel Orientation="Horizontal" Height="150" HorizontalAlignment="Center">
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity0" DataContext="{Binding PlayerBoard0}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity1" DataContext="{Binding PlayerBoard1}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity2" DataContext="{Binding PlayerBoard2}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity3" DataContext="{Binding PlayerBoard3}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity4" DataContext="{Binding PlayerBoard4}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity5" DataContext="{Binding PlayerBoard5}" VerticalAlignment="Center" Margin="2,0"/>
+                                    <controls:BoardEntity x:Name="PlayerBoardEntity6" DataContext="{Binding PlayerBoard6}" VerticalAlignment="Center" Margin="2,0"/>
+                            </StackPanel>
+                        </ScrollViewer>
                     </Border>
                 </Grid>
             </DockPanel>

@@ -311,7 +311,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(selected.HasReplayFile)
 				{
-					ReplayReader.Read(selected.ReplayFilePath);
+					ReplayReader.Read(selected.ReplayFile);
 				}
 				else if(Config.Instance.StatsInWindow)
 				{
