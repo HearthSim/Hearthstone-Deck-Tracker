@@ -48,27 +48,29 @@ namespace Hearthstone_Deck_Tracker
 		public void SetMax(string cardId)
 		{
 			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
-			if(index == -1)
+			if(index != -1)
 				SetMax(index);
         }
 
 		public void SetMax(int index)
 		{
 			foreach(var secret in Secrets)
-				secret.PossibleSecrets[index] = true;
+				if(index > 0 || index < secret.PossibleSecrets.Length)
+					secret.PossibleSecrets[index] = true;
 		}
 
 		public void SetZero(string cardId)
 		{
 			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
-			if(index == -1)
+			if(index != -1)
 				SetZero(index);
         }
 
 		public void SetZero(int index)
 		{
 			foreach(var secret in Secrets)
-				secret.PossibleSecrets[index] = false;
+				if(index > 0 || index < secret.PossibleSecrets.Length)
+					secret.PossibleSecrets[index] = false;
 		}
 
 		public Secret[] GetSecrets()
