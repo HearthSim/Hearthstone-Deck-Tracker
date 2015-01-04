@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					                  x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
 
 				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, CardIds.HeroIdDict[playerHero.CardId], opponent.Name,
-				                             CardIds.HeroIdDict[opponentHero.CardId], DateTime.Now.ToString("hhmm-ddMMyy"));
+				                             CardIds.HeroIdDict[opponentHero.CardId], DateTime.Now.ToString("HHmm-ddMMyy"));
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))

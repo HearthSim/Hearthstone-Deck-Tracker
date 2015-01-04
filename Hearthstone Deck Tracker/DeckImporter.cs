@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM hh:mm")};
+				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm")};
 
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
