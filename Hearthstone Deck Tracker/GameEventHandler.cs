@@ -495,6 +495,8 @@ namespace Hearthstone_Deck_Tracker
 			    return;
 		    Logger.WriteLine(">> GAME MODE: " + mode + "(saved to gamestats)");
 		    //Game.CurrentGameStats.GameMode = mode;
+            	    if (mode == GameMode.None && !Config.Instance.RecordOther)
+                    	return;
 		    SaveAndUpdateStats();
 	    }
 
