@@ -240,9 +240,16 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="_REPLAY">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_control_resume}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
                     <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
-                    <MenuItem Header="_SELECT GAME" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"></MenuItem>
+                    <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
+                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
@@ -371,7 +378,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
-                            Width="240">
+                            Width="235">
                     <TextBox controls:TextBoxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
@@ -387,7 +394,7 @@
                              Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
                              TextChanged="TextBoxDBFilter_TextChanged"
                              PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"
-                             DockPanel.Dock="Left" Width="130" />
+                             DockPanel.Dock="Left" Width="125" />
                 </StackPanel>
                 <ListView x:Name="ListViewDB" Background="DimGray" Foreground="White"
                                     FontWeight="Bold" BorderThickness="1"

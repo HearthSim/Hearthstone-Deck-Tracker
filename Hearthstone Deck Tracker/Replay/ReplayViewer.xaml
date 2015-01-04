@@ -8,7 +8,7 @@
         Title="ReplayViewer" Height="665" Width="1269" 
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
-        <Line Name="AttackLine" Stroke="Red" StrokeThickness="4"/>
+        <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1"></controls:Arrow>
         <DockPanel>
             <DockPanel Width="250">
                 <!--<Button Content="Next" Name="BtnNext" Click="BtnNext_Click" DockPanel.Dock="Top"></Button>-->
@@ -16,34 +16,41 @@
             </DockPanel>
             <DockPanel>
                 <DockPanel Height="140" Dock="Top">
-                    <StackPanel Width="215" DockPanel.Dock="Left">
-                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Hero" />
-                            <Label Content="{Binding OpponentHero}" />
+                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                    <DockPanel Name="OpponentPanel" Width="215" DockPanel.Dock="Left" Background="LightGray">
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="32"  Background="{DynamicResource AccentColorBrush}">
+                            <Image Source="{Binding OpponentHeroImage}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
                         </StackPanel>
-                        <Grid>
+                            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" DockPanel.Dock="Top">
+                        <Grid  Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" />
+                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding OpponentAttackVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding OpponentAttackVisibility}"/>
                             <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding OpponentHealthTextColor}"/>
-                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
-                            <Image Source="../Resources/mana.png" Width="35" Height="35" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentMana}" Grid.Column="3" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
-                        </Grid>
-                        <controls:CardEntity x:Name="OpponentCardEntityWeapon" DataContext="{Binding OpponentWeapon}"/>
-                    </StackPanel>
+                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding OpponentArmorVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding OpponentArmorVisibility}"/>
+                            <Grid HorizontalAlignment="Right" Grid.Column="3">
+                                <Image Source="../Resources/mana.png" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentMana}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                            </Grid>
+                                </Grid>
+                            </Border>
+                            <controls:CardEntity x:Name="OpponentCardEntityWeapon" DataContext="{Binding OpponentWeapon}" DockPanel.Dock="Top"/>
+                            <controls:BoardEntity DockPanel.Dock="Bottom" x:Name="OpponentBoardHeroEntity" DataContext="{Binding OpponentBoardHero}" Width="0" Height="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Visibility="Hidden"/>
+
+                        </DockPanel>
+                    </Border>
                     <Border BorderBrush="DarkGray" BorderThickness="1" DockPanel.Dock="Right">
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                            <StackPanel Width="215" Background="LightGray"  Visibility="{Binding PlayerSecretVisibility}">
+                            <StackPanel Width="215" Background="LightGray"  Visibility="{Binding OpponentSecretVisibility}">
                                 <controls:CardEntity x:Name="OpponentSecretEntity0" DataContext="{Binding OpponentSecret0}"/>
                                 <controls:CardEntity x:Name="OpponentSecretEntity1" DataContext="{Binding OpponentSecret1}"/>
                                 <controls:CardEntity x:Name="OpponentSecretEntity2" DataContext="{Binding OpponentSecret2}"/>
@@ -53,7 +60,6 @@
                             </ScrollViewer>
                     </Border>
                     <Border BorderBrush="DarkGray" BorderThickness="1">
-
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <WrapPanel Background="LightGray" >
                             <controls:CardEntity x:Name="OpponentCardEntity0" DataContext="{Binding OpponentCard0}"/>
@@ -71,30 +77,37 @@
                     </Border>
                 </DockPanel>
                 <DockPanel Height="142" Dock="Bottom">
-                    <StackPanel Width="215" DockPanel.Dock="Left">
-                        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Hero" />
-                            <Label Content="{Binding PlayerHero}" />
+                    <Border BorderBrush="DarkGray" BorderThickness="1">
+                        <StackPanel Name="PlayerPanel"  Width="215" DockPanel.Dock="Left" Background="LightGray">
+                            <controls:BoardEntity x:Name="PlayerBoardHeroEntity" DataContext="{Binding PlayerBoardHero}" Width="0" Height="0" VerticalAlignment="Center" Visibility="Hidden"/>
+                            <StackPanel Orientation="Horizontal" Height="32" Background="{DynamicResource AccentColorBrush}">
+                            <Image Source="{Binding PlayerHeroImage}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerName}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,2,0,0"/>
                         </StackPanel>
-                        <Grid>
+
+                            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                                <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" />
+                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerAttackVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding PlayerAttackVisibility}"/>
                             <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding PlayerHealthTextColor}"/>
-                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
-                            <Image Source="../Resources/mana.png" Width="35" Height="35" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerMana}" Grid.Column="3" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
-                        </Grid>
-                        <controls:CardEntity x:Name="PlayerCardEntityWeapon" DataContext="{Binding PlayerWeapon}"/>
+                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerArmorVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding PlayerArmorVisibility}"/>
+                            <Grid Grid.Column="3" HorizontalAlignment="Right">
+                                <Image Source="../Resources/mana.png" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerMana}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                            </Grid>
+                                </Grid>
+                            </Border>
+                            <controls:CardEntity x:Name="PlayerCardEntityWeapon" DataContext="{Binding PlayerWeapon}"/>
                     </StackPanel>
+                        </Border>
                     <Border BorderBrush="DarkGray" BorderThickness="1" DockPanel.Dock="Right">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <StackPanel Width="215" Background="LightGray" Visibility="{Binding PlayerSecretVisibility}">
@@ -158,7 +171,5 @@
                 </Grid>
             </DockPanel>
         </DockPanel>
-
-
     </Grid>
 </controls1:MetroWindow>

@@ -367,8 +367,12 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
-			if(Game.Entities.Count > 0 && !Game.SavedReplay)
-				ReplayMaker.SaveToDisk();
+			if(Game.Entities.Count > 0 && !Game.SavedReplay && Game.CurrentGameStats != null &&
+			   Game.CurrentGameStats.ReplayFilePath == null && RecordCurrentGameMode)
+			{
+				Game.CurrentGameStats.ReplayFilePath = ReplayMaker.SaveToDisk();
+				SaveAndUpdateStats();
+			}
 			if(!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
@@ -414,7 +418,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			if(_waitingForRankedMessage)
-				return;
+				return; 
+			HsLogReader.Instance.ClearLog();
 			Logger.WriteLine("Game end");
 			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{

@@ -562,6 +562,11 @@ namespace Hearthstone_Deck_Tracker
 			get { return Instance.SaveDataInAppData == false ? string.Empty : AppDataPath + "\\"; }
 		}
 
+		public string ReplayDir
+		{
+			get { return "Replays"; }
+		}
+
 		public string LogFilePath
 		{
 			get { return Instance._currentLogFile ?? GetLogFileName(); }

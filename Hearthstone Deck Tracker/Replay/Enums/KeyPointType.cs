@@ -20,6 +20,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 		BoardPos,
         PlaySpell,
 		Weapon,
-		WeaponDestroyed
+		WeaponDestroyed,
+	    HeroPower,
+		Victory,
+		Defeat
     }
 }

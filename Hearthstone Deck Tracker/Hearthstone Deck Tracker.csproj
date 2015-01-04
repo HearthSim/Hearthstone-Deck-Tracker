@@ -177,6 +177,7 @@
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
     <Compile Include="Hearthstone\Secrets\Secret.cs" />
+    <Compile Include="Replay\Controls\Arrow.cs" />
     <Compile Include="Replay\Controls\BoardEntity.xaml.cs">
       <DependentUpon>BoardEntity.xaml</DependentUpon>
     </Compile>

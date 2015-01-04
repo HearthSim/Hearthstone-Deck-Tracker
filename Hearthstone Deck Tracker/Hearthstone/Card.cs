@@ -252,7 +252,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					return _cachedBackground;
 				}
-				Load();
 				_lastCount = Count;
 				if(Id == null || Name == null)
 					return new ImageBrush();

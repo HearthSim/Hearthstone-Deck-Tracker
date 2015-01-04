@@ -814,5 +814,23 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine(ex.ToString());
 			}
 		}
+
+		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(Config.Instance.StatsInWindow)
+			{
+				StatsWindow.WindowState = WindowState.Normal;
+				StatsWindow.Show();
+				StatsWindow.Activate();
+				StatsWindow.StatsControl.TabControlCurrentOverall.SelectedIndex = 1;
+				StatsWindow.StatsControl.TabControlOverall.SelectedIndex = 1;
+			}
+			else
+			{
+				FlyoutDeckStats.IsOpen = true;
+				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
+				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
+			}
+		}
 	}
 }

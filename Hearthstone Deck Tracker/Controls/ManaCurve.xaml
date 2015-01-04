@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="300" Width="240"
+             d:DesignHeight="300" Width="235"
              Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
     <Grid>
         <Grid.ColumnDefinitions>

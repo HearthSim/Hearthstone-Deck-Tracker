@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls;
@@ -307,7 +309,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(selected != null)
 			{
-				if(Config.Instance.StatsInWindow)
+				if(selected.HasReplayFile)
+				{
+					ReplayReader.Read(selected.ReplayFilePath);
+				}
+				else if(Config.Instance.StatsInWindow)
 				{
 					Helper.MainWindow.StatsWindow.GameDetailsFlyout.SetGame(selected);
 					Helper.MainWindow.StatsWindow.FlyoutGameDetails.Header = selected.ToString();

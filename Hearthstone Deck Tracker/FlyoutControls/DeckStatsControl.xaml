@@ -402,7 +402,7 @@
                                 <Button Name="BtnMoveToOtherDeck" IsEnabled="False" Content="Move to other deck"
                                         Margin="5,0,0,0"
                                         Click="BtnMoveToOtherDeck_Click" />
-                                <Button x:Name="BtnDetails" IsEnabled="False" Content="Show game details"
+                                <Button x:Name="BtnDetails" IsEnabled="False" Content="Show Replay"
                                         Margin="5,0,0,0"
                                         Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
                                 <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0"
@@ -419,7 +419,7 @@
             </TabItem>
             <TabItem Name="TabItemOverall" Header="Overall" PreviewMouseDown="TabItemOverall_OnPreviewMouseDown">
                 <Grid>
-                    <TabControl Grid.Row="0">
+                    <TabControl Name="TabControlOverall" Grid.Row="0">
                         <TabItem Header="Stats" Height="41" VerticalAlignment="Bottom">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -700,7 +700,7 @@
                                                     Content="Move to other deck" Margin="5,0,0,0"
                                                     Click="BtnOverallMoveToOtherDeck_Click" />
                                             <Button x:Name="BtnOverallDetails" IsEnabled="False"
-                                                    Content="Show game details" Margin="5,0,0,0"
+                                                    Content="Show replay" Margin="5,0,0,0"
                                                     Width="120" VerticalAlignment="Bottom" Click="BtnOverallDetails_Click" />
                                             <Button x:Name="BtnOverallNote" IsEnabled="False" Content="Edit Note"
                                                     Margin="5,0,0,0" Width="75"
