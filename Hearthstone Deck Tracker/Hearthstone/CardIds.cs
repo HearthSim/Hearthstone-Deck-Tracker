@@ -130,5 +130,48 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{ "GVG_110t" }
 				}
 			};
+
+		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
+			{
+				{"HERO_01", "Warrior"},
+				{"HERO_02", "Shaman"},
+				{"HERO_03", "Rogue"},
+				{"HERO_04", "Paladin"},
+				{"HERO_05", "Hunter"},
+				{"HERO_06", "Druid"},
+				{"HERO_07", "Warlock"},
+				{"HERO_08", "Mage"},
+				{"HERO_09", "Priest"},
+				{"NAX1_01", "Anub'Rekhan"},
+				{"NAX1h_01", "Anub'Rekhan"},
+				{"NAX2_01", "Grand Widow Faerlina"},
+				{"NAX2_01H", "Grand Widow Faerlina"},
+				{"NAX3_01", "Maexxna"},
+				{"NAX3_01H", "Maexxna"},
+				{"NAX4_01", "Noth the Plaguebringer"},
+				{"NAX4_01H", "Noth the Plaguebringer"},
+				{"NAX5_01", "Heigan the Unclean"},
+				{"NAX5_01H", "Heigan the Unclean"},
+				{"NAX6_01", "Loatheb"},
+				{"NAX6_01H", "Loatheb"},
+				{"NAX7_01", "Instructor Razuvious"},
+				{"NAX7_01H", "Instructor Razuvious"},
+				{"NAX8_01", "Gothik the Harvester"},
+				{"NAX8_01H", "Gothik the Harvester"},
+				{"NAX9_01", "Baron Rivendare"},
+				{"NAX9_01H", "Baron Rivendare"},
+				{"NAX10_01", "Patchwerk"},
+				{"NAX10_01H", "Patchwerk"},
+				{"NAX11_01", "Grobbulus"},
+				{"NAX11_01H", "Grobbulus"},
+				{"NAX12_01", "Gluth"},
+				{"NAX12_01H", "Gluth"},
+				{"NAX13_01", "Thaddius"},
+				{"NAX13_01H", "Thaddius"},
+				{"NAX14_01", "Sapphiron"},
+				{"NAX14_01H", "Sapphiron"},
+				{"NAX15_01", "Kel'Thuzad"},
+				{"NAX15_01H", "Kel'Thuzad"}
+			};
 	}
 }

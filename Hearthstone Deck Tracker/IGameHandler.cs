@@ -24,9 +24,9 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentHandDiscard(string cardId, int from, int turn);
 		void HandleOpponentDraw(int turn);
 		void HandleOpponentMulligan(int from);
-		void HandleOpponentGet(int turn);
+		void HandleOpponentGet(int turn, int id);
 		void HandleOpponentSecretPlayed(string cardId, int from, int turn, bool fromDeck, int otherId);
-		void HandleOpponentPlayToHand(string cardId, int turn);
+		void HandleOpponentPlayToHand(string cardId, int turn, int id);
 		void HandleOpponentPlayToDeck(string cardId, int turn);
 		void HandleOpponentSecretTrigger(string cardId, int turn, int otherId);
 		void HandleOpponentDeckDiscard(string cardId, int turn);
@@ -36,14 +36,15 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion OpponentHandlers
 
-		void TurnStart(Turn player, int turnNumber);
+		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
 		void HandleGameEnd(bool backInMenu);
-		void HandleLoss();
-		void HandleWin();
+		void HandleLoss(bool fromAssetUnload);
+		void HandleWin(bool fromAssetUnload);
 		void PlayerSetAside(string id);
 
 
 		void HandlePossibleArenaCard(string id);
+		void SetGameMode(GameMode mode);
 	}
 }

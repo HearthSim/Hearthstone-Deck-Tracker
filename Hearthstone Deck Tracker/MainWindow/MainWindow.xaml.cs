@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
@@ -318,6 +319,8 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(50);
 				}
 
+				ReplayReader.CloseViewers();
+
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
 				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 
@@ -400,8 +403,6 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.DecksList.Where(
 					d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))
 					).ToList();
-			if(decks.Contains(DeckPickerList.SelectedDeck))
-				decks.Remove(DeckPickerList.SelectedDeck);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			if(decks.Count > 0)
@@ -778,6 +779,59 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
 				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
+			}
+		}
+		
+		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var newest = Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
+				if(newest != null)
+					ReplayReader.Read(newest.FullName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+			}
+		}
+
+		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var dialog = new OpenFileDialog
+				             {
+					             Title = "Select Replay File",
+					             DefaultExt = "*.hdtreplay",
+					             Filter = "HDT Replay|*.hdtreplay",
+					             InitialDirectory = Config.Instance.ReplayDir
+				             };
+				var dialogResult = dialog.ShowDialog();
+				if(dialogResult == System.Windows.Forms.DialogResult.OK)
+					ReplayReader.Read(dialog.FileName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+			}
+		}
+
+		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(Config.Instance.StatsInWindow)
+			{
+				StatsWindow.WindowState = WindowState.Normal;
+				StatsWindow.Show();
+				StatsWindow.Activate();
+				StatsWindow.StatsControl.TabControlCurrentOverall.SelectedIndex = 1;
+				StatsWindow.StatsControl.TabControlOverall.SelectedIndex = 1;
+			}
+			else
+			{
+				FlyoutDeckStats.IsOpen = true;
+				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
+				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
 			}
 		}
 	}

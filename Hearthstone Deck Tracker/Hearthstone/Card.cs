@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
+	[Serializable]
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
 		public string Id;
@@ -241,10 +242,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return new SolidColorBrush(Colors.White); }
 		}
 
+		private int _lastCount;
+		private ImageBrush _cachedBackground;
 		public ImageBrush Background
 		{
 			get
 			{
+				if(_cachedBackground != null && Count == _lastCount)
+				{
+					return _cachedBackground;
+				}
+				_lastCount = Count;
 				if(Id == null || Name == null)
 					return new ImageBrush();
 				try
@@ -297,6 +305,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 					var brush = new ImageBrush { ImageSource = new DrawingImage(drawingGroup) };
+					_cachedBackground = brush;
 					return brush;
 				}
 				catch(Exception)
@@ -333,9 +342,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Name.GetHashCode();
 		}
 
+		private bool _loaded;
 		public void Load()
 		{
-			Debug.Assert(Id != null);
+			if(_loaded)
+				return;
 
 			var stats = Game.GetCardFromId(Id);
 			PlayerClass = stats.PlayerClass;
@@ -353,6 +364,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = stats.Mechanics;
 			Artist = stats.Artist;
 			_wasDiscarded = false;
+			_loaded = true;
 			OnPropertyChanged();
 		}
 

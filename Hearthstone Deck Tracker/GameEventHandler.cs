@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker
@@ -45,6 +46,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
+			if(cardId == "GAME_005")
+			{
+				HandlePlayerGet(cardId, turn);
+				return;
+			}
 			if(Game.SetAsideCards.Contains(cardId))
 				Game.SetAsideCards.Remove(cardId);
 			LogEvent("PlayerDraw", cardId);
@@ -66,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerMulligan", cardId);
-			TurnTimer.Instance.MulliganDone(Turn.Player);
+			TurnTimer.Instance.MulliganDone(ActivePlayer.Player);
 			Game.PlayerMulligan(cardId);
 
 			//without this update call the overlay deck does not update properly after having Card implement INotifyPropertyChanged
@@ -159,7 +165,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 	    public static void HandleOpponentPlay(string cardId, int from, int turn)
-		{
+	    {
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
@@ -187,14 +193,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentMulligan", from: from);
 			Game.OpponentMulligan(from);
-			TurnTimer.Instance.MulliganDone(Turn.Opponent);
+			TurnTimer.Instance.MulliganDone(ActivePlayer.Opponent);
 			Game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 		}
 
-		public static void HandleOpponentGet(int turn)
+		public static void HandleOpponentGet(int turn, int id)
 		{
 			LogEvent("OpponentGet", turn: turn);
-			Game.OpponentGet(turn);
+			Game.OpponentGet(turn, id);
 			Game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 		}
 
@@ -214,10 +220,10 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.ShowSecrets();
 		}
 
-		public static void HandleOpponentPlayToHand(string cardId, int turn)
+		public static void HandleOpponentPlayToHand(string cardId, int turn, int id)
 		{
 			LogEvent("OpponentBackToHand", cardId, turn);
-			Game.OpponentBackToHand(cardId, turn);
+			Game.OpponentBackToHand(cardId, turn, id);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
@@ -282,8 +288,8 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayingAs = hero;
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-			if(selectedDeck != null)
-				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
+			//if(selectedDeck != null)
+			//	Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			if(!string.IsNullOrEmpty(hero))
 			{
@@ -317,14 +323,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-	    public static void TurnStart(Turn player, int turnNumber)
+	    public static void TurnStart(ActivePlayer player, int turnNumber)
 		{
 			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer
 			//maybe add timer to player/opponent windows
 			TurnTimer.Instance.SetCurrentPlayer(player);
 			TurnTimer.Instance.Restart();
-			if(player == Turn.Player && !Game.IsInMenu)
+			if(player == ActivePlayer.Player && !Game.IsInMenu)
 			{
 				if(Config.Instance.FlashHsOnTurnStart)
 					User32.FlashHs();
@@ -352,7 +358,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
 			}
-
+			_waitingForRankedMessage = false;
 			Game.IsInMenu = false;
 			Game.Reset();
 		}
@@ -361,6 +367,12 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
 		public static void HandleGameEnd(bool backInMenu)
 		{
+			if(Game.Entities.Count > 0 && !Game.SavedReplay && Game.CurrentGameStats != null &&
+			   Game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
+			{
+				Game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
+				SaveAndUpdateStats();
+			}
 			if(!backInMenu)
 			{
 				Helper.MainWindow.Overlay.HideTimers();
@@ -371,6 +383,8 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine(Game.CurrentGameMode + " is set to not record games. Discarding game.");
 					return;
 				}*/
+				Game.CurrentGameStats.PlayerName = Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.Name;
+				Game.CurrentGameStats.OpponentName = Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId).Value.Name;
 				Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 				if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 				{
@@ -403,6 +417,9 @@ namespace Hearthstone_Deck_Tracker
 				}
 				return;
 			}
+			if(_waitingForRankedMessage)
+				return; 
+			HsLogReader.Instance.ClearLog();
 			Logger.WriteLine("Game end");
 			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
@@ -443,24 +460,45 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
-	    public static void HandleWin()
+	    public static void HandleWin(bool fromAssetUnload)
 		{
-			if(!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was won!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Win;
-			SaveAndUpdateStats();
+			if(fromAssetUnload)
+				SaveAndUpdateStats();
 		}
 
-		public static void HandleLoss()
+		public static void HandleLoss(bool fromAssetUnload)
 		{
-			if(!Game.IsInMenu || Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null)
 				return;
 			Logger.WriteLine("Game was lost!", "GameStats");
 			Game.CurrentGameStats.Result = GameResult.Loss;
-			SaveAndUpdateStats();
+			if(fromAssetUnload)
+				SaveAndUpdateStats();
 		}
 
+	    public static void SetGameMode(GameMode mode)
+	    {
+			if(_waitingForRankedMessage && mode != GameMode.Ranked)
+			{
+				SaveAndUpdateStats();
+				_waitingForRankedMessage = false;
+				Game.CurrentGameStats = null;
+				HandleGameEnd(true);
+			}
+			Game.CurrentGameMode = mode;
+			Logger.WriteLine(">> GAME MODE: " + mode);
+		    if(Game.CurrentGameStats == null)
+			    return;
+		    Logger.WriteLine(">> GAME MODE: " + mode + "(saved to gamestats)");
+		    //Game.CurrentGameStats.GameMode = mode;
+		    SaveAndUpdateStats();
+	    }
+
+	    private static bool _waitingForRankedMessage;
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
@@ -472,13 +510,18 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Game.CurrentGameStats != null)
 				{
-					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+					Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
+                    if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 					{
 						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
 						return;
 					}
 					Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
 					Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
+					if(Game.CurrentGameMode == GameMode.Casual)
+						_waitingForRankedMessage = true;
+					else if(Game.CurrentGameMode != GameMode.None)
+					    Game.CurrentGameStats = null;
 				}
 
 				if(_assignedDeck == null)
@@ -491,7 +534,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Saving DeckStats", "GameStats");
 					DeckStatsList.Save();
 				}
-				Game.CurrentGameStats = null;
+				
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				statsControl.Refresh();
 			}
@@ -592,9 +635,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentMulligan(@from);
         }
 
-        void IGameHandler.HandleOpponentGet(int turn)
+        void IGameHandler.HandleOpponentGet(int turn, int id)
         {
-            HandleOpponentGet(turn);
+            HandleOpponentGet(turn, id);
         }
 
         void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck, int otherId)
@@ -602,9 +645,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck, otherId);
         }
 
-        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn)
+        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn, int id)
         {
-            HandleOpponentPlayToHand(cardId, turn);
+            HandleOpponentPlayToHand(cardId, turn, id);
         }
 
         void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
@@ -632,7 +675,7 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentHeroPower(cardId, turn);
         }
 
-        void IGameHandler.TurnStart(Turn player, int turnNumber)
+        void IGameHandler.TurnStart(ActivePlayer player, int turnNumber)
         {
             TurnStart(player, turnNumber);
         }
@@ -647,14 +690,14 @@ namespace Hearthstone_Deck_Tracker
             HandleGameEnd(backInMenu);
         }
 
-        void IGameHandler.HandleLoss()
+        void IGameHandler.HandleLoss(bool fromAssetUnload)
         {
-            HandleLoss();
+            HandleLoss(fromAssetUnload);
         }
 
-        void IGameHandler.HandleWin()
+        void IGameHandler.HandleWin(bool fromAssetUnload)
         {
-            HandleWin();
+            HandleWin(fromAssetUnload);
         }
 
         void IGameHandler.PlayerSetAside(string id)
@@ -676,6 +719,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			HandleOpponentPlayToDeck(cardId, turn);
 		}
+
+	    void IGameHandler.SetGameMode(GameMode mode)
+	    {
+		    SetGameMode(mode);
+	    }
 
 		#endregion IGameHandlerImplementation
 

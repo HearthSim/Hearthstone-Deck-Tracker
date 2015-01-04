@@ -2,13 +2,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Replay;
 
 #endregion
 
@@ -20,61 +22,26 @@ namespace Hearthstone_Deck_Tracker
 
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
-		private const int PowerCountThreshold = 1;
 
 		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 		private readonly Regex _otherIdRegex = new Regex(@".*\[.*(id=(?<Id>(\d+))).*");
 
 		private readonly string _fullOutputPath;
-
-		private readonly Dictionary<string, string> _heroIdDict = new Dictionary<string, string>
-			{
-				{"HERO_01", "Warrior"},
-				{"HERO_02", "Shaman"},
-				{"HERO_03", "Rogue"},
-				{"HERO_04", "Paladin"},
-				{"HERO_05", "Hunter"},
-				{"HERO_06", "Druid"},
-				{"HERO_07", "Warlock"},
-				{"HERO_08", "Mage"},
-				{"HERO_09", "Priest"},
-				{"NAX1_01", "Anub'Rekhan"},
-				{"NAX1h_01", "Anub'Rekhan"},
-				{"NAX2_01", "Grand Widow Faerlina"},
-				{"NAX2_01H", "Grand Widow Faerlina"},
-				{"NAX3_01", "Maexxna"},
-				{"NAX3_01H", "Maexxna"},
-				{"NAX4_01", "Noth the Plaguebringer"},
-				{"NAX4_01H", "Noth the Plaguebringer"},
-				{"NAX5_01", "Heigan the Unclean"},
-				{"NAX5_01H", "Heigan the Unclean"},
-				{"NAX6_01", "Loatheb"},
-				{"NAX6_01H", "Loatheb"},
-				{"NAX7_01", "Instructor Razuvious"},
-				{"NAX7_01H", "Instructor Razuvious"},
-				{"NAX8_01", "Gothik the Harvester"},
-				{"NAX8_01H", "Gothik the Harvester"},
-				{"NAX9_01", "Baron Rivendare"},
-				{"NAX9_01H", "Baron Rivendare"},
-				{"NAX10_01", "Patchwerk"},
-				{"NAX10_01H", "Patchwerk"},
-				{"NAX11_01", "Grobbulus"},
-				{"NAX11_01H", "Grobbulus"},
-				{"NAX12_01", "Gluth"},
-				{"NAX12_01H", "Gluth"},
-				{"NAX13_01", "Thaddius"},
-				{"NAX13_01H", "Thaddius"},
-				{"NAX14_01", "Sapphiron"},
-				{"NAX14_01H", "Sapphiron"},
-				{"NAX15_01", "Kel'Thuzad"},
-				{"NAX15_01H", "Kel'Thuzad"}
-			};
-
+		
 		private readonly Regex _cardAlreadyInCacheRegex = new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
 		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
 		private readonly Regex _powerListRegex = new Regex(@"GameState.DebugPrintPowerList\(\)\ -\ Count=(?<count>(\d+))");
+
+		private readonly Regex _tagChangeRegex = new Regex(@"TAG_CHANGE\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+		private readonly Regex _entityRegex = new Regex(@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
+		private readonly Regex _creationRegex = new Regex(@"FULL_ENTITY\ -\ Creating\ ID=(?<id>(\d+))\ CardID=(?<cardId>(\w*))");
+		private readonly Regex _creationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
+		private readonly Regex _playerEntityRegex = new Regex(@"Player\ EntityID=(?<id>(\d+))\ PlayerID=(?<playerId>(\d+))\ GameAccountId=(?<gameAccountId>(.+))");
+		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
+
 
 		private readonly int _updateDelay;
 		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
@@ -85,14 +52,17 @@ namespace Hearthstone_Deck_Tracker
 		private bool _first;
 		private long _lastGameEnd;
 		private long _previousSize;
-		private int _turnCount;
-		private int _playerCount;
-		private int _powerCount;
+		private int _addToTurn;
+		private bool _gameEnded;
 
+		private bool _waitForModeDetection;
+		private int _currentEntityId;
+		private dynamic _waitForController;
+		private readonly List<Entity> _tmpEntities = new List<Entity>();
+		private bool _currentEntityHasCardId;
 		#endregion
 
 		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
-		private Turn _currentPlayer;
 		private bool _opponentUsedHeroPower;
 		private bool _playerUsedHeroPower;
 		private IGameHandler _gameHandler;
@@ -150,16 +120,31 @@ namespace Hearthstone_Deck_Tracker
 
 		public int GetTurnNumber()
 		{
-			return (_turnCount + 1) / 2;
+			if(!Game.IsMulliganDone)
+				return 0;
+			if(_addToTurn == -1)
+			{
+				var firstPlayer = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
+				if(firstPlayer.Value != null)
+				{
+					_addToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == Game.PlayerId ? 0 : 1;
+				}
+			}
+			Entity entity;
+			if(Game.Entities.TryGetValue(1, out entity))
+				return (entity.Tags[GAME_TAG.TURN] + (_addToTurn == -1 ? 0 : _addToTurn)) / 2;
+			return 0;
 		}
 
         /// <summary>
         /// Start tracking gamelogs with default impelementaion of GameEventHandler
         /// </summary>
 		public void Start()
-		{
+        {
+	        _addToTurn = -1;
 			_first = true;
 			_doUpdate = true;
+	        _gameEnded = false;
 			_gameHandler = new GameEventHandler();
 			ReadFileAsync();
 		}
@@ -170,9 +155,11 @@ namespace Hearthstone_Deck_Tracker
         /// <param name="gh"> Custom Game handler implementation </param>
 		public void Start(IGameHandler gh)
 		{
+			_addToTurn = -1;
 			_first = true;
 			_doUpdate = true;
 			_gameHandler = gh;
+			_gameEnded = false;
 			ReadFileAsync();
 		}
 		
@@ -199,7 +186,7 @@ namespace Hearthstone_Deck_Tracker
 								fileOffset = fs.Length - MaxFileLength;
 								fs.Seek(fs.Length - MaxFileLength, SeekOrigin.Begin);
 							}
-							_previousSize = FindLastGameEnd(fs) + fileOffset;
+							_previousSize = FindLastGameStart(fs) + fileOffset;
 							_currentOffset = _previousSize;
 							_first = false;
 						}
@@ -224,7 +211,9 @@ namespace Hearthstone_Deck_Tracker
 								await Task.Delay(_updateDelay);
 								continue;
 							}
+							
 							Analyze(newLines);
+							
 							if (_ifaceUpdateNeeded)
 								Helper.UpdateEverything();
 						}
@@ -237,7 +226,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private long FindLastGameEnd(FileStream fs)
+		private long FindLastGameStart(FileStream fs)
 		{
 			using(var sr = new StreamReader(fs))
 			{
@@ -247,7 +236,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var line in lines)
 				{
 					tempOffset += line.Length + 1;
-					if(line.StartsWith("[Bob] legend rank"))
+					if(line.StartsWith("[Bob] legend rank") || line.Contains("CREATE_GAME"))
 						offset = tempOffset;
 				}
 
@@ -255,37 +244,120 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private bool _turnEnded;
 		private void Analyze(string log)
 		{
 			var logLines = log.Split('\n');
 			foreach(var logLine in logLines)
 			{
 				_currentOffset += logLine.Length + 1;
+				#region [Power]
 				if(logLine.StartsWith("[Power]"))
 				{
-					if(logLine.Contains("tag=CURRENT_PLAYER"))
+					if(_gameEntityRegex.IsMatch(logLine))
 					{
-						_turnEnded = true;
-						continue;
+						_gameHandler.HandleGameStart();
+						var match = _gameEntityRegex.Match(logLine);
+						var id = int.Parse(match.Groups["id"].Value);
+						if(!Game.Entities.ContainsKey(id))
+							Game.Entities.Add(id, new Entity(id));
+						_currentEntityId = id;
 					}
-					if(_powerListRegex.IsMatch(logLine))
-					{ 
-						var count = int.Parse(_powerListRegex.Match(logLine).Groups["count"].Value);
-						if(count > 30)
+					else if(_playerEntityRegex.IsMatch(logLine))
+					{
+						var match = _playerEntityRegex.Match(logLine);
+						var id = int.Parse(match.Groups["id"].Value);
+						if(!Game.Entities.ContainsKey(id))
+							Game.Entities.Add(id, new Entity(id));
+						_currentEntityId = id;
+					}
+					else if(_tagChangeRegex.IsMatch(logLine))
+					{
+						var match = _tagChangeRegex.Match(logLine);
+						var rawEntity = match.Groups["entity"].Value;
+						if(rawEntity.StartsWith("[") && _entityRegex.IsMatch(rawEntity))
 						{
-							Logger.WriteLine("DebugPrintPowerList " + count, "HsLogReader", 1);
-							_powerCount++;
+							var entity = _entityRegex.Match(rawEntity);
+							var id = int.Parse(entity.Groups["id"].Value);
+							TagChange(match.Groups["tag"].Value, id, match.Groups["value"].Value);
 						}
-						continue;
+						else
+						{
+							var entity = Game.Entities.FirstOrDefault(x => x.Value.Name == rawEntity);
+							if(entity.Value == null)
+							{
+								//while the id is unknown, store in tmp entities
+								var tmpEntity = _tmpEntities.FirstOrDefault(x => x.Name == rawEntity);
+								if(tmpEntity == null)
+								{
+									tmpEntity = new Entity(_tmpEntities.Count + 1);
+									tmpEntity.Name = rawEntity;
+                                    _tmpEntities.Add(tmpEntity);
+								}
+								GAME_TAG tag;
+								Enum.TryParse(match.Groups["tag"].Value, out tag);
+								var value = ParseTagValue(tag, match.Groups["value"].Value);
+								tmpEntity.SetTag(tag, value);
+								if(tmpEntity.HasTag(GAME_TAG.ENTITY_ID))
+								{
+									var id = tmpEntity.GetTag(GAME_TAG.ENTITY_ID);
+									if(Game.Entities.ContainsKey(id))
+									{
+										Game.Entities[id].Name = tmpEntity.Name;
+										foreach(var t in tmpEntity.Tags)
+										{
+											Game.Entities[id].SetTag(t.Key, t.Value);
+										}
+										_tmpEntities.Remove(tmpEntity);
+										Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
+									}
+									else
+									{
+										Logger.WriteLine("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
+									}
+								}
+							}
+							else
+							{
+								TagChange(match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value);
+							}
+						}
 					}
-					if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
+					else if(_creationRegex.IsMatch(logLine))
 					{
-						Game.CurrentGameMode = GameMode.Spectator;
-						Logger.WriteLine(">>> GAME MODE: SPECTATOR");
-						continue;
+						var match = _creationRegex.Match(logLine);
+						var id = int.Parse(match.Groups["id"].Value);
+						var cardId = match.Groups["cardId"].Value;
+						if(!Game.Entities.ContainsKey(id))
+							Game.Entities.Add(id, new Entity(id) { CardId = cardId });
+						_currentEntityId = id;
+						_currentEntityHasCardId = !string.IsNullOrEmpty(cardId);
 					}
-					if(_entityNameRegex.IsMatch(logLine))
+					else if(_updatingEntityRegex.IsMatch(logLine))
+					{
+						var match = _updatingEntityRegex.Match(logLine);
+						var cardId = match.Groups["cardId"].Value;
+						var rawEntity = match.Groups["entity"].Value;
+						if(rawEntity.StartsWith("[") && _entityRegex.IsMatch(rawEntity))
+						{
+							var entity = _entityRegex.Match(rawEntity);
+							var id = int.Parse(entity.Groups["id"].Value);
+							_currentEntityId = id;
+							if(!Game.Entities.ContainsKey(id))
+								Game.Entities.Add(id, new Entity(id));
+							Game.Entities[id].CardId = cardId;
+						}
+					}
+					else if(_creationTagRegex.IsMatch(logLine) && !logLine.Contains("HIDE_ENTITY"))
+					{
+						var match = _creationTagRegex.Match(logLine);
+						TagChange(match.Groups["tag"].Value, _currentEntityId, match.Groups["value"].Value);
+						
+					}
+					else if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
+					{
+						_gameHandler.SetGameMode(GameMode.Spectator);
+					}
+					else if(_entityNameRegex.IsMatch(logLine))
 					{
 						var match = _entityNameRegex.Match(logLine);
 						var name = match.Groups["name"].Value;
@@ -294,9 +366,9 @@ namespace Hearthstone_Deck_Tracker
 							_gameHandler.HandlePlayerName(name);
 						else if(player == 2)
 							_gameHandler.HandleOpponentName(name);
-						continue;
 					}
-					if((_currentPlayer == Turn.Player && !_playerUsedHeroPower) || _currentPlayer == Turn.Opponent && !_opponentUsedHeroPower)
+					else if((Game.PlayerId >= 0 && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower) 
+						|| Game.OpponentId >= 0 && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_opponentUsedHeroPower)
 					{
 						if(_heroPowerRegex.IsMatch(logLine))
 						{
@@ -306,7 +378,7 @@ namespace Hearthstone_Deck_Tracker
 								var heroPower = Game.GetCardFromId(id);
 								if(heroPower.Type == "Hero Power")
 								{
-									if(_currentPlayer == Turn.Player)
+									if(Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 									{
 										_gameHandler.HandlePlayerHeroPower(id, GetTurnNumber());
 										_playerUsedHeroPower = true;
@@ -316,75 +388,75 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.HandleOpponentHeroPower(id, GetTurnNumber());
 										_opponentUsedHeroPower = true;
 									}
-									ResetPowerCount();
 								}
 							}
 						}
 					}
 				}
+				#endregion
+				#region [Asset]
 				else if(logLine.StartsWith("[Asset]"))
 				{
-					if(logLine.ToLower().Contains("victory_screen_start"))
-						_gameHandler.HandleWin();
-					else if(logLine.ToLower().Contains("defeat_screen_start"))
-						_gameHandler.HandleLoss();
-					else if(logLine.Contains("rank_window"))
+					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
+                        _gameHandler.HandleWin(true);
+					else if(logLine.ToLower().Contains("defeat_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
+						_gameHandler.HandleLoss(true);
+					else if(logLine.Contains("rank"))
 					{
-						Game.CurrentGameMode = GameMode.Ranked;
-						Logger.WriteLine(">>> GAME MODE: RANKED");
+						_gameHandler.SetGameMode(GameMode.Ranked);
+						if(_waitForModeDetection)
+							GameEnd();
 					}
 					else if(_unloadCardRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
-					{
 						_gameHandler.HandlePossibleArenaCard(_unloadCardRegex.Match(logLine).Groups["id"].Value);
-					}
 				}
-				else if(logLine.StartsWith("[Bob] legend rank"))
-				{
-					if(!Game.IsInMenu)
-						_gameHandler.HandleGameEnd(false);
-				}
+				#endregion
+				#region [Bob]
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
 				{
-					Game.CurrentGameMode = GameMode.Practice;
-					Logger.WriteLine(">>> GAME MODE: PRACTICE");
+					_gameHandler.SetGameMode(GameMode.Practice);
+					if(_waitForModeDetection)
+						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
 				{
-					Game.CurrentGameMode = GameMode.Casual;
-					Logger.WriteLine(">>> GAME MODE: CASUAL (RANKED)");
+					_gameHandler.SetGameMode(GameMode.Casual);
+					if(_waitForModeDetection)
+						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
 				{
-					Game.CurrentGameMode = GameMode.Arena;
-					Logger.WriteLine(">>> GAME MODE: ARENA");
+					_gameHandler.SetGameMode(GameMode.Arena);
+					if(_waitForModeDetection)
+						GameEnd();
 					Game.ResetArenaCards();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
 				{
-					Game.CurrentGameMode = GameMode.Friendly;
-					Logger.WriteLine(">>> GAME MODE: FRIENDLY");
+					_gameHandler.SetGameMode(GameMode.Friendly);
+					if(_waitForModeDetection)
+						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
-					//game ended
-
-					Game.CurrentGameMode = GameMode.None;
-					Logger.WriteLine(">>> GAME MODE: NONE");
-
-					_gameHandler.HandleGameEnd(true);
-					_lastGameEnd = _currentOffset;
-					_turnCount = 0;
-					_playerCount = 0;
-					ClearLog();
+					//game ended -  back in menu
+					if(Game.CurrentGameMode == GameMode.Spectator)
+						GameEnd();
+					else
+					{
+						_gameHandler.SetGameMode(GameMode.None);
+						_waitForModeDetection = true;
+					}
 				}
+				#endregion
+				#region [Rachelle]
 				else if(logLine.StartsWith("[Rachelle]"))
 				{
 					if(_cardAlreadyInCacheRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
-					{
-						//Console.WriteLine();
 						_gameHandler.HandlePossibleArenaCard(_cardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value);
-					}
 				}
+				#endregion
+				#region [Zone]
 				else if(logLine.StartsWith("[Zone]"))
 				{
 					if(_cardMovementRegex.IsMatch(logLine))
@@ -394,23 +466,9 @@ namespace Hearthstone_Deck_Tracker
 						var id = match.Groups["Id"].Value.Trim();
 						var from = match.Groups["from"].Value.Trim();
 						var to = match.Groups["to"].Value.Trim();
-						var otherId = -1;
 
-						var zonePos = -1;
-						//var zone = string.Empty;
-
-						// Only for some log lines, should be valid in every action where we need it
-						if(_opponentPlayRegex.IsMatch(logLine))
-						{
-							var match2 = _opponentPlayRegex.Match(logLine);
-							zonePos = Int32.Parse(match2.Groups["zonePos"].Value.Trim());
-						}
-						if(_zoneRegex.IsMatch(logLine))
-						{
-							//var match3 = _zoneRegex.Match(logLine);
-							//zone = match3.Groups["zone"].Value.Trim();
-							_gameHandler.PlayerSetAside(id);
-						}
+						//if(_zoneRegex.IsMatch(logLine))
+						//	_gameHandler.PlayerSetAside(id);
 
 						//game start/end
 						if(id.Contains("HERO") || (id.Contains("NAX") && id.Contains("_01")))
@@ -419,179 +477,432 @@ namespace Hearthstone_Deck_Tracker
 							{
 								if(to.Contains("FRIENDLY"))
 								{
-									if(_playerCount++ == 0)
-										_gameHandler.HandleGameStart();
-									_gameHandler.SetPlayerHero(_heroIdDict[id]);
+									_gameHandler.SetPlayerHero(CardIds.HeroIdDict[id]);
 								}
 								else if(to.Contains("OPPOSING"))
 								{
-									if(_playerCount++ == 0)
-										_gameHandler.HandleGameStart();
 									string heroName;
-									if(_heroIdDict.TryGetValue(id, out heroName))
+									if(CardIds.HeroIdDict.TryGetValue(id, out heroName))
 										_gameHandler.SetOpponentHero(heroName);
 								}
 							}
-							ResetPowerCount();
 							continue;
 						}
 
-						switch(from)
-						{
-							case "FRIENDLY DECK":
-								if(to == "FRIENDLY HAND")
-								{
-									if(_turnEnded || _powerCount >= PowerCountThreshold)
-									{
-										if(_turnEnded)
-											Logger.WriteLine("--- Turn increment reason: turnEnded");
-										if(_powerCount >= PowerCountThreshold)
-											Logger.WriteLine("--- Turn increment reason: powerCount");
-										_turnCount++;
-										_turnEnded = false;
-										_playerUsedHeroPower = false;
-										ResetPowerCount();
-										_currentPlayer = Turn.Player;
-										_gameHandler.TurnStart(Turn.Player, GetTurnNumber());
-									}
-									_gameHandler.HandlePlayerDraw(id, GetTurnNumber());
-								}
-								else if(to == "FRIENDLY SECRET")
-									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), true);
-								else if(to == "FRIENDLY GRAVEYARD" || to == "FRIENDLY PLAY")
-									//player discard from deck                 (deathlord)
-									_gameHandler.HandlePlayerDeckDiscard(id, GetTurnNumber());
-                                break;
-							case "FRIENDLY HAND":
-								if(to == "FRIENDLY DECK")
-								{
-									_gameHandler.HandlePlayerMulligan(id);
-								}
-								else if(to == "FRIENDLY PLAY")
-									_gameHandler.HandlePlayerPlay(id, GetTurnNumber());
-								else if(to == "FRIENDLY SECRET")
-									_gameHandler.HandlePlayerSecretPlayed(id, GetTurnNumber(), false);
-								else
-									//player discard from hand and spells
-									_gameHandler.HandlePlayerHandDiscard(id, GetTurnNumber());
-
-								break;
-							case "FRIENDLY PLAY":
-								if(to == "FRIENDLY HAND")
-									_gameHandler.HandlePlayerBackToHand(id, GetTurnNumber());
-								else if(to == "FRIENDLY DECK")
-									_gameHandler.HandlePlayerPlayToDeck(id, GetTurnNumber());
-								break;
-							case "OPPOSING HAND":
-								if(to == "OPPOSING DECK")
-								{
-									//opponent mulligan
-									_gameHandler.HandleOpponentMulligan(zonePos);
-								}
-								else if(to == "OPPOSING SECRET")
-								{
-									if(_otherIdRegex.IsMatch(logLine))
-										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
-									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), false, otherId);
-								}
-								else if(to == "OPPOSING PLAY")
-									_gameHandler.HandleOpponentPlay(id, zonePos, GetTurnNumber());
-								else
-									_gameHandler.HandleOpponentHandDiscard(id, zonePos, GetTurnNumber());
-								
-								break;
-							case "OPPOSING DECK":
-								if(to == "OPPOSING HAND")
-								{
-									if(_turnEnded || _powerCount >= PowerCountThreshold)
-									{
-										if(_turnEnded)
-											Logger.WriteLine("--- Turn increment reason: turnEnded");
-										if(_powerCount >= PowerCountThreshold)
-											Logger.WriteLine("--- Turn increment reason: powerCount");
-										_turnCount++;
-										_turnEnded = false;
-										ResetPowerCount();
-										_opponentUsedHeroPower = false;
-										_currentPlayer = Turn.Opponent;
-										_gameHandler.TurnStart(Turn.Opponent, GetTurnNumber());
-									}
-									//opponent draw
-									_gameHandler.HandleOpponentDraw(GetTurnNumber());
-								}
-								else if(to == "OPPOSING SECRET")
-								{
-									if(_otherIdRegex.IsMatch(logLine))
-										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
-
-									_gameHandler.HandleOpponentSecretPlayed(id, zonePos, GetTurnNumber(), true, otherId);
-								}
-								else if(to == "OPPOSING GRAVEYARD" || to == "OPPOSING PLAY")
-									//opponent discard from deck              (deathlord)
-									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
-								else if(string.IsNullOrEmpty(to.Trim()) && logLine.Contains("zone=SETASIDE")) //tracking
-									_gameHandler.HandleOpponentDeckDiscard(id, GetTurnNumber());
-
-								break;
-							case "OPPOSING SECRET":
-								if(to == "OPPOSING GRAVEYARD" || to == "FRIENDLY SECRET")
-								{
-									//opponent secret triggered || stolen
-									if(_otherIdRegex.IsMatch(logLine))
-										otherId = int.Parse(_otherIdRegex.Match(logLine).Groups["Id"].Value);
-									_gameHandler.HandleOpponentSecretTrigger(id, GetTurnNumber(), otherId);
-								}
-								break;
-							case "OPPOSING PLAY":
-								if(to == "OPPOSING HAND") //card from play back to hand (sap/brew)
-									_gameHandler.HandleOpponentPlayToHand(id, GetTurnNumber());
-								else if(to == "OPPOSING DECK")
-									_gameHandler.HandleOpponentPlayToDeck(id, GetTurnNumber());
-								break;
-							default:
-								if(to == "OPPOSING HAND")
-								{
-									//if(id == "GAME_005")
-									//	_turnCount--;
-									if(GetTurnNumber() == 0) //coin is handled in Game.OpponentDraw()
-										_gameHandler.HandleOpponentDraw(GetTurnNumber());
-									else
-										//coin, thoughtsteal etc
-										_gameHandler.HandleOpponentGet(GetTurnNumber());
-								}
-								else if(to == "FRIENDLY HAND")
-								{
-									
-									if(GetTurnNumber() == 0 && id != "GAME_005")
-										_gameHandler.HandlePlayerDraw(id, GetTurnNumber());
-									else
-										//coin, thoughtsteal etc
-										_gameHandler.HandlePlayerGet(id, GetTurnNumber());
-								}	
-								else if(to == "OPPOSING GRAVEYARD" && from == "" && id != "")
-								{
-									//todo: not sure why those two are here
-									//CardMovement(this, new CardMovementArgs(CardMovementType.OpponentPlay, id));
-								}
-								else if(to == "FRIENDLY GRAVEYARD" && from == "")
-								{
-									// CardMovement(this, new CardMovementArgs(CardMovementType.PlayerPlay, id));
-								}
-								break;
-						}
-						ResetPowerCount();
 						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
 							Game.LastZoneChangedCardId = id;
-						
+
 					}
 				}
+				#endregion
+
+				if(_first)
+					break;
 			}
 		}
 
-		private void ResetPowerCount()
+		private void GameEnd()
 		{
-			Logger.WriteLine("Reset powercount (was " + _powerCount + ")", "HsLogReader", 1);
-			_powerCount = 0;
+			_waitForModeDetection = false;
+			_gameHandler.HandleGameEnd(true);
+			_lastGameEnd = _currentOffset;
+			//ClearLog();
+		}
+
+		private int _lastId;
+
+		private ReplayKeyPoint _proposedKeyPoint;
+		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
+		{
+			if(_proposedKeyPoint != null)
+				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+			_proposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
+		}
+
+		private void TagChange(string rawTag, int id, string rawValue, bool isRecursive = false)
+		{
+			if(_lastId != id && _proposedKeyPoint != null)
+			{
+				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+				_proposedKeyPoint = null;
+			}
+			_lastId = id;
+			if(!Game.Entities.ContainsKey(id))
+				Game.Entities.Add(id, new Entity(id));
+			GAME_TAG tag;
+			if(!Enum.TryParse(rawTag, out tag))
+			{
+				int tmp;
+				if(int.TryParse(rawTag, out tmp) && Enum.IsDefined(typeof(GAME_TAG), tmp))
+					tag = (GAME_TAG)tmp;
+			}
+			var value = ParseTagValue(tag, rawValue);
+			var prevZone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
+			Game.Entities[id].SetTag(tag, value);
+
+			if(tag == GAME_TAG.CONTROLLER && _waitForController != null && Game.PlayerId == -1)
+			{
+				if(_currentEntityHasCardId)
+				{
+					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value.IsPlayer = value == 1;
+					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value.IsPlayer = value != 1;
+					Game.PlayerId = value;
+					Game.OpponentId = value == 1 ? 2 : 1;
+				}
+				else
+				{
+					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value.IsPlayer = value != 1;
+					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value.IsPlayer = value == 1;
+					Game.PlayerId = value == 1 ? 2 : 1;
+					Game.OpponentId = value;
+				}
+			}
+			var controller = Game.Entities[id].GetTag(GAME_TAG.CONTROLLER);
+			string player = Game.Entities[id].HasTag(GAME_TAG.CONTROLLER)
+				                ? (controller == Game.PlayerId ? "FRIENDLY" : "OPPOSING")
+				                : "";
+			var cardId = Game.Entities[id].CardId;
+			if(tag == GAME_TAG.ZONE)
+			{
+				//Logger.WriteLine("--------" + player + " " + Game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
+				//                 (TAG_ZONE)value);
+
+				if(((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && Game.IsMulliganDone) &&
+				   _waitForController == null)
+				{
+					if(!Game.IsMulliganDone)
+						prevZone = (int)TAG_ZONE.DECK;
+					if(controller == 0)
+					{
+						Game.Entities[id].SetTag(GAME_TAG.ZONE, prevZone);
+						_waitForController = new {Tag = rawTag, Id = id, Value = rawValue};
+						Logger.WriteLine("CURRENTLY NO CONTROLLER SET FOR CARD, WAITING...");
+						return;
+					}
+				}
+				switch((TAG_ZONE)prevZone)
+				{
+					case TAG_ZONE.DECK:
+						switch((TAG_ZONE)value)
+						{
+							case TAG_ZONE.HAND:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerDraw(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentDraw(GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.REMOVEDFROMGAME:
+							case TAG_ZONE.GRAVEYARD:
+							case TAG_ZONE.SETASIDE:
+							case TAG_ZONE.PLAY:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerDeckDiscard(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentDeckDiscard(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.SECRET:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerSecretPlayed(cardId, GetTurnNumber(), true);
+									ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentSecretPlayed(cardId, -1, GetTurnNumber(), true, id);
+									ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Player);
+								}
+								break;
+						}
+						break;
+					case TAG_ZONE.GRAVEYARD:
+						break;
+					case TAG_ZONE.HAND:
+						switch((TAG_ZONE)value)
+						{
+							case TAG_ZONE.PLAY:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerPlay(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.Play, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentPlay(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION), GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.Play, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.REMOVEDFROMGAME:
+							case TAG_ZONE.GRAVEYARD:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerHandDiscard(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.HandDiscard, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentHandDiscard(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION),
+									                                       GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.HandDiscard, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.SECRET:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerSecretPlayed(cardId, GetTurnNumber(), false);
+									ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentSecretPlayed(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION),
+									                                        GetTurnNumber(), false, id);
+									ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.DECK:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerMulligan(cardId);
+									ProposeKeyPoint(KeyPointType.Mulligan, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentMulligan(Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION));
+									ProposeKeyPoint(KeyPointType.Mulligan, id, ActivePlayer.Opponent);
+								}
+								break;
+						}
+						break;
+					case TAG_ZONE.PLAY:
+						switch((TAG_ZONE)value)
+						{
+							case TAG_ZONE.HAND:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerBackToHand(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.PlayToHand, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentPlayToHand(cardId, GetTurnNumber(), id);
+									ProposeKeyPoint(KeyPointType.PlayToHand, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.DECK:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerPlayToDeck(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+									_gameHandler.HandleOpponentPlayToDeck(cardId, GetTurnNumber());
+								ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
+								break;
+							case TAG_ZONE.GRAVEYARD:
+								if(Game.Entities[id].HasTag(GAME_TAG.HEALTH))
+								{
+									if(controller == Game.PlayerId)
+										ProposeKeyPoint(KeyPointType.Death, id, ActivePlayer.Player);
+									else if(controller == Game.OpponentId)
+										ProposeKeyPoint(KeyPointType.Death, id, ActivePlayer.Opponent);
+								}
+								break;
+						}
+						break;
+					case TAG_ZONE.SECRET:
+						switch((TAG_ZONE)value)
+						{
+							case TAG_ZONE.SECRET:
+							case TAG_ZONE.GRAVEYARD:
+								if(controller == Game.PlayerId)
+									ProposeKeyPoint(KeyPointType.SecretTriggered, id, ActivePlayer.Player);
+								if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentSecretTrigger(cardId, GetTurnNumber(), id);
+									ProposeKeyPoint(KeyPointType.SecretTriggered, id, ActivePlayer.Opponent);
+								}
+								break;
+						}
+						break;
+					case TAG_ZONE.SETASIDE:
+					case TAG_ZONE.CREATED:
+					case TAG_ZONE.INVALID:
+					case TAG_ZONE.REMOVEDFROMGAME:
+						switch((TAG_ZONE)value)
+						{
+							case TAG_ZONE.PLAY:
+								if(controller == Game.PlayerId)
+									ProposeKeyPoint(KeyPointType.Summon, id, ActivePlayer.Player);
+								if(controller == Game.OpponentId)
+									ProposeKeyPoint(KeyPointType.Summon, id, ActivePlayer.Opponent);
+								break;
+							case TAG_ZONE.HAND:
+								if(controller == Game.PlayerId)
+								{
+									_gameHandler.HandlePlayerGet(cardId, GetTurnNumber());
+									ProposeKeyPoint(KeyPointType.Obtain, id, ActivePlayer.Player);
+								}
+								else if(controller == Game.OpponentId)
+								{
+									_gameHandler.HandleOpponentGet(GetTurnNumber(), id);
+									ProposeKeyPoint(KeyPointType.Obtain, id, ActivePlayer.Opponent);
+								}
+								break;
+						}
+						break;
+				}
+			}
+			else if(tag == GAME_TAG.PLAYSTATE && !_gameEnded)
+			{
+				if(Game.Entities[id].IsPlayer)
+				{
+					if(value == (int)TAG_PLAYSTATE.WON)
+					{
+						GameEndKeyPoint(true, id);
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleWin(false);
+						_gameEnded = true;
+					}
+					else if(value == (int)TAG_PLAYSTATE.LOST)
+					{
+						GameEndKeyPoint(false, id);
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleLoss(false);
+						_gameEnded = true;
+					}
+				}
+				else
+				{
+					if(value == (int)TAG_PLAYSTATE.WON)
+					{
+						GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleLoss(false);
+						_gameEnded = true;
+					}
+					else if(value == (int)TAG_PLAYSTATE.LOST)
+					{
+						GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
+						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleWin(false);
+						_gameEnded = true;
+					}
+				}
+			}
+			else if(tag == GAME_TAG.CURRENT_PLAYER && value == 1)
+				_gameHandler.TurnStart(Game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent, GetTurnNumber());
+			else if(tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
+			{
+				if(controller == Game.PlayerId)
+					ProposeKeyPoint(KeyPointType.Attack, id, ActivePlayer.Player);
+				else if(controller == Game.OpponentId)
+					ProposeKeyPoint(KeyPointType.Attack, id, ActivePlayer.Opponent);
+
+			}
+			else if(tag == GAME_TAG.ZONE_POSITION)
+			{
+				var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
+				if(zone == (int)TAG_ZONE.HAND)
+				{
+					if(controller == Game.PlayerId)
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player);
+					else if(controller == Game.OpponentId)
+						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent);
+				}
+				else if(zone == (int)TAG_ZONE.PLAY)
+				{
+					if(controller == Game.PlayerId)
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player);
+					else if(controller == Game.OpponentId)
+						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
+				}
+			}
+			else if(tag == GAME_TAG.CARD_TARGET && value > 0)
+			{
+				if(controller == Game.PlayerId)
+					ProposeKeyPoint(KeyPointType.PlaySpell, id, ActivePlayer.Player);
+				else if(controller == Game.OpponentId)
+					ProposeKeyPoint(KeyPointType.PlaySpell, id, ActivePlayer.Opponent);
+			}
+			else if(tag == GAME_TAG.EQUIPPED_WEAPON && value == 0)
+			{
+				if(controller == Game.PlayerId)
+					ProposeKeyPoint(KeyPointType.WeaponDestroyed, id, ActivePlayer.Player);
+				else if(controller == Game.OpponentId)
+					ProposeKeyPoint(KeyPointType.WeaponDestroyed, id, ActivePlayer.Opponent);
+			}
+			else if(tag == GAME_TAG.EXHAUSTED && value > 0)
+			{
+				if(Game.Entities[id].GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO_POWER)
+				{
+					if(controller == Game.PlayerId)
+						ProposeKeyPoint(KeyPointType.HeroPower, id, ActivePlayer.Player);
+					else if(controller == Game.OpponentId)
+						ProposeKeyPoint(KeyPointType.HeroPower, id, ActivePlayer.Opponent);
+				}
+			}
+			if(_waitForController != null)
+			{
+				if(!isRecursive)
+				{
+					TagChange((string)_waitForController.Tag, (int)_waitForController.Id, (string)_waitForController.Value, true);
+					_waitForController = null;
+				}
+
+			}
+		}
+
+		private void GameEndKeyPoint(bool victory, int id)
+		{
+			if(_proposedKeyPoint != null)
+			{
+				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+				_proposedKeyPoint = null;
+			}
+			ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player);
+		}
+
+		private int ParseTagValue(GAME_TAG tag, string rawValue)
+		{
+			int value;
+			if(tag == GAME_TAG.ZONE)
+			{
+				TAG_ZONE zone;
+				Enum.TryParse(rawValue, out zone);
+				value = (int)zone;
+			}
+			else if(tag == GAME_TAG.MULLIGAN_STATE)
+			{
+				TAG_MULLIGAN state;
+				Enum.TryParse(rawValue, out state);
+				value = (int)state;
+			}
+			else if(tag == GAME_TAG.PLAYSTATE)
+			{
+				TAG_PLAYSTATE state;
+				Enum.TryParse(rawValue, out state);
+				value = (int)state;
+			}
+			else if(tag == GAME_TAG.CARDTYPE)
+			{
+				TAG_CARDTYPE type;
+				Enum.TryParse(rawValue, out type);
+				value = (int)type;
+			}
+			else
+				int.TryParse(rawValue, out value);
+			return value;
 		}
 
 		public void ClearLog()
@@ -616,15 +927,18 @@ namespace Hearthstone_Deck_Tracker
 		internal void Reset(bool full)
 		{
 			if(full)
+			{
 				_previousSize = 0;
+				_currentOffset = 0;
+			}
 			else
 			{
 				_currentOffset = _lastGameEnd;
 				_previousSize = _lastGameEnd;
 			}
-			_turnCount = 0;
 			_first = true;
-			_turnEnded = false;
+			_addToTurn = -1;
+			_gameEnded = false;
 		}
 	}
 }

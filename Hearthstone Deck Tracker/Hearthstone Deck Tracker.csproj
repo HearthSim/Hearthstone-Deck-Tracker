@@ -74,6 +74,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -116,6 +118,11 @@
     </Compile>
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
+    <Compile Include="Enums\Hearthstone\GAME_TAG.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_CARDTYPE.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_MULLIGAN.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_PLAYSTATE.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_ZONE.cs" />
     <Compile Include="Enums\HeroClass.cs" />
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="Enums\TagFilterOperation.cs" />
@@ -165,15 +172,31 @@
     <Compile Include="DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
+    <Compile Include="Hearthstone\Entities\Entity.cs" />
     <Compile Include="Hearthstone\Secrets\SecretHelper.cs" />
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
     <Compile Include="Hearthstone\Secrets\Secret.cs" />
+    <Compile Include="Replay\Controls\Arrow.cs" />
+    <Compile Include="Replay\Controls\BoardEntity.xaml.cs">
+      <DependentUpon>BoardEntity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Replay\Controls\CardEntity.xaml.cs">
+      <DependentUpon>CardEntity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Replay\Enums\KeyPointType.cs" />
+    <Compile Include="Replay\ReplayHelper.cs" />
+    <Compile Include="Replay\ReplayKeyPoint.cs" />
+    <Compile Include="Replay\ReplayMaker.cs" />
+    <Compile Include="Replay\ReplayReader.cs" />
+    <Compile Include="Replay\ReplayViewer.xaml.cs">
+      <DependentUpon>ReplayViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Enums\PlayType.cs" />
     <Compile Include="Enums\GameResult.cs" />
-    <Compile Include="Enums\Turn.cs" />
+    <Compile Include="Enums\ActivePlayer.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -294,6 +317,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
+    <Page Include="Replay\Controls\BoardEntity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Replay\Controls\CardEntity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Replay\ReplayViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -468,6 +503,9 @@
     <Content Include="Images\armorsmith.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\ashbringer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\assassin-s-blade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -507,6 +545,9 @@
     <Content Include="Images\baron-rivendare.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\battle-axe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\battle-rage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -541,6 +582,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\blizzard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\blood-fury.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\blood-imp.png">
@@ -1163,6 +1207,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\HearthstoneDeckTracker16.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\heavy-axe.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\hellfire.png">
@@ -2281,6 +2328,9 @@
     <Content Include="Images\whirlwind.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\wicked-knife.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\wild-growth.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2347,6 +2397,7 @@
     <Resource Include="Resources\shaman_small.png" />
     <Resource Include="Resources\warlock_small.png" />
     <Resource Include="Resources\warrior_small.png" />
+    <Resource Include="Resources\armor.png" />
     <Content Include="Updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
