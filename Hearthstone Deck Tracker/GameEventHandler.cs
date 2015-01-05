@@ -288,8 +288,8 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayingAs = hero;
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-			//if(selectedDeck != null)
-			//	Game.SetPremadeDeck((Deck)selectedDeck.Clone());
+			if(selectedDeck != null)
+				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			if(!string.IsNullOrEmpty(hero))
 			{
