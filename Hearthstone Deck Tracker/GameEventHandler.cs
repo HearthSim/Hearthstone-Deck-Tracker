@@ -288,8 +288,6 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayingAs = hero;
 
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-			if(selectedDeck != null)
-				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 
 			if(!string.IsNullOrEmpty(hero))
 			{
@@ -362,6 +360,10 @@ namespace Hearthstone_Deck_Tracker
 			_showedNoteDialog = false;
 			Game.IsInMenu = false;
 			Game.Reset();
+			
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if(selectedDeck != null)
+				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 		}
 
 		private static Deck _assignedDeck;
@@ -432,7 +434,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePossibleArenaCard(string id)
 		{
-			Game.PossibleArenaCards.Add(Game.GetCardFromId(id));
+			var card = Game.GetCardFromId(id);
+            if(!Game.PossibleArenaCards.Contains(card))
+				Game.PossibleArenaCards.Add(card);
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
