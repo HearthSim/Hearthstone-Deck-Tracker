@@ -37,10 +37,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			SaveAndClose();
+		}
+
+		private void SaveAndClose()
+		{
 			if(_game != null)
 			{
 				_game.Note = TextBoxNote.Text;
-				_game.Save();
+				DeckStatsList.Save();
+				(Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout).Refresh();
 			}
 			Close();
 		}
@@ -49,12 +55,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(e.Key == Key.Enter && Config.Instance.EnterToSaveNote)
 			{
-				if(_game != null)
-				{
-					_game.Note = TextBoxNote.Text;
-					_game.Save();
-				}
-				Close();
+				SaveAndClose();
 			}
 		}
 

@@ -213,7 +213,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Save();
 		}
 
-		public void Save()
+		private void Save()
 		{
 			XmlManager<List<TurnStats>>.Save(_gameFile, TurnStats);
 		}
