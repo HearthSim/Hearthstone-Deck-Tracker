@@ -495,6 +495,10 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				#endregion
+				else if(logLine.Contains("CREATE_GAME"))
+				{
+					_gameHandler.HandleGameStart();
+				}
 
 				if(_first)
 					break;
