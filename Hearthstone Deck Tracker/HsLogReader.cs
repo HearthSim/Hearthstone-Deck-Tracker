@@ -283,11 +283,16 @@ namespace Hearthstone_Deck_Tracker
 					{
 						var match = _tagChangeRegex.Match(logLine);
 						var rawEntity = match.Groups["entity"].Value;
+						int entityId;
 						if(rawEntity.StartsWith("[") && _entityRegex.IsMatch(rawEntity))
 						{
 							var entity = _entityRegex.Match(rawEntity);
 							var id = int.Parse(entity.Groups["id"].Value);
 							TagChange(match.Groups["tag"].Value, id, match.Groups["value"].Value);
+						}
+						else if(int.TryParse(rawEntity, out entityId))
+						{
+							TagChange(match.Groups["tag"].Value, entityId, match.Groups["value"].Value);
 						}
 						else
 						{
