@@ -404,6 +404,9 @@ namespace Hearthstone_Deck_Tracker
 					d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))
 					).ToList();
 
+			if(decks.Contains(DeckPickerList.SelectedDeck))
+				decks.Remove(DeckPickerList.SelectedDeck);
+
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			if(decks.Count > 0)
 			{

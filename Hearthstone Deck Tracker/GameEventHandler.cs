@@ -358,6 +358,7 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
 			}
+			_showedNoteDialog = false;
 			_waitingForRankedMessage = false;
 			Game.IsInMenu = false;
 			Game.Reset();
@@ -404,8 +405,11 @@ namespace Hearthstone_Deck_Tracker
 						return;
 					}
 					selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
-					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed)
+					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
+					{
+						_showedNoteDialog = true;
 						new NoteDialog(Game.CurrentGameStats);
+					}
 					Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 					_assignedDeck = selectedDeck;
 				}
@@ -481,31 +485,39 @@ namespace Hearthstone_Deck_Tracker
 
 	    public static void SetGameMode(GameMode mode)
 	    {
-			if(_waitingForRankedMessage && mode != GameMode.Ranked)
+			if(_waitingForRankedMessage)
 			{
-				SaveAndUpdateStats();
-				_waitingForRankedMessage = false;
-				Game.CurrentGameStats = null;
+				if(mode == GameMode.Ranked)
+				{
+					SaveAndUpdateStats();
+					_waitingForRankedMessage = false;
+					//Game.CurrentGameStats = null;
+				}
 				HandleGameEnd(true);
 			}
-			Game.CurrentGameMode = mode;
+		    Game.CurrentGameMode = mode;
 			Logger.WriteLine(">> GAME MODE: " + mode );
 		    if(Game.CurrentGameStats == null || mode == GameMode.None && !Config.Instance.RecordOther)
 			    return;
-		    Logger.WriteLine(">> GAME MODE: " + mode + "(saved to gamestats)");
+			Game.LastGameMode = mode;
+			Logger.WriteLine(">> GAME MODE: " + mode + "(saved to gamestats)");
 		    //Game.CurrentGameStats.GameMode = mode;
 		    SaveAndUpdateStats();
 	    }
 
 	    private static bool _waitingForRankedMessage;
+	    private static bool _showedNoteDialog;
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
 			if(RecordCurrentGameMode)
 			{
 
-				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed)
+				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
+				{
+					_showedNoteDialog = true;
 					new NoteDialog(Game.CurrentGameStats);
+				}
 
 				if(Game.CurrentGameStats != null)
 				{
@@ -549,13 +561,13 @@ namespace Hearthstone_Deck_Tracker
 	    {
 		    get
 		    {
-			    return Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther ||
-			           Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice ||
-			           Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena ||
-			           Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked ||
-			           Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly ||
-			           Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual ||
-			           Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator;
+			    return Game.LastGameMode == GameMode.None && Config.Instance.RecordOther ||
+			           Game.LastGameMode == GameMode.Practice && Config.Instance.RecordPractice ||
+			           Game.LastGameMode == GameMode.Arena && Config.Instance.RecordArena ||
+			           Game.LastGameMode == GameMode.Ranked && Config.Instance.RecordRanked ||
+			           Game.LastGameMode == GameMode.Friendly && Config.Instance.RecordFriendly ||
+			           Game.LastGameMode == GameMode.Casual && Config.Instance.RecordCasual ||
+			           Game.LastGameMode == GameMode.Spectator && Config.Instance.RecordSpectator;
 		    }
 	    }
 
