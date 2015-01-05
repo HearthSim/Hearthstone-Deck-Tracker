@@ -235,8 +235,13 @@ namespace Hearthstone_Deck_Tracker
 
 				foreach(var line in lines)
 				{
+					if(line.Contains("CREATE_GAME"))
+					{
+						offset = tempOffset;
+						continue;
+					}
 					tempOffset += line.Length + 1;
-					if(line.StartsWith("[Bob] legend rank") || line.Contains("CREATE_GAME"))
+					if(line.StartsWith("[Bob] legend rank"))
 						offset = tempOffset;
 				}
 
@@ -253,7 +258,11 @@ namespace Hearthstone_Deck_Tracker
 				#region [Power]
 				if(logLine.StartsWith("[Power]"))
 				{
-					if(_gameEntityRegex.IsMatch(logLine))
+					if(logLine.Contains("CREATE_GAME"))
+					{
+						_gameHandler.HandleGameStart();
+					}
+					else if(_gameEntityRegex.IsMatch(logLine))
 					{
 						_gameHandler.HandleGameStart();
 						var match = _gameEntityRegex.Match(logLine);
@@ -308,7 +317,7 @@ namespace Hearthstone_Deck_Tracker
 											Game.Entities[id].SetTag(t.Key, t.Value);
 										}
 										_tmpEntities.Remove(tmpEntity);
-										Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
+										//Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
 									}
 									else
 									{
@@ -448,6 +457,11 @@ namespace Hearthstone_Deck_Tracker
 						_waitForModeDetection = true;
 					}
 				}
+				else if(logLine.StartsWith("[Bob] ---RegisterFriendChallenge---"))
+				{
+					//if(++_friendChallengeCount > 1)
+						_gameHandler.HandleInMenu();
+				}
 				#endregion
 				#region [Rachelle]
 				else if(logLine.StartsWith("[Rachelle]"))
@@ -495,10 +509,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				#endregion
-				else if(logLine.Contains("CREATE_GAME"))
-				{
-					_gameHandler.HandleGameStart();
-				}
 
 				if(_first)
 					break;
@@ -508,7 +518,7 @@ namespace Hearthstone_Deck_Tracker
 		private void GameEnd()
 		{
 			_waitForModeDetection = false;
-			_gameHandler.HandleGameEnd(true);
+			//_gameHandler.HandleGameEnd(true);
 			_lastGameEnd = _currentOffset;
 			//ClearLog();
 		}
@@ -580,7 +590,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Game.Entities[id].SetTag(GAME_TAG.ZONE, prevZone);
 						_waitForController = new {Tag = rawTag, Id = id, Value = rawValue};
-						Logger.WriteLine("CURRENTLY NO CONTROLLER SET FOR CARD, WAITING...");
+						//Logger.WriteLine("CURRENTLY NO CONTROLLER SET FOR CARD, WAITING...");
 						return;
 					}
 				}
@@ -774,14 +784,14 @@ namespace Hearthstone_Deck_Tracker
 					if(value == (int)TAG_PLAYSTATE.WON)
 					{
 						GameEndKeyPoint(true, id);
-						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleGameEnd();
 						_gameHandler.HandleWin(false);
 						_gameEnded = true;
 					}
 					else if(value == (int)TAG_PLAYSTATE.LOST)
 					{
 						GameEndKeyPoint(false, id);
-						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleGameEnd();
 						_gameHandler.HandleLoss(false);
 						_gameEnded = true;
 					}
@@ -791,14 +801,14 @@ namespace Hearthstone_Deck_Tracker
 					if(value == (int)TAG_PLAYSTATE.WON)
 					{
 						GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
-						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleGameEnd();
 						_gameHandler.HandleLoss(false);
 						_gameEnded = true;
 					}
 					else if(value == (int)TAG_PLAYSTATE.LOST)
 					{
 						GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
-						_gameHandler.HandleGameEnd(false);
+						_gameHandler.HandleGameEnd();
 						_gameHandler.HandleWin(false);
 						_gameEnded = true;
 					}

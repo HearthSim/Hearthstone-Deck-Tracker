@@ -36,7 +36,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int OpponentSecretCount;
 		public static bool IsRunning;
 		public static GameMode CurrentGameMode;
-		public static GameMode LastGameMode;
 		public static GameStats CurrentGameStats;
 
 
@@ -83,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		static Game()
 		{
 			Entities = new Dictionary<int, Entity>();
-			LastGameMode = GameMode.None;
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			SetAsideCards = new List<string>();
@@ -155,7 +153,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			SetAsideCards.Clear();
 			OpponentReturnedToDeck.Clear();
-			CurrentGameMode = GameMode.None;
 			if(!IsInMenu && resetStats)
 			{
 				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)

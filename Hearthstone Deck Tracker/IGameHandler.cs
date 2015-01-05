@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
-		void HandleGameEnd(bool backInMenu);
+		void HandleGameEnd();
 		void HandleLoss(bool fromAssetUnload);
 		void HandleWin(bool fromAssetUnload);
 		void PlayerSetAside(string id);
@@ -46,5 +46,6 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandlePossibleArenaCard(string id);
 		void SetGameMode(GameMode mode);
+		void HandleInMenu();
 	}
 }
