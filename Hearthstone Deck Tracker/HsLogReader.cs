@@ -511,8 +511,8 @@ namespace Hearthstone_Deck_Tracker
 							continue;
 						}
 
-						if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
-							Game.LastZoneChangedCardId = id;
+						//if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
+						//	Game.LastZoneChangedCardId = id;
 
 					}
 				}
@@ -531,6 +531,7 @@ namespace Hearthstone_Deck_Tracker
 			//ClearLog();
 		}
 
+		private int _secondToLastId;
 		private int _lastId;
 
 		private ReplayKeyPoint _proposedKeyPoint;
@@ -543,10 +544,14 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TagChange(string rawTag, int id, string rawValue, bool isRecursive = false)
 		{
-			if(_lastId != id && _proposedKeyPoint != null)
+			if(_lastId != id)
 			{
-				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
-				_proposedKeyPoint = null;
+				Game.SecondToLastUsedId = _lastId;
+				if(_proposedKeyPoint != null)
+				{
+					ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+					_proposedKeyPoint = null;
+				}
 			}
 			_lastId = id;
 			if(!Game.Entities.ContainsKey(id))

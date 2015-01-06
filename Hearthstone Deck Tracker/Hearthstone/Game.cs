@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static CardMark[] OpponentHandMarks { get; private set; }
 		public static Card[] OpponentStolenCardsInformation { get; private set; }
 		public static List<Card> PossibleArenaCards { get; set; }
-		public static string LastZoneChangedCardId;
+		public static int? SecondToLastUsedId;
 
 		//public static List<Entity> Entities;
 		public static Dictionary<int, Entity> Entities;
@@ -140,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentCards.Clear();
 			OpponentHandCount = 0;
 			OpponentDeckCount = 30;
-			LastZoneChangedCardId = null;
+			SecondToLastUsedId = null;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
 			OpponentStolenCardsInformation = new Card[MaxHandSize];
@@ -526,7 +526,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				OpponentHandAge[OpponentHandCount - 1] = turn;
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
-				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
+				if(!string.IsNullOrEmpty(cardId))
 				{
 					var card = GetCardFromId(cardId);
 					if(card != null)
@@ -593,13 +593,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(OpponentHandMarks[OpponentHandCount - 1] != CardMark.Coin)
 			{
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Stolen;
-				if(!string.IsNullOrEmpty(LastZoneChangedCardId))
+				if(SecondToLastUsedId.HasValue)
 				{
 					var cardId = Entities[id].CardId;
 					if(string.IsNullOrEmpty(cardId) && Entities[id].HasTag(GAME_TAG.LAST_AFFECTED_BY))
 						cardId = Entities[Entities[id].GetTag(GAME_TAG.LAST_AFFECTED_BY)].CardId;
 					if(string.IsNullOrEmpty(cardId))
-						cardId = LastZoneChangedCardId;
+						cardId = Entities[SecondToLastUsedId.Value].CardId;
+
 					var card = GetCardFromId(cardId);
 					if(card != null)
 						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
