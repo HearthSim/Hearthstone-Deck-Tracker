@@ -871,6 +871,16 @@ namespace Hearthstone_Deck_Tracker
 						ProposeKeyPoint(KeyPointType.HeroPower, id, ActivePlayer.Opponent);
 				}
 			}
+			else if(tag == GAME_TAG.CONTROLLER && Game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+			{
+				if(value == Game.PlayerId)
+				{
+					_gameHandler.HandleOpponentSecretTrigger(cardId, GetTurnNumber(), id);
+					ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+				}
+				else if(value == Game.OpponentId)
+					ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+			}
 			if(_waitForController != null)
 			{
 				if(!isRecursive)

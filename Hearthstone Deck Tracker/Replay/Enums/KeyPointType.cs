@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		WeaponDestroyed,
 	    HeroPower,
 		Victory,
-		Defeat
+		Defeat,
+	    SecretStolen
     }
 }
