@@ -348,6 +348,9 @@ namespace Hearthstone_Deck_Tracker
         [DefaultValue(false)]
         public bool DiscardZeroTurnGame = false;
 
+        [DefaultValue(true)]
+        public bool SaveHSLogIntoReplay = true;
+
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 

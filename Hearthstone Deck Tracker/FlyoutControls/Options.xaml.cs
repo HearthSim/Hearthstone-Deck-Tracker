@@ -1469,6 +1469,20 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.UnHookMouse();
 			Config.Save();
 		}
+
+        private void CheckboxSaveHSLogIntoReplayFile_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.SaveHSLogIntoReplay = true;
+            SaveConfig(false);
+        }
+
+        private void CheckboxSaveHSLogIntoReplayFile_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized) return;
+            Config.Instance.SaveHSLogIntoReplay = false;
+            SaveConfig(false);
+        }
 	}
 }
  

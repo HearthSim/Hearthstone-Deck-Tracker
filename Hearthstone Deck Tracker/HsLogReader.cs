@@ -249,12 +249,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void Analyze(string log)
-		{
-			var logLines = log.Split('\n');
+		private void Analyze(string log) {
+		    var logLines = log.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
 			foreach(var logLine in logLines)
 			{
 				_currentOffset += logLine.Length + 1;
+
+			    if (logLine.StartsWith("["))
+			        Game.AddHSLogLine(logLine);
+
 				#region [Power]
 				if(logLine.StartsWith("[Power]"))
 				{
