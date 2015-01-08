@@ -75,7 +75,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static int PlayerId;
 		public static int OpponentId;
 		public static bool SavedReplay;
-		//public static Dictionary<string, int> PlayerIds; 
+	    private static List<string> hsLogLines = new List<string>();
+	    //public static Dictionary<string, int> PlayerIds; 
 
 		#endregion
 
@@ -120,7 +121,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		//public static object ResetObject = new object();
+	    public static List<string> HSLogLines {
+	        get { return hsLogLines; }
+	    }
 
 		public static void Reset(bool resetStats = true)
 		{
@@ -164,6 +167,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					                   OpponentName = OpponentName
 				                   };
 			}
+            hsLogLines = new List<string>();
 
 		}
 
@@ -731,5 +735,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PossibleArenaCards.Clear();
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
-	}
+
+        public static void AddHSLogLine(string logLine)
+        {
+            HSLogLines.Add(logLine);
+        }
+    }
 }

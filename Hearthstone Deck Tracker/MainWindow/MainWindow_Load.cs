@@ -512,6 +512,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
 			Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
 			Options.CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
+            Options.CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
 			Options.CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			Options.CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			Options.CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;

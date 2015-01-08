@@ -464,12 +464,11 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" MinHeight="286" />
                                 <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-                            <GroupBox Header="Exporting to Hearthstone" Grid.Row="1" VerticalAlignment="Top"
-                                      Width="235" Height="240" Margin="10,10,0,0">
+                            <GroupBox Header="Exporting to Hearthstone" VerticalAlignment="Top" Height="240" Margin="12,281,3,0" Grid.RowSpan="3">
                                 <StackPanel>
                                     <DockPanel Margin="10,5,10,0">
                                         <Label Content="Speed:" />
@@ -521,8 +520,8 @@
 
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Record Games" Height="250" Width="235" VerticalAlignment="Top"
-                                      Margin="10,0,0,0" Grid.Column="1" Grid.Row="0">
+                            <GroupBox Header="Record Games" Height="276" VerticalAlignment="Top"
+                                      Margin="12,0,2,0" Grid.Row="0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
@@ -562,10 +561,13 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
                                               Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
+                                    <CheckBox x:Name="CheckboxSaveHSLogIntoReplayFile"
+                                    	Content="Save original HS log into replay"
+                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                                    	VerticalAlignment="Top" Checked="CheckboxSaveHSLogIntoReplayFile_Checked" Unchecked="CheckboxSaveHSLogIntoReplayFile_Unchecked" />
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top"
-                                      Width="235" Height="73" Margin="11,10,1,0">
+                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top" Height="73" Margin="14,240,0,0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"

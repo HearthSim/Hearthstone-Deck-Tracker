@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -66,9 +67,17 @@ namespace Hearthstone_Deck_Tracker.Replay
 					{
 						var json = archive.CreateEntry("replay.json");
 
-						using(var stream = json.Open())
-						using(var sw = new StreamWriter(stream))
-							sw.Write(JsonConvert.SerializeObject(Points));
+                        using(var stream = json.Open())
+                        using(var sw = new StreamWriter(stream))
+                            sw.Write(JsonConvert.SerializeObject(Points));
+
+					    if (Config.Instance.SaveHSLogIntoReplay) {
+					        var hsLog = archive.CreateEntry("output_log.txt");
+
+					        using (var logStream = hsLog.Open())
+					        using (var swLog = new StreamWriter(logStream))
+					            Game.HSLogLines.ForEach(swLog.WriteLine);
+					    }
 					}
 
 					using(var fileStream = new FileStream(path, FileMode.Create))
