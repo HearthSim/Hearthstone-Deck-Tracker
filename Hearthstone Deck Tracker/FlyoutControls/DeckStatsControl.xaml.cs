@@ -468,9 +468,10 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
-			var heroPlayed = heroes.OrderByDescending(x => x.Value).First().Key;
+			
+			var heroPlayed = heroes.Any() ? heroes.OrderByDescending(x => x.Value).First().Key : "Any";
 
-			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == heroPlayed);
+			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
