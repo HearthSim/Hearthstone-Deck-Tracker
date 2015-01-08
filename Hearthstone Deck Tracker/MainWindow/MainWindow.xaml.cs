@@ -408,7 +408,15 @@ namespace Hearthstone_Deck_Tracker
 				decks.Remove(DeckPickerList.SelectedDeck);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
-			if(decks.Count > 0)
+			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
+			{
+				var deck = decks.First();
+				Logger.WriteLine("Automatically selected deck: " + deck.Name);
+				DeckPickerList.SelectDeck(deck);
+				UpdateDeckList(deck);
+				UseDeck(deck);
+			}
+			else if(decks.Count > 0)
 			{
 				var dsDialog = new DeckSelectionDialog(decks);
 
