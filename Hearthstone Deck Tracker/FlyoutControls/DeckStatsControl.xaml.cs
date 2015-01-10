@@ -725,15 +725,15 @@ namespace Hearthstone_Deck_Tracker
 
 			private string GetWinLoss(string hsClass = null)
 			{
-				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
-				var losses = _stats.Count(s => s.Result.ToString() == "Loss" && (hsClass == null || s.OpponentHero == hsClass));
+				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
+				var losses = _stats.Count(s => s.Result == GameResult.Loss && (hsClass == null || s.OpponentHero == hsClass));
 				return wins + " - " + losses;
 			}
 
 			private string GetPercent(string hsClass = null)
 			{
-				var wins = _stats.Count(s => s.Result.ToString() == "Win" && (hsClass == null || s.OpponentHero == hsClass));
-				var total = _stats.Count(s => (hsClass == null || s.OpponentHero == hsClass));
+				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
+				var total = _stats.Count(s => s.Result != GameResult.None && (hsClass == null || s.OpponentHero == hsClass));
 				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";
 			}
 
