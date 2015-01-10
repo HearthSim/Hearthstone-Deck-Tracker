@@ -405,6 +405,9 @@
                                 <Button x:Name="BtnDetails" IsEnabled="False" Content="Show Replay"
                                         Margin="5,0,0,0"
                                         Width="120" VerticalAlignment="Bottom" Click="BtnDetails_Click" />
+                                <Button x:Name="BtnImportOpponentDeck" IsEnabled="False" Content="Import Opp. Deck"
+                                        Margin="5,0,0,0"
+                                        Width="120" VerticalAlignment="Bottom" Click="BtnImportOpponentDeck_Click" />
                                 <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0"
                                         Width="75"
                                         VerticalAlignment="Bottom" Click="BtnEditNote_Click" />
@@ -702,6 +705,9 @@
                                             <Button x:Name="BtnOverallDetails" IsEnabled="False"
                                                     Content="Show replay" Margin="5,0,0,0"
                                                     Width="120" VerticalAlignment="Bottom" Click="BtnOverallDetails_Click" />
+                                            <Button x:Name="BtnOverallImportOpponentDeck" IsEnabled="False"
+                                                    Content="Import Opp. Deck" Margin="5,0,0,0"
+                                                    Width="120" VerticalAlignment="Bottom" Click="BtnOverallImportOpponentDeck_Click" />
                                             <Button x:Name="BtnOverallNote" IsEnabled="False" Content="Edit Note"
                                                     Margin="5,0,0,0" Width="75"
                                                     VerticalAlignment="Bottom" Click="BtnOverallEditNote_Click" />
