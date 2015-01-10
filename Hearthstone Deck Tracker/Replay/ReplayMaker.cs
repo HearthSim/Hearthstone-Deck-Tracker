@@ -1,16 +1,11 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Replay
@@ -165,98 +160,41 @@ namespace Hearthstone_Deck_Tracker.Replay
 			foreach(var kp in toRemove)
 				Points.Remove(kp);
 
-			var occupiedPlayerHandZonePos = new List<int>();
-			var occupiedPlayerBoardZonePos = new List<int>();
-			var occupiedOpponentHandZonePos = new List<int>();
-			var occupiedOpponentBoardZonePos = new List<int>();
+			var occupiedZonePos = new List<int>();
+			var noUniqueZonePos = new List<Entity>();
 			foreach(var kp in Points)
 			{
-				occupiedPlayerHandZonePos.Clear();
-				occupiedPlayerBoardZonePos.Clear();
-				occupiedOpponentHandZonePos.Clear();
-				occupiedOpponentBoardZonePos.Clear();
-				foreach(var entity in kp.Data)
+				var currentEntity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
+				if(currentEntity == null || !currentEntity.HasTag(GAME_TAG.ZONE_POSITION))
+					continue;
+				
+				occupiedZonePos.Clear();
+				noUniqueZonePos.Clear();
+				noUniqueZonePos.Add(currentEntity);
+				foreach(var entity in kp.Data.Where(x => x.Id != kp.Id && x.HasTag(GAME_TAG.ZONE_POSITION)))
 				{
-					if(entity.HasTag(GAME_TAG.ZONE_POSITION))
+					var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
+					if(entity.GetTag(GAME_TAG.ZONE_POSITION) == currentEntity.GetTag(GAME_TAG.ZONE_POSITION) &&
+					   entity.GetTag(GAME_TAG.CONTROLLER) == currentEntity.GetTag(GAME_TAG.CONTROLLER))
 					{
-						var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
-						if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND)
-						{
-							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
-							{
-								if(!occupiedPlayerHandZonePos.Contains(zonePos))
-									occupiedPlayerHandZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedPlayerHandZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedPlayerHandZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-							else
-							{
-								if(!occupiedOpponentHandZonePos.Contains(zonePos))
-									occupiedOpponentHandZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedOpponentHandZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedOpponentHandZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-
-						}
-						else if(entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.PLAY)
-						{
-							if(entity.GetTag(GAME_TAG.CONTROLLER) == playerController)
-							{
-								if(!occupiedPlayerBoardZonePos.Contains(zonePos))
-									occupiedPlayerBoardZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedPlayerBoardZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedPlayerBoardZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-							else
-							{
-								if(!occupiedOpponentBoardZonePos.Contains(zonePos))
-									occupiedOpponentBoardZonePos.Add(zonePos);
-								else
-								{
-									for(int i = 1; i <= 10; i++)
-									{
-										if(!occupiedOpponentBoardZonePos.Contains(i))
-										{
-											entity.SetTag(GAME_TAG.ZONE_POSITION, i);
-											occupiedOpponentBoardZonePos.Add(i);
-											break;
-										}
-									}
-								}
-							}
-						}
+						if(!occupiedZonePos.Contains(zonePos))
+							occupiedZonePos.Add(zonePos);
+						else
+							noUniqueZonePos.Add(entity);
 					}
 				}
+				foreach(var entity in noUniqueZonePos)
+				{
+					if(occupiedZonePos.Contains(entity.GetTag(GAME_TAG.ZONE_POSITION)))
+					{
+						var targetPos = occupiedZonePos.Max() + 1;
+						currentEntity.SetTag(GAME_TAG.ZONE_POSITION, targetPos);
+						occupiedZonePos.Add(targetPos);
+					}
+					else
+						occupiedZonePos.Add(entity.GetTag(GAME_TAG.ZONE_POSITION));
+				}
+				
 			}
 
 
