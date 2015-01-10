@@ -182,11 +182,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		private Entity GetHero(int controller)
 		{
-			return
-				_currentGameState.Data.FirstOrDefault(
-				                             x =>
-				                             !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO") &&
-				                             x.IsControlledBy(controller)) ?? new Entity();
+			var heroEntityId = controller == _playerController
+				                 ? PlayerEntity.GetTag(GAME_TAG.HERO_ENTITY)
+				                 : OpponentEntity.GetTag(GAME_TAG.HERO_ENTITY);
+
+			return _currentGameState.Data.FirstOrDefault(x => x.Id == heroEntityId) ?? new Entity();
 		}
 
 		public List<ReplayKeyPoint> KeyPoints
@@ -289,7 +289,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			get
 			{
-				if(!Enum.GetNames(typeof(HeroClass)).Contains(OpponentHero))
+				if(!Enum.GetNames(typeof(HeroClass)).Contains(OpponentHero) && OpponentHero != "Jaraxxus")
 					return new BitmapImage();
 				var uri = new Uri(string.Format("../Resources/{0}_small.png", OpponentHero.ToLower()), UriKind.Relative);
 				return new BitmapImage(uri);
@@ -380,10 +380,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public Entity OpponentBoardHero
 		{
-			get
-			{
-				return _currentGameState.Data.FirstOrDefault(x => !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO") && x.IsControlledBy(_opponentController));
-			}
+			get { return GetHero(_opponentController); }
 		}
 		public Entity OpponentBoard0
 		{
@@ -415,10 +412,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		}
 		public Entity PlayerBoardHero
 		{
-			get
-			{
-				return _currentGameState.Data.FirstOrDefault(x => !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO") && x.IsControlledBy(_playerController));
-			}
+			get { return GetHero(_playerController); }
 		}
 		public Entity PlayerBoard0
 		{

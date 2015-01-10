@@ -2398,6 +2398,7 @@
     <Resource Include="Resources\warlock_small.png" />
     <Resource Include="Resources\warrior_small.png" />
     <Resource Include="Resources\armor.png" />
+    <Resource Include="Resources\jaraxxus_small.png" />
     <Content Include="Updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

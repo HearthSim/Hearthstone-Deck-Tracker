@@ -171,7 +171,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{"NAX14_01", "Sapphiron"},
 				{"NAX14_01H", "Sapphiron"},
 				{"NAX15_01", "Kel'Thuzad"},
-				{"NAX15_01H", "Kel'Thuzad"}
+				{"NAX15_01H", "Kel'Thuzad"},
+				{"EX1_323h", "Jaraxxus"}
 			};
 	}
 }
