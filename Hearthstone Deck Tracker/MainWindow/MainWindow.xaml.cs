@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -418,6 +419,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(decks.Count > 0)
 			{
+				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -429,10 +431,15 @@ namespace Hearthstone_Deck_Tracker
 
 				if(selectedDeck != null)
 				{
-					Logger.WriteLine("Selected deck: " + selectedDeck.Name);
-					DeckPickerList.SelectDeck(selectedDeck);
-					UpdateDeckList(selectedDeck);
-					UseDeck(selectedDeck);
+					if(selectedDeck.Name == "Use no deck")
+						DeselectDeck();
+					else
+					{
+						Logger.WriteLine("Selected deck: " + selectedDeck.Name);
+						DeckPickerList.SelectDeck(selectedDeck);
+						UpdateDeckList(selectedDeck);
+						UseDeck(selectedDeck);
+					}
 				}
 				else
 				{
