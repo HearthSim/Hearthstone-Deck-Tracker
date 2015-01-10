@@ -608,28 +608,28 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			get
 			{
-				return OpponentSecrets.Count() > 1 ? OpponentSecrets.ToArray()[0] : null;
+				return OpponentSecrets.Count() > 1 ? OpponentSecrets.ToArray()[1] : null;
 			}
 		}
 		public Entity OpponentSecret2
 		{
 			get
 			{
-				return OpponentSecrets.Count() > 2 ? OpponentSecrets.ToArray()[0] : null;
+				return OpponentSecrets.Count() > 2 ? OpponentSecrets.ToArray()[2] : null;
 			}
 		}
 		public Entity OpponentSecret3
 		{
 			get
 			{
-				return OpponentSecrets.Count() > 3 ? OpponentSecrets.ToArray()[0] : null;
+				return OpponentSecrets.Count() > 3 ? OpponentSecrets.ToArray()[3] : null;
 			}
 		}
 		public Entity OpponentSecret4
 		{
 			get
 			{
-				return OpponentSecrets.Count() > 4 ? OpponentSecrets.ToArray()[0] : null;
+				return OpponentSecrets.Count() > 4 ? OpponentSecrets.ToArray()[4] : null;
 			}
 		}
 		public Entity PlayerSecret0
