@@ -5,7 +5,7 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       Title="Timer" Height="130" Width="150"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                      Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
+                      Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated" GlowBrush="{StaticResource AccentColorBrush}">
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" />

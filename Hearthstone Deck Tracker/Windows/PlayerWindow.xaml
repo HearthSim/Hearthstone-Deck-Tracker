@@ -7,7 +7,7 @@
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
                       Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico"
-                      Deactivated="MetroWindow_Deactivated">
+                      Deactivated="MetroWindow_Deactivated" GlowBrush="{StaticResource AccentColorBrush}">
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
             <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
