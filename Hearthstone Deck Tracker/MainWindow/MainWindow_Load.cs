@@ -520,6 +520,7 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
 			Options.CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
 			Options.CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
+			Options.CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
