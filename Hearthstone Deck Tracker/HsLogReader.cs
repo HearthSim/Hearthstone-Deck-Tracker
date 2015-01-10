@@ -264,10 +264,12 @@ namespace Hearthstone_Deck_Tracker
 					if(logLine.Contains("CREATE_GAME"))
 					{
 						_gameHandler.HandleGameStart();
+						_gameEnded = false;
 					}
 					else if(_gameEntityRegex.IsMatch(logLine))
 					{
 						_gameHandler.HandleGameStart();
+						_gameEnded = false;
 						var match = _gameEntityRegex.Match(logLine);
 						var id = int.Parse(match.Groups["id"].Value);
 						if(!Game.Entities.ContainsKey(id))
@@ -414,10 +416,18 @@ namespace Hearthstone_Deck_Tracker
 				#region [Asset]
 				else if(logLine.StartsWith("[Asset]"))
 				{
-					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
-                        _gameHandler.HandleWin(true);
-					else if(logLine.ToLower().Contains("defeat_screen_start") && Game.CurrentGameStats != null && Game.CurrentGameStats.Result == GameResult.None)
+					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && !_gameEnded)
+					{
+						_gameHandler.HandleGameEnd();
+						_gameHandler.HandleWin(true);
+						_gameEnded = true;
+					}
+					else if(logLine.ToLower().Contains("defeat_screen_start") && Game.CurrentGameStats != null && !_gameEnded)
+					{
+						_gameHandler.HandleGameEnd();
 						_gameHandler.HandleLoss(true);
+						_gameEnded = true;
+					}
 					else if(logLine.Contains("rank"))
 					{
 						_gameHandler.SetGameMode(GameMode.Ranked);
@@ -531,7 +541,6 @@ namespace Hearthstone_Deck_Tracker
 			//ClearLog();
 		}
 
-		private int _secondToLastId;
 		private int _lastId;
 
 		private ReplayKeyPoint _proposedKeyPoint;
