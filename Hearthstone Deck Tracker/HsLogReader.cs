@@ -265,11 +265,13 @@ namespace Hearthstone_Deck_Tracker
 					{
 						_gameHandler.HandleGameStart();
 						_gameEnded = false;
+						_addToTurn = -1;
 					}
 					else if(_gameEntityRegex.IsMatch(logLine))
 					{
 						_gameHandler.HandleGameStart();
 						_gameEnded = false;
+						_addToTurn = -1;
 						var match = _gameEntityRegex.Match(logLine);
 						var id = int.Parse(match.Groups["id"].Value);
 						if(!Game.Entities.ContainsKey(id))
