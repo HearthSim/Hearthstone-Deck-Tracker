@@ -9,6 +9,7 @@
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Closing="ReplayViewer_OnClosing">
     <Grid>
         <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1"></controls:Arrow>
+        <controls:Arrow x:Name="PlayArrow" Stroke="Black" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1"></controls:Arrow>
         <DockPanel>
             <DockPanel Width="250">
                 <!--<Button Content="Next" Name="BtnNext" Click="BtnNext_Click" DockPanel.Dock="Top"></Button>-->
@@ -72,6 +73,7 @@
                                 <controls:CardEntity x:Name="OpponentCardEntity7" DataContext="{Binding OpponentCard7}"/>
                                 <controls:CardEntity x:Name="OpponentCardEntity8" DataContext="{Binding OpponentCard8}"/>
                                 <controls:CardEntity x:Name="OpponentCardEntity9" DataContext="{Binding OpponentCard9}"/>
+                                <controls:CardEntity x:Name="OpponentCardEntityPlayed" DataContext="{Binding OpponentCardPlayed}"/>
                             </WrapPanel>
                         </ScrollViewer>
                     </Border>
@@ -132,6 +134,7 @@
                                 <controls:CardEntity x:Name="PlayerCardEntity7" DataContext="{Binding PlayerCard7}" />
                                 <controls:CardEntity x:Name="PlayerCardEntity8" DataContext="{Binding PlayerCard8}" />
                                 <controls:CardEntity x:Name="PlayerCardEntity9" DataContext="{Binding PlayerCard9}" />
+                                <controls:CardEntity x:Name="PlayerCardEntityPlayed" DataContext="{Binding PlayerCardPlayed}"/>
                             </WrapPanel>
                         </ScrollViewer>
                     </Border>

@@ -87,15 +87,18 @@ namespace Hearthstone_Deck_Tracker.Replay
             _treeViewTurnItems = new List<TreeViewItem>();
 			foreach (var kp in Replay)
 			{
-
 			    var tvItem = _treeViewTurnItems.FirstOrDefault(x => (string) x.Header == "Turn " + kp.Turn);
                 if (tvItem == null)
                 {
                     tvItem = new TreeViewItem() {Header = "Turn " + kp.Turn, IsExpanded = true};
                     _treeViewTurnItems.Add(tvItem);
                 }
-				if(!string.IsNullOrEmpty(kp.Data.First(x => x.Id == kp.Id).CardId))
-					tvItem.Items.Add(kp);
+				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
+                if(entity == null || string.IsNullOrEmpty(entity.CardId))
+					continue;
+				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
+					continue;
+				tvItem.Items.Add(kp);
 			}
 		    foreach (var tvi in _treeViewTurnItems)
 		        TreeViewKeyPoints.Items.Add(tvi);
@@ -118,6 +121,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			DataContext = null;
 			DataContext = this;
+
+			var attackArrowVisibility = Visibility.Hidden;
+			var playArrowVisibility = Visibility.Hidden;
 			if(_currentGameState.Type == KeyPointType.Attack)
 			{
 				await Task.Delay(100);
@@ -127,46 +133,125 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var defender = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == defenderId);
 				if(attacker != null && defender != null)
 				{
-					double xOffsetAttacker = 0, xOffsetDefender = 0, yOffsetAttacker = 0, yOffsetDefender = 0;
-					if(attacker == PlayerBoardHeroEntity)
-						yOffsetAttacker = 31;
-					else if(attacker == OpponentBoardHeroEntity)
-						yOffsetAttacker = -28;
-					else
-					{
-						xOffsetAttacker = attacker.ActualWidth / 2;
-						yOffsetAttacker = attacker.ActualHeight / 2;
-					}
-					if(defender == PlayerBoardHeroEntity)
-						yOffsetDefender = 31;
-					else if(defender == OpponentBoardHeroEntity)
-						yOffsetDefender = -28;
-					else
-					{
-						xOffsetDefender = defender.ActualWidth / 2;
-						yOffsetDefender = defender.ActualHeight / 2;
-					}
-					AttackArrow.X1 = GetPosition(attacker).X + xOffsetAttacker;
-					AttackArrow.X2 = GetPosition(defender).X + xOffsetDefender;
-					if(GetPosition(attacker).Y < GetPosition(defender).Y)
-					{
-						AttackArrow.Y1 = GetPosition(attacker).Y + yOffsetAttacker;
-						AttackArrow.Y2 = GetPosition(defender).Y - yOffsetDefender;
-					}
-					else
-					{
-
-						AttackArrow.Y1 = GetPosition(attacker).Y - yOffsetAttacker;
-						AttackArrow.Y2 = GetPosition(defender).Y + yOffsetDefender;
-					}
-					AttackArrow.Visibility = Visibility.Visible;
+					var attackerTop = GetPosition(attacker).Y < GetPosition(defender).Y;
+                    var a = GetCenterPos(attacker, attackerTop);
+					var b = GetCenterPos(defender, !attackerTop);
+					AttackArrow.X1 = a.X;
+					AttackArrow.Y1 = a.Y;
+					AttackArrow.X2 = b.X;
+					AttackArrow.Y2 = b.Y;
+					attackArrowVisibility = Visibility.Visible;
 				}
-				else
-					AttackArrow.Visibility = Visibility.Hidden;
+			}
+			else if(_currentGameState.Type == KeyPointType.PlaySpell)
+			{
+				await Task.Delay(100);
+				var entity = _currentGameState.Data.FirstOrDefault(e => e.Id == _currentGameState.Id);
+				if(entity != null && entity.HasTag(GAME_TAG.CARD_TARGET))
+				{
+					var targetId = entity.GetTag(GAME_TAG.CARD_TARGET);
+					var boardEntity = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == targetId);
+					if(boardEntity != null)
+					{
+						var top = entity.IsControlledBy(_opponentController);
+						var cardPos = GetCenterPos(entity.IsControlledBy(_opponentController) ? OpponentCardEntityPlayed : PlayerCardEntityPlayed, top);
+						var boardPos = GetCenterPos(boardEntity, !top);
+						AttackArrow.X1 = cardPos.X;
+						AttackArrow.Y1 = cardPos.Y;
+						AttackArrow.X2 = boardPos.X;
+						AttackArrow.Y2 = boardPos.Y;
+						attackArrowVisibility = Visibility.Visible;
+					}
+				}
+			}
+			AttackArrow.Visibility = attackArrowVisibility;
+
+			if(_currentGameState.Type == KeyPointType.Play)
+			{
+				await Task.Delay(100);
+				var entity = _currentGameState.Data.FirstOrDefault(e => e.Id == _currentGameState.Id);
+				if(entity != null)
+				{
+					var boardEntity = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == entity.Id);
+					if(boardEntity != null)
+					{
+						var top = entity.IsControlledBy(_opponentController);
+						var cardPos = GetCenterPos(entity.IsControlledBy(_opponentController) ? OpponentCardEntityPlayed : PlayerCardEntityPlayed, top);
+						var boardPos = GetCenterPos(boardEntity, !top);
+						PlayArrow.X1 = cardPos.X;
+						PlayArrow.Y1 = cardPos.Y;
+						PlayArrow.X2 = boardPos.X;
+						PlayArrow.Y2 = boardPos.Y;
+						playArrowVisibility = Visibility.Visible;
+					}
+				}
 
 			}
+			PlayArrow.Visibility = playArrowVisibility;
+		}
+
+		private Point GetCenterPos(BoardEntity entity, bool top)
+		{
+			var xOffset = entity.ActualWidth / 2;
+			double yOffset;
+			if(entity == PlayerBoardHeroEntity)
+				yOffset = -31;
+			else if(entity == OpponentBoardHeroEntity)
+				yOffset = -28;
 			else
-				AttackArrow.Visibility = Visibility.Hidden;
+			{
+				yOffset = entity.ActualHeight / 2;
+				if(!top)
+					yOffset *= -1;
+			}
+			var x = GetPosition(entity).X + xOffset;
+			var y = GetPosition(entity).Y + yOffset;
+			return new Point(x, y);
+		}
+
+		public Point GetCenterPos(CardEntity entity, bool top)
+		{
+			var xOffset = entity.ActualWidth / 2;
+			var yOffset = entity.ActualHeight / 2;
+			if(top)
+				yOffset -= 12;
+			else
+			{
+				yOffset += 12;
+				yOffset *= -1;
+			}
+			var x = GetPosition(entity).X + xOffset;
+			var y = GetPosition(entity).Y + yOffset;
+			return new Point(x, y);
+		}
+
+		public Entity OpponentCardPlayed
+		{
+			get
+			{
+				var entity = _currentGameState.Data.FirstOrDefault(e => e.Id == _currentGameState.Id);
+				if(entity != null && entity.IsControlledBy(_opponentController)
+					&& (_currentGameState.Type == KeyPointType.Play || _currentGameState.Type == KeyPointType.PlaySpell))
+				{
+					entity.SetCardCount(0);
+					return entity;
+				}
+				return null;
+			}
+		}
+		public Entity PlayerCardPlayed
+		{
+			get
+			{
+				var entity = _currentGameState.Data.FirstOrDefault(e => e.Id == _currentGameState.Id);
+				if(entity != null && entity.IsControlledBy(_playerController)
+					&& (_currentGameState.Type == KeyPointType.Play || _currentGameState.Type == KeyPointType.PlaySpell))
+				{
+					entity.SetCardCount(0);
+					return entity;
+				}
+				return null;
+			}
 		}
 
 		private Point GetPosition(Visual element)
@@ -193,7 +278,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			get { return Replay; }
 		}
-
+		
 		public BitmapImage PlayerHeroImage
 		{
 			get
