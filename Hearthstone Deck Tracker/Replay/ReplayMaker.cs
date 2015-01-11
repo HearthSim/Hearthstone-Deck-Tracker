@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Newtonsoft.Json;
@@ -160,6 +161,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 			foreach(var kp in toRemove)
 				Points.Remove(kp);
 
+
+			//this one is still needed for hand zonepos I think...
 			var occupiedZonePos = new List<int>();
 			var noUniqueZonePos = new List<Entity>();
 			foreach(var kp in Points)
@@ -196,6 +199,22 @@ namespace Hearthstone_Deck_Tracker.Replay
 				}
 				
 			}
+
+			var onBoard = new List<Entity>();
+			foreach(var kp in Points)
+			{
+				var currentBoard = kp.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.HasTag(GAME_TAG.HEALTH) 
+												   && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO")).ToList();
+				if(onBoard.All(e => currentBoard.Any(e2 => e2.Id == e.Id)) 
+					&& currentBoard.All(e => onBoard.Any(e2 => e2.Id == e.Id)))
+				{
+					foreach(var entity in currentBoard)
+						entity.SetTag(GAME_TAG.ZONE_POSITION, onBoard.First(e => e.Id == entity.Id).GetTag(GAME_TAG.ZONE_POSITION));
+				}
+				else
+					onBoard = new List<Entity>(currentBoard);
+			}
+
 
 
 			//re-reverse
