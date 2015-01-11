@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 			OpponentWindow.UpdateOpponentLayout();
 		}
 
-        private void CopyReplayFiles()
+        public void CopyReplayFiles()
         {
             if (Config.Instance.SaveDataInAppData == null)
                 return;
@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-		private void SetupDeckStatsFile()
+		public void SetupDeckStatsFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
 				return;
@@ -372,7 +372,7 @@ namespace Hearthstone_Deck_Tracker
 			return updated;
 		}
 
-		private void SetupDeckListFile()
+		public void SetupDeckListFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
 				return;
@@ -410,7 +410,7 @@ namespace Hearthstone_Deck_Tracker
 				File.Copy(_decksPath, _decksPath + ".old");
 		}
 
-		private void SetupDefaultDeckStatsFile()
+		public void SetupDefaultDeckStatsFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
 				return;

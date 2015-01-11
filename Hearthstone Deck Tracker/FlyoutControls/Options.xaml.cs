@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
 using SystemColors = System.Windows.SystemColors;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -1304,6 +1305,17 @@ namespace Hearthstone_Deck_Tracker
 
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
+                if (Config.Instance.SaveDataInAppData != null && !Config.Instance.SaveDataInAppData.Value)
+                {
+                    foreach(bool value in new List<bool> { true, false}) {
+                        Config.Instance.SaveDataInAppData = value;
+                        Helper.MainWindow.CopyReplayFiles();
+                        Helper.MainWindow.SetupDeckStatsFile();
+                        Helper.MainWindow.SetupDeckListFile();
+                        Helper.MainWindow.SetupDefaultDeckStatsFile();
+                        Config.Instance.DataDirPath = dialog.SelectedPath;
+                    }
+                }
                 Config.Instance.DataDirPath = dialog.SelectedPath;
                 Config.Save();
                 await Helper.MainWindow.Restart();
