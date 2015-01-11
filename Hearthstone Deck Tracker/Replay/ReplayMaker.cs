@@ -174,7 +174,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				foreach(var entity in kp.Data.Where(x => x.Id != kp.Id && x.HasTag(GAME_TAG.ZONE_POSITION)))
 				{
 					var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
-					if(entity.GetTag(GAME_TAG.ZONE_POSITION) == currentEntity.GetTag(GAME_TAG.ZONE_POSITION) &&
+					if(entity.GetTag(GAME_TAG.ZONE) == currentEntity.GetTag(GAME_TAG.ZONE) &&
 					   entity.GetTag(GAME_TAG.CONTROLLER) == currentEntity.GetTag(GAME_TAG.CONTROLLER))
 					{
 						if(!occupiedZonePos.Contains(zonePos))
