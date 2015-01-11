@@ -459,6 +459,7 @@
                                               Unchecked="CheckboxLogTab_Unchecked" />
                                     <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
                                     <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
+                                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path" Click="SelectSaveDataPath_Click"/>
                                 </StackPanel>
                             </GroupBox>
                         </Grid>

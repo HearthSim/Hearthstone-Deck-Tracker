@@ -1297,7 +1297,21 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
+        private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                Config.Instance.DataDirPath = dialog.SelectedPath;
+                Config.Save();
+                await Helper.MainWindow.Restart();
+            }
+
+        }
+
+        private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -1483,6 +1497,6 @@ namespace Hearthstone_Deck_Tracker
             Config.Instance.SaveHSLogIntoReplay = false;
             SaveConfig(false);
         }
-	}
+    }
 }
  
