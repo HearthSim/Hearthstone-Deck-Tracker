@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					var xml = new WebClient().DownloadString(versionXmlUrl);
+					var xml = new WebClient{Proxy = null}.DownloadString(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 
