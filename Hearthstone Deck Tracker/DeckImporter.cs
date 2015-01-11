@@ -457,8 +457,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var doc = await GetHtmlDoc(url);
-                var deck = new Deck { Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText).Trim() };
- 
+                		var deck = new Deck { Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText).Trim() };
 				var nodes = doc.DocumentNode.SelectNodes("//table[@class='table table-bordered table-hover table-db']/tbody/tr");
 
                 foreach (var cardNode in nodes)
