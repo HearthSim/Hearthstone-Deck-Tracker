@@ -1190,10 +1190,10 @@ namespace Hearthstone_Deck_Tracker
 			await Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
+        private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SaveDataInAppData = true;
+            Config.Instance.SaveDataInAppData = true;
 			Config.Save();
 			await Helper.MainWindow.Restart();
 		}
@@ -1201,7 +1201,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SaveDataInAppData = false;
+            Config.Instance.SaveDataInAppData = false;
 			Config.Save();
 			await Helper.MainWindow.Restart();
 		}
