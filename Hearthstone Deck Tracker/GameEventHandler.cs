@@ -373,16 +373,13 @@ namespace Hearthstone_Deck_Tracker
 		    Helper.MainWindow.Overlay.HideTimers();
 		    if(Game.CurrentGameStats == null)
 			    return;
-		    Game.CurrentGameStats.PlayerName =
-			    Game.Entities.First(
-			                        e =>
-			                        e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId)
-			        .Value.Name;
-		    Game.CurrentGameStats.OpponentName =
-			    Game.Entities.First(
-			                        e =>
-			                        e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId)
-			        .Value.Name;
+		    var player = Game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
+		    var opponent = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
+			if(player.Value != null)
+				Game.CurrentGameStats.PlayerName = player.Value.Name;
+			if(opponent.Value != null)
+		    Game.CurrentGameStats.OpponentName = opponent.Value.Name;
+
 		    Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 		    if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 		    {
@@ -493,7 +490,9 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReader.Instance.ClearLog();
 			if(!Config.Instance.KeepDecksVisible)
 				Game.Reset(false);
-		}
+			if(Game.CurrentGameStats != null && Game.CurrentGameStats.Result != GameResult.None)
+				Game.CurrentGameStats = null;
+	    }
 
 	    private static bool _showedNoteDialog;
 		private static void SaveAndUpdateStats()
