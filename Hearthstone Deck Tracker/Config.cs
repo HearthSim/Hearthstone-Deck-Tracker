@@ -67,8 +67,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(-1)]
 		public int CustomWidth = -1;
 
-        [DefaultValue("")]
-        public string DataDirPath = string.Empty;
+        [DefaultValue(".")]
+        public string DataDirPath = ".";
 
         [DefaultValue(false)]
 		[XmlIgnore]
