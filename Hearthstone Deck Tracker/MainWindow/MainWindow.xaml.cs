@@ -538,6 +538,7 @@ namespace Hearthstone_Deck_Tracker
 			if(version == null) return;
 			try
 			{
+				ActivateWindow();
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
 													 version.Build);
 				var result =
