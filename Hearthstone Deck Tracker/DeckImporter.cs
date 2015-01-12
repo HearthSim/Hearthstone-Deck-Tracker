@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportHearthstoneDecks(url);
 			if(url.Contains("heartharena"))
 				return await ImportHearthArena(url);
+            if (url.Contains("hearthstoneheroes"))
+                return await ImportHearthstoneheroes(url);
 			Logger.WriteLine("invalid url", "DeckImporter");
 			return null;
 		}
@@ -210,7 +212,6 @@ namespace Hearthstone_Deck_Tracker
 				return null;
 			}
 		}
-
 
 		private static async Task<Deck> ImportHearthNewsFr(string url)
 		{
@@ -442,6 +443,39 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				return deck;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.Message + "\n" + e.StackTrace);
+				return null;
+			}
+		}
+
+        private static async Task<Deck> ImportHearthstoneheroes(string url)
+		{
+
+			try
+			{
+				var doc = await GetHtmlDoc(url);
+                		var deck = new Deck { Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText).Trim() };
+				var nodes = doc.DocumentNode.SelectNodes("//table[@class='table table-bordered table-hover table-db']/tbody/tr");
+
+                foreach (var cardNode in nodes)
+                {
+
+                    string name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a").Attributes[3].Value.ToString());
+
+                    string temp = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/small").InnerText[0].ToString());
+                    int count = int.Parse(temp);
+                    
+                    var card = Game.GetCardFromName(name);
+                    card.Count = count;
+                    deck.Cards.Add(card);
+                    if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+                        deck.Class = card.PlayerClass;
+                }
+
+                return deck;
 			}
 			catch(Exception e)
 			{
