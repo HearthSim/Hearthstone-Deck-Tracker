@@ -1401,6 +1401,8 @@ namespace Hearthstone_Deck_Tracker
 			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 			if(regKey != null)
 				regKey.SetValue("Hearthstone Deck Tracker", Application.ResourceAssembly.Location);
+			Config.Instance.StartWithWindows = true;
+			Config.Save();
 		}
 
 		private void CheckboxStartWithWindows_Unchecked(object sender, RoutedEventArgs e)
@@ -1410,6 +1412,8 @@ namespace Hearthstone_Deck_Tracker
 			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 			if(regKey != null)
 				regKey.DeleteValue("Hearthstone Deck Tracker", false);
+			Config.Instance.StartWithWindows = false;
+			Config.Save();
 		}
 
 		private void CheckboxAutoGrayoutSecrets_Checked(object sender, RoutedEventArgs e)
