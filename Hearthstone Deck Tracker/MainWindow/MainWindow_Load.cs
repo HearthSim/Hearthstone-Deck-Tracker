@@ -170,10 +170,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var filePath = Config.Instance.DataDir + "DeckStats.xml";
-			//load saved decks
+			//create file if it does not exist
 			if(!File.Exists(filePath))
 			{
-				//avoid overwriting decks file with new releases.
 				using(var sr = new StreamWriter(filePath, false))
 					sr.WriteLine("<DeckStatsList></DeckStatsList>");
 			}
@@ -398,16 +397,13 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Moved decks to local");
 			}
 
-			//load saved decks
-			if(!File.Exists(_decksPath))
+			//create file if it doesn't exist
+			var path = Path.Combine(Config.Instance.DataDir, "PlayerDecks.xml");
+			if(!File.Exists(path))
 			{
-				//avoid overwriting decks file with new releases.
-				using(var sr = new StreamWriter(_decksPath, false))
+				using(var sr = new StreamWriter(path, false))
 					sr.WriteLine("<Decks></Decks>");
 			}
-			else if(!File.Exists(_decksPath + ".old"))
-				//the new playerdecks.xml wont work with versions below 0.2.19, make copy
-				File.Copy(_decksPath, _decksPath + ".old");
 		}
 
 		public void SetupDefaultDeckStatsFile()
@@ -445,10 +441,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";
-			//load saved decks
+			//create if it does not exist
 			if(!File.Exists(filePath))
 			{
-				//avoid overwriting file with new releases.
 				using (var sr = new StreamWriter(filePath, false))
 					sr.WriteLine("<DefaultDeckStats></DefaultDeckStats>");
 			}

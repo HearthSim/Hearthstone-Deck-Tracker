@@ -1300,26 +1300,29 @@ namespace Hearthstone_Deck_Tracker
 
         private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
-            System.Windows.Forms.DialogResult dialogResult = dialog.ShowDialog();
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            var dialogResult = dialog.ShowDialog();
 
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
-                if (Config.Instance.SaveDataInAppData != null && !Config.Instance.SaveDataInAppData.Value)
+	            var saveInAppData = Config.Instance.SaveDataInAppData.HasValue && Config.Instance.SaveDataInAppData.Value;
+                if (!saveInAppData)
                 {
-                    foreach(bool value in new List<bool> { true, false}) {
+                    foreach(bool value in new List<bool> { true, false })
+					{
                         Config.Instance.SaveDataInAppData = value;
                         Helper.MainWindow.CopyReplayFiles();
                         Helper.MainWindow.SetupDeckStatsFile();
                         Helper.MainWindow.SetupDeckListFile();
                         Helper.MainWindow.SetupDefaultDeckStatsFile();
                         Config.Instance.DataDirPath = dialog.SelectedPath;
-                    }
-                }
-                Config.Instance.DataDirPath = dialog.SelectedPath;
-                Config.Save();
-                await Helper.MainWindow.Restart();
-            }
+					}
+				}
+				Config.Instance.DataDirPath = dialog.SelectedPath;
+				Config.Save();
+				if(!saveInAppData)
+					await Helper.MainWindow.Restart();
+			}
 
         }
 
