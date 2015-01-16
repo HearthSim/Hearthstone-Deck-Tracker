@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
 using SystemColors = System.Windows.SystemColors;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -1190,10 +1191,10 @@ namespace Hearthstone_Deck_Tracker
 			await Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
+        private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SaveDataInAppData = true;
+            Config.Instance.SaveDataInAppData = true;
 			Config.Save();
 			await Helper.MainWindow.Restart();
 		}
@@ -1201,7 +1202,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized) return;
-			Config.Instance.SaveDataInAppData = false;
+            Config.Instance.SaveDataInAppData = false;
 			Config.Save();
 			await Helper.MainWindow.Restart();
 		}
@@ -1297,7 +1298,32 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
+        private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult dialogResult = dialog.ShowDialog();
+
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            {
+                if (Config.Instance.SaveDataInAppData != null && !Config.Instance.SaveDataInAppData.Value)
+                {
+                    foreach(bool value in new List<bool> { true, false}) {
+                        Config.Instance.SaveDataInAppData = value;
+                        Helper.MainWindow.CopyReplayFiles();
+                        Helper.MainWindow.SetupDeckStatsFile();
+                        Helper.MainWindow.SetupDeckListFile();
+                        Helper.MainWindow.SetupDefaultDeckStatsFile();
+                        Config.Instance.DataDirPath = dialog.SelectedPath;
+                    }
+                }
+                Config.Instance.DataDirPath = dialog.SelectedPath;
+                Config.Save();
+                await Helper.MainWindow.Restart();
+            }
+
+        }
+
+        private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -1487,6 +1513,6 @@ namespace Hearthstone_Deck_Tracker
             Config.Instance.SaveHSLogIntoReplay = false;
             SaveConfig(false);
         }
-	}
+    }
 }
  

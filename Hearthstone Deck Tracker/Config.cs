@@ -67,7 +67,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(-1)]
 		public int CustomWidth = -1;
 
-		[DefaultValue(false)]
+        [DefaultValue(".")]
+        public string DataDirPath = ".";
+
+        [DefaultValue(false)]
 		[XmlIgnore]
 		public bool Debug = false;
 
@@ -574,7 +577,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public string DataDir
 		{
-			get { return Instance.SaveDataInAppData == false ? string.Empty : AppDataPath + "\\"; }
+			get { return Instance.SaveDataInAppData == false ? DataDirPath + "\\" : AppDataPath + "\\"; }
 		}
 
 		public string ReplayDir

@@ -284,6 +284,8 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.SortDecks();
+
+            CopyReplayFiles();
 		}
 
 		#endregion
