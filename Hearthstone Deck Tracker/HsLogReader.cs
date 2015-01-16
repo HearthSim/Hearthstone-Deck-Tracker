@@ -664,8 +664,6 @@ namespace Hearthstone_Deck_Tracker
 								break;
 						}
 						break;
-					case TAG_ZONE.GRAVEYARD:
-						break;
 					case TAG_ZONE.HAND:
 						switch((TAG_ZONE)value)
 						{
@@ -773,6 +771,7 @@ namespace Hearthstone_Deck_Tracker
 								break;
 						}
 						break;
+					case TAG_ZONE.GRAVEYARD:
 					case TAG_ZONE.SETASIDE:
 					case TAG_ZONE.CREATED:
 					case TAG_ZONE.INVALID:
