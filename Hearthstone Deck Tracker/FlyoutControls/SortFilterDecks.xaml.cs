@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -29,7 +33,8 @@ namespace Hearthstone_Deck_Tracker
 			public override bool Equals(object obj)
 			{
 				var other = obj as Tag;
-				if(other == null) return false;
+				if(other == null)
+					return false;
 				return other.Name == Name;
 			}
 
@@ -74,7 +79,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetSelectedTags(List<string> tags)
 		{
-			if(tags == null) return;
+			if(tags == null)
+				return;
 			foreach(var tag in Tags)
 				tag.Selected = tags.Contains(tag.Name);
 			ListboxTags.Items.Refresh();
@@ -82,8 +88,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public void AddSelectedTag(string tag)
 		{
-			if(Tags.All(t => t.Name != tag)) return;
-			if(Tags.First(t => t.Name == "All").Selected) return;
+			if(Tags.All(t => t.Name != tag))
+				return;
+			if(Tags.First(t => t.Name == "All").Selected)
+				return;
 
 			Tags.First(t => t.Name == tag).Selected = true;
 
@@ -158,7 +166,8 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnAddTag_Click(object sender, RoutedEventArgs e)
 		{
 			var tag = TextboxNewTag.Text;
-			if(Tags.Any(t => t.Name == tag)) return;
+			if(Tags.Any(t => t.Name == tag))
+				return;
 
 			Tags.Add(new Tag(tag));
 
@@ -169,13 +178,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
 		{
-			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+			var msgbxoResult = MessageBox.Show("The tag will be deleted from all decks", "Are you sure?", MessageBoxButton.YesNo,
+			                                   MessageBoxImage.Exclamation);
 			if(msgbxoResult != MessageBoxResult.Yes)
 				return;
 
 			var tag = ListboxTags.SelectedItem as Tag;
-			if(tag == null) return;
-			if(Tags.All(t => t.Equals(tag))) return;
+			if(tag == null)
+				return;
+			if(Tags.All(t => t.Equals(tag)))
+				return;
 
 			Tags.Remove(Tags.First(t => t.Equals(tag)));
 
@@ -246,7 +258,8 @@ namespace Hearthstone_Deck_Tracker
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
-			if(selectedValue == null) return;
+			if(selectedValue == null)
+				return;
 
 			Config.Instance.SelectedDeckSorting = selectedValue;
 			Config.Save();
@@ -270,7 +283,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
-			    Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
+				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
 				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 			else if(Name == "TagControlEdit")
@@ -298,9 +311,9 @@ namespace Hearthstone_Deck_Tracker
 			var selectedTag = ListboxTags.SelectedItem as Tag;
 			if(selectedTag == null)
 				return;
-			var index = Tags.IndexOf(selectedTag) +  1;
+			var index = Tags.IndexOf(selectedTag) + 1;
 			if(index < Tags.Count)
-				MoveTag(selectedTag.Name, index, index+1);
+				MoveTag(selectedTag.Name, index, index + 1);
 		}
 
 		private void BtnTop_OnClick(object sender, RoutedEventArgs e)

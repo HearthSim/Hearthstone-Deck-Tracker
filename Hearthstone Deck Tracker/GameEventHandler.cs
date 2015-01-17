@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -7,9 +9,11 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker
 {
-    public class GameEventHandler : IGameHandler
+	public class GameEventHandler : IGameHandler
 	{
 		#region Player
 
@@ -17,6 +21,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Game.PlayerName = name;
 		}
+
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -33,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
 		}
 
-        public static void HandlePlayerBackToHand(string cardId, int turn)
+		public static void HandlePlayerBackToHand(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
@@ -56,8 +61,8 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("PlayerDraw", cardId);
 			var correctDeck = Game.PlayerDraw(cardId);
 
-			if(!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
+			if(!(await correctDeck) && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage
+			   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck");
@@ -95,6 +100,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
 		}
+
 		public static void HandlePlayerHandDiscard(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -126,8 +132,8 @@ namespace Hearthstone_Deck_Tracker
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
 
 			//don't think this will ever detect an incorrect deck but who knows...
-			if(!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage &&
-			   !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
+			if(!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage
+			   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
 				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
@@ -139,9 +145,9 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 		}
-		
-	    public static void HandlePlayerPlayToDeck(string cardId, int turn)
-	    {
+
+		public static void HandlePlayerPlayToDeck(string cardId, int turn)
+		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerPlayToDeck", cardId);
@@ -158,14 +164,13 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Opponent
 
-
 		public void HandleOpponentName(string name)
 		{
 			Game.OpponentName = name;
 		}
 
-	    public static void HandleOpponentPlay(string cardId, int from, int turn)
-	    {
+		public static void HandleOpponentPlay(string cardId, int from, int turn)
+		{
 			LogEvent("OpponentPlay", cardId, turn, from);
 			Game.OpponentPlay(cardId, from, turn);
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
@@ -230,8 +235,8 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-	    public static void HandleOpponentPlayToDeck(string cardId, int turn)
-	    {
+		public static void HandleOpponentPlayToDeck(string cardId, int turn)
+		{
 			LogEvent("OpponentPlayToDeck", cardId, turn);
 			Game.OpponentPlayToDeck(cardId, turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentPlayToDeck, turn, cardId);
@@ -239,20 +244,20 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 		}
 
-	    public static void HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
+		public static void HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
 		{
 			LogEvent("OpponentSecretTrigger", cardId);
 			Game.OpponentSecretTriggered(cardId);
 			Game.OpponentSecretCount--;
 			Game.OpponentSecrets.SecretRemoved(otherId);
-		    if(Game.OpponentSecretCount <= 0)
-			    Helper.MainWindow.Overlay.HideSecrets();
-		    else
-		    {
+			if(Game.OpponentSecretCount <= 0)
+				Helper.MainWindow.Overlay.HideSecrets();
+			else
+			{
 				if(Config.Instance.AutoGrayoutSecrets)
 					Game.OpponentSecrets.SetZero(cardId);
 				Helper.MainWindow.Overlay.ShowSecrets();
-		    }
+			}
 			Game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 		}
 
@@ -291,7 +296,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!string.IsNullOrEmpty(hero))
 			{
-				if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection) return;
+				if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection)
+					return;
 
 				if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
 				{
@@ -321,7 +327,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-	    public static void TurnStart(ActivePlayer player, int turnNumber)
+		public static void TurnStart(ActivePlayer player, int turnNumber)
 		{
 			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
 			//doesn't really matter whose turn it is for now, just restart timer
@@ -338,7 +344,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-	    private static DateTime _lastGameStart;
+		private static DateTime _lastGameStart;
+
 		public static void HandleGameStart()
 		{
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
@@ -351,8 +358,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
 
-			if(Config.Instance.KeyPressOnGameStart != "None" &&
-			   Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+			if(Config.Instance.KeyPressOnGameStart != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
@@ -360,7 +366,7 @@ namespace Hearthstone_Deck_Tracker
 			_showedNoteDialog = false;
 			Game.IsInMenu = false;
 			Game.Reset();
-			
+
 			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
 			if(selectedDeck != null)
 				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
@@ -368,54 +374,53 @@ namespace Hearthstone_Deck_Tracker
 
 		private static Deck _assignedDeck;
 #pragma warning disable 4014
-	    public static void HandleGameEnd()
-	    {
-		    Helper.MainWindow.Overlay.HideTimers();
-		    if(Game.CurrentGameStats == null)
-			    return;
-		    var player = Game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
-		    var opponent = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
+		public static void HandleGameEnd()
+		{
+			Helper.MainWindow.Overlay.HideTimers();
+			if(Game.CurrentGameStats == null)
+				return;
+			var player = Game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
+			var opponent = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
 			if(player.Value != null)
 				Game.CurrentGameStats.PlayerName = player.Value.Name;
 			if(opponent.Value != null)
-		    Game.CurrentGameStats.OpponentName = opponent.Value.Name;
+				Game.CurrentGameStats.OpponentName = opponent.Value.Name;
 
-		    Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
-		    if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
-		    {
-			    Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
-			    _assignedDeck = null;
-			    return;
-		    }
-		    Game.CurrentGameStats.GameEnd();
-		    var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
-		    if(selectedDeck != null)
-		    {
-			    if(Config.Instance.DiscardGameIfIncorrectDeck &&
-			       !Game.PlayerDrawn.All(c => c.IsStolen || selectedDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
-			    {
-				    Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
-				    Game.CurrentGameStats.DeleteGameFile();
-				    _assignedDeck = null;
-				    return;
-			    }
-			    selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
-			    if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
-			    {
-				    _showedNoteDialog = true;
-				    new NoteDialog(Game.CurrentGameStats);
-			    }
-			    Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
-			    _assignedDeck = selectedDeck;
-		    }
-		    else
-		    {
-			    DefaultDeckStats.Instance.GetDeckStats(Game.PlayingAs).AddGameResult(Game.CurrentGameStats);
-			    Logger.WriteLine(string.Format("Assigned current deck to default {0} deck.", Game.PlayingAs), "GameStats");
-			    _assignedDeck = null;
-		    }
-
-	    }
+			Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
+			if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+			{
+				Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+				_assignedDeck = null;
+				return;
+			}
+			Game.CurrentGameStats.GameEnd();
+			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			if(selectedDeck != null)
+			{
+				if(Config.Instance.DiscardGameIfIncorrectDeck
+				   && !Game.PlayerDrawn.All(c => c.IsStolen || selectedDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
+				{
+					Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
+					Game.CurrentGameStats.DeleteGameFile();
+					_assignedDeck = null;
+					return;
+				}
+				selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
+				{
+					_showedNoteDialog = true;
+					new NoteDialog(Game.CurrentGameStats);
+				}
+				Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
+				_assignedDeck = selectedDeck;
+			}
+			else
+			{
+				DefaultDeckStats.Instance.GetDeckStats(Game.PlayingAs).AddGameResult(Game.CurrentGameStats);
+				Logger.WriteLine(string.Format("Assigned current deck to default {0} deck.", Game.PlayingAs), "GameStats");
+				_assignedDeck = null;
+			}
+		}
 #pragma warning restore 4014
 
 		private static void LogEvent(string type, string id = "", int turn = 0, int from = -1)
@@ -432,12 +437,12 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePossibleArenaCard(string id)
 		{
 			var card = Game.GetCardFromId(id);
-            if(!Game.PossibleArenaCards.Contains(card))
+			if(!Game.PossibleArenaCards.Contains(card))
 				Game.PossibleArenaCards.Add(card);
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
-	    public static void HandleWin(bool fromAssetUnload)
+		public static void HandleWin(bool fromAssetUnload)
 		{
 			if(Game.CurrentGameStats == null)
 				return;
@@ -453,19 +458,19 @@ namespace Hearthstone_Deck_Tracker
 			Game.CurrentGameStats.Result = GameResult.Loss;
 		}
 
-	    public static void SetGameMode(GameMode mode)
+		public static void SetGameMode(GameMode mode)
 		{
 			Logger.WriteLine(">> GAME MODE: " + mode);
 			Game.CurrentGameMode = mode;
-	    }
+		}
 
-	    public void HandleInMenu()
-	    {
-		    if(Game.IsInMenu)
-			    return;
+		public void HandleInMenu()
+		{
+			if(Game.IsInMenu)
+				return;
 
-			if(Game.Entities.Count > 0 && !Game.SavedReplay && Game.CurrentGameStats != null &&
-				  Game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
+			if(Game.Entities.Count > 0 && !Game.SavedReplay && Game.CurrentGameStats != null && Game.CurrentGameStats.ReplayFile == null
+			   && RecordCurrentGameMode)
 				Game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 
 			SaveAndUpdateStats();
@@ -492,22 +497,22 @@ namespace Hearthstone_Deck_Tracker
 				Game.Reset(false);
 			if(Game.CurrentGameStats != null && Game.CurrentGameStats.Result != GameResult.None)
 				Game.CurrentGameStats = null;
-	    }
+		}
 
-	    public void HandleConcede()
-	    {
-		    if(Game.CurrentGameStats == null)
-			    return;
-		    Game.CurrentGameStats.WasConceded = true;
-	    }
+		public void HandleConcede()
+		{
+			if(Game.CurrentGameStats == null)
+				return;
+			Game.CurrentGameStats.WasConceded = true;
+		}
 
-	    private static bool _showedNoteDialog;
+		private static bool _showedNoteDialog;
+
 		private static void SaveAndUpdateStats()
 		{
 			var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
 			if(RecordCurrentGameMode)
 			{
-
 				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;
@@ -517,7 +522,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Game.CurrentGameStats != null)
 				{
 					Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
-                    if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
+					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 					{
 						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
 						return;
@@ -537,7 +542,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Saving DeckStats", "GameStats");
 					DeckStatsList.Save();
 				}
-				
+
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				statsControl.Refresh();
 			}
@@ -549,19 +554,19 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-	    public static bool RecordCurrentGameMode
-	    {
-		    get
-		    {
-			    return Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther ||
-			           Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice ||
-			           Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena ||
-			           Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked ||
-			           Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly ||
-			           Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual ||
-			           Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator;
-		    }
-	    }
+		public static bool RecordCurrentGameMode
+		{
+			get
+			{
+				return Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
+				       || Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice
+				       || Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena
+				       || Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked
+				       || Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly
+				       || Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual
+				       || Game.CurrentGameMode == GameMode.Spectator && Config.Instance.RecordSpectator;
+			}
+		}
 
 		public static void HandlePlayerHeroPower(string cardId, int turn)
 		{
@@ -575,143 +580,142 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentHeroPower, turn, cardId);
 		}
 
+		#region IGameHandlerImplementation
 
-        #region IGameHandlerImplementation
+		void IGameHandler.HandlePlayerBackToHand(string cardId, int turn)
+		{
+			HandlePlayerBackToHand(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerBackToHand(string cardId, int turn)
-        {
-            HandlePlayerBackToHand(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerDraw(string cardId, int turn)
+		{
+			HandlePlayerDraw(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerDraw(string cardId, int turn)
-        {
-            HandlePlayerDraw(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerMulligan(string cardId)
+		{
+			HandlePlayerMulligan(cardId);
+		}
 
-        void IGameHandler.HandlePlayerMulligan(string cardId)
-        {
-            HandlePlayerMulligan(cardId);
-        }
+		void IGameHandler.HandlePlayerSecretPlayed(string cardId, int turn, bool fromDeck)
+		{
+			HandlePlayerSecretPlayed(cardId, turn, fromDeck);
+		}
 
-        void IGameHandler.HandlePlayerSecretPlayed(string cardId, int turn, bool fromDeck)
-        {
-            HandlePlayerSecretPlayed(cardId, turn, fromDeck);
-        }
+		void IGameHandler.HandlePlayerHandDiscard(string cardId, int turn)
+		{
+			HandlePlayerHandDiscard(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerHandDiscard(string cardId, int turn)
-        {
-            HandlePlayerHandDiscard(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerPlay(string cardId, int turn)
+		{
+			HandlePlayerPlay(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerPlay(string cardId, int turn)
-        {
-            HandlePlayerPlay(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerDeckDiscard(string cardId, int turn)
+		{
+			HandlePlayerDeckDiscard(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerDeckDiscard(string cardId, int turn)
-        {
-            HandlePlayerDeckDiscard(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerHeroPower(string cardId, int turn)
+		{
+			HandlePlayerHeroPower(cardId, turn);
+		}
 
-        void IGameHandler.HandlePlayerHeroPower(string cardId, int turn)
-        {
-            HandlePlayerHeroPower(cardId, turn);
-        }
+		void IGameHandler.HandleOpponentPlay(string cardId, int @from, int turn)
+		{
+			HandleOpponentPlay(cardId, @from, turn);
+		}
 
-        void IGameHandler.HandleOpponentPlay(string cardId, int @from, int turn)
-        {
-            HandleOpponentPlay(cardId, @from, turn);
-        }
+		void IGameHandler.HandleOpponentHandDiscard(string cardId, int @from, int turn)
+		{
+			HandleOpponentHandDiscard(cardId, @from, turn);
+		}
 
-        void IGameHandler.HandleOpponentHandDiscard(string cardId, int @from, int turn)
-        {
-            HandleOpponentHandDiscard(cardId, @from, turn);
-        }
+		void IGameHandler.HandleOpponentDraw(int turn)
+		{
+			HandlOpponentDraw(turn);
+		}
 
-        void IGameHandler.HandleOpponentDraw(int turn)
-        {
-            HandlOpponentDraw(turn);
-        }
+		void IGameHandler.HandleOpponentMulligan(int @from)
+		{
+			HandleOpponentMulligan(@from);
+		}
 
-        void IGameHandler.HandleOpponentMulligan(int @from)
-        {
-            HandleOpponentMulligan(@from);
-        }
+		void IGameHandler.HandleOpponentGet(int turn, int id)
+		{
+			HandleOpponentGet(turn, id);
+		}
 
-        void IGameHandler.HandleOpponentGet(int turn, int id)
-        {
-            HandleOpponentGet(turn, id);
-        }
+		void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck, int otherId)
+		{
+			HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck, otherId);
+		}
 
-        void IGameHandler.HandleOpponentSecretPlayed(string cardId, int @from, int turn, bool fromDeck, int otherId)
-        {
-            HandleOpponentSecretPlayed(cardId, @from, turn, fromDeck, otherId);
-        }
+		void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn, int id)
+		{
+			HandleOpponentPlayToHand(cardId, turn, id);
+		}
 
-        void IGameHandler.HandleOpponentPlayToHand(string cardId, int turn, int id)
-        {
-            HandleOpponentPlayToHand(cardId, turn, id);
-        }
+		void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
+		{
+			HandleOpponentSecretTrigger(cardId, turn, otherId);
+		}
 
-        void IGameHandler.HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
-        {
-            HandleOpponentSecretTrigger(cardId, turn, otherId);
-        }
+		void IGameHandler.HandleOpponentDeckDiscard(string cardId, int turn)
+		{
+			HandleOpponentDeckDiscard(cardId, turn);
+		}
 
-        void IGameHandler.HandleOpponentDeckDiscard(string cardId, int turn)
-        {
-            HandleOpponentDeckDiscard(cardId, turn);
-        }
+		void IGameHandler.SetOpponentHero(string hero)
+		{
+			SetOpponentHero(hero);
+		}
 
-        void IGameHandler.SetOpponentHero(string hero)
-        {
-            SetOpponentHero(hero);
-        }
+		void IGameHandler.SetPlayerHero(string hero)
+		{
+			SetPlayerHero(hero);
+		}
 
-	    void IGameHandler.SetPlayerHero(string hero)
-	    {
-		    SetPlayerHero(hero);
-	    }
+		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn)
+		{
+			HandleOpponentHeroPower(cardId, turn);
+		}
 
-        void IGameHandler.HandleOpponentHeroPower(string cardId, int turn)
-        {
-            HandleOpponentHeroPower(cardId, turn);
-        }
+		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber)
+		{
+			TurnStart(player, turnNumber);
+		}
 
-        void IGameHandler.TurnStart(ActivePlayer player, int turnNumber)
-        {
-            TurnStart(player, turnNumber);
-        }
+		void IGameHandler.HandleGameStart()
+		{
+			HandleGameStart();
+		}
 
-        void IGameHandler.HandleGameStart()
-        {
-            HandleGameStart();
-        }
+		void IGameHandler.HandleGameEnd()
+		{
+			HandleGameEnd();
+		}
 
-        void IGameHandler.HandleGameEnd()
-        {
-            HandleGameEnd();
-        }
+		void IGameHandler.HandleLoss(bool fromAssetUnload)
+		{
+			HandleLoss(fromAssetUnload);
+		}
 
-        void IGameHandler.HandleLoss(bool fromAssetUnload)
-        {
-            HandleLoss(fromAssetUnload);
-        }
+		void IGameHandler.HandleWin(bool fromAssetUnload)
+		{
+			HandleWin(fromAssetUnload);
+		}
 
-        void IGameHandler.HandleWin(bool fromAssetUnload)
-        {
-            HandleWin(fromAssetUnload);
-        }
+		void IGameHandler.PlayerSetAside(string id)
+		{
+			PlayerSetAside(id);
+		}
 
-        void IGameHandler.PlayerSetAside(string id)
-        {
-            PlayerSetAside(id);
-        }
-
-        void IGameHandler.HandlePlayerGet(string cardId, int turn)
-        {
-            HandlePlayerGet(cardId, turn);
-        }
+		void IGameHandler.HandlePlayerGet(string cardId, int turn)
+		{
+			HandlePlayerGet(cardId, turn);
+		}
 
 		void IGameHandler.HandlePlayerPlayToDeck(string cardId, int turn)
 		{
@@ -723,12 +727,11 @@ namespace Hearthstone_Deck_Tracker
 			HandleOpponentPlayToDeck(cardId, turn);
 		}
 
-	    void IGameHandler.SetGameMode(GameMode mode)
-	    {
-		    SetGameMode(mode);
-	    }
+		void IGameHandler.SetGameMode(GameMode mode)
+		{
+			SetGameMode(mode);
+		}
 
 		#endregion IGameHandlerImplementation
-
 	}
 }

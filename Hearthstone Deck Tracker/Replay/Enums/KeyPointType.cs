@@ -1,29 +1,29 @@
 namespace Hearthstone_Deck_Tracker.Replay
 {
-    public enum KeyPointType
-    {
-        Play,
-        Draw,
-        Mulligan,
-        Death,
-        HandDiscard,
-        DeckDiscard,
-        SecretPlayed,
-        SecretTriggered,
-        Turn,
-        Attack,
-        PlayToHand,
-        PlayToDeck,
-        Obtain,
+	public enum KeyPointType
+	{
+		Play,
+		Draw,
+		Mulligan,
+		Death,
+		HandDiscard,
+		DeckDiscard,
+		SecretPlayed,
+		SecretTriggered,
+		Turn,
+		Attack,
+		PlayToHand,
+		PlayToDeck,
+		Obtain,
 		Summon,
-	    HandPos,
+		HandPos,
 		BoardPos,
-        PlaySpell,
+		PlaySpell,
 		Weapon,
 		WeaponDestroyed,
-	    HeroPower,
+		HeroPower,
 		Victory,
 		Defeat,
-	    SecretStolen
-    }
+		SecretStolen
+	}
 }

@@ -37,7 +37,7 @@
                             <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
                             <Setter Property="Background" Value="{Binding Background}" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            <Setter Property="Height" Value="{Binding Height}"></Setter>
+                            <Setter Property="Height" Value="{Binding Height}" />
                             <Setter Property="Margin" Value="0,-2,0,0" />
                         </Style>
                     </ListView.Resources>
@@ -52,7 +52,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218">
-                <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)" />
                 <local:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147"
                                     Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -71,8 +71,8 @@
                         </Style>
                     </ListView.Resources>
                 </local:DeckListView>
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
                 <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
                     <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0"
@@ -85,49 +85,49 @@
             <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73"
                          Canvas.Top="105">
                 <StackPanel Name="Marks0">
-                    <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark0" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark0" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks1">
-                    <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark1" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark1" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks2">
-                    <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark2" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark2" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks3">
-                    <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark3" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark3" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks4">
-                    <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark4" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark4" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks5">
-                    <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark5" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark5" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks6">
-                    <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark6" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark6" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks7">
-                    <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark7" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark7" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks8">
-                    <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark8" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark8" FontSize="20" Text="0" />
                 </StackPanel>
                 <StackPanel Name="Marks9">
-                    <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
-                    <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0"></local:HearthstoneTextBlock>
+                    <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0" />
+                    <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0" />
                 </StackPanel>
             </UniformGrid>
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203"
                                Visibility="Hidden" />
-            <StackPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed"></StackPanel>
+            <StackPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" />
         </Canvas>
 
     </Grid>

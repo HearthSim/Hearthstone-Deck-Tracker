@@ -28,14 +28,14 @@
                         <Setter Property="ToolTip">
                             <Setter.Value>
                                 <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                    <local:CardToolTip></local:CardToolTip>
+                                    <local:CardToolTip />
                                 </ToolTip>
                             </Setter.Value>
                         </Setter>
                         <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
                         <Setter Property="Background" Value="{Binding Background}" />
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Height" Value="{Binding PlayerWindowHeight}"></Setter>
+                        <Setter Property="Height" Value="{Binding PlayerWindowHeight}" />
                         <Setter Property="Margin" Value="0,-2,0,0" />
                         <Setter Property="IsEnabled" Value="False" />
                         <Style.Triggers>
@@ -47,18 +47,15 @@
                 </ListView.Resources>
             </local:DeckListView>
             <StackPanel Name="StackPanelDraw" Orientation="Horizontal" HorizontalAlignment="Center">
-                <local:HearthstoneTextBlock x:Name="LblDrawChance2" Text="0%" FontSize="16" VerticalAlignment="Center"></local:HearthstoneTextBlock>
+                <local:HearthstoneTextBlock x:Name="LblDrawChance2" Text="0%" FontSize="16" VerticalAlignment="Center" />
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDrawChance1" Text="0%" FontSize="16"
-                                            VerticalAlignment="Center">
-                </local:HearthstoneTextBlock>
+                                            VerticalAlignment="Center" />
             </StackPanel>
             <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblCardCount" Text="Hand: 0" FontSize="14"
-                                            VerticalAlignment="Center">
-                </local:HearthstoneTextBlock>
+                                            VerticalAlignment="Center" />
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDeckCount" Text="Deck: 0" FontSize="14"
-                                            VerticalAlignment="Center">
-                </local:HearthstoneTextBlock>
+                                            VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>
 

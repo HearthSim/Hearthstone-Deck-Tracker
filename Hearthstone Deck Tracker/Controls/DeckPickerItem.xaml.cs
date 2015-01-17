@@ -1,5 +1,9 @@
-﻿using System.Windows.Controls;
+﻿#region
+
+using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {

@@ -1,23 +1,28 @@
+#region
+
 using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
 	public class SecretHelper
 	{
-		public int Id { get; private set; }
-		public bool Stolen { get; private set; }
-		public bool[] PossibleSecrets { get; set; }
 		public SecretHelper(HeroClass heroClass, int id, bool stolen)
 		{
 			Id = id;
 			Stolen = stolen;
 			PossibleSecrets = new bool[GetMaxSecretCount(heroClass)];
 
-			for(int i = 0; i < PossibleSecrets.Length; i++)
+			for(var i = 0; i < PossibleSecrets.Length; i++)
 				PossibleSecrets[i] = true;
 		}
+
+		public int Id { get; private set; }
+		public bool Stolen { get; private set; }
+		public bool[] PossibleSecrets { get; set; }
 
 		public static int GetMaxSecretCount(HeroClass heroClass)
 		{

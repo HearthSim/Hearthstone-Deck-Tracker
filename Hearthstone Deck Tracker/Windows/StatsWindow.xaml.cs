@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
 using System.Windows;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -25,7 +29,8 @@ namespace Hearthstone_Deck_Tracker
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if(_appIsClosing) return;
+			if(_appIsClosing)
+				return;
 			e.Cancel = true;
 			Hide();
 		}

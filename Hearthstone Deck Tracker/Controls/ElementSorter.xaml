@@ -7,6 +7,5 @@
              d:DesignHeight="300" d:DesignWidth="300"
              BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
 
-    <StackPanel Name="StackPanel">
-    </StackPanel>
+    <StackPanel Name="StackPanel" />
 </UserControl>

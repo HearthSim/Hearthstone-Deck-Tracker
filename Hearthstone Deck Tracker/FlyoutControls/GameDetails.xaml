@@ -10,7 +10,7 @@
     <Grid>
         <GroupBox Header="Game Details" Grid.Row="1" Grid.Column="1">
             <Grid>
-                <Separator Margin="0,58,0,0" VerticalAlignment="Top"></Separator>
+                <Separator Margin="0,58,0,0" VerticalAlignment="Top" />
                 <DataGrid Name="DataGridDetails" Margin="0,60,0,0" CanUserAddRows="False" CanUserDeleteRows="False"
                           CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
                           CanUserSortColumns="False">

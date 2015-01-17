@@ -29,28 +29,26 @@
                                         <Bold>
                                             <Run Text="First number:" />
                                         </Bold>
-                                        <Run Text="The chance of your opponent"></Run>
-                                        <Italic>
+                                        <Run Text="The chance of your opponent" />
+                            <Italic>
                                             <Run Text="having" />
                                         </Italic>
-                                        <Run Text="a card next turn. "></Run>
-                                        <LineBreak />
+                                        <Run Text="a card next turn. " />
+                            <LineBreak />
                                         <Run
-                                            Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)">
-                                        </Run>
-                                        <LineBreak />
+                                            Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)" />
+                            <LineBreak />
                                         <Bold>
                                             <Run Text="Second number:" />
                                         </Bold>
-                                        <Run Text="The chance of your opponent"></Run>
-                                        <Italic>
+                                        <Run Text="The chance of your opponent" />
+                            <Italic>
                                             <Run Text="drawing" />
                                         </Italic>
-                                        <Run Text="a card next turn."></Run>
-                                        <LineBreak />
+                                        <Run Text="a card next turn." />
+                            <LineBreak />
                                         <Run
-                                            Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)">
-                                        </Run>
+                                            Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)" />
                         </TextBlock>
                     </StackPanel>
                 </GroupBox>

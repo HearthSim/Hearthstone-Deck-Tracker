@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
@@ -6,72 +8,70 @@ using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker
 {
 	[ContentProperty("Text")]
 	public class OutlinedTextBlock : FrameworkElement
 	{
-		public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
-			"Fill",
-			typeof(Brush),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(Brushes.White, FrameworkPropertyMetadataOptions.AffectsRender));
+		public static readonly DependencyProperty FillProperty = DependencyProperty.Register("Fill", typeof(Brush), typeof(OutlinedTextBlock),
+		                                                                                     new FrameworkPropertyMetadata(Brushes.White,
+		                                                                                                                   FrameworkPropertyMetadataOptions
+			                                                                                                                   .AffectsRender));
 
-		public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
-			"Stroke",
-			typeof(Brush),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+		public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register("Stroke", typeof(Brush),
+		                                                                                       typeof(OutlinedTextBlock),
+		                                                                                       new FrameworkPropertyMetadata(Brushes.Black,
+		                                                                                                                     FrameworkPropertyMetadataOptions
+			                                                                                                                     .AffectsRender));
 
-		public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(OutlinedTextBlock),
+		                                                                                                       new FrameworkPropertyMetadata(
+			                                                                                                       OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty FontSizeProperty = TextElement.FontSizeProperty.AddOwner(
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty FontSizeProperty = TextElement.FontSizeProperty.AddOwner(typeof(OutlinedTextBlock),
+		                                                                                                   new FrameworkPropertyMetadata(
+			                                                                                                   OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty FontStretchProperty = TextElement.FontStretchProperty.AddOwner(
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty FontStretchProperty = TextElement.FontStretchProperty.AddOwner(typeof(OutlinedTextBlock),
+		                                                                                                         new FrameworkPropertyMetadata
+			                                                                                                         (OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty FontStyleProperty = TextElement.FontStyleProperty.AddOwner(
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty FontStyleProperty = TextElement.FontStyleProperty.AddOwner(typeof(OutlinedTextBlock),
+		                                                                                                     new FrameworkPropertyMetadata(
+			                                                                                                     OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(OutlinedTextBlock),
+		                                                                                                       new FrameworkPropertyMetadata(
+			                                                                                                       OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
-			"Text",
-			typeof(string),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextInvalidated));
+		public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string),
+		                                                                                     typeof(OutlinedTextBlock),
+		                                                                                     new FrameworkPropertyMetadata(
+			                                                                                     OnFormattedTextInvalidated));
 
-		public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
-			"TextAlignment",
-			typeof(TextAlignment),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment", typeof(TextAlignment),
+		                                                                                              typeof(OutlinedTextBlock),
+		                                                                                              new FrameworkPropertyMetadata(
+			                                                                                              OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty TextDecorationsProperty = DependencyProperty.Register(
-			"TextDecorations",
-			typeof(TextDecorationCollection),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty TextDecorationsProperty = DependencyProperty.Register("TextDecorations",
+		                                                                                                typeof(TextDecorationCollection),
+		                                                                                                typeof(OutlinedTextBlock),
+		                                                                                                new FrameworkPropertyMetadata(
+			                                                                                                OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty TextTrimmingProperty = DependencyProperty.Register(
-			"TextTrimming",
-			typeof(TextTrimming),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(OnFormattedTextUpdated));
+		public static readonly DependencyProperty TextTrimmingProperty = DependencyProperty.Register("TextTrimming", typeof(TextTrimming),
+		                                                                                             typeof(OutlinedTextBlock),
+		                                                                                             new FrameworkPropertyMetadata(
+			                                                                                             OnFormattedTextUpdated));
 
-		public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register(
-			"TextWrapping",
-			typeof(TextWrapping),
-			typeof(OutlinedTextBlock),
-			new FrameworkPropertyMetadata(TextWrapping.Wrap, OnFormattedTextUpdated));
+		public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register("TextWrapping", typeof(TextWrapping),
+		                                                                                             typeof(OutlinedTextBlock),
+		                                                                                             new FrameworkPropertyMetadata(
+			                                                                                             TextWrapping.Wrap,
+			                                                                                             OnFormattedTextUpdated));
 
 		private FormattedText _formattedText;
 
@@ -230,15 +230,9 @@ namespace Hearthstone_Deck_Tracker
 			if(_formattedText != null || Text == null)
 				return;
 
-			_formattedText = new FormattedText(
-				Text,
-				CultureInfo.CurrentUICulture,
-				FlowDirection,
-				new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal),
-				FontSize,
-				Brushes.Black,
-				null,
-				TextFormattingMode.Display);
+			_formattedText = new FormattedText(Text, CultureInfo.CurrentUICulture, FlowDirection,
+			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Normal), FontSize, Brushes.Black,
+			                                   null, TextFormattingMode.Display);
 
 			UpdateFormattedText();
 		}

@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -6,8 +10,10 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[Description("With deck")]
 		WithDeck,
+
 		[Description("Without deck")]
 		WithoutDeck,
+
 		[Description("All")]
 		All
 	}

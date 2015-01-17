@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -9,6 +11,8 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
@@ -17,7 +21,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void UpdateDbListView()
 		{
-			if(_newDeck == null) return;
+			if(_newDeck == null)
+				return;
 			var selectedClass = _newDeck.Class;
 			string selectedNeutral;
 			string selectedManaCost;
@@ -32,9 +37,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 			try
 			{
-				selectedManaCost = MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+				selectedManaCost =
+					MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				selectedManaCost = "ALL";
 			}
@@ -42,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				selectedSet = MenuFilterSet.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				selectedSet = "ALL";
 			}
@@ -58,18 +64,19 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var card in Game.GetActualCards())
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
-					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput) 
-						&& (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
+					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput)
+					   && (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
 						continue;
-					if(Config.Instance.UseFullTextSearch && words.Any(w => !cardName.Contains(w)
-					                                                       && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                                                       && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-					                                                       && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
+					if(Config.Instance.UseFullTextSearch
+					   && words.Any(
+					                w =>
+					                !cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
+					                && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
 
 					// mana filter
-					if(selectedManaCost != "ALL" &&
-					   ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+					if(selectedManaCost != "ALL" && ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
 						continue;
 					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;
@@ -116,7 +123,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = deckName};
 				var name =
 					await
-						this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
 
 				if(String.IsNullOrEmpty(name))
 					return;
@@ -131,10 +138,9 @@ namespace Hearthstone_Deck_Tracker
 
 				var result =
 					await
-						this.ShowMessageAsync("Not 30 cards",
-							string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
-								_newDeck.Cards.Sum(c => c.Count)),
-							MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("Not 30 cards",
+					                      string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
+					                                    _newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -255,7 +261,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void UpdateTitle()
 		{
-			Title = _newDeck == null ? "Hearthstone Deck Tracker" : string.Format("Hearthstone Deck Tracker - Cards: {0}", _newDeck.Cards.Sum(c => c.Count));
+			Title = _newDeck == null
+				        ? "Hearthstone Deck Tracker" : string.Format("Hearthstone Deck Tracker - Cards: {0}", _newDeck.Cards.Sum(c => c.Count));
 		}
 
 		public void SetNewDeck(Deck deck, bool editing = false)
@@ -396,7 +403,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_newDeckUnsavedChanges)
 			{
-				var result = await this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation", EditingDeck ? "All changes made to the deck will be lost." : "The new deck will be lost.", MessageDialogStyle.AffirmativeAndNegative);
+				var result =
+					await
+					this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation",
+					                      EditingDeck ? "All changes made to the deck will be lost." : "The new deck will be lost.",
+					                      MessageDialogStyle.AffirmativeAndNegative);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -418,8 +429,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
 				var result =
 					await
-						this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative,
-							settings);
+					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 					SaveDeck(true);
 				else if(result == MessageDialogResult.Negative)
@@ -430,12 +440,12 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
 
 				var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
-										? "The stats will be moved to the default-deck (can be changed in options)"
-										: "The stats will be deleted (can be changed in options)";
+					                    ? "The stats will be moved to the default-deck (can be changed in options)"
+					                    : "The stats will be deleted (can be changed in options)";
 				var result =
 					await
-						this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!\n" + keepStatsInfo,
-							MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!\n" + keepStatsInfo,
+					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					Deck oldDeck;
@@ -510,7 +520,8 @@ namespace Hearthstone_Deck_Tracker
 			if(originalSource != null)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
-				if(card == null) return;
+				if(card == null)
+					return;
 				AddCardToDeck((Card)card.Clone());
 				_newDeckUnsavedChanges = true;
 			}
@@ -518,7 +529,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewDeck_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			if(_newDeck == null) return;
+			if(_newDeck == null)
+				return;
 			var originalSource = (DependencyObject)e.OriginalSource;
 			while((originalSource != null) && !(originalSource is ListViewItem))
 				originalSource = VisualTreeHelper.GetParent(originalSource);
@@ -535,7 +547,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewDeck_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			if(_newDeck == null) return;
+			if(_newDeck == null)
+				return;
 			var originalSource = (DependencyObject)e.OriginalSource;
 			while((originalSource != null) && !(originalSource is ListViewItem))
 				originalSource = VisualTreeHelper.GetParent(originalSource);

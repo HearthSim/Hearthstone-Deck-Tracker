@@ -1,11 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Controls;
 using System.Windows.Shapes;
 
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay.Controls
 {
@@ -14,12 +15,48 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 	{
 		#region Dependency Properties
 
-		public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-		public static readonly DependencyProperty Y1Property = DependencyProperty.Register("Y1", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-		public static readonly DependencyProperty X2Property = DependencyProperty.Register("X2", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-		public static readonly DependencyProperty Y2Property = DependencyProperty.Register("Y2", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-		public static readonly DependencyProperty HeadWidthProperty = DependencyProperty.Register("HeadWidth", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
-		public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register("HeadHeight", typeof(double), typeof(Arrow), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
+		public static readonly DependencyProperty X1Property = DependencyProperty.Register("X1", typeof(double), typeof(Arrow),
+		                                                                                   new FrameworkPropertyMetadata(0.0,
+		                                                                                                                 FrameworkPropertyMetadataOptions
+			                                                                                                                 .AffectsRender
+		                                                                                                                 | FrameworkPropertyMetadataOptions
+			                                                                                                                   .AffectsMeasure));
+
+		public static readonly DependencyProperty Y1Property = DependencyProperty.Register("Y1", typeof(double), typeof(Arrow),
+		                                                                                   new FrameworkPropertyMetadata(0.0,
+		                                                                                                                 FrameworkPropertyMetadataOptions
+			                                                                                                                 .AffectsRender
+		                                                                                                                 | FrameworkPropertyMetadataOptions
+			                                                                                                                   .AffectsMeasure));
+
+		public static readonly DependencyProperty X2Property = DependencyProperty.Register("X2", typeof(double), typeof(Arrow),
+		                                                                                   new FrameworkPropertyMetadata(0.0,
+		                                                                                                                 FrameworkPropertyMetadataOptions
+			                                                                                                                 .AffectsRender
+		                                                                                                                 | FrameworkPropertyMetadataOptions
+			                                                                                                                   .AffectsMeasure));
+
+		public static readonly DependencyProperty Y2Property = DependencyProperty.Register("Y2", typeof(double), typeof(Arrow),
+		                                                                                   new FrameworkPropertyMetadata(0.0,
+		                                                                                                                 FrameworkPropertyMetadataOptions
+			                                                                                                                 .AffectsRender
+		                                                                                                                 | FrameworkPropertyMetadataOptions
+			                                                                                                                   .AffectsMeasure));
+
+		public static readonly DependencyProperty HeadWidthProperty = DependencyProperty.Register("HeadWidth", typeof(double), typeof(Arrow),
+		                                                                                          new FrameworkPropertyMetadata(0.0,
+		                                                                                                                        FrameworkPropertyMetadataOptions
+			                                                                                                                        .AffectsRender
+		                                                                                                                        | FrameworkPropertyMetadataOptions
+			                                                                                                                          .AffectsMeasure));
+
+		public static readonly DependencyProperty HeadHeightProperty = DependencyProperty.Register("HeadHeight", typeof(double),
+		                                                                                           typeof(Arrow),
+		                                                                                           new FrameworkPropertyMetadata(0.0,
+		                                                                                                                         FrameworkPropertyMetadataOptions
+			                                                                                                                         .AffectsRender
+		                                                                                                                         | FrameworkPropertyMetadataOptions
+			                                                                                                                           .AffectsMeasure));
 
 		#endregion
 
@@ -76,13 +113,11 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 			get
 			{
 				// Create a StreamGeometry for describing the shape
-				StreamGeometry geometry = new StreamGeometry();
+				var geometry = new StreamGeometry();
 				geometry.FillRule = FillRule.EvenOdd;
 
-				using (StreamGeometryContext context = geometry.Open())
-				{
+				using(var context = geometry.Open())
 					InternalDrawArrowGeometry(context);
-				}
 
 				// Freeze the geometry for performance benefits
 				geometry.Freeze();
@@ -97,20 +132,16 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 
 		private void InternalDrawArrowGeometry(StreamGeometryContext context)
 		{
-			double theta = Math.Atan2(Y1 - Y2, X1 - X2);
-			double sint = Math.Sin(theta);
-			double cost = Math.Cos(theta);
+			var theta = Math.Atan2(Y1 - Y2, X1 - X2);
+			var sint = Math.Sin(theta);
+			var cost = Math.Cos(theta);
 
-			Point pt1 = new Point(X1, this.Y1);
-			Point pt2 = new Point(X2, this.Y2);
+			var pt1 = new Point(X1, this.Y1);
+			var pt2 = new Point(X2, this.Y2);
 
-			Point pt3 = new Point(
-				X2 + (HeadWidth * cost - HeadHeight * sint),
-				Y2 + (HeadWidth * sint + HeadHeight * cost));
+			var pt3 = new Point(X2 + (HeadWidth * cost - HeadHeight * sint), Y2 + (HeadWidth * sint + HeadHeight * cost));
 
-			Point pt4 = new Point(
-				X2 + (HeadWidth * cost + HeadHeight * sint),
-				Y2 - (HeadHeight * cost - HeadWidth * sint));
+			var pt4 = new Point(X2 + (HeadWidth * cost + HeadHeight * sint), Y2 - (HeadHeight * cost - HeadWidth * sint));
 
 			context.BeginFigure(pt1, true, false);
 			context.LineTo(pt2, true, true);

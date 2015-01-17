@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay.Controls
 {
@@ -30,13 +20,12 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 		{
 			get { return DataContext == null ? Visibility.Collapsed : Visibility.Visible; }
 		}
-		
+
 		private void CardEntity_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			var binding = GetBindingExpression(VisibilityProperty);
 			if(binding != null)
 				binding.UpdateTarget();
-
 		}
 	}
 }

@@ -27,10 +27,10 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Name="BtnUp"  Margin="0,0,3,0" Grid.Column="0" Content="up" Click="BtnUp_OnClick"></Button>
-                <Button Name="BtnDown" Margin="3,0,3,0" Grid.Column="1" Content="down" Click="BtnDown_OnClick"></Button>
-                <Button Name="BtnTop"  Margin="3,0,3,0" Grid.Column="2" Content="top" Click="BtnTop_OnClick"></Button>
-                <Button Name="BtnBottom" Margin="3,0,0,0" Grid.Column="3" Content="bottom" Click="BtnBottom_OnClick"></Button>
+                <Button Name="BtnUp"  Margin="0,0,3,0" Grid.Column="0" Content="up" Click="BtnUp_OnClick" />
+                <Button Name="BtnDown" Margin="3,0,3,0" Grid.Column="1" Content="down" Click="BtnDown_OnClick" />
+                <Button Name="BtnTop"  Margin="3,0,3,0" Grid.Column="2" Content="top" Click="BtnTop_OnClick" />
+                <Button Name="BtnBottom" Margin="3,0,0,0" Grid.Column="3" Content="bottom" Click="BtnBottom_OnClick" />
             </Grid>
             <Button x:Name="BtnDeleteTag" DockPanel.Dock="Bottom" Margin="0,3,0,0" Content="Delete Selected"
                     VerticalAlignment="Bottom" Width="auto" Click="BtnDeteleTag_Click" Height="26" />
@@ -53,8 +53,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Checked="CheckBox_Checked"
-                                  Unchecked="CheckBox_Unchecked">
-                        </CheckBox>
+                                  Unchecked="CheckBox_Unchecked" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

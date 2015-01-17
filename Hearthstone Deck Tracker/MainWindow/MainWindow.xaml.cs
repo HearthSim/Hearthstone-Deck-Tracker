@@ -1,9 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,12 +18,13 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
 using MessageBox = System.Windows.MessageBox;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -33,8 +35,8 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
-		public readonly List<Deck> DefaultDecks;
 		public readonly Decks DeckList;
+		public readonly List<Deck> DefaultDecks;
 		public readonly Version NewVersion;
 		public readonly OpponentWindow OpponentWindow;
 		public readonly OverlayWindow Overlay;
@@ -45,9 +47,8 @@ namespace Hearthstone_Deck_Tracker
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
 
-		private readonly string _logConfigPath =
-			Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) +
-			@"\Blizzard\Hearthstone\log.config";
+		private readonly string _logConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+		                                         + @"\Blizzard\Hearthstone\log.config";
 
 		private readonly NotifyIcon _notifyIcon;
 		private readonly bool _updatedLogConfig;
@@ -55,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool EditingDeck;
 
 		public ReadOnlyCollection<string> EventKeys =
-			new ReadOnlyCollection<string>(new[] { "None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" });
+			new ReadOnlyCollection<string>(new[] {"None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"});
 
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
@@ -106,9 +107,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Load();
 			HsLogReader.Create();
 
-			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion)
-									? null
-									: new Version(Config.Instance.CreatedByVersion);
+			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 
 			Version currentVersion;
 			if(Config.Instance.CheckForUpdates)
@@ -155,10 +154,8 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception e)
 			{
 				MessageBox.Show(
-					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please delete " + _decksPath +
-					" (this will cause you to lose your decks).",
-					"Error loading PlayerDecks.xml");
+				                e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete " + _decksPath
+				                + " (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
 				Application.Current.Shutdown();
 			}
 
@@ -167,42 +164,45 @@ namespace Hearthstone_Deck_Tracker
 
 			SetupDefaultDeckStatsFile();
 			DefaultDeckStats.Load();
-			
+
 
 			SetupDeckStatsFile();
 			DeckStatsList.Load();
 
-			_notifyIcon = new NotifyIcon { Icon = new Icon(@"Images/HearthstoneDeckTracker16.ico"), Visible = true, ContextMenu = new ContextMenu(), Text = "Hearthstone Deck Tracker v" + versionString };
+			_notifyIcon = new NotifyIcon
+			{
+				Icon = new Icon(@"Images/HearthstoneDeckTracker16.ico"),
+				Visible = true,
+				ContextMenu = new ContextMenu(),
+				Text = "Hearthstone Deck Tracker v" + versionString
+			};
 			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => DeselectDeck());
 			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect deck")
 			{
 				MenuItems =
-													  {
-														  new MenuItem("On",
-																	   (sender, args) =>
-																	   AutoDeckDetection(true)),
-														  new MenuItem("Off",
-																	   (sender, args) =>
-																	   AutoDeckDetection(false))
-													  }
-			}); _notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Class cards first")
+				{
+					new MenuItem("On", (sender, args) => AutoDeckDetection(true)),
+					new MenuItem("Off", (sender, args) => AutoDeckDetection(false))
+				}
+			});
+			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Class cards first")
 			{
 				MenuItems =
-													  {
-														  new MenuItem("Yes",
-																	   (sender, args) =>
-																	   SortClassCardsFirst(true)),
-														  new MenuItem("No",
-																	   (sender, args) =>
-																	   SortClassCardsFirst(false))
-													  }
+				{
+					new MenuItem("Yes", (sender, args) => SortClassCardsFirst(true)),
+					new MenuItem("No", (sender, args) => SortClassCardsFirst(false))
+				}
 			});
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
-			_notifyIcon.MouseClick += (sender, args) => { if(args.Button == MouseButtons.Left) ActivateWindow(); };
+			_notifyIcon.MouseClick += (sender, args) =>
+			{
+				if(args.Button == MouseButtons.Left)
+					ActivateWindow();
+			};
 
 			//create overlay
-			Overlay = new OverlayWindow { Topmost = true };
+			Overlay = new OverlayWindow {Topmost = true};
 
 			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
 			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
@@ -288,7 +288,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.SortDecks();
 
-            CopyReplayFiles();
+			CopyReplayFiles();
 		}
 
 		#endregion
@@ -405,10 +405,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void ShowIncorrectDeckMessage()
 		{
-			var decks =
-				DeckList.DecksList.Where(
-					d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))
-					).ToList();
+			var decks = DeckList.DecksList.Where(d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))).ToList();
 
 			if(decks.Contains(DeckPickerList.SelectedDeck))
 				decks.Remove(DeckPickerList.SelectedDeck);
@@ -538,19 +535,18 @@ namespace Hearthstone_Deck_Tracker
 		private async void ShowNewUpdateMessage(Version newVersion = null)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new MetroDialogSettings { AffirmativeButtonText = "Download", NegativeButtonText = "Not now" };
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
 			var version = newVersion ?? NewVersion;
-			if(version == null) return;
+			if(version == null)
+				return;
 			try
 			{
 				ActivateWindow();
-				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor,
-													 version.Build);
+				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 				var result =
 					await
-					this.ShowMessageAsync("New Update available!",
-										  "Press \"Download\" to automatically download.",
-										  MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("New Update available!", "Press \"Download\" to automatically download.",
+					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
 				{
@@ -710,9 +706,7 @@ namespace Hearthstone_Deck_Tracker
 				MenuItemUpdateDeck.IsEnabled = !string.IsNullOrEmpty(deck.Url);
 			}
 			else
-			{
 				EnableMenuItems(false);
-			}
 		}
 
 		#endregion
@@ -749,14 +743,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized) return;
+			if(!_initialized)
+				return;
 			Config.Instance.AutoDeckDetection = true;
 			Config.Save();
 		}
 
 		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized) return;
+			if(!_initialized)
+				return;
 			Config.Instance.AutoDeckDetection = false;
 			Config.Save();
 		}
@@ -764,7 +760,7 @@ namespace Hearthstone_Deck_Tracker
 		private void AutoDeckDetection(bool enable)
 		{
 			CheckboxDeckDetection.IsChecked = enable;
-            Config.Instance.AutoDeckDetection = enable;
+			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
 		}
 
@@ -796,7 +792,7 @@ namespace Hearthstone_Deck_Tracker
 			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
 			if(actualTag != null)
 			{
-				var tags = new List<string>() {actualTag.Name};
+				var tags = new List<string> {actualTag.Name};
 				SortFilterDecksFlyout.SetSelectedTags(tags);
 				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
@@ -805,12 +801,13 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 		}
-		
+
 		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
 		{
 			try
 			{
-				var newest = Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
+				var newest =
+					Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
 				if(newest != null)
 					ReplayReader.Read(newest.FullName);
 			}
@@ -825,12 +822,12 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var dialog = new OpenFileDialog
-				             {
-					             Title = "Select Replay File",
-					             DefaultExt = "*.hdtreplay",
-					             Filter = "HDT Replay|*.hdtreplay",
-					             InitialDirectory = Config.Instance.ReplayDir
-				             };
+				{
+					Title = "Select Replay File",
+					DefaultExt = "*.hdtreplay",
+					Filter = "HDT Replay|*.hdtreplay",
+					InitialDirectory = Config.Instance.ReplayDir
+				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
 					ReplayReader.Read(dialog.FileName);

@@ -183,7 +183,7 @@
                                                                OnLabel="Enabled" OffLabel="Disabled"
                                                                Checked="ToggleSwitchExtraFeatures_Checked"
                                                                Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
-                                        <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force ON" Margin="10,0,0,0" Checked="CheckBoxForceExtraFeatures_OnChecked" Unchecked="CheckBoxForceExtraFeatures_OnUnchecked"></CheckBox>
+                                        <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force ON" Margin="10,0,0,0" Checked="CheckBoxForceExtraFeatures_OnChecked" Unchecked="CheckBoxForceExtraFeatures_OnUnchecked" />
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
@@ -484,12 +484,12 @@
                                         </ComboBox>
                                     </DockPanel>
                                     <StackPanel Orientation="Horizontal" Margin="10,5,0,0" >
-                                        <Label Content="Wait"></Label>
+                                        <Label Content="Wait" />
                                         <TextBox x:Name="TextboxExportDelay" 
                                              HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
                                              TextWrapping="Wrap" Text="0" VerticalAlignment="Top"
                                              Width="27" TextChanged="TextboxExportDelay_TextChanged" PreviewTextInput="TextboxExportDelay_PreviewTextInput"/>
-                                        <Label Content="seconds before starting"></Label>
+                                        <Label Content="seconds before starting" />
                                     </StackPanel>
                                     <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
@@ -591,7 +591,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Name="BtnSaveLog" Content="Save to file" Click="BtnSaveLog_OnClick"/>
                             <Button Name="BtnClear" Content="Clear" Click="BtnClear_OnClick" Margin="5,0,0,0"/>
-                            <Label Content="Log level:" Margin="5,0,0,0"></Label>
+                            <Label Content="Log level:" Margin="5,0,0,0" />
                             <ComboBox Name="ComboBoxLogLevel" SelectionChanged="ComboBoxLogLevel_OnSelectionChanged" SelectedIndex="0">
                                 <system:String>0</system:String>
                                 <system:String>1</system:String>

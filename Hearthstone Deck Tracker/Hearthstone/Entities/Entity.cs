@@ -1,26 +1,48 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Newtonsoft.Json;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 {
 	[Serializable]
 	public class Entity
 	{
+		private Card _cachedCard;
+
+		public Entity()
+		{
+			Tags = new Dictionary<GAME_TAG, int>();
+		}
+
+		public Entity(int id)
+		{
+			Tags = new Dictionary<GAME_TAG, int>();
+			Id = id;
+		}
+
 		public Dictionary<GAME_TAG, int> Tags { get; set; }
 		public string Name { get; set; }
 		public int Id { get; set; }
 		public string CardId { get; set; }
 		public bool IsPlayer { get; set; }
 
-		private Card _cachedCard;
 		[JsonIgnore]
 		public Card Card
 		{
-			get { return _cachedCard ?? (_cachedCard = (Game.GetCardFromId(CardId) ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", 0, 0, "unknown", null, 0, ""))); }
+			get
+			{
+				return _cachedCard
+				       ?? (_cachedCard =
+				           (Game.GetCardFromId(CardId)
+				            ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", 0, 0, "unknown", null, 0, "")));
+			}
 		}
 
 		[JsonIgnore]
@@ -36,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			{
 				var color = Colors.White;
 				if(!string.IsNullOrEmpty(CardId) && Attack > Card.Attack)
-						color = Colors.LawnGreen;
+					color = Colors.LawnGreen;
 				return new SolidColorBrush(color);
 			}
 		}
@@ -93,19 +115,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		[JsonIgnore]
 		public ImageBrush Background
 		{
-			get
-			{
-				return Card.Background;
-			}
+			get { return Card.Background; }
 		}
 
 		[JsonIgnore]
 		public string LocalizedName
 		{
-			get
-			{
-				return Card.LocalizedName;
-			}
+			get { return Card.LocalizedName; }
 		}
 
 		[JsonIgnore]
@@ -134,17 +150,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public Visibility EffectsVisibility
 		{
 			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
-		}
-
-		public Entity()
-		{
-			Tags = new Dictionary<GAME_TAG, int>();
-		}
-
-		public Entity(int id)
-		{
-			Tags = new Dictionary<GAME_TAG, int>();
-			Id = id;
 		}
 
 		public bool HasTag(GAME_TAG tag)

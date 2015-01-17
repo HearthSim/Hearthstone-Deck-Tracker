@@ -1,4 +1,8 @@
-﻿using System.ComponentModel;
+﻿#region
+
+using System.ComponentModel;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -6,24 +10,34 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[Description("Today")]
 		Today,
+
 		[Description("Yesterday")]
 		Yesterday,
+
 		[Description("Last 24 Hours")]
 		Last24Hours,
+
 		[Description("This Week")]
 		ThisWeek,
+
 		[Description("Previous Week")]
 		PreviousWeek,
+
 		[Description("Last 7 Days")]
 		Last7Days,
+
 		[Description("This Month")]
 		ThisMonth,
+
 		[Description("Previous Month")]
 		PreviousMonth,
+
 		[Description("This Year")]
 		ThisYear,
+
 		[Description("Previous Year")]
 		PreviousYear,
+
 		[Description("All Time")]
 		AllTime
 	}

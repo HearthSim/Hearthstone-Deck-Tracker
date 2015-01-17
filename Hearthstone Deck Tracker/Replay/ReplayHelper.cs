@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay
 {
 	public static class ReplayHelper
 	{
-
 		public static bool IsInZone(this Entity entity, TAG_ZONE zone)
 		{
 			return entity.HasTag(GAME_TAG.ZONE) && entity.GetTag(GAME_TAG.ZONE) == (int)zone;

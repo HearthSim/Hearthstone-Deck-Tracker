@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -8,6 +10,8 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay
 {
@@ -41,14 +45,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 					Points.Last()
 					      .Data.First(
 					                  x =>
-					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO") &&
-					                  x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
+					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
+					                  && x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
 				var opponentHero =
 					Points.Last()
 					      .Data.First(
 					                  x =>
-					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO") &&
-					                  x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
+					                  && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
 
 				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, CardIds.HeroIdDict[playerHero.CardId], opponent.Name,
 				                             CardIds.HeroIdDict[opponentHero.CardId], DateTime.Now.ToString("HHmm-ddMMyy"));
@@ -63,17 +67,18 @@ namespace Hearthstone_Deck_Tracker.Replay
 					{
 						var json = archive.CreateEntry("replay.json");
 
-                        using(var stream = json.Open())
-                        using(var sw = new StreamWriter(stream))
-                            sw.Write(JsonConvert.SerializeObject(Points));
+						using(var stream = json.Open())
+						using(var sw = new StreamWriter(stream))
+							sw.Write(JsonConvert.SerializeObject(Points));
 
-					    if (Config.Instance.SaveHSLogIntoReplay) {
-					        var hsLog = archive.CreateEntry("output_log.txt");
+						if(Config.Instance.SaveHSLogIntoReplay)
+						{
+							var hsLog = archive.CreateEntry("output_log.txt");
 
-					        using (var logStream = hsLog.Open())
-					        using (var swLog = new StreamWriter(logStream))
-					            Game.HSLogLines.ForEach(swLog.WriteLine);
-					    }
+							using(var logStream = hsLog.Open())
+							using(var swLog = new StreamWriter(logStream))
+								Game.HSLogLines.ForEach(swLog.WriteLine);
+						}
 					}
 
 					using(var fileStream = new FileStream(path, FileMode.Create))
@@ -89,8 +94,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 				Logger.WriteLine(e.ToString());
 				return null;
 			}
-
-
 		}
 
 		private static void ResolveCardIds()
@@ -112,6 +115,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				}
 			}
 		}
+
 		private static void ResolveZonePos()
 		{
 			//ZONE_POSITION changes happen after draws, meaning drawn card will not appear. 
@@ -170,15 +174,15 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var currentEntity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
 				if(currentEntity == null || !currentEntity.HasTag(GAME_TAG.ZONE_POSITION))
 					continue;
-				
+
 				occupiedZonePos.Clear();
 				noUniqueZonePos.Clear();
 				noUniqueZonePos.Add(currentEntity);
 				foreach(var entity in kp.Data.Where(x => x.Id != kp.Id && x.HasTag(GAME_TAG.ZONE_POSITION)))
 				{
 					var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
-					if(entity.GetTag(GAME_TAG.ZONE) == currentEntity.GetTag(GAME_TAG.ZONE) &&
-					   entity.GetTag(GAME_TAG.CONTROLLER) == currentEntity.GetTag(GAME_TAG.CONTROLLER))
+					if(entity.GetTag(GAME_TAG.ZONE) == currentEntity.GetTag(GAME_TAG.ZONE)
+					   && entity.GetTag(GAME_TAG.CONTROLLER) == currentEntity.GetTag(GAME_TAG.CONTROLLER))
 					{
 						if(!occupiedZonePos.Contains(zonePos))
 							occupiedZonePos.Add(zonePos);
@@ -197,16 +201,17 @@ namespace Hearthstone_Deck_Tracker.Replay
 					else
 						occupiedZonePos.Add(entity.GetTag(GAME_TAG.ZONE_POSITION));
 				}
-				
 			}
 
 			var onBoard = new List<Entity>();
 			foreach(var kp in Points)
 			{
-				var currentBoard = kp.Data.Where(x => x.IsInZone(TAG_ZONE.PLAY) && x.HasTag(GAME_TAG.HEALTH) 
-												   && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO")).ToList();
-				if(onBoard.All(e => currentBoard.Any(e2 => e2.Id == e.Id)) 
-					&& currentBoard.All(e => onBoard.Any(e2 => e2.Id == e.Id)))
+				var currentBoard =
+					kp.Data.Where(
+					              x =>
+					              x.IsInZone(TAG_ZONE.PLAY) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId)
+					              && !x.CardId.Contains("HERO")).ToList();
+				if(onBoard.All(e => currentBoard.Any(e2 => e2.Id == e.Id)) && currentBoard.All(e => onBoard.Any(e2 => e2.Id == e.Id)))
 				{
 					foreach(var entity in currentBoard)
 						entity.SetTag(GAME_TAG.ZONE_POSITION, onBoard.First(e => e.Id == entity.Id).GetTag(GAME_TAG.ZONE_POSITION));
@@ -216,10 +221,10 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 
 
-
 			//re-reverse
 			Points.Reverse();
 		}
+
 		private static void RemoveObsoletePlays()
 		{
 			var spellsWithTarget = Points.Where(x => x.Type == KeyPointType.PlaySpell).Select(x => x.Id);

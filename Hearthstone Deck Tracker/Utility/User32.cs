@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -95,17 +99,18 @@ namespace Hearthstone_Deck_Tracker
 				return _hsWindow;
 
 			if(Config.Instance.AdvancedWindowSearch)
+			{
 				Parallel.ForEach(Process.GetProcesses(), (process, state) =>
-				                                         {
-					                                         var sb = new StringBuilder(200);
-					                                         GetClassName(process.MainWindowHandle, sb, 200);
-					                                         if(sb.ToString()
-					                                              .Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
-					                                         {
-						                                         _hsWindow = process.MainWindowHandle;
-						                                         state.Break();
-					                                         }
-				                                         });
+				{
+					var sb = new StringBuilder(200);
+					GetClassName(process.MainWindowHandle, sb, 200);
+					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
+					{
+						_hsWindow = process.MainWindowHandle;
+						state.Break();
+					}
+				});
+			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
 		}
@@ -243,21 +248,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public class WindowsHookHelper
 		{
-			public delegate IntPtr HookDelegate(
-				Int32 code, IntPtr wParam, IntPtr lParam);
+			public delegate IntPtr HookDelegate(Int32 code, IntPtr wParam, IntPtr lParam);
 
 			[DllImport("User32.dll")]
-			public static extern IntPtr CallNextHookEx(
-				IntPtr hHook, Int32 nCode, IntPtr wParam, IntPtr lParam);
+			public static extern IntPtr CallNextHookEx(IntPtr hHook, Int32 nCode, IntPtr wParam, IntPtr lParam);
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr UnhookWindowsHookEx(IntPtr hHook);
 
 
 			[DllImport("User32.dll")]
-			public static extern IntPtr SetWindowsHookEx(
-				Int32 idHook, HookDelegate lpfn, IntPtr hmod,
-				Int32 dwThreadId);
+			public static extern IntPtr SetWindowsHookEx(Int32 idHook, HookDelegate lpfn, IntPtr hmod, Int32 dwThreadId);
 		}
 	}
 }

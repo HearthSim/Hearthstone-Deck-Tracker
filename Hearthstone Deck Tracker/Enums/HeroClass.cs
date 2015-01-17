@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Hearthstone_Deck_Tracker.Enums
+﻿namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum HeroClass
 	{

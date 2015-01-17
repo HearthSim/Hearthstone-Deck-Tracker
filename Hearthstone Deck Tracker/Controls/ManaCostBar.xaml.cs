@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Shapes;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -126,7 +130,8 @@ namespace Hearthstone_Deck_Tracker
 						done[0] = AnimateBar(_bars[0], _previousBarHeights[0], targetValues[0]);
 
 					var offset = _bars[0].ActualHeight + _bars[1].ActualHeight + _bars[2].ActualHeight - 24;
-					if(offset < -4) offset = -4;
+					if(offset < -4)
+						offset = -4;
 					LabelCount.Margin = new Thickness(0, 0, 0, offset);
 
 					await Task.Delay(FrameDelay);

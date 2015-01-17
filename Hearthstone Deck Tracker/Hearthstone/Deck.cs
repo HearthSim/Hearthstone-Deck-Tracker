@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,6 +9,8 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -55,17 +59,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastEdited = lastEdited;
 		}
 
-		public string GetDeckInfo()
-		{
-			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name, Class, Cards.Sum(x => x.Count));
-		}
-
 		[XmlIgnore]
 		public string WinPercentString
 		{
 			get
 			{
-				if(DeckStats.Games.Count == 0) return "-%";
+				if(DeckStats.Games.Count == 0)
+					return "-%";
 				return Math.Round(WinPercent, 0) + "%";
 			}
 		}
@@ -75,7 +75,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(DeckStats.Games.Count == 0) return 0.0;
+				if(DeckStats.Games.Count == 0)
+					return 0.0;
 				return 100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count;
 			}
 		}
@@ -164,6 +165,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited);
 		}
 
+		public string GetDeckInfo()
+		{
+			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name, Class, Cards.Sum(x => x.Count));
+		}
+
 		/// returns the number of cards in the deck with mechanics matching the newmechanic.
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
 		public int getMechanicCount(String newmechanic)
@@ -183,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 
-			Console.WriteLine(newmechanic + count.ToString() + "\n");
+			Console.WriteLine(newmechanic + count + "\n");
 			return count;
 		}
 
@@ -260,7 +266,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public override bool Equals(object obj)
 		{
 			var deck = obj as Deck;
-			if(deck == null) return false;
+			if(deck == null)
+				return false;
 			return Name == deck.Name;
 		}
 

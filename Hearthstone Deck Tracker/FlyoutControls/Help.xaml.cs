@@ -1,5 +1,9 @@
-﻿using System.Diagnostics;
+﻿#region
+
+using System.Diagnostics;
 using System.Windows.Navigation;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {

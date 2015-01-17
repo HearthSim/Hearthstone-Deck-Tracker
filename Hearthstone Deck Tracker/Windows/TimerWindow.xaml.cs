@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -29,12 +33,12 @@ namespace Hearthstone_Deck_Tracker
 			Topmost = _config.TimerWindowTopmost;
 
 			var titleBarCorners = new[]
-				{
-					new Point((int)Left + 5, (int)Top + 5),
-					new Point((int)(Left + Width) - 5, (int)Top + 5),
-					new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
-					new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
-				};
+			{
+				new Point((int)Left + 5, (int)Top + 5),
+				new Point((int)(Left + Width) - 5, (int)Top + 5),
+				new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+				new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
+			};
 			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
 			{
 				Top = 100;
@@ -45,15 +49,15 @@ namespace Hearthstone_Deck_Tracker
 		public void Update(TimerEventArgs timerEventArgs)
 		{
 			LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds / 60) % 60, timerEventArgs.Seconds % 60);
-			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60,
-			                                       timerEventArgs.PlayerSeconds % 60);
+			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60, timerEventArgs.PlayerSeconds % 60);
 			LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds / 60) % 60,
 			                                         timerEventArgs.OpponentSeconds % 60);
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if(_appIsClosing) return;
+			if(_appIsClosing)
+				return;
 			e.Cancel = true;
 			Hide();
 		}

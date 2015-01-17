@@ -1,11 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Forms.VisualStyles;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -13,7 +15,8 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckPickerList.SelectedDeck == null) return;
+			if(DeckPickerList.SelectedDeck == null)
+				return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
 		}
 
@@ -29,8 +32,8 @@ namespace Hearthstone_Deck_Tracker
 				                    : "The stats will be deleted (can be changed in options)";
 			var result =
 				await
-				this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?\n" + keepStatsInfo,
-				                      MessageDialogStyle.AffirmativeAndNegative, settings);
+				this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?\n" + keepStatsInfo, MessageDialogStyle.AffirmativeAndNegative,
+				                      settings);
 			if(result == MessageDialogResult.Negative)
 				return;
 
@@ -62,7 +65,7 @@ namespace Hearthstone_Deck_Tracker
 								game.DeleteGameFile();
 							Logger.WriteLine("Deleted games from deck: " + deck.Name);
 						}
-						catch (Exception)
+						catch(Exception)
 						{
 							Logger.WriteLine("Error deleting games");
 						}
@@ -82,7 +85,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var cloneStats = (await this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.", MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings() { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))== MessageDialogResult.Affirmative;
+			var cloneStats =
+				(await
+				 this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.",
+				                       MessageDialogStyle.AffirmativeAndNegative,
+				                       new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"}))
+				== MessageDialogResult.Affirmative;
 
 			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
 			var originalStatsEntry = clone.DeckStats;
@@ -92,8 +100,7 @@ namespace Hearthstone_Deck_Tracker
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
 					await
-					this.ShowInputAsync("Name already exists",
-					                    "You already have a deck with that name, please select a different one.", settings);
+					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
 
 				if(string.IsNullOrEmpty(name))
 					return;
@@ -134,7 +141,8 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckPickerList.SelectedDeck;
-			if(selectedDeck == null) return;
+			if(selectedDeck == null)
+				return;
 			SetNewDeck(selectedDeck, true);
 		}
 

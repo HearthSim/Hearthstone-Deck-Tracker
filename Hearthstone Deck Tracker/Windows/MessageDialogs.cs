@@ -1,10 +1,14 @@
-﻿using System.Diagnostics;
+﻿#region
+
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -25,8 +29,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 			return
 				await
-				window.ShowMessageAsync("Delete Games",
-				                        "This will delete the selected games (" + count + ").\n\nAre you sure?",
+				window.ShowMessageAsync("Delete Games", "This will delete the selected games (" + count + ").\n\nAre you sure?",
 				                        MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
 
@@ -56,11 +59,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == MessageDialogResult.Negative)
 			{
 				var dialog = new OpenFileDialog
-					{
-						Title = "Select Hearthstone.exe",
-						DefaultExt = "Hearthstone.exe",
-						Filter = "Hearthstone.exe|Hearthstone.exe"
-					};
+				{
+					Title = "Select Hearthstone.exe",
+					DefaultExt = "Hearthstone.exe",
+					Filter = "Hearthstone.exe|Hearthstone.exe"
+				};
 				var dialogResult = dialog.ShowDialog();
 
 				if(dialogResult == true)

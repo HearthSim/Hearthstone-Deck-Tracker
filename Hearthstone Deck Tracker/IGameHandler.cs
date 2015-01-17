@@ -1,8 +1,11 @@
+#region
+
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
-
 	public interface IGameHandler
 	{
 		void HandlePlayerGet(string cardId, int turn);
@@ -17,6 +20,19 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerHeroPower(string cardId, int turn);
 		void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);
+
+		void TurnStart(ActivePlayer player, int turnNumber);
+		void HandleGameStart();
+		void HandleGameEnd();
+		void HandleLoss(bool fromAssetUnload);
+		void HandleWin(bool fromAssetUnload);
+		void PlayerSetAside(string id);
+
+
+		void HandlePossibleArenaCard(string id);
+		void SetGameMode(GameMode mode);
+		void HandleInMenu();
+		void HandleConcede();
 
 		#region OpponentHandlers
 
@@ -35,18 +51,5 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentName(string name);
 
 		#endregion OpponentHandlers
-
-		void TurnStart(ActivePlayer player, int turnNumber);
-		void HandleGameStart();
-		void HandleGameEnd();
-		void HandleLoss(bool fromAssetUnload);
-		void HandleWin(bool fromAssetUnload);
-		void PlayerSetAside(string id);
-
-
-		void HandlePossibleArenaCard(string id);
-		void SetGameMode(GameMode mode);
-		void HandleInMenu();
-		void HandleConcede();
 	}
 }

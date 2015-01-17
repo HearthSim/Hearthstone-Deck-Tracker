@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -59,7 +63,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckBox_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized) return;
+			if(!_initialized)
+				return;
 			_setConfigValue(true);
 			Config.Save();
 			Helper.MainWindow.Overlay.Update(false);
@@ -71,7 +76,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized) return;
+			if(!_initialized)
+				return;
 			_setConfigValue(false);
 			Config.Save();
 			Helper.MainWindow.Overlay.Update(false);

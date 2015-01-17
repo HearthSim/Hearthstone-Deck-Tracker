@@ -1,11 +1,10 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
-using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
@@ -37,5 +36,5 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Games.Add(gameStats);
 		}
-	}	
+	}
 }

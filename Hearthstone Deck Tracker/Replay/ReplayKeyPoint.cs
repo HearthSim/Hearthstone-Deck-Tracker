@@ -1,18 +1,20 @@
+#region
+
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay
 {
 	public class ReplayKeyPoint
 	{
 		public Entity[] Data;
-		public KeyPointType Type;
-		public ActivePlayer Player;
 		public int Id;
-
-		public int Turn { get { return Data[0].GetTag(GAME_TAG.TURN); } }
+		public ActivePlayer Player;
+		public KeyPointType Type;
 
 		public ReplayKeyPoint(Entity[] data, KeyPointType type, int id, ActivePlayer player)
 		{
@@ -20,26 +22,31 @@ namespace Hearthstone_Deck_Tracker.Replay
 				Data = Helper.DeepClone(data);
 			Type = type;
 			Id = id;
-		    Player = player;
+			Player = player;
+		}
+
+		public int Turn
+		{
+			get { return Data[0].GetTag(GAME_TAG.TURN); }
 		}
 
 		public override string ToString()
 		{
-		    string additionalInfo = "";
-            if (Type == KeyPointType.Attack)
-            {
-                var attackerId = Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER);
-                var attackerCardId = Data.First(x => x.Id == attackerId).CardId;
-                if (!string.IsNullOrEmpty(attackerCardId))
-                    additionalInfo += Game.GetCardFromId(attackerCardId).LocalizedName;
-                
-                additionalInfo += " -> ";
-                
-                var defenderId = Data[0].GetTag(GAME_TAG.PROPOSED_DEFENDER);
-                var defenderCardId = Data.First(x => x.Id == defenderId).CardId;
-                if (!string.IsNullOrEmpty(defenderCardId))
-                    additionalInfo += Game.GetCardFromId(defenderCardId).LocalizedName;
-            }
+			var additionalInfo = "";
+			if(Type == KeyPointType.Attack)
+			{
+				var attackerId = Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER);
+				var attackerCardId = Data.First(x => x.Id == attackerId).CardId;
+				if(!string.IsNullOrEmpty(attackerCardId))
+					additionalInfo += Game.GetCardFromId(attackerCardId).LocalizedName;
+
+				additionalInfo += " -> ";
+
+				var defenderId = Data[0].GetTag(GAME_TAG.PROPOSED_DEFENDER);
+				var defenderCardId = Data.First(x => x.Id == defenderId).CardId;
+				if(!string.IsNullOrEmpty(defenderCardId))
+					additionalInfo += Game.GetCardFromId(defenderCardId).LocalizedName;
+			}
 			else if(Type == KeyPointType.PlaySpell)
 			{
 				var entity = Data.First(x => x.Id == Id);
@@ -53,15 +60,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(!string.IsNullOrEmpty(targetCardId))
 					additionalInfo += Game.GetCardFromId(targetCardId).LocalizedName;
 			}
-            else
-            {
-                
-                var entityCardId = Data.First(x => x.Id == Id).CardId;
-                if (!string.IsNullOrEmpty(entityCardId))
-                    additionalInfo = Game.GetCardFromId(entityCardId).LocalizedName;
-                else
-                    additionalInfo = "Entity " + Id;
-            }
+			else
+			{
+				var entityCardId = Data.First(x => x.Id == Id).CardId;
+				if(!string.IsNullOrEmpty(entityCardId))
+					additionalInfo = Game.GetCardFromId(entityCardId).LocalizedName;
+				else
+					additionalInfo = "Entity " + Id;
+			}
 			return string.Format("[{0}] {1} \n{2}", Player, Type, additionalInfo);
 		}
 	}

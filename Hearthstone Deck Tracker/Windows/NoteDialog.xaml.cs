@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
-using MahApps.Metro.Controls;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -24,8 +15,9 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly GameStats _game;
 		private readonly bool _initialized;
+
 		public NoteDialog(GameStats game)
-		{ 
+		{
 			InitializeComponent();
 			_game = game;
 			CheckBoxEnterToSave.IsChecked = Config.Instance.EnterToSaveNote;
@@ -54,9 +46,7 @@ namespace Hearthstone_Deck_Tracker
 		private void TextBoxNote_OnPreviewKeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.Enter && Config.Instance.EnterToSaveNote)
-			{
 				SaveAndClose();
-			}
 		}
 
 		private void CheckBoxEnterToSave_OnChecked(object sender, RoutedEventArgs e)

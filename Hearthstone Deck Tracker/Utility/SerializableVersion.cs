@@ -1,4 +1,8 @@
-﻿using System.Xml.Serialization;
+﻿#region
+
+using System.Xml.Serialization;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {

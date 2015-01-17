@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +24,8 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
+#endregion
+
 namespace Hearthstone_Deck_Tracker
 {
 	public static class Helper
@@ -29,22 +33,22 @@ namespace Hearthstone_Deck_Tracker
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
-			{
-				{"English", "enUS"},
-				{"Chinese (China)", "zhCN"},
-				{"Chinese (Taiwan)", "zhTW"},
-				{"English (Great Britain)", "enGB"},
-				{"French", "frFR"},
-				{"German", "deDE"},
-				{"Italian", "itIT"},
-				{"Korean", "koKR"},
-				{"Polish", "plPL"},
-				{"Portuguese (Brazil)", "ptBR"},
-				{"Portuguese (Portugal)", "ptPT"},
-				{"Russian", "ruRU"},
-				{"Spanish (Mexico)", "esMX"},
-				{"Spanish (Spain)", "esES"}
-			};
+		{
+			{"English", "enUS"},
+			{"Chinese (China)", "zhCN"},
+			{"Chinese (Taiwan)", "zhTW"},
+			{"English (Great Britain)", "enGB"},
+			{"French", "frFR"},
+			{"German", "deDE"},
+			{"Italian", "itIT"},
+			{"Korean", "koKR"},
+			{"Polish", "plPL"},
+			{"Portuguese (Brazil)", "ptBR"},
+			{"Portuguese (Portugal)", "ptPT"},
+			{"Russian", "ruRU"},
+			{"Spanish (Mexico)", "esMX"},
+			{"Spanish (Spain)", "esES"}
+		};
 
 		public static MainWindow MainWindow { get; set; }
 
@@ -54,7 +58,8 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			const string versionXmlUrl =
+				@"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
 
 			var currentVersion = GetCurrentVersion();
 
@@ -62,7 +67,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					var xml = new WebClient{Proxy = null}.DownloadString(versionXmlUrl);
+					var xml = new WebClient {Proxy = null}.DownloadString(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 
@@ -89,9 +94,9 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception e)
 			{
 				MessageBox.Show(
-					e.Message + "\n\n" + e.InnerException +
-					"\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
-					"Error loading Version.xml");
+				                e.Message + "\n\n" + e.InnerException
+				                + "\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
+				                "Error loading Version.xml");
 
 				return null;
 			}
@@ -105,9 +110,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static bool IsHex(IEnumerable<char> chars)
 		{
-			return chars.All(c => ((c >= '0' && c <= '9')
-			                       || (c >= 'a' && c <= 'f')
-			                       || (c >= 'A' && c <= 'F')));
+			return chars.All(c => ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')));
 		}
 
 		public static double DrawProbability(int copies, int deck, int draw)
@@ -183,7 +186,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
-			if(collection == null) return;
+			if(collection == null)
+				return;
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(collection);
 			view1.SortDescriptions.Clear();
 
@@ -206,7 +210,8 @@ namespace Hearthstone_Deck_Tracker
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if(!User32.IsHearthstoneInForeground()) return null;
+			if(!User32.IsHearthstoneInForeground())
+				return null;
 
 			try
 			{
@@ -228,9 +233,9 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(300);
 
 			var rect = User32.GetHearthstoneRect(false);
-			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1),
-			                                 (int)(rect.Height * 0.15));
-			if(capture == null) return false;
+			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1), (int)(rect.Height * 0.15));
+			if(capture == null)
+				return false;
 
 			for(var y = 0; y < capture.Height; y++)
 			{
@@ -265,8 +270,7 @@ namespace Hearthstone_Deck_Tracker
 			const int green = 174;
 			const int blue = 10;
 			const int deviation = 10;
-			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation &&
-			       Math.Abs(pixel.B - blue) <= deviation;
+			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation && Math.Abs(pixel.B - blue) <= deviation;
 		}
 
 		public static void UpdateEverything()
@@ -335,13 +339,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string GetWinPercentString(int wins, int losses)
 		{
-			if(wins + losses == 0) return "-%";
-			return Math.Round(wins*100.0/(wins+losses), 0) + "%";
+			if(wins + losses == 0)
+				return "-%";
+			return Math.Round(wins * 100.0 / (wins + losses), 0) + "%";
 		}
 
 		public static T DeepClone<T>(T obj)
 		{
-			using (var ms = new MemoryStream())
+			using(var ms = new MemoryStream())
 			{
 				var formatter = new BinaryFormatter();
 				formatter.Serialize(ms, obj);

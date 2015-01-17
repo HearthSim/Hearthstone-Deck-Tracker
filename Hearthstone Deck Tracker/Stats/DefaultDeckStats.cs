@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
@@ -15,6 +19,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DefaultDeckStats()
 		{
 			DeckStats = new List<DeckStats>();
+		}
+
+		public static DefaultDeckStats Instance
+		{
+			get { return _instance ?? (_instance = new DefaultDeckStats()); }
 		}
 
 		public DeckStats GetDeckStats(string hero)
@@ -30,11 +39,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return ds;
 		}
 
-		public static DefaultDeckStats Instance
-		{
-			get { return _instance ?? (_instance = new DefaultDeckStats()); }
-		}
-
 		public static void Load()
 		{
 			var file = Config.Instance.DataDir + "DefaultDeckStats.xml";
@@ -44,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				_instance = XmlManager<DefaultDeckStats>.Load(file);
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				//failed loading deckstats 
 				var corruptedFile = Helper.GetValidFilePath(Config.Instance.DataDir, "DefaultDeckStats_corrupted", "xml");
@@ -52,16 +56,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					File.Move(file, corruptedFile);
 				}
-				catch (Exception)
+				catch(Exception)
 				{
-					throw new Exception("Can not load or move DefaultDeckStats.xml file. Please manually delete the file in \"%appdata\\HearthstoneDeckTracker\".");
+					throw new Exception(
+						"Can not load or move DefaultDeckStats.xml file. Please manually delete the file in \"%appdata\\HearthstoneDeckTracker\".");
 				}
 
 				//get latest backup file
 				var backup =
 					new DirectoryInfo(Config.Instance.DataDir).GetFiles("DefaultDeckStats_backup*")
-															  .OrderByDescending(x => x.CreationTime)
-															  .FirstOrDefault();
+					                                          .OrderByDescending(x => x.CreationTime)
+					                                          .FirstOrDefault();
 				if(backup != null)
 				{
 					try
@@ -69,15 +74,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 						File.Copy(backup.FullName, file);
 						_instance = XmlManager<DefaultDeckStats>.Load(file);
 					}
-					catch (Exception)
+					catch(Exception)
 					{
-						throw new Exception("Error restoring DefaultDeckStats backup. Please manually rename \"DefaultDeckStats_backup.xml\" to \"DefaultDeckStats.xml\" in \"%appdata\\HearthstoneDeckTracker\".");
+						throw new Exception(
+							"Error restoring DefaultDeckStats backup. Please manually rename \"DefaultDeckStats_backup.xml\" to \"DefaultDeckStats.xml\" in \"%appdata\\HearthstoneDeckTracker\".");
 					}
 				}
 				else
 				{
 					//can't call ShowMessageAsync on MainWindow at this point. todo: Add something like a message queue.
-					MessageBox.Show("Your DefaultDeckStats file got corrupted and there was no backup to restore from.", "Error restoring DefaultDeckStats backup");
+					MessageBox.Show("Your DefaultDeckStats file got corrupted and there was no backup to restore from.",
+					                "Error restoring DefaultDeckStats backup");
 				}
 			}
 		}

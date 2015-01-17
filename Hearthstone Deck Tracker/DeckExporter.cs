@@ -16,7 +16,8 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static async Task Export(Deck deck)
 		{
-			if(deck == null) return;
+			if(deck == null)
+				return;
 			try
 			{
 				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo(), "DeckExporter"));
@@ -87,7 +88,6 @@ namespace Hearthstone_Deck_Tracker
 				}
 				catch
 				{
-
 				}
 				Logger.WriteLine("Done creating deck.", "DeckExporter");
 			}
@@ -100,19 +100,22 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.Overlay.ForceHidden = false;
 				Helper.MainWindow.Overlay.UpdatePosition();
 			}
-
 		}
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
 			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
-			await ClickOnPoint(hsHandle, new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio), (int)(Config.Instance.ExportAllButtonY * height)));
+			await
+				ClickOnPoint(hsHandle,
+				             new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
+				                       (int)(Config.Instance.ExportAllButtonY * height)));
 		}
 
 		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
 		{
 			Logger.WriteLine("Setting deck name...", "DeckExporter");
-			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio), (int)(Config.Instance.ExportNameDeckY * height));
+			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio),
+			                            (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			//send enter and second click to make sure the current name gets selected
 			SendKeys.SendWait("{ENTER}");
@@ -132,7 +135,8 @@ namespace Hearthstone_Deck_Tracker
 			return (width * ratio * left) + ((width - width * ratio) / 2);
 		}
 
-		private static async Task AddCardToDeck(Card card, Point searchBoxPos, double cardPosX, double card2PosX, double cardPosY, int height, IntPtr hsHandle)
+		private static async Task AddCardToDeck(Card card, Point searchBoxPos, double cardPosX, double card2PosX, double cardPosY, int height,
+		                                        IntPtr hsHandle)
 		{
 			if(!User32.IsHearthstoneInForeground())
 			{
@@ -144,9 +148,7 @@ namespace Hearthstone_Deck_Tracker
 			await ClickOnPoint(hsHandle, searchBoxPos);
 
 			var addArtist = new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
-			var fixedName = addArtist
-				                ? (card.LocalizedName + " " + card.Artist).ToLowerInvariant()
-				                : card.LocalizedName.ToLowerInvariant();
+			var fixedName = addArtist ? (card.LocalizedName + " " + card.Artist).ToLowerInvariant() : card.LocalizedName.ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
 				Clipboard.SetText(fixedName);
@@ -277,8 +279,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				await
 					ClickOnPoint(handle,
-					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
-					                       (int)(Config.Instance.ExportClearY * height)));
+					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearY * height)));
 				if(count++ > 35)
 					break;
 			}
@@ -286,16 +287,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool CheckForCardsInDeck(IntPtr wndHandle, int width, int height, double ratio)
 		{
-
-			var capture = Helper.CaptureHearthstone(new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearCheckYFixed*height)), 1,
-			                                        1, wndHandle);
-			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255,56,45,69), 5);
+			var capture =
+				Helper.CaptureHearthstone(
+				                          new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
+				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
+			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
 		}
 
 		private static bool ColorDistance(Color color, Color target, double distance)
 		{
-			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance &&
-			       Math.Abs(color.B - target.B) < distance;
+			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance && Math.Abs(color.B - target.B) < distance;
 		}
 	}
 }

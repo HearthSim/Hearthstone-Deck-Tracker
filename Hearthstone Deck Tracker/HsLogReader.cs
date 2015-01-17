@@ -23,54 +23,62 @@ namespace Hearthstone_Deck_Tracker
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
 
-		private readonly Regex _cardMovementRegex = new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
-		private readonly Regex _otherIdRegex = new Regex(@".*\[.*(id=(?<Id>(\d+))).*");
+		private readonly Regex _cardAlreadyInCacheRegex =
+			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
+
+		private readonly Regex _cardMovementRegex =
+			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
+
+		private readonly Regex _creationRegex = new Regex(@"FULL_ENTITY\ -\ Creating\ ID=(?<id>(\d+))\ CardID=(?<cardId>(\w*))");
+
+		private readonly Regex _creationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+
+		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
+
+		private readonly Regex _entityRegex =
+			new Regex(
+				@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
 
 		private readonly string _fullOutputPath;
-		
-		private readonly Regex _cardAlreadyInCacheRegex = new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
-		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
-		private readonly Regex _opponentPlayRegex = new Regex(@"\w*(zonePos=(?<zonePos>(\d+))).*(zone\ from\ OPPOSING\ HAND).*");
-		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
-		private readonly Regex _powerListRegex = new Regex(@"GameState.DebugPrintPowerList\(\)\ -\ Count=(?<count>(\d+))");
+		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
+		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
+		private readonly bool _ifaceUpdateNeeded = true;
+
+		private readonly Regex _playerEntityRegex =
+			new Regex(@"Player\ EntityID=(?<id>(\d+))\ PlayerID=(?<playerId>(\d+))\ GameAccountId=(?<gameAccountId>(.+))");
 
 		private readonly Regex _tagChangeRegex = new Regex(@"TAG_CHANGE\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
-		private readonly Regex _entityRegex = new Regex(@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
-		private readonly Regex _creationRegex = new Regex(@"FULL_ENTITY\ -\ Creating\ ID=(?<id>(\d+))\ CardID=(?<cardId>(\w*))");
-		private readonly Regex _creationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
-		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
-		private readonly Regex _playerEntityRegex = new Regex(@"Player\ EntityID=(?<id>(\d+))\ PlayerID=(?<playerId>(\d+))\ GameAccountId=(?<gameAccountId>(.+))");
-		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 
+		private readonly List<Entity> _tmpEntities = new List<Entity>();
+
+		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 
 		private readonly int _updateDelay;
-		private readonly Regex _zoneRegex = new Regex(@"\w*(zone=(?<zone>(\w*)).*(zone\ from\ FRIENDLY\ DECK)\w*)");
 
+		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 
+		private int _addToTurn;
+		private bool _currentEntityHasCardId;
+		private int _currentEntityId;
 		private long _currentOffset;
 		private bool _doUpdate;
 		private bool _first;
-		private long _lastGameEnd;
-		private long _previousSize;
-		private int _addToTurn;
 		private bool _gameEnded;
-
-		private bool _waitForModeDetection;
-		private int _currentEntityId;
-		private dynamic _waitForController;
-		private readonly List<Entity> _tmpEntities = new List<Entity>();
-		private bool _currentEntityHasCardId;
-		#endregion
-
-		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
+		private IGameHandler _gameHandler;
+		private long _lastGameEnd;
+		private int _lastId;
 		private bool _opponentUsedHeroPower;
 		private bool _playerUsedHeroPower;
-		private IGameHandler _gameHandler;
-        /// <summary>
-        /// Update deckTracker interface (true by default)
-        /// </summary>
-		private readonly bool _ifaceUpdateNeeded = true;
+		private long _previousSize;
+		private ReplayKeyPoint _proposedKeyPoint;
+		private dynamic _waitForController;
+		private bool _waitForModeDetection;
 
+		#endregion
+
+		/// <summary>
+		/// Update deckTracker interface (true by default)
+		/// </summary>
 		private HsLogReader()
 		{
 			var hsDirPath = Config.Instance.HearthstoneDirectory;
@@ -89,30 +97,28 @@ namespace Hearthstone_Deck_Tracker
 			_ifaceUpdateNeeded = interfaceUpdateNeeded;
 
 			_updateDelay = updateDelay == 0 ? 100 : updateDelay;
-			while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
+			while(hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
 				hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
 			_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
 		}
 
-
-
 		public static HsLogReader Instance { get; private set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
+		/// <summary>
+		/// 
+		/// </summary>
 		public static void Create()
 		{
 			Instance = new HsLogReader();
 		}
 
-        /// <summary>
-        /// Create HsLogReader instance with custom parameters
-        /// Can be used when Config class was not ininialized 
-        /// </summary>
-        /// <param name="hsDirectory"> Game directory </param>
-        /// <param name="updateDeclay">Log file update Declay</param>
-        /// <param name="ifaceUpdateNeeded">Update UI flag. Can be set to false, if UI updating  is not required </param>
+		/// <summary>
+		/// Create HsLogReader instance with custom parameters
+		/// Can be used when Config class was not ininialized 
+		/// </summary>
+		/// <param name="hsDirectory"> Game directory </param>
+		/// <param name="updateDeclay">Log file update Declay</param>
+		/// <param name="ifaceUpdateNeeded">Update UI flag. Can be set to false, if UI updating  is not required </param>
 		public static void Create(string hsDirectory, int updateDeclay, bool ifaceUpdateNeeded = true)
 		{
 			Instance = new HsLogReader(hsDirectory, updateDeclay, ifaceUpdateNeeded);
@@ -126,9 +132,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var firstPlayer = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
 				if(firstPlayer.Value != null)
-				{
 					_addToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == Game.PlayerId ? 0 : 1;
-				}
 			}
 			Entity entity;
 			if(Game.Entities.TryGetValue(1, out entity))
@@ -136,23 +140,23 @@ namespace Hearthstone_Deck_Tracker
 			return 0;
 		}
 
-        /// <summary>
-        /// Start tracking gamelogs with default impelementaion of GameEventHandler
-        /// </summary>
+		/// <summary>
+		/// Start tracking gamelogs with default impelementaion of GameEventHandler
+		/// </summary>
 		public void Start()
-        {
-	        _addToTurn = -1;
+		{
+			_addToTurn = -1;
 			_first = true;
 			_doUpdate = true;
-	        _gameEnded = false;
+			_gameEnded = false;
 			_gameHandler = new GameEventHandler();
 			ReadFileAsync();
 		}
 
-        /// <summary>
-        /// Start tracking gamelogs with custom impelementaion of GameEventHandler
-        /// </summary>
-        /// <param name="gh"> Custom Game handler implementation </param>
+		/// <summary>
+		/// Start tracking gamelogs with custom impelementaion of GameEventHandler
+		/// </summary>
+		/// <param name="gh"> Custom Game handler implementation </param>
 		public void Start(IGameHandler gh)
 		{
 			_addToTurn = -1;
@@ -162,7 +166,6 @@ namespace Hearthstone_Deck_Tracker
 			_gameEnded = false;
 			ReadFileAsync();
 		}
-		
 
 		public void Stop()
 		{
@@ -211,10 +214,10 @@ namespace Hearthstone_Deck_Tracker
 								await Task.Delay(_updateDelay);
 								continue;
 							}
-							
+
 							Analyze(newLines);
-							
-							if (_ifaceUpdateNeeded)
+
+							if(_ifaceUpdateNeeded)
 								Helper.UpdateEverything();
 						}
 
@@ -249,16 +252,18 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void Analyze(string log) {
-		    var logLines = log.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
+		private void Analyze(string log)
+		{
+			var logLines = log.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
 			foreach(var logLine in logLines)
 			{
 				_currentOffset += logLine.Length + 1;
 
-			    if (logLine.StartsWith("["))
-			        Game.AddHSLogLine(logLine);
+				if(logLine.StartsWith("["))
+					Game.AddHSLogLine(logLine);
 
 				#region [Power]
+
 				if(logLine.StartsWith("[Power]"))
 				{
 					if(logLine.Contains("CREATE_GAME"))
@@ -298,9 +303,7 @@ namespace Hearthstone_Deck_Tracker
 							TagChange(match.Groups["tag"].Value, id, match.Groups["value"].Value);
 						}
 						else if(int.TryParse(rawEntity, out entityId))
-						{
 							TagChange(match.Groups["tag"].Value, entityId, match.Groups["value"].Value);
-						}
 						else
 						{
 							var entity = Game.Entities.FirstOrDefault(x => x.Value.Name == rawEntity);
@@ -312,7 +315,7 @@ namespace Hearthstone_Deck_Tracker
 								{
 									tmpEntity = new Entity(_tmpEntities.Count + 1);
 									tmpEntity.Name = rawEntity;
-                                    _tmpEntities.Add(tmpEntity);
+									_tmpEntities.Add(tmpEntity);
 								}
 								GAME_TAG tag;
 								Enum.TryParse(match.Groups["tag"].Value, out tag);
@@ -325,22 +328,16 @@ namespace Hearthstone_Deck_Tracker
 									{
 										Game.Entities[id].Name = tmpEntity.Name;
 										foreach(var t in tmpEntity.Tags)
-										{
 											Game.Entities[id].SetTag(t.Key, t.Value);
-										}
 										_tmpEntities.Remove(tmpEntity);
 										//Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
 									}
 									else
-									{
 										Logger.WriteLine("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
-									}
 								}
 							}
 							else
-							{
 								TagChange(match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value);
-							}
 						}
 					}
 					else if(_creationRegex.IsMatch(logLine))
@@ -349,7 +346,7 @@ namespace Hearthstone_Deck_Tracker
 						var id = int.Parse(match.Groups["id"].Value);
 						var cardId = match.Groups["cardId"].Value;
 						if(!Game.Entities.ContainsKey(id))
-							Game.Entities.Add(id, new Entity(id) { CardId = cardId });
+							Game.Entities.Add(id, new Entity(id) {CardId = cardId});
 						_currentEntityId = id;
 						_currentEntityHasCardId = !string.IsNullOrEmpty(cardId);
 					}
@@ -372,12 +369,9 @@ namespace Hearthstone_Deck_Tracker
 					{
 						var match = _creationTagRegex.Match(logLine);
 						TagChange(match.Groups["tag"].Value, _currentEntityId, match.Groups["value"].Value);
-						
 					}
 					else if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
-					{
 						_gameHandler.SetGameMode(GameMode.Spectator);
-					}
 					else if(_entityNameRegex.IsMatch(logLine))
 					{
 						var match = _entityNameRegex.Match(logLine);
@@ -388,8 +382,12 @@ namespace Hearthstone_Deck_Tracker
 						else if(player == 2)
 							_gameHandler.HandleOpponentName(name);
 					}
-					else if((Game.PlayerId >= 0 && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower) 
-						|| Game.OpponentId >= 0 && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_opponentUsedHeroPower)
+					else if((Game.PlayerId >= 0
+					         && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId)
+					                .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower)
+					        || Game.OpponentId >= 0
+					        && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId)
+					               .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_opponentUsedHeroPower)
 					{
 						if(_heroPowerRegex.IsMatch(logLine))
 						{
@@ -399,7 +397,9 @@ namespace Hearthstone_Deck_Tracker
 								var heroPower = Game.GetCardFromId(id);
 								if(heroPower.Type == "Hero Power")
 								{
-									if(Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId).Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+									if(
+										Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId)
+										    .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 									{
 										_gameHandler.HandlePlayerHeroPower(id, GetTurnNumber());
 										_playerUsedHeroPower = true;
@@ -414,8 +414,9 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				#endregion
-				#region [Asset]
+					#endregion
+					#region [Asset]
+
 				else if(logLine.StartsWith("[Asset]"))
 				{
 					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && !_gameEnded)
@@ -439,8 +440,9 @@ namespace Hearthstone_Deck_Tracker
 					else if(_unloadCardRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
 						_gameHandler.HandlePossibleArenaCard(_unloadCardRegex.Match(logLine).Groups["id"].Value);
 				}
-				#endregion
-				#region [Bob]
+					#endregion
+					#region [Bob]
+
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Practice);
@@ -480,17 +482,19 @@ namespace Hearthstone_Deck_Tracker
 				else if(logLine.StartsWith("[Bob] ---RegisterFriendChallenge---"))
 				{
 					//if(++_friendChallengeCount > 1)
-						_gameHandler.HandleInMenu();
+					_gameHandler.HandleInMenu();
 				}
-				#endregion
-				#region [Rachelle]
+					#endregion
+					#region [Rachelle]
+
 				else if(logLine.StartsWith("[Rachelle]"))
 				{
 					if(_cardAlreadyInCacheRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
 						_gameHandler.HandlePossibleArenaCard(_cardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value);
 				}
-				#endregion
-				#region [Zone]
+					#endregion
+					#region [Zone]
+
 				else if(logLine.StartsWith("[Zone]"))
 				{
 					if(_cardMovementRegex.IsMatch(logLine))
@@ -510,9 +514,7 @@ namespace Hearthstone_Deck_Tracker
 							if(!from.Contains("PLAY"))
 							{
 								if(to.Contains("FRIENDLY"))
-								{
 									_gameHandler.SetPlayerHero(CardIds.HeroIdDict[id]);
-								}
 								else if(to.Contains("OPPOSING"))
 								{
 									string heroName;
@@ -525,9 +527,9 @@ namespace Hearthstone_Deck_Tracker
 
 						//if((from.Contains("PLAY") || from.Contains("HAND") || from.Contains("SECRET") || to.Contains("PLAY")) && logLine.Contains("->") && !string.IsNullOrEmpty(id))
 						//	Game.LastZoneChangedCardId = id;
-
 					}
 				}
+
 				#endregion
 
 				if(_first)
@@ -543,9 +545,6 @@ namespace Hearthstone_Deck_Tracker
 			//ClearLog();
 		}
 
-		private int _lastId;
-
-		private ReplayKeyPoint _proposedKeyPoint;
 		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
 			if(_proposedKeyPoint != null)
@@ -596,17 +595,14 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			var controller = Game.Entities[id].GetTag(GAME_TAG.CONTROLLER);
-			string player = Game.Entities[id].HasTag(GAME_TAG.CONTROLLER)
-				                ? (controller == Game.PlayerId ? "FRIENDLY" : "OPPOSING")
-				                : "";
+			var player = Game.Entities[id].HasTag(GAME_TAG.CONTROLLER) ? (controller == Game.PlayerId ? "FRIENDLY" : "OPPOSING") : "";
 			var cardId = Game.Entities[id].CardId;
 			if(tag == GAME_TAG.ZONE)
 			{
 				//Logger.WriteLine("--------" + player + " " + Game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
 				//                 (TAG_ZONE)value);
 
-				if(((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && Game.IsMulliganDone) &&
-				   _waitForController == null)
+				if(((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && Game.IsMulliganDone) && _waitForController == null)
 				{
 					if(!Game.IsMulliganDone)
 						prevZone = (int)TAG_ZONE.DECK;
@@ -688,8 +684,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(controller == Game.OpponentId)
 								{
-									_gameHandler.HandleOpponentHandDiscard(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION),
-									                                       GetTurnNumber());
+									_gameHandler.HandleOpponentHandDiscard(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION), GetTurnNumber());
 									ProposeKeyPoint(KeyPointType.HandDiscard, id, ActivePlayer.Opponent);
 								}
 								break;
@@ -701,8 +696,7 @@ namespace Hearthstone_Deck_Tracker
 								}
 								else if(controller == Game.OpponentId)
 								{
-									_gameHandler.HandleOpponentSecretPlayed(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION),
-									                                        GetTurnNumber(), false, id);
+									_gameHandler.HandleOpponentSecretPlayed(cardId, Game.Entities[id].GetTag(GAME_TAG.ZONE_POSITION), GetTurnNumber(), false, id);
 									ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Opponent);
 								}
 								break;
@@ -850,7 +844,6 @@ namespace Hearthstone_Deck_Tracker
 					ProposeKeyPoint(KeyPointType.Attack, id, ActivePlayer.Player);
 				else if(controller == Game.OpponentId)
 					ProposeKeyPoint(KeyPointType.Attack, id, ActivePlayer.Opponent);
-
 			}
 			else if(tag == GAME_TAG.ZONE_POSITION)
 			{
@@ -911,7 +904,6 @@ namespace Hearthstone_Deck_Tracker
 					TagChange((string)_waitForController.Tag, (int)_waitForController.Id, (string)_waitForController.Value, true);
 					_waitForController = null;
 				}
-
 			}
 		}
 

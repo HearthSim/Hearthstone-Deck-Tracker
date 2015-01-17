@@ -1,9 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -23,15 +26,13 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		public string GetDescription(Enum en)
 		{
-			Type type = en.GetType();
-			MemberInfo[] memInfo = type.GetMember(en.ToString());
+			var type = en.GetType();
+			var memInfo = type.GetMember(en.ToString());
 			if(memInfo.Length > 0)
 			{
-				object[] attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+				var attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 				if(attrs.Length > 0)
-				{
 					return ((DescriptionAttribute)attrs[0]).Description;
-				}
 			}
 			return en.ToString();
 		}

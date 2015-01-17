@@ -1,4 +1,8 @@
-﻿using Hearthstone_Deck_Tracker.Hearthstone;
+﻿#region
+
+using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -15,16 +19,16 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 
 			_manaCostBars = new[]
-				{
-					ManaCostBar0,
-					ManaCostBar1,
-					ManaCostBar2,
-					ManaCostBar3,
-					ManaCostBar4,
-					ManaCostBar5,
-					ManaCostBar6,
-					ManaCostBar7
-				};
+			{
+				ManaCostBar0,
+				ManaCostBar1,
+				ManaCostBar2,
+				ManaCostBar3,
+				ManaCostBar4,
+				ManaCostBar5,
+				ManaCostBar6,
+				ManaCostBar7
+			};
 		}
 
 		public void SetDeck(Deck deck)
@@ -46,7 +50,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void UpdateValues()
 		{
-			if(_deck == null) return;
+			if(_deck == null)
+				return;
 
 			var counts = new int[8];
 			var weapons = new int[8];

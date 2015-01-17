@@ -14,7 +14,6 @@
             <Path Fill="Black" Data="M 0 0 L 6 6 L 12 0 Z" />
         </Button>
         <CheckBox Name="CheckBox" Margin="5" DockPanel.Dock="Right" Checked="CheckBox_Checked"
-                  Unchecked="CheckBox_Unchecked">
-        </CheckBox>
+                  Unchecked="CheckBox_Unchecked" />
     </DockPanel>
 </UserControl>

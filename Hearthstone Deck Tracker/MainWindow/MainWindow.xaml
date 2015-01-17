@@ -57,19 +57,19 @@
 
         <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
                          Width="515">
-            <local:Options x:Name="Options" Margin="0,-35,0,0"></local:Options>
+            <local:Options x:Name="Options" Margin="0,-35,0,0" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:Help x:Name="Help"></local:Help>
+            <local:Help x:Name="Help" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:DeckStatsControl x:Name="DeckStatsFlyout"></local:DeckStatsControl>
+            <local:DeckStatsControl x:Name="DeckStatsFlyout" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:GameDetails x:Name="GameDetailsFlyout"></local:GameDetails>
+            <local:GameDetails x:Name="GameDetailsFlyout" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
                          Width="255" Height="auto" Panel.ZIndex="100">
@@ -77,7 +77,7 @@
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
-            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0"></local:DeckNotes>
+            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
         </controls:Flyout>
         <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
@@ -102,19 +102,17 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click">
-                    </MenuItem>
+                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click" />
                     <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="AUTO DECK SELECTION"
                               FontSize="14"
                               Checked="CheckboxDeckDetection_Checked"
                               Unchecked="CheckboxDeckDetection_Unchecked" />
                     <Separator />
-                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click">
-                    </MenuItem>
+                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click" />
                     <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK FILTER">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click"></TextBlock>
+                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click" />
                             </DataTemplate>
                         </MenuItem.ItemTemplate>
                     </MenuItem>
@@ -134,47 +132,47 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0"></Image>
+                            <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -193,7 +191,7 @@
                     <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" ></CheckBox>
+                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
                             </DataTemplate>
                         </MenuItem.ItemTemplate>
                     </MenuItem>
@@ -224,11 +222,11 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click"></MenuItem>
-                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck."></MenuItem>
-                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick"></MenuItem>
-                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click"></MenuItem>
+                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click" />
+                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck." />
+                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick" />
+                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick" />
+                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click" />
                 </MenuItem>
                 <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
@@ -252,11 +250,11 @@
                     <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
             </Menu>
-            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2"></Separator>
+            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
             <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ListView x:Name="ListViewDeck" Grid.Row="0"
                                     Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
@@ -279,7 +277,7 @@
                             <Setter Property="ToolTip">
                                 <Setter.Value>
                                     <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                        <local:CardToolTip></local:CardToolTip>
+                                        <local:CardToolTip />
                                     </ToolTip>
                                 </Setter.Value>
                             </Setter>
@@ -299,7 +297,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6"></local:ManaCurve>
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6" />
             </Grid>
 
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
@@ -333,7 +331,7 @@
                 </MenuItem>
                 <MenuItem>
                     <MenuItem.Header>
-                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="FILTER"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="FILTER" />
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -374,8 +372,8 @@
             </Menu>
             <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
                             Width="235">
@@ -416,7 +414,7 @@
                             <Setter Property="ToolTip">
                                 <Setter.Value>
                                     <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                        <local:CardToolTip></local:CardToolTip>
+                                        <local:CardToolTip />
                                     </ToolTip>
                                 </Setter.Value>
                             </Setter>

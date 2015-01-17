@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
 	public class OpponentSecrets
 	{
-		public List<SecretHelper> Secrets { get; private set; }
-		public HeroClass HeroClass { get; set; }
-
 		public OpponentSecrets()
 		{
 			Secrets = new List<SecretHelper>();
 		}
+
+		public List<SecretHelper> Secrets { get; private set; }
+		public HeroClass HeroClass { get; set; }
 
 		public void NewSecretPlayed(int id, bool stolen)
 		{
@@ -50,13 +53,15 @@ namespace Hearthstone_Deck_Tracker
 			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
 			if(index != -1)
 				SetMax(index);
-        }
+		}
 
 		public void SetMax(int index)
 		{
 			foreach(var secret in Secrets)
+			{
 				if(index > 0 || index < secret.PossibleSecrets.Length)
 					secret.PossibleSecrets[index] = true;
+			}
 		}
 
 		public void SetZero(string cardId)
@@ -64,25 +69,31 @@ namespace Hearthstone_Deck_Tracker
 			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
 			if(index != -1)
 				SetZero(index);
-        }
+		}
 
 		public void SetZero(int index)
 		{
 			foreach(var secret in Secrets)
+			{
 				if(index > 0 || index < secret.PossibleSecrets.Length)
 					secret.PossibleSecrets[index] = false;
+			}
 		}
 
 		public Secret[] GetSecrets()
 		{
 			var count = SecretHelper.GetMaxSecretCount(HeroClass);
-            var returnThis = new Secret[count];
-			for(int i = 0; i < count; i++)
+			var returnThis = new Secret[count];
+			for(var i = 0; i < count; i++)
 				returnThis[i] = new Secret(SecretHelper.GetSecretIds(HeroClass)[i], 0);
 			foreach(var secret in Secrets)
-				for(int i = 0; i < count; i++)
+			{
+				for(var i = 0; i < count; i++)
+				{
 					if(secret.PossibleSecrets[i])
 						returnThis[i].Count++;
+				}
+			}
 			return returnThis;
 		}
 
@@ -90,10 +101,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var count = SecretHelper.GetMaxSecretCount(heroClass);
 			var returnThis = new Secret[count];
-			for(int i = 0; i < count; i++)
+			for(var i = 0; i < count; i++)
 				returnThis[i] = new Secret(SecretHelper.GetSecretIds(heroClass)[i], 1);
 			return returnThis;
 		}
-
 	}
 }

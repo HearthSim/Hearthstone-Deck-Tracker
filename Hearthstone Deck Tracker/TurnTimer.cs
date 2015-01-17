@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Media;
 using System.Timers;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -48,7 +52,14 @@ namespace Hearthstone_Deck_Tracker
 		/// <param name="turnTime">Time of a turn in seconds</param>
 		public static void Create(int turnTime)
 		{
-			Instance = new TurnTimer {Seconds = turnTime, PlayerSeconds = 0, OpponentSeconds = 0, _turnTime = turnTime, _timer = new Timer(1000) {AutoReset = true, Enabled = true}};
+			Instance = new TurnTimer
+			{
+				Seconds = turnTime,
+				PlayerSeconds = 0,
+				OpponentSeconds = 0,
+				_turnTime = turnTime,
+				_timer = new Timer(1000) {AutoReset = true, Enabled = true}
+			};
 			Instance._timer.Elapsed += Instance.TimerOnElapsed;
 			Instance._timer.Stop();
 		}
@@ -72,8 +83,7 @@ namespace Hearthstone_Deck_Tracker
 			Seconds = _turnTime;
 			_timer.Stop();
 			_timer.Start();
-			if((!_playerMulliganed && _opponentMulliganed)
-			   || (!_opponentMulliganed && _playerMulliganed)
+			if((!_playerMulliganed && _opponentMulliganed) || (!_opponentMulliganed && _playerMulliganed)
 			   || (!_opponentMulliganed && !_playerMulliganed && Seconds < 85))
 				_playerMulliganed = _opponentMulliganed = true;
 
@@ -106,23 +116,23 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{
-			Helper.MainWindow.Overlay.Dispatcher.BeginInvoke(
-				new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
-			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(
-				new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
+			Helper.MainWindow.Overlay.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
+			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
 
-            if (CurrentActivePlayer == ActivePlayer.Player)
-                CheckForTimerAlarm();
+			if(CurrentActivePlayer == ActivePlayer.Player)
+				CheckForTimerAlarm();
 		}
 
-        private void CheckForTimerAlarm()
-        {
-            if (Config.Instance.TimerAlert)
-                if (Seconds == Config.Instance.TimerAlertSeconds)
-                {
-                    SystemSounds.Asterisk.Play();
-                    User32.FlashHs();
-                }
-        }
+		private void CheckForTimerAlarm()
+		{
+			if(Config.Instance.TimerAlert)
+			{
+				if(Seconds == Config.Instance.TimerAlertSeconds)
+				{
+					SystemSounds.Asterisk.Play();
+					User32.FlashHs();
+				}
+			}
+		}
 	}
 }

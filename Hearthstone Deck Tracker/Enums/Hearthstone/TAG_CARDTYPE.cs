@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Hearthstone_Deck_Tracker.Enums.Hearthstone
+﻿namespace Hearthstone_Deck_Tracker.Enums.Hearthstone
 {
 	public enum TAG_CARDTYPE
 	{

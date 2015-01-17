@@ -8,8 +8,7 @@
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
         <local:DeckPicker x:Name="DeckPickerList" SelectionChanged="DeckPickerList_SelectionChanged" Height="auto"
-                          Margin="0,34,0,0">
-        </local:DeckPicker>
+                          Margin="0,34,0,0" />
         <Label Content="Select your deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
                FontWeight="Bold" Margin="10,0,0,0" />
     </Grid>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -7,8 +9,9 @@ using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
 using Point = System.Drawing.Point;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -37,12 +40,12 @@ namespace Hearthstone_Deck_Tracker
 			Topmost = _config.WindowsTopmost;
 
 			var titleBarCorners = new[]
-				{
-					new Point((int)Left + 5, (int)Top + 5),
-					new Point((int)(Left + Width) - 5, (int)Top + 5),
-					new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
-					new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
-				};
+			{
+				new Point((int)Left + 5, (int)Top + 5),
+				new Point((int)(Left + Width) - 5, (int)Top + 5),
+				new Point((int)Left + 5, (int)(Top + TitlebarHeight) - 5),
+				new Point((int)(Left + Width) - 5, (int)(Top + TitlebarHeight) - 5)
+			};
 			if(!Screen.AllScreens.Any(s => titleBarCorners.Any(c => s.WorkingArea.Contains(c))))
 			{
 				Top = 100;
@@ -90,8 +93,18 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null)
 				return;
 
-			var wins = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Win && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-			var losses = selectedDeck.DeckStats.Games.Count(g => g.Result == GameResult.Loss && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+			var wins =
+				selectedDeck.DeckStats.Games.Count(
+				                                   g =>
+				                                   g.Result == GameResult.Win
+				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
+				                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+			var losses =
+				selectedDeck.DeckStats.Games.Count(
+				                                   g =>
+				                                   g.Result == GameResult.Loss
+				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
+				                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
 		}
 
@@ -143,8 +156,7 @@ namespace Hearthstone_Deck_Tracker
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
 		}
 
-		private void PlayerDeckOnCollectionChanged(object sender,
-		                                           NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+		private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
 			Scale();
 		}
@@ -152,8 +164,7 @@ namespace Hearthstone_Deck_Tracker
 		private void Scale()
 		{
 			var allLabelsHeight = LblDrawChance1.ActualHeight + LblDeckCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight;
-			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) <
-			   1 || Scaling < 1)
+			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
 				Scaling = (Height - allLabelsHeight) / (ListViewPlayer.Items.Count * 35);
@@ -167,14 +178,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
 		{
-			if(_forScreenshot) return;
+			if(_forScreenshot)
+				return;
 			Scale();
 			ListViewPlayer.Items.Refresh();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
-			if(_appIsClosing) return;
+			if(_appIsClosing)
+				return;
 			e.Cancel = true;
 			Hide();
 		}

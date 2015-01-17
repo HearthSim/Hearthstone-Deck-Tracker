@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Diagnostics;
 using System.Windows.Controls;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
@@ -36,5 +40,4 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return _textBox.GetHashCode();
 		}
 	}
-
 }
