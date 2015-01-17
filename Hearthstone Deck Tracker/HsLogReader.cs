@@ -800,40 +800,45 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 			}
-			else if(tag == GAME_TAG.PLAYSTATE && !_gameEnded)
+			else if(tag == GAME_TAG.PLAYSTATE)
 			{
-				if(Game.Entities[id].IsPlayer)
+				if(value == (int)TAG_PLAYSTATE.QUIT)
+					_gameHandler.HandleConcede();
+				if(!_gameEnded)
 				{
-					if(value == (int)TAG_PLAYSTATE.WON)
+					if(Game.Entities[id].IsPlayer)
 					{
-						GameEndKeyPoint(true, id);
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleWin(false);
-						_gameEnded = true;
+						if(value == (int)TAG_PLAYSTATE.WON)
+						{
+							GameEndKeyPoint(true, id);
+							_gameHandler.HandleGameEnd();
+							_gameHandler.HandleWin(false);
+							_gameEnded = true;
+						}
+						else if(value == (int)TAG_PLAYSTATE.LOST)
+						{
+							GameEndKeyPoint(false, id);
+							_gameHandler.HandleGameEnd();
+							_gameHandler.HandleLoss(false);
+							_gameEnded = true;
+						}
 					}
-					else if(value == (int)TAG_PLAYSTATE.LOST)
+					else
 					{
-						GameEndKeyPoint(false, id);
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleLoss(false);
-						_gameEnded = true;
-					}
-				}
-				else
-				{
-					if(value == (int)TAG_PLAYSTATE.WON)
-					{
-						GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleLoss(false);
-						_gameEnded = true;
-					}
-					else if(value == (int)TAG_PLAYSTATE.LOST)
-					{
-						GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleWin(false);
-						_gameEnded = true;
+						if(value == (int)TAG_PLAYSTATE.WON)
+						{
+							GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
+							_gameHandler.HandleGameEnd();
+							_gameHandler.HandleLoss(false);
+							_gameEnded = true;
+						}
+						else if(value == (int)TAG_PLAYSTATE.LOST)
+						{
+							GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
+							_gameHandler.HandleGameEnd();
+							_gameHandler.HandleWin(false);
+							_gameEnded = true;
+						}
 					}
 				}
 			}

@@ -47,5 +47,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePossibleArenaCard(string id);
 		void SetGameMode(GameMode mode);
 		void HandleInMenu();
+		void HandleConcede();
 	}
 }

@@ -494,6 +494,13 @@ namespace Hearthstone_Deck_Tracker
 				Game.CurrentGameStats = null;
 	    }
 
+	    public void HandleConcede()
+	    {
+		    if(Game.CurrentGameStats == null)
+			    return;
+		    Game.CurrentGameStats.WasConceded = true;
+	    }
+
 	    private static bool _showedNoteDialog;
 		private static void SaveAndUpdateStats()
 		{

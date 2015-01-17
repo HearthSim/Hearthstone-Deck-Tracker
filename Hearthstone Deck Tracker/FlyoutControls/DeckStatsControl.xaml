@@ -337,12 +337,17 @@
                                       MouseDoubleClick="DGrid_MouseDoubleClick"
                                       SelectionChanged="DGrid_SelectionChanged">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                                    <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
                                         <DataGridTextColumn.ElementStyle>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="HorizontalAlignment" Value="Center" />
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="ToolTip" Value="{Binding ResultToolTip}"/>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
                                     </DataGridTextColumn>
                                     <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                         <DataGridTemplateColumn.CellTemplate>
@@ -628,12 +633,17 @@
                                                   MouseDoubleClick="DGridOverall_MouseDoubleClick"
                                                   SelectionChanged="DGridOverall_SelectionChanged">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                                                <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
+                                                    <DataGridTextColumn.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="ToolTip" Value="{Binding ResultToolTip}"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.CellStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTemplateColumn Header="Hero" SortMemberPath="PlayerHero">
                                                     <DataGridTemplateColumn.CellTemplate>

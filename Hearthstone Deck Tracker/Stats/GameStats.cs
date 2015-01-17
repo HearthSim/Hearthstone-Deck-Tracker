@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
@@ -57,6 +57,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string OpponentName { get; set; }
 		public bool VerifiedHeroes { get; set; }
 		public string ReplayFile { get; set; }
+		public bool WasConceded { get; set; }
+
+		[XmlIgnore]
+		public string ResultString
+		{
+			get { return Result + (WasConceded ? "*" : ""); }
+		}
+
+		[XmlIgnore]
+		public ToolTip ResultToolTip
+		{
+			get { return new ToolTip() {Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden)}; }
+		}
 
 		[XmlIgnore]
 		public bool HasReplayFile
