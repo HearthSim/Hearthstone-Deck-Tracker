@@ -466,6 +466,12 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.TrackerWindowLeft.HasValue)
 				Left = Config.Instance.TrackerWindowLeft.Value;
 
+			if(Config.Instance.WindowHeight < 0)
+				Config.Instance.Reset("WindowHeight");
+			Height = Config.Instance.WindowHeight;
+			if(Config.Instance.WindowWidth < 0)
+				Config.Instance.Reset("WindowWidth");
+			Width = Config.Instance.WindowWidth;
 			var titleBarCorners = new[]
 			{
 				new Point((int)Left + 5, (int)Top + 5),
@@ -495,8 +501,6 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxAccent.SelectedItem = accent;
 
 
-			Height = Config.Instance.WindowHeight;
-			Width = Config.Instance.WindowWidth;
 			Game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
 			Game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
 			Options.CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
