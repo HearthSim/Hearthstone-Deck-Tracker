@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var doc = await GetHtmlDoc(url);
-				var deck = new Deck();
+				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm")};
 
 				var cardNodes = doc.DocumentNode.SelectSingleNode(".//ul[@class='deckList']");
 				var nameNodes = cardNodes.SelectNodes(".//span[@class='name']");
