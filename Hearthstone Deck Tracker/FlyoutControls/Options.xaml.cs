@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -41,6 +42,11 @@ namespace Hearthstone_Deck_Tracker
 		public void MainWindowInitialized()
 		{
 			_initialized = true;
+		}
+
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+		{
+			Process.Start(e.Uri.AbsoluteUri);
 		}
 
 		private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
@@ -1652,6 +1658,22 @@ namespace Hearthstone_Deck_Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.SaveHSLogIntoReplay = false;
+			SaveConfig(false);
+		}
+
+		private void ImportNetDeck_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NetDeckClipboardCheck = true;
+			SaveConfig(false);
+		}
+
+		private void ImportNetDeck_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NetDeckClipboardCheck = false;
 			SaveConfig(false);
 		}
 	}

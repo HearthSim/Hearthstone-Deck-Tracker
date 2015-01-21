@@ -568,12 +568,18 @@
                                     	VerticalAlignment="Top" Checked="CheckboxSaveHSLogIntoReplayFile_Checked" Unchecked="CheckboxSaveHSLogIntoReplayFile_Unchecked" />
                                 </StackPanel>
                             </GroupBox>
-                            <GroupBox Header="Importing from Websites" Grid.Row="2" VerticalAlignment="Top" Height="73" Margin="14,240,0,0">
+                            <GroupBox Header="Importing" Grid.Row="2" VerticalAlignment="Top" Height="auto" Margin="14,240,0,0">
                                 <StackPanel>
                                     <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                                               Unchecked="CheckboxTagOnImport_Unchecked" />
+                                    <CheckBox Name="ImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0" Checked="ImportNetDeck_OnChecked" Unchecked="ImportNetDeck_OnUnchecked"/>
+                                    <TextBlock Margin="10,2,0,0">
+                                        <Hyperlink NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
+                                            RequestNavigate="Hyperlink_RequestNavigate">
+                                            Download NetDeck (Chrome ext.)
+                                        </Hyperlink></TextBlock>
 
                                 </StackPanel>
                             </GroupBox>

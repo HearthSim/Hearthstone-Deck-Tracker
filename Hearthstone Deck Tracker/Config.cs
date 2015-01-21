@@ -144,6 +144,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
+		[DefaultValue(false)]
+		public bool NetDeckClipboardCheck = false;
+
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 

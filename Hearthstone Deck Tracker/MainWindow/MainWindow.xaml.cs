@@ -20,6 +20,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
+using Clipboard = System.Windows.Clipboard;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
 using MessageBox = System.Windows.MessageBox;
@@ -526,6 +527,50 @@ namespace Hearthstone_Deck_Tracker
 							Close();
 					}
 					Game.IsRunning = false;
+				}
+				if(Config.Instance.NetDeckClipboardCheck)
+				{
+					try
+					{
+						if(Clipboard.ContainsText())
+						{
+							var clipboardContent = Clipboard.GetText();
+							if(clipboardContent.StartsWith("netdeckimport"))
+							{
+
+								var clipboardLines = clipboardContent.Split('\n').ToList();
+								string deckName = clipboardLines.FirstOrDefault(line => line.StartsWith("name:"));
+								if(!string.IsNullOrEmpty(deckName))
+								{
+									clipboardLines.Remove(deckName);
+									deckName = deckName.Replace("name:", "");
+								}
+								string url = clipboardLines.FirstOrDefault(line => line.StartsWith("url:"));
+								if(!string.IsNullOrEmpty(url))
+								{
+									clipboardLines.Remove(url);
+									url = url.Replace("url:", "");
+								}
+								clipboardLines.RemoveAt(0); //"netdeckimport"
+
+								var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n));
+								if(deck != null)
+								{
+									deck.Url = url;
+									deck.Note = url;
+									deck.Name = deckName;
+									SetNewDeck(deck);
+									ActivateWindow();
+								}
+								Clipboard.Clear();
+							}
+						}
+					}
+
+					catch(Exception e)
+					{
+						Logger.WriteLine(e.ToString());
+					}
 				}
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
