@@ -61,7 +61,8 @@ namespace Hearthstone_Deck_Tracker
 				"arenavalue",
 				"hearthstone-decks",
 				"heartharena",
-				"hearthstoneheroes"
+				"hearthstoneheroes",
+                "elitedecks"
 			};
 			if(validUrls.Any(clipboard.Contains))
 				settings.DefaultText = clipboard;
