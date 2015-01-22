@@ -270,9 +270,7 @@ namespace Hearthstone_Deck_Tracker
 			UpdateDbListView();
 
 			_doUpdate = _foundHsDirectory;
-			UpdateOverlayAsync();
 
-			_initialized = true;
 			Options.MainWindowInitialized();
 
 			DeckPickerList.UpdateList();
@@ -290,6 +288,10 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SortDecks();
 
 			CopyReplayFiles();
+
+			UpdateOverlayAsync();
+
+			_initialized = true;
 		}
 
 		#endregion
@@ -528,7 +530,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					Game.IsRunning = false;
 				}
-				if(Config.Instance.NetDeckClipboardCheck)
+				if(Config.Instance.NetDeckClipboardCheck && _initialized)
 				{
 					try
 					{
@@ -543,13 +545,13 @@ namespace Hearthstone_Deck_Tracker
 								if(!string.IsNullOrEmpty(deckName))
 								{
 									clipboardLines.Remove(deckName);
-									deckName = deckName.Replace("name:", "");
+									deckName = deckName.Replace("name:", "").Trim();
 								}
 								string url = clipboardLines.FirstOrDefault(line => line.StartsWith("url:"));
 								if(!string.IsNullOrEmpty(url))
 								{
 									clipboardLines.Remove(url);
-									url = url.Replace("url:", "");
+									url = url.Replace("url:", "").Trim();
 								}
 								clipboardLines.RemoveAt(0); //"netdeckimport"
 
