@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -62,10 +63,27 @@ namespace Hearthstone_Deck_Tracker
 				"hearthstone-decks",
 				"heartharena",
 				"hearthstoneheroes",
-                "elitedecks"
+				"elitedecks"
 			};
 			if(validUrls.Any(clipboard.Contains))
 				settings.DefaultText = clipboard;
+
+			if(Config.Instance.DisplayNetDeckAd)
+			{
+				var result =
+					await
+					this.ShowMessageAsync("NetDeck",
+					                      "For easier (one-click!) web importing check out the NetDeck Chrome Extension!\n\n(This message will not be displayed again, no worries.)",
+					                      MessageDialogStyle.AffirmativeAndNegative,
+					                      new MetroDialogSettings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
+
+				if(result == MessageDialogResult.Affirmative)
+					Process.Start("https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel");
+
+				Config.Instance.DisplayNetDeckAd = false;
+				Config.Save();
+			}
+
 
 			//import dialog
 			var url =
@@ -135,6 +153,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
+				if(CheckClipboardForNetDeckImport())
+				{
+					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
+					{
+						Config.Instance.NetDeckClipboardCheck = true;
+						Options.ImportNetDeck.IsChecked = true;
+					}
+					return;
+				}
 				var deck = ParseCardString(Clipboard.GetText());
 				if(deck != null)
 					SetNewDeck(deck);

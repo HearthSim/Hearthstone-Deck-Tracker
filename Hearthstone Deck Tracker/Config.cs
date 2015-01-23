@@ -88,6 +88,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool DiscardZeroTurnGame = false;
 
 		[DefaultValue(true)]
+		public bool DisplayNetDeckAd = true;
+
+		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 
 		[DefaultValue(0.06)]
@@ -143,9 +146,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
-
-		[DefaultValue(false)]
-		public bool NetDeckClipboardCheck = false;
 
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
@@ -227,6 +227,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool MinimizeToTray = false;
+
+		[DefaultValue(null)]
+		public bool? NetDeckClipboardCheck = null;
 
 		[DefaultValue(false)]
 		public bool NoteDialogDelayed = false;

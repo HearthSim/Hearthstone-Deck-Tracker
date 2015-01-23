@@ -487,7 +487,24 @@ namespace Hearthstone_Deck_Tracker
 					}
 
 					Game.IsRunning = true;
-					if(!User32.IsHearthstoneInForeground() && !hsForegroundChanged)
+					if(User32.IsHearthstoneInForeground())
+					{
+						if(hsForegroundChanged)
+						{
+							Overlay.Update(true);
+							if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
+							{
+								//if player topmost is set to true before opponent:
+								//clicking on the playerwindow and back to hs causes the playerwindow to be behind hs.
+								//other way around it works for both windows... what?
+								OpponentWindow.Topmost = true;
+								PlayerWindow.Topmost = true;
+								TimerWindow.Topmost = true;
+							}
+							hsForegroundChanged = false;
+						}
+					}
+					else if(!hsForegroundChanged)
 					{
 						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 						{
@@ -496,20 +513,6 @@ namespace Hearthstone_Deck_Tracker
 							TimerWindow.Topmost = false;
 						}
 						hsForegroundChanged = true;
-					}
-					else if(hsForegroundChanged && User32.IsHearthstoneInForeground())
-					{
-						Overlay.Update(true);
-						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
-						{
-							//if player topmost is set to true before opponent:
-							//clicking on the playerwindow and back to hs causes the playerwindow to be behind hs.
-							//other way around it works for both windows... what?
-							OpponentWindow.Topmost = true;
-							PlayerWindow.Topmost = true;
-							TimerWindow.Topmost = true;
-						}
-						hsForegroundChanged = false;
 					}
 				}
 				else
@@ -530,53 +533,60 @@ namespace Hearthstone_Deck_Tracker
 					}
 					Game.IsRunning = false;
 				}
-				if(Config.Instance.NetDeckClipboardCheck && _initialized)
-				{
-					try
-					{
-						if(Clipboard.ContainsText())
-						{
-							var clipboardContent = Clipboard.GetText();
-							if(clipboardContent.StartsWith("netdeckimport"))
-							{
 
-								var clipboardLines = clipboardContent.Split('\n').ToList();
-								string deckName = clipboardLines.FirstOrDefault(line => line.StartsWith("name:"));
-								if(!string.IsNullOrEmpty(deckName))
-								{
-									clipboardLines.Remove(deckName);
-									deckName = deckName.Replace("name:", "").Trim();
-								}
-								string url = clipboardLines.FirstOrDefault(line => line.StartsWith("url:"));
-								if(!string.IsNullOrEmpty(url))
-								{
-									clipboardLines.Remove(url);
-									url = url.Replace("url:", "").Trim();
-								}
-								clipboardLines.RemoveAt(0); //"netdeckimport"
+				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
+				   && User32.IsHearthstoneInForeground())
+					CheckClipboardForNetDeckImport();
 
-								var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n));
-								if(deck != null)
-								{
-									deck.Url = url;
-									deck.Note = url;
-									deck.Name = deckName;
-									SetNewDeck(deck);
-									ActivateWindow();
-								}
-								Clipboard.Clear();
-							}
-						}
-					}
-
-					catch(Exception e)
-					{
-						Logger.WriteLine(e.ToString());
-					}
-				}
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
 			_canShowDown = true;
+		}
+
+		private bool CheckClipboardForNetDeckImport()
+		{
+			try
+			{
+				if(Clipboard.ContainsText())
+				{
+					var clipboardContent = Clipboard.GetText();
+					if(clipboardContent.StartsWith("netdeckimport"))
+					{
+						var clipboardLines = clipboardContent.Split('\n').ToList();
+						var deckName = clipboardLines.FirstOrDefault(line => line.StartsWith("name:"));
+						if(!string.IsNullOrEmpty(deckName))
+						{
+							clipboardLines.Remove(deckName);
+							deckName = deckName.Replace("name:", "").Trim();
+						}
+						var url = clipboardLines.FirstOrDefault(line => line.StartsWith("url:"));
+						if(!string.IsNullOrEmpty(url))
+						{
+							clipboardLines.Remove(url);
+							url = url.Replace("url:", "").Trim();
+						}
+						clipboardLines.RemoveAt(0); //"netdeckimport"
+
+						var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n));
+						if(deck != null)
+						{
+							deck.Url = url;
+							deck.Note = url;
+							deck.Name = deckName;
+							SetNewDeck(deck);
+							ActivateWindow();
+						}
+						Clipboard.Clear();
+						return true;
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString());
+				return false;
+			}
+			return false;
 		}
 
 		private async void ShowNewUpdateMessage(Version newVersion = null)
