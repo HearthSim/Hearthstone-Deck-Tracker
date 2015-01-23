@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				if(CheckClipboardForNetDeckImport())
+				if(await CheckClipboardForNetDeckImport())
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{

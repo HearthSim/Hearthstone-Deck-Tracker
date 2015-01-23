@@ -547,14 +547,14 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
 				   && !User32.IsHearthstoneInForeground())
-					CheckClipboardForNetDeckImport();
+					await CheckClipboardForNetDeckImport();
 
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
 			_canShowDown = true;
 		}
 
-		private bool CheckClipboardForNetDeckImport()
+		private async Task<bool> CheckClipboardForNetDeckImport()
 		{
 			try
 			{
@@ -585,6 +585,8 @@ namespace Hearthstone_Deck_Tracker
 							deck.Note = url;
 							deck.Name = deckName;
 							SetNewDeck(deck);
+							if(Config.Instance.AutoSaveOnImport)
+								await SaveDeckWithOverwriteCheck();
 							ActivateWindow();
 						}
 						Clipboard.Clear();
