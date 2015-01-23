@@ -573,7 +573,8 @@ namespace Hearthstone_Deck_Tracker
 			Options.CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
 			Options.CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
 			Options.CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
-			Options.ImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
+			Options.CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
+			Options.CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
 
 			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;

@@ -44,6 +44,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AutoGrayoutSecrets = true;
 
+		[DefaultValue(false)]
+		public bool AutoSaveOnImport = false;
+
 		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
 

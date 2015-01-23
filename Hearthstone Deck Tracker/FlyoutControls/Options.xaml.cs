@@ -1661,7 +1661,7 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		private void ImportNetDeck_OnChecked(object sender, RoutedEventArgs e)
+		private void CheckboxImportNetDeck_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -1669,12 +1669,28 @@ namespace Hearthstone_Deck_Tracker
 			SaveConfig(false);
 		}
 
-		private void ImportNetDeck_OnUnchecked(object sender, RoutedEventArgs e)
+		private void CheckboxImportNetDeck_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.NetDeckClipboardCheck = false;
 			SaveConfig(false);
+		}
+
+		private void CheckboxAutoSaveOnImport_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoSaveOnImport = true;
+			Config.Save();
+		}
+
+		private void CheckboxAutoSaveOnImport_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoSaveOnImport = false;
+			Config.Save();
 		}
 	}
 }

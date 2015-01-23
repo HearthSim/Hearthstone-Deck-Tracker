@@ -574,7 +574,8 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                                               Unchecked="CheckboxTagOnImport_Unchecked" />
-                                    <CheckBox Name="ImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0" Checked="ImportNetDeck_OnChecked" Unchecked="ImportNetDeck_OnUnchecked"/>
+                                    <CheckBox Name="CheckboxAutoSaveOnImport" Content="Auto save deck on import" Margin="10,5,0,0" Checked="CheckboxAutoSaveOnImport_OnChecked" Unchecked="CheckboxAutoSaveOnImport_OnUnchecked"/>
+                                    <CheckBox Name="CheckboxImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0" Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked"/>
                                     <TextBlock Margin="10,2,0,0">
                                         <Hyperlink NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                                             RequestNavigate="Hyperlink_RequestNavigate">

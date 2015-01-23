@@ -40,6 +40,8 @@ namespace Hearthstone_Deck_Tracker
 
 				SetNewDeck(deck, reimport);
 				TagControlEdit.SetSelectedTags(deck.Tags);
+				if(Config.Instance.AutoSaveOnImport)
+					await SaveDeckWithOverwriteCheck();
 			}
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
@@ -88,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 						                      new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 					if(enableOptionResult == MessageDialogResult.Affirmative)
 					{
-						Options.ImportNetDeck.IsChecked = true;
+						Options.CheckboxImportNetDeck.IsChecked = true;
 						Config.Instance.NetDeckClipboardCheck = true;
 						Config.Save();
 					}
@@ -155,6 +157,8 @@ namespace Hearthstone_Deck_Tracker
 					deck.Cards.Add(card);
 				}
 				SetNewDeck(deck);
+				if(Config.Instance.AutoSaveOnImport)
+					await SaveDeckWithOverwriteCheck();
 			}
 			catch(Exception ex)
 			{
@@ -163,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void BtnClipboardText_Click(object sender, RoutedEventArgs e)
+		private async void BtnClipboardText_Click(object sender, RoutedEventArgs e)
 		{
 			try
 			{
@@ -171,7 +175,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{
-						Options.ImportNetDeck.IsChecked = true;
+						Options.CheckboxImportNetDeck.IsChecked = true;
 						Config.Instance.NetDeckClipboardCheck = true;
 						Config.Save();
 					}
@@ -179,7 +183,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 				var deck = ParseCardString(Clipboard.GetText());
 				if(deck != null)
+				{
 					SetNewDeck(deck);
+					if(Config.Instance.AutoSaveOnImport)
+						await SaveDeckWithOverwriteCheck();
+				}
 			}
 			catch(Exception ex)
 			{
@@ -239,7 +247,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void BtnFile_Click(object sender, RoutedEventArgs e)
+		private async void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
 			var dialogResult = dialog.ShowDialog();
@@ -263,6 +271,8 @@ namespace Hearthstone_Deck_Tracker
 						TagControlEdit.SetSelectedTags(deck.Tags);
 					}
 					SetNewDeck(deck);
+					if(Config.Instance.AutoSaveOnImport)
+						await SaveDeckWithOverwriteCheck();
 				}
 				catch(Exception ex)
 				{

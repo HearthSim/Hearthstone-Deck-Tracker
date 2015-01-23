@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -423,6 +424,11 @@ namespace Hearthstone_Deck_Tracker
 			//	new ObservableCollection<Card>(
 			//		NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
 			//ListViewNewDeck.ItemsSource = NewDeck.Cards;
+			await SaveDeckWithOverwriteCheck();
+		}
+
+		private async Task SaveDeckWithOverwriteCheck()
+		{
 			var deckName = TextBoxDeckName.Text;
 			if(EditingDeck)
 			{
