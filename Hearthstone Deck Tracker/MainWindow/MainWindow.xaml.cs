@@ -253,6 +253,17 @@ namespace Hearthstone_Deck_Tracker
 			Options.ComboboxKeyPressGameEnd.ItemsSource = EventKeys;
 
 			LoadConfig();
+			if(!Config.Instance.NetDeckClipboardCheck.HasValue)
+			{
+				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+				                        @"Google\Chrome\User Data\Default\Extensions\lpdbiakcpmcppnpchohihcbdnojlgeel");
+
+				if(Directory.Exists(path))
+				{
+					Config.Instance.NetDeckClipboardCheck = true;
+					Config.Save();
+				}
+			}
 
 			FillElementSorters();
 
@@ -535,7 +546,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
-				   && User32.IsHearthstoneInForeground())
+				   && !User32.IsHearthstoneInForeground())
 					CheckClipboardForNetDeckImport();
 
 				await Task.Delay(Config.Instance.UpdateDelay);

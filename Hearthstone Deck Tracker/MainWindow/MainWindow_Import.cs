@@ -78,7 +78,21 @@ namespace Hearthstone_Deck_Tracker
 					                      new MetroDialogSettings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
 
 				if(result == MessageDialogResult.Affirmative)
+				{
 					Process.Start("https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel");
+					var enableOptionResult =
+						await
+						this.ShowMessageAsync("Enable one-click importing?",
+						                      "Would you like to enable one-click importing via NetDeck?\n(options > other > importing)",
+						                      MessageDialogStyle.AffirmativeAndNegative,
+						                      new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
+					if(enableOptionResult == MessageDialogResult.Affirmative)
+					{
+						Options.ImportNetDeck.IsChecked = true;
+						Config.Instance.NetDeckClipboardCheck = true;
+						Config.Save();
+					}
+				}
 
 				Config.Instance.DisplayNetDeckAd = false;
 				Config.Save();
@@ -157,8 +171,9 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{
-						Config.Instance.NetDeckClipboardCheck = true;
 						Options.ImportNetDeck.IsChecked = true;
+						Config.Instance.NetDeckClipboardCheck = true;
+						Config.Save();
 					}
 					return;
 				}
