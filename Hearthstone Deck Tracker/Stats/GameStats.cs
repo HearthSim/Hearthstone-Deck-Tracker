@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats()
 		{
-        }
+		}
 
 		public GameStats(GameResult result, string opponentHero, string playerHero)
 		{
@@ -71,15 +71,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
-        public SerializableVersion PlayerDeckVersion { get; set; }
+		public SerializableVersion PlayerDeckVersion { get; set; }
 
 		[XmlIgnore]
 		public string PlayerDeckVersionString
-        {
-            get
-            {
-                return PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
-            }
+		{
+			get
+			{
+				return PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
+			}
 		}
 
 		[XmlIgnore]

@@ -146,12 +146,12 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
-            if (overwrite)
-            {
-                _newDeck.Version = newVersion;
-                AddDeckHistory();
+			if(overwrite)
+			{
+				_newDeck.Version = newVersion;
+				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
-            }
+			}
 
 			if(EditingDeck && overwrite)
 			{
@@ -286,10 +286,10 @@ namespace Hearthstone_Deck_Tracker
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
-                UpdateDeckHistoryPanel(deck, false);
-                UpdateDbListView();
+				UpdateDeckHistoryPanel(deck, false);
+				UpdateDbListView();
 				ExpandNewDeck();
-                UpdateTitle();
+				UpdateTitle();
 				ManaCurveMyDecks.SetDeck(deck);
 			}
 		}
@@ -300,8 +300,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
-                DeckHistoryPanel.Visibility = Visibility.Visible;
-                GridNewDeck.UpdateLayout();
+				DeckHistoryPanel.Visibility = Visibility.Visible;
+				GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
 			}
@@ -317,8 +317,8 @@ namespace Hearthstone_Deck_Tracker
 				var width = GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Visibility.Collapsed;
 				MenuNewDeck.Visibility = Visibility.Collapsed;
-                DeckHistoryPanel.Visibility = Visibility.Collapsed;
-                MinWidth -= width;
+				DeckHistoryPanel.Visibility = Visibility.Collapsed;
+				MinWidth -= width;
 				Width -= width;
 			}
 			ClearNewDeckSection();
@@ -333,6 +333,17 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemExportScreenshot.IsEnabled = enable;
 			MenuItemExportToHs.IsEnabled = enable;
 			MenuItemExportXml.IsEnabled = enable;
+		}
+
+		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		{
+			//a menuitems clickevent does not fire if it has subitems
+			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
+			if(!MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
+			{
+				MenuItemSave.IsSubmenuOpen = false;
+				await SaveDeckWithOverwriteCheck();
+			}
 		}
 
 		#region UI
@@ -388,8 +399,8 @@ namespace Hearthstone_Deck_Tracker
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
-            UpdateDeckHistoryPanel(_newDeck, true);
-            ManaCurveMyDecks.SetDeck(_newDeck);
+			UpdateDeckHistoryPanel(_newDeck, true);
+			ManaCurveMyDecks.SetDeck(_newDeck);
 			UpdateDbListView();
 		}
 
@@ -428,12 +439,13 @@ namespace Hearthstone_Deck_Tracker
 			EditingDeck = false;
 			editedDeckName = string.Empty;
 		}
-		
+
 		private async Task SaveDeckWithOverwriteCheck()
 		{
 			await SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
-        private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion)
+
+		private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 			if(EditingDeck)
@@ -596,24 +608,13 @@ namespace Hearthstone_Deck_Tracker
 			UpdateDbListView();
 		}
 
-        private void AddDeckHistory()
-        {
-            Deck currentClone = _originalDeck.Clone() as Deck;
-            currentClone.Versions = new List<Deck>(); //empty ref to history
-            _newDeck.Versions.Add(currentClone);
-        }
+		private void AddDeckHistory()
+		{
+			var currentClone = _originalDeck.Clone() as Deck;
+			currentClone.Versions = new List<Deck>(); //empty ref to history
+			_newDeck.Versions.Add(currentClone);
+		}
 
 		#endregion
-
-		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
-		{
-			//a menuitems clickevent does not fire if it has subitems
-			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
-			if(!MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
-			{
-				MenuItemSave.IsSubmenuOpen = false;
-				await SaveDeckWithOverwriteCheck();
-			}
-		}
 	}
 }
