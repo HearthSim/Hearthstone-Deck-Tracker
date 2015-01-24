@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void SaveDeck(bool overwrite)
+		private async void SaveDeck(bool overwrite, SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 
@@ -148,9 +148,9 @@ namespace Hearthstone_Deck_Tracker
 
             if (overwrite)
             {
-                _newDeck.Version = SerializableVersion.Parse(ComboBoxVersionIncrement.SelectedValue.ToString());
+                _newDeck.Version = newVersion;
                 AddDeckHistory();
-                //UpdateDeckHistoryPanel(_newDeck, false);
+				//UpdateDeckHistoryPanel(_newDeck, false);
             }
 
 			if(EditingDeck && overwrite)
@@ -428,17 +428,12 @@ namespace Hearthstone_Deck_Tracker
 			EditingDeck = false;
 			editedDeckName = string.Empty;
 		}
-
-		private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
-		{
-			//NewDeck.Cards =
-			//	new ObservableCollection<Card>(
-			//		NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
-			//ListViewNewDeck.ItemsSource = NewDeck.Cards;
-			await SaveDeckWithOverwriteCheck();
-		}
-
+		
 		private async Task SaveDeckWithOverwriteCheck()
+		{
+			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+		}
+        private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 			if(EditingDeck)
@@ -448,9 +443,9 @@ namespace Hearthstone_Deck_Tracker
 					await
 					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result == MessageDialogResult.Affirmative)
-					SaveDeck(true);
+					SaveDeck(true, newVersion);
 				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false);
+					SaveDeck(false, newVersion);
 			}
 			else if(DeckList.DecksList.Any(d => d.Name == deckName))
 			{
@@ -469,13 +464,13 @@ namespace Hearthstone_Deck_Tracker
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
 						DeleteDeck(oldDeck);
 
-					SaveDeck(true);
+					SaveDeck(true, newVersion);
 				}
 				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false);
+					SaveDeck(false, newVersion);
 			}
 			else
-				SaveDeck(false);
+				SaveDeck(false, newVersion);
 
 			editedDeckName = string.Empty;
 		}
@@ -609,5 +604,16 @@ namespace Hearthstone_Deck_Tracker
         }
 
 		#endregion
+
+		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		{
+			//a menuitems clickevent does not fire if it has subitems
+			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
+			if(!MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
+			{
+				MenuItemSave.IsSubmenuOpen = false;
+				await SaveDeckWithOverwriteCheck();
+			}
+		}
 	}
 }

@@ -312,7 +312,7 @@
 
 
             <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="0" Visibility="Collapsed">
-                <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
+                <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -320,6 +320,9 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
+                    <MenuItem Name="MenuItemSaveVersionCurrent" Header="v1.0 (current)" Click="MenuItemSaveVersionCurrent_OnClick"/>
+                    <MenuItem Name="MenuItemSaveVersionMinor" Header="v1.1" Click="MenuItemSaveVersionMinor_OnClick"/>
+                    <MenuItem Name="MenuItemSaveVersionMajor" Header="v2.0" Click="MenuItemSaveVersionMajor_OnClick"/>
                 </MenuItem>
                 <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
@@ -406,7 +409,7 @@
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                                     HorizontalAlignment="Left"
                                     Width="235" KeyDown="ListViewDB_KeyDown"
-                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
+                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1" Grid.Column="0">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -439,11 +442,9 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <DockPanel Grid.Column="1" Margin="0,6,0,0">
+                <DockPanel Grid.Column="1" Margin="0,6,0,0" Grid.Row="0">
                     <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
-                    <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-                    <Label Content="->" VerticalAlignment="Center" DockPanel.Dock="Left"/>
-                    <ComboBox Name="ComboBoxVersionIncrement" Margin="0,0,6,0" />
+                    <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center"/>
                 </DockPanel>
                 <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                     <StackPanel x:Name="DeckHistoryPanel" 
