@@ -791,7 +791,7 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    Version = version.Major.ToString();
+	                Version = version.ToString("v{M}.{m}");
                 }
             }
 

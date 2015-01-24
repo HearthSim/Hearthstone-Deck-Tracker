@@ -212,7 +212,7 @@
                                       CanUserReorderColumns="False" CanUserSortColumns="False"
                                       CanUserResizeColumns="False">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Version" Binding="{Binding Version}">
+                                                <DataGridTextColumn Header="Ver." Binding="{Binding Version}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -361,7 +361,7 @@
                                       MouseDoubleClick="DGrid_MouseDoubleClick"
                                       SelectionChanged="DGrid_SelectionChanged">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Version" Binding="{Binding PlayerDeckVersionMajor}">
+                                                <DataGridTextColumn Header="Ver." Binding="{Binding PlayerDeckVersionString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />

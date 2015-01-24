@@ -146,11 +146,11 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
-            if (overwrite && IncraseVersion.IsChecked.HasValue && IncraseVersion.IsChecked.Value)
+            if (overwrite)
             {
-                _newDeck.Version = SerializableVersion.IncreaseMajor(_newDeck.Version);
+                _newDeck.Version = SerializableVersion.Parse(ComboBoxVersionIncrement.SelectedValue.ToString());
                 AddDeckHistory();
-                UpdateDeckHistoryPanel(_newDeck);
+                UpdateDeckHistoryPanel(_newDeck, false);
             }
 
 			if(EditingDeck && overwrite)
@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
-                UpdateDeckHistoryPanel(deck);
+                UpdateDeckHistoryPanel(deck, false);
                 UpdateDbListView();
 				ExpandNewDeck();
                 UpdateTitle();
@@ -388,7 +388,7 @@ namespace Hearthstone_Deck_Tracker
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
-            UpdateDeckHistoryPanel(_newDeck);
+            UpdateDeckHistoryPanel(_newDeck, true);
             ManaCurveMyDecks.SetDeck(_newDeck);
 			UpdateDbListView();
 		}

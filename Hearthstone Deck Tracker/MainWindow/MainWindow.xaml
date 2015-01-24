@@ -320,7 +320,6 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
-                <CheckBox x:Name="IncraseVersion" Content="Increase version" IsChecked="True"/>
                 <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -439,18 +438,20 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock x:Name="DeckCurrentVersionHeader" Text="Deck History" HorizontalAlignment="Center" FontSize="16"/>
-                    <TextBlock x:Name="DeckCurrentVersion" FontSize="12"/>
-                </StackPanel>
-                <ScrollViewer Grid.Column="1" Grid.Row="1">
+                <DockPanel Grid.Column="1" Margin="0,6,0,0">
+                    <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
+                    <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <Label Content="->" VerticalAlignment="Center" DockPanel.Dock="Left"/>
+                    <ComboBox Name="ComboBoxVersionIncrement" Margin="0,0,6,0" />
+                </DockPanel>
+                <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                     <StackPanel x:Name="DeckHistoryPanel" 
                                     Orientation="Vertical"
-                                    Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                                    
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" Margin="0,6,0,6"
-                                    HorizontalAlignment="Center" Width="220" Height="auto"
+                                    ScrollViewer.CanContentScroll="True"
+                                    HorizontalAlignment="Center" Height="auto" Width="220"  Margin="0,0,0,0"
                 />
                 </ScrollViewer>
             </Grid>

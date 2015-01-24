@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             get
             {
-                return string.Format("{0} (v{1})", Name, Version.Major);
+                return string.Format("{0} (v{1}.{2})", Name, Version.Major, Version.Minor);
             }
         }
         public SerializableVersion Version = new SerializableVersion(1, 0);

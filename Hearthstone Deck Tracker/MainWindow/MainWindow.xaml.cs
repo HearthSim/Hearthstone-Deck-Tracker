@@ -811,19 +811,25 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
-        private void UpdateDeckHistoryPanel(Deck selected)
+        private void UpdateDeckHistoryPanel(Deck selected, bool isNewDeck)
         {
             DeckHistoryPanel.Children.Clear();
-            DeckCurrentVersion.Text = "Current version is " + _newDeck.Version.Major.ToString();
-            IncraseVersion.IsChecked = true;  //increase by default
+            DeckCurrentVersion.Text = string.Format("v{0}.{1}",_newDeck.Version.Major, _newDeck.Version.Minor);
+	        ComboBoxVersionIncrement.ItemsSource = new List<string>
+			{
+				_newDeck.Version.ToString("v{M}.{m}"),
+                string.Format("v{0}.{1}", _newDeck.Version.Major, _newDeck.Version.Minor + 1),
+		        string.Format("v{0}.{1}", _newDeck.Version.Major + 1, 0)
+	        };
+	        ComboBoxVersionIncrement.SelectedIndex = isNewDeck ? 0 : 1;
+
             if (selected.Versions.Count > 0)
             {
                 Deck current = selected;
-                List<Card> history = new List<Card>();
                 foreach (Deck prevVersion in selected.Versions.OrderByDescending(d => d.Version))
                 {
-                    Controls.DeckVersionChange versionChange = new Controls.DeckVersionChange();
-                    versionChange.Label.Text = string.Format("{0} to {1}", prevVersion.Version.Major, current.Version.Major);
+                    var versionChange = new Controls.DeckVersionChange();
+                    versionChange.Label.Text = string.Format("{0} -> {1}", prevVersion.Version.ToString("v{M}.{m}"), current.Version.ToString("v{M}.{m}"));
                     versionChange.ListViewDeck.ItemsSource = current - prevVersion;
                     DeckHistoryPanel.Children.Add(versionChange);
                     current = prevVersion;
