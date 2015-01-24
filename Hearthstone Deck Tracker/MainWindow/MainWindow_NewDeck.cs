@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 _newDeck.Version = SerializableVersion.Parse(ComboBoxVersionIncrement.SelectedValue.ToString());
                 AddDeckHistory();
-                UpdateDeckHistoryPanel(_newDeck, false);
+                //UpdateDeckHistoryPanel(_newDeck, false);
             }
 
 			if(EditingDeck && overwrite)

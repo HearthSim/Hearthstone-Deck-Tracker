@@ -29,10 +29,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public SerializableVersion(Version v)
 		{
-			Major = v.Major;
-			Minor = v.Minor;
-			Revision = v.Revision;
-			Build = v.Build;
+			Major = v.Major > 0 ? v.Major : 0;
+			Minor = v.Minor > 0 ? v.Minor : 0;
+			Revision = v.Revision > 0 ? v.Revision : 0;
+			Build = v.Build > 0 ? v.Build : 0;
 		}
 
 		public static SerializableVersion Default
