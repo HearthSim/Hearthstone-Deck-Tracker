@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string NameAndVersion
 		{
-			get { return string.Format("{0} (v{1}.{2})", Name, Version.Major, Version.Minor); }
+			get { return Versions.Count == 0 ? Name :  string.Format("{0} (v{1}.{2})", Name, Version.Major, Version.Minor); }
 		}
 
 		[XmlIgnore]
