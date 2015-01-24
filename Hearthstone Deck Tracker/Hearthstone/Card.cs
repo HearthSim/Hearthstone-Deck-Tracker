@@ -278,17 +278,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
-																   new Rect(189, 6, 25, 24)));
+						                                           new Rect(189, 6, 25, 24)));
 
 						if(Math.Abs(Count) > 1 && Math.Abs(Count) <= 9)
 						{
-							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
-																	   new Rect(194, 8, 18, 21)));
+							drawingGroup.Children.Add(
+							                          new ImageDrawing(
+								                          new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
+								                          new Rect(194, 8, 18, 21)));
 						}
 						else
 						{
 							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
-																	   new Rect(194, 8, 18, 21)));
+							                                           new Rect(194, 8, 18, 21)));
 						}
 					}
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using Controls = Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -21,6 +21,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Clipboard = System.Windows.Clipboard;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
@@ -66,8 +67,8 @@ namespace Hearthstone_Deck_Tracker
 		private bool _doUpdate;
 		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
-		private Deck _originalDeck;
 		private bool _newDeckUnsavedChanges;
+		private Deck _originalDeck;
 		private bool _tempUpdateCheckDisabled;
 		private Version _updatedVersion;
 
@@ -840,10 +841,10 @@ namespace Hearthstone_Deck_Tracker
 
 			if(selected.Versions.Count > 0)
 			{
-				Deck current = selected;
-				foreach(Deck prevVersion in selected.Versions.OrderByDescending(d => d.Version))
+				var current = selected;
+				foreach(var prevVersion in selected.Versions.OrderByDescending(d => d.Version))
 				{
-					var versionChange = new Controls.DeckVersionChange();
+					var versionChange = new DeckVersionChange();
 					versionChange.Label.Text = string.Format("{0} -> {1}", prevVersion.Version.ToString("v{M}.{m}"),
 					                                         current.Version.ToString("v{M}.{m}"));
 					versionChange.ListViewDeck.ItemsSource = current - prevVersion;

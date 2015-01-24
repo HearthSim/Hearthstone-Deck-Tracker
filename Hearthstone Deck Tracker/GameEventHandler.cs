@@ -405,7 +405,7 @@ namespace Hearthstone_Deck_Tracker
 					_assignedDeck = null;
 					return;
 				}
-                Game.CurrentGameStats.PlayerDeckVersion = selectedDeck.Version;
+				Game.CurrentGameStats.PlayerDeckVersion = selectedDeck.Version;
 				selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
 				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
