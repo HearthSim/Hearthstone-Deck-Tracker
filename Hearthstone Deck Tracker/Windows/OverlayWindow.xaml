@@ -46,6 +46,8 @@
                     <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" />
                     <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Margin="4,0,0,0" />
                 </StackPanel>
+                <StackPanel Name="StackPanelDrawType" Orientation="Vertical" HorizontalAlignment="Center">
+                </StackPanel>
                 <StackPanel Name="StackPanelPlayerCount" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="14" Text="Hand: 0" />
                     <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />

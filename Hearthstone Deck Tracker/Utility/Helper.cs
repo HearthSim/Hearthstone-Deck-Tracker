@@ -296,8 +296,14 @@ namespace Hearthstone_Deck_Tracker
 			if(MainWindow.Overlay.IsVisible)
 				MainWindow.Overlay.Update(false);
 
+            Dictionary<string, int> breakdownLeft = CalculateDeckBreakdown(Game.PlayerDeck);
+
 			if(MainWindow.PlayerWindow.IsVisible)
-				MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
+				MainWindow.PlayerWindow.SetCardCount(
+                    Game.PlayerHandCount, 
+                    30 - Game.PlayerDrawn.Sum(card => card.Count),
+                    breakdownLeft   
+                    );
 
 			if(MainWindow.OpponentWindow.IsVisible)
 				MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
@@ -390,5 +396,35 @@ namespace Hearthstone_Deck_Tracker
 				return FromUnixTime(time);
 			return DateTime.Now;
 		}
+
+        public static Dictionary<string, int> CalculateDeckBreakdown(IEnumerable<Card> cards)
+        {
+            List<string> allMechanics = cards.Where(c=> c.Mechanics != null).SelectMany(c => c.Mechanics).Distinct().ToList();
+            List<string> allRaces = cards.Where(c => c.Race != null).Select(c => c.Race).Distinct().ToList();
+            List<string> allTypes = cards.Where(c => c.Type != null).Select(c => c.Type).Distinct().ToList();
+
+            Dictionary<string, int> breakdownLeft = new Dictionary<string, int>();
+
+            foreach (string mechanic in allMechanics)
+            {
+                int left = cards.Where(card => ((card.Mechanics != null) && (card.Mechanics.Contains(mechanic)))).Sum(card => card.Count);
+                breakdownLeft.Add("(M)" + mechanic, left);
+            }
+
+            foreach (string race in allRaces)
+            {
+                int left = cards.Where(card => card.Race == race).Sum(card => card.Count);
+                breakdownLeft.Add("(R)" + race, left);
+            }
+
+            foreach (string type in allTypes)
+            {
+                int left = cards.Where(card => card.Type == type).Sum(card => card.Count);
+                breakdownLeft.Add("(T)" + type, left);
+            }
+
+            return breakdownLeft;
+        }
+
 	}
 }

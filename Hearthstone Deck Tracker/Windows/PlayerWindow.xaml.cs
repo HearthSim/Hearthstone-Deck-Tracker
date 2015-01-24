@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -112,7 +113,8 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Draw Chances":
 						StackPanelMain.Children.Add(StackPanelDraw);
-						break;
+                        StackPanelMain.Children.Add(StackPanelDrawType);
+                		break;
 					case "Card Counter":
 						StackPanelMain.Children.Add(StackPanelCount);
 						break;
@@ -129,7 +131,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void SetCardCount(int cardCount, int cardsLeftInDeck)
+		public void SetCardCount(int cardCount, int cardsLeftInDeck, Dictionary<string, int> breakdownLeft)
 		{
 			LblCardCount.Text = "Hand: " + cardCount;
 			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
@@ -145,7 +147,21 @@ namespace Hearthstone_Deck_Tracker
 
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
-		}
+            
+            StackPanelDrawType.Children.Clear();
+            foreach (var item in breakdownLeft)
+            {
+                HearthstoneTextBlock htb = new HearthstoneTextBlock();
+                htb.Text = string.Format("{0} : ({1}) {2}%", 
+                    item.Key,
+                    item.Value,
+                    Math.Round(100.0f * item.Value / cardsLeftInDeck, 2)
+                    );
+                htb.FontSize = 16;
+                StackPanelDrawType.Children.Add(htb);
+                StackPanelDrawType.UpdateLayout();
+            }
+        }
 
 		private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
@@ -209,13 +225,15 @@ namespace Hearthstone_Deck_Tracker
 			if(top)
 			{
 				StackPanelMain.Children.Add(StackPanelDraw);
-				StackPanelMain.Children.Add(StackPanelCount);
+                StackPanelMain.Children.Add(StackPanelDrawType);
+                StackPanelMain.Children.Add(StackPanelCount);
 				StackPanelMain.Children.Add(ListViewPlayer);
 			}
 			else
 			{
 				StackPanelMain.Children.Add(ListViewPlayer);
 				StackPanelMain.Children.Add(StackPanelDraw);
+                StackPanelMain.Children.Add(StackPanelDrawType);				
 				StackPanelMain.Children.Add(StackPanelCount);
 			}
 		}

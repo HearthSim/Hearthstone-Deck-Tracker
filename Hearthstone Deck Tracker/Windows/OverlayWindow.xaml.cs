@@ -366,7 +366,7 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
 		}
 
-		private void SetCardCount(int cardCount, int cardsLeftInDeck)
+        private void SetCardCount(int cardCount, int cardsLeftInDeck, Dictionary<string, int> breakdownLeft)
 		{
 			//previous < current -> draw
 			if(_cardCount < cardCount)
@@ -388,7 +388,20 @@ namespace Hearthstone_Deck_Tracker
 
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
-		}
+            StackPanelDrawType.Children.Clear();
+
+            foreach (var item in breakdownLeft)
+            {
+                HearthstoneTextBlock htb = new HearthstoneTextBlock();
+                htb.Text = string.Format("{0} : ({1}) {2}%",
+                    item.Key,
+                    item.Value,
+                    Math.Round(100.0f * item.Value / cardsLeftInDeck, 2)
+                    );
+                htb.FontSize = 14;
+                StackPanelDrawType.Children.Add(htb);
+            }
+        }
 
 		public void ShowOverlay(bool enable)
 		{
@@ -578,7 +591,12 @@ namespace Hearthstone_Deck_Tracker
 			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
 			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
-			SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
+            Dictionary<string, int> breakdownLeft = Helper.CalculateDeckBreakdown(Game.PlayerDeck);
+
+            SetCardCount(Game.PlayerHandCount,
+                         30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count),
+                         breakdownLeft
+                         );
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
@@ -899,6 +917,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Draw Chances":
 						StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
+                        StackPanelPlayer.Children.Add(StackPanelDrawType);
 						break;
 					case "Card Counter":
 						StackPanelPlayer.Children.Add(StackPanelPlayerCount);

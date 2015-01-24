@@ -51,6 +51,8 @@
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDrawChance1" Text="0%" FontSize="16"
                                             VerticalAlignment="Center" />
             </StackPanel>
+            <StackPanel Name="StackPanelDrawType" Orientation="Vertical" HorizontalAlignment="Center">
+            </StackPanel>
             <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblCardCount" Text="Hand: 0" FontSize="14"
                                             VerticalAlignment="Center" />
