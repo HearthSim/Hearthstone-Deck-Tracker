@@ -143,6 +143,7 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = DeckPickerList.SelectedDeck;
 			if(selectedDeck == null)
 				return;
+            _originalDeck = selectedDeck;
 			SetNewDeck(selectedDeck, true);
 		}
 

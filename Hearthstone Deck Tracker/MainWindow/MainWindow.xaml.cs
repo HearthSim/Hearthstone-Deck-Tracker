@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Controls = Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -65,6 +66,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool _doUpdate;
 		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
+        private Deck _originalDeck;
 		private bool _newDeckUnsavedChanges;
 		private bool _tempUpdateCheckDisabled;
 		private Version _updatedVersion;
@@ -435,7 +437,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(decks.Count > 0)
 			{
-				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>()));
+                decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>() ,SerializableVersion.Default, new List<Deck>()));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -805,7 +807,6 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			ListViewDeck.ItemsSource = selected.Cards;
-
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			if(Config.Instance.LastDeck != selected.Name)
 			{
@@ -813,6 +814,26 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 			}
 		}
+
+        private void UpdateDeckHistoryPanel(Deck selected)
+        {
+            DeckHistoryPanel.Children.Clear();
+            DeckCurrentVersion.Text = "Current version is " + _newDeck.Version.Major.ToString();
+            IncraseVersion.IsChecked = true;  //increase by default
+            if (selected.Versions.Count > 0)
+            {
+                Deck current = selected;
+                List<Card> history = new List<Card>();
+                foreach (Deck prevVersion in selected.Versions.OrderByDescending(d => d.Version))
+                {
+                    Controls.DeckVersionChange versionChange = new Controls.DeckVersionChange();
+                    versionChange.Label.Text = string.Format("{0} to {1}", prevVersion.Version.Major, current.Version.Major);
+                    versionChange.ListViewDeck.ItemsSource = current - prevVersion;
+                    DeckHistoryPanel.Children.Add(versionChange);
+                    current = prevVersion;
+                }
+            }
+        }
 
 
 		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
