@@ -92,8 +92,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu Grid.Row="0" Grid.ColumnSpan="3">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -299,7 +300,6 @@
                 </ListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6" />
             </Grid>
-
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="1"
                               Height="auto" Width="auto"
@@ -310,7 +310,7 @@
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
 
 
-            <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
+            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="0" Visibility="Collapsed">
                 <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -320,6 +320,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                 </MenuItem>
+                <CheckBox x:Name="IncraseVersion" Content="Increase version" IsChecked="True"/>
                 <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -370,13 +371,17 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
+            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="492">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
-                            Width="235">
+                            Width="235" Grid.ColumnSpan="2">
                     <TextBox controls:TextBoxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
@@ -434,8 +439,21 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock x:Name="DeckCurrentVersionHeader" Text="Deck History" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBlock x:Name="DeckCurrentVersion" FontSize="12"/>
+                </StackPanel>
+                <ScrollViewer Grid.Column="1" Grid.Row="1">
+                    <StackPanel x:Name="DeckHistoryPanel" 
+                                    Orientation="Vertical"
+                                    Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.CanContentScroll="True" Margin="0,6,0,6"
+                                    HorizontalAlignment="Center" Width="220" Height="auto"
+                />
+                </ScrollViewer>
             </Grid>
-
         </Grid>
     </Grid>
 </controls:MetroWindow>

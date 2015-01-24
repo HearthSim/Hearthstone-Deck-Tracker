@@ -146,6 +146,13 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
+            if (overwrite && IncraseVersion.IsChecked.HasValue && IncraseVersion.IsChecked.Value)
+            {
+                _newDeck.Version = SerializableVersion.IncreaseMajor(_newDeck.Version);
+                AddDeckHistory();
+                UpdateDeckHistoryPanel(_newDeck);
+            }
+
 			if(EditingDeck && overwrite)
 			{
 				DeckList.DecksList.Remove(_newDeck);
@@ -279,9 +286,10 @@ namespace Hearthstone_Deck_Tracker
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
-				UpdateDbListView();
+                UpdateDeckHistoryPanel(deck);
+                UpdateDbListView();
 				ExpandNewDeck();
-				UpdateTitle();
+                UpdateTitle();
 				ManaCurveMyDecks.SetDeck(deck);
 			}
 		}
@@ -292,7 +300,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
-				GridNewDeck.UpdateLayout();
+                DeckHistoryPanel.Visibility = Visibility.Visible;
+                GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
 			}
@@ -308,7 +317,8 @@ namespace Hearthstone_Deck_Tracker
 				var width = GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Visibility.Collapsed;
 				MenuNewDeck.Visibility = Visibility.Collapsed;
-				MinWidth -= width;
+                DeckHistoryPanel.Visibility = Visibility.Collapsed;
+                MinWidth -= width;
 				Width -= width;
 			}
 			ClearNewDeckSection();
@@ -378,7 +388,8 @@ namespace Hearthstone_Deck_Tracker
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
-			ManaCurveMyDecks.SetDeck(_newDeck);
+            UpdateDeckHistoryPanel(_newDeck);
+            ManaCurveMyDecks.SetDeck(_newDeck);
 			UpdateDbListView();
 		}
 
@@ -589,6 +600,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			UpdateDbListView();
 		}
+
+        private void AddDeckHistory()
+        {
+            Deck currentClone = _originalDeck.Clone() as Deck;
+            currentClone.Versions = new List<Deck>(); //empty ref to history
+            _newDeck.Versions.Add(currentClone);
+        }
 
 		#endregion
 	}

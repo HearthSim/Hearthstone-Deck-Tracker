@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameStats()
 		{
-		}
+        }
 
 		public GameStats(GameResult result, string opponentHero, string playerHero)
 		{
@@ -71,6 +71,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+        public SerializableVersion PlayerDeckVersion { get; set; }
+        public string PlayerDeckVersionMajor
+        {
+            get
+            {
+                //can't fnd a way to bind PlayerDeckVersion.Major in datagrid
+                return PlayerDeckVersion != null ? PlayerDeckVersion.Major.ToString() : SerializableVersion.Default.Major.ToString();
+            }
+        }
 		public ToolTip ResultToolTip
 		{
 			get { return new ToolTip {Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden)}; }
