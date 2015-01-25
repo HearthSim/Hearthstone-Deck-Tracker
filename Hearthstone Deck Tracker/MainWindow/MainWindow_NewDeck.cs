@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
-			if(overwrite)
+			if(overwrite && (_newDeck.Version != newVersion))
 			{
 				_newDeck.Version = newVersion;
 				AddDeckHistory();
