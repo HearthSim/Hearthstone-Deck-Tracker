@@ -160,7 +160,8 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
-			await Task.Delay(Config.Instance.DeckExportDelay * 2);
+			Logger.WriteLine("try to export card: " + card.Name , "DeckExporter", 1);
+			await Task.Delay(Config.Instance.DeckExportDelay * 2);	
 
 			if(await CheckForSpecialCases(card, cardPosX + 50, card2PosX + 50, cardPosY + 50, hsHandle))
 				return;
@@ -269,7 +270,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			int width = 40, height = 40, hue_min = 90;
 			var avgHue = 0.0f;
-			var avgBri = 0.0f;
+			var bri = 0.0f;
 
 			if(check_second)
 			{
@@ -294,16 +295,17 @@ namespace Hearthstone_Deck_Tracker
 					if(pixel.GetSaturation() > 0.05)
 					{
 						avgHue += pixel.GetHue();
-						avgBri += pixel.GetBrightness();
+						bri += pixel.GetBrightness();
 						validPixels++;
 					}
 				}
 			}
 
 			avgHue /= validPixels;
+			Logger.WriteLine("avgHue: " + avgHue + ";Bri: " + bri , "DeckExporter", 1);
 
 			if(check_second)
-				return 750 < (int)avgBri;
+				return 750 < (int)bri;
 			else
 				return hue_min < (int)avgHue;
 		}
