@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker
 		private async Task<string> InputDeckURL()
 		{
 			var settings = new MetroDialogSettings();
-			var clipboard = Clipboard.GetText();
+			var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
 			var validUrls = new[]
 			{
 				"hearthstats",
@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var settings = new MetroDialogSettings();
-				var clipboard = Clipboard.GetText();
+				var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
 				if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
 					settings.DefaultText = clipboard;
 
@@ -181,12 +181,15 @@ namespace Hearthstone_Deck_Tracker
 					}
 					return;
 				}
-				var deck = ParseCardString(Clipboard.GetText());
-				if(deck != null)
+				if(Clipboard.ContainsText())
 				{
-					SetNewDeck(deck);
-					if(Config.Instance.AutoSaveOnImport)
-						await SaveDeckWithOverwriteCheck();
+					var deck = ParseCardString(Clipboard.GetText());
+					if(deck != null)
+					{
+						SetNewDeck(deck);
+						if(Config.Instance.AutoSaveOnImport)
+							await SaveDeckWithOverwriteCheck();
+					}
 				}
 			}
 			catch(Exception ex)
