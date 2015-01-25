@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool Debug = false;
 
 		[DefaultValue(50)]
-		public int DeckExportDelay = 50;
+		public int DeckExportDelay = 60;
 
 		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
@@ -102,14 +102,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.915)]
 		public double ExportAllButtonY = 0.915;
 
-		[DefaultValue(0.12)]
-		public double ExportCard1X = 0.12;
+		[DefaultValue(0.04)]
+		public double ExportCard1X = 0.04;
 
-		[DefaultValue(0.285)]
-		public double ExportCard2X = 0.285;
+		[DefaultValue(0.2)]
+		public double ExportCard2X = 0.2;
 
-		[DefaultValue(0.32)]
-		public double ExportCardsY = 0.32;
+		[DefaultValue(0.168)]
+		public double ExportCardsY = 0.168;
 
 		[DefaultValue(0.185)]
 		public double ExportClearCheckYFixed = 0.185;

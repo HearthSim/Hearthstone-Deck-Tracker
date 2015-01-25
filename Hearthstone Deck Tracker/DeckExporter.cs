@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker
 {
 	internal static class DeckExporter
 	{
-		public static async Task Export(Deck deck)
+		public static async Task Export(Deck deck, Deck not_collected)
 		{
 			if(deck == null)
 				return;
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)),
-				                             (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
+											 (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
 				var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
 				var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
 				var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
 
 				Logger.WriteLine("Creating deck...", "DeckExporter");
 				foreach(var card in deck.Cards)
-					await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
+					await AddCardToDeck(not_collected, card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsRect.Width, hsHandle);
 
 
 				// Clear search field now all cards have been entered
@@ -107,15 +107,15 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
 			await
 				ClickOnPoint(hsHandle,
-				             new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
-				                       (int)(Config.Instance.ExportAllButtonY * height)));
+							 new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
+									   (int)(Config.Instance.ExportAllButtonY * height)));
 		}
 
 		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
 		{
 			Logger.WriteLine("Setting deck name...", "DeckExporter");
 			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio),
-			                            (int)(Config.Instance.ExportNameDeckY * height));
+										(int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			//send enter and second click to make sure the current name gets selected
 			SendKeys.SendWait("{ENTER}");
@@ -132,11 +132,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private static double GetXPos(double left, int width, double ratio)
 		{
-			return (width * ratio * left) + ((width - width * ratio) / 2);
+			return (width * ratio * left) + (width * (1 - ratio) / 2);
 		}
 
-		private static async Task AddCardToDeck(Card card, Point searchBoxPos, double cardPosX, double card2PosX, double cardPosY, int height,
-		                                        IntPtr hsHandle)
+		private static async Task AddCardToDeck(Deck not_collected, Card card, Point searchBoxPos, double cardPosX, double card2PosX, double cardPosY,
+												int height, int width, IntPtr hsHandle)
 		{
 			if(!User32.IsHearthstoneInForeground())
 			{
@@ -147,8 +147,10 @@ namespace Hearthstone_Deck_Tracker
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 
-			var addArtist = new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
-			var fixedName = addArtist ? (card.LocalizedName + " " + card.Artist).ToLowerInvariant() : card.LocalizedName.ToLowerInvariant();
+			var addArtist = new[] { "zhCN", "zhTW", "ruRU", "koKR" }.All(x => Config.Instance.SelectedLanguage != x);
+			var fixedName = addArtist
+								? (card.LocalizedName + " " + card.Artist).ToLowerInvariant()
+								: card.LocalizedName.ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
 				Clipboard.SetText(fixedName);
@@ -160,25 +162,50 @@ namespace Hearthstone_Deck_Tracker
 
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			if(await CheckForSpecialCases(card, cardPosX, card2PosX, cardPosY, hsHandle))
+			if(await CheckForSpecialCases(card, cardPosX + 50, card2PosX + 50, cardPosY + 50, hsHandle))
 				return;
 
-			var golden = CheckForGolden(hsHandle, new Point((int)card2PosX, (int)(cardPosY + height * 0.05)));
-			for(var i = 0; i < card.Count; i++)
+			//Check if Card exist in collection
+			if(Card_check(hsHandle, false, (int)cardPosX, (int)cardPosY))
 			{
-				if(Config.Instance.PrioritizeGolden && golden)
-					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-				else
-					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-			}
+				//move mouse over card if card is new 
+				Point new_card = new Point((int)cardPosX, (int)cardPosY);
+				User32.ClientToScreen(hsHandle, ref new_card);
+				for(int i = 0; i < 3; i++)
+				{ Cursor.Position = new Point(new_card.X + i + 50, new_card.Y - i + 50); }
 
-			if(card.Count == 2 && golden)
-			{
-				//click again to make sure we get 2 cards 
-				if(Config.Instance.PrioritizeGolden)
-					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
+				//Check if a golden exist
+				if(Config.Instance.PrioritizeGolden && Card_check(hsHandle, false, (int)card2PosX, (int)cardPosY))
+				{
+					await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
+
+					if(card.Count == 2)
+					{
+						await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
+						await ClickOnPoint(hsHandle, new Point((int)cardPosX + 50, (int)cardPosY + 50));
+					}
+				}
 				else
-					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+				{
+					await ClickOnPoint(hsHandle, new Point((int)cardPosX + 50, (int)cardPosY + 50));
+
+					if(card.Count == 2)
+					{
+						//Check if two card are not available 
+						await Task.Delay(100);
+						if(!Card_check(hsHandle, true, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287)))
+						{
+							not_collected.Cards.Add((Card)card.Clone());
+							not_collected.Cards.Last().Count = 1;
+						}
+
+						await ClickOnPoint(hsHandle, new Point((int)cardPosX + 50, (int)cardPosY + 50));
+					}
+				}
+			}
+			else
+			{
+				not_collected.Cards.Add((Card)card.Clone());
 			}
 		}
 
@@ -238,18 +265,25 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(Config.Instance.DeckExportDelay);
 		}
 
-		private static bool CheckForGolden(IntPtr wndHandle, Point point)
+		private static bool Card_check(IntPtr wndHandle, bool check_second, int PosX, int PosY)
 		{
-			const int width = 50, height = 50, targetHue = 43;
-			const float targetSat = 0.38f;
+			int width = 40, height = 40, hue_min = 90;
 			var avgHue = 0.0f;
-			var avgSat = 0.0f;
-			var capture = Helper.CaptureHearthstone(point, width, height, wndHandle);
+			var avgBri = 0.0f;
+
+			if(check_second)
+			{
+				height = 30;
+				width = 55;
+			}
+
+			var capture = Helper.CaptureHearthstone(new Point(PosX, PosY), width, height, wndHandle);
 
 			if(capture == null)
 				return false;
 
 			var validPixels = 0;
+
 			for(var i = 0; i < width; i++)
 			{
 				for(var j = 0; j < height; j++)
@@ -260,15 +294,18 @@ namespace Hearthstone_Deck_Tracker
 					if(pixel.GetSaturation() > 0.05)
 					{
 						avgHue += pixel.GetHue();
-						avgSat += pixel.GetSaturation();
+						avgBri += pixel.GetBrightness();
 						validPixels++;
 					}
 				}
 			}
-			avgHue /= validPixels;
-			avgSat /= validPixels;
 
-			return avgHue <= targetHue && avgSat <= targetSat;
+			avgHue /= validPixels;
+
+			if(check_second)
+				return 750 < (int)avgBri;
+			else
+				return hue_min < (int)avgHue;
 		}
 
 		private static async Task ClearDeck(int width, int height, IntPtr handle, double ratio)
@@ -279,7 +316,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				await
 					ClickOnPoint(handle,
-					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearY * height)));
+								 new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
+										   (int)(Config.Instance.ExportClearY * height)));
 				if(count++ > 35)
 					break;
 			}
@@ -287,16 +325,18 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool CheckForCardsInDeck(IntPtr wndHandle, int width, int height, double ratio)
 		{
+
 			var capture =
 				Helper.CaptureHearthstone(
-				                          new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
-				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
+										   new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
+													 (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
 			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
 		}
 
 		private static bool ColorDistance(Color color, Color target, double distance)
 		{
-			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance && Math.Abs(color.B - target.B) < distance;
+			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance &&
+				   Math.Abs(color.B - target.B) < distance;
 		}
 	}
 }

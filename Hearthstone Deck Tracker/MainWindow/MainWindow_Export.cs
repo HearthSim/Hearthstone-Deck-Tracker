@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDeck;
-			if(deck == null)
+			if(deck == null) 
 				return;
 			ExportDeck(deck);
 		}
@@ -27,33 +27,79 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var message =
 				string.Format(
-				              "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
-				              deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
+							  "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
+							  deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
 
 			if(deck.Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
-			{
-				message +=
-					"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
-			}
+				message += "\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
-			var result =
-				await
-				this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
+			var settings = new MetroDialogSettings { AffirmativeButtonText = "export" };
+			var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone",
+													 message,
+													 MessageDialogStyle.AffirmativeAndNegative, settings);
 
 			if(result == MessageDialogResult.Affirmative)
 			{
 				var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
 				Topmost = false;
 				await Task.Delay(500);
-				await DeckExporter.Export(deck);
+				Deck not_collected = new Deck();
+				await DeckExporter.Export(deck, not_collected);
 				await controller.CloseAsync();
+
+				if(not_collected.Cards.Count() != 0)
+				{
+					message = "The following cards are not included in your collection:\n";
+					int dusk = 0;
+					int duskadd = 0;
+					string specialSet = "";
+					foreach(var card in not_collected.Cards)
+					{
+						message += "\n• " + card.LocalizedName;
+
+						switch(card.Rarity)
+						{
+							case "Common":
+								duskadd = 40;
+								break;
+							case "Rare":
+								duskadd = 100;
+								break;
+							case "Epic":
+								duskadd = 400;
+								break;
+							case "Legendary":
+								duskadd = 1600;
+								break;
+							default:
+								duskadd = 0;
+								break;
+						}
+
+						if(card.Count == 2)
+							message += " x2";
+
+						if(card.Set.Equals("CURSE OF NAXXRAMAS", System.StringComparison.CurrentCultureIgnoreCase))
+							specialSet = "and the Naxxramas DLC ";
+						else if(card.Set.Equals("PROMOTION", System.StringComparison.CurrentCultureIgnoreCase))
+							specialSet = "and Promotioncards ";
+						else if(card.Count == 2)
+							dusk += 2 * duskadd;
+						else
+							dusk += duskadd;
+
+					}
+					message += string.Format("\n\n You need {0} dusk {1}to create this Deck", dusk, specialSet);
+					settings.AffirmativeButtonText = "OK";
+					await this.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, settings);
+				}
+
 			}
 		}
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckPickerList.SelectedDeck == null)
+			if(DeckPickerList.SelectedDeck == null) 
 				return;
 			Logger.WriteLine("Creating screenshot of " + DeckPickerList.SelectedDeck.GetDeckInfo(), "Screenshot");
 			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.SelectedDeck.Cards, true);
@@ -62,13 +108,14 @@ namespace Hearthstone_Deck_Tracker
 			screenShotWindow.Left = 0;
 			await Task.Delay(100);
 			var source = PresentationSource.FromVisual(screenShotWindow);
-			if(source == null)
+			if(source == null) 
 				return;
 
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
+			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY,
+												 DeckPickerList.SelectedDeck.Name);
 
 			screenShotWindow.Shutdown();
 			if(fileName == null)
@@ -80,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDeck;
-			if(deck == null)
+			if(deck == null) 
 				return;
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
 			XmlManager<Deck>.Save(path, deck);
@@ -91,13 +138,12 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDeck;
-			if(deck == null)
+			if(deck == null) 
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
 			this.ShowMessage("", "copied to clipboard");
 			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard");
 		}
-
 
 		public async Task ShowSavedFileMessage(string fileName, string dir)
 		{
