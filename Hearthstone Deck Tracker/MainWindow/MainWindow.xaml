@@ -254,10 +254,21 @@
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
             <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="ListViewDeck" Grid.Row="0"
+                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0">
+                    <Label Content="SELECTED VERSION:"/>
+                    <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ShortVersionString}"/>
+                        </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <ListView x:Name="ListViewDeck" Grid.Row="1"
                                     Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -298,7 +309,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6" />
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="1"

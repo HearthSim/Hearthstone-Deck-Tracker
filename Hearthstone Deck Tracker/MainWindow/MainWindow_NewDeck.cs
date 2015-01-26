@@ -149,6 +149,7 @@ namespace Hearthstone_Deck_Tracker
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
 				_newDeck.Version = newVersion;
+				_newDeck.SelectedVersion = newVersion;
 				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
@@ -283,6 +284,11 @@ namespace Hearthstone_Deck_Tracker
 				if(editing)
 					editedDeckName = deck.Name;
 				_newDeck = (Deck)deck.Clone();
+
+				_newDeck.Cards.Clear();
+				foreach(var card in deck.GetSelectedDeckVersion().Cards)
+					_newDeck.Cards.Add(card.Clone() as Card);
+
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
@@ -434,7 +440,7 @@ namespace Hearthstone_Deck_Tracker
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.Cards : null;
+			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.GetSelectedDeckVersion().Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
