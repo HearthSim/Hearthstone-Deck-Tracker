@@ -434,8 +434,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.DecksList.Where(d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
 				        .ToList();
 
-			if(decks.Contains(DeckPickerList.SelectedDeck))
-				decks.Remove(DeckPickerList.SelectedDeck);
+			if(decks.Contains(DeckPickerList.SelectedDeck.GetSelectedDeckVersion()))
+				decks.Remove(DeckPickerList.SelectedDeck.GetSelectedDeckVersion());
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
