@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void SetPremadeDeck(Deck deck)
 		{
 			PlayerDeck.Clear();
-			foreach(var card in deck.Cards)
+			foreach(var card in deck.GetSelectedDeckVersion().Cards)
 				PlayerDeck.Add((Card)card.Clone());
 			IsUsingPremade = true;
 		}

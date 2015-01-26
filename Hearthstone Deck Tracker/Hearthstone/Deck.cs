@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Name;
 		public string Note;
+		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -61,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited, SerializableVersion version, IEnumerable<Deck> versions)
+		            DateTime lastEdited, SerializableVersion version, IEnumerable<Deck> versions, SerializableVersion selectedVersion = null)
             List<Card> missingCards
 		{
 			Name = name;
@@ -75,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = url;
 			LastEdited = lastEdited;
 			Version = version;
+			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			if(versions != null)
 			{
@@ -83,9 +85,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public List<SerializableVersion> VersionsIncludingSelf
+		{
+			get { return Versions.Select(x => x.Version).Concat(new[] {Version}).ToList(); }
+		}
+
+		[XmlIgnore]
 		public string NameAndVersion
 		{
-			get { return Versions.Count == 0 ? Name :  string.Format("{0} (v{1}.{2})", Name, Version.Major, Version.Minor); }
+			get { return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor); }
 		}
 
 		[XmlIgnore]
@@ -189,9 +198,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public bool HasVersions
+		{
+			get { return Versions != null && Versions.Count > 0; }
+		}
+
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SelectedVersion);
+		}
+
+		public Deck GetSelectedDeckVersion()
+		{
+			return Versions == null ? this : Versions.FirstOrDefault(d => d.Version == SelectedVersion) ?? this;
+		}
+
+		public void SelectVersion(SerializableVersion version)
+		{
+			SelectedVersion = version;
+		}
+
+		public void SelectVersion(Deck deck)
+		{
+			SelectVersion(deck.Version);
 		}
 
 		public string GetDeckInfo()

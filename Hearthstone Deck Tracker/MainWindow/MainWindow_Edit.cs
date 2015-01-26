@@ -158,7 +158,8 @@ namespace Hearthstone_Deck_Tracker
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url.");
 				return;
 			}
-			if(deck.Cards.All(c1 => selectedDeck.Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
+			//this could be expanded to check against the last version of the deck that was not modified after downloading
+			if(deck.Cards.All(c1 => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
 			{
 				await this.ShowMessageAsync("Already up to date.", "No changes found.");
 				return;

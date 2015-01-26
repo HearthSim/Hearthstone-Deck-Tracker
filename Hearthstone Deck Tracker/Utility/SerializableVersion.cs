@@ -40,6 +40,12 @@ namespace Hearthstone_Deck_Tracker
 			get { return new SerializableVersion(1, 0); }
 		}
 
+		[XmlIgnore]
+		public string ShortVersionString
+		{
+			get { return ToString("v{M}.{m}"); }
+		}
+
 		public int CompareTo(object obj)
 		{
 			var other = obj as SerializableVersion;
@@ -53,7 +59,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
 		}
-
 
 		/// <summary>
 		/// {M}: Major, {m}: Minor, {r}: Revision, {b}: Build

@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker
 		public void SetDeck(Deck deck)
 		{
 			_deck = deck;
-			deck.Cards.CollectionChanged += (sender, args) => UpdateValues();
+			deck.GetSelectedDeckVersion().Cards.CollectionChanged += (sender, args) => UpdateValues();
 			UpdateValues();
 		}
 
@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker
 			var weapons = new int[8];
 			var spells = new int[8];
 			var minions = new int[8];
-			foreach(var card in _deck.Cards)
+			foreach(var card in _deck.GetSelectedDeckVersion().Cards)
 			{
 				if(card.Cost >= 7)
 				{
