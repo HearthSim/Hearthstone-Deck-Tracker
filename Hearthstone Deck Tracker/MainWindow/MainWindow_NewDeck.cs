@@ -292,7 +292,7 @@ namespace Hearthstone_Deck_Tracker
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
-				UpdateDeckHistoryPanel(deck, false);
+				UpdateDeckHistoryPanel(deck, !editing);
 				UpdateDbListView();
 				ExpandNewDeck();
 				UpdateTitle();
