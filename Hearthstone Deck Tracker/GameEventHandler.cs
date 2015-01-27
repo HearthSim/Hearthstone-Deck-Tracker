@@ -292,7 +292,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Game.PlayingAs = hero;
 
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 
 			if(!string.IsNullOrEmpty(hero))
 			{
@@ -367,7 +367,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.IsInMenu = false;
 			Game.Reset();
 
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck != null)
 				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 		}
@@ -394,7 +394,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			Game.CurrentGameStats.GameEnd();
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck != null)
 			{
 				if(Config.Instance.DiscardGameIfIncorrectDeck
@@ -490,7 +490,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(!Config.Instance.KeepDecksVisible)
 			{
-				var deck = Helper.MainWindow.DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+				var deck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 				if(deck != null)
 					Game.SetPremadeDeck((Deck)deck.Clone());
 			}

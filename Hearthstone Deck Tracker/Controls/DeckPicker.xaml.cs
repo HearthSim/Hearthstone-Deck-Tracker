@@ -425,5 +425,10 @@ namespace Hearthstone_Deck_Tracker
 				e.Handled = true;
 			}
 		}
+
+        internal Deck GetSelectedDeckVersion()
+        {
+            return SelectedDeck != null ? SelectedDeck.GetSelectedDeckVersion() : null;
+        }
 	}
 }

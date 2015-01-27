@@ -59,8 +59,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(DeckPickerList.SelectedDeck == null)
 				return;
-			Logger.WriteLine("Creating screenshot of " + DeckPickerList.SelectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.SelectedDeck.GetSelectedDeckVersion().Cards, true);
+			Logger.WriteLine("Creating screenshot of " + DeckPickerList.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
+			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.GetSelectedDeckVersion().Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.SelectedDeck.GetSelectedDeckVersion().Name);
+			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.GetSelectedDeckVersion().Name);
 
 			screenShotWindow.Shutdown();
 			if(fileName == null)
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+			var deck = DeckPickerList.GetSelectedDeckVersion();
 			if(deck == null)
 				return;
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck.GetSelectedDeckVersion();
+			var deck = DeckPickerList.GetSelectedDeckVersion();
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
