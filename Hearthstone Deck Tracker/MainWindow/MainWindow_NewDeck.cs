@@ -440,7 +440,7 @@ namespace Hearthstone_Deck_Tracker
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.GetSelectedDeckVersion().Cards : null;
+			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.GetSelectedDeckVersion().Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
