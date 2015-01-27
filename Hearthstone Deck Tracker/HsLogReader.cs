@@ -382,32 +382,34 @@ namespace Hearthstone_Deck_Tracker
 						else if(player == 2)
 							_gameHandler.HandleOpponentName(name);
 					}
-					else if((Game.PlayerId >= 0
-					         && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId)
-					                .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower)
-					        || Game.OpponentId >= 0
-					        && Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId)
-					               .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_opponentUsedHeroPower)
+					else
 					{
-						if(_heroPowerRegex.IsMatch(logLine))
+						var playerEntity =
+							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId);
+						var opponentEntity =
+							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId);
+
+						if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
+							|| opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
 						{
-							var id = _heroPowerRegex.Match(logLine).Groups["Id"].Value.Trim();
-							if(!string.IsNullOrEmpty(id))
+							if(_heroPowerRegex.IsMatch(logLine))
 							{
-								var heroPower = Game.GetCardFromId(id);
-								if(heroPower.Type == "Hero Power")
+								var id = _heroPowerRegex.Match(logLine).Groups["Id"].Value.Trim();
+								if(!string.IsNullOrEmpty(id))
 								{
-									if(
-										Game.Entities.First(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId)
-										    .Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+									var heroPower = Game.GetCardFromId(id);
+									if(heroPower.Type == "Hero Power")
 									{
-										_gameHandler.HandlePlayerHeroPower(id, GetTurnNumber());
-										_playerUsedHeroPower = true;
-									}
-									else
-									{
-										_gameHandler.HandleOpponentHeroPower(id, GetTurnNumber());
-										_opponentUsedHeroPower = true;
+										if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+										{
+											_gameHandler.HandlePlayerHeroPower(id, GetTurnNumber());
+											_playerUsedHeroPower = true;
+										}
+										else if(opponentEntity.Value != null)
+										{
+											_gameHandler.HandleOpponentHeroPower(id, GetTurnNumber());
+											_opponentUsedHeroPower = true;
+										}
 									}
 								}
 							}
@@ -579,17 +581,23 @@ namespace Hearthstone_Deck_Tracker
 
 			if(tag == GAME_TAG.CONTROLLER && _waitForController != null && Game.PlayerId == -1)
 			{
-				if(_currentEntityHasCardId)
+				var p1 = Game.Entities.FirstOrDefault(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value;
+				var p2 = Game.Entities.FirstOrDefault(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value;
+                if(_currentEntityHasCardId)
 				{
-					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value.IsPlayer = value == 1;
-					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value.IsPlayer = value != 1;
+					if(p1 != null)
+						p1.IsPlayer = value == 1;
+					if(p2 != null)
+						p2.IsPlayer = value != 1;
 					Game.PlayerId = value;
 					Game.OpponentId = value == 1 ? 2 : 1;
 				}
 				else
 				{
-					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value.IsPlayer = value != 1;
-					Game.Entities.First(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value.IsPlayer = value == 1;
+					if(p1 != null)
+						p1.IsPlayer = value != 1;
+					if(p2 != null)
+						p2.IsPlayer = value == 1;
 					Game.PlayerId = value == 1 ? 2 : 1;
 					Game.OpponentId = value;
 				}
@@ -821,14 +829,18 @@ namespace Hearthstone_Deck_Tracker
 					{
 						if(value == (int)TAG_PLAYSTATE.WON)
 						{
-							GameEndKeyPoint(false, Game.Entities.First(x => x.Value.IsPlayer).Key);
+							var playerEntity = Game.Entities.FirstOrDefault(x => x.Value.IsPlayer);
+							if(playerEntity.Value != null)
+								GameEndKeyPoint(false, playerEntity.Key);
 							_gameHandler.HandleGameEnd();
 							_gameHandler.HandleLoss(false);
 							_gameEnded = true;
 						}
 						else if(value == (int)TAG_PLAYSTATE.LOST)
 						{
-							GameEndKeyPoint(true, Game.Entities.First(x => x.Value.IsPlayer).Key);
+							var playerEntity = Game.Entities.FirstOrDefault(x => x.Value.IsPlayer);
+							if(playerEntity.Value != null)
+								GameEndKeyPoint(true, playerEntity.Key);
 							_gameHandler.HandleGameEnd();
 							_gameHandler.HandleWin(false);
 							_gameEnded = true;
