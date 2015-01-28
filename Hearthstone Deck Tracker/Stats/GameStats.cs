@@ -144,6 +144,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 				GameMode = GameMode,
 				Turns = Turns,
 				_turnStats = LoadTurnStats(),
+				PlayerName =  PlayerName,
+				OpponentName = OpponentName,
+				ReplayFile = ReplayFile,
+				WasConceded = WasConceded,
+				VerifiedHeroes = VerifiedHeroes,
 				IsClone = true
 			};
 			newGame.Save();
