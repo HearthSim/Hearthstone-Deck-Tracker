@@ -87,9 +87,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var cloneStats =
 				(await
-				 this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.",
-				                       MessageDialogStyle.AffirmativeAndNegative,
-				                       new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"}))
+				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
+									   MessageDialogStyle.AffirmativeAndNegative,
+									   new MetroDialogSettings { AffirmativeButtonText = "clone history", NegativeButtonText = "do not clone history" }))
 				== MessageDialogResult.Affirmative;
 
 			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
@@ -138,9 +138,9 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			var cloneStats =
 				(await
-				 this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.",
+				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
 									   MessageDialogStyle.AffirmativeAndNegative,
-									   new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))
+									   new MetroDialogSettings { AffirmativeButtonText = "clone history", NegativeButtonText = "do not clone history" }))
 				== MessageDialogResult.Affirmative;
 			var clone = (Deck)deck.Clone();
 			clone.ResetVersions();
