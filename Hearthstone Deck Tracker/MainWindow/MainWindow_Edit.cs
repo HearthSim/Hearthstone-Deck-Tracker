@@ -131,6 +131,57 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.UpdateList();
 		}
 
+		private async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckPickerList.GetSelectedDeckVersion();
+			if(deck == null)
+				return;
+			var cloneStats =
+				(await
+				 this.ShowMessageAsync("Clone game stats?", "Cloned games do not count towards class or overall stats.",
+									   MessageDialogStyle.AffirmativeAndNegative,
+									   new MetroDialogSettings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" }))
+				== MessageDialogResult.Affirmative;
+			var clone = (Deck)deck.Clone();
+			clone.ResetVersions();
+
+			var originalStatsEntry = clone.DeckStats;
+
+			while(DeckList.DecksList.Any(d => d.Name == clone.Name))
+			{
+				var settings = new MetroDialogSettings { AffirmativeButtonText = "Set", DefaultText = clone.Name };
+				var name =
+					await
+					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
+
+				if(string.IsNullOrEmpty(name))
+					return;
+
+				clone.Name = name;
+			}
+
+			DeckList.DecksList.Add(clone);
+			DeckPickerList.AddAndSelectDeck(clone);
+			WriteDecks();
+
+			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
+			if(newStatsEntry == null)
+			{
+				newStatsEntry = new DeckStats(clone.Name);
+				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+			}
+
+			//clone game stats
+			if(cloneStats)
+			{
+				foreach(var game in originalStatsEntry.Games)
+					newStatsEntry.AddGameResult(game.CloneWithNewId());
+				Logger.WriteLine("cloned gamestats");
+			}
+
+			DeckStatsList.Save();
+			DeckPickerList.UpdateList();
+		}
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;

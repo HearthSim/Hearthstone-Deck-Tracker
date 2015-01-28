@@ -199,7 +199,10 @@
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
-                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="CLONE">
+                        <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
+                        <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>
@@ -334,6 +337,7 @@
                     <MenuItem Name="MenuItemSaveVersionCurrent" Header="v1.0 (current)" Click="MenuItemSaveVersionCurrent_OnClick"/>
                     <MenuItem Name="MenuItemSaveVersionMinor" Header="v1.1" Click="MenuItemSaveVersionMinor_OnClick"/>
                     <MenuItem Name="MenuItemSaveVersionMajor" Header="v2.0" Click="MenuItemSaveVersionMajor_OnClick"/>
+                    <MenuItem Name="MenuItemSaveAsNew" Header="SAVE AS NEW (v1.0)" Click="MenuItemSaveAsNew_OnClick"/>
                 </MenuItem>
                 <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>

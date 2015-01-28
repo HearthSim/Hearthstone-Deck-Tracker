@@ -451,10 +451,16 @@ namespace Hearthstone_Deck_Tracker
 			await SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-		private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion)
+		private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
 			var deckName = TextBoxDeckName.Text;
-			if(EditingDeck)
+			if(saveAsNew)
+			{
+				EditingDeck = false;
+				_newDeck.ResetVersions();
+				SaveDeck(false, newVersion);
+			}
+			else if(EditingDeck)
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
 				var result =
@@ -622,5 +628,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
 	}
 }

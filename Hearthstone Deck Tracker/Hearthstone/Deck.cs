@@ -85,6 +85,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public void ResetVersions()
+		{
+			Versions = new List<Deck>();
+			Version = SerializableVersion.Default;
+			SelectedVersion = Version;
+		}
+
 		[XmlIgnore]
 		public List<SerializableVersion> VersionsIncludingSelf
 		{

@@ -1028,5 +1028,10 @@ namespace Hearthstone_Deck_Tracker
 				Console.WriteLine(version);
 			}
 		}
+
+		private async void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
+		}
 	}
 }
