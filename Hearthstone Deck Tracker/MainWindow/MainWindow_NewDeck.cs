@@ -458,20 +458,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				EditingDeck = false;
 				_newDeck.ResetVersions();
-				SaveDeck(false, newVersion);
 			}
-			else if(EditingDeck)
-			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
-				var result =
-					await
-					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative, settings);
-				if(result == MessageDialogResult.Affirmative)
-					SaveDeck(true, newVersion);
-				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false, newVersion);
-			}
-			else if(DeckList.DecksList.Any(d => d.Name == deckName))
+			else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
 
@@ -493,8 +481,8 @@ namespace Hearthstone_Deck_Tracker
 				else if(result == MessageDialogResult.Negative)
 					SaveDeck(false, newVersion);
 			}
-			else
-				SaveDeck(false, newVersion);
+
+			SaveDeck(EditingDeck, newVersion);
 
 			editedDeckName = string.Empty;
 		}
