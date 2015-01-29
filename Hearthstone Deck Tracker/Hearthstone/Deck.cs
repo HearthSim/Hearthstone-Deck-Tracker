@@ -62,8 +62,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions, SerializableVersion selectedVersion = null)
-            
+		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
+		            SerializableVersion selectedVersion = null)
+
 		{
 			Name = name;
 			Class = className;
@@ -83,13 +84,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				foreach(var d in versions)
 					Versions.Add(d.Clone() as Deck);
 			}
-		}
-
-		public void ResetVersions()
-		{
-			Versions = new List<Deck>();
-			Version = SerializableVersion.Default;
-			SelectedVersion = Version;
 		}
 
 		[XmlIgnore]
@@ -214,6 +208,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SelectedVersion);
+		}
+
+		public void ResetVersions()
+		{
+			Versions = new List<Deck>();
+			Version = SerializableVersion.Default;
+			SelectedVersion = Version;
 		}
 
 		public Deck GetSelectedDeckVersion()

@@ -390,7 +390,7 @@ namespace Hearthstone_Deck_Tracker
 							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId);
 
 						if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
-							|| opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
+						   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
 						{
 							if(_heroPowerRegex.IsMatch(logLine))
 							{
@@ -583,7 +583,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var p1 = Game.Entities.FirstOrDefault(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 1).Value;
 				var p2 = Game.Entities.FirstOrDefault(e => e.Value.GetTag(GAME_TAG.PLAYER_ID) == 2).Value;
-                if(_currentEntityHasCardId)
+				if(_currentEntityHasCardId)
 				{
 					if(p1 != null)
 						p1.IsPlayer = value == 1;

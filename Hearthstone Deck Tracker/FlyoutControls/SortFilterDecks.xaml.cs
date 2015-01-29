@@ -46,8 +46,8 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		private bool _initialized;
 		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+		private bool _initialized;
 
 		#region Methods
 
@@ -272,7 +272,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.SelectedDeckSorting = selectedValue;
 				Config.Save();
 			}
-
 		}
 
 		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)

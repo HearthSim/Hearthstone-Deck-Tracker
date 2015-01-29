@@ -1033,5 +1033,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
 		}
+
+		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
+		{
+			if(deck == null)
+				return;
+			_originalDeck = deck;
+			SetNewDeck(deck, true);
+		}
 	}
 }

@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
@@ -119,6 +121,8 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Properties
 
+		public delegate void DoubleClickHandler(DeckPicker sender, Deck deck);
+
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
 
@@ -152,8 +156,12 @@ namespace Hearthstone_Deck_Tracker
 		public bool ChangedSelection { get; set; }
 
 		public event SelectedDeckHandler OnSelectedDeckChanged;
+		public event DoubleClickHandler OnDoubleClick;
 
 		#endregion
+
+		private bool _wasClicked;
+		private bool _wasDoubleClicked;
 
 		public DeckPicker()
 		{
@@ -411,8 +419,18 @@ namespace Hearthstone_Deck_Tracker
 				ListboxPicker.Items.Add(deck);
 		}
 
-		private void DeckPickerItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private async void DeckPickerItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
+			if(_wasClicked)
+				return;
+			_wasClicked = true;
+			await Task.Delay(SystemInformation.DoubleClickTime);
+			_wasClicked = false;
+			if(_wasDoubleClicked)
+			{
+				_wasDoubleClicked = false;
+				return;
+			}
 			var deckPickerItem = (sender as DeckPickerItem);
 			if(deckPickerItem == null)
 				return;
@@ -426,9 +444,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-        internal Deck GetSelectedDeckVersion()
-        {
-            return SelectedDeck != null ? SelectedDeck.GetSelectedDeckVersion() : null;
-        }
+		internal Deck GetSelectedDeckVersion()
+		{
+			return SelectedDeck != null ? SelectedDeck.GetSelectedDeckVersion() : null;
+		}
+
+		private void Control_OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			_wasDoubleClicked = true;
+			if(OnDoubleClick != null)
+				OnDoubleClick(this, SelectedDeck);
+		}
 	}
 }

@@ -88,9 +88,12 @@ namespace Hearthstone_Deck_Tracker
 			var cloneStats =
 				(await
 				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
-									   MessageDialogStyle.AffirmativeAndNegative,
-									   new MetroDialogSettings { AffirmativeButtonText = "clone history", NegativeButtonText = "do not clone history" }))
-				== MessageDialogResult.Affirmative;
+				                       MessageDialogStyle.AffirmativeAndNegative,
+				                       new MetroDialogSettings
+				                       {
+					                       AffirmativeButtonText = "clone history",
+					                       NegativeButtonText = "do not clone history"
+				                       })) == MessageDialogResult.Affirmative;
 
 			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
 			var originalStatsEntry = clone.DeckStats;
@@ -139,9 +142,12 @@ namespace Hearthstone_Deck_Tracker
 			var cloneStats =
 				(await
 				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
-									   MessageDialogStyle.AffirmativeAndNegative,
-									   new MetroDialogSettings { AffirmativeButtonText = "clone history", NegativeButtonText = "do not clone history" }))
-				== MessageDialogResult.Affirmative;
+				                       MessageDialogStyle.AffirmativeAndNegative,
+				                       new MetroDialogSettings
+				                       {
+					                       AffirmativeButtonText = "clone history",
+					                       NegativeButtonText = "do not clone history"
+				                       })) == MessageDialogResult.Affirmative;
 			var clone = (Deck)deck.Clone();
 			clone.ResetVersions();
 
@@ -149,7 +155,7 @@ namespace Hearthstone_Deck_Tracker
 
 			while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
-				var settings = new MetroDialogSettings { AffirmativeButtonText = "Set", DefaultText = clone.Name };
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
 					await
 					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
@@ -182,6 +188,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
 		}
+
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;

@@ -16,8 +16,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class GameDetails
 	{
-		private bool _initialized;
 		private GameStats _gameStats;
+		private bool _initialized;
 
 		public GameDetails()
 		{

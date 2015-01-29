@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck == null)
 				return;
-            if(Game.PlayingAgainst != string.Empty)
+			if(Game.PlayingAgainst != string.Empty)
 			{
 				var winsVS =
 					selectedDeck.DeckStats.Games.Count(

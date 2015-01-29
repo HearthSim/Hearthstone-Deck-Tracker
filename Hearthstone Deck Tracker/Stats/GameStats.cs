@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				GameMode = GameMode,
 				Turns = Turns,
 				_turnStats = LoadTurnStats(),
-				PlayerName =  PlayerName,
+				PlayerName = PlayerName,
 				OpponentName = OpponentName,
 				ReplayFile = ReplayFile,
 				WasConceded = WasConceded,

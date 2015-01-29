@@ -82,9 +82,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!deck.MissingCards.Any())
 			{
-				await window.ShowMessageAsync("No missing cards",
-				                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-				                        MessageDialogStyle.Affirmative, new MetroDialogSettings {AffirmativeButtonText = "OK"});
+				await
+					window.ShowMessageAsync("No missing cards",
+					                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
+					                        MessageDialogStyle.Affirmative, new MetroDialogSettings {AffirmativeButtonText = "OK"});
 				return;
 			}
 			var message = "The following cards were not found:\n";

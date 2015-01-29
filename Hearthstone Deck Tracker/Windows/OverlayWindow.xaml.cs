@@ -595,7 +595,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetWinRates()
 		{
-            var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck == null)
 				return;
 

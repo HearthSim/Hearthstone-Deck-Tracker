@@ -319,7 +319,8 @@
                               Grid.Row="1"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
-                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
+                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
+                              OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                        Grid.Row="1" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
