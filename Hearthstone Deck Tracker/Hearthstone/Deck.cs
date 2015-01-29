@@ -62,8 +62,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited, SerializableVersion version, IEnumerable<Deck> versions, SerializableVersion selectedVersion = null)
-            List<Card> missingCards
+		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions, SerializableVersion selectedVersion = null)
+            
 		{
 			Name = name;
 			Class = className;

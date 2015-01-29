@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckPickerList.SelectedDeck;
 			if(deck == null)
 				return;
-			ExportDeck(deck);
+			ExportDeck(deck.GetSelectedDeckVersion());
 		}
 
 		private async void ExportDeck(Deck deck)
@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckPickerList.GetSelectedDeckVersion();
 			if(deck == null)
 				return;
 			this.ShowMissingCardsMessage(deck);
