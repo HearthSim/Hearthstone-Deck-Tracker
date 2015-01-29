@@ -231,7 +231,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					color = Colors.Orange;
 				else if(InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
-				else if(Count == 0)
+				else if(Count <= 0)
 					color = Colors.Gray;
 				else if(WasDiscarded && Game.HighlightDiscarded)
 					color = Colors.IndianRed;
@@ -275,15 +275,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
 
 					//extra info?
-					if(Count >= 2 || Rarity == "Legendary")
+					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
 						                                           new Rect(189, 6, 25, 24)));
 
-						if(Count >= 2 && Count <= 9)
+						if(Math.Abs(Count) > 1 && Math.Abs(Count) <= 9)
 						{
-							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_" + Count + ".png", UriKind.Relative)),
-							                                           new Rect(194, 8, 18, 21)));
+							drawingGroup.Children.Add(
+							                          new ImageDrawing(
+								                          new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
+								                          new Rect(194, 8, 18, 21)));
 						}
 						else
 						{
@@ -293,7 +295,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 					//dark overlay
-					if(Count == 0)
+					if(Count <= 0)
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
 
 					var brush = new ImageBrush {ImageSource = new DrawingImage(drawingGroup)};

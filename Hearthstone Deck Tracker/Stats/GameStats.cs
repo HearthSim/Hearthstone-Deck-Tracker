@@ -70,6 +70,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return Result + (WasConceded ? "*" : ""); }
 		}
 
+		public SerializableVersion PlayerDeckVersion { get; set; }
+
+		[XmlIgnore]
+		public string PlayerDeckVersionString
+		{
+			get
+			{
+				return PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
+			}
+		}
+
 		[XmlIgnore]
 		public ToolTip ResultToolTip
 		{

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -20,6 +21,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Clipboard = System.Windows.Clipboard;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
@@ -66,12 +68,21 @@ namespace Hearthstone_Deck_Tracker
 		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
 		private bool _newDeckUnsavedChanges;
+		private Deck _originalDeck;
 		private bool _tempUpdateCheckDisabled;
 		private Version _updatedVersion;
 
 		public bool ShowToolTip
 		{
 			get { return Config.Instance.TrackerCardToolTips; }
+		}
+
+		public Visibility VersionComboBoxVisibility
+		{
+			get
+			{
+				return DeckPickerList.SelectedDeck != null && DeckPickerList.SelectedDeck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
+			}
 		}
 
 		#endregion
@@ -419,10 +430,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void ShowIncorrectDeckMessage()
 		{
-			var decks = DeckList.DecksList.Where(d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.Cards.Contains(c))).ToList();
+			var decks =
+				DeckList.DecksList.Where(d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				        .ToList();
 
-			if(decks.Contains(DeckPickerList.SelectedDeck))
-				decks.Remove(DeckPickerList.SelectedDeck);
+			if(decks.Contains(DeckPickerList.GetSelectedDeckVersion()))
+				decks.Remove(DeckPickerList.GetSelectedDeckVersion());
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
@@ -435,7 +448,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(decks.Count > 0)
 			{
-				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now));
+				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, SerializableVersion.Default,
+				                   new List<Deck>()));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -775,9 +789,17 @@ namespace Hearthstone_Deck_Tracker
 				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				MenuItemQuickSetTag.Items.Refresh();
 				MenuItemUpdateDeck.IsEnabled = !string.IsNullOrEmpty(deck.Url);
+
+				ComboBoxDeckVersion.ItemsSource = deck.VersionsIncludingSelf;
+				ComboBoxDeckVersion.SelectedItem = deck.SelectedVersion;
+				PanelVersionComboBox.Visibility = deck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
 			}
 			else
+			{
+				ComboBoxDeckVersion.ItemsSource = null;
 				EnableMenuItems(false);
+				PanelVersionComboBox.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		#endregion
@@ -804,13 +826,53 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 				return;
 			}
-			ListViewDeck.ItemsSource = selected.Cards;
-
+			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			if(Config.Instance.LastDeck != selected.Name)
 			{
 				Config.Instance.LastDeck = selected.Name;
 				Config.Save();
+			}
+		}
+
+		private void UpdateDeckHistoryPanel(Deck selected, bool isNewDeck)
+		{
+			DeckHistoryPanel.Children.Clear();
+			DeckCurrentVersion.Text = string.Format("v{0}.{1}", selected.SelectedVersion.Major, selected.SelectedVersion.Minor);
+			if(isNewDeck)
+			{
+				MenuItemSaveVersionCurrent.IsEnabled = false;
+				MenuItemSaveVersionMinor.IsEnabled = false;
+				MenuItemSaveVersionMajor.IsEnabled = false;
+				MenuItemSaveVersionCurrent.Visibility = Visibility.Collapsed;
+				MenuItemSaveVersionMinor.Visibility = Visibility.Collapsed;
+				MenuItemSaveVersionMajor.Visibility = Visibility.Collapsed;
+			}
+			else
+			{
+				MenuItemSaveVersionCurrent.IsEnabled = true;
+				MenuItemSaveVersionMinor.IsEnabled = true;
+				MenuItemSaveVersionMajor.IsEnabled = true;
+				MenuItemSaveVersionCurrent.Visibility = Visibility.Visible;
+				MenuItemSaveVersionMinor.Visibility = Visibility.Visible;
+				MenuItemSaveVersionMajor.Visibility = Visibility.Visible;
+				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
+				MenuItemSaveVersionMinor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major, _newDeck.Version.Minor + 1);
+				MenuItemSaveVersionMajor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major + 1, 0);
+			}
+
+			if(selected.Versions.Count > 0)
+			{
+				var current = selected;
+				foreach(var prevVersion in selected.Versions.OrderByDescending(d => d.Version))
+				{
+					var versionChange = new DeckVersionChange();
+					versionChange.Label.Text = string.Format("{0} -> {1}", prevVersion.Version.ToString("v{M}.{m}"),
+					                                         current.Version.ToString("v{M}.{m}"));
+					versionChange.ListViewDeck.ItemsSource = current - prevVersion;
+					DeckHistoryPanel.Children.Add(versionChange);
+					current = prevVersion;
+				}
 			}
 		}
 
@@ -927,6 +989,43 @@ namespace Hearthstone_Deck_Tracker
 				FlyoutDeckStats.IsOpen = true;
 				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
 				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
+			}
+		}
+
+		private async void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+		}
+
+		private async void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
+		}
+
+		private async void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
+		}
+
+		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized || DeckPickerList.ChangedSelection)
+				return;
+			var deck = DeckPickerList.SelectedDeck;
+			if(deck == null)
+				return;
+			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
+			if(version != null)
+			{
+				DeckPickerList.RemoveDeck(deck);
+				deck.SelectVersion(version);
+				WriteDecks();
+				DeckPickerList.AddAndSelectDeck(deck);
+				DeckPickerList.UpdateList();
+				UpdateDeckList(DeckPickerList.SelectedDeck);
+				ManaCurveMyDecks.UpdateValues();
+				UseDeck(deck);
+				Console.WriteLine(version);
 			}
 		}
 	}

@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
 				              "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
 				              deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
 
-			if(deck.Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
+			if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 			{
 				message +=
 					"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
@@ -55,8 +55,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(DeckPickerList.SelectedDeck == null)
 				return;
-			Logger.WriteLine("Creating screenshot of " + DeckPickerList.SelectedDeck.GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.SelectedDeck.Cards, true);
+			Logger.WriteLine("Creating screenshot of " + DeckPickerList.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
+			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.GetSelectedDeckVersion().Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.SelectedDeck.Name);
+			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.GetSelectedDeckVersion().Name);
 
 			screenShotWindow.Shutdown();
 			if(fileName == null)
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckPickerList.GetSelectedDeckVersion();
 			if(deck == null)
 				return;
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckPickerList.GetSelectedDeckVersion();
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));

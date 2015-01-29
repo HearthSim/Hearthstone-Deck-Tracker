@@ -28,12 +28,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public DateTime LastEdited;
 		public string Name;
 		public string Note;
+		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
 		public List<string> Tags;
 
 		public string Url;
+
+		public SerializableVersion Version = new SerializableVersion(1, 0);
+
+		[XmlArray(ElementName = "DeckHistory")]
+		[XmlArrayItem(ElementName = "Deck")]
+		public List<Deck> Versions;
 
 		public Deck()
 		{
@@ -42,11 +49,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = string.Empty;
 			Url = string.Empty;
 			Name = string.Empty;
+			Version = SerializableVersion.Default;
+			Versions = new List<Deck>();
 		}
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited)
+		            DateTime lastEdited, SerializableVersion version, IEnumerable<Deck> versions, SerializableVersion selectedVersion = null)
 		{
 			Name = name;
 			Class = className;
@@ -57,6 +66,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = note;
 			Url = url;
 			LastEdited = lastEdited;
+			Version = version;
+			SelectedVersion = selectedVersion ?? version;
+			Versions = new List<Deck>();
+			if(versions != null)
+			{
+				foreach(var d in versions)
+					Versions.Add(d.Clone() as Deck);
+			}
+		}
+
+		[XmlIgnore]
+		public List<SerializableVersion> VersionsIncludingSelf
+		{
+			get { return Versions.Select(x => x.Version).Concat(new[] {Version}).ToList(); }
+		}
+
+		[XmlIgnore]
+		public string NameAndVersion
+		{
+			get { return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor); }
 		}
 
 		[XmlIgnore]
@@ -160,9 +189,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public bool HasVersions
+		{
+			get { return Versions != null && Versions.Count > 0; }
+		}
+
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Version, Versions, SelectedVersion);
+		}
+
+		public Deck GetSelectedDeckVersion()
+		{
+			return Versions == null ? this : Versions.FirstOrDefault(d => d.Version == SelectedVersion) ?? this;
+		}
+
+		public void SelectVersion(SerializableVersion version)
+		{
+			SelectedVersion = version;
+		}
+
+		public void SelectVersion(Deck deck)
+		{
+			SelectVersion(deck.Version);
 		}
 
 		public string GetDeckInfo()
@@ -273,7 +323,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override int GetHashCode()
 		{
-			return Name.GetHashCode();
+			return NameAndVersion.GetHashCode();
+		}
+
+		public static List<Card> operator -(Deck first, Deck second)
+		{
+			var result = new Deck();
+
+			var diff = new List<Card>();
+			//removed
+			//diff.AddRange(prevVersion.Cards.Where(c => !selected.Cards.Contains(c)));
+			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
+			{
+				var cd = c.Clone() as Card;
+				cd.Count = -cd.Count; //merk as negative for visual
+				diff.Add(cd);
+			}
+			//added
+			diff.AddRange(first.Cards.Where(c => !second.Cards.Contains(c)));
+
+			//diff count
+			var diffCount =
+				first.Cards.Where(c => second.Cards.Any(c2 => c2.Id == c.Id) && second.Cards.First(c2 => c2.Id == c.Id).Count != c.Count);
+			foreach(var card in diffCount)
+			{
+				var cardclone = card.Clone() as Card;
+				cardclone.Count = cardclone.Count - second.Cards.Where(c => c.Id == cardclone.Id).First().Count;
+				diff.Add(cardclone);
+			}
+
+			return diff;
 		}
 	}
 }

@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker
 				return hsClass.GetName;
 			var deck = DataContext as Deck;
 			if(deck != null)
-				return deck.Name;
+				return deck.NameAndVersion;
 			return string.Empty;
 		}
 	}

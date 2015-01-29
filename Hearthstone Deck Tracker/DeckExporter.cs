@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 				Logger.WriteLine("Creating deck...", "DeckExporter");
-				foreach(var card in deck.Cards)
+				foreach(var card in deck.GetSelectedDeckVersion().Cards)
 					await AddCardToDeck(card, searchBoxPos, cardPosX, card2PosX, cardPosY, hsRect.Height, hsHandle);
 
 
