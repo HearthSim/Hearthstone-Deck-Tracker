@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void SaveDeck(bool overwrite)
+		private async void SaveDeck(bool overwrite, SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 
@@ -144,6 +144,14 @@ namespace Hearthstone_Deck_Tracker
 					                                    _newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result != MessageDialogResult.Affirmative)
 					return;
+			}
+
+			if(overwrite && (_newDeck.Version != newVersion))
+			{
+				_newDeck.Version = newVersion;
+				_newDeck.SelectedVersion = newVersion;
+				AddDeckHistory();
+				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
 
 			if(EditingDeck && overwrite)
@@ -276,9 +284,15 @@ namespace Hearthstone_Deck_Tracker
 				if(editing)
 					editedDeckName = deck.Name;
 				_newDeck = (Deck)deck.Clone();
+
+				_newDeck.Cards.Clear();
+				foreach(var card in deck.GetSelectedDeckVersion().Cards)
+					_newDeck.Cards.Add(card.Clone() as Card);
+
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 				TextBoxDeckName.Text = _newDeck.Name;
+				UpdateDeckHistoryPanel(deck, !editing);
 				UpdateDbListView();
 				ExpandNewDeck();
 				UpdateTitle();
@@ -292,6 +306,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
+				DeckHistoryPanel.Visibility = Visibility.Visible;
 				GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
@@ -308,6 +323,7 @@ namespace Hearthstone_Deck_Tracker
 				var width = GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Visibility.Collapsed;
 				MenuNewDeck.Visibility = Visibility.Collapsed;
+				DeckHistoryPanel.Visibility = Visibility.Collapsed;
 				MinWidth -= width;
 				Width -= width;
 			}
@@ -323,6 +339,17 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemExportScreenshot.IsEnabled = enable;
 			MenuItemExportToHs.IsEnabled = enable;
 			MenuItemExportXml.IsEnabled = enable;
+		}
+
+		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		{
+			//a menuitems clickevent does not fire if it has subitems
+			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
+			if(!MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
+			{
+				MenuItemSave.IsSubmenuOpen = false;
+				await SaveDeckWithOverwriteCheck();
+			}
 		}
 
 		#region UI
@@ -378,6 +405,7 @@ namespace Hearthstone_Deck_Tracker
 			ExpandNewDeck();
 			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
+			UpdateDeckHistoryPanel(_newDeck, true);
 			ManaCurveMyDecks.SetDeck(_newDeck);
 			UpdateDbListView();
 		}
@@ -412,36 +440,26 @@ namespace Hearthstone_Deck_Tracker
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.SelectedDeck.Cards : null;
+			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.GetSelectedDeckVersion().Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
 		}
 
-		private async void BtnSaveDeck_Click(object sender, RoutedEventArgs e)
-		{
-			//NewDeck.Cards =
-			//	new ObservableCollection<Card>(
-			//		NewDeck.Cards.OrderBy(c => c.Cost).ThenByDescending(c => c.Type).ThenBy(c => c.Name).ToList());
-			//ListViewNewDeck.ItemsSource = NewDeck.Cards;
-			await SaveDeckWithOverwriteCheck();
-		}
-
 		private async Task SaveDeckWithOverwriteCheck()
 		{
+			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+		}
+
+		private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+		{
 			var deckName = TextBoxDeckName.Text;
-			if(EditingDeck)
+			if(saveAsNew)
 			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Save as new"};
-				var result =
-					await
-					this.ShowMessageAsync("Saving deck", "How do you wish to save the deck?", MessageDialogStyle.AffirmativeAndNegative, settings);
-				if(result == MessageDialogResult.Affirmative)
-					SaveDeck(true);
-				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false);
+				EditingDeck = false;
+				_newDeck.ResetVersions();
 			}
-			else if(DeckList.DecksList.Any(d => d.Name == deckName))
+			else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
 
@@ -458,13 +476,13 @@ namespace Hearthstone_Deck_Tracker
 					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
 						DeleteDeck(oldDeck);
 
-					SaveDeck(true);
+					SaveDeck(true, newVersion);
 				}
 				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false);
+					SaveDeck(false, newVersion);
 			}
-			else
-				SaveDeck(false);
+
+			SaveDeck(EditingDeck, newVersion);
 
 			editedDeckName = string.Empty;
 		}
@@ -588,6 +606,13 @@ namespace Hearthstone_Deck_Tracker
 		private void BtnFilter_OnClick(object sender, RoutedEventArgs e)
 		{
 			UpdateDbListView();
+		}
+
+		private void AddDeckHistory()
+		{
+			var currentClone = _originalDeck.Clone() as Deck;
+			currentClone.Versions = new List<Deck>(); //empty ref to history
+			_newDeck.Versions.Add(currentClone);
 		}
 
 		#endregion

@@ -92,8 +92,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu Grid.Row="0" Grid.ColumnSpan="3">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -185,6 +186,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="_DECK" Click="BtnEditDeck_Click" />
+                    <MenuItem Header="SHOW MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
                     <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
                     <MenuItem Header="_NOTES" Click="BtnNotes_Click" />
                     <MenuItem Header="_TAGS" Click="BtnTags_Click" />
@@ -197,7 +199,10 @@
                     </MenuItem>
                     <Separator />
                     <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
-                    <MenuItem Header="CLONE" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="CLONE">
+                        <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
+                        <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>
@@ -253,10 +258,21 @@
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
             <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <ListView x:Name="ListViewDeck" Grid.Row="0"
+                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0">
+                    <Label Content="SELECTED VERSION:"/>
+                    <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ShortVersionString}"/>
+                        </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <ListView x:Name="ListViewDeck" Grid.Row="1"
                                     Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -297,21 +313,21 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="1" Height="150" Margin="0,0,0,6" />
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
-
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="1"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
-                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" />
+                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
+                              OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                        Grid.Row="1" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
 
 
-            <Menu Name="MenuNewDeck" Grid.Column="3" Grid.Row="0" Visibility="Collapsed">
-                <MenuItem Header="SAVE" Click="BtnSaveDeck_Click">
+            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="0" Visibility="Collapsed">
+                <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
@@ -319,6 +335,10 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
+                    <MenuItem Name="MenuItemSaveVersionCurrent" Header="v1.0 (current)" Click="MenuItemSaveVersionCurrent_OnClick"/>
+                    <MenuItem Name="MenuItemSaveVersionMinor" Header="v1.1" Click="MenuItemSaveVersionMinor_OnClick"/>
+                    <MenuItem Name="MenuItemSaveVersionMajor" Header="v2.0" Click="MenuItemSaveVersionMajor_OnClick"/>
+                    <MenuItem Name="MenuItemSaveAsNew" Header="SAVE AS NEW (v1.0)" Click="MenuItemSaveAsNew_OnClick"/>
                 </MenuItem>
                 <MenuItem Header="CANCEL" Click="BtnCancelEdit_Click">
                     <MenuItem.Icon>
@@ -370,13 +390,17 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="246">
+            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="492">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="5*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
-                            Width="235">
+                            Width="235" Grid.ColumnSpan="2">
                     <TextBox controls:TextBoxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
                              VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
                              TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
@@ -401,7 +425,7 @@
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                                     HorizontalAlignment="Left"
                                     Width="235" KeyDown="ListViewDB_KeyDown"
-                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1">
+                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1" Grid.Column="0">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -434,8 +458,21 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <DockPanel Grid.Column="1" Margin="0,6,0,0" Grid.Row="0">
+                    <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
+                    <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center"/>
+                </DockPanel>
+                <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+                    <StackPanel x:Name="DeckHistoryPanel" 
+                                    Orientation="Vertical"
+                                    
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.CanContentScroll="True"
+                                    HorizontalAlignment="Center" Height="auto" Width="220"  Margin="0,0,0,0"
+                />
+                </ScrollViewer>
             </Grid>
-
         </Grid>
     </Grid>
 </controls:MetroWindow>

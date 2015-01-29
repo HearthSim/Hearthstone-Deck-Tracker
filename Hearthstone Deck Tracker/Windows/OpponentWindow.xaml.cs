@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck == null)
 				return;
 			if(Game.PlayingAgainst != string.Empty)

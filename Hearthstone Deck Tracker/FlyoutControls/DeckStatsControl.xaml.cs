@@ -211,6 +211,22 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLoss.Items.Clear();
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
+			//current version
+			var games =
+				filteredGames.Where(
+				                    g =>
+				                    g.PlayerDeckVersion == deck.Version
+				                    || g.PlayerDeckVersion == null && deck.Version == new SerializableVersion(1, 0)).ToList();
+			DataGridWinLoss.Items.Add(new WinLoss(games, "%", deck.Version));
+			DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", deck.Version));
+			//prev versions
+			foreach(var v in deck.Versions.Select(d => d.Version).OrderByDescending(d => d))
+			{
+				games =
+					filteredGames.Where(g => g.PlayerDeckVersion == v || g.PlayerDeckVersion == null && v == new SerializableVersion(1, 0)).ToList();
+				DataGridWinLoss.Items.Add(new WinLoss(games, "%", v));
+				DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", v));
+			}
 
 			var defaultStats = DefaultDeckStats.Instance.GetDeckStats(deck.Class) ?? new DeckStats();
 
@@ -502,6 +518,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				_deck.DeckStats.Games.Remove(selectedGame);
+			selectedGame.PlayerDeckVersion = selectedDeck.Version; //move to latest version
 			selectedDeck.DeckStats.Games.Add(selectedGame);
 			DeckStatsList.Save();
 			Helper.MainWindow.WriteDecks();
@@ -763,11 +780,19 @@ namespace Hearthstone_Deck_Tracker
 			private readonly string _playerHero;
 			private readonly List<GameStats> _stats;
 
-			public WinLoss(List<GameStats> stats, string text)
+			public WinLoss(List<GameStats> stats, string text) : this(stats, text, null)
+			{
+			}
+
+			public WinLoss(List<GameStats> stats, string text, SerializableVersion version)
 			{
 				_percent = text == "%";
 				_stats = stats;
 				Text = text;
+				if(version == null)
+					Version = "ALL";
+				else
+					Version = version.ToString("v{M}.{m}");
 			}
 
 			public WinLoss(List<GameStats> stats, bool percent, string playerHero)
@@ -776,6 +801,8 @@ namespace Hearthstone_Deck_Tracker
 				_stats = stats;
 				_playerHero = playerHero;
 			}
+
+			public string Version { get; set; }
 
 			public BitmapImage PlayerHeroImage
 			{
@@ -857,6 +884,8 @@ namespace Hearthstone_Deck_Tracker
 
 			private string GetWinLoss(string hsClass = null)
 			{
+				if(_stats == null)
+					return "0 - 0";
 				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
 				var losses = _stats.Count(s => s.Result == GameResult.Loss && (hsClass == null || s.OpponentHero == hsClass));
 				return wins + " - " + losses;
@@ -864,6 +893,8 @@ namespace Hearthstone_Deck_Tracker
 
 			private string GetPercent(string hsClass = null)
 			{
+				if(_stats == null)
+					return "-";
 				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
 				var total = _stats.Count(s => s.Result != GameResult.None && (hsClass == null || s.OpponentHero == hsClass));
 				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";

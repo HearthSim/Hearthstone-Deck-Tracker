@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hearthstone Deck Tracker", "Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj", "{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTTests", "HDTTests\HDTTests.csproj", "{A99438AD-6733-4FDA-928C-30C37255FF1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +23,10 @@ Global
 		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

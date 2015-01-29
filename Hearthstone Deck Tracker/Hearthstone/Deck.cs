@@ -20,14 +20,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public ObservableCollection<Card> Cards;
 
+
 		public string Class;
 
 		[XmlIgnore]
 		public bool IsSelectedInGui;
 
 		public DateTime LastEdited;
+
+		[XmlArray(ElementName = "MissingCards")]
+		[XmlArrayItem(ElementName = "Card")]
+		public List<Card> MissingCards;
+
 		public string Name;
 		public string Note;
+		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -35,28 +42,60 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Url;
 
+		public SerializableVersion Version = new SerializableVersion(1, 0);
+
+		[XmlArray(ElementName = "DeckHistory")]
+		[XmlArrayItem(ElementName = "Deck")]
+		public List<Deck> Versions;
+
 		public Deck()
 		{
 			Cards = new ObservableCollection<Card>();
+			MissingCards = new List<Card>();
 			Tags = new List<string>();
 			Note = string.Empty;
 			Url = string.Empty;
 			Name = string.Empty;
+			Version = SerializableVersion.Default;
+			Versions = new List<Deck>();
 		}
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited)
+		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
+		            SerializableVersion selectedVersion = null)
+
 		{
 			Name = name;
 			Class = className;
 			Cards = new ObservableCollection<Card>();
+			MissingCards = missingCards;
 			foreach(var card in cards)
 				Cards.Add((Card)card.Clone());
 			Tags = new List<string>(tags);
 			Note = note;
 			Url = url;
 			LastEdited = lastEdited;
+			Version = version;
+			SelectedVersion = selectedVersion ?? version;
+			Versions = new List<Deck>();
+			if(versions != null)
+			{
+				foreach(var d in versions)
+					Versions.Add(d.Clone() as Deck);
+			}
+		}
+
+		[XmlIgnore]
+		public List<SerializableVersion> VersionsIncludingSelf
+		{
+			get { return Versions.Select(x => x.Version).Concat(new[] {Version}).ToList(); }
+		}
+
+		[XmlIgnore]
+		public string NameAndVersion
+		{
+			get { return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor); }
 		}
 
 		[XmlIgnore]
@@ -160,9 +199,37 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public bool HasVersions
+		{
+			get { return Versions != null && Versions.Count > 0; }
+		}
+
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SelectedVersion);
+		}
+
+		public void ResetVersions()
+		{
+			Versions = new List<Deck>();
+			Version = SerializableVersion.Default;
+			SelectedVersion = Version;
+		}
+
+		public Deck GetSelectedDeckVersion()
+		{
+			return Versions == null ? this : Versions.FirstOrDefault(d => d.Version == SelectedVersion) ?? this;
+		}
+
+		public void SelectVersion(SerializableVersion version)
+		{
+			SelectedVersion = version;
+		}
+
+		public void SelectVersion(Deck deck)
+		{
+			SelectVersion(deck.Version);
 		}
 
 		public string GetDeckInfo()
@@ -273,7 +340,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override int GetHashCode()
 		{
-			return Name.GetHashCode();
+			return NameAndVersion.GetHashCode();
+		}
+
+		public static List<Card> operator -(Deck first, Deck second)
+		{
+			var result = new Deck();
+
+			var diff = new List<Card>();
+			//removed
+			//diff.AddRange(prevVersion.Cards.Where(c => !selected.Cards.Contains(c)));
+			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
+			{
+				var cd = c.Clone() as Card;
+				cd.Count = -cd.Count; //merk as negative for visual
+				diff.Add(cd);
+			}
+			//added
+			diff.AddRange(first.Cards.Where(c => !second.Cards.Contains(c)));
+
+			//diff count
+			var diffCount =
+				first.Cards.Where(c => second.Cards.Any(c2 => c2.Id == c.Id) && second.Cards.First(c2 => c2.Id == c.Id).Count != c.Count);
+			foreach(var card in diffCount)
+			{
+				var cardclone = card.Clone() as Card;
+				cardclone.Count = cardclone.Count - second.Cards.Where(c => c.Id == cardclone.Id).First().Count;
+				diff.Add(cardclone);
+			}
+
+			return diff;
 		}
 	}
 }

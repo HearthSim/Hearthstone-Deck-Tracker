@@ -201,7 +201,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string DeckToIdString(Deck deck)
 		{
-			return deck.Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
+			return deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 		}
 
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))

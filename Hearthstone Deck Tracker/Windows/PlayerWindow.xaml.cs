@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetWinRates()
 		{
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			if(selectedDeck == null)
 				return;
 
@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetDeckTitle()
 		{
-			var selectedDeck = Helper.MainWindow.DeckPickerList.SelectedDeck;
+			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
 			LblDeckTitle.Text = selectedDeck != null ? selectedDeck.Name : string.Empty;
 		}
 

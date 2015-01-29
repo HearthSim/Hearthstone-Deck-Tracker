@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
@@ -119,6 +121,8 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Properties
 
+		public delegate void DoubleClickHandler(DeckPicker sender, Deck deck);
+
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
 
@@ -149,9 +153,15 @@ namespace Hearthstone_Deck_Tracker
 			get { return _selectedClass != null ? _selectedClass.Name : "None"; }
 		}
 
+		public bool ChangedSelection { get; set; }
+
 		public event SelectedDeckHandler OnSelectedDeckChanged;
+		public event DoubleClickHandler OnDoubleClick;
 
 		#endregion
+
+		private bool _wasClicked;
+		private bool _wasDoubleClicked;
 
 		public DeckPicker()
 		{
@@ -193,6 +203,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null)
 				return;
+			ChangedSelection = true;
 			var hsClass = _hsClasses.FirstOrDefault(c => c.Name == deck.Class) ?? _hsClasses.First(c => c.Name == "Undefined");
 
 			if(hsClass != null)
@@ -222,6 +233,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			SelectedDeck = deck;
+			ChangedSelection = false;
 		}
 
 		private bool DeckMatchesSelectedTags(Deck deck)
@@ -245,12 +257,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListboxPicker_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(ListboxPicker.SelectedIndex == -1)
+			if(e.AddedItems == null || e.AddedItems.Count == 0)
 				return;
 			if(!_initialized)
 				return;
-
-			var selectedClass = ListboxPicker.SelectedItem as HsClass;
+			ChangedSelection = true;
+			var selectedClass = e.AddedItems[0] as HsClass;
 			if(selectedClass != null)
 			{
 				if(_inClassSelect)
@@ -293,22 +305,30 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				var newSelectedDeck = ListboxPicker.SelectedItem as Deck;
-				if(Equals(newSelectedDeck, SelectedDeck))
-					return;
-				if(newSelectedDeck != null)
+				var newSelectedDeck = e.AddedItems[0] as Deck;
+				if(newSelectedDeck == null)
 				{
-					if(SelectedDeck != null)
-						SelectedDeck.IsSelectedInGui = false;
-					newSelectedDeck.IsSelectedInGui = true;
-					ListboxPicker.Items.Refresh();
-
-					if(OnSelectedDeckChanged != null)
-						OnSelectedDeckChanged(this, newSelectedDeck);
-
-					SelectedDeck = newSelectedDeck;
+					ChangedSelection = false;
+					return;
 				}
+
+				if(Equals(newSelectedDeck, SelectedDeck))
+				{
+					ChangedSelection = false;
+					return;
+				}
+
+				if(OnSelectedDeckChanged != null)
+					OnSelectedDeckChanged(this, newSelectedDeck);
+				if(SelectedDeck != null)
+					SelectedDeck.IsSelectedInGui = false;
+				newSelectedDeck.IsSelectedInGui = true;
+				ListboxPicker.Items.Refresh();
+
+
+				SelectedDeck = newSelectedDeck;
 			}
+			ChangedSelection = false;
 		}
 
 		internal void SetSelectedTags(List<string> tags)
@@ -399,8 +419,18 @@ namespace Hearthstone_Deck_Tracker
 				ListboxPicker.Items.Add(deck);
 		}
 
-		private void DeckPickerItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private async void DeckPickerItem_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
+			if(_wasClicked)
+				return;
+			_wasClicked = true;
+			await Task.Delay(SystemInformation.DoubleClickTime);
+			_wasClicked = false;
+			if(_wasDoubleClicked)
+			{
+				_wasDoubleClicked = false;
+				return;
+			}
 			var deckPickerItem = (sender as DeckPickerItem);
 			if(deckPickerItem == null)
 				return;
@@ -412,6 +442,18 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.DeselectDeck();
 				e.Handled = true;
 			}
+		}
+
+		internal Deck GetSelectedDeckVersion()
+		{
+			return SelectedDeck != null ? SelectedDeck.GetSelectedDeckVersion() : null;
+		}
+
+		private void Control_OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			_wasDoubleClicked = true;
+			if(OnDoubleClick != null)
+				OnDoubleClick(this, SelectedDeck);
 		}
 	}
 }
