@@ -185,6 +185,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="_DECK" Click="BtnEditDeck_Click" />
+                    <MenuItem Header="SHOW MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
                     <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
                     <MenuItem Header="_NOTES" Click="BtnNotes_Click" />
                     <MenuItem Header="_TAGS" Click="BtnTags_Click" />

@@ -20,12 +20,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public ObservableCollection<Card> Cards;
 
+
 		public string Class;
 
 		[XmlIgnore]
 		public bool IsSelectedInGui;
 
 		public DateTime LastEdited;
+
+		[XmlArray(ElementName = "MissingCards")]
+		[XmlArrayItem(ElementName = "Card")]
+		public List<Card> MissingCards;
+
 		public string Name;
 		public string Note;
 
@@ -38,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Deck()
 		{
 			Cards = new ObservableCollection<Card>();
+			MissingCards = new List<Card>();
 			Tags = new List<string>();
 			Note = string.Empty;
 			Url = string.Empty;
@@ -46,11 +53,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited)
+		            DateTime lastEdited, List<Card> missingCards)
 		{
 			Name = name;
 			Class = className;
 			Cards = new ObservableCollection<Card>();
+			MissingCards = missingCards;
 			foreach(var card in cards)
 				Cards.Add((Card)card.Clone());
 			Tags = new List<string>(tags);
@@ -162,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards);
 		}
 
 		public string GetDeckInfo()

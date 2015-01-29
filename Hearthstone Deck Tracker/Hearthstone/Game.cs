@@ -688,7 +688,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromName(string name)
 		{
-            if(GetActualCards().Any(c => string.Equals(c.Name, name, StringComparison.InvariantCultureIgnoreCase)))
+			if(GetActualCards().Any(c => string.Equals(c.Name, name, StringComparison.InvariantCultureIgnoreCase)))
 			{
 				var card = GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
 				if(card != null)

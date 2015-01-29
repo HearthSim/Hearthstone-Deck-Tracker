@@ -296,6 +296,24 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
+				if(configVersion <= new Version(0, 7, 6, 0))
+				{
+					if(Config.Instance.ExportCard1X != 0.04)
+					{
+						Config.Instance.Reset("ExportCard1X");
+						converted = true;
+					}
+					if(Config.Instance.ExportCard2X != 0.2)
+					{
+						Config.Instance.Reset("ExportCard2X");
+						converted = true;
+					}
+					if(Config.Instance.ExportCardsY != 0.168)
+					{
+						Config.Instance.Reset("ExportCardsY");
+						converted = true;
+					}
+				}
 			}
 
 			if(converted)
