@@ -683,7 +683,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(_cardDb.TryGetValue(cardId, out card))
 				return (Card)card.Clone();
 			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
-			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", null, 0, "");
+			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
 		public static Card GetCardFromName(string name)
@@ -697,7 +697,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			//not sure with all the values here
 			Logger.WriteLine("Could not get card from name: " + name);
-			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0, "UNKNOWN", null, 0, "");
+			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
 		public static List<Card> GetActualCards()

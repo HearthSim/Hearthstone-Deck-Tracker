@@ -48,7 +48,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
-		            int count, string text, int attack, int health, string race, string[] mechanics, int? durability, string artist)
+		            int count, string text, int attack, int health, string race, string[] mechanics, int? durability, string artist,
+		            string set)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -65,8 +66,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Race = race;
 			Durability = durability;
 			Mechanics = mechanics;
-
 			Artist = artist;
+			Set = set;
 		}
 
 		public int Count
@@ -310,7 +311,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race,
-			                       Mechanics, Durability, Artist);
+			                       Mechanics, Durability, Artist, Set);
 			return newcard;
 		}
 
@@ -354,6 +355,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Durability = stats.Durability;
 			Mechanics = stats.Mechanics;
 			Artist = stats.Artist;
+			Set = stats.Set;
 			_wasDiscarded = false;
 			_loaded = true;
 			OnPropertyChanged();

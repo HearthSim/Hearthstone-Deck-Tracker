@@ -48,8 +48,12 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(500);
 				await DeckExporter.Export(deck);
 				await controller.CloseAsync();
+
+				if(deck.MissingCards.Any())
+					this.ShowMissingCardsMessage(deck);
 			}
 		}
+
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
@@ -98,7 +102,6 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard");
 		}
 
-
 		public async Task ShowSavedFileMessage(string fileName, string dir)
 		{
 			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
@@ -120,6 +123,14 @@ namespace Hearthstone_Deck_Tracker
 				ExportDeck(deck);
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+		}
+
+		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckPickerList.SelectedDeck;
+			if(deck == null)
+				return;
+			this.ShowMissingCardsMessage(deck);
 		}
 	}
 }
