@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
+		private bool _initialized;
 		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
 
 		#region Methods
@@ -70,6 +71,7 @@ namespace Hearthstone_Deck_Tracker
 				var old = oldTag.FirstOrDefault(t => t.Name == tag);
 				Tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
 			}
+			_initialized = true;
 		}
 
 		public List<string> GetTags()
@@ -257,14 +259,20 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			Helper.MainWindow.DeckPickerList.SortDecks();
+			if(!_initialized)
+				return;
+
 			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
 			if(selectedValue == null)
 				return;
 
-			Config.Instance.SelectedDeckSorting = selectedValue;
-			Config.Save();
+			if(Config.Instance.SelectedDeckSorting != selectedValue)
+			{
+				Config.Instance.SelectedDeckSorting = selectedValue;
+				Config.Save();
+			}
 
-			Helper.MainWindow.DeckPickerList.SortDecks();
 		}
 
 		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)

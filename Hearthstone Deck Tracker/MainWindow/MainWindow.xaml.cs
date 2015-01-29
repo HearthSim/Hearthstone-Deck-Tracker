@@ -656,7 +656,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void WriteDecks()
 		{
-			XmlManager<Decks>.Save(_decksPath, DeckList);
+			if(_initialized)
+				XmlManager<Decks>.Save(_decksPath, DeckList);
 		}
 
 		public void ActivateWindow()
@@ -806,8 +807,11 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = selected.Cards;
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			Config.Instance.LastDeck = selected.Name;
-			Config.Save();
+			if(Config.Instance.LastDeck != selected.Name)
+			{
+				Config.Instance.LastDeck = selected.Name;
+				Config.Save();
+			}
 		}
 
 

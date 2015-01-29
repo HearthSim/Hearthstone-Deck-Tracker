@@ -16,13 +16,12 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class GameDetails
 	{
-		private readonly bool _initialized;
+		private bool _initialized;
 		private GameStats _gameStats;
 
 		public GameDetails()
 		{
 			InitializeComponent();
-			_initialized = true;
 		}
 
 		public void SetGame(GameStats gameStats)
@@ -74,6 +73,7 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxOpponentPlay.IsChecked = Config.Instance.GameDetails.ShowOpponentPlay;
 			CheckboxPlayerMulligan.IsChecked = Config.Instance.GameDetails.ShowPlayerMulligan;
 			CheckboxOpponentMulligan.IsChecked = Config.Instance.GameDetails.ShowOpponentMulligan;
+			_initialized = true;
 		}
 
 		private void CheckboxPlayerPlay_Checked(object sender, RoutedEventArgs e)
