@@ -78,55 +78,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public static async void ShowMissingCardsMessage(this MetroWindow window, Deck deck)
+		public static async void ShowMissingCardsMessage(this MetroWindow window, string message)
 		{
-			if(!deck.MissingCards.Any())
+			if (message.Equals(""))
 			{
 				await
-					window.ShowMessageAsync("No missing cards",
-					                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-					                        MessageDialogStyle.Affirmative, new MetroDialogSettings {AffirmativeButtonText = "OK"});
+				window.ShowMessageAsync("No missing cards",
+										"No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
+										MessageDialogStyle.Affirmative, new MetroDialogSettings { AffirmativeButtonText = "OK" });
 				return;
 			}
-			var message = "The following cards were not found:\n";
-			var totalDust = 0;
-			var promo = "";
-			var nax = "";
-			foreach(var card in deck.MissingCards)
-			{
-				message += "\n• " + card.LocalizedName;
 
-				int dust;
-				switch(card.Rarity)
-				{
-					case "Common":
-						dust = 40;
-						break;
-					case "Rare":
-						dust = 100;
-						break;
-					case "Epic":
-						dust = 400;
-						break;
-					case "Legendary":
-						dust = 1600;
-						break;
-					default:
-						dust = 0;
-						break;
-				}
-
-				if(card.Count == 2)
-					message += " x2";
-
-				if(card.Set.Equals("CURSE OF NAXXRAMAS", StringComparison.CurrentCultureIgnoreCase))
-					nax = "and the Naxxramas DLC ";
-				else if(card.Set.Equals("PROMOTION", StringComparison.CurrentCultureIgnoreCase))
-					promo = "and Promotion cards ";
-				else
-					totalDust += dust * card.Count;
-			}
-			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});

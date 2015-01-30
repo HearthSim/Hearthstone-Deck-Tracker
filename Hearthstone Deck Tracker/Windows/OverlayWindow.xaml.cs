@@ -260,9 +260,24 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			HideCardsWhenFriendsListOpen(PointFromScreen(_mousePos));
-
 			GrayOutSecrets(_mousePos);
+			HideMissingCardsStack(_mousePos);
 		}
+
+		private void HideMissingCardsStack (Point clickPos){
+
+			if(PointInsideControl(ButtonMissingCards.PointFromScreen(clickPos), ButtonMissingCards.ActualWidth,
+											   ButtonMissingCards.ActualHeight, new Thickness(5)))
+			{
+				_opponentCardsHidden = false;
+				StackPanelOpponent.Visibility = Visibility.Visible;
+				StackPanelMissingCards.Visibility = Visibility.Hidden;
+				UpdatePosition();
+			}
+
+
+		}
+
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)
 		{
@@ -785,19 +800,40 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var relativePos = PointFromScreen(new Point(pos.X, pos.Y));
 					if((StackPanelSecrets.IsVisible
-					    && (PointInsideControl(StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y)), StackPanelSecrets.ActualWidth,
-					                           StackPanelSecrets.ActualHeight, new Thickness(20)))
-					    || relativePos.X < 170 && relativePos.Y > Height - 120))
+						&& (PointInsideControl(StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y)), StackPanelSecrets.ActualWidth,
+											   StackPanelSecrets.ActualHeight, new Thickness(20)))
+						|| relativePos.X < 170 && relativePos.Y > Height - 120))
 					{
 						if(_mouseInput == null)
 							HookMouse();
 					}
 					else if(_mouseInput != null && !((_isFriendsListOpen.HasValue && _isFriendsListOpen.Value) || await Helper.FriendsListOpen()))
 						UnHookMouse();
+
+					//
+					if(StackPanelMissingCards.IsVisible && (PointInsideControl(ButtonMissingCards.PointFromScreen(new Point(pos.X, pos.Y)), ButtonMissingCards.ActualWidth,
+									   ButtonMissingCards.ActualHeight, new Thickness(20))))
+					{
+						if(_mouseInput == null)
+							HookMouse();
+						else if(_mouseInput != null)
+							UnHookMouse();
+					}
+
 				}
-				else if(_mouseInput != null)
-					UnHookMouse();
+				else
+				{
+					if(_mouseInput != null)
+						UnHookMouse();
+
+					if(StackPanelMissingCards.IsVisible && (PointInsideControl(ButtonMissingCards.PointFromScreen(new Point(pos.X, pos.Y)), ButtonMissingCards.ActualWidth,
+					   ButtonMissingCards.ActualHeight, new Thickness(20))))
+						HideMissingCardsStack(new Point(pos.X, pos.Y));
+
+				}
+
 			}
+
 		}
 
 
@@ -841,7 +877,7 @@ namespace Hearthstone_Deck_Tracker
 			//hide the overlay depenting on options
 			ShowOverlay(
 			            !((Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
-			              || (Config.Instance.HideInMenu && Game.IsInMenu)
+						  || (Config.Instance.HideInMenu && Game.IsInMenu && !(StackPanelMissingCards.Visibility == Visibility.Visible))
 			              || (Config.Instance.HideOverlayInSpectator && Game.CurrentGameMode == GameMode.Spectator)
 			              || Config.Instance.HideOverlay || ForceHidden));
 
@@ -1137,6 +1173,24 @@ namespace Hearthstone_Deck_Tracker
 			_mouseInput.Dispose();
 			_mouseInput = null;
 			Logger.WriteLine("Disabled mouse hook");
+		}
+
+		public void ShowMissingCards(string message)
+		{
+			LblMissingCards.Text = message + System.Environment.NewLine;
+			if(Config.Instance.ExtraFeatures){
+				ButtonMissingCards.Width = 25;
+				ButtonMissingCards.Content = "OK";
+			}
+			else
+			{
+				ButtonMissingCards.Width = 130;
+				ButtonMissingCards.Content = "Mouseover to close";
+			}
+
+			StackPanelOpponent.Visibility = Visibility.Hidden;
+			_opponentCardsHidden = true;
+			StackPanelMissingCards.Visibility = Visibility.Visible;
 		}
 	}
 }
