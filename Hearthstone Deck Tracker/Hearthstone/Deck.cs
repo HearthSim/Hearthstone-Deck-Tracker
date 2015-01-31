@@ -48,6 +48,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
 
+
+		public string HearthStatsId;
+
 		public Deck()
 		{
 			Cards = new ObservableCollection<Card>();
@@ -204,6 +207,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get { return Versions != null && Versions.Count > 0; }
 		}
+
 
 		public object Clone()
 		{

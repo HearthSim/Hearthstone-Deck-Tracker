@@ -143,6 +143,13 @@
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameEventHandler.cs" />
+    <Compile Include="HearthStats\HearthStatsAPI.cs" />
+    <Compile Include="HearthStats\HearthStatsTestWindow.xaml.cs">
+      <DependentUpon>HearthStatsTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HearthStats\LoginControl.xaml.cs">
+      <DependentUpon>LoginControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
@@ -315,6 +322,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="HearthStats\HearthStatsTestWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HearthStats\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -390,6 +405,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="HearthStats\hearthstats_logo.png" />
     <Content Include="Images\abomination.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

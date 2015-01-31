@@ -13,12 +13,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.HearthStats;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -314,6 +316,9 @@ namespace Hearthstone_Deck_Tracker
 			UpdateOverlayAsync();
 
 			_initialized = true;
+
+			HearthStatsTestWindow testWindow = new HearthStatsTestWindow();
+			testWindow.Show();
 		}
 
 		#endregion
@@ -1040,6 +1045,11 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_originalDeck = deck;
 			SetNewDeck(deck, true);
+		}
+
+		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutHearthstatsLogin.IsOpen = true;
 		}
 	}
 }

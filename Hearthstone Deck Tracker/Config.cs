@@ -619,6 +619,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public string HearthStatsFilePath
+		{
+			get { return Path.Combine(DataDir, "hearthstats"); }
+		}
+
 		#endregion
 
 		#region Misc

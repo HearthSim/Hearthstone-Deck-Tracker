@@ -5,6 +5,7 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+                      xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats"
                       Title="Hearthstone Deck Tracker" Height="620" Width="550"
                       MinHeight="525" MinWidth="590"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -82,6 +83,9 @@
         <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutHearthstatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
+            <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
         </controls:Flyout>
         <Grid>
             <Grid.RowDefinitions>
@@ -233,26 +237,40 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick" />
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click" />
                 </MenuItem>
-                <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_graph_line}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
+                <MenuItem Header="MENUITEM">
+                    <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_graph_line}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_REPLAYS">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_control_resume}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
+                        <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
+                        <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
+                    </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_REPLAYS">
+                <MenuItem Header="_HEARTHSTATS">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_control_resume}" />
+                                <VisualBrush Visual="{StaticResource hearthstats}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
-                    <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
+                    <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
+                    <MenuItem Header="SYNC NOW" />
+                    <CheckBox Content="AUTO SYNC" Margin="-24,0,0,0"></CheckBox>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
