@@ -221,6 +221,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				drawnCard = GetCardFromId(cardId);
 				PlayerDrawn.Add(drawnCard);
 			}
+			drawnCard.InHandCount++;
 			drawnCard.JustDrawn();
 
 
@@ -288,6 +289,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					drawnCard.IsStolen = true;
 					PlayerDrawn.Add(drawnCard);
 				}
+				drawnCard.InHandCount++;
 				drawnCard.JustDrawn();
 
 				var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
@@ -317,6 +319,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.InHandCount--;
 				if(CanRemoveCard(card))
 					PlayerDeck.Remove(card);
+			}
+
+			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
+			if (drawnCard != null)
+			{
+				drawnCard.InHandCount--;
 			}
 		}
 

@@ -90,7 +90,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			var message = "The following cards were not found:\n";
 			var totalDust = 0;
-			var specialSet = "";
+			var promo = "";
+			var nax = "";
 			foreach(var card in deck.MissingCards)
 			{
 				message += "\n• " + card.LocalizedName;
@@ -119,13 +120,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 					message += " x2";
 
 				if(card.Set.Equals("CURSE OF NAXXRAMAS", StringComparison.CurrentCultureIgnoreCase))
-					specialSet = "and the Naxxramas DLC ";
+					nax = "and the Naxxramas DLC ";
 				else if(card.Set.Equals("PROMOTION", StringComparison.CurrentCultureIgnoreCase))
-					specialSet = "and Promotion cards ";
+					promo = "and Promotion cards ";
 				else
 					totalDust += dust * card.Count;
 			}
-			message += string.Format("\n\nYou need {0} dust {1}to craft the missing cards.", totalDust, specialSet);
+			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});
