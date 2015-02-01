@@ -21,7 +21,6 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -1065,9 +1064,7 @@ namespace Hearthstone_Deck_Tracker
 				EnableHearthStatsMenu(false);
 			}
 			else
-			{
 				FlyoutHearthStatsLogin.IsOpen = true;
-			}
 		}
 	}
 }

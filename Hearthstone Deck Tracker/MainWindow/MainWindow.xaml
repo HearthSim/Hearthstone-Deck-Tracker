@@ -87,9 +87,6 @@
         <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
             <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthStatsSync" Header="Sync decks with HearthStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <hearthStats:SyncDecksControl x:Name="HearthStatsSyncControl"/>
-        </controls:Flyout>
         <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
         </controls:Flyout>

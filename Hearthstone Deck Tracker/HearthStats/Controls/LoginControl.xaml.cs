@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				return;
 			}
 			IsEnabled = false;
-			var result = await HearthStatsAPI.Login(TextBoxEmail.Text, TextBoxPassword.Password);
+			var result = await HearthStatsAPI.LoginAsync(TextBoxEmail.Text, TextBoxPassword.Password);
 			if(result.Success)
 				Helper.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
 			else
@@ -56,7 +56,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		private void DisplayLoginError(string error)
 		{
-
 			TextBlockErrorMessage.Text = "Error:\n" + error;
 			TextBlockErrorMessage.Visibility = Visibility.Visible;
 			IsEnabled = true;

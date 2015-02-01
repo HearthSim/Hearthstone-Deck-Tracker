@@ -58,13 +58,16 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 
 		private int _addToTurn;
+		private bool _awaitingRankedDetection;
 		private bool _currentEntityHasCardId;
 		private int _currentEntityId;
 		private long _currentOffset;
 		private bool _doUpdate;
 		private bool _first;
+		private bool _foundRanked;
 		private bool _gameEnded;
 		private IGameHandler _gameHandler;
+		private DateTime _lastAssetUnload;
 		private long _lastGameEnd;
 		private int _lastId;
 		private bool _opponentUsedHeroPower;
@@ -72,10 +75,8 @@ namespace Hearthstone_Deck_Tracker
 		private long _previousSize;
 		private ReplayKeyPoint _proposedKeyPoint;
 		private dynamic _waitForController;
-		private bool _awaitingRankedDetection;
-		private DateTime _lastAssetUnload;
-		private bool _foundRanked;
 		private bool _waitingForFirstAssetUnload;
+
 		#endregion
 
 		/// <summary>
@@ -450,22 +451,16 @@ namespace Hearthstone_Deck_Tracker
 					#region [Bob]
 
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
-				{
 					_gameHandler.SetGameMode(GameMode.Practice);
-				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
-				{
 					_gameHandler.SetGameMode(GameMode.Casual);
-				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Arena);
 					Game.ResetArenaCards();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
-				{
 					_gameHandler.SetGameMode(GameMode.Friendly);
-				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended -  back in menu

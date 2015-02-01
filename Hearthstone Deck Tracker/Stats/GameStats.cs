@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 
@@ -20,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private readonly string[] _hsClasses = {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
 
 		public Guid GameId;
+		public string HearthStatsId;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()
@@ -159,7 +159,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { Coin = value.ToLower() == "Yes"; }
 		}
 
-		public string HearthStatsId;
 		[XmlIgnore]
 		public bool HasHearthStatsId
 		{

@@ -445,7 +445,7 @@ namespace Hearthstone_Deck_Tracker
 						await HsLogReader.Instance.RankedDetection();
 					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
 						await RankDetection(5);
-					HearthStatsSync.UploadMatch(_lastGame, selectedDeck);
+					HearthStatsSync.UploadMatchAsync(_lastGame, selectedDeck);
 				}
 				_lastGame = null;
 			}
@@ -455,7 +455,6 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine(string.Format("Assigned current deck to default {0} deck.", Game.PlayingAs), "GameStats");
 				_assignedDeck = null;
 			}
-
 		}
 #pragma warning restore 4014
 
@@ -465,19 +464,16 @@ namespace Hearthstone_Deck_Tracker
 			var startTime = DateTime.Now;
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(_lastGame != null && !_lastGame.HasRank && (DateTime.Now - startTime) < timeout)
-			{
 				await Task.Delay(100);
-			}
 		}
+
 		private static async Task GameModeDetection(int timeoutInSeconds)
 		{
 			Logger.WriteLine("waiting for game mode detection", "GameEventHandler");
 			var startTime = DateTime.Now;
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(Game.CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
-			{
 				await Task.Delay(100);
-			}
 		}
 
 		private static void LogEvent(string type, string id = "", int turn = 0, int from = -1)

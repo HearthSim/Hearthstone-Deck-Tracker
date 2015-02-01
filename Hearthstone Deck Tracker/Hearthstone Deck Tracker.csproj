@@ -158,9 +158,6 @@
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="HearthStats\API\LoginResult.cs" />
-    <Compile Include="HearthStats\Controls\SyncDecksControl.xaml.cs">
-      <DependentUpon>SyncDecksControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
@@ -346,10 +343,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HearthStats\Controls\LoginControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\Controls\SyncDecksControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

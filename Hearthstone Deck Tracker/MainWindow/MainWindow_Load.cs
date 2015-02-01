@@ -6,7 +6,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.HearthStats;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
@@ -719,13 +718,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemSync_OnClick(object sender, RoutedEventArgs e)
 		{
-			FlyoutHearthStatsSync.IsOpen = true;
-			HearthStatsSyncControl.LoadLocalDecks(DeckList.DecksList);
+			//FlyoutHearthStatsSync.IsOpen = true;
+			//HearthStatsSyncControl.LoadLocalDecks(DeckList.DecksList);
 		}
 
 		private async void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
 		{
-			var decks = await HearthStatsSync.DownloadDecks();
+			var decks = await HearthStatsSync.DownloadDecksAsync();
 			var localDecks = DeckList.DecksList;
 
 			var newDecks = decks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId));
@@ -734,7 +733,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var deck in newDecks)
 				DeckList.DecksList.Add(deck);
 
-			var newGames = await HearthStatsSync.DownloadGames();
+			var newGames = await HearthStatsSync.DownloadGamesAsync();
 			foreach(var game in newGames)
 			{
 				var deck = DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);

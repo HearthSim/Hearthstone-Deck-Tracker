@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Logger.WriteLine(">> GAME MODE: " + value);
 			}
 		}
+
 		public static GameStats CurrentGameStats;
 
 
@@ -176,7 +177,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			//if(CurrentGameMode == GameMode.Ranked) //otherwise switching from playing ranked to casual causes problems
 			//	CurrentGameMode = GameMode.Casual;
-			
+
 
 			if(!IsInMenu && resetStats)
 			{
@@ -341,10 +342,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
-			if (drawnCard != null)
-			{
+			if(drawnCard != null)
 				drawnCard.InHandCount--;
-			}
 		}
 
 		private static bool CanRemoveCard(Card card)

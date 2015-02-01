@@ -222,6 +222,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string LastDeck = "";
 
+		[DefaultValue(0L)]
+		public long LastHearthStatsDecksSync = 0L;
+
+		[DefaultValue(0L)]
+		public long LastHearthStatsGamesSync = 0L;
+
 		[DefaultValue(0)]
 		public int LogLevel = 0;
 
@@ -571,12 +577,6 @@ namespace Hearthstone_Deck_Tracker
 			set { _gameDetails = value; }
 		}
 
-		[DefaultValue(0L)]
-		public long LastHearthStatsDecksSync = 0L;
-
-		[DefaultValue(0L)]
-		public long LastHearthStatsGamesSync = 0L;
-
 		#endregion
 
 		#region Properties
@@ -632,7 +632,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return Path.Combine(DataDir, "hearthstats"); }
 		}
-		
+
 		#endregion
 
 		#region Misc

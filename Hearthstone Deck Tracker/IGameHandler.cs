@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandleInMenu();
 		void HandleConcede();
 
+		void SetRank(int rank);
+
 		#region OpponentHandlers
 
 		void HandleOpponentPlay(string cardId, int from, int turn);
@@ -52,7 +54,5 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentName(string name);
 
 		#endregion OpponentHandlers
-
-		void SetRank(int rank);
 	}
 }
