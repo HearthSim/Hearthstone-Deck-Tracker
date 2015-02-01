@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.HearthStats.LoginControl"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.HearthStats.Controls.LoginControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              MaxWidth="300" Width="300"
              d:DesignHeight="400" d:DesignWidth="300">
     <StackPanel Margin="10">
-        <Image Source="hearthstats_logo.png" Width="64" Height="64" Margin="16"/>
+        <Image Source="../Resources/hearthstats_logo.png" Width="64" Height="64" Margin="16"/>
         <TextBlock HorizontalAlignment="Center" FontSize="18">
             <Run Text="Login to your account"/>
         </TextBlock>
@@ -16,11 +16,12 @@
             <TextBox Name="TextBoxEmail" controls:TextBoxHelper.Watermark="Email"/>
             <PasswordBox Name="TextBoxPassword" controls:TextBoxHelper.Watermark="Password" Margin="0,5,0,0"/>
             <DockPanel Margin="0,5,0,0">
-                <CheckBox Name="CheckBoxRememberLogin" Content="Remember me" IsChecked="True"/>
-                <Button Name="BtnLogin" Content="Login" Margin="16,0,0,0"/>
+                <CheckBox Name="CheckBoxRememberLogin" Content="Remember me" IsChecked="True" Checked="CheckBoxRememberLogin_Checked" Unchecked="CheckBoxRememberLogin_OnUnchecked"/>
+                <Button Name="BtnLogin" Content="Login" Margin="16,0,0,0" Click="BtnLogin_Click"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Margin="0,10,0,0">
+            <TextBlock Name="TextBlockErrorMessage" Foreground="Red" Visibility="Collapsed" TextWrapping="Wrap"/>
             <TextBlock>
                 <Bold>
                     <Run Text="Forgot your password?" />

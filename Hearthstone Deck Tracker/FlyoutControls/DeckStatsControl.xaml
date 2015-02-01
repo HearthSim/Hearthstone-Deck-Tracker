@@ -368,6 +368,13 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
@@ -667,6 +674,13 @@
                                                   MouseDoubleClick="DGridOverall_MouseDoubleClick"
                                                   SelectionChanged="DGridOverall_SelectionChanged">
                                             <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">

@@ -39,7 +39,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
 		public static bool IsRunning;
-		public static GameMode CurrentGameMode;
+
+		private static GameMode _currentGameMode;
+
+		public static GameMode CurrentGameMode
+		{
+			get { return _currentGameMode; }
+			set
+			{
+				_currentGameMode = value;
+				Logger.WriteLine(">> GAME MODE: " + value);
+			}
+		}
 		public static GameStats CurrentGameStats;
 
 
@@ -162,8 +173,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			SetAsideCards.Clear();
 			OpponentReturnedToDeck.Clear();
+
+			//if(CurrentGameMode == GameMode.Ranked) //otherwise switching from playing ranked to casual causes problems
+			//	CurrentGameMode = GameMode.Casual;
+			
+
 			if(!IsInMenu && resetStats)
+			{
+				CurrentGameMode = GameMode.None;
 				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs) {PlayerName = PlayerName, OpponentName = OpponentName};
+			}
 			hsLogLines = new List<string>();
 		}
 

@@ -72,8 +72,10 @@ namespace Hearthstone_Deck_Tracker
 		private long _previousSize;
 		private ReplayKeyPoint _proposedKeyPoint;
 		private dynamic _waitForController;
-		private bool _waitForModeDetection;
-
+		private bool _awaitingRankedDetection;
+		private DateTime _lastAssetUnload;
+		private bool _foundRanked;
+		private bool _waitingForFirstAssetUnload;
 		#endregion
 
 		/// <summary>
@@ -421,23 +423,25 @@ namespace Hearthstone_Deck_Tracker
 
 				else if(logLine.StartsWith("[Asset]"))
 				{
-					if(logLine.ToLower().Contains("victory_screen_start") && Game.CurrentGameStats != null && !_gameEnded)
+					if(_awaitingRankedDetection)
 					{
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleWin(true);
-						_gameEnded = true;
+						_lastAssetUnload = DateTime.Now;
+						_waitingForFirstAssetUnload = false;
 					}
-					else if(logLine.ToLower().Contains("defeat_screen_start") && Game.CurrentGameStats != null && !_gameEnded)
+					if(logLine.Contains("Medal_Ranked_"))
 					{
-						_gameHandler.HandleGameEnd();
-						_gameHandler.HandleLoss(true);
-						_gameEnded = true;
+						var match = Regex.Match(logLine, "Medal_Ranked_(?<rank>(\\d+))");
+						if(match.Success)
+						{
+							int rank;
+							if(int.TryParse(match.Groups["rank"].Value, out rank))
+								_gameHandler.SetRank(rank);
+						}
 					}
-					else if(logLine.Contains("rank"))
+					else if(logLine.Contains("rank_window"))
 					{
+						_foundRanked = true;
 						_gameHandler.SetGameMode(GameMode.Ranked);
-						if(_waitForModeDetection)
-							GameEnd();
 					}
 					else if(_unloadCardRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
 						_gameHandler.HandlePossibleArenaCard(_unloadCardRegex.Match(logLine).Groups["id"].Value);
@@ -448,38 +452,25 @@ namespace Hearthstone_Deck_Tracker
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenPractice---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Practice);
-					if(_waitForModeDetection)
-						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenTourneys---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Casual);
-					if(_waitForModeDetection)
-						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenForge---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Arena);
-					if(_waitForModeDetection)
-						GameEnd();
 					Game.ResetArenaCards();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenFriendly---"))
 				{
 					_gameHandler.SetGameMode(GameMode.Friendly);
-					if(_waitForModeDetection)
-						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenBox---"))
 				{
 					//game ended -  back in menu
 					if(Game.CurrentGameMode == GameMode.Spectator)
 						GameEnd();
-					else
-					{
-						_gameHandler.SetGameMode(GameMode.None);
-						_waitForModeDetection = true;
-					}
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterFriendChallenge---"))
 				{
@@ -541,10 +532,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void GameEnd()
 		{
-			_waitForModeDetection = false;
-			//_gameHandler.HandleGameEnd(true);
 			_lastGameEnd = _currentOffset;
-			//ClearLog();
 		}
 
 		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
@@ -813,37 +801,22 @@ namespace Hearthstone_Deck_Tracker
 						if(value == (int)TAG_PLAYSTATE.WON)
 						{
 							GameEndKeyPoint(true, id);
+							_gameHandler.HandleWin();
 							_gameHandler.HandleGameEnd();
-							_gameHandler.HandleWin(false);
 							_gameEnded = true;
 						}
 						else if(value == (int)TAG_PLAYSTATE.LOST)
 						{
 							GameEndKeyPoint(false, id);
+							_gameHandler.HandleLoss();
 							_gameHandler.HandleGameEnd();
-							_gameHandler.HandleLoss(false);
 							_gameEnded = true;
 						}
-					}
-					else
-					{
-						if(value == (int)TAG_PLAYSTATE.WON)
+						else if(value == (int)TAG_PLAYSTATE.TIED)
 						{
-							var playerEntity = Game.Entities.FirstOrDefault(x => x.Value.IsPlayer);
-							if(playerEntity.Value != null)
-								GameEndKeyPoint(false, playerEntity.Key);
+							GameEndKeyPoint(false, id);
+							_gameHandler.HandleTied();
 							_gameHandler.HandleGameEnd();
-							_gameHandler.HandleLoss(false);
-							_gameEnded = true;
-						}
-						else if(value == (int)TAG_PLAYSTATE.LOST)
-						{
-							var playerEntity = Game.Entities.FirstOrDefault(x => x.Value.IsPlayer);
-							if(playerEntity.Value != null)
-								GameEndKeyPoint(true, playerEntity.Key);
-							_gameHandler.HandleGameEnd();
-							_gameHandler.HandleWin(false);
-							_gameEnded = true;
 						}
 					}
 				}
@@ -995,6 +968,24 @@ namespace Hearthstone_Deck_Tracker
 			_first = true;
 			_addToTurn = -1;
 			_gameEnded = false;
+		}
+
+
+		public async Task<bool> RankedDetection(int timeoutInSeconds = 3)
+		{
+			Logger.WriteLine("waiting for ranked detection", "HsLogReader");
+			_awaitingRankedDetection = true;
+			_waitingForFirstAssetUnload = true;
+			_foundRanked = false;
+			_lastAssetUnload = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(_waitingForFirstAssetUnload || (DateTime.Now - _lastAssetUnload) < timeout)
+			{
+				await Task.Delay(100);
+				if(_foundRanked)
+					break;
+			}
+			return _foundRanked;
 		}
 	}
 }

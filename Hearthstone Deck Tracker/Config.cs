@@ -345,6 +345,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RecordSpectator = false;
 
+		[DefaultValue(true)]
+		public bool RememberHearthStatsLogin = true;
+
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
@@ -568,6 +571,12 @@ namespace Hearthstone_Deck_Tracker
 			set { _gameDetails = value; }
 		}
 
+		[DefaultValue(0L)]
+		public long LastHearthStatsDecksSync = 0L;
+
+		[DefaultValue(0L)]
+		public long LastHearthStatsGamesSync = 0L;
+
 		#endregion
 
 		#region Properties
@@ -623,7 +632,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return Path.Combine(DataDir, "hearthstats"); }
 		}
-
+		
 		#endregion
 
 		#region Misc

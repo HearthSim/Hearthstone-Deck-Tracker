@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 
@@ -63,6 +64,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool VerifiedHeroes { get; set; }
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
+		public int Rank { get; set; }
+
+		[XmlIgnore]
+		public bool HasRank
+		{
+			get { return Rank > 0 && Rank <= 25; }
+		}
+
+		[XmlIgnore]
+		public string RankString
+		{
+			get { return HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-"; }
+		}
 
 		[XmlIgnore]
 		public string ResultString
@@ -144,6 +158,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return Coin ? "Yes" : "No"; }
 			set { Coin = value.ToLower() == "Yes"; }
 		}
+
+		public string HearthStatsId;
+		[XmlIgnore]
+		public bool HasHearthStatsId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId); }
+		}
+
+		public string HearthStatsDeckId { get; set; }
 
 		public GameStats CloneWithNewId()
 		{

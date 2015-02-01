@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public List<Card> MissingCards;
 
-		public string Name;
+		public string Name { get; set; }
 		public string Note;
 		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Deck> Versions;
 
 
+		public bool? SyncWithHearthStats { get; set; }
 		public string HearthStatsId;
 
 		public Deck()
@@ -59,6 +60,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = string.Empty;
 			Url = string.Empty;
 			Name = string.Empty;
+			SyncWithHearthStats = null;
+			HearthStatsId = string.Empty;
 			Version = SerializableVersion.Default;
 			Versions = new List<Deck>();
 		}
@@ -66,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            SerializableVersion selectedVersion = null)
+					bool? syncWithHearthStats, string hearthStatsId, SerializableVersion selectedVersion = null)
 
 		{
 			Name = name;
@@ -80,6 +83,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = url;
 			LastEdited = lastEdited;
 			Version = version;
+			SyncWithHearthStats = syncWithHearthStats;
+			HearthStatsId = hearthStatsId;
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			if(versions != null)
@@ -87,6 +92,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				foreach(var d in versions)
 					Versions.Add(d.Clone() as Deck);
 			}
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId); }
 		}
 
 		[XmlIgnore]
@@ -211,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SelectedVersion);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId, SelectedVersion);
 		}
 
 		public void ResetVersions()

@@ -5,7 +5,7 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-                      xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats"
+                      xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       Title="Hearthstone Deck Tracker" Height="620" Width="550"
                       MinHeight="525" MinWidth="590"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -84,9 +84,16 @@
                          Height="auto" Panel.ZIndex="100">
             <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthstatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
+        <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
             <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
         </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutHearthStatsSync" Header="Sync decks with HearthStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <hearthStats:SyncDecksControl x:Name="HearthStatsSyncControl"/>
+        </controls:Flyout>
+        <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
+        </controls:Flyout>
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -269,8 +276,9 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
-                    <MenuItem Header="SYNC NOW" />
-                    <CheckBox Content="AUTO SYNC" Margin="-24,0,0,0"></CheckBox>
+                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" Margin="-24,0,0,0" FontSize="14"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14"/>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />

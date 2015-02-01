@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.HearthStats;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -317,8 +318,10 @@ namespace Hearthstone_Deck_Tracker
 
 			_initialized = true;
 
-			HearthStatsTestWindow testWindow = new HearthStatsTestWindow();
+			var testWindow = new HearthStatsTestWindow();
 			testWindow.Show();
+
+			LoadHearthStats();
 		}
 
 		#endregion
@@ -454,7 +457,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(decks.Count > 0)
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>(),
-				                   SerializableVersion.Default, new List<Deck>()));
+				                   SerializableVersion.Default, new List<Deck>(), false, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -1049,7 +1052,22 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
 		{
-			FlyoutHearthstatsLogin.IsOpen = true;
+			if(MenuItemLogin.Header.ToString() == "LOGOUT")
+			{
+				var deletedFile = HearthStatsAPI.Logout();
+				if(!deletedFile)
+				{
+					this.ShowMessageAsync("Error deleting stored credentials",
+					                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+					                      + Config.Instance.HearthStatsFilePath);
+				}
+				MenuItemLogin.Header = "LOGIN";
+				EnableHearthStatsMenu(false);
+			}
+			else
+			{
+				FlyoutHearthStatsLogin.IsOpen = true;
+			}
 		}
 	}
 }

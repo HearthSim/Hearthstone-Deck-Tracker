@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HearthStats;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -697,6 +699,48 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			ManaCurveMyDecks.UpdateValues();
+		}
+
+		private void LoadHearthStats()
+		{
+			var loaded = HearthStatsAPI.LoadCredentials();
+			if(loaded)
+				MenuItemLogin.Header = "LOGOUT";
+#if(!DEBUG)
+			EnableHearthStatsMenu(loaded);
+#endif
+		}
+
+		private void EnableHearthStatsMenu(bool enable)
+		{
+			//MenuItemSyncNow.IsEnabled = enable;
+			//MenuItemCheckBoxAutoSync.IsEnabled = enable;
+		}
+
+		private void MenuItemSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutHearthStatsSync.IsOpen = true;
+			HearthStatsSyncControl.LoadLocalDecks(DeckList.DecksList);
+		}
+
+		private async void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			var decks = await HearthStatsSync.DownloadDecks();
+			var localDecks = DeckList.DecksList;
+
+			var newDecks = decks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId));
+
+			//confirmation before this
+			foreach(var deck in newDecks)
+				DeckList.DecksList.Add(deck);
+
+			var newGames = await HearthStatsSync.DownloadGames();
+			foreach(var game in newGames)
+			{
+				var deck = DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);
+				if(deck != null)
+					deck.DeckStats.AddGameResult(game);
+			}
 		}
 	}
 }

@@ -24,8 +24,9 @@ namespace Hearthstone_Deck_Tracker
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
 		void HandleGameEnd();
-		void HandleLoss(bool fromAssetUnload);
-		void HandleWin(bool fromAssetUnload);
+		void HandleLoss();
+		void HandleWin();
+		void HandleTied();
 		void PlayerSetAside(string id);
 
 
@@ -51,5 +52,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentName(string name);
 
 		#endregion OpponentHandlers
+
+		void SetRank(int rank);
 	}
 }
