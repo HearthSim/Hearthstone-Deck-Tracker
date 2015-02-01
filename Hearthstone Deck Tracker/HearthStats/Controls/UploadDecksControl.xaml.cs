@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -21,7 +22,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			InitializeComponent();
 		}
 
-		public void LoadLocalDecks(IEnumerable<Deck> decks)
+		private bool _done;
+		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
 			ListViewLocalDecksNoSync.Items.Clear();
 			ListViewLocalDecksSync.Items.Clear();
@@ -34,6 +36,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				else
 					ListViewLocalDecksNoSync.Items.Add(deck);
 			}
+
+			_done = false;
+			while(!_done)
+				await Task.Delay(100);
+
+			return ListViewLocalDecksSync.Items.Cast<Deck>().ToList();
 		}
 
 		private void DeckDoNotSync_OnChecked(object sender, RoutedEventArgs e)
@@ -88,6 +96,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			ListViewLocalDecksNoSync.Items.SortDescriptions.Clear();
 			ListViewLocalDecksNoSync.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			_done = true;
+			Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = false;
 		}
 	}
 }

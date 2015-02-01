@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				                        MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
 
-		public static async void ShowUpdateNotesMessage(this MetroWindow window)
+		public static async Task ShowUpdateNotesMessage(this MetroWindow window)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"};
@@ -46,12 +46,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Process.Start(releaseDownloadUrl);
 		}
 
-		public static async void ShowMessage(this MainWindow window, string title, string message)
+		public static async Task ShowMessage(this MainWindow window, string title, string message)
 		{
 			await window.ShowMessageAsync(title, message);
 		}
 
-		public static async void ShowHsNotInstalledMessage(this MetroWindow window)
+		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
 		{
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
 			var result =

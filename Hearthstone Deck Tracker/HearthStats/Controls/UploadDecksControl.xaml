@@ -1,38 +1,44 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.HearthStats.Controls.UploadDecksControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <GroupBox Header="IGNORE" Grid.Column="0" Margin="0">
-            <DockPanel>
-                <Button Name="BtnSyncAll"  DockPanel.Dock="Bottom" Content="SELECT ALL" Margin="0,6,0,0" Click="BtnSyncAll_Click"/>
-                <ListView Name="ListViewLocalDecksNoSync" Width="180" BorderThickness="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Name}" IsChecked="{Binding SyncWithHearthStats}" Margin="2,0,0,0" Checked="DeckDoNotSync_OnChecked"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
-        </GroupBox>
-        <GroupBox Header="UPLOAD" Grid.Column="1" Margin="10,0,0,0">
-            <DockPanel>
-                <Button Name="BtnSyncNone"  DockPanel.Dock="Bottom" Content="DESELECT ALL" Margin="0,6,0,0" Click="BtnSyncNone_Click"/>
-                <ListView Name="ListViewLocalDecksSync" Width="180" BorderThickness="1">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Name}" IsChecked="{Binding SyncWithHearthStats}" Margin="2,0,0,0" Unchecked="DeckDoSync_OnChecked"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </DockPanel>
-        </GroupBox>
-    </Grid>
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <GroupBox Header="LOCAL DECKS" Width="550">
+        <DockPanel HorizontalAlignment="Center">
+            <Button DockPanel.Dock="Bottom" Content="SYNC" Margin="0,6,0,6" Click="Button_Click" />
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="IGNORE" Margin="0">
+                    <DockPanel>
+                        <Button Name="BtnSyncAll" DockPanel.Dock="Bottom" Content="SELECT ALL" Margin="0,6,0,0"
+                                Click="BtnSyncAll_Click" />
+                        <ListView Name="ListViewLocalDecksNoSync" Width="250" BorderThickness="1">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding SyncWithHearthStats}"
+                                              Margin="2,0,0,0" Checked="DeckDoNotSync_OnChecked" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </DockPanel>
+                </GroupBox>
+                <GroupBox Header="UPLOAD" Grid.Column="1" Margin="10,0,0,0">
+                    <DockPanel>
+                        <Button Name="BtnSyncNone" DockPanel.Dock="Bottom" Content="DESELECT ALL" Margin="0,6,0,0"
+                                Click="BtnSyncNone_Click" />
+                        <ListView Name="ListViewLocalDecksSync" Width="250" BorderThickness="1">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding SyncWithHearthStats}"
+                                              Margin="2,0,0,0" Unchecked="DeckDoSync_OnChecked" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
+
+        </DockPanel>
+    </GroupBox>
 </UserControl>

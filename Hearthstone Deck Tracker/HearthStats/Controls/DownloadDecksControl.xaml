@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-        <GroupBox Header="Decks found on HearthStats"  Margin="2" Width="300" >
+             d:DesignHeight="300" d:DesignWidth="500">
+    <GroupBox Header="Decks found on HearthStats"  Margin="2" Width="300" >
         <DockPanel>
-            <Button DockPanel.Dock="Bottom" Content="IMPORT DECKS" Margin="0,6,0,6" Click="Button_Click"/>
+            <Button DockPanel.Dock="Bottom" Content="SYNC" Margin="0,6,0,6" Click="Button_Click"/>
             <ListView Name="ListViewHearthStats" BorderThickness="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>

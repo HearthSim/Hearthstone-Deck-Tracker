@@ -90,7 +90,9 @@
         <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
         </controls:Flyout>
-        
+        <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
+        </controls:Flyout>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
@@ -273,9 +275,11 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
-                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC" Click="MenuItemHearthStatsSync_OnClick"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" Margin="-24,0,0,0" FontSize="14"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14"/>
+                    <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC NOW" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />

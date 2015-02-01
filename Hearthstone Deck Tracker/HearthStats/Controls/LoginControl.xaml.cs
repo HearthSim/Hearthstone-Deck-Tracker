@@ -49,7 +49,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			IsEnabled = false;
 			var result = await HearthStatsAPI.LoginAsync(TextBoxEmail.Text, TextBoxPassword.Password);
 			if(result.Success)
+			{
 				Helper.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
+				HearthStatsManager.Sync();
+			}
 			else
 				DisplayLoginError(result.Message);
 		}

@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			InitializeComponent();
 		}
 
-		public async Task<List<Deck>> LoadLocalDecks(IEnumerable<Deck> decks)
+		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
 			foreach(var deck in decks)
 				ListViewHearthStats.Items.Add(deck);
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 			//show warning
 
-			var deleted = await HearthStatsSync.DeleteDeckAsync(deck);
+			var deleted = await HearthStatsManager.DeleteDeckAsync(deck);
 			if(deleted)
 				ListViewHearthStats.Items.Remove(deck);
 		}

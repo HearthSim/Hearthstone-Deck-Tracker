@@ -439,7 +439,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 				_assignedDeck = selectedDeck;
 
-				if(HearthStatsAPI.IsLoggedIn)
+				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 				{
 					if(Game.CurrentGameMode == GameMode.None)
 						await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
@@ -447,7 +447,7 @@ namespace Hearthstone_Deck_Tracker
 						await HsLogReader.Instance.RankedDetection();
 					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
 						await RankDetection(5);
-					HearthStatsSync.UploadMatchAsync(_lastGame, selectedDeck);
+					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck);
 				}
 				_lastGame = null;
 			}

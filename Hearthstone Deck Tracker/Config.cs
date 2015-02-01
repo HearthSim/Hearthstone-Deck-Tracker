@@ -150,6 +150,15 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
+		[DefaultValue(true)]
+		public bool HearthStatsAutoUploadNewDecks = true;
+
+		[DefaultValue(true)]
+		public bool HearthStatsAutoUploadNewGames = true;
+
+		[DefaultValue(true)]
+		public bool HearthStatsSyncOnStart = true;
+
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 

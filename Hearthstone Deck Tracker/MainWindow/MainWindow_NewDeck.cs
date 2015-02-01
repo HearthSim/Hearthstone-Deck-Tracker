@@ -2,12 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -199,6 +201,20 @@ namespace Hearthstone_Deck_Tracker
 						}
 						DeckStatsList.Save();
 					}
+				}
+			}
+
+
+			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			{
+				if(EditingDeck)
+				{
+					//TODO
+				}
+				else
+				{
+					//don't really care about waiting for it to finish here
+					HearthStatsManager.UploadDeckAsync(newDeckClone);
 				}
 			}
 
@@ -616,5 +632,10 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(@"http://hearthstats.net/dashboards");
+		}
 	}
 }

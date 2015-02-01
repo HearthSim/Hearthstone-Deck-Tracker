@@ -643,7 +643,7 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		private async void ShowNewUpdateMessage(Version newVersion = null)
+		private async Task ShowNewUpdateMessage(Version newVersion = null)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
@@ -1069,22 +1069,99 @@ namespace Hearthstone_Deck_Tracker
 			SetNewDeck(deck, true);
 		}
 
-		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
+		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
 		{
 			if(MenuItemLogin.Header.ToString() == "LOGOUT")
 			{
-				var deletedFile = HearthStatsAPI.Logout();
-				if(!deletedFile)
+				var result = await this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
+				                                   new MetroDialogSettings() {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+				if(result == MessageDialogResult.Affirmative)
 				{
-					this.ShowMessageAsync("Error deleting stored credentials",
-					                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
-					                      + Config.Instance.HearthStatsFilePath);
+					var deletedFile = HearthStatsAPI.Logout();
+					if(!deletedFile)
+					{
+						await this.ShowMessageAsync("Error deleting stored credentials",
+						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+						                      + Config.Instance.HearthStatsFilePath);
+					}
+					MenuItemLogin.Header = "LOGIN";
+					EnableHearthStatsMenu(false);
 				}
-				MenuItemLogin.Header = "LOGIN";
-				EnableHearthStatsMenu(false);
 			}
 			else
 				FlyoutHearthStatsLogin.IsOpen = true;
+		}
+
+		private void LoadHearthStats()
+		{
+			var loaded = HearthStatsAPI.LoadCredentials();
+			if(loaded)
+			{
+				MenuItemLogin.Header = "LOGOUT";
+			}
+#if(!DEBUG)
+			EnableHearthStatsMenu(loaded);
+#endif
+		}
+
+		private void EnableHearthStatsMenu(bool enable)
+		{
+			//MenuItemSyncNow.IsEnabled = enable;
+			//MenuItemCheckBoxAutoSync.IsEnabled = enable;
+		}
+
+		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			HearthStatsManager.Sync();
+		}
+
+
+		private void MenuItemCheckBoxSyncOnStart_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxSyncOnStart_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = false;
+			Config.Save();
 		}
 	}
 }

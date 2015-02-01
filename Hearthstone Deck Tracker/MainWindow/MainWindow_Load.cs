@@ -657,6 +657,10 @@ namespace Hearthstone_Deck_Tracker
 			StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
+
+			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
+			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
+			MenuItemCheckBoxAutoUploadGames.IsChecked = Config.Instance.HearthStatsAutoUploadNewGames;
 		}
 
 		public void UpdateQuickFilterItemSource()
@@ -673,7 +677,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			var presentationsource = PresentationSource.FromVisual(this);
 			if(presentationsource != null) // make sure it's connected
@@ -681,66 +685,29 @@ namespace Hearthstone_Deck_Tracker
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
 			}
+			ManaCurveMyDecks.UpdateValues();
+			if(_updatedVersion != null)
+				await this.ShowUpdateNotesMessage();
+
+			if(NewVersion != null)
+				await ShowNewUpdateMessage();
+
 			if(!_foundHsDirectory)
 			{
-				this.ShowHsNotInstalledMessage();
-				return;
+				await this.ShowHsNotInstalledMessage();
 			}
-			if(NewVersion != null)
-				ShowNewUpdateMessage();
-			if(_updatedVersion != null)
-				this.ShowUpdateNotesMessage();
-
-			if(_updatedLogConfig)
+			else if(_updatedLogConfig)
 			{
-				this.ShowMessage("Restart Hearthstone",
+				await this.ShowMessage("Restart Hearthstone",
 				                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
 			}
 
-			ManaCurveMyDecks.UpdateValues();
-		}
-
-		private void LoadHearthStats()
-		{
-			var loaded = HearthStatsAPI.LoadCredentials();
-			if(loaded)
-				MenuItemLogin.Header = "LOGOUT";
-#if(!DEBUG)
-			EnableHearthStatsMenu(loaded);
-#endif
-		}
-
-		private void EnableHearthStatsMenu(bool enable)
-		{
-			//MenuItemSyncNow.IsEnabled = enable;
-			//MenuItemCheckBoxAutoSync.IsEnabled = enable;
-		}
-
-		private void MenuItemSync_OnClick(object sender, RoutedEventArgs e)
-		{
-			//FlyoutHearthStatsSync.IsOpen = true;
-			//HearthStatsSyncControl.LoadLocalDecks(DeckList.DecksList);
-		}
-
-		private async void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
-		{
-			var decks = await HearthStatsSync.DownloadDecksAsync();
-			var localDecks = DeckList.DecksList;
-
-			var newDecks = decks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId));
-
-			//confirmation before this
-			foreach(var deck in newDecks)
-				DeckList.DecksList.Add(deck);
-
-			var newGames = await HearthStatsSync.DownloadGamesAsync();
-			foreach(var game in newGames)
+			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
 			{
-				var deck = DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);
-				if(deck != null)
-					deck.DeckStats.AddGameResult(game);
+				HearthStatsManager.Sync();
 			}
 		}
 
+		
 	}
 }
