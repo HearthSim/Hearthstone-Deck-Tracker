@@ -327,10 +327,12 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
 					{
-						var lastDeckName = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs).Name;
-						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
+						var lastDeck = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
+						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 
-						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
+						var deck = lastDeck.Id == Guid.Empty
+							           ? Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeck.Name)
+							           : Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckId == lastDeck.Id);
 
 						if(deck != null)
 						{

@@ -741,5 +741,6 @@ namespace Hearthstone_Deck_Tracker
 					deck.DeckStats.AddGameResult(game);
 			}
 		}
+
 	}
 }

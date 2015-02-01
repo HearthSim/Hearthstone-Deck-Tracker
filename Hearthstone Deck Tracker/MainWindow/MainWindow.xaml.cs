@@ -277,11 +277,17 @@ namespace Hearthstone_Deck_Tracker
 					Config.Save();
 				}
 			}
+			if(!Config.Instance.ResolvedDeckStatsIds)
+			{
+				ResolveDeckStatsIds();
+				Config.Instance.ResolvedDeckStatsIds = true;
+				Config.Save();
+			}
 
 			FillElementSorters();
 
 			//this has to happen before reader starts
-			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
+			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
 			DeckPickerList.SelectDeck(lastDeck);
 
 			TurnTimer.Create(90);
@@ -321,6 +327,20 @@ namespace Hearthstone_Deck_Tracker
 			testWindow.Show();
 
 			LoadHearthStats();
+		}
+
+		private void ResolveDeckStatsIds()
+		{
+			foreach(var deckStats in DeckStatsList.Instance.DeckStats)
+			{
+				var deck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckStats.Name);
+				if(deck != null)
+				{
+					deckStats.DeckId = deck.DeckId;
+					deckStats.HearthStatsDeckId = deck.HearthStatsId;
+				}
+			}
+			DeckStatsList.Save();
 		}
 
 		#endregion
@@ -456,7 +476,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(decks.Count > 0)
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>(),
-				                   SerializableVersion.Default, new List<Deck>(), false, ""));
+				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -788,7 +808,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						break;
 				}
-				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
+				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
 				WriteDecks();
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
@@ -829,15 +849,15 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = null;
 			if(selected == null)
 			{
-				Config.Instance.LastDeck = string.Empty;
+				Config.Instance.LastDeckId = Guid.Empty; 
 				Config.Save();
 				return;
 			}
 			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			if(Config.Instance.LastDeck != selected.Name)
+			if(Config.Instance.LastDeckId != selected.DeckId)
 			{
-				Config.Instance.LastDeck = selected.Name;
+				Config.Instance.LastDeckId = selected.DeckId;
 				Config.Save();
 			}
 		}

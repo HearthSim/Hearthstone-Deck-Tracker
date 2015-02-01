@@ -177,7 +177,7 @@ namespace Hearthstone_Deck_Tracker
 				TagControlEdit.SetSelectedTags(new List<string>());
 				if(deckName != oldDeckName)
 				{
-					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == oldDeckName);
+					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
 					if(statsEntry != null)
 					{
 						if(overwrite)
@@ -187,10 +187,10 @@ namespace Hearthstone_Deck_Tracker
 						}
 						else
 						{
-							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == deckName);
+							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
 							if(newStatsEntry == null)
 							{
-								newStatsEntry = new DeckStats(deckName);
+								newStatsEntry = new DeckStats(_newDeck);
 								DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 							}
 							foreach(var game in statsEntry.Games)

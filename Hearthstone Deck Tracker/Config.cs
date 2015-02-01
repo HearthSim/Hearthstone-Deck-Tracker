@@ -219,8 +219,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("None")]
 		public string KeyPressOnGameStart = "None";
 
+		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
+
+		[DefaultValue("00000000-0000-0000-0000-000000000000")]
+		public string LastDeckIdString = Guid.Empty.ToString();
 
 		[DefaultValue(0L)]
 		public long LastHearthStatsDecksSync = 0L;
@@ -368,6 +372,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
+
+		[DefaultValue(false)]
+		public bool ResolvedDeckStatsIds = false;
 
 		//updating from <= 0.5.1: 
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
@@ -575,6 +582,19 @@ namespace Hearthstone_Deck_Tracker
 		{
 			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
 			set { _gameDetails = value; }
+		}
+
+		[XmlIgnore]
+		public Guid LastDeckId
+		{
+			get
+			{
+				Guid id;
+				if(Guid.TryParse(LastDeckIdString, out id))
+					return id;
+				return Guid.Empty;
+			}
+			set { LastDeckIdString = value.ToString(); }
 		}
 
 		#endregion

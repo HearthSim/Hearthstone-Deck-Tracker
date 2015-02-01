@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var ds = DeckStats.FirstOrDefault(d => d.Name == hero);
 			if(ds == null)
 			{
-				ds = new DeckStats(hero);
+				ds = new DeckStats() {Name = hero};
 				DeckStats.Add(ds);
 			}
 			return ds;

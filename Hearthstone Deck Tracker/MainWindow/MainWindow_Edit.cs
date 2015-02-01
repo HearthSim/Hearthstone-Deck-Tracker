@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 
-			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == deck.Name);
+			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(deck));
 			if(deckStats != null)
 			{
 				if(deckStats.Games.Any())
@@ -95,10 +95,10 @@ namespace Hearthstone_Deck_Tracker
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
 
-			var clone = (Deck)DeckPickerList.SelectedDeck.Clone();
+			var clone = (Deck)DeckPickerList.SelectedDeck.CloneWithNewId();
 			var originalStatsEntry = clone.DeckStats;
 
-			while(DeckList.DecksList.Any(d => d.Name == clone.Name))
+			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
@@ -109,16 +109,16 @@ namespace Hearthstone_Deck_Tracker
 					return;
 
 				clone.Name = name;
-			}
+			}*/
 
 			DeckList.DecksList.Add(clone);
 			DeckPickerList.AddAndSelectDeck(clone);
 			WriteDecks();
 
-			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
+			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
 			{
-				newStatsEntry = new DeckStats(clone.Name);
+				newStatsEntry = new DeckStats(clone);
 				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 			}
 
@@ -148,12 +148,12 @@ namespace Hearthstone_Deck_Tracker
 					                       AffirmativeButtonText = "clone history",
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
-			var clone = (Deck)deck.Clone();
+			var clone = (Deck)deck.CloneWithNewId();
 			clone.ResetVersions();
 
 			var originalStatsEntry = clone.DeckStats;
 
-			while(DeckList.DecksList.Any(d => d.Name == clone.Name))
+			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
 				var name =
@@ -164,16 +164,16 @@ namespace Hearthstone_Deck_Tracker
 					return;
 
 				clone.Name = name;
-			}
+			}*/
 
 			DeckList.DecksList.Add(clone);
 			DeckPickerList.AddAndSelectDeck(clone);
 			WriteDecks();
 
-			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == clone.Name);
+			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
 			{
-				newStatsEntry = new DeckStats(clone.Name);
+				newStatsEntry = new DeckStats(clone);
 				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 			}
 
