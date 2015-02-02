@@ -8,8 +8,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -169,45 +167,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		private class DeckObject
-		{
-			public CardObject[] cards;
-			public string name;
-			public string @class;
-			public string[] tags;
-			public string notes;
-			//public string url;
-			//public string version;
-			public string id;
-
-			public Deck ToDeck()
-			{
-				return new Deck();
-				//return new Deck(name, @class, cards.Select(x => x.ToCard()), tags, notes, url, DateTime.Now, new List<Card>(),
-				//         SerializableVersion.Parse(version), new List<Deck>(), true, id, Guid.Empty);
-			}
-		}
-
-		private class CardObject
-		{
-			public string id;
-			public int count;
-
-			public CardObject(Card card)
-			{
-				id = card.Id;
-				count = card.Count;
-			}
-
-			public Card ToCard()
-			{
-				var card =  Game.GetCardFromId(id);
-				card.Count = count;
-				return card;
-			}
-
-		}
-
 		public static async Task<PostResult> PostDeckAsync(Deck deck)
 		{
 			if(deck == null)
@@ -223,18 +182,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("uploading deck: " + deck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
-			var data =
-				JsonConvert.SerializeObject(
-				                            new
-				                            {
-					                            name = deck.Name,
-					                            note = deck.Note,
-					                            tags = deck.Tags,
-					                            @class = deck.Class,
-					                            cards,
-					                           // url,
-					                           // version = deck.Version.ToString("{M}.{m}")
-				                            });
+			var data = JsonConvert.SerializeObject(new
+			{
+				name = deck.Name,
+				note = deck.Note,
+				tags = deck.Tags,
+				@class = deck.Class,
+				cards,
+				// url,
+				// version = deck.Version.ToString("{M}.{m}")
+			});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -269,7 +226,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return PostResult.Failed;
 			}
 			var version = deck.Version.ToString("{M}.{m}");
-            Logger.WriteLine("uploading version " + version + " of " + deck, "HearthStatsAPI");
+			Logger.WriteLine("uploading version " + version + " of " + deck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/create_version?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {deck_id = deck.DeckId, version, cards});
@@ -294,7 +251,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		
 
 		public static async Task<PostResult> PostGameResultAsync(GameStats game, Deck deck)
 		{
@@ -427,7 +383,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("deleting game: " + game, "HearthStatsAPI");
 
 			var url = BaseUrl + "@@@@@@@@@@@@@@@@" + _authToken; // TODO
-			var data = JsonConvert.SerializeObject(new { deck_id = game.HearthStatsId });
+			var data = JsonConvert.SerializeObject(new {deck_id = game.HearthStatsId});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -441,10 +397,48 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");
 				return PostResult.CanRetry;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
 				return PostResult.CanRetry;
+			}
+		}
+
+		private class CardObject
+		{
+			public readonly int count;
+			public readonly string id;
+
+			public CardObject(Card card)
+			{
+				id = card.Id;
+				count = card.Count;
+			}
+
+			public Card ToCard()
+			{
+				var card = Game.GetCardFromId(id);
+				card.Count = count;
+				return card;
+			}
+		}
+
+		private class DeckObject
+		{
+			public CardObject[] cards;
+			public string @class;
+			//public string url;
+			//public string version;
+			public string id;
+			public string name;
+			public string notes;
+			public string[] tags;
+
+			public Deck ToDeck()
+			{
+				return new Deck();
+				//return new Deck(name, @class, cards.Select(x => x.ToCard()), tags, notes, url, DateTime.Now, new List<Card>(),
+				//         SerializableVersion.Parse(version), new List<Deck>(), true, id, Guid.Empty);
 			}
 		}
 
@@ -501,6 +495,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			return PostVersionAsync(version, hearthStatsId).Result;
 		}
+
 		#endregion
 	}
 }

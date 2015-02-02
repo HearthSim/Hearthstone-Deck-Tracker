@@ -12,20 +12,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class DeckStats
 	{
+		public Guid DeckId;
+
 		[XmlArray(ElementName = "Games")]
 		[XmlArrayItem(ElementName = "Game")]
 		public List<GameStats> Games;
 
-		public string Name;
-
-		public Guid DeckId;
 		public string HearthStatsDeckId;
-
-		[XmlIgnore]
-		public bool HasHearthStatsDeckId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsDeckId); }
-		}
+		public string Name;
 
 		public DeckStats()
 		{
@@ -38,6 +32,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Games = new List<GameStats>();
 			HearthStatsDeckId = deck.HearthStatsId;
 			DeckId = deck.DeckId;
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsDeckId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckId); }
 		}
 
 		public void AddGameResult(GameResult result, string opponentHero, string playerHero)

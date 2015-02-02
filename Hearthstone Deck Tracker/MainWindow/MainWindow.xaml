@@ -95,7 +95,8 @@
         </controls:Flyout>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -104,7 +105,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <Menu Grid.Row="1" Grid.ColumnSpan="3">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -282,8 +283,8 @@
                     <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
                 </MenuItem>
             </Menu>
-            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
-            <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
+            <Separator Grid.Row="1" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
+            <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -343,7 +344,7 @@
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                              Grid.Row="1"
+                              Grid.Row="2"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
@@ -351,9 +352,7 @@
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                        Grid.Row="1" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
-
-
-            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="0" Visibility="Collapsed">
+            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
                 <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -417,7 +416,7 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="492">
+            <Grid Grid.Column="2" Grid.Row="2" Name="GridNewDeck" Visibility="Collapsed" Width="492">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="5*" />
@@ -500,6 +499,35 @@
                 />
                 </ScrollViewer>
             </Grid>
+            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem Content="NEWS:" Grid.Column="0"/>
+                <StatusBarItem Grid.Column="1">
+                    <controls:TransitioningContentControl Name="NewsContentControl" Transition="Right"/>
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="2">
+                    <Button Name="BtnCloseNews" VerticalAlignment="Center" Height="24" Width="24" Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" BorderThickness="0" Click="BtnCloseNews_OnClick">
+                        <Button.Content>
+                            <Rectangle Width="8" Height="8">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_close}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button.Content>
+                    </Button>
+                </StatusBarItem>
+                
+            </StatusBar>
         </Grid>
     </Grid>
 </controls:MetroWindow>

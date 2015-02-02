@@ -1,11 +1,9 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace Hearthstone_Deck_Tracker.HearthStats.API
+﻿namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
 	public class PostResult
 	{
-		public bool Success;
 		public bool Retry;
+		public bool Success;
 
 		private PostResult(bool success, bool retry)
 		{
@@ -17,10 +15,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			get { return new PostResult(true, false); }
 		}
+
 		public static PostResult Failed
 		{
 			get { return new PostResult(false, false); }
 		}
+
 		public static PostResult CanRetry
 		{
 			get { return new PostResult(false, true); }

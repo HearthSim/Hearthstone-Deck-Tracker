@@ -213,17 +213,9 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(previousVersion != newVersion)
 						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId);
-					else
-					{
-						
-					}
-
-
 				}
 				else
-				{
 					HearthStatsManager.UploadDeckAsync(newDeckClone);
-				}
 			}
 
 			//after cloning the stats, otherwise new stats will be generated
@@ -374,6 +366,11 @@ namespace Hearthstone_Deck_Tracker
 				MenuItemSave.IsSubmenuOpen = false;
 				await SaveDeckWithOverwriteCheck();
 			}
+		}
+
+		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(@"http://hearthstats.net/dashboards");
 		}
 
 		#region UI
@@ -640,10 +637,5 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
-		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e)
-		{
-			Process.Start(@"http://hearthstats.net/dashboards");
-		}
 	}
 }

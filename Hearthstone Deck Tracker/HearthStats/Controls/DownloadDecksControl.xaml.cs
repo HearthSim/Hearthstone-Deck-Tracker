@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 	public partial class DownloadDecksControl : UserControl
 	{
 		private bool _done;
-		private List<Deck> _selectedDecks; 
+		private List<Deck> _selectedDecks;
 
 		public DownloadDecksControl()
 		{
@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			_selectedDecks = ListViewHearthStats.Items.Cast<Deck>().ToList();
-            _done = true;
+			_done = true;
 			Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = false;
 		}
 

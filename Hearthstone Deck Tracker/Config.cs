@@ -216,6 +216,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
 
+		[DefaultValue(-1)]
+		public int IgnoreNewsId = -1;
+
 		[DefaultValue(true)]
 		public bool KeepDecksVisible = true;
 

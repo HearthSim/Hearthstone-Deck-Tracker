@@ -8,9 +8,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Cache;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.HearthStats;
@@ -90,6 +94,13 @@ namespace Hearthstone_Deck_Tracker
 		#endregion
 
 		#region Constructor
+
+		private int _currentNewsId;
+		private DateTime _lastNewsCheck;
+		private DateTime _lastNewsUpdate;
+		private string[] _news;
+		private int _newsLine;
+		private bool _updateNews;
 
 		public MainWindow()
 		{
@@ -320,6 +331,7 @@ namespace Hearthstone_Deck_Tracker
 			CopyReplayFiles();
 
 			UpdateOverlayAsync();
+			UpdateNewsAsync();
 
 			_initialized = true;
 
@@ -327,6 +339,98 @@ namespace Hearthstone_Deck_Tracker
 			testWindow.Show();
 
 			LoadHearthStats();
+		}
+
+		private async void UpdateNewsAsync()
+		{
+			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Test/master/test";
+			_updateNews = true;
+			var client = new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)};
+			_lastNewsCheck = DateTime.MinValue;
+			_lastNewsUpdate = DateTime.MinValue;
+			_currentNewsId = Config.Instance.IgnoreNewsId;
+			while(_updateNews)
+			{
+				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(60))
+				{
+					try
+					{
+						var oldNewsId = _currentNewsId;
+						var content =
+							client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+						try
+						{
+							_currentNewsId = int.Parse(content[0].Split(':')[1]);
+						}
+						catch(Exception)
+						{
+							_currentNewsId = 0;
+						}
+						_news = content.Skip(1).ToArray();
+						if(_currentNewsId > oldNewsId
+						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
+						{
+							StatusBarNews.Visibility = Visibility.Visible;
+							UpdateNews(0);
+						}
+					}
+					catch(Exception e)
+					{
+						Logger.WriteLine("Error loading news: " + e, "UpdateNews");
+					}
+					_lastNewsCheck = DateTime.Now;
+				}
+				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(15))
+					UpdateNews();
+				await Task.Delay(1000);
+			}
+		}
+
+		private void UpdateNews(int newsLine)
+		{
+			if(newsLine < _news.Length)
+				NewsContentControl.Content = StringToTextBlock(_news[newsLine]);
+			_lastNewsUpdate = DateTime.Now;
+		}
+
+		private void UpdateNews()
+		{
+			if(_news == null)
+				return;
+			_newsLine++;
+			if(_newsLine > _news.Length - 1)
+				_newsLine = 0;
+			UpdateNews(_newsLine);
+		}
+
+		private TextBlock StringToTextBlock(string text)
+		{
+			var tb = new TextBlock();
+			ParseMarkup(text, tb);
+			return tb;
+		}
+
+		private void ParseMarkup(string text, TextBlock tb)
+		{
+			const string urlMarkup = @"\[(?<text>(.*?))\]\((?<url>(http[s]?://.+\..+?))\)";
+
+			var url = Regex.Match(text, urlMarkup);
+			var rest = url.Success ? text.Split(new[] {(url.Value)}, StringSplitOptions.None) : new[] {text};
+			if(rest.Length == 1)
+				tb.Inlines.Add(rest[0]);
+			else
+			{
+				for(int restIndex = 0, urlIndex = 0; restIndex < rest.Length; restIndex += 2, urlIndex++)
+				{
+					ParseMarkup(rest[restIndex], tb);
+					var link = new Hyperlink();
+					link.NavigateUri = new Uri(url.Groups["url"].Value);
+					link.RequestNavigate += (sender, args) => Process.Start(args.Uri.AbsoluteUri);
+					link.Inlines.Add(new Run(url.Groups["text"].Value));
+					tb.Inlines.Add(link);
+					ParseMarkup(rest[restIndex + 1], tb);
+				}
+			}
 		}
 
 		private void ResolveDeckStatsIds()
@@ -368,6 +472,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				_doUpdate = false;
+				_updateNews = false;
 
 				//wait for update to finish, might otherwise crash when overlay gets disposed
 				for(var i = 0; i < 100; i++)
@@ -849,7 +954,7 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = null;
 			if(selected == null)
 			{
-				Config.Instance.LastDeckId = Guid.Empty; 
+				Config.Instance.LastDeckId = Guid.Empty;
 				Config.Save();
 				return;
 			}
@@ -1073,16 +1178,19 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(MenuItemLogin.Header.ToString() == "LOGOUT")
 			{
-				var result = await this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
-				                                   new MetroDialogSettings() {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+				var result =
+					await
+					this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
+					                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
 				if(result == MessageDialogResult.Affirmative)
 				{
 					var deletedFile = HearthStatsAPI.Logout();
 					if(!deletedFile)
 					{
-						await this.ShowMessageAsync("Error deleting stored credentials",
-						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
-						                      + Config.Instance.HearthStatsFilePath);
+						await
+							this.ShowMessageAsync("Error deleting stored credentials",
+							                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+							                      + Config.Instance.HearthStatsFilePath);
 					}
 					MenuItemLogin.Header = "LOGIN";
 					EnableHearthStatsMenu(false);
@@ -1096,9 +1204,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var loaded = HearthStatsAPI.LoadCredentials();
 			if(loaded)
-			{
 				MenuItemLogin.Header = "LOGOUT";
-			}
 #if(!DEBUG)
 			EnableHearthStatsMenu(loaded);
 #endif
@@ -1162,6 +1268,14 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Config.Instance.HearthStatsAutoUploadNewGames = false;
 			Config.Save();
+		}
+
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
+		{
+			Config.Instance.IgnoreNewsId = _currentNewsId;
+			Config.Save();
+			StatusBarNews.Visibility = Visibility.Collapsed;
+			;
 		}
 	}
 }

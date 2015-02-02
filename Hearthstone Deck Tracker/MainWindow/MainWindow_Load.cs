@@ -693,21 +693,16 @@ namespace Hearthstone_Deck_Tracker
 				await ShowNewUpdateMessage();
 
 			if(!_foundHsDirectory)
-			{
 				await this.ShowHsNotInstalledMessage();
-			}
 			else if(_updatedLogConfig)
 			{
-				await this.ShowMessage("Restart Hearthstone",
-				                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
+				await
+					this.ShowMessage("Restart Hearthstone",
+					                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
 			}
 
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
-			{
 				HearthStatsManager.Sync();
-			}
 		}
-
-		
 	}
 }

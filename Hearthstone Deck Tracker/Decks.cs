@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
 	public class DeckInfo
 	{
 		public string Class;
-		public string Name;
 		public Guid Id;
+		public string Name;
 	}
 }

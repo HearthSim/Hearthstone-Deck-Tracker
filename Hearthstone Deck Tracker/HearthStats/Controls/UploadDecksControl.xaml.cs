@@ -17,13 +17,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 	/// </summary>
 	public partial class UploadDecksControl : UserControl
 	{
+		private bool _done;
+		private List<Deck> _selectedDecks;
+
 		public UploadDecksControl()
 		{
 			InitializeComponent();
 		}
 
-		private List<Deck> _selectedDecks; 
-		private bool _done;
 		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
 			_selectedDecks = new List<Deck>();
@@ -103,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			_selectedDecks = ListViewLocalDecksSync.Items.Cast<Deck>().ToList();
-            _done = true;
+			_done = true;
 			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
 		}
 

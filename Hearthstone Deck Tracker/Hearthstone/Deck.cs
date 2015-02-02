@@ -20,14 +20,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public ObservableCollection<Card> Cards;
 
-		private Guid _deckId;
-
-		public Guid DeckId
-		{
-			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
-			set { _deckId = value; }
-		}
-
 		public string Class;
 		public string HearthStatsId;
 
@@ -55,6 +47,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
 
+		private Guid _deckId;
+
 
 		public Deck()
 		{
@@ -74,7 +68,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, bool versionOnHearthStats, SerializableVersion selectedVersion = null)
+		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, bool versionOnHearthStats,
+		            SerializableVersion selectedVersion = null)
 
 		{
 			Name = name;
@@ -101,21 +96,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public Guid DeckId
+		{
+			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
+			set { _deckId = value; }
+		}
+
 		public string Name { get; set; }
 		public bool? SyncWithHearthStats { get; set; }
-
-		public Deck GetVersion(int major, int minor)
-		{
-			var target = new SerializableVersion(major, minor);
-			if(Version == target)
-				return this;
-			return Versions.FirstOrDefault(x => x.Version == target);
-		}
-
-		public bool HasVersion(SerializableVersion version)
-		{
-			return Version == version || Versions.Any(v => v.Version == version);
-		}
 
 		[XmlIgnore]
 		public bool HasHearthStatsId
@@ -251,10 +239,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			                DeckId, VersionOnHearthStats, SelectedVersion);
 		}
 
+		public Deck GetVersion(int major, int minor)
+		{
+			var target = new SerializableVersion(major, minor);
+			if(Version == target)
+				return this;
+			return Versions.FirstOrDefault(x => x.Version == target);
+		}
+
+		public bool HasVersion(SerializableVersion version)
+		{
+			return Version == version || Versions.Any(v => v.Version == version);
+		}
+
 		public object CloneWithNewId()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-							Guid.NewGuid(), VersionOnHearthStats, SelectedVersion);
+			                Guid.NewGuid(), VersionOnHearthStats, SelectedVersion);
 		}
 
 		public void ResetVersions()

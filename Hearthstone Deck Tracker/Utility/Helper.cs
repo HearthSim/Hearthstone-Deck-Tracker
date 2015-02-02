@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Cache;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -58,8 +59,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			const string versionXmlUrl =
-				@"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Test/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
 
@@ -67,7 +67,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					var xml = new WebClient {Proxy = null}.DownloadString(versionXmlUrl);
+					var xml =
+						new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)}.DownloadString(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -232,7 +231,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				foreach(var game in newGames)
 				{
-					var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);
+					var deck =
+						Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);
 					if(deck != null && deck.DeckStats.Games.All(g => g.HearthStatsId != game.HearthStatsId))
 						deck.DeckStats.AddGameResult(game);
 				}
@@ -248,8 +248,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = true;
 				newDecks = await Helper.MainWindow.HearthStatsUploadDecksControl.LoadDecks(newDecks);
 				controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Uploading new decks...");
-				await Task.Run(() =>
-				{ Parallel.ForEach(newDecks, deck => UploadDeck(deck, false)); });
+				await Task.Run(() => { Parallel.ForEach(newDecks, deck => UploadDeck(deck, false)); });
 				Helper.MainWindow.WriteDecks(); //save new ids
 			}
 
@@ -287,8 +286,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(newGames.Any())
 			{
 				controller.SetMessage("Uploading new matches...");
-				await Task.Run(() =>
-				{ Parallel.ForEach(newMatches, match => UploadMatch(match.game, match.deck, false)); });
+				await Task.Run(() => { Parallel.ForEach(newMatches, match => UploadMatch(match.game, match.deck, false)); });
 				DeckStatsList.Save();
 			}
 			Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime();
@@ -319,7 +317,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			if(result.Success && saveFilesAfter)
 				Helper.MainWindow.WriteDecks();
-            return result;
+			return result;
 		}
 
 		public static PostResult UploadVersion(Deck deck, string hearthStatsId, bool saveFilesAfter = true)
@@ -342,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("try #2 do delete game " + game, "HearthStatsSync");
 				result = await HearthStatsAPI.DeleteMatchAsync(game);
 			}
-            return result;
+			return result;
 		}
-    }
+	}
 }
