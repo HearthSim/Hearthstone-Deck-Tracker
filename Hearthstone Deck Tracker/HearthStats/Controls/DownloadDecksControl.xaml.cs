@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
-			_selectedDecks = new List<Deck>();
+			_selectedDecks = decks.ToList();
 
 			foreach(var deck in _selectedDecks)
 				ListViewHearthStats.Items.Add(deck);

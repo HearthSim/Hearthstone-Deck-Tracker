@@ -283,7 +283,7 @@
                     <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
                 </MenuItem>
             </Menu>
-            <Separator Grid.Row="1" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
+            <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
             <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -350,7 +350,7 @@
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
                               OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                       Grid.Row="1" Panel.ZIndex="1"
+                       Grid.Row="2" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
             <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
                 <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
@@ -499,7 +499,7 @@
                 />
                 </ScrollViewer>
             </Grid>
-            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
+            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>

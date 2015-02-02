@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public ObservableCollection<Card> Cards;
 
 		public string Class;
+		public string HearthStatsDeckVersionId;
 		public string HearthStatsId;
 
 		[XmlIgnore]
@@ -95,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Versions.Add(d.CloneWithNewId() as Deck);
 			}
 		}
+
 
 		public Guid DeckId
 		{

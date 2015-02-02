@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker
 		#region Constructor
 
 		private int _currentNewsId;
+		private string _currentNewsLine;
 		private DateTime _lastNewsCheck;
 		private DateTime _lastNewsUpdate;
 		private string[] _news;
@@ -343,7 +344,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void UpdateNewsAsync()
 		{
-			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Test/master/test";
+			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
 			_updateNews = true;
 			var client = new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)};
 			_lastNewsCheck = DateTime.MinValue;
@@ -360,7 +361,7 @@ namespace Hearthstone_Deck_Tracker
 							client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
 						try
 						{
-							_currentNewsId = int.Parse(content[0].Split(':')[1]);
+							_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
 						}
 						catch(Exception)
 						{
@@ -388,14 +389,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private void UpdateNews(int newsLine)
 		{
-			if(newsLine < _news.Length)
-				NewsContentControl.Content = StringToTextBlock(_news[newsLine]);
+			if(newsLine < _news.Length && _currentNewsLine != _news[newsLine])
+			{
+				_currentNewsLine = _news[newsLine];
+				NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
+			}
 			_lastNewsUpdate = DateTime.Now;
 		}
 
 		private void UpdateNews()
 		{
-			if(_news == null)
+			if(_news == null || _news.Length == 0)
 				return;
 			_newsLine++;
 			if(_newsLine > _news.Length - 1)

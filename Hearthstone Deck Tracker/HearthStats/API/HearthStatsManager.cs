@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
-using Newtonsoft.Json;
 
 #endregion
 
@@ -59,59 +58,36 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<List<Deck>> DownloadDecksAsync(bool forceAll = false)
 		{
-			await Task.Delay(1000);
-			return new List<Deck>();
 			Logger.WriteLine("trying do download decks", "HearthStatsSync");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("error: not logged in", "HearthStatsSync");
 				return null;
 			}
-			var json = await HearthStatsAPI.GetDecksAsync(forceAll ? 0 : Config.Instance.LastHearthStatsDecksSync);
+			var decks = await HearthStatsAPI.GetDecksAsync(forceAll ? 0 : Config.Instance.LastHearthStatsDecksSync);
 			//Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime();
 			//Config.Save();
-			Console.WriteLine(json);
-			//convert json to deck list
 
-			return new List<Deck>();
+			return decks ?? new List<Deck>();
 		}
 
 		public static async Task<List<GameStats>> DownloadGamesAsync(bool forceAll = false)
 		{
-			await Task.Delay(1000);
-			return new List<GameStats>();
+			//await Task.Delay(1000);
+			//return new List<GameStats>();
 			Logger.WriteLine("trying do download decks", "HearthStatsSync");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("error: not logged in", "HearthStatsSync");
 				return null;
 			}
-			var json = await HearthStatsAPI.GetGamesAsync(forceAll ? 0 : Config.Instance.LastHearthStatsGamesSync);
-			Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime();
-			Config.Save();
+			var games = await HearthStatsAPI.GetGamesAsync(forceAll ? 0 : Config.Instance.LastHearthStatsGamesSync);
+			//Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime();
+			//Config.Save();
 
-			var gameObjs = (dynamic[])JsonConvert.DeserializeObject(json);
-			var games =
-				gameObjs.Select(
-				                x =>
-				                new GameStats
-				                {
-					                Result = x.result,
-					                GameMode = x.mode,
-					                PlayerHero = x.@class,
-					                OpponentHero = x.oppclass,
-					                OpponentName = x.oppname,
-					                Turns = x.numturns,
-					                Coin = x.coin,
-					                HearthStatsId = x.id,
-					                HearthStatsDeckId = x.deck_id,
-					                Note = x.notes,
-					                Rank = x.ranklvl,
-					                StartTime = Helper.FromUnixTime(long.Parse(x.start_time.ToString())),
-					                EndTime = Helper.FromUnixTime(long.Parse(x.start_time.ToString()) + int.Parse(x.duration.ToString())),
-				                });
+			//save games to decks
 
-			return games.ToList();
+			return games;
 		}
 
 		public static async Task<bool> DeleteDeckAsync(Deck deck)
@@ -162,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				{
 					foreach(var v in versions)
 					{
-						await Task.Delay(VersionDelay);
+						//await Task.Delay(VersionDelay);
 						await UploadVersionAsync(v, first.HearthStatsId, false);
 					}
 				}
@@ -180,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async void Sync(bool forceFullSync = false)
 		{
+			forceFullSync = true;
 			var controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
 			var decks = await DownloadDecksAsync(forceFullSync);
 			var localDecks = Helper.MainWindow.DeckList.DecksList;
@@ -190,10 +167,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
 				newDecks = await Helper.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
 				foreach(var deck in newDecks)
+				{
 					Helper.MainWindow.DeckList.DecksList.Add(deck);
+					Helper.MainWindow.DeckPickerList.AddDeck(deck);
+				}
 				Helper.MainWindow.WriteDecks();
+				Helper.MainWindow.DeckPickerList.UpdateList();
 			}
-
 
 			if(!controller.IsOpen)
 				controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new versions...");

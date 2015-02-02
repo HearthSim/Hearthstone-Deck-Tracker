@@ -166,6 +166,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		public string HearthStatsDeckId { get; set; }
+		public string HearthStatsDeckVersionId { get; set; }
 
 		public GameStats CloneWithNewId()
 		{

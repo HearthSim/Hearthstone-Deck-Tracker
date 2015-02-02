@@ -22,13 +22,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		private const string BaseUrl = "http://192.237.249.9";
 		private static string _authToken;
 
-		private static readonly List<GameMode> ValidGameModes = new List<GameMode>
-		{
-			GameMode.Arena,
-			GameMode.Casual,
-			GameMode.Ranked,
-			GameMode.Friendly
-		};
+		private static readonly List<GameMode> ValidGameModes = new List<GameMode> {GameMode.Casual, GameMode.Ranked, GameMode.Friendly};
 
 		public static bool IsLoggedIn
 		{
@@ -146,24 +140,21 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			Logger.WriteLine("getting decks since " + unixTime, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/hdt_after?auth_token=" + _authToken;
-			var data = JsonConvert.SerializeObject(new {date = unixTime});
+			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
 			Console.WriteLine(data);
 			try
 			{
 				var response = await PostAsync(url, data);
-				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString() == "success")
-				{
-					var decks = (DeckObject[])json.data;
-					return decks.Select(d => d.ToDeck()).ToList(); //todo ToDecks()
-				}
-				return null;
-				//success?
+
+				var obj = JsonConvert.DeserializeObject<ResponseWrapper<DeckObjectWrapper[]>>(response);
+				if(obj.status == "success")
+					return obj.data.Select(dw => dw.ToDeck()).ToList();
+				return new List<Deck>();
 			}
 			catch(Exception e)
 			{
 				Console.WriteLine(e);
-				return null;
+				return new List<Deck>();
 			}
 		}
 
@@ -201,6 +192,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				{
 					deck.VersionOnHearthStats = true;
 					deck.HearthStatsId = json.data.id;
+					deck.HearthStatsDeckVersionId = json.data.version_id;
 					Logger.WriteLine("assigned id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
@@ -229,7 +221,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("uploading version " + version + " of " + deck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/create_version?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
-			var data = JsonConvert.SerializeObject(new {deck_id = deck.DeckId, version, cards});
+			var data = JsonConvert.SerializeObject(new {deck_id = hearthStatsId, version, cards});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -238,7 +230,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					deck.VersionOnHearthStats = true;
-					deck.HearthStatsId = hearthStatsId;
+					deck.HearthStatsDeckVersionId = json.data.version_id;
+					//deck.HearthStatsId = hearthStatsId;
 					Logger.WriteLine("assigned id to version: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
@@ -250,7 +243,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return PostResult.CanRetry;
 			}
 		}
-
 
 		public static async Task<PostResult> PostGameResultAsync(GameStats game, Deck deck)
 		{
@@ -290,6 +282,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					game.HearthStatsId = json.data.id;
+					game.HearthStatsDeckVersionId = json.data.version_id;
 					Logger.WriteLine("assigned id to version: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
@@ -327,9 +320,25 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return reader.ReadToEnd();
 		}
 
-		public static async Task<string> GetGamesAsync(long unixTime)
+		public static async Task<List<GameStats>> GetGamesAsync(long unixTime)
 		{
-			return "";
+			Logger.WriteLine("getting games since " + unixTime, "HearthStatsAPI");
+			var url = BaseUrl + "/api/v2/matches/hdt_after?auth_token=" + _authToken;
+			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
+			Console.WriteLine(data);
+			try
+			{
+				var response = await PostAsync(url, data);
+				var obj = JsonConvert.DeserializeObject<ResponseWrapper<GameStatsObjectWrapper[]>>(response);
+				if(obj.status == "success")
+					return obj.data.Select(x => x.ToGameStats()).ToList();
+				return new List<GameStats>();
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e);
+				return new List<GameStats>();
+			}
 		}
 
 		public static async Task<PostResult> DeleteDeckAsync(Deck deck)
@@ -404,44 +413,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		private class CardObject
-		{
-			public readonly int count;
-			public readonly string id;
-
-			public CardObject(Card card)
-			{
-				id = card.Id;
-				count = card.Count;
-			}
-
-			public Card ToCard()
-			{
-				var card = Game.GetCardFromId(id);
-				card.Count = count;
-				return card;
-			}
-		}
-
-		private class DeckObject
-		{
-			public CardObject[] cards;
-			public string @class;
-			//public string url;
-			//public string version;
-			public string id;
-			public string name;
-			public string notes;
-			public string[] tags;
-
-			public Deck ToDeck()
-			{
-				return new Deck();
-				//return new Deck(name, @class, cards.Select(x => x.ToCard()), tags, notes, url, DateTime.Now, new List<Card>(),
-				//         SerializableVersion.Parse(version), new List<Deck>(), true, id, Guid.Empty);
-			}
-		}
-
 		#endregion
 
 		#region Sync
@@ -481,7 +452,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return GetAsync(url).Result;
 		}
 
-		public static string GetGames(long unixTime)
+		public static List<GameStats> GetGames(long unixTime)
 		{
 			return GetGamesAsync(unixTime).Result;
 		}
@@ -494,6 +465,171 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static PostResult PostVersion(Deck version, string hearthStatsId)
 		{
 			return PostVersionAsync(version, hearthStatsId).Result;
+		}
+
+		#endregion
+
+		#region
+
+		private static readonly Dictionary<int, GameResult> _gameResultDict = new Dictionary<int, GameResult>
+		{
+			{1, GameResult.Win},
+			{2, GameResult.Loss},
+			{3, GameResult.Draw}
+		};
+
+		private static readonly Dictionary<int, GameMode> _gameModeDict = new Dictionary<int, GameMode>
+		{
+			{1, GameMode.Arena},
+			{2, GameMode.Casual},
+			{3, GameMode.Ranked},
+			{4, GameMode.None}, //Tournament
+			{5, GameMode.Friendly}
+		};
+
+		private static readonly Dictionary<int, string> _heroDict = new Dictionary<int, string>
+		{
+			{1, "Druid"},
+			{2, "Hunter"},
+			{3, "Mage"},
+			{4, "Paladin"},
+			{5, "Priest"},
+			{6, "Rogue"},
+			{7, "Shaman"},
+			{8, "Warlock"},
+			{9, "Warrior"}
+		};
+
+		public class CardObject
+		{
+			public string count;
+			public string id;
+
+			public CardObject(Card card)
+			{
+				if(card != null)
+				{
+					id = card.Id;
+					count = card.Count.ToString();
+				}
+			}
+
+			public Card ToCard()
+			{
+				try
+				{
+					var card = Game.GetCardFromId(id);
+					if(card != null && !string.IsNullOrEmpty(count))
+						card.Count = int.Parse(count);
+					return card;
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine("error converting CardObject: " + e, "HearthStatsAPI");
+					return null;
+				}
+			}
+		}
+
+		public class DeckObject
+		{
+			public int id;
+			public int klass_id;
+			public string name;
+			public string notes;
+			public string[] tags;
+			public string url;
+			public int version_id;
+
+			public Deck ToDeck(CardObject[] cards)
+			{
+				try
+				{
+					return new Deck(name ?? "", _heroDict[klass_id],
+					                cards == null ? new List<Card>() : cards.Select(x => x.ToCard()).Where(x => x != null), tags ?? new string[0],
+					                notes ?? "", url ?? "", DateTime.Now, new List<Card>(), new SerializableVersion(1, 0), new List<Deck>(), true,
+					                id.ToString(), Guid.NewGuid(), true) {HearthStatsDeckVersionId = version_id.ToString()};
+				}
+				catch(Exception e)
+				{
+					Logger.WriteLine("error converting DeckObject: " + e, "HearthStatsAPI");
+					return null;
+				}
+			}
+		}
+
+		public class DeckObjectWrapper
+		{
+			public CardObject[] cards;
+			public DeckObject deck;
+
+			public Deck ToDeck()
+			{
+				return deck.ToDeck(cards);
+			}
+		}
+
+		public class GameStatsObject
+		{
+			public int klass_id { get; set; }
+			public bool coin { get; set; }
+			public string created_at { get; set; } //unix
+			public int duration { get; set; }
+			public int id { get; set; }
+			public int mode_id { get; set; }
+			public string notes { get; set; }
+			public int numturns { get; set; }
+			public int oppclass_id { get; set; }
+			public string oppname { get; set; }
+			public int ranklvl { get; set; }
+			public int result_id { get; set; }
+
+			public GameStats ToGameStats(string versionId, string deckId)
+			{
+				try
+				{
+					return new GameStats
+					{
+						Result = _gameResultDict[result_id],
+						GameMode = _gameModeDict[mode_id],
+						PlayerHero = _heroDict[klass_id],
+						OpponentHero = _heroDict[oppclass_id],
+						OpponentName = oppname,
+						Turns = numturns,
+						Coin = coin,
+						HearthStatsId = id.ToString(),
+						HearthStatsDeckId = deckId,
+						HearthStatsDeckVersionId = versionId,
+						Note = notes,
+						Rank = ranklvl,
+						StartTime = DateTime.Parse(created_at),
+						EndTime = DateTime.Parse(created_at).AddSeconds(duration),
+					};
+				}
+				catch(Exception e)
+				{
+					Logger.WriteLine("error converting GameStatsObject " + e, "HearthStatsAPI");
+					return null;
+				}
+			}
+		}
+
+		public class GameStatsObjectWrapper
+		{
+			public GameStatsObject match { get; set; }
+			public string deck_id { get; set; }
+			public string version_id { get; set; }
+
+			public GameStats ToGameStats()
+			{
+				return match.ToGameStats(version_id, deck_id);
+			}
+		}
+
+		public class ResponseWrapper<T>
+		{
+			public string status { get; set; }
+			public T data { get; set; }
 		}
 
 		#endregion

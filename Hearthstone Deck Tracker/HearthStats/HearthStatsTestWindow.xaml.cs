@@ -29,8 +29,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats
 			//HearthStatsAPI.PostDeck(Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion());
 		}
 
-		private void BtnGetDecks_OnClick(object sender, RoutedEventArgs e)
+		private async void BtnGetDecks_OnClick(object sender, RoutedEventArgs e)
 		{
+			//var decks = await HearthStatsManager.DownloadDecksAsync();
+			var decks = await HearthStatsManager.DownloadGamesAsync();
+
+			Console.WriteLine(decks.Count);
 			//HearthStatsAPI.GetDecks(DateTime.MinValue);
 			//HearthStatsAPI.GetDecks(DateTime.Today);
 			//HearthStatsAPI.GetDecks(DateTime.Now.ToUnixTime());
