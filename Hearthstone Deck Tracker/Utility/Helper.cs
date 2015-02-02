@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Test/master/live-version";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
 
