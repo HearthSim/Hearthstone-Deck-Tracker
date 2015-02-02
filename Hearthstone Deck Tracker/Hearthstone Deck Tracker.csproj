@@ -145,6 +145,7 @@
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="HearthStats\API\HearthStatsAPI.cs" />
     <Compile Include="HearthStats\API\HearthStatsManager.cs" />
+    <Compile Include="HearthStats\API\PostResult.cs" />
     <Compile Include="HearthStats\Controls\DownloadDecksControl.xaml.cs">
       <DependentUpon>DownloadDecksControl.xaml</DependentUpon>
     </Compile>

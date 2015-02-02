@@ -7,7 +7,10 @@
              d:DesignHeight="300" d:DesignWidth="500">
     <GroupBox Header="Decks found on HearthStats"  Margin="2" Width="300" >
         <DockPanel>
-            <Button DockPanel.Dock="Bottom" Content="SYNC" Margin="0,6,0,6" Click="Button_Click"/>
+            <DockPanel DockPanel.Dock="Bottom" Margin="0,6,0,6">
+                <Button Content="CANCEL" Width="80" DockPanel.Dock="Right" Margin="6,0,0,0" Click="ButtonCancel_OnClick"/>
+                <Button Content="SYNC" Click="Button_Click"/>
+            </DockPanel>
             <ListView Name="ListViewHearthStats" BorderThickness="1">
                 <ListView.ItemTemplate>
                     <DataTemplate>

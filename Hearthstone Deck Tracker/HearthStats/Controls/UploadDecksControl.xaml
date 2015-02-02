@@ -7,7 +7,10 @@
              d:DesignHeight="300" d:DesignWidth="600">
     <GroupBox Header="LOCAL DECKS" Width="550">
         <DockPanel HorizontalAlignment="Center">
-            <Button DockPanel.Dock="Bottom" Content="SYNC" Margin="0,6,0,6" Click="Button_Click" />
+            <DockPanel DockPanel.Dock="Bottom" Margin="0,6,0,6">
+                <Button Content="CANCEL" Width="80" DockPanel.Dock="Right" Margin="6,0,0,0" Click="ButtonCancel_OnClick"/>
+                <Button Content="SYNC" Click="Button_Click"/>
+            </DockPanel>
             <StackPanel Orientation="Horizontal">
                 <GroupBox Header="IGNORE" Margin="0">
                     <DockPanel>

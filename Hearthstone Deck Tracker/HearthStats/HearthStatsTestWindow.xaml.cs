@@ -23,8 +23,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats
 			InitializeComponent();
 		}
 
-		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
 		{
+			await PostDeckAsync(Helper.MainWindow.DeckPickerList.SelectedDeck);
 			//HearthStatsAPI.PostDeck(Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion());
 		}
 
@@ -49,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats
 
 		private async Task PostDeckAsync(Deck deck)
 		{
-			//await HearthStatsAPI.PostDeckAsync(deck);
+			await HearthStatsManager.UploadDeckAsync(deck);
 			//foreach(var game in deck.DeckStats.Games)
 			//	await HearthStatsAPI.PostGameResultAsync(game, deck);
 		}
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats
 		private void PostDeck(Deck deck)
 		{
 			HearthStatsAPI.PostDeck(deck);
-			Parallel.ForEach(deck.DeckStats.Games, game => HearthStatsAPI.PostGameResult(game, deck));
+			//Parallel.ForEach(deck.DeckStats.Games, game => HearthStatsAPI.PostGameResult(game, deck));
 		}
 
 		private void BtnPostAll_OnClick(object sender, RoutedEventArgs e)

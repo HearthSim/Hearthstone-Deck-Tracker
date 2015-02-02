@@ -18,6 +18,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 	public partial class DownloadDecksControl : UserControl
 	{
 		private bool _done;
+		private List<Deck> _selectedDecks; 
 
 		public DownloadDecksControl()
 		{
@@ -26,19 +27,22 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
-			foreach(var deck in decks)
+			_selectedDecks = new List<Deck>();
+
+			foreach(var deck in _selectedDecks)
 				ListViewHearthStats.Items.Add(deck);
 
 			_done = false;
 			while(!_done)
 				await Task.Delay(100);
 
-			return ListViewHearthStats.Items.Cast<Deck>().ToList();
+			return _selectedDecks;
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			_done = true;
+			_selectedDecks = ListViewHearthStats.Items.Cast<Deck>().ToList();
+            _done = true;
 			Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = false;
 		}
 
@@ -56,6 +60,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			var deleted = await HearthStatsManager.DeleteDeckAsync(deck);
 			if(deleted)
 				ListViewHearthStats.Items.Remove(deck);
+		}
+
+		private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
+		{
+			_selectedDecks = new List<Deck>();
+			_done = true;
+			Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = false;
 		}
 	}
 }

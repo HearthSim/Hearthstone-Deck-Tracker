@@ -148,10 +148,12 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
+			var previousVersion = _newDeck.Version;
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
+				_newDeck.VersionOnHearthStats = false;
 				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
@@ -209,11 +211,17 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(EditingDeck)
 				{
-					//TODO
+					if(previousVersion != newVersion)
+						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId);
+					else
+					{
+						
+					}
+
+
 				}
 				else
 				{
-					//don't really care about waiting for it to finish here
 					HearthStatsManager.UploadDeckAsync(newDeckClone);
 				}
 			}

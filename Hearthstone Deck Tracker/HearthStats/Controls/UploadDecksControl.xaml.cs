@@ -22,9 +22,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			InitializeComponent();
 		}
 
+		private List<Deck> _selectedDecks; 
 		private bool _done;
 		public async Task<List<Deck>> LoadDecks(IEnumerable<Deck> decks)
 		{
+			_selectedDecks = new List<Deck>();
 			ListViewLocalDecksNoSync.Items.Clear();
 			ListViewLocalDecksSync.Items.Clear();
 			foreach(var deck in decks.OrderBy(x => x.Name))
@@ -41,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			while(!_done)
 				await Task.Delay(100);
 
-			return ListViewLocalDecksSync.Items.Cast<Deck>().ToList();
+			return _selectedDecks;
 		}
 
 		private void DeckDoNotSync_OnChecked(object sender, RoutedEventArgs e)
@@ -100,8 +102,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
+			_selectedDecks = ListViewLocalDecksSync.Items.Cast<Deck>().ToList();
+            _done = true;
+			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
+		}
+
+		private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
+		{
+			_selectedDecks = new List<Deck>();
 			_done = true;
-			Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = false;
+			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
 		}
 	}
 }

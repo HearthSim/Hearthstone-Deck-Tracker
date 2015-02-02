@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, SerializableVersion selectedVersion = null)
+		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, bool versionOnHearthStats, SerializableVersion selectedVersion = null)
 
 		{
 			Name = name;
@@ -93,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			DeckId = deckId;
+			VersionOnHearthStats = versionOnHearthStats;
 			if(versions != null)
 			{
 				foreach(var d in versions)
@@ -102,6 +103,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Name { get; set; }
 		public bool? SyncWithHearthStats { get; set; }
+
+		public Deck GetVersion(int major, int minor)
+		{
+			var target = new SerializableVersion(major, minor);
+			if(Version == target)
+				return this;
+			return Versions.FirstOrDefault(x => x.Version == target);
+		}
+
+		public bool HasVersion(SerializableVersion version)
+		{
+			return Version == version || Versions.Any(v => v.Version == version);
+		}
 
 		[XmlIgnore]
 		public bool HasHearthStatsId
@@ -228,17 +242,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return Versions != null && Versions.Count > 0; }
 		}
 
+		public bool VersionOnHearthStats { get; set; }
+
 
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, SelectedVersion);
+			                DeckId, VersionOnHearthStats, SelectedVersion);
 		}
 
 		public object CloneWithNewId()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-							Guid.NewGuid(), SelectedVersion);
+							Guid.NewGuid(), VersionOnHearthStats, SelectedVersion);
 		}
 
 		public void ResetVersions()

@@ -90,7 +90,7 @@
         <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
         </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+        <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
         </controls:Flyout>
         <Grid>
