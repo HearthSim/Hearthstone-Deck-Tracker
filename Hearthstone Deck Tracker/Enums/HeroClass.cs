@@ -7,8 +7,8 @@
 		Mage,
 		Priest,
 		Paladin,
-		Shaman,
 		Rogue,
+		Shaman,
 		Warlock,
 		Warrior
 	}
@@ -21,8 +21,8 @@
 		Mage,
 		Priest,
 		Paladin,
-		Shaman,
 		Rogue,
+		Shaman,
 		Warlock,
 		Warrior
 	}
