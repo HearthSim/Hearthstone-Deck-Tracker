@@ -661,6 +661,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
 			MenuItemCheckBoxAutoUploadGames.IsChecked = Config.Instance.HearthStatsAutoUploadNewGames;
+			MenuItemCheckBoxAutoSyncBackground.IsChecked = Config.Instance.HearthStatsAutoSyncInBackground;
 		}
 
 		public void UpdateQuickFilterItemSource()
@@ -702,7 +703,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.Sync();
+				HearthStatsManager.SyncAsync();
 		}
 	}
 }

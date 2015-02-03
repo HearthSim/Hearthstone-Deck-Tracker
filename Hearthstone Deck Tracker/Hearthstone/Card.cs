@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -321,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override string ToString()
 		{
-			return Name + " (" + Count + ")";
+			return Name + "(" + Count + ")";
 		}
 
 		public override bool Equals(object card)

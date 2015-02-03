@@ -34,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			OpponentHero = opponentHero;
 			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
-			Logger.WriteLine("Started new game", "Gamestats");
 			GameId = Guid.NewGuid();
 		}
 

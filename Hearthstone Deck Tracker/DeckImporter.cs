@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var doc = await GetHtmlDoc(url);
-				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm")};
+				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
 
 				var cardNodes = doc.DocumentNode.SelectSingleNode(".//ul[@class='deckList']");
 				var nameNodes = cardNodes.SelectNodes(".//span[@class='name']");
@@ -111,7 +111,8 @@ namespace Hearthstone_Deck_Tracker
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
-
+				if(Helper.MainWindow.DeckList.AllTags.Contains("Arena"))
+					deck.Tags.Add("Arena");
 				return deck;
 			}
 			catch(Exception e)
@@ -159,7 +160,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm")};
+				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
 
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();

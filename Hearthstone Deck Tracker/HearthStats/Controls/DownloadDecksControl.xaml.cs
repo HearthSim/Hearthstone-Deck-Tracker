@@ -30,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		{
 			_selectedDecks = decks.ToList();
 
+			ListViewHearthStats.Items.Clear();
 			foreach(var deck in _selectedDecks)
 				ListViewHearthStats.Items.Add(deck);
 
@@ -57,10 +58,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				return;
 
 			//show warning
-			var result = await Helper.MainWindow.ShowMessageAsync("Delete " + deck.Name,
-			                                   "This will permanentely delete the deck and all associated stats. Are you sure?",
-			                                   MessageDialogStyle.AffirmativeAndNegative,
-			                                   new MetroDialogSettings() {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+			var result =
+				await
+				Helper.MainWindow.ShowMessageAsync("Delete " + deck.Name,
+				                                   "This will permanentely delete the deck and all associated stats. Are you sure?",
+				                                   MessageDialogStyle.AffirmativeAndNegative,
+				                                   new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 			if(result == MessageDialogResult.Affirmative)
 			{
 				var deleted = await HearthStatsManager.DeleteDeckAsync(deck);

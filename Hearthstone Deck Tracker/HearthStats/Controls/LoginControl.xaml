@@ -13,11 +13,11 @@
             <Run Text="Login to your account"/>
         </TextBlock>
         <StackPanel Margin="0,16,0,0">
-            <TextBox Name="TextBoxEmail" controls:TextBoxHelper.Watermark="Email"/>
-            <PasswordBox Name="TextBoxPassword" controls:TextBoxHelper.Watermark="Password" Margin="0,5,0,0"/>
+            <TextBox Name="TextBoxEmail" controls:TextBoxHelper.Watermark="Email" TabIndex="0"/>
+            <PasswordBox Name="TextBoxPassword" controls:TextBoxHelper.Watermark="Password" Margin="0,5,0,0" TabIndex="1"/>
             <DockPanel Margin="0,5,0,0">
-                <CheckBox Name="CheckBoxRememberLogin" Content="Remember me" IsChecked="True" Checked="CheckBoxRememberLogin_Checked" Unchecked="CheckBoxRememberLogin_OnUnchecked"/>
-                <Button Name="BtnLogin" Content="Login" Margin="16,0,0,0" Click="BtnLogin_Click" IsDefault="True"/>
+                <CheckBox Name="CheckBoxRememberLogin" Content="Remember me" IsChecked="True" Checked="CheckBoxRememberLogin_Checked" Unchecked="CheckBoxRememberLogin_OnUnchecked" TabIndex="2"/>
+                <Button Name="BtnLogin" Content="Login" Margin="16,0,0,0" Click="BtnLogin_Click" IsDefault="True" TabIndex="3"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Margin="0,10,0,0">

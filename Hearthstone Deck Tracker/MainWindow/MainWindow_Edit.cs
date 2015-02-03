@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Windows;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -76,6 +77,8 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Removed deckstats from deck: " + deck.Name);
 			}
 
+			HearthStatsManager.DeleteDeckAsync(deck);
+
 			DeckList.DecksList.Remove(deck);
 			WriteDecks();
 			DeckPickerList.RemoveDeck(deck);
@@ -132,6 +135,8 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
+
+			HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
@@ -187,6 +192,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsList.Save();
 			DeckPickerList.UpdateList();
+			HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)

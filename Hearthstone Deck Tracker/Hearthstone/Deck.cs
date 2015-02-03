@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string HearthStatsDeckVersionId;
 		public string HearthStatsId;
 
+
 		[XmlIgnore]
 		public bool IsSelectedInGui;
 
@@ -50,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Deck> Versions;
 
 		private Guid _deckId;
+		private bool? _isArenaDeck;
 
 
 		public Deck()
@@ -70,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, bool versionOnHearthStats,
+		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
 		            SerializableVersion selectedVersion = null)
 
 		{
@@ -90,12 +92,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			DeckId = deckId;
-			VersionOnHearthStats = versionOnHearthStats;
+			HearthStatsDeckVersionId = hearthStatsDeckVersionId;
 			if(versions != null)
 			{
 				foreach(var d in versions)
 					Versions.Add(d.CloneWithNewId() as Deck);
 			}
+		}
+
+		public bool IsArenaDeck
+		{
+			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
+			set { _isArenaDeck = value; }
 		}
 
 
@@ -112,6 +120,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool HasHearthStatsId
 		{
 			get { return !string.IsNullOrEmpty(HearthStatsId); }
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsDeckVersionId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
 		}
 
 		[XmlIgnore]
@@ -212,6 +226,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 		}
+
 		[XmlIgnore]
 		public BitmapImage HeroImage
 		{
@@ -223,6 +238,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return new BitmapImage(uri);
 			}
 		}
+
 		public DeckStats DeckStats
 		{
 			get
@@ -243,13 +259,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return Versions != null && Versions.Count > 0; }
 		}
 
-		public bool VersionOnHearthStats { get; set; }
-
-
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, VersionOnHearthStats, SelectedVersion);
+			                DeckId, "", SelectedVersion);
+		}
+
+		private bool? CheckIfArenaDeck()
+		{
+			return !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 		}
 
 		public Deck GetVersion(int major, int minor)
@@ -268,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object CloneWithNewId()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-			                Guid.NewGuid(), VersionOnHearthStats, SelectedVersion);
+			                Guid.NewGuid(), "", SelectedVersion);
 		}
 
 		public void ResetVersions()

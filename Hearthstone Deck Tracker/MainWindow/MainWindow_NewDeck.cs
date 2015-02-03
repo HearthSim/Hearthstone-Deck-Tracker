@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
-				_newDeck.VersionOnHearthStats = false;
+				_newDeck.HearthStatsDeckVersionId = "";
 				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
@@ -212,10 +212,12 @@ namespace Hearthstone_Deck_Tracker
 				if(EditingDeck)
 				{
 					if(previousVersion != newVersion)
-						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId);
+						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId, background: true);
+					else
+						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true);
 				}
 				else
-					HearthStatsManager.UploadDeckAsync(newDeckClone);
+					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true);
 			}
 
 			//after cloning the stats, otherwise new stats will be generated
@@ -637,5 +639,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+
 	}
 }

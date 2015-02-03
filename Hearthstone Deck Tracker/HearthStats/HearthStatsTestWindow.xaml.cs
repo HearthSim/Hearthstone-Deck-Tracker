@@ -32,9 +32,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats
 		private async void BtnGetDecks_OnClick(object sender, RoutedEventArgs e)
 		{
 			//var decks = await HearthStatsManager.DownloadDecksAsync();
-			var decks = await HearthStatsManager.DownloadGamesAsync();
+			//var decks = await HearthStatsManager.DownloadGamesAsync();
 
-			Console.WriteLine(decks.Count);
+			var asd = await HearthStatsAPI.GetDecksAsync(DateTime.Now.ToUnixTime() - 60000);
+			Console.WriteLine(asd.Count);
+
+			//Console.WriteLine(decks.Count);
 			//HearthStatsAPI.GetDecks(DateTime.MinValue);
 			//HearthStatsAPI.GetDecks(DateTime.Today);
 			//HearthStatsAPI.GetDecks(DateTime.Now.ToUnixTime());

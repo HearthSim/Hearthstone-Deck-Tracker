@@ -9,13 +9,13 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Cache;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.HearthStats;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -44,6 +44,9 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
+		private const int NewsCheckInterval = 300;
+		private const int NewsTickerUpdateInterval = 15;
+		private const int HearthStatsAutoSyncInterval = 300;
 		public readonly Decks DeckList;
 		public readonly List<Deck> DefaultDecks;
 		public readonly Version NewVersion;
@@ -70,12 +73,20 @@ namespace Hearthstone_Deck_Tracker
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
 		private bool _canShowDown;
+		private int _currentNewsId;
+		private string _currentNewsLine;
 		private bool _doUpdate;
+		private DateTime _lastHearthStatsSync;
+		private DateTime _lastNewsCheck;
+		private DateTime _lastNewsUpdate;
 		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
 		private bool _newDeckUnsavedChanges;
+		private string[] _news;
+		private int _newsLine;
 		private Deck _originalDeck;
 		private bool _tempUpdateCheckDisabled;
+		private bool _update;
 		private Version _updatedVersion;
 
 		public bool ShowToolTip
@@ -94,14 +105,6 @@ namespace Hearthstone_Deck_Tracker
 		#endregion
 
 		#region Constructor
-
-		private int _currentNewsId;
-		private string _currentNewsLine;
-		private DateTime _lastNewsCheck;
-		private DateTime _lastNewsUpdate;
-		private string[] _news;
-		private int _newsLine;
-		private bool _updateNews;
 
 		public MainWindow()
 		{
@@ -332,7 +335,7 @@ namespace Hearthstone_Deck_Tracker
 			CopyReplayFiles();
 
 			UpdateOverlayAsync();
-			UpdateNewsAsync();
+			UpdateAsync();
 
 			_initialized = true;
 
@@ -342,32 +345,40 @@ namespace Hearthstone_Deck_Tracker
 			LoadHearthStats();
 		}
 
-		private async void UpdateNewsAsync()
+		public Thickness TitleBarMargin
+		{
+			get { return new Thickness(0, TitlebarHeight, 0, 0); }
+		}
+
+		private async void UpdateAsync()
 		{
 			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
-			_updateNews = true;
-			var client = new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)};
+			_update = true;
 			_lastNewsCheck = DateTime.MinValue;
 			_lastNewsUpdate = DateTime.MinValue;
 			_currentNewsId = Config.Instance.IgnoreNewsId;
-			while(_updateNews)
+			_lastHearthStatsSync = DateTime.Now;
+			while(_update)
 			{
-				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(60))
+				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(NewsCheckInterval))
 				{
 					try
 					{
 						var oldNewsId = _currentNewsId;
-						var content =
-							client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-						try
+						using(var client = new WebClient())
 						{
-							_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
+							var content =
+								client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+							try
+							{
+								_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
+							}
+							catch(Exception)
+							{
+								_currentNewsId = 0;
+							}
+							_news = content.Skip(1).ToArray();
 						}
-						catch(Exception)
-						{
-							_currentNewsId = 0;
-						}
-						_news = content.Skip(1).ToArray();
 						if(_currentNewsId > oldNewsId
 						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
 						{
@@ -381,8 +392,16 @@ namespace Hearthstone_Deck_Tracker
 					}
 					_lastNewsCheck = DateTime.Now;
 				}
-				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(15))
+				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(NewsTickerUpdateInterval))
 					UpdateNews();
+
+				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoSyncInBackground
+				   && (DateTime.Now - _lastHearthStatsSync) > TimeSpan.FromSeconds(HearthStatsAutoSyncInterval))
+				{
+					_lastHearthStatsSync = DateTime.Now;
+					HearthStatsManager.SyncAsync(background: true);
+				}
+
 				await Task.Delay(1000);
 			}
 		}
@@ -431,6 +450,7 @@ namespace Hearthstone_Deck_Tracker
 					link.NavigateUri = new Uri(url.Groups["url"].Value);
 					link.RequestNavigate += (sender, args) => Process.Start(args.Uri.AbsoluteUri);
 					link.Inlines.Add(new Run(url.Groups["text"].Value));
+					link.Foreground = new SolidColorBrush(Colors.White);
 					tb.Inlines.Add(link);
 					ParseMarkup(rest[restIndex + 1], tb);
 				}
@@ -476,7 +496,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				_doUpdate = false;
-				_updateNews = false;
+				_update = false;
 
 				//wait for update to finish, might otherwise crash when overlay gets disposed
 				for(var i = 0; i < 100; i++)
@@ -585,7 +605,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(decks.Count > 0)
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>(),
-				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, false));
+				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -1180,49 +1200,37 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
 		{
-			if(MenuItemLogin.Header.ToString() == "LOGOUT")
-			{
-				var result =
-					await
-					this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
-					                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
-				if(result == MessageDialogResult.Affirmative)
-				{
-					var deletedFile = HearthStatsAPI.Logout();
-					if(!deletedFile)
-					{
-						await
-							this.ShowMessageAsync("Error deleting stored credentials",
-							                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
-							                      + Config.Instance.HearthStatsFilePath);
-					}
-					MenuItemLogin.Header = "LOGIN";
-					EnableHearthStatsMenu(false);
-				}
-			}
-			else
-				FlyoutHearthStatsLogin.IsOpen = true;
+			FlyoutHearthStatsLogin.IsOpen = true;
+			await Task.Delay(100); //wait for open
+			HearthstatsLoginControl.TextBoxEmail.Focus();
 		}
 
 		private void LoadHearthStats()
 		{
 			var loaded = HearthStatsAPI.LoadCredentials();
 			if(loaded)
-				MenuItemLogin.Header = "LOGOUT";
-#if(!DEBUG)
+			{
+				MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				MenuItemLogin.Visibility = Visibility.Collapsed;
+				MenuItemLogout.Visibility = Visibility.Visible;
+				SeparatorLogout.Visibility = Visibility.Visible;
+			}
 			EnableHearthStatsMenu(loaded);
-#endif
 		}
 
-		private void EnableHearthStatsMenu(bool enable)
+		public void EnableHearthStatsMenu(bool enable)
 		{
-			//MenuItemSyncNow.IsEnabled = enable;
-			//MenuItemCheckBoxAutoSync.IsEnabled = enable;
+			MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
+			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
+			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
+			MenuItemHearthStatsSync.IsEnabled = enable;
 		}
 
 		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
 		{
-			HearthStatsManager.Sync();
+			HearthStatsManager.SyncAsync();
 		}
 
 
@@ -1274,12 +1282,61 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
+		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = false;
+			Config.Save();
+		}
+
 		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.IgnoreNewsId = _currentNewsId;
 			Config.Save();
 			StatusBarNews.Visibility = Visibility.Collapsed;
 			;
+		}
+
+		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+				HearthStatsManager.SyncAsync(true);
+		}
+
+		private async void MenuItemLogout_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+			{
+				var deletedFile = HearthStatsAPI.Logout();
+				if(!deletedFile)
+				{
+					await
+						this.ShowMessageAsync("Error deleting stored credentials",
+						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+						                      + Config.Instance.HearthStatsFilePath);
+				}
+				MenuItemLogin.Visibility = Visibility.Visible;
+				MenuItemLogout.Visibility = Visibility.Collapsed;
+				SeparatorLogout.Visibility = Visibility.Collapsed;
+				EnableHearthStatsMenu(false);
+			}
 		}
 	}
 }

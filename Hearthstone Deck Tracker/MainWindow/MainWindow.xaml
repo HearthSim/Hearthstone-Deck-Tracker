@@ -6,8 +6,8 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
-                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
-                      MinHeight="525" MinWidth="590"
+                      Title="Hearthstone Deck Tracker" Height="620" Width="645"
+                      MinHeight="525" MinWidth="645"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -22,6 +22,7 @@
     </Window.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" />
             <Button Click="BtnOptions_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
@@ -54,45 +55,48 @@
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    <Grid>
-
-        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
                          Width="515">
-            <local:Options x:Name="Options" Margin="0,-35,0,0" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
+                <local:Options x:Name="Options" Margin="0,-35,0,0" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:Help x:Name="Help" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
+                <local:Help x:Name="Help" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:DeckStatsControl x:Name="DeckStatsFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
+                <local:DeckStatsControl x:Name="DeckStatsFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:GameDetails x:Name="GameDetailsFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
+                <local:GameDetails x:Name="GameDetailsFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
                          Width="255" Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
-            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
+                <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
-            <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
-        </controls:Flyout>
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
+                <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -108,7 +112,7 @@
             <Menu Grid.Row="1" Grid.ColumnSpan="3">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_layer}" />
                             </Rectangle.Fill>
@@ -136,7 +140,7 @@
                 </MenuItem>
                 <MenuItem Header="_NEW">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_layer_add}" />
                             </Rectangle.Fill>
@@ -190,7 +194,7 @@
                 </MenuItem>
                 <MenuItem Header="_EDIT" Name="MenuItemEdit">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_edit}" />
                             </Rectangle.Fill>
@@ -217,7 +221,7 @@
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16"  Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_download}" />
                             </Rectangle.Fill>
@@ -232,7 +236,7 @@
                 </MenuItem>
                 <MenuItem Header="E_XPORT" Name="MenuItemExport">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_upload}" />
                             </Rectangle.Fill>
@@ -244,32 +248,32 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick" />
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click" />
                 </MenuItem>
-                <MenuItem Header="MENUITEM">
-                    <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_graph_line}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="_REPLAYS">
-                        <MenuItem.Icon>
-                            <Rectangle Width="16" Height="16">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_control_resume}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </MenuItem.Icon>
-                        <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
-                        <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
-                        <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
-                    </MenuItem>
+                <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_graph_line}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="_REPLAYS">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_control_resume}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
+                    <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
+                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
+                </MenuItem>
+                <!--<MenuItem Header="MENUITEM">
+                </MenuItem>-->
                 <MenuItem Header="_HEARTHSTATS">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource hearthstats}" />
                             </Rectangle.Fill>
@@ -278,9 +282,14 @@
                     <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
                     <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
                     <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC NOW" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="FORCE FULL SYNC" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
+                    <Separator/>
                     <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
                     <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND" ToolTip="will perform 'SYNC NOW' every 2 minutes in background" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
+                    <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />

@@ -447,7 +447,7 @@ namespace Hearthstone_Deck_Tracker
 						await HsLogReader.Instance.RankedDetection();
 					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
 						await RankDetection(5);
-					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck);
+					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
 				}
 				_lastGame = null;
 			}
