@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
@@ -211,7 +212,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 		}
-
+		[XmlIgnore]
+		public BitmapImage HeroImage
+		{
+			get
+			{
+				if(!Enum.GetNames(typeof(HeroClass)).Contains(Class))
+					return new BitmapImage();
+				var uri = new Uri(string.Format("../../Resources/{0}_small.png", Class.ToLower()), UriKind.Relative);
+				return new BitmapImage(uri);
+			}
+		}
 		public DeckStats DeckStats
 		{
 			get

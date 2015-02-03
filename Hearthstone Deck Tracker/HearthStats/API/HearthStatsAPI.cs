@@ -355,8 +355,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			Logger.WriteLine("deleting deck: " + deck, "HearthStatsAPI");
 
-			var url = BaseUrl + "@@@@@@@@@@@@@@@@" + _authToken; // TODO 
-			var data = JsonConvert.SerializeObject(new {deck_id = deck.HearthStatsId});
+			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken; // TODO 
+			var data = JsonConvert.SerializeObject(new {deck_id = new[] {deck.HearthStatsId}});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -401,6 +401,53 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					Logger.WriteLine("deleted game", "HearthStatsAPI");
+					return PostResult.WasSuccess;
+				}
+				Logger.WriteLine("error: " + response, "HearthStatsAPI");
+				return PostResult.CanRetry;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				return PostResult.CanRetry;
+			}
+		}
+
+		//TODO TEST
+		public static async Task<PostResult> MoveMatchAsync(GameStats game, Deck newDeck)
+		{
+			if(game == null)
+			{
+				Logger.WriteLine("error: game is null", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(!game.HasHearthStatsId)
+			{
+				Logger.WriteLine("error: game has no HearthStatsId", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(newDeck == null)
+			{
+				Logger.WriteLine("error: deck is null", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(!newDeck.HasHearthStatsId)
+			{
+				Logger.WriteLine("error: deck has no HearthStatsId", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			Logger.WriteLine("deleting game: " + game, "HearthStatsAPI");
+
+			var url = BaseUrl + "/api/v2/matches/move?auth_token=" + _authToken;
+			var data = JsonConvert.SerializeObject(new {match_id = new[] {game.HearthStatsId}, deck_id = newDeck.HearthStatsId});
+			try
+			{
+				var response = await PostAsync(url, data);
+				Console.WriteLine(response);
+				dynamic json = JsonConvert.DeserializeObject(response);
+				if(json.status.ToString() == "success")
+				{
+					Logger.WriteLine("moved game", "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");
@@ -465,6 +512,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static PostResult PostVersion(Deck version, string hearthStatsId)
 		{
 			return PostVersionAsync(version, hearthStatsId).Result;
+		}
+
+		public static PostResult MoveMatch(GameStats game, Deck newDeck)
+		{
+			return MoveMatchAsync(game, newDeck).Result;
 		}
 
 		#endregion

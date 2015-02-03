@@ -163,8 +163,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var newDecks = decks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId)).ToList();
 			if(newDecks.Any())
 			{
-				await controller.CloseAsync();
 				Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
+				await controller.CloseAsync();
 				newDecks = await Helper.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
 				foreach(var deck in newDecks)
 				{

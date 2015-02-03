@@ -23,6 +23,9 @@ namespace Hearthstone_Deck_Tracker
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                     + @"\HearthstoneDeckTracker";
 
+		public readonly string LocalAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+		                                          + @"\HearthstoneDeckTracker";
+
 		[DefaultValue("")]
 		public string AccentName = "";
 
@@ -662,7 +665,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public string HearthStatsFilePath
 		{
-			get { return Path.Combine(DataDir, "hearthstats"); }
+			get
+			{
+				if(!Directory.Exists(LocalAppDataPath))
+					Directory.CreateDirectory(LocalAppDataPath);
+				return Path.Combine(LocalAppDataPath, "hearthstats");
+			}
 		}
 
 		#endregion

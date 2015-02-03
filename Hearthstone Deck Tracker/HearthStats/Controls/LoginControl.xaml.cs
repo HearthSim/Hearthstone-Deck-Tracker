@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			if(result.Success)
 			{
 				Helper.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
+				Helper.MainWindow.MenuItemLogin.Header = "LOGOUT";
 				HearthStatsManager.Sync();
 			}
 			else

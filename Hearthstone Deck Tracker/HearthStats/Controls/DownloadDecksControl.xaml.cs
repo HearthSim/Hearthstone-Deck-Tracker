@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -56,10 +57,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				return;
 
 			//show warning
-
-			var deleted = await HearthStatsManager.DeleteDeckAsync(deck);
-			if(deleted)
-				ListViewHearthStats.Items.Remove(deck);
+			var result = await Helper.MainWindow.ShowMessageAsync("Delete " + deck.Name,
+			                                   "This will permanentely delete the deck and all associated stats. Are you sure?",
+			                                   MessageDialogStyle.AffirmativeAndNegative,
+			                                   new MetroDialogSettings() {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+			{
+				var deleted = await HearthStatsManager.DeleteDeckAsync(deck);
+				if(deleted)
+					ListViewHearthStats.Items.Remove(deck);
+			}
 		}
 
 		private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
