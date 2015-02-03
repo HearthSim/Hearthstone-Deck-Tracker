@@ -428,6 +428,7 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 				Game.CurrentGameStats.PlayerDeckVersion = selectedDeck.Version;
+				Game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
 
 				_lastGame = Game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);

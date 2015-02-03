@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public List<GameStats> Games;
 
 		public string HearthStatsDeckId;
+		public string HearthStatsDeckVersionId;
 		public string Name;
 
 		public DeckStats()
@@ -30,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Name = deck.Name;
 			Games = new List<GameStats>();
+			HearthStatsDeckVersionId = deck.HearthStatsDeckVersionId;
 			HearthStatsDeckId = deck.HearthStatsId;
 			DeckId = deck.DeckId;
 		}
@@ -38,6 +40,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool HasHearthStatsDeckId
 		{
 			get { return !string.IsNullOrEmpty(HearthStatsDeckId); }
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsDeckVersionId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
 		}
 
 		public void AddGameResult(GameResult result, string opponentHero, string playerHero)
@@ -52,8 +60,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool BelongsToDeck(Deck deck)
 		{
-			if(HasHearthStatsDeckId && deck.HasHearthStatsId)
-				return HearthStatsDeckId.Equals(deck.HearthStatsId);
+			if(HasHearthStatsDeckId && deck.HasHearthStatsId && HasHearthStatsDeckVersionId && deck.HasHearthStatsDeckVersionId)
+				return HearthStatsDeckId.Equals(deck.HearthStatsId) && HearthStatsDeckVersionId.Equals(deck.HearthStatsDeckVersionId);
 			return DeckId == deck.DeckId;
 		}
 	}

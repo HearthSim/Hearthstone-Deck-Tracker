@@ -58,13 +58,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				Helper.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
 				Helper.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
 
-				var dialogResult = await Helper.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
-				                                                MessageDialogStyle.AffirmativeAndNegative,
-				                                                new MetroDialogSettings()
-				                                                {
-					                                                AffirmativeButtonText = "sync now",
-					                                                NegativeButtonText = "later"
-				                                                });
+				var dialogResult =
+					await
+					Helper.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
+					                                   MessageDialogStyle.AffirmativeAndNegative,
+					                                   new MetroDialogSettings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}

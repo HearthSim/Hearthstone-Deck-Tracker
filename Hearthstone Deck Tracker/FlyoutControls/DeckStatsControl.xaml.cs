@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -215,17 +216,18 @@ namespace Hearthstone_Deck_Tracker
 			var games =
 				filteredGames.Where(
 				                    g =>
-				                    g.PlayerDeckVersion == deck.Version
-				                    || g.PlayerDeckVersion == null && deck.Version == new SerializableVersion(1, 0)).ToList();
+				                    g.BelongsToDeckVerion(deck) || !g.IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0))
+				             .ToList();
 			DataGridWinLoss.Items.Add(new WinLoss(games, "%", deck.Version));
 			DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", deck.Version));
 			//prev versions
-			foreach(var v in deck.Versions.Select(d => d.Version).OrderByDescending(d => d))
+			foreach(var v in deck.Versions.OrderByDescending(d => d.Version))
 			{
 				games =
-					filteredGames.Where(g => g.PlayerDeckVersion == v || g.PlayerDeckVersion == null && v == new SerializableVersion(1, 0)).ToList();
-				DataGridWinLoss.Items.Add(new WinLoss(games, "%", v));
-				DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", v));
+					filteredGames.Where(g => g.BelongsToDeckVerion(v) || !g.IsAssociatedWithDeckVersion && v.Version == new SerializableVersion(1, 0))
+					             .ToList();
+				DataGridWinLoss.Items.Add(new WinLoss(games, "%", v.Version));
+				DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", v.Version));
 			}
 
 			var defaultStats = DefaultDeckStats.Instance.GetDeckStats(deck.Class) ?? new DeckStats();
@@ -519,11 +521,14 @@ namespace Hearthstone_Deck_Tracker
 			else
 				_deck.DeckStats.Games.Remove(selectedGame);
 			selectedGame.PlayerDeckVersion = selectedDeck.Version; //move to latest version
+			selectedGame.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
 			selectedDeck.DeckStats.Games.Add(selectedGame);
 			DeckStatsList.Save();
 			Helper.MainWindow.WriteDecks();
 			Refresh();
 			Helper.MainWindow.DeckPickerList.UpdateList();
+			if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+				HearthStatsManager.MoveMatchAsync(selectedGame, selectedDeck, background: true);
 		}
 
 		private bool VerifyHeroes(GameStats game)

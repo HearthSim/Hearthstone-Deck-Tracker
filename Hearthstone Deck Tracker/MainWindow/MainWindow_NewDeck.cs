@@ -639,7 +639,5 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
-
 	}
 }

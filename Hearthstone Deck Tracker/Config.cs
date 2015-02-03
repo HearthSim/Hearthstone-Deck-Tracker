@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                     + @"\HearthstoneDeckTracker";
-		
+
 		[DefaultValue("")]
 		public string AccentName = "";
 
@@ -149,6 +149,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
+
+		[DefaultValue(false)]
+		public bool HearthStatsAutoSyncInBackground = false;
 
 		[DefaultValue(true)]
 		public bool HearthStatsAutoUploadNewDecks = true;
@@ -609,9 +612,6 @@ namespace Hearthstone_Deck_Tracker
 			set { LastDeckIdString = value.ToString(); }
 		}
 
-		[DefaultValue(false)]
-		public bool HearthStatsAutoSyncInBackground = false;
-
 		#endregion
 
 		#region Properties
@@ -665,10 +665,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public string HearthStatsFilePath
 		{
-			get
-			{
-				return Path.Combine(DataDir, "hearthstatsauth");
-			}
+			get { return Path.Combine(DataDir, "hearthstatsauth"); }
 		}
 
 		#endregion

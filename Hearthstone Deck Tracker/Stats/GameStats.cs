@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -84,6 +85,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		public SerializableVersion PlayerDeckVersion { get; set; }
+
+		public bool IsAssociatedWithDeckVersion
+		{
+			get { return PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
+		}
 
 		[XmlIgnore]
 		public string PlayerDeckVersionString
@@ -166,6 +172,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string HearthStatsDeckId { get; set; }
 		public string HearthStatsDeckVersionId { get; set; }
+
+		public bool BelongsToDeckVerion(Deck deck)
+		{
+			return PlayerDeckVersion == deck.Version || HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId;
+		}
 
 		public GameStats CloneWithNewId()
 		{

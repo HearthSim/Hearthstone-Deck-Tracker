@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception ex)
 			{
 				Logger.WriteLine(ex.ToString());
-                return Default;
+				return Default;
 			}
 		}
 	}

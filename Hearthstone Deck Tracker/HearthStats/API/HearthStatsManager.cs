@@ -22,10 +22,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			//await Task.Delay(1000);
 			//return true;
-			Logger.WriteLine("trying to upload match: " + game, "HearthStatsSync");
+			Logger.WriteLine("trying to upload match: " + game, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return PostResult.Failed;
 			}
 			if(!HearthStatsAPI.IsValidGame(game))
@@ -34,11 +34,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
 			if(!deck.HasHearthStatsId)
 			{
-				Logger.WriteLine("...deck has no HearthStats id, uploading deck", "HearthStatsSync");
+				Logger.WriteLine("...deck has no HearthStats id, uploading deck", "HearthStatsManager");
 				var success = await UploadDeckAsync(deck);
 				if(!success.Success)
 				{
-					Logger.WriteLine("error: deck could not be uploaded or did not return an id. Can not upload match.", "HearthStatsSync");
+					Logger.WriteLine("error: deck could not be uploaded or did not return an id. Can not upload match.", "HearthStatsManager");
 					if(background)
 						Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
 					return PostResult.Failed;
@@ -48,13 +48,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 to upload match: " + game, "HearthStatsSync");
+				Logger.WriteLine("try #2 to upload match: " + game, "HearthStatsManager");
 				result = await HearthStatsAPI.PostGameResultAsync(game, deck);
 			}
 			if(result.Success && saveFilesAfter)
 				DeckStatsList.Save();
 			if(background)
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success uploading game " + game, "HearthStatsManager");
 			return result;
 		}
 
@@ -65,10 +67,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<List<Deck>> DownloadDecksAsync(bool forceAll = false)
 		{
-			Logger.WriteLine("trying do download decks", "HearthStatsSync");
+			Logger.WriteLine("trying to download decks", "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return null;
 			}
 			var decks = await HearthStatsAPI.GetDecksAsync(forceAll ? 0 : Config.Instance.LastHearthStatsDecksSync);
@@ -80,38 +82,33 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<List<GameStats>> DownloadGamesAsync(bool forceAll = false)
 		{
-			//await Task.Delay(1000);
-			//return new List<GameStats>();
-			Logger.WriteLine("trying do download games", "HearthStatsSync");
+			Logger.WriteLine("trying to download games", "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return null;
 			}
 			var games = await HearthStatsAPI.GetGamesAsync(forceAll ? 0 : Config.Instance.LastHearthStatsGamesSync);
-			//Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime();
-			//Config.Save();
-
-			//save games to decks
-
 			return games;
 		}
 
 		public static async Task<bool> DeleteDeckAsync(Deck deck)
 		{
-			Logger.WriteLine("trying do delete deck " + deck, "HearthStatsSync");
+			Logger.WriteLine("trying to delete deck " + deck, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return false;
 			}
 			var result = await HearthStatsAPI.DeleteDeckAsync(deck);
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 do delete deck " + deck, "HearthStatsSync");
+				Logger.WriteLine("try #2 to delete deck " + deck, "HearthStatsManager");
 				result = await HearthStatsAPI.DeleteDeckAsync(deck);
 			}
+			if(result.Success)
+				Logger.WriteLine("success deleting deck " + deck, "HearthStatsManager");
 			return result.Success;
 		}
 
@@ -119,10 +116,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			//await Task.Delay(1000);
 			//return true;
-			Logger.WriteLine("trying to upload deck " + deck, "HearthStatsSync");
+			Logger.WriteLine("trying to upload deck " + deck, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return PostResult.Failed;
 			}
 
@@ -133,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 to upload deck " + deck, "HearthStatsSync");
+				Logger.WriteLine("try #2 to upload deck " + deck, "HearthStatsManager");
 				result = await HearthStatsAPI.PostDeckAsync(first);
 			}
 			if(result.Success)
@@ -159,6 +156,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			if(background)
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success uploading deck " + deck, "HearthStatsManager");
 			return PostResult.Failed;
 		}
 
@@ -173,14 +172,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			                 "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return;
 			}
 			try
 			{
 				if(_syncInProgress)
 				{
-					Logger.WriteLine("error: sync already in progress", "HearthStatsSync");
+					Logger.WriteLine("error: sync already in progress", "HearthStatsManager");
 					return;
 				}
 				_syncInProgress = true;
@@ -207,32 +206,62 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Helper.MainWindow.DeckPickerList.UpdateList();
 					background = false;
 				}
-
-				/*if(!controller.IsOpen)
-					controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new versions...");
-				else
-					controller.SetMessage("Checking HearthStats for new versions...");
-				localDecks = Helper.MainWindow.DeckList.DecksList;
-				var versions = await DownloadVersionsAsync(forceFullSync);
-				var newVersions =
-					versions.Where(v => localDecks.Any(d => d.HasHearthStatsId && d.HearthStatsId == v.HearthStatsId && !d.HasVersion(v.Version)))
-					        .OrderBy(v => v.Version)
-					        .ToList();
-				if(newVersions.Any())
+				if(!background)
 				{
-					foreach(var version in newVersions)
+					if(controller == null || !controller.IsOpen)
+						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new versions...");
+					else
+						controller.SetMessage("Checking for new versions...");
+				}
+				var decksWithNewVersions =
+					decks.Where(deck => localDecks.All(localDeck => localDeck.HasHearthStatsId && localDeck.Version != deck.Version)).ToList();
+				if(decksWithNewVersions.Any()) // TODO: TEST
+				{
+					foreach(var deck in decksWithNewVersions)
 					{
-						var deck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == version.HearthStatsId);
-						if(deck != null)
+						var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+						if(currentDeck == null)
+							continue;
+						var originalDeck = (Deck)currentDeck.Clone();
+						var versions =
+							deck.VersionsIncludingSelf.Where(v => !currentDeck.VersionsIncludingSelf.Contains(v))
+							    .OrderBy(v => v)
+							    .Select(v => deck.GetVersion(v.Major, v.Minor));
+						foreach(var newVersion in versions)
 						{
-							Helper.MainWindow.DeckList.DecksList.Remove(deck);
-							deck.Versions.Clear();
-							version.Versions.Add(deck);
-							Helper.MainWindow.DeckList.DecksList.Add(version);
+							var clone = (Deck)currentDeck.Clone();
+							currentDeck.Version = newVersion.Version;
+							currentDeck.SelectedVersion = newVersion.Version;
+							currentDeck.HearthStatsDeckVersionId = newVersion.HearthStatsDeckVersionId;
+							currentDeck.Versions.Add(clone);
 						}
+						Helper.MainWindow.DeckPickerList.RemoveDeck(originalDeck);
+						Helper.MainWindow.DeckPickerList.AddDeck(currentDeck);
 					}
+				}
+				if(!background)
+				{
+					if(controller == null || !controller.IsOpen)
+						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for edited decks...");
+					else
+						controller.SetMessage("Checking for edited decks...");
+				}
+				foreach(var deck in decks) //TODO: TEST
+				{
+					var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+					if(localDeck != null)
+					{
+						localDeck.Name = deck.Name;
+						localDeck.Tags = deck.Tags;
+						localDeck.Note = deck.Note;
+						localDeck.Cards.Clear();
+						foreach(var card in deck.Cards)
+							localDeck.Cards.Add((Card)card.Clone());
+					}
+					Helper.MainWindow.DeckPickerList.UpdateList();
 					Helper.MainWindow.WriteDecks();
-				}*/
+				}
+
 
 				if(!background)
 				{
@@ -247,9 +276,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					foreach(var game in newGames)
 					{
 						var deck =
-							Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId);
+							Helper.MainWindow.DeckList.DecksList.FirstOrDefault(
+							                                                    d =>
+							                                                    d.HasHearthStatsId && d.HearthStatsId == game.HearthStatsDeckId
+							                                                    && d.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
 						if(deck != null && deck.DeckStats.Games.All(g => g.HearthStatsId != game.HearthStatsId))
+						{
+							game.PlayerDeckVersion = deck.Version;
 							deck.DeckStats.AddGameResult(game);
+						}
 					}
 					DeckStatsList.Save();
 					Helper.MainWindow.DeckPickerList.UpdateList();
@@ -325,25 +360,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		public static async Task<List<Deck>> DownloadVersionsAsync(bool forceAll = false)
-		{
-			Logger.WriteLine("trying do download versions", "HearthStatsSync");
-			if(!HearthStatsAPI.IsLoggedIn)
-			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
-				return new List<Deck>();
-			}
-			await Task.Delay(100);
-			return new List<Deck>();
-		}
-
 		public static async Task<PostResult> UploadVersionAsync(Deck deck, string hearthStatsId, bool saveFilesAfter = true,
 		                                                        bool background = false)
 		{
-			Logger.WriteLine("trying to upload version " + deck.Version + " of " + deck, "HearthStatsSync");
+			Logger.WriteLine("trying to upload version " + deck.Version + " of " + deck, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return PostResult.Failed;
 			}
 			if(background)
@@ -353,13 +376,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 to upload version " + deck.Version + " of " + deck, "HearthStatsSync");
+				Logger.WriteLine("try #2 to upload version " + deck.Version + " of " + deck, "HearthStatsManager");
 				result = await HearthStatsAPI.PostVersionAsync(deck, hearthStatsId);
 			}
 			if(result.Success && saveFilesAfter)
 				Helper.MainWindow.WriteDecks();
 			if(background)
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success uploading version " + deck, "HearthStatsManager");
 			return result;
 		}
 
@@ -368,34 +393,82 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return UploadVersionAsync(deck, hearthStatsId, saveFilesAfter).Result;
 		}
 
-		public static async Task<PostResult> DeleteMatchAsync(GameStats game)
+		public static async Task<PostResult> DeleteMatchAsync(GameStats game, bool saveFilesAfter = true, bool background = false)
 		{
-			Logger.WriteLine("trying do delete game " + game, "HearthStatsSync");
+			Logger.WriteLine("trying to delete game " + game, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return PostResult.Failed;
 			}
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
 			var result = await HearthStatsAPI.DeleteMatchAsync(game);
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 do delete game " + game, "HearthStatsSync");
+				Logger.WriteLine("try #2 to delete game " + game, "HearthStatsManager");
 				result = await HearthStatsAPI.DeleteMatchAsync(game);
 			}
+			if(result.Success && saveFilesAfter)
+				DeckStatsList.Save();
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success deleting game " + game, "HearthStatsManager");
 			return result;
 		}
 
-		public static async Task<PostResult> UpdateDeckAsync(Deck deck, bool saveFileAfter = true, bool background = false)
+		public static async Task<PostResult> MoveMatchAsync(GameStats game, Deck target, bool saveFilesAfter = true, bool background = false)
 		{
-			Logger.WriteLine("trying do update deck " + deck, "HearthStatsSync");
+			Logger.WriteLine("trying to move game " + game + " to " + target, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("error: not logged in", "HearthStatsSync");
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return PostResult.Failed;
 			}
-			Console.WriteLine("NOT YET IMPLEMENTED");
-			return PostResult.Failed;
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
+			var result = await HearthStatsAPI.MoveMatchAsync(game, target);
+			if(!result.Success && result.Retry)
+			{
+				await Task.Delay(RetryDelay);
+				Logger.WriteLine("try #2 to move game " + game + " to " + target, "HearthStatsManager");
+				result = await HearthStatsAPI.MoveMatchAsync(game, target);
+			}
+			if(result.Success && saveFilesAfter)
+				DeckStatsList.Save();
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success moveing game " + game, "HearthStatsManager");
+			return result;
+		}
+
+		public static async Task<PostResult> UpdateDeckAsync(Deck deck, bool saveFilesAfter = true, bool background = false)
+		{
+			Logger.WriteLine("trying to update deck " + deck, "HearthStatsManager");
+			if(!HearthStatsAPI.IsLoggedIn)
+			{
+				Logger.WriteLine("error: not logged in", "HearthStatsManager");
+				return PostResult.Failed;
+			}
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
+			var result = await HearthStatsAPI.UpdateDeckAsync(deck);
+			if(!result.Success && result.Retry)
+			{
+				await Task.Delay(RetryDelay);
+				Logger.WriteLine("try #2 to update deck " + deck, "HearthStatsManager");
+				result = await HearthStatsAPI.UpdateDeckAsync(deck);
+			}
+			if(result.Success && saveFilesAfter)
+				Helper.MainWindow.WriteDecks();
+			if(background)
+				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			if(result.Success)
+				Logger.WriteLine("success updating deck " + deck, "HearthStatsManager");
+			return result;
 		}
 	}
 }
