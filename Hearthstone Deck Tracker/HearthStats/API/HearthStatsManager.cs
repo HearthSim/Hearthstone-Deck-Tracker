@@ -393,9 +393,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return UploadVersionAsync(deck, hearthStatsId, saveFilesAfter).Result;
 		}
 
-		public static async Task<PostResult> DeleteMatchAsync(GameStats game, bool saveFilesAfter = true, bool background = false)
+		public static async Task<PostResult> DeleteMatchesAsync(List<GameStats> games, bool saveFilesAfter = true, bool background = false)
 		{
-			Logger.WriteLine("trying to delete game " + game, "HearthStatsManager");
+			Logger.WriteLine("trying to delete game " + games.Select(g => g.ToString()).Aggregate((c, n) => c + ", " + n), "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("error: not logged in", "HearthStatsManager");
@@ -403,19 +403,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			if(background)
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
-			var result = await HearthStatsAPI.DeleteMatchAsync(game);
+			var result = await HearthStatsAPI.DeleteMatchesAsync(games);
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
-				Logger.WriteLine("try #2 to delete game " + game, "HearthStatsManager");
-				result = await HearthStatsAPI.DeleteMatchAsync(game);
+				Logger.WriteLine("try #2 to delete game " + games, "HearthStatsManager");
+				result = await HearthStatsAPI.DeleteMatchesAsync(games);
 			}
 			if(result.Success && saveFilesAfter)
 				DeckStatsList.Save();
 			if(background)
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
 			if(result.Success)
-				Logger.WriteLine("success deleting game " + game, "HearthStatsManager");
+				Logger.WriteLine("success deleting game " + games, "HearthStatsManager");
 			return result;
 		}
 

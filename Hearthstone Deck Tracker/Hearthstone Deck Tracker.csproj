@@ -143,9 +143,17 @@
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameEventHandler.cs" />
+    <Compile Include="HearthStats\API\Objects\CardObject.cs" />
+    <Compile Include="HearthStats\API\Objects\DeckObject.cs" />
+    <Compile Include="HearthStats\API\Objects\DeckObjectWrapper.cs" />
+    <Compile Include="HearthStats\API\Dictionaries.cs" />
+    <Compile Include="HearthStats\API\Objects\DeckVersion.cs" />
+    <Compile Include="HearthStats\API\Objects\GameStatsObject.cs" />
+    <Compile Include="HearthStats\API\Objects\GameStatsObjectWrapper.cs" />
     <Compile Include="HearthStats\API\HearthStatsAPI.cs" />
     <Compile Include="HearthStats\API\HearthStatsManager.cs" />
     <Compile Include="HearthStats\API\PostResult.cs" />
+    <Compile Include="HearthStats\API\Objects\ResponseWrapper.cs" />
     <Compile Include="HearthStats\Controls\DownloadDecksControl.xaml.cs">
       <DependentUpon>DownloadDecksControl.xaml</DependentUpon>
     </Compile>
