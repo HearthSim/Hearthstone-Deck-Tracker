@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			try
 			{
-				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo(), "DeckExporter"));
+				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo()), "DeckExporter");
 				var hsHandle = User32.GetHearthstoneWindow();
 
 				if(!User32.IsHearthstoneInForeground())
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 
-				Logger.WriteLine("Waiting for " + Config.Instance.ExportStartDelay + " seconds before starting the export process");
+				Logger.WriteLine("Waiting for " + Config.Instance.ExportStartDelay + " seconds before starting the export process", "DeckExporter");
 				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
 
 				var hsRect = User32.GetHearthstoneRect(false);

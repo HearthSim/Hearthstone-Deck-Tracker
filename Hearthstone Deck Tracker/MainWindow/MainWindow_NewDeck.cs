@@ -174,7 +174,7 @@ namespace Hearthstone_Deck_Tracker
 			newDeckClone.LastEdited = DateTime.Now;
 
 			WriteDecks();
-			Logger.WriteLine("Saved Decks");
+			Logger.WriteLine("Saved Decks", "SaveDeck");
 
 			if(EditingDeck)
 			{
@@ -187,7 +187,7 @@ namespace Hearthstone_Deck_Tracker
 						if(overwrite)
 						{
 							statsEntry.Name = deckName;
-							Logger.WriteLine("Deck has new name, updated deckstats");
+							Logger.WriteLine("Deck has new name, updated deckstats", "SaveDeck");
 						}
 						else
 						{
@@ -199,7 +199,7 @@ namespace Hearthstone_Deck_Tracker
 							}
 							foreach(var game in statsEntry.Games)
 								newStatsEntry.AddGameResult(game.CloneWithNewId());
-							Logger.WriteLine("cloned gamestats for \"Set as new\"");
+							Logger.WriteLine("cloned gamestats for \"Set as new\"", "SaveDeck");
 						}
 						DeckStatsList.Save();
 					}
@@ -209,6 +209,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks)
 			{
+				Logger.WriteLine("auto uploading new/edited deck", "SaveDeck");
 				if(EditingDeck)
 				{
 					if(previousVersion != newVersion)

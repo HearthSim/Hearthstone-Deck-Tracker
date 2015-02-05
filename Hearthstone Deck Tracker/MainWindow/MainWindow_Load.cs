@@ -96,14 +96,14 @@ namespace Hearthstone_Deck_Tracker
 					{
 						Helper.CopyFolder(appDataReplayDirPath, appDataReplayDirPath + time);
 						Directory.Delete(appDataReplayDirPath, true);
-						Logger.WriteLine("Created backups of replays in appdata");
+						Logger.WriteLine("Created backups of replays in appdata", "Load");
 					}
 
 
 					Helper.CopyFolder(dataReplayDirPath, appDataReplayDirPath);
 					Directory.Delete(dataReplayDirPath, true);
 
-					Logger.WriteLine("Moved Games to appdata");
+					Logger.WriteLine("Moved replays to appdata", "Load");
 				}
 			}
 			else if(Directory.Exists(appDataReplayDirPath)) //Save in DataDir and AppData Replay dir still exists
@@ -115,12 +115,12 @@ namespace Hearthstone_Deck_Tracker
 					Helper.CopyFolder(dataReplayDirPath, dataReplayDirPath + time);
 					Directory.Delete(dataReplayDirPath, true);
 				}
-				Logger.WriteLine("Created backups of replays locally");
+				Logger.WriteLine("Created backups of replays locally", "Load");
 
 
 				Helper.CopyFolder(appDataReplayDirPath, dataReplayDirPath);
 				Directory.Delete(appDataReplayDirPath, true);
-				Logger.WriteLine("Moved Games to appdata");
+				Logger.WriteLine("Moved replays to appdata", "Load");
 			}
 		}
 
@@ -146,16 +146,16 @@ namespace Hearthstone_Deck_Tracker
 							Helper.CopyFolder(appDataGamesDirPath, appDataGamesDirPath + time);
 							Directory.Delete(appDataGamesDirPath, true);
 						}
-						Logger.WriteLine("Created backups of deckstats and games in appdata");
+						Logger.WriteLine("Created backups of DeckStats and Games in appdata", "Load");
 					}
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved DeckStats to appdata");
+					Logger.WriteLine("Moved DeckStats to appdata", "Load");
 					if(Directory.Exists(dataGamesDirPath))
 					{
 						Helper.CopyFolder(dataGamesDirPath, appDataGamesDirPath);
 						Directory.Delete(dataGamesDirPath, true);
 					}
-					Logger.WriteLine("Moved Games to appdata");
+					Logger.WriteLine("Moved Games to appdata", "Load");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -170,16 +170,16 @@ namespace Hearthstone_Deck_Tracker
 						Helper.CopyFolder(dataGamesDirPath, dataGamesDirPath + time);
 						Directory.Delete(dataGamesDirPath, true);
 					}
-					Logger.WriteLine("Created backups of deckstats and games locally");
+					Logger.WriteLine("Created backups of deckstats and games locally", "Load");
 				}
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved DeckStats to local");
+				Logger.WriteLine("Moved DeckStats to local", "Load");
 				if(Directory.Exists(appDataGamesDirPath))
 				{
 					Helper.CopyFolder(appDataGamesDirPath, dataGamesDirPath);
 					Directory.Delete(appDataGamesDirPath, true);
 				}
-				Logger.WriteLine("Moved Games to appdata");
+				Logger.WriteLine("Moved Games to appdata", "Load");
 			}
 
 			var filePath = Config.Instance.DataDir + "DeckStats.xml";
@@ -319,6 +319,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(converted)
 			{
+				Logger.WriteLine("changed config values", "ConvertLegacyConfig");
 				Config.SaveBackup();
 				Config.Save();
 			}
@@ -366,7 +367,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					updated = true;
 					File.Copy("Files/log.config", _logConfigPath, true);
-					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _logConfigPath));
+					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _logConfigPath), "Load");
 				}
 				else
 				{
@@ -377,12 +378,12 @@ namespace Hearthstone_Deck_Tracker
 					{
 						updated = true;
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _logConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _logConfigPath), "Load");
 					}
 					else if(Config.Instance.AlwaysOverwriteLogConfig)
 					{
 						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _logConfigPath));
+						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _logConfigPath), "Load");
 					}
 				}
 			}
@@ -414,7 +415,7 @@ namespace Hearthstone_Deck_Tracker
 						//backup in case the file already exists
 						File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved decks to appdata");
+					Logger.WriteLine("Moved decks to appdata", "Load");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -423,7 +424,7 @@ namespace Hearthstone_Deck_Tracker
 					//backup in case the file already exists
 					File.Move(dataDirPath, dataDirPath + DateTime.Now.ToFileTime());
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved decks to local");
+				Logger.WriteLine("Moved decks to local", "Load");
 			}
 
 			//create file if it doesn't exist
@@ -450,10 +451,10 @@ namespace Hearthstone_Deck_Tracker
 						//backup in case the file already exists
 						var time = DateTime.Now.ToFileTime();
 						File.Move(appDataPath, appDataPath + time);
-						Logger.WriteLine("Created backups of DefaultDeckStats in appdata");
+						Logger.WriteLine("Created backups of DefaultDeckStats in appdata", "Load");
 					}
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved DefaultDeckStats to appdata");
+					Logger.WriteLine("Moved DefaultDeckStats to appdata", "Load");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -463,10 +464,10 @@ namespace Hearthstone_Deck_Tracker
 					//backup in case the file already exists
 					var time = DateTime.Now.ToFileTime();
 					File.Move(dataDirPath, dataDirPath + time);
-					Logger.WriteLine("Created backups of DefaultDeckStats locally");
+					Logger.WriteLine("Created backups of DefaultDeckStats locally", "Load");
 				}
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved DefaultDeckStats to local");
+				Logger.WriteLine("Moved DefaultDeckStats to local", "Load");
 			}
 
 			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";

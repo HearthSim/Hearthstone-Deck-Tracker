@@ -95,14 +95,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Versions = new List<Deck>();
 			DeckId = deckId;
 			if(hearthStatsIdClone != null)
-				_hearthStatsIdClone = hearthStatsIdClone;
+				HearthStatsIdForUploading = hearthStatsIdClone;
 			if(isArenaDeck.HasValue)
 				IsArenaDeck = isArenaDeck.Value;
 			HearthStatsDeckVersionId = hearthStatsDeckVersionId;
 			if(versions != null)
 			{
 				foreach(var d in versions)
-					Versions.Add(d.CloneWithNewId() as Deck);
+					Versions.Add(d.CloneWithNewId(true) as Deck);
 			}
 		}
 
@@ -281,7 +281,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, "", _hearthStatsIdClone, SelectedVersion, _isArenaDeck);
+			                DeckId, "", HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
 
 		private bool? CheckIfArenaDeck()
@@ -297,15 +297,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Versions.FirstOrDefault(x => x.Version == target);
 		}
 
+		public Deck GetVersion(SerializableVersion version)
+		{
+			return GetVersion(version.Major, version.Minor);
+		}
+
 		public bool HasVersion(SerializableVersion version)
 		{
 			return Version == version || Versions.Any(v => v.Version == version);
 		}
 
-		public object CloneWithNewId()
+		public object CloneWithNewId(bool isVersion)
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-			                Guid.NewGuid(), "", "", SelectedVersion, _isArenaDeck);
+			                Guid.NewGuid(), "", isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
 		}
 
 		public void ResetVersions()

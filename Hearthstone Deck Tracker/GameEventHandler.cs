@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker
 			   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
-				Logger.WriteLine("Found incorrect deck");
+				Logger.WriteLine("Found incorrect deck on PlayerDraw", "GameEventHandler");
 			}
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
@@ -138,7 +138,7 @@ namespace Hearthstone_Deck_Tracker
 			   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
 				Helper.MainWindow.NeedToIncorrectDeckMessage = true;
-				Logger.WriteLine("Found incorrect deck", "HandlePlayerDiscard");
+				Logger.WriteLine("Found incorrect deck on PlayerDeckDiscard", "GameEventHandler");
 			}
 			Game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
 
@@ -297,7 +297,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Game.CurrentGameStats != null)
 				Game.CurrentGameStats.OpponentHero = hero;
-			Logger.WriteLine("Playing against " + hero, "Hearthstone");
+			Logger.WriteLine("Playing against " + hero, "GameEventHandler");
 
 			HeroClass heroClass;
 			if(Enum.TryParse(hero, true, out heroClass))
@@ -347,7 +347,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void TurnStart(ActivePlayer player, int turnNumber)
 		{
-			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "LogReader");
+			Logger.WriteLine(string.Format("{0}-turn ({1})", player, turnNumber + 1), "GameEventHandler");
 			//doesn't really matter whose turn it is for now, just restart timer
 			//maybe add timer to player/opponent windows
 			TurnTimer.Instance.SetCurrentPlayer(player);
@@ -369,7 +369,7 @@ namespace Hearthstone_Deck_Tracker
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
 				return;
 			_lastGameStart = DateTime.Now;
-			Logger.WriteLine("Game start");
+			Logger.WriteLine("Game start", "GameEventHandler");
 
 			if(Config.Instance.FlashHsOnTurnStart)
 				User32.FlashHs();
@@ -379,7 +379,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.KeyPressOnGameStart != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
-				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
+				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart, "GameEventHandler");
 			}
 			_showedNoteDialog = false;
 			Game.IsInMenu = false;
@@ -408,7 +408,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 			if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 			{
-				Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+				Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)", "GameEventHandler");
 				_assignedDeck = null;
 				return;
 			}
@@ -422,7 +422,7 @@ namespace Hearthstone_Deck_Tracker
 				                            c.IsStolen
 				                            || selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
 				{
-					Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played");
+					Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played", "GameEventHandler");
 					Game.CurrentGameStats.DeleteGameFile();
 					_assignedDeck = null;
 					return;
@@ -494,13 +494,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private static void LogEvent(string type, string id = "", int turn = 0, int from = -1)
 		{
-			Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", type, id, turn, from), "LogReader");
+			Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", type, id, turn, from), "GameEventHandler");
 		}
 
 		public static void PlayerSetAside(string id)
 		{
 			Game.SetAsideCards.Add(id);
-			Logger.WriteLine("set aside: " + id);
+			Logger.WriteLine("set aside: " + id, "GameEventHandler");
 		}
 
 		public void HandlePossibleArenaCard(string id)
@@ -515,7 +515,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was won!", "GameStats");
+			Logger.WriteLine("Game was won!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Win;
 		}
 
@@ -523,7 +523,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game was lost!", "GameStats");
+			Logger.WriteLine("Game was lost!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Loss;
 		}
 
@@ -531,7 +531,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(Game.CurrentGameStats == null)
 				return;
-			Logger.WriteLine("Game a tie!", "GameStats");
+			Logger.WriteLine("Game was a tie!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Draw;
 		}
 
@@ -558,7 +558,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
-				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
+				Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd, "GameEventHandler");
 			}
 			if(!Config.Instance.KeepDecksVisible)
 			{
@@ -600,22 +600,22 @@ namespace Hearthstone_Deck_Tracker
 					Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 					if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
 					{
-						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+						Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)", "GameEventHandler");
 						return;
 					}
 					Game.CurrentGameStats.GameMode = Game.CurrentGameMode;
-					Logger.WriteLine("Set gamemode to " + Game.CurrentGameMode);
+					Logger.WriteLine("Set CurrentGameStats.GameMode to " + Game.CurrentGameMode, "GameEventHandler");
 					Game.CurrentGameStats = null;
 				}
 
 				if(_assignedDeck == null)
 				{
-					Logger.WriteLine("Saving DefaultDeckStats", "GameStats");
+					Logger.WriteLine("Saving DefaultDeckStats", "GameEventHandler");
 					DefaultDeckStats.Save();
 				}
 				else
 				{
-					Logger.WriteLine("Saving DeckStats", "GameStats");
+					Logger.WriteLine("Saving DeckStats", "GameEventHandler");
 					DeckStatsList.Save();
 				}
 

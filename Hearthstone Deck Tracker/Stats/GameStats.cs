@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool IsAssociatedWithDeckVersion
 		{
-			get { return PlayerDeckVersion != null; } // || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
+			get { return PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
 		}
 
 		[XmlIgnore]
@@ -173,9 +173,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string HearthStatsDeckId { get; set; }
 		public string HearthStatsDeckVersionId { get; set; }
 
+		public bool HasHearthStatsDeckVersionId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId) && int.Parse(HearthStatsDeckVersionId) > 0; }
+		}
+
 		public bool BelongsToDeckVerion(Deck deck)
 		{
-			return PlayerDeckVersion == deck.Version || HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId;
+			return PlayerDeckVersion == deck.Version || HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId
+			       || (!HasHearthStatsDeckVersionId && HearthStatsDeckId == deck.HearthStatsId);
 		}
 
 		public GameStats CloneWithNewId()
@@ -266,7 +272,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				}
 				catch(Exception e)
 				{
-					Logger.WriteLine("Error loading file: " + _gameFile + "\n" + e);
+					Logger.WriteLine("Error loading file: " + _gameFile + "\n" + e, "GameStats");
 				}
 			}
 			return new List<TurnStats>();
@@ -279,12 +285,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 				if(File.Exists(_gameFile))
 				{
 					File.Delete(_gameFile);
-					Logger.WriteLine("Deleted gamefile: " + _gameFile);
+					Logger.WriteLine("Deleted gamefile: " + _gameFile, "GameStats");
 				}
 			}
 			catch(Exception)
 			{
-				Logger.WriteLine("Error deleting gamefile: " + _gameFile);
+				Logger.WriteLine("Error deleting gamefile: " + _gameFile, "GameStats");
 			}
 		}
 

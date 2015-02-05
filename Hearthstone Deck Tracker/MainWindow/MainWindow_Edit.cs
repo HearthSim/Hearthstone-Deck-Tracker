@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
 						DefaultDeckStats.Save();
-						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name));
+						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name), "Edit");
 					}
 					else
 					{
@@ -64,26 +64,26 @@ namespace Hearthstone_Deck_Tracker
 						{
 							foreach(var game in deckStats.Games)
 								game.DeleteGameFile();
-							Logger.WriteLine("Deleted games from deck: " + deck.Name);
+							Logger.WriteLine("Deleted games from deck: " + deck.Name, "Edit");
 						}
 						catch(Exception)
 						{
-							Logger.WriteLine("Error deleting games");
+							Logger.WriteLine("Error deleting games", "Edit");
 						}
 					}
 				}
 				DeckStatsList.Instance.DeckStats.Remove(deckStats);
 				DeckStatsList.Save();
-				Logger.WriteLine("Removed deckstats from deck: " + deck.Name);
+				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
 			}
 
-			HearthStatsManager.DeleteDeckAsync(deck);
+			HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
 			DeckList.DecksList.Remove(deck);
 			WriteDecks();
 			DeckPickerList.RemoveDeck(deck);
 			ListViewDeck.ItemsSource = null;
-			Logger.WriteLine("Deleted deck: " + deck.Name);
+			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
 		}
 
 		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
 
-			var clone = (Deck)DeckPickerList.SelectedDeck.CloneWithNewId();
+			var clone = (Deck)DeckPickerList.SelectedDeck.CloneWithNewId(false);
 			var originalStatsEntry = clone.DeckStats;
 
 			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				foreach(var game in originalStatsEntry.Games)
 					newStatsEntry.AddGameResult(game.CloneWithNewId());
-				Logger.WriteLine("cloned gamestats");
+				Logger.WriteLine("cloned gamestats", "Edit");
 			}
 
 			DeckStatsList.Save();
@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 					                       AffirmativeButtonText = "clone history",
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
-			var clone = (Deck)deck.CloneWithNewId();
+			var clone = (Deck)deck.CloneWithNewId(false);
 			clone.ResetVersions();
 
 			var originalStatsEntry = clone.DeckStats;
@@ -187,7 +187,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				foreach(var game in originalStatsEntry.Games)
 					newStatsEntry.AddGameResult(game.CloneWithNewId());
-				Logger.WriteLine("cloned gamestats");
+				Logger.WriteLine("cloned gamestats (version)", "Edit");
 			}
 
 			DeckStatsList.Save();

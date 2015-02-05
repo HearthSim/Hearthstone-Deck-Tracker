@@ -745,14 +745,14 @@ namespace Hearthstone_Deck_Tracker
 						Directory.CreateDirectory(Instance.ConfigDir);
 						SaveBackup(true); //backup in case the file already exists
 						File.Move("config.xml", Instance.ConfigPath);
-						Logger.WriteLine("Moved config to appdata");
+						Logger.WriteLine("Moved config to appdata", "Config");
 					}
 				}
 				else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
 				{
 					SaveBackup(true); //backup in case the file already exists
 					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to local");
+					Logger.WriteLine("Moved config to local", "Config");
 				}
 			}
 		}

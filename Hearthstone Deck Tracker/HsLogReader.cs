@@ -336,7 +336,7 @@ namespace Hearthstone_Deck_Tracker
 										//Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
 									}
 									else
-										Logger.WriteLine("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
+										Logger.WriteLine("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY", "LogReader");
 								}
 							}
 							else
@@ -938,12 +938,12 @@ namespace Hearthstone_Deck_Tracker
 					using(var fs = new FileStream(_fullOutputPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
 					using(var sw = new StreamWriter(fs))
 						sw.Write("");
-					Logger.WriteLine("Cleared log file");
+					Logger.WriteLine("Cleared log file", "LogReader");
 					Reset(true);
 				}
 				catch(Exception e)
 				{
-					Logger.WriteLine("Error cleared log file: " + e.Message);
+					Logger.WriteLine("Error cleared log file: " + e, "LogReader");
 				}
 			}
 		}
@@ -968,7 +968,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public async Task<bool> RankedDetection(int timeoutInSeconds = 3)
 		{
-			Logger.WriteLine("waiting for ranked detection", "HsLogReader");
+			Logger.WriteLine("waiting for ranked detection", "LogReader");
 			_awaitingRankedDetection = true;
 			_waitingForFirstAssetUnload = true;
 			_foundRanked = false;

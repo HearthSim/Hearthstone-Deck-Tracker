@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			_done = false;
 			while(!_done)
 				await Task.Delay(100);
-
+			Logger.WriteLine("selected " + _selectedDecks.Count + " decks", "UploadDecksControl");
 			return _selectedDecks;
 		}
 

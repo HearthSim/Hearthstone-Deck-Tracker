@@ -111,8 +111,11 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			InitializeComponent();
-
+			if(!Directory.Exists("Logs"))
+				Directory.CreateDirectory("Logs");
+			Trace.AutoFlush = true;
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.TextBoxLog));
+			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter("Logs/hdt_log.txt", false)));
 
 			EnableMenuItems(false);
 
@@ -125,9 +128,9 @@ namespace Hearthstone_Deck_Tracker
 					File.Move("Updater_new.exe", "Updater.exe");
 				}
 			}
-			catch
+			catch(Exception e)
 			{
-				Logger.WriteLine("Error updating updater");
+				Logger.WriteLine("Error updating updater\n" + e);
 			}
 
 			Helper.MainWindow = this;
@@ -617,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
-				Logger.WriteLine("Automatically selected deck: " + deck.Name);
+				Logger.WriteLine("Automatically selected deck: " + deck.Name, "IncorrectDeckMessage");
 				DeckPickerList.SelectDeck(deck);
 				UpdateDeckList(deck);
 				UseDeck(deck);
@@ -641,7 +644,7 @@ namespace Hearthstone_Deck_Tracker
 						DeselectDeck();
 					else
 					{
-						Logger.WriteLine("Selected deck: " + selectedDeck.Name);
+						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
 						DeckPickerList.SelectDeck(selectedDeck);
 						UpdateDeckList(selectedDeck);
 						UseDeck(selectedDeck);
@@ -722,7 +725,7 @@ namespace Hearthstone_Deck_Tracker
 					if(Game.IsRunning)
 					{
 						//game was closed
-						Logger.WriteLine("Exited game");
+						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
 						HsLogReader.Instance.ClearLog();
 						Game.Reset();
 						if(DeckPickerList.SelectedDeck != null)
@@ -786,7 +789,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString());
+				Logger.WriteLine(e.ToString(), "NetDeckClipbardCheck");
 				return false;
 			}
 			return false;
@@ -870,7 +873,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void DeselectDeck()
 		{
-			Logger.WriteLine("set player item source as drawn");
+			Logger.WriteLine("set player item source to PlayerDrawn", "DelsectDeck");
 			Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
 			PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
 			Game.IsUsingPremade = false;
@@ -944,10 +947,10 @@ namespace Hearthstone_Deck_Tracker
 					Overlay.ListViewPlayer.Items.Refresh();
 					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
 					PlayerWindow.ListViewPlayer.Items.Refresh();
-					Logger.WriteLine("Set player itemsource as playerdeck");
+					Logger.WriteLine("Set player itemsource as playerdeck", "Tracker");
 				}
 				UpdateDeckList(deck);
-				Logger.WriteLine("Switched to deck: " + deck.Name);
+				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
 
 				//set and save last used deck for class
 				while(DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
@@ -1126,7 +1129,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString());
+				Logger.WriteLine(ex.ToString(), "LastReplay");
 			}
 		}
 
@@ -1147,7 +1150,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString());
+				Logger.WriteLine(ex.ToString(), "ReplayFromFile");
 			}
 		}
 

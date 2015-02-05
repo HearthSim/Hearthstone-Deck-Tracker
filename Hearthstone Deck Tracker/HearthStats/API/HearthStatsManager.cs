@@ -28,14 +28,21 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		private static void AddBackgroundActivity()
 		{
 			_backgroundActivities++;
+			if(!Helper.MainWindow.ProgressRingTitleBar.IsActive)
+				Logger.WriteLine("background process indicator ON", "HearthStatsManager");
 			Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
 		}
 
 		private static void RemoveBackgroundActivity()
 		{
 			_backgroundActivities--;
-			if(_backgroundActivities == 0)
+			if(_backgroundActivities <= 0)
+			{
+				_backgroundActivities = 0;
+				if(Helper.MainWindow.ProgressRingTitleBar.IsActive)
+					Logger.WriteLine("background process indicator OFF", "HearthStatsManager");
 				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+			}
 		}
 
 		public static async Task<PostResult> UploadMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
@@ -163,8 +170,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return null;
 			}
 			var decks = await HearthStatsAPI.GetDecksAsync(forceAll ? 0 : Config.Instance.LastHearthStatsDecksSync);
-
-			return decks ?? new List<Deck>();
+			if(decks == null || decks.Count == 0)
+			{
+				Logger.WriteLine("no new decks", "HearthStatsManager");
+				return new List<Deck>();
+			}
+			return decks;
 		}
 
 		public static async Task<List<GameStats>> DownloadGamesAsync(bool forceAll = false)
@@ -176,10 +187,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return null;
 			}
 			var games = await HearthStatsAPI.GetGamesAsync(forceAll ? 0 : Config.Instance.LastHearthStatsGamesSync);
+			if(games == null || games.Count == 0)
+			{
+				Logger.WriteLine("no new games", "HearthStatsManager");
+				return new List<GameStats>();
+			}
 			return games;
 		}
 
-		public static async Task<bool> DeleteDeckAsync(Deck deck)
+		public static async Task<bool> DeleteDeckAsync(Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
 			Logger.WriteLine("trying to delete deck " + deck, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
@@ -187,6 +203,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("error: not logged in", "HearthStatsManager");
 				return false;
 			}
+			if(background)
+				AddBackgroundActivity();
 			var result = await HearthStatsAPI.DeleteDeckAsync(deck);
 			if(!result.Success && result.Retry)
 			{
@@ -195,7 +213,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				result = await HearthStatsAPI.DeleteDeckAsync(deck);
 			}
 			if(result.Success)
+			{
 				Logger.WriteLine("success deleting deck " + deck, "HearthStatsManager");
+				if(saveFilesAfter)
+					Helper.MainWindow.WriteDecks();
+				if(background)
+					RemoveBackgroundActivity();
+			}
 			return result.Success;
 		}
 
@@ -224,7 +248,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var versions =
 					deck.VersionsIncludingSelf.Where(v => v != new SerializableVersion(1, 0))
-					    .Select(v => deck.GetVersion(v.Major, v.Minor))
+					    .Select(deck.GetVersion)
 					    .Where(d => d != null && !d.HasHearthStatsDeckVersionId)
 					    .ToList();
 				if(versions.Any())
@@ -274,88 +298,116 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 				var controller = background
 					                 ? null : await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
-				var remoteDecks = await DownloadDecksAsync(forceFullSync);
+				Logger.WriteLine("Checking HearthStats for new decks...", "HearthStatsManager");
 				var localDecks = Helper.MainWindow.DeckList.DecksList;
-				var newDecks = remoteDecks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId)).ToList();
-				if(newDecks.Any())
+				var remoteDecks = await DownloadDecksAsync(forceFullSync);
+				if(remoteDecks.Any())
 				{
-					Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
-					if(!background)
-						await controller.CloseAsync();
-					newDecks = await Helper.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
-					foreach(var deck in newDecks)
+					var newDecks = remoteDecks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId)).ToList();
+					if(newDecks.Any())
 					{
-						Helper.MainWindow.DeckList.DecksList.Add(deck);
-						Helper.MainWindow.DeckPickerList.AddDeck(deck);
-					}
-					Helper.MainWindow.WriteDecks();
-					Helper.MainWindow.DeckPickerList.UpdateList();
-					background = false;
-				}
-				if(!background)
-				{
-					if(controller == null || !controller.IsOpen)
-						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new versions...");
-					else
-						controller.SetMessage("Checking for new versions...");
-				}
-				var decksWithNewVersions =
-					remoteDecks.Where(
-					                  deck =>
-					                  localDecks.Any(
-					                                 localDeck =>
-					                                 localDeck.HasHearthStatsId && deck.HearthStatsId == localDeck.HearthStatsId
-					                                 && localDeck.GetMaxVerion() != deck.GetMaxVerion())).ToList();
-				if(decksWithNewVersions.Any()) // TODO: TEST
-				{
-					foreach(var deck in decksWithNewVersions)
-					{
-						var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
-						if(currentDeck == null)
-							continue;
-						var originalDeck = (Deck)currentDeck.Clone();
-						var versions =
-							deck.VersionsIncludingSelf.Where(v => !currentDeck.VersionsIncludingSelf.Contains(v))
-							    .OrderBy(v => v)
-							    .Select(v => deck.GetVersion(v.Major, v.Minor));
-						foreach(var newVersion in versions)
+						Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
+						if(!background)
+							await controller.CloseAsync();
+						newDecks = await Helper.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
+						foreach(var deck in newDecks)
 						{
-							var clone = (Deck)currentDeck.Clone();
-							currentDeck.Version = newVersion.Version;
-							currentDeck.SelectedVersion = newVersion.Version;
-							currentDeck.HearthStatsDeckVersionId = newVersion.HearthStatsDeckVersionId;
-							currentDeck.Versions.Add(clone);
+							Helper.MainWindow.DeckList.DecksList.Add(deck);
+							Helper.MainWindow.DeckPickerList.AddDeck(deck);
+							Logger.WriteLine("saved new deck " + deck, "HearthStatsManager");
 						}
-						Helper.MainWindow.DeckPickerList.RemoveDeck(originalDeck);
-						Helper.MainWindow.DeckPickerList.AddDeck(currentDeck);
+						Helper.MainWindow.WriteDecks();
+						Helper.MainWindow.DeckPickerList.UpdateList();
+						background = false;
 					}
-					Helper.MainWindow.WriteDecks();
-					Helper.MainWindow.DeckPickerList.UpdateList();
-				}
-				if(!background)
-				{
-					if(controller == null || !controller.IsOpen)
-						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for edited decks...");
-					else
-						controller.SetMessage("Checking for edited decks...");
-				}
-				foreach(var deck in remoteDecks)
-				{
-					var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
-					if(localDeck != null)
+					if(!background)
 					{
-						localDeck = (Deck)localDeck.Clone();
-						localDeck.Name = deck.Name;
-						localDeck.Tags = deck.Tags;
-						localDeck.Note = deck.Note;
-						localDeck.Cards.Clear();
-						foreach(var card in deck.Cards)
-							localDeck.Cards.Add((Card)card.Clone());
+						if(controller == null || !controller.IsOpen)
+							controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new versions...");
+						else
+							controller.SetMessage("Checking for new versions...");
 					}
-					Helper.MainWindow.DeckPickerList.UpdateList();
-					Helper.MainWindow.WriteDecks();
+					Logger.WriteLine("Checking for new versions...", "HearthStatsManager");
+					var decksWithNewVersions =
+						remoteDecks.Where(
+						                  deck =>
+						                  localDecks.Any(
+						                                 localDeck =>
+						                                 localDeck.HasHearthStatsId && deck.HearthStatsId == localDeck.HearthStatsId
+						                                 && localDeck.GetMaxVerion() != deck.GetMaxVerion())).ToList();
+					if(decksWithNewVersions.Any()) // TODO: TEST
+					{
+						foreach(var deck in decksWithNewVersions)
+						{
+							var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+							if(currentDeck == null)
+								continue;
+							var originalDeck = (Deck)currentDeck.Clone();
+							var versions =
+								deck.VersionsIncludingSelf.Where(v => !currentDeck.VersionsIncludingSelf.Contains(v))
+								    .OrderBy(v => v)
+								    .Select(v => deck.GetVersion(v))
+								    .Where(v => v != null)
+								    .ToList();
+							if(versions.Any())
+							{
+								foreach(var newVersion in versions)
+								{
+									var clone = (Deck)currentDeck.Clone();
+									currentDeck.Version = newVersion.Version;
+									currentDeck.SelectedVersion = newVersion.Version;
+									currentDeck.HearthStatsDeckVersionId = newVersion.HearthStatsDeckVersionId;
+									currentDeck.Versions.Add(clone);
+								}
+								Helper.MainWindow.DeckPickerList.RemoveDeck(originalDeck);
+								Helper.MainWindow.DeckPickerList.AddDeck(currentDeck);
+								Logger.WriteLine(
+								                 string.Format("saved {0} new versions ({1}) to {2}", versions.Count,
+								                               versions.Select(v => v.Version.ToString()).Aggregate((c, n) => c + ", " + n), deck),
+								                 "HearthStatsManager");
+							}
+						}
+						Helper.MainWindow.WriteDecks();
+						Helper.MainWindow.DeckPickerList.UpdateList();
+					}
+					if(!background)
+					{
+						if(controller == null || !controller.IsOpen)
+							controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for edited decks...");
+						else
+							controller.SetMessage("Checking for edited decks...");
+					}
+					Logger.WriteLine("Checking for edited decks...", "HearthStatsManager");
+					var editedDecks =
+						remoteDecks.SelectMany(
+						                       r =>
+						                       localDecks.Where(
+						                                        l =>
+						                                        l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId
+						                                        && (l.Name != r.Name || l.Tags != r.Tags || l.Note != r.Note
+						                                            || l.Cards.Any(lc => r.Cards.All(rc => !rc.EqualsWithCount(lc)))))).ToList();
+					if(editedDecks.Any())
+					{
+						foreach(var deck in editedDecks)
+						{
+							var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+							if(localDeck != null)
+							{
+								localDeck = (Deck)localDeck.Clone();
+								localDeck.Name = deck.Name;
+								localDeck.Tags = deck.Tags;
+								localDeck.Note = deck.Note;
+								localDeck.Cards.Clear();
+								foreach(var card in deck.Cards)
+									localDeck.Cards.Add((Card)card.Clone());
+								Logger.WriteLine("edited latest version of " + localDeck, "HearthStatsManager");
+							}
+						}
+						Helper.MainWindow.DeckPickerList.UpdateList();
+						Helper.MainWindow.WriteDecks();
+						Logger.WriteLine("edited " + editedDecks.Count + " decks", "HearthStatsManager");
+					}
 				}
-
 
 				if(!background)
 				{
@@ -364,6 +416,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					else
 						controller.SetMessage("Checking HearthStats for new matches...");
 				}
+				Logger.WriteLine("Checking HearthStats for new matches...", "HearthStatsManager");
 				var newGames = await DownloadGamesAsync(forceFullSync);
 				if(newGames.Any())
 				{
@@ -375,14 +428,18 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							                                                    d.VersionsIncludingSelf.Select(v => d.GetVersion(v.Major, v.Minor))
 							                                                     .Where(v => v != null)
 							                                                     .Any(v => game.BelongsToDeckVerion(v)));
-						//Helper.MainWindow.DeckList.DecksList.Where(d => d != null).SelectMany(d => d.VersionsIncludingSelf.Where(v => v != null).Select(v => d.GetVersion(v.Minor, v.Minor)).Where(v => v != null))
-						//      .FirstOrDefault(d => d.HasHearthStatsDeckVersionId && d.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
+						//Helper.MainWindow.DeckList.DecksList.Where(d => d != null).SelectMany(d => d.VersionsIncludingSelf.Where(v => v != null).Select(d.GetVersion).Where(v => v != null))
+						//      .FirstOrDefault(d => game.BelongsToDeckVerion(d));
 
 						if(deck != null && deck.DeckStats.Games.All(g => g.HearthStatsId != game.HearthStatsId))
 						{
 							//game.PlayerDeckVersion = deck.Version;
+							Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
+							                 "HearthStatsManager");
 							deck.DeckStats.AddGameResult(game);
 						}
+						else
+							Logger.WriteLine(string.Format("no deck found for match {0}", game), "HearthStatsManager");
 					}
 					DeckStatsList.Save();
 					Helper.MainWindow.DeckPickerList.UpdateList();
@@ -390,21 +447,34 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 				if(!background)
 					controller.SetMessage("Checking for new local decks...");
-				newDecks = localDecks.Where(deck => !deck.HasHearthStatsId).ToList();
-				if(newDecks.Any(d => d.SyncWithHearthStats != false))
+				Logger.WriteLine("Checking for new local decks...", "HearthStatsManager");
+				var newLocalDecks = localDecks.Where(deck => !deck.HasHearthStatsId).ToList();
+				if(newLocalDecks.Any(d => d.SyncWithHearthStats != false))
 				{
+					Logger.WriteLine("found " + newLocalDecks.Count + " new decks", "HearthStatsManager");
 					if(!background)
 						await controller.CloseAsync();
 					Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = true;
-					newDecks = await Helper.MainWindow.HearthStatsUploadDecksControl.LoadDecks(newDecks);
-					controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Uploading new decks...");
-					await Task.Run(() => { Parallel.ForEach(newDecks, deck => UploadDeck(deck, false)); });
-					Helper.MainWindow.WriteDecks(); //save new ids
-					background = false;
+					newLocalDecks = await Helper.MainWindow.HearthStatsUploadDecksControl.LoadDecks(newLocalDecks);
+					if(newLocalDecks.Any())
+					{
+						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Uploading " + newLocalDecks.Count + " new decks...");
+						Logger.WriteLine("Uploading " + newLocalDecks.Count + " new decks...", "HearthStatsManager");
+						await Task.Run(() => { Parallel.ForEach(newLocalDecks, deck => UploadDeck(deck, false)); });
+						Helper.MainWindow.WriteDecks(); //save new ids
+						background = false;
+					}
 				}
 
 				if(!background)
-					controller.SetMessage("Checking for new local versions...");
+				{
+					if(controller == null || !controller.IsOpen)
+						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new local versions...");
+					else
+						controller.SetMessage("Checking for new local versions...");
+				}
+
+				Logger.WriteLine("Checking for new local versions...", "HearthStatsManager");
 				var localNewVersions =
 					localDecks.Where(x => x.HasHearthStatsId)
 					          .SelectMany(
@@ -415,7 +485,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(localNewVersions.Any())
 				{
 					if(!background)
-						controller.SetMessage("Uploading new versions...");
+						controller.SetMessage("Uploading " + localNewVersions.Count + " new versions...");
+					Logger.WriteLine("Uploading " + localNewVersions.Count + " new versions...", "HearthStatsManager");
 					//this can't happen in parallel (?)
 					foreach(var v in localNewVersions)
 					{
@@ -430,6 +501,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				}
 				if(!background)
 					controller.SetMessage("Checking for new local matches...");
+				Logger.WriteLine("Checking for new local matches...", "HearthStatsManager");
 
 				var newMatches =
 					Helper.MainWindow.DeckList.DecksList.Where(d => d.SyncWithHearthStats == true && d.HasHearthStatsId)
@@ -438,7 +510,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(newMatches.Any())
 				{
 					if(!background)
-						controller.SetMessage("Uploading new matches...");
+						controller.SetMessage("Uploading " + newMatches.Count + " new matches...");
+					Logger.WriteLine("Uploading " + newMatches.Count + " new matches...", "HearthStatsManager");
 					await Task.Run(() => { Parallel.ForEach(newMatches, match => UploadMatch(match.game, match.deck, false)); });
 					DeckStatsList.Save();
 				}
@@ -450,6 +523,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 				RemoveBackgroundActivity();
 				_syncInProgress = false;
+				Logger.WriteLine("finished sync process", "HearthStatsManager");
 			}
 			catch(Exception e)
 			{

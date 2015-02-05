@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						selectedGame.DeleteGameFile();
 						_deck.DeckStats.Games.Remove(selectedGame);
-						Logger.WriteLine("Deleted game: " + selectedGame);
+						Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 						DeckStatsList.Save();
 					}
 				}
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							selectedGame.DeleteGameFile();
 							deck.DeckStats.Games.Remove(selectedGame);
-							Logger.WriteLine("Deleted game: " + selectedGame);
+							Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 							DefaultDeckStats.Save();
 						}
 					}
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							selectedGame.DeleteGameFile();
 							deckstats.Games.Remove(selectedGame);
-							Logger.WriteLine("Deleted game: " + selectedGame);
+							Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 							DefaultDeckStats.Save();
 						}
 					}
@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							selectedGame.DeleteGameFile();
 							_deck.DeckStats.Games.Remove(selectedGame);
-							Logger.WriteLine("Deleted game: " + selectedGame);
+							Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 						}
 					}
 					else
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker
 							{
 								selectedGame.DeleteGameFile();
 								deck.DeckStats.Games.Remove(selectedGame);
-								Logger.WriteLine("Deleted game: " + selectedGame);
+								Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 							}
 						}
 						else
@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
 							{
 								selectedGame.DeleteGameFile();
 								deckstats.Games.Remove(selectedGame);
-								Logger.WriteLine("Deleted game: " + selectedGame);
+								Logger.WriteLine("Deleted game " + selectedGame + "(overall=" + overall + ")", "DeckStatsControl");
 							}
 						}
 					}
@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker
 				HearthStatsManager.DeleteMatchesAsync(selectedGames);
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
-				Logger.WriteLine("Deleted " + count + " games");
+				Logger.WriteLine("Deleted " + count + " games", "DeckStatsControl");
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Refresh();
 			}

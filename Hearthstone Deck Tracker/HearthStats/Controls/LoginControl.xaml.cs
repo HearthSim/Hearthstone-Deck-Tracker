@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex);
+				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
 			}
 		}
 	}

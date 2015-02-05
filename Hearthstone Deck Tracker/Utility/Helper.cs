@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Version CheckForUpdates(out Version newVersionOut)
 		{
-			Logger.WriteLine("Checking for updates...");
+			Logger.WriteLine("Checking for updates...", "Helper");
 			newVersionOut = null;
 
 			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error capturing hearthstone: " + ex);
+				Logger.WriteLine("Error capturing hearthstone: " + ex, "Helper");
 				return null;
 			}
 		}
@@ -255,7 +255,7 @@ namespace Hearthstone_Deck_Tracker
 
 						if(foundFriendsList)
 						{
-							Logger.WriteLine("Found Friendslist");
+							Logger.WriteLine("Found Friendslist", "Helper");
 							return true;
 						}
 					}

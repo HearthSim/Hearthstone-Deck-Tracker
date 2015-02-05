@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex);
+				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
 				return false;
 			}
 		}
@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				}
 				catch(Exception e)
 				{
-					Logger.WriteLine("Error loading credentials\n" + e);
+					Logger.WriteLine("Error loading credentials\n" + e, "HearthStatsAPI");
 					return false;
 				}
 			}
@@ -212,11 +212,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "success")
 				{
-					deck.HearthStatsId = json.data.id;
-					deck.DeckStats.HearthStatsDeckId = json.data.id;
-					deck.HearthStatsDeckVersionId = json.data.version_id;
-					deck.DeckStats.HearthStatsDeckVersionId = json.data.version_id;
-					Logger.WriteLine("assigned id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
+					deck.HearthStatsId = json.data.deck.id;
+					deck.DeckStats.HearthStatsDeckId = json.data.deck.id;
+					deck.HearthStatsDeckVersionId = json.data.deck_versions[0].id;
+					//deck.DeckStats.HearthStatsDeckVersionId = json.data.deck_versions[0].id;
+					deck.SyncWithHearthStats = true;
+					Logger.WriteLine("HearthStatsId assigned to deck: " + deck.HearthStatsId, "HearthStatsAPI");
+					Logger.WriteLine("HearthStatsDeckVersionId assigned to deck: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
 				return PostResult.CanRetry;
@@ -291,7 +293,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			gameObj.coin = game.Coin.ToString().ToLower();
 			gameObj.numturns = game.Turns;
 			gameObj.duration = (int)(game.EndTime - game.StartTime).TotalSeconds;
-			gameObj.deck_id = deck.HearthStatsId;
+			gameObj.deck_id = deck.HearthStatsIdForUploading;
 			gameObj.deck_version_id = versionId;
 			if(!string.IsNullOrEmpty(game.OpponentHero))
 				gameObj.oppclass = game.OpponentHero;

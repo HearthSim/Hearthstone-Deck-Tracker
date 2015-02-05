@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_currentGameMode = value;
-				Logger.WriteLine(">> GAME MODE: " + value);
+				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static void Reset(bool resetStats = true)
 		{
-			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<");
+			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<", "Game");
 
 			ReplayMaker.Reset();
 			PlayerDrawn.Clear();
@@ -259,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(deckCard.Count == 0)
 				{
 					PlayerDeck.Remove(deckCard);
-					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)");
+					Logger.WriteLine("Removed " + deckCard.Name + " from deck (count 0)", "Game");
 				}
 			}
 			else
@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var fromSetAside = SetAsideCards.Any(id => cardId == id);
 			if(fromSetAside)
 			{
-				Logger.WriteLine("Got card from setaside: " + cardId);
+				Logger.WriteLine("Got card from setaside: " + cardId, "Game");
 				foreach(var c in SetAsideCards)
 					PlayerDeckDiscard(c);
 				SetAsideCards.Clear();
@@ -385,7 +385,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				deckCard = GetCardFromId(cardId);
 				PlayerDeck.Add(deckCard);
-				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)");
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
 			}
 		}
 
@@ -432,7 +432,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				deckCard = GetCardFromId(cardId);
 				PlayerDeck.Add(deckCard);
-				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)");
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
 			}
 		}
 
@@ -498,7 +498,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				LogDeckChange(true, card, false);
 
 				if(card.IsStolen)
-					Logger.WriteLine("Opponent played stolen card from " + from);
+					Logger.WriteLine("Opponent played stolen card from " + from, "Game");
 			}
 
 			for(var i = from - 1; i < MaxHandSize - 1; i++)
@@ -690,13 +690,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							tempDb.Add(tmp.Id, tmp);
 						}
 					}
-					Logger.WriteLine("Done loading card database (enUS)", "Hearthstone");
+					Logger.WriteLine("Done loading card database (enUS)", "Game");
 				}
 				_cardDb = new Dictionary<string, Card>(tempDb);
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error loading db: \n" + e);
+				Logger.WriteLine("Error loading db: \n" + e, "Game");
 			}
 		}
 
@@ -708,7 +708,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			//_cardDb.TryGetValue(cardId, out card);
 			if(_cardDb.TryGetValue(cardId, out card))
 				return (Card)card.Clone();
-			Logger.WriteLine("Could not find entry in db for cardId: " + cardId);
+			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Game");
 			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
@@ -722,7 +722,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			//not sure with all the values here
-			Logger.WriteLine("Could not get card from name: " + name);
+			Logger.WriteLine("Could not get card from name: " + name, "Game");
 			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 

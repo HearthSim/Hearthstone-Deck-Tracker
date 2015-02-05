@@ -850,7 +850,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString());
+				Logger.WriteLine(ex.ToString(), "ReplayViewer");
 			}
 		}
 	}

@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				                                   new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 			if(result == MessageDialogResult.Affirmative)
 			{
-				var deleted = await HearthStatsManager.DeleteDeckAsync(deck);
+				var deleted = await HearthStatsManager.DeleteDeckAsync(deck, false, true);
 				if(deleted)
 					ListViewHearthStats.Items.Remove(deck);
 			}

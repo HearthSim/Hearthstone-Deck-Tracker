@@ -162,7 +162,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error importing deck from clipboard(id string): " + ex);
+				Logger.WriteLine("Error importing deck from clipboard(id string): " + ex, "Import");
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error importing deck from clipboard(text): " + ex);
+				Logger.WriteLine("Error importing deck from clipboard(text): " + ex, "Import");
 			}
 		}
 
@@ -245,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error parsing card string: " + ex);
+				Logger.WriteLine("Error parsing card string: " + ex, "Import");
 				return null;
 			}
 		}
@@ -279,7 +279,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine("Error getting deck from file: \n" + ex.Message + "\n" + ex.StackTrace);
+					Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
 				}
 			}
 		}

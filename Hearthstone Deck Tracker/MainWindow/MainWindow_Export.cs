@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
 			XmlManager<Deck>.Save(path, deck);
 			await ShowSavedFileMessage(path, "SavedDecks");
-			Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + path);
+			Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + path, "Export");
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
 			this.ShowMessage("", "copied to clipboard");
-			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard");
+			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard", "Export");
 		}
 
 		public async Task ShowSavedFileMessage(string fileName, string dir)

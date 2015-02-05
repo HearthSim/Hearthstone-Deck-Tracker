@@ -296,7 +296,6 @@ namespace Hearthstone_Deck_Tracker
 							var needToHide = Canvas.GetTop(panel) + panel.ActualHeight > Height * 0.3;
 							if(needToHide)
 							{
-								Logger.WriteLine("set " + panel.Name + "to collapsed");
 								panel.Visibility = Visibility.Collapsed;
 								if(panel.Equals(StackPanelPlayer))
 									_playerCardsHidden = true;
@@ -306,7 +305,6 @@ namespace Hearthstone_Deck_Tracker
 						}
 						else if(panel.Visibility == Visibility.Collapsed)
 						{
-							Logger.WriteLine("set " + panel.Name + "to visible");
 							panel.Visibility = Visibility.Visible;
 							if(panel.Equals(StackPanelPlayer))
 								_playerCardsHidden = false;
@@ -485,7 +483,7 @@ namespace Hearthstone_Deck_Tracker
 				ListViewOpponent.Items.Refresh();
 				Topmost = false;
 				Topmost = true;
-				Logger.WriteLine("Refreshed overlay topmost status");
+				Logger.WriteLine("Refreshed overlay topmost status", "UpdateOverlay");
 			}
 
 
@@ -861,7 +859,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString());
+				Logger.WriteLine(ex.ToString(), "UpdateOverlayPosition");
 			}
 		}
 
@@ -1078,7 +1076,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine(ex.ToString());
+						Logger.WriteLine(ex.ToString(), "UnlockOverlay");
 					}
 				}
 			}
@@ -1127,7 +1125,7 @@ namespace Hearthstone_Deck_Tracker
 			_mouseInput.LmbDown += MouseInputOnLmbDown;
 			_mouseInput.LmbUp += MouseInputOnLmbUp;
 			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
-			Logger.WriteLine("Enabled mouse hook");
+			Logger.WriteLine("Enabled mouse hook", "Overlay");
 		}
 
 		public void UnHookMouse()
@@ -1136,7 +1134,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_mouseInput.Dispose();
 			_mouseInput = null;
-			Logger.WriteLine("Disabled mouse hook");
+			Logger.WriteLine("Disabled mouse hook", "Overlay");
 		}
 	}
 }

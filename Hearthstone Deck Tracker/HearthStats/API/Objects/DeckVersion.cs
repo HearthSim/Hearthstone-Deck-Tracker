@@ -1,5 +1,6 @@
 #region
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -17,10 +18,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 
 		public Deck ToDeck(Deck latest)
 		{
-			var clone = (Deck)latest.CloneWithNewId();
-			clone.Cards = new ObservableCollection<Card>(cards.Select(c => c.ToCard()));
+			var clone = (Deck)latest.CloneWithNewId(true);
+			clone.Cards =
+				new ObservableCollection<Card>(cards == null
+					                               ? new List<Card>()
+					                               : cards.Where(x => x != null && x.count != null && x.id != null)
+					                                      .Select(x => x.ToCard())
+					                                      .Where(x => x != null)
+					                                      .ToList());
 			clone.HearthStatsDeckVersionId = deck_version_id.ToString();
-			clone.HearthStatsIdForUploading = latest.HearthStatsId;
 			clone.Version = SerializableVersion.ParseOrDefault(version);
 			clone.Versions.Clear();
 			return clone;
