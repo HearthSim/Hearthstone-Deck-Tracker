@@ -160,9 +160,6 @@
     <Compile Include="HearthStats\Controls\UploadDecksControl.xaml.cs">
       <DependentUpon>UploadDecksControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HearthStats\HearthStatsTestWindow.xaml.cs">
-      <DependentUpon>HearthStatsTestWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="HearthStats\Controls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
@@ -344,10 +341,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HearthStats\Controls\UploadDecksControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\HearthStatsTestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

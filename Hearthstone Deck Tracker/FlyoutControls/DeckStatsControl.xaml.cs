@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				HearthStatsManager.DeleteMatchesAsync(new List<GameStats>() {selectedGame});
+				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
 				Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Refresh();
 			}
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				HearthStatsManager.DeleteMatchesAsync(selectedGames);
-                DeckStatsList.Save();
+				DeckStatsList.Save();
 				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games");
 				Helper.MainWindow.DeckPickerList.Items.Refresh();

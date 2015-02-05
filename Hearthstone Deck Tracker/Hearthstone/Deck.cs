@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public ObservableCollection<Card> Cards;
 
 		public string Class;
+		public string HearthStatsArenaId;
 		public string HearthStatsDeckVersionId;
 		public string HearthStatsId;
 
@@ -51,6 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Deck> Versions;
 
 		private Guid _deckId;
+		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 
 
@@ -73,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
 		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
-		            SerializableVersion selectedVersion = null)
+		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null)
 
 		{
 			Name = name;
@@ -92,6 +94,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			DeckId = deckId;
+			if(hearthStatsIdClone != null)
+				_hearthStatsIdClone = hearthStatsIdClone;
+			if(isArenaDeck.HasValue)
+				IsArenaDeck = isArenaDeck.Value;
 			HearthStatsDeckVersionId = hearthStatsDeckVersionId;
 			if(versions != null)
 			{
@@ -102,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsArenaDeck
 		{
-			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
+			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? Tags.Contains("Arena"); }
 			set { _isArenaDeck = value; }
 		}
 
@@ -119,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HasHearthStatsId
 		{
-			get { return !string.IsNullOrEmpty(HearthStatsId); }
+			get { return !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone); }
 		}
 
 		[XmlIgnore]
@@ -259,10 +265,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return Versions != null && Versions.Count > 0; }
 		}
 
+		public bool HasHearthStatsArenaId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsArenaId); }
+		}
+
+		//I don't know why I need this but I apparently can't serialize anything if versions of a deck have the same hearthstatsid
+
+		public string HearthStatsIdForUploading
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId) ? HearthStatsId : _hearthStatsIdClone; }
+			set { _hearthStatsIdClone = value; }
+		}
+
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, "", SelectedVersion);
+			                DeckId, "", _hearthStatsIdClone, SelectedVersion, _isArenaDeck);
 		}
 
 		private bool? CheckIfArenaDeck()
@@ -286,7 +305,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object CloneWithNewId()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-			                Guid.NewGuid(), "", SelectedVersion);
+			                Guid.NewGuid(), "", "", SelectedVersion, _isArenaDeck);
 		}
 
 		public void ResetVersions()
@@ -453,6 +472,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			return diff;
+		}
+
+		public SerializableVersion GetMaxVerion()
+		{
+			return VersionsIncludingSelf.OrderByDescending(x => x).First();
 		}
 	}
 }

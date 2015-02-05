@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool IsAssociatedWithDeckVersion
 		{
-			get { return PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
+			get { return PlayerDeckVersion != null; } // || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
 		}
 
 		[XmlIgnore]

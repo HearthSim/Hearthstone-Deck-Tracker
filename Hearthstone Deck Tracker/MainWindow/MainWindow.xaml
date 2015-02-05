@@ -22,7 +22,7 @@
     </Window.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" />
+            <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" ToolTip="syncing with HearthStats..."/>
             <Button Click="BtnOptions_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
@@ -287,7 +287,7 @@
                     <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
                     <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
                     <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND" ToolTip="will perform 'SYNC NOW' every 2 minutes in background" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND*" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
                     <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
                     <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
                 </MenuItem>
@@ -299,7 +299,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0">
+                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0" Visibility="Collapsed">
                     <Label Content="SELECTED VERSION:"/>
                     <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
                         <ComboBox.ItemTemplate>

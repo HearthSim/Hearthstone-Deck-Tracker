@@ -159,8 +159,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HearthStatsAutoUploadNewGames = true;
 
-		[DefaultValue(true)]
-		public bool HearthStatsSyncOnStart = true;
+		[DefaultValue(false)]
+		public bool HearthStatsSyncOnStart = false;
 
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";

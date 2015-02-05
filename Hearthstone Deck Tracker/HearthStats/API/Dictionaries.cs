@@ -1,9 +1,9 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{1, GameMode.Arena},
 			{2, GameMode.Casual},
 			{3, GameMode.Ranked},
-			{4, GameMode.None},	//Tournament
+			{4, GameMode.None}, //Tournament
 			{5, GameMode.Friendly}
 		};
 

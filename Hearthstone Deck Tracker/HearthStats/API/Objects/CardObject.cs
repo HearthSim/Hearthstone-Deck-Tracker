@@ -1,5 +1,9 @@
+#region
+
 using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 {

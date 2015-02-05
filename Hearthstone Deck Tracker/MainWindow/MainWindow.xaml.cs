@@ -17,7 +17,6 @@ using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls;
-using Hearthstone_Deck_Tracker.HearthStats;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
@@ -45,7 +44,7 @@ namespace Hearthstone_Deck_Tracker
 		#region Properties
 
 		private const int NewsCheckInterval = 300;
-		private const int NewsTickerUpdateInterval = 15;
+		private const int NewsTickerUpdateInterval = 30;
 		private const int HearthStatsAutoSyncInterval = 300;
 		public readonly Decks DeckList;
 		public readonly List<Deck> DefaultDecks;
@@ -292,12 +291,6 @@ namespace Hearthstone_Deck_Tracker
 					Config.Save();
 				}
 			}
-			if(!Config.Instance.ResolvedDeckStatsIds)
-			{
-				ResolveDeckStatsIds();
-				Config.Instance.ResolvedDeckStatsIds = true;
-				Config.Save();
-			}
 
 			FillElementSorters();
 
@@ -334,15 +327,13 @@ namespace Hearthstone_Deck_Tracker
 
 			CopyReplayFiles();
 
+			LoadHearthStats();
+
 			UpdateOverlayAsync();
 			UpdateAsync();
 
+
 			_initialized = true;
-
-			var testWindow = new HearthStatsTestWindow();
-			testWindow.Show();
-
-			LoadHearthStats();
 		}
 
 		public Thickness TitleBarMargin
@@ -457,8 +448,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void ResolveDeckStatsIds()
+		private bool ResolveDeckStatsIds()
 		{
+			var needToRestart = false;
 			foreach(var deckStats in DeckStatsList.Instance.DeckStats)
 			{
 				var deck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckStats.Name);
@@ -466,14 +458,21 @@ namespace Hearthstone_Deck_Tracker
 				{
 					deckStats.DeckId = deck.DeckId;
 					deckStats.HearthStatsDeckId = deck.HearthStatsId;
+					needToRestart = true;
 				}
 			}
 			DeckStatsList.Save();
+			WriteDecks();
+			Config.Instance.ResolvedDeckStatsIds = true;
+			Config.Save();
+			return needToRestart;
 		}
 
 		#endregion
 
 		#region GENERAL GUI
+
+		private bool _closeAnyway;
 
 		private void MetroWindow_Activated(object sender, EventArgs e)
 		{
@@ -495,6 +494,27 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
+				if(HearthStatsManager.SyncInProgress && !_closeAnyway)
+				{
+					e.Cancel = true;
+					var result =
+						await
+						this.ShowMessageAsync("WARNING! Sync with HearthStats in progress!",
+						                      "Closing Hearthstone Deck Tracker now can cause data inconsistencies. Are you sure?",
+						                      MessageDialogStyle.AffirmativeAndNegative,
+						                      new MetroDialogSettings {AffirmativeButtonText = "close anyway", NegativeButtonText = "wait"});
+					if(result == MessageDialogResult.Negative)
+					{
+						while(HearthStatsManager.SyncInProgress)
+							await Task.Delay(100);
+						await this.ShowMessage("Sync is complete.", "You can close Hearthstone Deck Tracker now.");
+					}
+					else
+					{
+						_closeAnyway = true;
+						Close();
+					}
+				}
 				_doUpdate = false;
 				_update = false;
 
@@ -820,6 +840,7 @@ namespace Hearthstone_Deck_Tracker
 		public async Task Restart()
 		{
 			await this.ShowMessageAsync("Restarting tracker", "");
+			Close();
 			Process.Start(Application.ResourceAssembly.Location);
 			Application.Current.Shutdown();
 		}

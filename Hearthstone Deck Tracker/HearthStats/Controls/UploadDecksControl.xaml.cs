@@ -110,6 +110,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
 		{
+			foreach(var deck in ListViewLocalDecksSync.Items.Cast<Deck>())
+			{
+				if(deck.SyncWithHearthStats == true)
+					deck.SyncWithHearthStats = null;
+			}
 			_selectedDecks = new List<Deck>();
 			_done = true;
 			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;

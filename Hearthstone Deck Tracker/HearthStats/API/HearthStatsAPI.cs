@@ -6,7 +6,6 @@ using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
@@ -22,9 +21,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 	public class HearthStatsAPI
 	{
 		private const string BaseUrl = "http://192.237.249.9";
-		private static string _authToken;
 
-		private static readonly List<GameMode> ValidGameModes = new List<GameMode> {GameMode.Casual, GameMode.Ranked, GameMode.Friendly};
+		#region authentication
+
+		private static string _authToken;
 
 		public static bool IsLoggedIn
 		{
@@ -72,48 +72,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return false;
 		}
 
-		public static bool IsValidGame(GameStats game)
-		{
-			var baseMsg = "Game " + game + " is not valid ({0})";
-			if(game == null)
-			{
-				Logger.WriteLine(string.Format(baseMsg, "null"), "HearthStatsAPI");
-				return false;
-			}
-			if(game.IsClone)
-			{
-				Logger.WriteLine(string.Format(baseMsg, "IsClone"), "HearthStatsAPI");
-				return false;
-			}
-			if(ValidGameModes.All(mode => game.GameMode != mode))
-			{
-				Logger.WriteLine(string.Format(baseMsg, "invalid game mode: " + game.GameMode), "HearthStatsAPI");
-				return false;
-			}
-			if(game.Result == GameResult.None)
-			{
-				Logger.WriteLine(string.Format(baseMsg, "invalid result: none"), "HearthStatsAPI");
-				return false;
-			}
-			if(game.HasHearthStatsId)
-			{
-				Logger.WriteLine(string.Format(baseMsg, "already submitted"), "HearthStatsAPI");
-				return false;
-			}
-			return true;
-		}
-
-		private static HttpWebRequest CreateRequest(string url, string method)
-		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.ContentType = "application/json";
-			request.Accept = "application/json";
-			request.Method = method;
-			return request;
-		}
-
-		#region Async
-
 		public static async Task<LoginResult> LoginAsync(string email, string pwd)
 		{
 			try
@@ -142,6 +100,48 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
+		#endregion
+
+		#region webrequests
+
+		private static async Task<string> PostAsync(string url, string data)
+		{
+			return await PostAsync(url, Encoding.UTF8.GetBytes(data));
+		}
+
+		private static async Task<string> PostAsync(string url, byte[] data)
+		{
+			var request = CreateRequest(url, "POST");
+			using(var stream = await request.GetRequestStreamAsync())
+				stream.Write(data, 0, data.Length);
+			var response = await request.GetResponseAsync();
+			using(var responseStream = response.GetResponseStream())
+			using(var reader = new StreamReader(responseStream))
+				return reader.ReadToEnd();
+		}
+
+		private static async Task<string> GetAsync(string url)
+		{
+			var request = CreateRequest(url, "GET");
+			var response = await request.GetResponseAsync();
+			using(var responseStream = response.GetResponseStream())
+			using(var reader = new StreamReader(responseStream))
+				return reader.ReadToEnd();
+		}
+
+		private static HttpWebRequest CreateRequest(string url, string method)
+		{
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.ContentType = "application/json";
+			request.Accept = "application/json";
+			request.Method = method;
+			return request;
+		}
+
+		#endregion
+
+		#region decks/matches
+
 		public static async Task<List<Deck>> GetDecksAsync(long unixTime)
 		{
 			Logger.WriteLine("getting decks since " + unixTime, "HearthStatsAPI");
@@ -163,18 +163,24 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		private static string AddUrlToNote(Deck deck)
+		public static async Task<List<GameStats>> GetGamesAsync(long unixTime)
 		{
-			var note = deck.Note;
-			if(!string.IsNullOrEmpty(deck.Url))
+			Logger.WriteLine("getting games since " + unixTime, "HearthStatsAPI");
+			var url = BaseUrl + "/api/v2/matches/hdt_after?auth_token=" + _authToken;
+			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
+			try
 			{
-				var urlString = "[source=" + deck.Url + "]";
-				if(!deck.Note.Contains(deck.Url))
-					note += "\r\n" + urlString;
-				else if(deck.Note.Contains(deck.Url) && !deck.Note.Contains(urlString))
-					note = note.Replace(deck.Url, urlString);
+				var response = await PostAsync(url, data);
+				var obj = JsonConvert.DeserializeObject<ResponseWrapper<GameStatsObjectWrapper[]>>(response);
+				if(obj.status == "success")
+					return obj.data.Select(x => x.ToGameStats()).ToList();
+				return new List<GameStats>();
 			}
-			return note;
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				return new List<GameStats>();
+			}
 		}
 
 		public static async Task<PostResult> PostDeckAsync(Deck deck)
@@ -184,23 +190,22 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("deck is null", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
+			if(deck.IsArenaDeck)
+			{
+				Logger.WriteLine("deck is an arena deck", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
 			if(deck.HasHearthStatsId)
 			{
 				Logger.WriteLine("deck already posted", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
 			Logger.WriteLine("uploading deck: " + deck, "HearthStatsAPI");
-			
+
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
-			var data = JsonConvert.SerializeObject(new
-			{
-				name = deck.Name,
-				notes = AddUrlToNote(deck),
-				tags = deck.Tags,
-				@class = deck.Class,
-				cards
-			});
+			var data =
+				JsonConvert.SerializeObject(new {name = deck.Name, notes = AddUrlToNote(deck), tags = deck.Tags, @class = deck.Class, cards});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -208,7 +213,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					deck.HearthStatsId = json.data.id;
+					deck.DeckStats.HearthStatsDeckId = json.data.id;
 					deck.HearthStatsDeckVersionId = json.data.version_id;
+					deck.DeckStats.HearthStatsDeckVersionId = json.data.version_id;
 					Logger.WriteLine("assigned id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
@@ -267,8 +274,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("can not upload game, deck has no hearthstats id", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
+			long versionId;
+			if(!long.TryParse(deck.HearthStatsDeckVersionId, out versionId))
+			{
+				Logger.WriteLine("error: invalid HearthStatsDeckVersionId", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
 			Logger.WriteLine("uploading match: " + game, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/matches/hdt_new?auth_token=" + _authToken;
+
 
 			dynamic gameObj = new ExpandoObject();
 			gameObj.mode = game.GameMode.ToString();
@@ -278,6 +292,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			gameObj.numturns = game.Turns;
 			gameObj.duration = (int)(game.EndTime - game.StartTime).TotalSeconds;
 			gameObj.deck_id = deck.HearthStatsId;
+			gameObj.deck_version_id = versionId;
 			if(!string.IsNullOrEmpty(game.OpponentHero))
 				gameObj.oppclass = game.OpponentHero;
 			if(!string.IsNullOrEmpty(game.OpponentName))
@@ -297,7 +312,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					game.HearthStatsId = json.data.id;
-					game.HearthStatsDeckVersionId = json.data.version_id;
 					Logger.WriteLine("assigned id to version: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
@@ -307,51 +321,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
 				return PostResult.CanRetry;
-			}
-		}
-
-		private static async Task<string> PostAsync(string url, string data)
-		{
-			return await PostAsync(url, Encoding.UTF8.GetBytes(data));
-		}
-
-		private static async Task<string> PostAsync(string url, byte[] data)
-		{
-			var request = CreateRequest(url, "POST");
-			using(var stream = await request.GetRequestStreamAsync())
-				stream.Write(data, 0, data.Length);
-			var response = await request.GetResponseAsync();
-			using(var responseStream = response.GetResponseStream())
-			using(var reader = new StreamReader(responseStream))
-				return reader.ReadToEnd();
-		}
-
-		private static async Task<string> GetAsync(string url)
-		{
-			var request = CreateRequest(url, "GET");
-			var response = await request.GetResponseAsync();
-			using(var responseStream = response.GetResponseStream())
-			using(var reader = new StreamReader(responseStream))
-				return reader.ReadToEnd();
-		}
-
-		public static async Task<List<GameStats>> GetGamesAsync(long unixTime)
-		{
-			Logger.WriteLine("getting games since " + unixTime, "HearthStatsAPI");
-			var url = BaseUrl + "/api/v2/matches/hdt_after?auth_token=" + _authToken;
-			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
-			try
-			{
-				var response = await PostAsync(url, data);
-				var obj = JsonConvert.DeserializeObject<ResponseWrapper<GameStatsObjectWrapper[]>>(response);
-				if(obj.status == "success")
-					return obj.data.Select(x => x.ToGameStats()).ToList();
-				return new List<GameStats>();
-			}
-			catch(Exception e)
-			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return new List<GameStats>();
 			}
 		}
 
@@ -434,7 +403,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("deleting games: " + validGames.Select(g => g.ToString()).Aggregate((c, n) => c + ", " + n), "HearthStatsAPI");
 
 			var url = BaseUrl + "/api/v2/matches/delete?auth_token=" + _authToken;
-			var data = JsonConvert.SerializeObject(new {match_id = new[] { validGames.Select(g => long.Parse(g.HearthStatsId))} });
+			var data = JsonConvert.SerializeObject(new {match_id = new[] {validGames.Select(g => long.Parse(g.HearthStatsId))}});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -552,63 +521,162 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
+		public static async Task<PostResult> CreatArenaRunAsync(Deck deck)
+		{
+			if(deck == null)
+			{
+				Logger.WriteLine("deck is null", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(deck.HasHearthStatsId || deck.HasHearthStatsArenaId)
+			{
+				Logger.WriteLine("deck already posted", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			Logger.WriteLine("creating new arena run: " + deck, "HearthStatsAPI");
+
+			var url = BaseUrl + "/api/v2/arena_runs/new?auth_token=" + _authToken;
+			var cards = deck.Cards.Select(x => new CardObject(x));
+			var data = JsonConvert.SerializeObject(new {@class = deck.Class, cards});
+			Logger.WriteLine(">>" + data);
+			try
+			{
+				var response = await PostAsync(url, data);
+				dynamic json = JsonConvert.DeserializeObject(response);
+				if(json.status.ToString() == "success")
+				{
+					deck.HearthStatsArenaId = json.data.id;
+					Logger.WriteLine("assigned arena id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
+					return PostResult.WasSuccess;
+				}
+				return PostResult.CanRetry;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				return PostResult.CanRetry;
+			}
+		}
+
+		public static async Task<PostResult> PostArenaMatch(GameStats game, Deck deck)
+		{
+			if(!IsValidArenaGame(game))
+				return PostResult.Failed;
+			if(!deck.HasHearthStatsArenaId)
+			{
+				Logger.WriteLine("can not upload game, deck has no HearthStatsArenaId", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			Logger.WriteLine("uploading arena match: " + game, "HearthStatsAPI");
+
+			var url = BaseUrl + "/api/v2/matches/hdt_new?auth_token=" + _authToken;
+
+			dynamic gameObj = new ExpandoObject();
+			gameObj.mode = game.GameMode.ToString();
+			gameObj.@class = string.IsNullOrEmpty(game.PlayerHero) ? deck.Class : game.PlayerHero;
+			gameObj.result = game.Result.ToString();
+			gameObj.coin = game.Coin.ToString().ToLower();
+			gameObj.numturns = game.Turns;
+			gameObj.duration = (int)(game.EndTime - game.StartTime).TotalSeconds;
+			gameObj.arena_run_id = deck.HearthStatsArenaId;
+			if(!string.IsNullOrEmpty(game.OpponentHero))
+				gameObj.oppclass = game.OpponentHero;
+			if(!string.IsNullOrEmpty(game.OpponentName))
+				gameObj.oppname = game.OpponentName;
+
+			var data = JsonConvert.SerializeObject(gameObj);
+			Logger.WriteLine(">>" + data);
+
+			try
+			{
+				var response = await PostAsync(url, data);
+				var json = JsonConvert.DeserializeObject(response);
+				if(json.status.ToString() == "success")
+					return PostResult.WasSuccess;
+				return PostResult.CanRetry;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				return PostResult.CanRetry;
+			}
+		}
+
 		#endregion
 
-		#region Sync
+		#region misc
 
-		public static LoginResult Login(string email, string pwd)
+		private static readonly List<GameMode> ValidGameModes = new List<GameMode> {GameMode.Casual, GameMode.Ranked, GameMode.Friendly};
+
+		public static bool IsValidGame(GameStats game)
 		{
-			return LoginAsync(email, pwd).Result;
+			var baseMsg = "Game " + game + " is not valid ({0})";
+			if(game == null)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "null"), "HearthStatsAPI");
+				return false;
+			}
+			if(game.IsClone)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "IsClone"), "HearthStatsAPI");
+				return false;
+			}
+			if(ValidGameModes.All(mode => game.GameMode != mode))
+			{
+				Logger.WriteLine(string.Format(baseMsg, "invalid game mode: " + game.GameMode), "HearthStatsAPI");
+				return false;
+			}
+			if(game.Result == GameResult.None)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "invalid result: none"), "HearthStatsAPI");
+				return false;
+			}
+			if(game.HasHearthStatsId)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "already submitted"), "HearthStatsAPI");
+				return false;
+			}
+			return true;
 		}
 
-		public static List<Deck> GetDecks(long unixTime)
+		public static bool IsValidArenaGame(GameStats game)
 		{
-			return GetDecksAsync(unixTime).Result;
+			var baseMsg = "Game " + game + " is no valid arena game ({0})";
+			if(game == null)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "null"), "HearthStatsAPI");
+				return false;
+			}
+			if(game.IsClone)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "IsClone"), "HearthStatsAPI");
+				return false;
+			}
+			if(game.GameMode != GameMode.Arena)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "invalid game mode: " + game.GameMode), "HearthStatsAPI");
+				return false;
+			}
+			if(game.HasHearthStatsId)
+			{
+				Logger.WriteLine(string.Format(baseMsg, "already submitted"), "HearthStatsAPI");
+				return false;
+			}
+			return true;
 		}
 
-		public static PostResult PostDeck(Deck deck)
+		private static string AddUrlToNote(Deck deck)
 		{
-			return PostDeckAsync(deck).Result;
-		}
-
-		public static PostResult PostGameResult(GameStats game, Deck deck)
-		{
-			return PostGameResultAsync(game, deck).Result;
-		}
-
-		private static string Post(string url, string data)
-		{
-			return PostAsync(url, data).Result;
-		}
-
-		private static string Post(string url, byte[] data)
-		{
-			return PostAsync(url, data).Result;
-		}
-
-		private static string Get(string url)
-		{
-			return GetAsync(url).Result;
-		}
-
-		public static List<GameStats> GetGames(long unixTime)
-		{
-			return GetGamesAsync(unixTime).Result;
-		}
-
-		public static PostResult DeleteDeck(Deck deck)
-		{
-			return DeleteDeckAsync(deck).Result;
-		}
-
-		public static PostResult PostVersion(Deck version, string hearthStatsId)
-		{
-			return PostVersionAsync(version, hearthStatsId).Result;
-		}
-
-		public static PostResult MoveMatch(GameStats game, Deck newDeck)
-		{
-			return MoveMatchAsync(game, newDeck).Result;
+			var note = deck.Note;
+			if(!string.IsNullOrEmpty(deck.Url))
+			{
+				var urlString = "[source=" + deck.Url + "]";
+				if(!deck.Note.Contains(deck.Url))
+					note += "\r\n" + urlString;
+				else if(deck.Note.Contains(deck.Url) && !deck.Note.Contains(urlString))
+					note = note.Replace(deck.Url, urlString);
+			}
+			return note;
 		}
 
 		#endregion

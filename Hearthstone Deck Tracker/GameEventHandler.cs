@@ -448,7 +448,11 @@ namespace Hearthstone_Deck_Tracker
 						await HsLogReader.Instance.RankedDetection();
 					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
 						await RankDetection(5);
-					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
+					await GameModeSaved(15);
+					if(Game.CurrentGameMode == GameMode.Arena)
+						HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+					else
+						HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
 				}
 				_lastGame = null;
 			}
@@ -476,6 +480,15 @@ namespace Hearthstone_Deck_Tracker
 			var startTime = DateTime.Now;
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(Game.CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
+		}
+
+		private static async Task GameModeSaved(int timeoutInSeconds)
+		{
+			Logger.WriteLine("waiting for game mode to be saved to game", "GameEventHandler");
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(_lastGame != null && _lastGame.GameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
 				await Task.Delay(100);
 		}
 
