@@ -407,7 +407,7 @@ namespace Hearthstone_Deck_Tracker
 					orderedDecks = orderedDecks.OrderBy(x => x.TagList).ToList();
 					break;
 				case "Win Rate":
-					orderedDecks = orderedDecks.OrderByDescending(x => x.WinPercent).ToList();
+					orderedDecks = orderedDecks.OrderByDescending(x => x.WinPercentAll).ToList();
 					break;
 			}
 

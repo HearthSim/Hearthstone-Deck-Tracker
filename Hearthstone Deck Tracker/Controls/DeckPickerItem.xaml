@@ -16,7 +16,7 @@
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="70" />
         </Grid.ColumnDefinitions>
         <Label Content="{Binding WinPercentString}" Grid.Column="1" HorizontalAlignment="Center"
                VerticalAlignment="Center" FontSize="12" FontWeight="Medium" Foreground="Black" />
