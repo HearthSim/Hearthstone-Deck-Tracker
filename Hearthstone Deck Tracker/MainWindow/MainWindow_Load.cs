@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -656,6 +657,11 @@ namespace Hearthstone_Deck_Tracker
 			StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
+
+			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
+			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
+			MenuItemCheckBoxAutoUploadGames.IsChecked = Config.Instance.HearthStatsAutoUploadNewGames;
+			MenuItemCheckBoxAutoSyncBackground.IsChecked = Config.Instance.HearthStatsAutoSyncInBackground;
 		}
 
 		public void UpdateQuickFilterItemSource()
@@ -672,7 +678,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			var presentationsource = PresentationSource.FromVisual(this);
 			if(presentationsource != null) // make sure it's connected
@@ -680,23 +686,29 @@ namespace Hearthstone_Deck_Tracker
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
 			}
-			if(!_foundHsDirectory)
-			{
-				this.ShowHsNotInstalledMessage();
-				return;
-			}
-			if(NewVersion != null)
-				ShowNewUpdateMessage();
-			if(_updatedVersion != null)
-				this.ShowUpdateNotesMessage();
-
-			if(_updatedLogConfig)
-			{
-				this.ShowMessage("Restart Hearthstone",
-				                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
-			}
-
 			ManaCurveMyDecks.UpdateValues();
+			if(_updatedVersion != null)
+				await this.ShowUpdateNotesMessage();
+
+			if(NewVersion != null)
+				await ShowNewUpdateMessage();
+
+			if(!_foundHsDirectory)
+				await this.ShowHsNotInstalledMessage();
+			else if(_updatedLogConfig)
+			{
+				await
+					this.ShowMessage("Restart Hearthstone",
+					                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
+			}
+
+			if(!Config.Instance.ResolvedDeckStatsIds)
+			{
+				if(ResolveDeckStatsIds())
+					await Restart();
+			}
+			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
+				HearthStatsManager.SyncAsync(background: true);
 		}
 	}
 }

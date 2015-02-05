@@ -142,5 +142,23 @@ namespace Hearthstone_Deck_Tracker
 				throw new Exception("Invalid version string", ex);
 			}
 		}
+
+		public static SerializableVersion ParseOrDefault(string verionString)
+		{
+			try
+			{
+				if(string.IsNullOrEmpty(verionString))
+					return Default;
+				Version version;
+				if(Version.TryParse(verionString.Replace("v", ""), out version))
+					return new SerializableVersion(version);
+				return Default;
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString());
+				return Default;
+			}
+		}
 	}
 }

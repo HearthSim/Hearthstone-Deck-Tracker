@@ -19,14 +19,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public override void Write(string message)
 		{
-			_textBox.Text += message;
-			_textBox.ScrollToEnd();
+			_textBox.Dispatcher.BeginInvoke((Action)(() =>
+			{
+				_textBox.Text += message + Environment.NewLine;
+				_textBox.ScrollToEnd();
+			}));
 		}
 
 		public override void WriteLine(string message)
 		{
-			_textBox.Text += message + Environment.NewLine;
-			_textBox.ScrollToEnd();
+			_textBox.Dispatcher.BeginInvoke((Action)(() =>
+			{
+				_textBox.Text += message + Environment.NewLine;
+				_textBox.ScrollToEnd();
+			}));
 		}
 
 		public override bool Equals(object obj)

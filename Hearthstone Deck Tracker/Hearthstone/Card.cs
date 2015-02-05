@@ -321,7 +321,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override string ToString()
 		{
-			return Name + " (" + Count + ")";
+			return Name + "(" + Count + ")";
 		}
 
 		public override bool Equals(object card)

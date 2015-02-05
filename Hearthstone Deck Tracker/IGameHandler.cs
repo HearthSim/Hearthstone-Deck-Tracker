@@ -24,8 +24,9 @@ namespace Hearthstone_Deck_Tracker
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
 		void HandleGameEnd();
-		void HandleLoss(bool fromAssetUnload);
-		void HandleWin(bool fromAssetUnload);
+		void HandleLoss();
+		void HandleWin();
+		void HandleTied();
 		void PlayerSetAside(string id);
 
 
@@ -33,6 +34,8 @@ namespace Hearthstone_Deck_Tracker
 		void SetGameMode(GameMode mode);
 		void HandleInMenu();
 		void HandleConcede();
+
+		void SetRank(int rank);
 
 		#region OpponentHandlers
 

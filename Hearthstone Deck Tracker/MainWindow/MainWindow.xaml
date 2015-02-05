@@ -5,8 +5,9 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-                      Title="Hearthstone Deck Tracker" Height="620" Width="550"
-                      MinHeight="525" MinWidth="590"
+                      xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
+                      Title="Hearthstone Deck Tracker" Height="620" Width="645"
+                      MinHeight="525" MinWidth="645"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -21,6 +22,7 @@
     </Window.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
+            <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" ToolTip="syncing with HearthStats..."/>
             <Button Click="BtnOptions_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
@@ -53,39 +55,52 @@
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    <Grid>
-
-        <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
                          Width="515">
-            <local:Options x:Name="Options" Margin="0,-35,0,0" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
+                <local:Options x:Name="Options" Margin="0,-35,0,0" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:Help x:Name="Help" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
+                <local:Help x:Name="Help" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:DeckStatsControl x:Name="DeckStatsFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
+                <local:DeckStatsControl x:Name="DeckStatsFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
-            <local:GameDetails x:Name="GameDetailsFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
+                <local:GameDetails x:Name="GameDetailsFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
                          Width="255" Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"
                          Panel.ZIndex="100">
-            <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
-        </controls:Flyout>
-        <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
+                <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="Set tags" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
-            <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
-        </controls:Flyout>
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0">
+                <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -94,10 +109,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <Menu Grid.Row="1" Grid.ColumnSpan="3">
                 <MenuItem Header="_DECKS">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_layer}" />
                             </Rectangle.Fill>
@@ -125,7 +140,7 @@
                 </MenuItem>
                 <MenuItem Header="_NEW">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_layer_add}" />
                             </Rectangle.Fill>
@@ -179,7 +194,7 @@
                 </MenuItem>
                 <MenuItem Header="_EDIT" Name="MenuItemEdit">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_edit}" />
                             </Rectangle.Fill>
@@ -206,7 +221,7 @@
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16"  Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_download}" />
                             </Rectangle.Fill>
@@ -221,7 +236,7 @@
                 </MenuItem>
                 <MenuItem Header="E_XPORT" Name="MenuItemExport">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_upload}" />
                             </Rectangle.Fill>
@@ -235,7 +250,7 @@
                 </MenuItem>
                 <MenuItem Header="_STATS"  Click="BtnDeckStats_Click">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_graph_line}" />
                             </Rectangle.Fill>
@@ -244,7 +259,7 @@
                 </MenuItem>
                 <MenuItem Header="_REPLAYS">
                     <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_control_resume}" />
                             </Rectangle.Fill>
@@ -254,15 +269,37 @@
                     <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
                     <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
+                <!--<MenuItem Header="MENUITEM">
+                </MenuItem>-->
+                <MenuItem Header="_HEARTHSTATS">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource hearthstats}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
+                    <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC NOW" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="FORCE FULL SYNC" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
+                    <Separator/>
+                    <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND*" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
+                    <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
+                </MenuItem>
             </Menu>
-            <Separator Grid.Row="0" Grid.ColumnSpan="3" Margin="0,29,0,0" Panel.ZIndex="2" />
-            <Grid Grid.Column="1" Grid.Row="1" Margin="-1,0,0,0" Width="255">
+            <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
+            <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0">
+                <DockPanel Name="PanelVersionComboBox" Margin="10,6,10,0" Grid.Row="0" Visibility="Collapsed">
                     <Label Content="SELECTED VERSION:"/>
                     <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
                         <ComboBox.ItemTemplate>
@@ -316,17 +353,15 @@
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
             <local:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                              Grid.Row="1"
+                              Grid.Row="2"
                               Height="auto" Width="auto"
                               Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
                               OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                       Grid.Row="1" Panel.ZIndex="1"
+                       Grid.Row="2" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
-
-
-            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="0" Visibility="Collapsed">
+            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
                 <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16">
@@ -390,7 +425,7 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Grid Grid.Column="2" Grid.Row="1" Name="GridNewDeck" Visibility="Collapsed" Width="492">
+            <Grid Grid.Column="2" Grid.Row="2" Name="GridNewDeck" Visibility="Collapsed" Width="492">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="5*" />
@@ -473,6 +508,35 @@
                 />
                 </ScrollViewer>
             </Grid>
+            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem Content="NEWS:" Grid.Column="0"/>
+                <StatusBarItem Grid.Column="1">
+                    <controls:TransitioningContentControl Name="NewsContentControl" Transition="Right"/>
+                </StatusBarItem>
+                <StatusBarItem Grid.Column="2">
+                    <Button Name="BtnCloseNews" VerticalAlignment="Center" Height="24" Width="24" Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" BorderThickness="0" Click="BtnCloseNews_OnClick">
+                        <Button.Content>
+                            <Rectangle Width="8" Height="8">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_close}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button.Content>
+                    </Button>
+                </StatusBarItem>
+                
+            </StatusBar>
         </Grid>
     </Grid>
 </controls:MetroWindow>

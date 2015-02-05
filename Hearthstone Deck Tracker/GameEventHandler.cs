@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -169,6 +171,20 @@ namespace Hearthstone_Deck_Tracker
 			Game.OpponentName = name;
 		}
 
+		public void SetRank(int rank)
+		{
+			if(Game.CurrentGameStats != null)
+			{
+				Game.CurrentGameStats.Rank = rank;
+				Logger.WriteLine("set rank to " + rank, "GameEventHandler");
+			}
+			else if(_lastGame != null)
+			{
+				_lastGame.Rank = rank;
+				Logger.WriteLine("set rank to " + rank, "GameEventHandler");
+			}
+		}
+
 		public static void HandleOpponentPlay(string cardId, int from, int turn)
 		{
 			LogEvent("OpponentPlay", cardId, turn, from);
@@ -311,10 +327,12 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
 					{
-						var lastDeckName = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs).Name;
-						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeckName, "HandleGameStart");
+						var lastDeck = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
+						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 
-						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeckName);
+						var deck = lastDeck.Id == Guid.Empty
+							           ? Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeck.Name)
+							           : Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckId == lastDeck.Id);
 
 						if(deck != null)
 						{
@@ -373,8 +391,9 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private static Deck _assignedDeck;
+		private static GameStats _lastGame;
 #pragma warning disable 4014
-		public static void HandleGameEnd()
+		public static async void HandleGameEnd()
 		{
 			Helper.MainWindow.Overlay.HideTimers();
 			if(Game.CurrentGameStats == null)
@@ -409,7 +428,10 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 				Game.CurrentGameStats.PlayerDeckVersion = selectedDeck.Version;
-				selectedDeck.DeckStats.AddGameResult(Game.CurrentGameStats);
+				Game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
+
+				_lastGame = Game.CurrentGameStats;
+				selectedDeck.DeckStats.AddGameResult(_lastGame);
 				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;
@@ -417,6 +439,22 @@ namespace Hearthstone_Deck_Tracker
 				}
 				Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 				_assignedDeck = selectedDeck;
+
+				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+				{
+					if(Game.CurrentGameMode == GameMode.None)
+						await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
+					if(Game.CurrentGameMode == GameMode.Casual)
+						await HsLogReader.Instance.RankedDetection();
+					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
+						await RankDetection(5);
+					await GameModeSaved(15);
+					if(Game.CurrentGameMode == GameMode.Arena)
+						HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+					else
+						HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
+				}
+				_lastGame = null;
 			}
 			else
 			{
@@ -426,6 +464,33 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 #pragma warning restore 4014
+
+		private static async Task RankDetection(int timeoutInSeconds)
+		{
+			Logger.WriteLine("waiting for rank detection", "GameEventHandler");
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(_lastGame != null && !_lastGame.HasRank && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
+		}
+
+		private static async Task GameModeDetection(int timeoutInSeconds)
+		{
+			Logger.WriteLine("waiting for game mode detection", "GameEventHandler");
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(Game.CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
+		}
+
+		private static async Task GameModeSaved(int timeoutInSeconds)
+		{
+			Logger.WriteLine("waiting for game mode to be saved to game", "GameEventHandler");
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(_lastGame != null && _lastGame.GameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
+		}
 
 		private static void LogEvent(string type, string id = "", int turn = 0, int from = -1)
 		{
@@ -446,7 +511,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
-		public static void HandleWin(bool fromAssetUnload)
+		public static void HandleWin()
 		{
 			if(Game.CurrentGameStats == null)
 				return;
@@ -454,7 +519,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.CurrentGameStats.Result = GameResult.Win;
 		}
 
-		public static void HandleLoss(bool fromAssetUnload)
+		public static void HandleLoss()
 		{
 			if(Game.CurrentGameStats == null)
 				return;
@@ -462,9 +527,16 @@ namespace Hearthstone_Deck_Tracker
 			Game.CurrentGameStats.Result = GameResult.Loss;
 		}
 
+		public static void HandleTied()
+		{
+			if(Game.CurrentGameStats == null)
+				return;
+			Logger.WriteLine("Game a tie!", "GameStats");
+			Game.CurrentGameStats.Result = GameResult.Draw;
+		}
+
 		public static void SetGameMode(GameMode mode)
 		{
-			Logger.WriteLine(">> GAME MODE: " + mode);
 			Game.CurrentGameMode = mode;
 		}
 
@@ -701,14 +773,19 @@ namespace Hearthstone_Deck_Tracker
 			HandleGameEnd();
 		}
 
-		void IGameHandler.HandleLoss(bool fromAssetUnload)
+		void IGameHandler.HandleLoss()
 		{
-			HandleLoss(fromAssetUnload);
+			HandleLoss();
 		}
 
-		void IGameHandler.HandleWin(bool fromAssetUnload)
+		void IGameHandler.HandleWin()
 		{
-			HandleWin(fromAssetUnload);
+			HandleWin();
+		}
+
+		void IGameHandler.HandleTied()
+		{
+			HandleTied();
 		}
 
 		void IGameHandler.PlayerSetAside(string id)

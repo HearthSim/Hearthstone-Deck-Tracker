@@ -2,12 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -146,10 +148,12 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
+			var previousVersion = _newDeck.Version;
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
+				_newDeck.HearthStatsDeckVersionId = "";
 				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
@@ -177,7 +181,7 @@ namespace Hearthstone_Deck_Tracker
 				TagControlEdit.SetSelectedTags(new List<string>());
 				if(deckName != oldDeckName)
 				{
-					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == oldDeckName);
+					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
 					if(statsEntry != null)
 					{
 						if(overwrite)
@@ -187,10 +191,10 @@ namespace Hearthstone_Deck_Tracker
 						}
 						else
 						{
-							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(d => d.Name == deckName);
+							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
 							if(newStatsEntry == null)
 							{
-								newStatsEntry = new DeckStats(deckName);
+								newStatsEntry = new DeckStats(_newDeck);
 								DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 							}
 							foreach(var game in statsEntry.Games)
@@ -200,6 +204,20 @@ namespace Hearthstone_Deck_Tracker
 						DeckStatsList.Save();
 					}
 				}
+			}
+
+
+			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			{
+				if(EditingDeck)
+				{
+					if(previousVersion != newVersion)
+						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId, background: true);
+					else
+						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true);
+				}
+				else
+					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true);
 			}
 
 			//after cloning the stats, otherwise new stats will be generated
@@ -350,6 +368,11 @@ namespace Hearthstone_Deck_Tracker
 				MenuItemSave.IsSubmenuOpen = false;
 				await SaveDeckWithOverwriteCheck();
 			}
+		}
+
+		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(@"http://hearthstats.net/dashboards");
 		}
 
 		#region UI

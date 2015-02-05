@@ -368,17 +368,20 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="DataGridCell">
-                                                <Setter Property="ToolTip" Value="{Binding ResultToolTip}"/>
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                            <Setter Property="ToolTip" Value="{Binding ResultToolTip}"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -667,17 +670,20 @@
                                                   MouseDoubleClick="DGridOverall_MouseDoubleClick"
                                                   SelectionChanged="DGridOverall_SelectionChanged">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
-                                                    <DataGridTextColumn.CellStyle>
-                                                        <Style TargetType="DataGridCell">
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Result" Binding="{Binding ResultString}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
                                                             <Setter Property="ToolTip" Value="{Binding ResultToolTip}"/>
                                                         </Style>
-                                                    </DataGridTextColumn.CellStyle>
+                                                    </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTemplateColumn Header="Hero" SortMemberPath="PlayerHero">
                                                     <DataGridTemplateColumn.CellTemplate>

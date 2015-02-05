@@ -4,6 +4,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		None,
 		Win,
-		Loss
+		Loss,
+		Draw
 	}
 }

@@ -8,11 +8,16 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -38,6 +43,9 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Properties
 
+		private const int NewsCheckInterval = 300;
+		private const int NewsTickerUpdateInterval = 30;
+		private const int HearthStatsAutoSyncInterval = 300;
 		public readonly Decks DeckList;
 		public readonly List<Deck> DefaultDecks;
 		public readonly Version NewVersion;
@@ -64,12 +72,20 @@ namespace Hearthstone_Deck_Tracker
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
 		private bool _canShowDown;
+		private int _currentNewsId;
+		private string _currentNewsLine;
 		private bool _doUpdate;
+		private DateTime _lastHearthStatsSync;
+		private DateTime _lastNewsCheck;
+		private DateTime _lastNewsUpdate;
 		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
 		private bool _newDeckUnsavedChanges;
+		private string[] _news;
+		private int _newsLine;
 		private Deck _originalDeck;
 		private bool _tempUpdateCheckDisabled;
+		private bool _update;
 		private Version _updatedVersion;
 
 		public bool ShowToolTip
@@ -279,7 +295,7 @@ namespace Hearthstone_Deck_Tracker
 			FillElementSorters();
 
 			//this has to happen before reader starts
-			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == Config.Instance.LastDeck);
+			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
 			DeckPickerList.SelectDeck(lastDeck);
 
 			TurnTimer.Create(90);
@@ -311,14 +327,152 @@ namespace Hearthstone_Deck_Tracker
 
 			CopyReplayFiles();
 
+			LoadHearthStats();
+
 			UpdateOverlayAsync();
+			UpdateAsync();
+
 
 			_initialized = true;
+		}
+
+		public Thickness TitleBarMargin
+		{
+			get { return new Thickness(0, TitlebarHeight, 0, 0); }
+		}
+
+		private async void UpdateAsync()
+		{
+			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
+			_update = true;
+			_lastNewsCheck = DateTime.MinValue;
+			_lastNewsUpdate = DateTime.MinValue;
+			_currentNewsId = Config.Instance.IgnoreNewsId;
+			_lastHearthStatsSync = DateTime.Now;
+			while(_update)
+			{
+				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(NewsCheckInterval))
+				{
+					try
+					{
+						var oldNewsId = _currentNewsId;
+						using(var client = new WebClient())
+						{
+							var content =
+								client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+							try
+							{
+								_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
+							}
+							catch(Exception)
+							{
+								_currentNewsId = 0;
+							}
+							_news = content.Skip(1).ToArray();
+						}
+						if(_currentNewsId > oldNewsId
+						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
+						{
+							StatusBarNews.Visibility = Visibility.Visible;
+							UpdateNews(0);
+						}
+					}
+					catch(Exception e)
+					{
+						Logger.WriteLine("Error loading news: " + e, "UpdateNews");
+					}
+					_lastNewsCheck = DateTime.Now;
+				}
+				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(NewsTickerUpdateInterval))
+					UpdateNews();
+
+				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoSyncInBackground
+				   && (DateTime.Now - _lastHearthStatsSync) > TimeSpan.FromSeconds(HearthStatsAutoSyncInterval))
+				{
+					_lastHearthStatsSync = DateTime.Now;
+					HearthStatsManager.SyncAsync(background: true);
+				}
+
+				await Task.Delay(1000);
+			}
+		}
+
+		private void UpdateNews(int newsLine)
+		{
+			if(newsLine < _news.Length && _currentNewsLine != _news[newsLine])
+			{
+				_currentNewsLine = _news[newsLine];
+				NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
+			}
+			_lastNewsUpdate = DateTime.Now;
+		}
+
+		private void UpdateNews()
+		{
+			if(_news == null || _news.Length == 0)
+				return;
+			_newsLine++;
+			if(_newsLine > _news.Length - 1)
+				_newsLine = 0;
+			UpdateNews(_newsLine);
+		}
+
+		private TextBlock StringToTextBlock(string text)
+		{
+			var tb = new TextBlock();
+			ParseMarkup(text, tb);
+			return tb;
+		}
+
+		private void ParseMarkup(string text, TextBlock tb)
+		{
+			const string urlMarkup = @"\[(?<text>(.*?))\]\((?<url>(http[s]?://.+\..+?))\)";
+
+			var url = Regex.Match(text, urlMarkup);
+			var rest = url.Success ? text.Split(new[] {(url.Value)}, StringSplitOptions.None) : new[] {text};
+			if(rest.Length == 1)
+				tb.Inlines.Add(rest[0]);
+			else
+			{
+				for(int restIndex = 0, urlIndex = 0; restIndex < rest.Length; restIndex += 2, urlIndex++)
+				{
+					ParseMarkup(rest[restIndex], tb);
+					var link = new Hyperlink();
+					link.NavigateUri = new Uri(url.Groups["url"].Value);
+					link.RequestNavigate += (sender, args) => Process.Start(args.Uri.AbsoluteUri);
+					link.Inlines.Add(new Run(url.Groups["text"].Value));
+					link.Foreground = new SolidColorBrush(Colors.White);
+					tb.Inlines.Add(link);
+					ParseMarkup(rest[restIndex + 1], tb);
+				}
+			}
+		}
+
+		private bool ResolveDeckStatsIds()
+		{
+			var needToRestart = false;
+			foreach(var deckStats in DeckStatsList.Instance.DeckStats)
+			{
+				var deck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckStats.Name);
+				if(deck != null)
+				{
+					deckStats.DeckId = deck.DeckId;
+					deckStats.HearthStatsDeckId = deck.HearthStatsId;
+					needToRestart = true;
+				}
+			}
+			DeckStatsList.Save();
+			WriteDecks();
+			Config.Instance.ResolvedDeckStatsIds = true;
+			Config.Save();
+			return needToRestart;
 		}
 
 		#endregion
 
 		#region GENERAL GUI
+
+		private bool _closeAnyway;
 
 		private void MetroWindow_Activated(object sender, EventArgs e)
 		{
@@ -340,7 +494,29 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
+				if(HearthStatsManager.SyncInProgress && !_closeAnyway)
+				{
+					e.Cancel = true;
+					var result =
+						await
+						this.ShowMessageAsync("WARNING! Sync with HearthStats in progress!",
+						                      "Closing Hearthstone Deck Tracker now can cause data inconsistencies. Are you sure?",
+						                      MessageDialogStyle.AffirmativeAndNegative,
+						                      new MetroDialogSettings {AffirmativeButtonText = "close anyway", NegativeButtonText = "wait"});
+					if(result == MessageDialogResult.Negative)
+					{
+						while(HearthStatsManager.SyncInProgress)
+							await Task.Delay(100);
+						await this.ShowMessage("Sync is complete.", "You can close Hearthstone Deck Tracker now.");
+					}
+					else
+					{
+						_closeAnyway = true;
+						Close();
+					}
+				}
 				_doUpdate = false;
+				_update = false;
 
 				//wait for update to finish, might otherwise crash when overlay gets disposed
 				for(var i = 0; i < 100; i++)
@@ -449,7 +625,7 @@ namespace Hearthstone_Deck_Tracker
 			else if(decks.Count > 0)
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>(),
-				                   SerializableVersion.Default, new List<Deck>()));
+				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 
 				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
@@ -616,7 +792,7 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		private async void ShowNewUpdateMessage(Version newVersion = null)
+		private async Task ShowNewUpdateMessage(Version newVersion = null)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
@@ -664,6 +840,7 @@ namespace Hearthstone_Deck_Tracker
 		public async Task Restart()
 		{
 			await this.ShowMessageAsync("Restarting tracker", "");
+			Close();
 			Process.Start(Application.ResourceAssembly.Location);
 			Application.Current.Shutdown();
 		}
@@ -781,7 +958,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						break;
 				}
-				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name});
+				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
 				WriteDecks();
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
@@ -822,15 +999,15 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = null;
 			if(selected == null)
 			{
-				Config.Instance.LastDeck = string.Empty;
+				Config.Instance.LastDeckId = Guid.Empty;
 				Config.Save();
 				return;
 			}
 			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			if(Config.Instance.LastDeck != selected.Name)
+			if(Config.Instance.LastDeckId != selected.DeckId)
 			{
-				Config.Instance.LastDeck = selected.Name;
+				Config.Instance.LastDeckId = selected.DeckId;
 				Config.Save();
 			}
 		}
@@ -1040,6 +1217,147 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_originalDeck = deck;
 			SetNewDeck(deck, true);
+		}
+
+		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutHearthStatsLogin.IsOpen = true;
+			await Task.Delay(100); //wait for open
+			HearthstatsLoginControl.TextBoxEmail.Focus();
+		}
+
+		private void LoadHearthStats()
+		{
+			var loaded = HearthStatsAPI.LoadCredentials();
+			if(loaded)
+			{
+				MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				MenuItemLogin.Visibility = Visibility.Collapsed;
+				MenuItemLogout.Visibility = Visibility.Visible;
+				SeparatorLogout.Visibility = Visibility.Visible;
+			}
+			EnableHearthStatsMenu(loaded);
+		}
+
+		public void EnableHearthStatsMenu(bool enable)
+		{
+			MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
+			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
+			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
+			MenuItemHearthStatsSync.IsEnabled = enable;
+		}
+
+		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			HearthStatsManager.SyncAsync();
+		}
+
+
+		private void MenuItemCheckBoxSyncOnStart_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxSyncOnStart_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = false;
+			Config.Save();
+		}
+
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
+		{
+			Config.Instance.IgnoreNewsId = _currentNewsId;
+			Config.Save();
+			StatusBarNews.Visibility = Visibility.Collapsed;
+			;
+		}
+
+		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+				HearthStatsManager.SyncAsync(true);
+		}
+
+		private async void MenuItemLogout_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+			{
+				var deletedFile = HearthStatsAPI.Logout();
+				if(!deletedFile)
+				{
+					await
+						this.ShowMessageAsync("Error deleting stored credentials",
+						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+						                      + Config.Instance.HearthStatsFilePath);
+				}
+				MenuItemLogin.Visibility = Visibility.Visible;
+				MenuItemLogout.Visibility = Visibility.Collapsed;
+				SeparatorLogout.Visibility = Visibility.Collapsed;
+				EnableHearthStatsMenu(false);
+			}
 		}
 	}
 }

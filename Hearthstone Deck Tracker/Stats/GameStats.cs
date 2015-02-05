@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -19,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private readonly string[] _hsClasses = {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
 
 		public Guid GameId;
+		public string HearthStatsId;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()
@@ -33,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			OpponentHero = opponentHero;
 			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
-			Logger.WriteLine("Started new game", "Gamestats");
 			GameId = Guid.NewGuid();
 		}
 
@@ -63,6 +64,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool VerifiedHeroes { get; set; }
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
+		public int Rank { get; set; }
+
+		[XmlIgnore]
+		public bool HasRank
+		{
+			get { return Rank > 0 && Rank <= 25; }
+		}
+
+		[XmlIgnore]
+		public string RankString
+		{
+			get { return HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-"; }
+		}
 
 		[XmlIgnore]
 		public string ResultString
@@ -71,6 +85,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		public SerializableVersion PlayerDeckVersion { get; set; }
+
+		public bool IsAssociatedWithDeckVersion
+		{
+			get { return PlayerDeckVersion != null; } // || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
+		}
 
 		[XmlIgnore]
 		public string PlayerDeckVersionString
@@ -143,6 +162,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get { return Coin ? "Yes" : "No"; }
 			set { Coin = value.ToLower() == "Yes"; }
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId); }
+		}
+
+		public string HearthStatsDeckId { get; set; }
+		public string HearthStatsDeckVersionId { get; set; }
+
+		public bool BelongsToDeckVerion(Deck deck)
+		{
+			return PlayerDeckVersion == deck.Version || HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId;
 		}
 
 		public GameStats CloneWithNewId()

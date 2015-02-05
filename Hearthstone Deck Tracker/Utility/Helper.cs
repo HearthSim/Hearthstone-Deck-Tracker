@@ -9,6 +9,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Cache;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -58,8 +59,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for updates...");
 			newVersionOut = null;
 
-			const string versionXmlUrl =
-				@"https://raw.githubusercontent.com/Epix37/Hearthstone-Deck-Tracker/master/Hearthstone%20Deck%20Tracker/Version.xml";
+			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
 
@@ -67,7 +67,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					var xml = new WebClient {Proxy = null}.DownloadString(versionXmlUrl);
+					var xml =
+						new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)}.DownloadString(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
 
@@ -354,6 +355,25 @@ namespace Hearthstone_Deck_Tracker
 
 				return (T)formatter.Deserialize(ms);
 			}
+		}
+
+		public static long ToUnixTime(this DateTime time)
+		{
+			var total = (long)(time - new DateTime(1970, 1, 1)).TotalSeconds;
+			return total < 0 ? 0 : total;
+		}
+
+		public static DateTime FromUnixTime(long unixTime)
+		{
+			return new DateTime(1970, 1, 1).Add(TimeSpan.FromSeconds(unixTime));
+		}
+
+		public static DateTime FromUnixTime(string unixTime)
+		{
+			long time;
+			if(long.TryParse(unixTime, out time))
+				return FromUnixTime(time);
+			return DateTime.Now;
 		}
 	}
 }

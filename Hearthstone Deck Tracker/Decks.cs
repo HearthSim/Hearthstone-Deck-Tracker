@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
@@ -24,6 +25,7 @@ namespace Hearthstone_Deck_Tracker
 	public class DeckInfo
 	{
 		public string Class;
+		public Guid Id;
 		public string Name;
 	}
 }

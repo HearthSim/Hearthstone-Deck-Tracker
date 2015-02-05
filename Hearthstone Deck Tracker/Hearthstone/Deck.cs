@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
@@ -20,8 +21,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public ObservableCollection<Card> Cards;
 
-
 		public string Class;
+		public string HearthStatsArenaId;
+		public string HearthStatsDeckVersionId;
+		public string HearthStatsId;
+
 
 		[XmlIgnore]
 		public bool IsSelectedInGui;
@@ -32,7 +36,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public List<Card> MissingCards;
 
-		public string Name;
 		public string Note;
 		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
@@ -48,6 +51,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
 
+		private Guid _deckId;
+		private string _hearthStatsIdClone;
+		private bool? _isArenaDeck;
+
+
 		public Deck()
 		{
 			Cards = new ObservableCollection<Card>();
@@ -56,14 +64,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = string.Empty;
 			Url = string.Empty;
 			Name = string.Empty;
+			SyncWithHearthStats = null;
+			HearthStatsId = string.Empty;
 			Version = SerializableVersion.Default;
 			Versions = new List<Deck>();
+			DeckId = Guid.NewGuid();
 		}
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            SerializableVersion selectedVersion = null)
+		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
+		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null)
 
 		{
 			Name = name;
@@ -77,13 +89,49 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = url;
 			LastEdited = lastEdited;
 			Version = version;
+			SyncWithHearthStats = syncWithHearthStats;
+			HearthStatsId = hearthStatsId;
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
+			DeckId = deckId;
+			if(hearthStatsIdClone != null)
+				_hearthStatsIdClone = hearthStatsIdClone;
+			if(isArenaDeck.HasValue)
+				IsArenaDeck = isArenaDeck.Value;
+			HearthStatsDeckVersionId = hearthStatsDeckVersionId;
 			if(versions != null)
 			{
 				foreach(var d in versions)
-					Versions.Add(d.Clone() as Deck);
+					Versions.Add(d.CloneWithNewId() as Deck);
 			}
+		}
+
+		public bool IsArenaDeck
+		{
+			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? Tags.Contains("Arena"); }
+			set { _isArenaDeck = value; }
+		}
+
+
+		public Guid DeckId
+		{
+			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
+			set { _deckId = value; }
+		}
+
+		public string Name { get; set; }
+		public bool? SyncWithHearthStats { get; set; }
+
+		[XmlIgnore]
+		public bool HasHearthStatsId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone); }
+		}
+
+		[XmlIgnore]
+		public bool HasHearthStatsDeckVersionId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
 		}
 
 		[XmlIgnore]
@@ -185,14 +233,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public BitmapImage HeroImage
+		{
+			get
+			{
+				if(!Enum.GetNames(typeof(HeroClass)).Contains(Class))
+					return new BitmapImage();
+				var uri = new Uri(string.Format("../../Resources/{0}_small.png", Class.ToLower()), UriKind.Relative);
+				return new BitmapImage(uri);
+			}
+		}
+
 		public DeckStats DeckStats
 		{
 			get
 			{
-				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.Name == Name);
+				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this));
 				if(deckStats == null)
 				{
-					deckStats = new DeckStats(Name);
+					deckStats = new DeckStats(this);
 					DeckStatsList.Instance.DeckStats.Add(deckStats);
 				}
 				return deckStats;
@@ -205,9 +265,47 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return Versions != null && Versions.Count > 0; }
 		}
 
+		public bool HasHearthStatsArenaId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsArenaId); }
+		}
+
+		//I don't know why I need this but I apparently can't serialize anything if versions of a deck have the same hearthstatsid
+
+		public string HearthStatsIdForUploading
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsId) ? HearthStatsId : _hearthStatsIdClone; }
+			set { _hearthStatsIdClone = value; }
+		}
+
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SelectedVersion);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
+			                DeckId, "", _hearthStatsIdClone, SelectedVersion, _isArenaDeck);
+		}
+
+		private bool? CheckIfArenaDeck()
+		{
+			return !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
+		}
+
+		public Deck GetVersion(int major, int minor)
+		{
+			var target = new SerializableVersion(major, minor);
+			if(Version == target)
+				return this;
+			return Versions.FirstOrDefault(x => x.Version == target);
+		}
+
+		public bool HasVersion(SerializableVersion version)
+		{
+			return Version == version || Versions.Any(v => v.Version == version);
+		}
+
+		public object CloneWithNewId()
+		{
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
+			                Guid.NewGuid(), "", "", SelectedVersion, _isArenaDeck);
 		}
 
 		public void ResetVersions()
@@ -335,12 +433,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deck = obj as Deck;
 			if(deck == null)
 				return false;
-			return Name == deck.Name;
+			if(deck.HasHearthStatsId && HasHearthStatsId)
+				return HearthStatsId.Equals(deck.HearthStatsId);
+			return DeckId.Equals(deck.DeckId);
 		}
 
 		public override int GetHashCode()
 		{
-			return NameAndVersion.GetHashCode();
+			if(HasHearthStatsId)
+				return HasHearthStatsId.GetHashCode();
+			return DeckId.GetHashCode();
 		}
 
 		public static List<Card> operator -(Deck first, Deck second)
@@ -370,6 +472,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 
 			return diff;
+		}
+
+		public SerializableVersion GetMaxVerion()
+		{
+			return VersionsIncludingSelf.OrderByDescending(x => x).First();
 		}
 	}
 }

@@ -150,6 +150,18 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
+		[DefaultValue(false)]
+		public bool HearthStatsAutoSyncInBackground = false;
+
+		[DefaultValue(true)]
+		public bool HearthStatsAutoUploadNewDecks = true;
+
+		[DefaultValue(true)]
+		public bool HearthStatsAutoUploadNewGames = true;
+
+		[DefaultValue(false)]
+		public bool HearthStatsSyncOnStart = false;
+
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
 
@@ -207,6 +219,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
 
+		[DefaultValue(-1)]
+		public int IgnoreNewsId = -1;
+
 		[DefaultValue(true)]
 		public bool KeepDecksVisible = true;
 
@@ -219,8 +234,18 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("None")]
 		public string KeyPressOnGameStart = "None";
 
+		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
+
+		[DefaultValue("00000000-0000-0000-0000-000000000000")]
+		public string LastDeckIdString = Guid.Empty.ToString();
+
+		[DefaultValue(0L)]
+		public long LastHearthStatsDecksSync = 0L;
+
+		[DefaultValue(0L)]
+		public long LastHearthStatsGamesSync = 0L;
 
 		[DefaultValue(0)]
 		public int LogLevel = 0;
@@ -345,6 +370,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RecordSpectator = false;
 
+		[DefaultValue(true)]
+		public bool RememberHearthStatsLogin = true;
+
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
@@ -359,6 +387,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
+
+		[DefaultValue(false)]
+		public bool ResolvedDeckStatsIds = false;
 
 		//updating from <= 0.5.1: 
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
@@ -568,6 +599,19 @@ namespace Hearthstone_Deck_Tracker
 			set { _gameDetails = value; }
 		}
 
+		[XmlIgnore]
+		public Guid LastDeckId
+		{
+			get
+			{
+				Guid id;
+				if(Guid.TryParse(LastDeckIdString, out id))
+					return id;
+				return Guid.Empty;
+			}
+			set { LastDeckIdString = value.ToString(); }
+		}
+
 		#endregion
 
 		#region Properties
@@ -617,6 +661,11 @@ namespace Hearthstone_Deck_Tracker
 
 				return _config;
 			}
+		}
+
+		public string HearthStatsFilePath
+		{
+			get { return Path.Combine(DataDir, "hearthstatsauth"); }
 		}
 
 		#endregion
