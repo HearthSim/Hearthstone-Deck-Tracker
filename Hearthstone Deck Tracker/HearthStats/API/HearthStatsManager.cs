@@ -443,6 +443,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 					DeckStatsList.Save();
 					Helper.MainWindow.DeckPickerList.UpdateList();
+					Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 				}
 
 				if(!background)
