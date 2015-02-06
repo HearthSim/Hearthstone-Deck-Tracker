@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			"Basic",
 			"Reward",
-			"Expert",
+			"Classic",
 			"Promotion",
 			"Curse of Naxxramas",
 			"Goblins vs Gnomes"
