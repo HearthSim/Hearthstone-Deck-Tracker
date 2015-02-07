@@ -476,6 +476,7 @@ namespace Hearthstone_Deck_Tracker
 		#region GENERAL GUI
 
 		private bool _closeAnyway;
+		private bool _showingUpdateMessage;
 
 		private void MetroWindow_Activated(object sender, EventArgs e)
 		{
@@ -680,7 +681,7 @@ namespace Hearthstone_Deck_Tracker
 
 					if(!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)
 					{
-						if(!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
+						if(!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0) && !_showingUpdateMessage)
 						{
 							Version newVersion;
 							var currentVersion = Helper.CheckForUpdates(out newVersion);
@@ -797,14 +798,22 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task ShowNewUpdateMessage(Version newVersion = null)
 		{
+			if(_showingUpdateMessage)
+				return;
+			_showingUpdateMessage = true;
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
 			var version = newVersion ?? NewVersion;
 			if(version == null)
+			{
+				_showingUpdateMessage = false;
 				return;
+			}
 			try
 			{
 				ActivateWindow();
+				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
+					await Task.Delay(100);
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
 				var result =
 					await
@@ -823,6 +832,7 @@ namespace Hearthstone_Deck_Tracker
 					try
 					{
 						Process.Start("Updater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
+						Close();
 						Application.Current.Shutdown();
 					}
 					catch
@@ -833,9 +843,12 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 					_tempUpdateCheckDisabled = true;
+
+				_showingUpdateMessage = false;
 			}
 			catch(Exception e)
 			{
+				_showingUpdateMessage = false;
 				Logger.WriteLine("Error showing new update message\n" + e.Message);
 			}
 		}
