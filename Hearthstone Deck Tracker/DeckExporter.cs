@@ -44,15 +44,6 @@ namespace Hearthstone_Deck_Tracker
 				var hsRect = User32.GetHearthstoneRect(false);
 				var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 
-				string oldClipboardContent = null;
-				try
-				{
-					oldClipboardContent = Clipboard.GetText();
-				}
-				catch
-				{
-				}
-
 				var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)),
 				                             (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
 				var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
@@ -95,14 +86,10 @@ namespace Hearthstone_Deck_Tracker
 				await ClickOnPoint(hsHandle, searchBoxPos);
 				SendKeys.SendWait("{DELETE}");
 				SendKeys.SendWait("{ENTER}");
-				try
-				{
-					if(oldClipboardContent != null)
-						Clipboard.SetText(oldClipboardContent);
-				}
-				catch
-				{
-				}
+
+				if(Config.Instance.ExportPasteClipboard)
+					Clipboard.Clear();
+
 				Logger.WriteLine("Done creating deck.", "DeckExporter");
 			}
 			catch(Exception e)
