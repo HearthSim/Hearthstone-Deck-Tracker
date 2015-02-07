@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				const string url = BaseUrl + "/api/v2/users/sign_in";
 				var data = JsonConvert.SerializeObject(new {user_login = new {email, password = pwd}});
-				var json = await PostAsync(url, data);
+				var json = await PostAsync(url, Encoding.UTF8.GetBytes(data));
 				dynamic response = JsonConvert.DeserializeObject(json);
 				if((bool)response.success)
 				{
@@ -106,6 +106,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		private static async Task<string> PostAsync(string url, string data)
 		{
+#if DEBUG
+			Logger.WriteLine("> " + data, "HearthStatsAPI");
+#endif
 			return await PostAsync(url, Encoding.UTF8.GetBytes(data));
 		}
 
@@ -114,10 +117,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var request = CreateRequest(url, "POST");
 			using(var stream = await request.GetRequestStreamAsync())
 				stream.Write(data, 0, data.Length);
-			var response = await request.GetResponseAsync();
-			using(var responseStream = response.GetResponseStream())
+			var webResponse = await request.GetResponseAsync();
+			using(var responseStream = webResponse.GetResponseStream())
 			using(var reader = new StreamReader(responseStream))
-				return reader.ReadToEnd();
+			{
+				var response = reader.ReadToEnd();
+#if DEBUG
+				Logger.WriteLine("< " + response, "HearthStatsAPI");
+#endif
+				return response;
+			}
 		}
 
 		private static async Task<string> GetAsync(string url)
@@ -530,17 +539,46 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("deck is null", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
-			if(deck.HasHearthStatsId || deck.HasHearthStatsArenaId)
+			if(deck.IsArenaDeck == false)
 			{
-				Logger.WriteLine("deck already posted", "HearthStatsAPI");
+				Logger.WriteLine("deck is not a viable arena deck", "HearthStatsAPI");
 				return PostResult.Failed;
+			}
+			if(deck.HasHearthStatsArenaId)
+			{
+				Logger.WriteLine("arena deck already posted", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(deck.HasVersions)
+			{
+				Logger.WriteLine("arena deck cannot have versions", "HearthStatsAPI");
+				return PostResult.Failed;
+			}
+			if(deck.HasHearthStatsId)
+			{
+				if(deck.CheckIfArenaDeck() == false)
+				{
+					Logger.WriteLine("deck has non-arena games", "HearthStatsAPI");
+					return PostResult.Failed;
+				}
+				if(deck.DeckStats.Games.Count <= 1)
+				{
+					Logger.WriteLine("deck has hearthstats id but no arena id. deleting and uploading as arena deck.", "HearthStatsAPI");
+					await DeleteDeckAsync(deck);
+					deck.HearthStatsId = "";
+					deck.HearthStatsDeckVersionId = "";
+				}
+				else
+				{
+					Logger.WriteLine("deck already has games but no arena id. cannot upload deck.", "HearthStatsAPI");
+					return PostResult.Failed;
+				}
 			}
 			Logger.WriteLine("creating new arena run: " + deck, "HearthStatsAPI");
 
 			var url = BaseUrl + "/api/v2/arena_runs/new?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {@class = deck.Class, cards});
-			Logger.WriteLine(">>" + data);
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -587,7 +625,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObj.oppname = game.OpponentName;
 
 			var data = JsonConvert.SerializeObject(gameObj);
-			Logger.WriteLine(">>" + data);
 
 			try
 			{

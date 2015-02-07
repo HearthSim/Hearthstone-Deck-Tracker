@@ -379,13 +379,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 					Logger.WriteLine("Checking for edited decks...", "HearthStatsManager");
 					var editedDecks =
-						remoteDecks.SelectMany(
-						                       r =>
-						                       localDecks.Where(
-						                                        l =>
-						                                        l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId
-						                                        && (l.Name != r.Name || l.Tags != r.Tags || l.Note != r.Note
-						                                            || l.Cards.Any(lc => r.Cards.All(rc => !rc.EqualsWithCount(lc)))))).ToList();
+						remoteDecks.Where(
+						                  r =>
+						                  !localDecks.Any(
+						                                  l =>
+						                                  l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId
+						                                  && (l.Name != r.Name || l.Tags != r.Tags || l.Note != r.Note
+						                                      || l.Cards.Any(lc => r.Cards.All(rc => !rc.EqualsWithCount(lc)))))).ToList();
 					if(editedDecks.Any())
 					{
 						foreach(var deck in editedDecks)
@@ -428,18 +428,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							                                                    d.VersionsIncludingSelf.Select(v => d.GetVersion(v.Major, v.Minor))
 							                                                     .Where(v => v != null)
 							                                                     .Any(v => game.BelongsToDeckVerion(v)));
-						//Helper.MainWindow.DeckList.DecksList.Where(d => d != null).SelectMany(d => d.VersionsIncludingSelf.Where(v => v != null).Select(d.GetVersion).Where(v => v != null))
-						//      .FirstOrDefault(d => game.BelongsToDeckVerion(d));
-
-						if(deck != null && deck.DeckStats.Games.All(g => g.HearthStatsId != game.HearthStatsId))
+						if(deck == null)
 						{
-							//game.PlayerDeckVersion = deck.Version;
-							Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
-							                 "HearthStatsManager");
-							deck.DeckStats.AddGameResult(game);
-						}
-						else
 							Logger.WriteLine(string.Format("no deck found for match {0}", game), "HearthStatsManager");
+							continue;
+						}
+						if(deck.DeckStats.Games.Any(g => g.HearthStatsId == game.HearthStatsId))
+						{
+							Logger.WriteLine(string.Format("deck {0} already has match {1}", deck, game), "HearthStatsManager");
+							continue;
+						}
+						Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
+						                 "HearthStatsManager");
+						deck.DeckStats.AddGameResult(game);
 					}
 					DeckStatsList.Save();
 					Helper.MainWindow.DeckPickerList.UpdateList();
@@ -449,7 +450,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(!background)
 					controller.SetMessage("Checking for new local decks...");
 				Logger.WriteLine("Checking for new local decks...", "HearthStatsManager");
-				var newLocalDecks = localDecks.Where(deck => !deck.HasHearthStatsId).ToList();
+				var newLocalDecks = localDecks.Where(deck => !deck.HasHearthStatsId && deck.IsArenaDeck != true).ToList();
 				if(newLocalDecks.Any(d => d.SyncWithHearthStats != false))
 				{
 					Logger.WriteLine("found " + newLocalDecks.Count + " new decks", "HearthStatsManager");

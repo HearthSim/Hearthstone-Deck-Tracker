@@ -792,7 +792,10 @@ namespace Hearthstone_Deck_Tracker
 			if(game != null)
 			{
 				_deck.DeckStats.AddGameResult(game);
-				HearthStatsManager.UploadMatchAsync(game, _deck.GetSelectedDeckVersion(), true, true);
+				if(game.GameMode == GameMode.Arena)
+					HearthStatsManager.UploadArenaMatchAsync(game, _deck, true, true);
+				else
+					HearthStatsManager.UploadMatchAsync(game, _deck.GetSelectedDeckVersion(), true, true);
 				Refresh();
 			}
 		}

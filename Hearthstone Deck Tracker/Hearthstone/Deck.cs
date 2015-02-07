@@ -284,7 +284,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			                DeckId, "", HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
 
-		private bool? CheckIfArenaDeck()
+		public bool? CheckIfArenaDeck()
 		{
 			return !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 		}

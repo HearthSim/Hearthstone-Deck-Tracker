@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			IsEnabled = false;
 			var result = await HearthStatsAPI.LoginAsync(TextBoxEmail.Text, TextBoxPassword.Password);
+			TextBoxPassword.Clear();
 			if(result.Success)
 			{
 				Helper.MainWindow.EnableHearthStatsMenu(true);
