@@ -432,6 +432,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
+    <SplashScreen Include="SplashScreen.png" />
     <Content Include="Images\abomination.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
