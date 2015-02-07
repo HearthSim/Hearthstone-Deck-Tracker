@@ -350,10 +350,11 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal">
+                                        <DockPanel>
                                             <Label Content="Opponent:" />
                                             <ComboBox x:Name="ComboBoxOpponentClassD" VerticalAlignment="Bottom" Width="90" SelectionChanged="ComboBoxOpponentClass_SelectionChanged"/>
-                                        </StackPanel>
+                                            <Button Name="BtnAddNewGame" Width="120" HorizontalAlignment="Right" Content="ADD NEW GAME" Height="26" VerticalAlignment="Top" Click="BtnAddNewGame_Click"/>
+                                        </DockPanel>
                                         <DataGrid IsReadOnly="True" Grid.Row="1" Margin="0,5" CanUserAddRows="False"
                                       Name="DataGridGames"
                                       AlternationCount="2" AutoGenerateColumns="False" CanUserDeleteRows="False"

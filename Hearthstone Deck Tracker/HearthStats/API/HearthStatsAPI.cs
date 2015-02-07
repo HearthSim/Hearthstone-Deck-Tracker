@@ -314,7 +314,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					game.HearthStatsId = json.data.id;
-					Logger.WriteLine("assigned id to version: " + deck.HearthStatsId, "HearthStatsAPI");
+					Logger.WriteLine("assigned id to match: " + game.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
 				return PostResult.CanRetry;

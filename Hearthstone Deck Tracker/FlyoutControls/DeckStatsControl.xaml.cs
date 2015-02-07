@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
@@ -776,6 +777,24 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Helper.MainWindow.SetNewDeck(deck);
 			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
+		}
+
+		private async void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
+		{
+			if(_deck == null)
+				return;
+			var dialog = new AddGameDialog(_deck);
+			await
+				Helper.MainWindow.ShowMetroDialogAsync(dialog,
+				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
+			var game = await dialog.WaitForButtonPressAsync();
+			await Helper.MainWindow.HideMetroDialogAsync(dialog);
+			if(game != null)
+			{
+				_deck.DeckStats.AddGameResult(game);
+				HearthStatsManager.UploadMatchAsync(game, _deck.GetSelectedDeckVersion(), true, true);
+				Refresh();
+			}
 		}
 
 		public class WinLoss

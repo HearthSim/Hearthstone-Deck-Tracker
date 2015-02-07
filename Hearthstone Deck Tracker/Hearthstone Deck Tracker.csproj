@@ -130,6 +130,10 @@
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
+    <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Windows\AddGameDialog.xaml.cs">
+      <DependentUpon>AddGameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
       <DependentUpon>DeckStatsControl.xaml</DependentUpon>
     </Compile>
@@ -293,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCostBarToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddGameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

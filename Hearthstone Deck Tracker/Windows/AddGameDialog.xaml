@@ -1,0 +1,83 @@
+﻿<dialogs:CustomDialog x:Class="Hearthstone_Deck_Tracker.FlyoutControls.AddGameDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Title="Add new game" Height="450" d:DesignWidth="450">
+    <StackPanel Width="300" Margin="0,15,0,0">
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Result:" Width="90"/>
+            <ComboBox Name="ComboBoxResult" SelectedIndex="0">
+                <enums:GameResult>Win</enums:GameResult>
+                <enums:GameResult>Loss</enums:GameResult>
+                <enums:GameResult>Draw</enums:GameResult>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="VS:" Width="90"/>
+            <ComboBox Name="ComboBoxOpponent" SelectedIndex="0">
+                <enums:HeroClass>Druid</enums:HeroClass>
+                <enums:HeroClass>Hunter</enums:HeroClass>
+                <enums:HeroClass>Mage</enums:HeroClass>
+                <enums:HeroClass>Paladin</enums:HeroClass>
+                <enums:HeroClass>Priest</enums:HeroClass>
+                <enums:HeroClass>Rogue</enums:HeroClass>
+                <enums:HeroClass>Shaman</enums:HeroClass>
+                <enums:HeroClass>Warlock</enums:HeroClass>
+                <enums:HeroClass>Warrior</enums:HeroClass>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Mode:" Width="90"/>
+            <ComboBox Name="ComboBoxMode" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                <enums:GameMode>Ranked</enums:GameMode>
+                <enums:GameMode>Casual</enums:GameMode>
+                <enums:GameMode>Arena</enums:GameMode>
+                <enums:GameMode>Friendly</enums:GameMode>
+                <enums:GameMode>Practice</enums:GameMode>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Rank:" Width="90"/>
+            <TextBox Name="TextBoxRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Coin:" Width="90"/>
+            <ComboBox Name="ComboBoxCoin" SelectedIndex="0">
+                <enums:YesNo>Yes</enums:YesNo>
+                <enums:YesNo>No</enums:YesNo>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Conceded:" Width="90"/>
+            <ComboBox Name="ComboBoxConceded" SelectedIndex="1">
+                <enums:YesNo>Yes</enums:YesNo>
+                <enums:YesNo>No</enums:YesNo>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Turns:" Width="90"/>
+            <TextBox Name="TextBoxTurns" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Duration (min):" Width="90"/>
+            <TextBox Name="TextBoxDuration" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Note:" Width="90"/>
+            <TextBox Name="TextBoxNote" />
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Opponent:" Width="90"/>
+            <TextBox Name="TextBoxOppName" />
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="210" Margin="0,30,0,0">
+            <Button Name="BtnSave"  Content="add game" Width="90" Style="{StaticResource AccentedSquareButtonStyle}" Click="BtnSave_OnClick"/>
+            <Button Content="cancel" Width="90" Margin="20,0,0,0" Click="BtnCancel_OnClick"/>
+        </StackPanel>
+    </StackPanel>
+</dialogs:CustomDialog>
