@@ -13,7 +13,8 @@
             </Style>
         </ListView.Resources>
     </ListView>
-    <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="1,0,0,0" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
+    <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="1,0,0,0" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
         <ListView.Resources>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Visibility" Value="Collapsed" />
