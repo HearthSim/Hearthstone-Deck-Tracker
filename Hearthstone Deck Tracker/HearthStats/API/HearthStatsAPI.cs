@@ -414,7 +414,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("deleting games: " + validGames.Select(g => g.ToString()).Aggregate((c, n) => c + ", " + n), "HearthStatsAPI");
 
 			var url = BaseUrl + "/api/v2/matches/delete?auth_token=" + _authToken;
-			var data = JsonConvert.SerializeObject(new {match_id = new[] {validGames.Select(g => long.Parse(g.HearthStatsId))}});
+			var data = JsonConvert.SerializeObject(new {match_id = validGames.Select(g => long.Parse(g.HearthStatsId))});
 			try
 			{
 				var response = await PostAsync(url, data);
