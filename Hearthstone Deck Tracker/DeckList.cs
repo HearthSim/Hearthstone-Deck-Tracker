@@ -40,6 +40,8 @@ namespace Hearthstone_Deck_Tracker
 			get { return _activeDeck ?? (_activeDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId)); }
 			set
 			{
+				if(_activeDeck == value)
+					return;
 				_activeDeck = value;
 				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
 				Config.Save();
@@ -133,7 +135,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(save)
 				Save();
-			Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
+			//Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		public static void Save()

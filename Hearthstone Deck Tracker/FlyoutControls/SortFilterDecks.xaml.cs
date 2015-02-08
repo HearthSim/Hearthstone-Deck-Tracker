@@ -268,13 +268,14 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedValue == null)
 				return;
 
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
 
 			if(Config.Instance.SelectedDeckSorting != selectedValue)
 			{
 				Config.Instance.SelectedDeckSorting = selectedValue;
 				Config.Save();
 			}
+
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)

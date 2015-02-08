@@ -33,6 +33,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetDeck(Deck deck)
 		{
+			if(deck == null)
+			{
+				ClearDeck();
+				return;
+			}
 			_deck = deck;
 			deck.GetSelectedDeckVersion().Cards.CollectionChanged += (sender, args) => UpdateValues();
 			UpdateValues();

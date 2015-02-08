@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -38,6 +39,35 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			get { return _fontWeight; }
 		}
+
+		#region sorting properties
+
+		public string Class
+		{
+			get { return Deck.GetClass; }
+		}
+
+		public DateTime LastEdited
+		{
+			get { return Deck.LastEdited; }
+		}
+
+		public double WinPercent
+		{
+			get { return Deck.WinPercent; }
+		}
+
+		public string DeckName
+		{
+			get { return Deck.Name; }
+		}
+
+		public string TagList
+		{
+			get { return Deck.TagList; }
+		}
+
+		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

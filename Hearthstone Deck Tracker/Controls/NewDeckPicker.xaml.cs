@@ -145,9 +145,27 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var view1 = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDecks.ItemsSource);
 			view1.SortDescriptions.Clear();
 
-			var direction = Config.Instance.SelectedDeckSorting == "Name" || Config.Instance.SelectedDeckSorting == "Tag"
-				                ? ListSortDirection.Ascending : ListSortDirection.Descending;
-			view1.SortDescriptions.Add(new SortDescription(Config.Instance.SelectedDeckSorting, direction));
+			if(SelectedClasses.Contains(HeroClassAll.All))
+				view1.SortDescriptions.Add(new SortDescription("Class", ListSortDirection.Ascending));
+
+			switch(Config.Instance.SelectedDeckSorting)
+			{
+				case "Name":
+					view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+					break;
+				case "Last Edited":
+					view1.SortDescriptions.Add(new SortDescription("LastEdited", ListSortDirection.Descending));
+					break;
+				case "Tag":
+					view1.SortDescriptions.Add(new SortDescription("TagList", ListSortDirection.Ascending));
+					break;
+				case "Win Rate":
+					view1.SortDescriptions.Add(new SortDescription("WinPercent", ListSortDirection.Descending));
+					break;
+			}
+
+			//view1.SortDescriptions.Add(new SortDescription(Config.Instance.SelectedDeckSorting, direction));
+			//ListViewDecks.Items.Refresh();
 		}
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
