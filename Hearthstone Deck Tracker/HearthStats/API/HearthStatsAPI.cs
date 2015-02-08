@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
 	public class HearthStatsAPI
 	{
-		private const string BaseUrl = "http://192.237.249.9";
+		private const string BaseUrl = "http://goat.hearthstats.net";
 
 		#region authentication
 

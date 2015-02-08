@@ -121,7 +121,7 @@ namespace Hearthstone_Deck_Tracker
 				TextBoxDeckName.Text = name;
 			}
 
-			while(DeckList.DecksList.Any(d => d.Name == deckName) && (!EditingDeck || !overwrite))
+			/*while(DeckList.DecksList.Any(d => d.Name == deckName) && (!EditingDeck || !overwrite))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = deckName};
 				var name =
@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 
 				deckName = name;
 				TextBoxDeckName.Text = name;
-			}
+			}*/
 
 			if(_newDeck.Cards.Sum(c => c.Count) != 30)
 			{
@@ -483,7 +483,7 @@ namespace Hearthstone_Deck_Tracker
 				EditingDeck = false;
 				_newDeck.ResetVersions();
 			}
-			else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
+			/*else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
 
@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(result == MessageDialogResult.Negative)
 					SaveDeck(false, newVersion);
-			}
+			}*/
 
 			SaveDeck(EditingDeck, newVersion);
 
