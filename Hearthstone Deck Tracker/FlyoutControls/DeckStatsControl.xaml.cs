@@ -796,6 +796,7 @@ namespace Hearthstone_Deck_Tracker
 					HearthStatsManager.UploadMatchAsync(game, _deck.GetSelectedDeckVersion(), true, true);
 				Refresh();
 			}
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		public class WinLoss
