@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using ListView = System.Windows.Controls.ListView;
 
 #endregion
 
@@ -28,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public bool ChangedSelection;
 		private bool _refillingList;
 		private bool _reselecting;
+		private bool _wasClicked;
+		private bool _wasDoubleClicked;
 
 		public NewDeckPicker()
 		{
@@ -225,10 +230,16 @@ namespace Hearthstone_Deck_Tracker.Controls
 				           : selectedTags.All(t => deck.Tags.Contains(t) || t == "None" && deck.Tags.Count == 0));
 		}
 
-		private void ListViewDecks_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+		private async void ListViewDecks_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
+			_wasDoubleClicked = true;
 			if(OnDoubleClick != null)
+			{
+				//wait for doubleclick to be over to not reselect the deck
+				await Task.Delay(SystemInformation.DoubleClickTime); 
 				OnDoubleClick(this, DeckList.Instance.ActiveDeck);
+			}
 		}
+
 	}
 }

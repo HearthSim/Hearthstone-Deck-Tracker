@@ -426,8 +426,8 @@
             </Menu>
             <Grid Grid.Column="2" Grid.Row="2" Name="GridNewDeck" Visibility="Collapsed" Width="492">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -492,12 +492,13 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <DockPanel Grid.Column="1" Margin="0,6,0,0" Grid.Row="0">
-                    <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
-                    <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center"/>
-                </DockPanel>
-                <ScrollViewer Grid.Column="1" Grid.Row="1" Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-                    <StackPanel x:Name="DeckHistoryPanel" 
+                <DockPanel Name="PanelDeckHistory" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
+                    <DockPanel Margin="0,6,0,0" DockPanel.Dock="Top" Height="26">
+                        <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
+                        <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <ScrollViewer Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1">
+                        <StackPanel x:Name="DeckHistoryPanel" 
                                     Orientation="Vertical"
                                     
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -505,7 +506,8 @@
                                     ScrollViewer.CanContentScroll="True"
                                     HorizontalAlignment="Center" Height="auto" Width="220"  Margin="0,0,0,0"
                 />
-                </ScrollViewer>
+                    </ScrollViewer>
+                </DockPanel>
             </Grid>
             <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
                 <StatusBar.ItemsPanel>

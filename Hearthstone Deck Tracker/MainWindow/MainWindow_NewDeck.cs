@@ -320,14 +320,22 @@ namespace Hearthstone_Deck_Tracker
 				ManaCurveMyDecks.SetDeck(deck);
 			}
 		}
-
+		 
 		private void ExpandNewDeck()
 		{
+			const int widthWithHistoryPanel = 485;
+			const int widthWithoutHistoryPanel = 240;
 			if(GridNewDeck.Visibility != Visibility.Visible)
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
-				DeckHistoryPanel.Visibility = Visibility.Visible;
+				if(_newDeck.HasVersions)
+				{
+					PanelDeckHistory.Visibility = Visibility.Visible;
+					GridNewDeck.Width = widthWithHistoryPanel;
+				}
+				else
+					GridNewDeck.Width = widthWithoutHistoryPanel;
 				GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
@@ -344,7 +352,7 @@ namespace Hearthstone_Deck_Tracker
 				var width = GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Visibility.Collapsed;
 				MenuNewDeck.Visibility = Visibility.Collapsed;
-				DeckHistoryPanel.Visibility = Visibility.Collapsed;
+				PanelDeckHistory.Visibility = Visibility.Collapsed;
 				MinWidth -= width;
 				Width -= width;
 			}

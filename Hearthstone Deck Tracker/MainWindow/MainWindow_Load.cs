@@ -676,6 +676,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Set player itemsource as playerdeck", "Tracker");
 			}
 			ManaCurveMyDecks.SetDeck(DeckList.Instance.ActiveDeck);
+			EnableMenuItems(DeckList.Instance.ActiveDeck != null);
 		}
 
 		public void UpdateQuickFilterItemSource()
