@@ -197,7 +197,14 @@ namespace Hearthstone_Deck_Tracker
 		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
 		{
 			LogEvent("OpponentHandDiscard", cardId, turn, from);
-			Game.OpponentPlay(cardId, from, turn);
+			try
+			{
+				Game.OpponentPlay(cardId, from, turn);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString(), "OpponentHandDiscard");
+			}
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
 			Game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
