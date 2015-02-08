@@ -30,7 +30,6 @@ using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Clipboard = System.Windows.Clipboard;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
-using MessageBox = System.Windows.MessageBox;
 
 #endregion
 
@@ -46,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int NewsCheckInterval = 300;
 		private const int NewsTickerUpdateInterval = 30;
 		private const int HearthStatsAutoSyncInterval = 300;
-		public readonly Decks DeckList;
+		//public readonly DeckList DeckList;
 		public readonly List<Deck> DefaultDecks;
 		public readonly Version NewVersion;
 		public readonly OpponentWindow OpponentWindow;
@@ -54,7 +53,6 @@ namespace Hearthstone_Deck_Tracker
 		public readonly PlayerWindow PlayerWindow;
 		public readonly StatsWindow StatsWindow;
 		public readonly TimerWindow TimerWindow;
-		private readonly string _decksPath;
 		private readonly bool _foundHsDirectory;
 		private readonly bool _initialized;
 
@@ -91,14 +89,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowToolTip
 		{
 			get { return Config.Instance.TrackerCardToolTips; }
-		}
-
-		public Visibility VersionComboBoxVisibility
-		{
-			get
-			{
-				return DeckPickerList.SelectedDeck != null && DeckPickerList.SelectedDeck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
-			}
 		}
 
 		#endregion
@@ -176,22 +166,25 @@ namespace Hearthstone_Deck_Tracker
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset("DataDirPath");
 
-			_decksPath = Config.Instance.DataDir + "PlayerDecks.xml";
+			//_decksPath = Config.Instance.DataDir + "PlayerDecks.xml";
 			SetupDeckListFile();
-			try
-			{
-				DeckList = XmlManager<Decks>.Load(_decksPath);
-			}
-			catch(Exception e)
-			{
-				MessageBox.Show(
-				                e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete " + _decksPath
-				                + " (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
-				Application.Current.Shutdown();
-			}
+			DeckList.Load();
+			UpdateDeckList(DeckList.Instance.ActiveDeck);
 
-			foreach(var deck in DeckList.DecksList)
-				DeckPickerList.AddDeck(deck);
+			//try
+			//{
+			//	DeckList = XmlManager<DeckList>.Load(_decksPath);
+			//}
+			//catch(Exception e)
+			//{
+			//	MessageBox.Show(
+			//	                e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete " + _decksPath
+			//	                + " (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
+			//	Application.Current.Shutdown();
+			//}
+
+			//foreach(var deck in DeckList.Instance.Decks)
+			//	DeckPickerList.AddDeck(deck);
 
 			SetupDefaultDeckStatsFile();
 			DefaultDeckStats.Load();
@@ -246,34 +239,6 @@ namespace Hearthstone_Deck_Tracker
 				OpponentWindow.Show();
 			if(Config.Instance.TimerWindowOnStartup)
 				TimerWindow.Show();
-			if(!DeckList.AllTags.Contains("All"))
-			{
-				DeckList.AllTags.Add("All");
-				WriteDecks();
-			}
-			if(!DeckList.AllTags.Contains("Favorite"))
-			{
-				if(DeckList.AllTags.Count > 1)
-					DeckList.AllTags.Insert(1, "Favorite");
-				else
-					DeckList.AllTags.Add("Favorite");
-				WriteDecks();
-			}
-			if(!DeckList.AllTags.Contains("Arena"))
-			{
-				DeckList.AllTags.Add("Arena");
-				WriteDecks();
-			}
-			if(!DeckList.AllTags.Contains("Constructed"))
-			{
-				DeckList.AllTags.Add("Constructed");
-				WriteDecks();
-			}
-			if(!DeckList.AllTags.Contains("None"))
-			{
-				DeckList.AllTags.Add("None");
-				WriteDecks();
-			}
 
 			Options.ComboboxAccent.ItemsSource = ThemeManager.Accents;
 			Options.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
@@ -298,8 +263,9 @@ namespace Hearthstone_Deck_Tracker
 			FillElementSorters();
 
 			//this has to happen before reader starts
-			var lastDeck = DeckList.DecksList.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
-			DeckPickerList.SelectDeck(lastDeck);
+			//var lastDeck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
+
+			//DeckPickerList.SelectDeck(lastDeck);
 
 			TurnTimer.Create(90);
 
@@ -314,19 +280,23 @@ namespace Hearthstone_Deck_Tracker
 
 			Options.MainWindowInitialized();
 
-			DeckPickerList.UpdateList();
-			if(lastDeck != null)
-			{
-				DeckPickerList.SelectDeck(lastDeck);
-				UpdateDeckList(lastDeck);
-				UseDeck(lastDeck);
-			}
+
+			//DeckPickerList.UpdateList();
+			//if(lastDeck != null)
+			//{
+			//DeckPickerList.SelectDeck(lastDeck);
+			//UpdateDeckList(lastDeck);
+			//UseDeck(lastDeck);
+			//}
+			if(DeckList.Instance.ActiveDeck != null)
+				UseDeck(DeckList.Instance.ActiveDeck);
 
 			if(_foundHsDirectory)
 				HsLogReader.Instance.Start();
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			DeckPickerList.SortDecks();
+			//DeckPickerList.SortDecks();
+			DeckPickerList.UpdateDecks();
 
 			CopyReplayFiles();
 
@@ -456,7 +426,7 @@ namespace Hearthstone_Deck_Tracker
 			var needToRestart = false;
 			foreach(var deckStats in DeckStatsList.Instance.DeckStats)
 			{
-				var deck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckStats.Name);
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.Name == deckStats.Name);
 				if(deck != null)
 				{
 					deckStats.DeckId = deck.DeckId;
@@ -465,7 +435,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			DeckStatsList.Save();
-			WriteDecks();
+			DeckList.Save();
+			;
 			Config.Instance.ResolvedDeckStatsIds = true;
 			Config.Save();
 			return needToRestart;
@@ -533,7 +504,8 @@ namespace Hearthstone_Deck_Tracker
 				ReplayReader.CloseViewers();
 
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
-				Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
+				//Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
+				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 
 				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visibility.Visible ? GridNewDeck.ActualWidth : 0));
 				Config.Instance.WindowHeight = (int)Height;
@@ -575,7 +547,8 @@ namespace Hearthstone_Deck_Tracker
 				OpponentWindow.Shutdown();
 				StatsWindow.Shutdown();
 				Config.Save();
-				WriteDecks();
+				DeckList.Save();
+				;
 			}
 			catch(Exception)
 			{
@@ -611,11 +584,13 @@ namespace Hearthstone_Deck_Tracker
 		public void ShowIncorrectDeckMessage()
 		{
 			var decks =
-				DeckList.DecksList.Where(d => d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				DeckList.Instance.Decks.Where(
+				                              d =>
+				                              d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
 				        .ToList();
 
-			if(decks.Contains(DeckPickerList.GetSelectedDeckVersion()))
-				decks.Remove(DeckPickerList.GetSelectedDeckVersion());
+			if(decks.Contains(DeckList.Instance.ActiveDeckVersion))
+				decks.Remove(DeckList.Instance.ActiveDeckVersion);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
@@ -729,8 +704,8 @@ namespace Hearthstone_Deck_Tracker
 						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
 						HsLogReader.Instance.ClearLog();
 						Game.Reset();
-						if(DeckPickerList.SelectedDeck != null)
-							Game.SetPremadeDeck((Deck)DeckPickerList.SelectedDeck.Clone());
+						if(DeckList.Instance.ActiveDeck != null)
+							Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 						HsLogReader.Instance.Reset(true);
 
 						if(Config.Instance.CloseWithHearthstone)
@@ -861,12 +836,6 @@ namespace Hearthstone_Deck_Tracker
 			Application.Current.Shutdown();
 		}
 
-		public void WriteDecks()
-		{
-			if(_initialized)
-				XmlManager<Decks>.Save(_decksPath, DeckList);
-		}
-
 		public void ActivateWindow()
 		{
 			Show();
@@ -902,12 +871,13 @@ namespace Hearthstone_Deck_Tracker
 				DeckStatsFlyout.SetDeck(null);
 			}
 
-			if(DeckPickerList.SelectedDeck != null)
-				DeckPickerList.SelectedDeck.IsSelectedInGui = false;
+			if(DeckList.Instance.ActiveDeck != null)
+				DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
 
-			DeckPickerList.SelectedDeck = null;
-			DeckPickerList.SelectedIndex = -1;
-			DeckPickerList.ListboxPicker.Items.Refresh();
+			DeckList.Instance.ActiveDeck = null;
+			DeckPickerList.DeselectDeck();
+			//DeckPickerList.SelectedIndex = -1;
+			//DeckPickerList.ListboxPicker.Items.Refresh();
 
 			UpdateDeckList(null);
 			UseDeck(null);
@@ -917,7 +887,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckList.Instance.ActiveDeck;
 			if(Config.Instance.StatsInWindow)
 			{
 				StatsWindow.StatsControl.SetDeck(deck);
@@ -932,7 +902,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
+		private void DeckPickerList_OnSelectedDeckChanged(NewDeckPicker sender, Deck deck)
 		{
 			if(deck != null)
 			{
@@ -966,16 +936,16 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
 
 				//set and save last used deck for class
-				while(DeckList.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+				while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
 				{
-					var lastSelected = DeckList.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
+					var lastSelected = DeckList.Instance.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
 					if(lastSelected != null)
-						DeckList.LastDeckClass.Remove(lastSelected);
+						DeckList.Instance.LastDeckClass.Remove(lastSelected);
 					else
 						break;
 				}
-				DeckList.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
-				WriteDecks();
+				DeckList.Instance.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
+				DeckList.Save();
 				EnableMenuItems(true);
 				ManaCurveMyDecks.SetDeck(deck);
 				TagControlEdit.SetSelectedTags(deck.Tags);
@@ -985,14 +955,20 @@ namespace Hearthstone_Deck_Tracker
 
 				ComboBoxDeckVersion.ItemsSource = deck.VersionsIncludingSelf;
 				ComboBoxDeckVersion.SelectedItem = deck.SelectedVersion;
-				PanelVersionComboBox.Visibility = deck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
+				UpdatePanelVersionComboBox(deck);
 			}
 			else
 			{
-				ComboBoxDeckVersion.ItemsSource = null;
+				UpdatePanelVersionComboBox(null);
 				EnableMenuItems(false);
-				PanelVersionComboBox.Visibility = Visibility.Collapsed;
 			}
+		}
+
+		private void UpdatePanelVersionComboBox(Deck deck)
+		{
+			ComboBoxDeckVersion.ItemsSource = deck != null ? deck.VersionsIncludingSelf : null;
+			ComboBoxDeckVersion.SelectedItem = deck != null ? deck.SelectedVersion : null;
+			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		#endregion
@@ -1015,15 +991,15 @@ namespace Hearthstone_Deck_Tracker
 			ListViewDeck.ItemsSource = null;
 			if(selected == null)
 			{
-				Config.Instance.LastDeckId = Guid.Empty;
+				Config.Instance.ActiveDeckId = Guid.Empty;
 				Config.Save();
 				return;
 			}
 			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			if(Config.Instance.LastDeckId != selected.DeckId)
+			if(Config.Instance.ActiveDeckId != selected.DeckId)
 			{
-				Config.Instance.LastDeckId = selected.DeckId;
+				Config.Instance.ActiveDeckId = selected.DeckId;
 				Config.Save();
 			}
 		}
@@ -1123,11 +1099,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var tags = new List<string> {actualTag.Name};
 				SortFilterDecksFlyout.SetSelectedTags(tags);
-				Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
-				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
-				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
+				DeckPickerList.UpdateDecks();
+				StatsWindow.StatsControl.LoadOverallStats();
+				DeckStatsFlyout.LoadOverallStats();
 			}
 		}
 
@@ -1204,18 +1180,19 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized || DeckPickerList.ChangedSelection)
 				return;
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
-			if(version != null)
+			if(version != null && deck.SelectedVersion != version)
 			{
-				DeckPickerList.RemoveDeck(deck);
+				//DeckPickerList.RemoveDeck(deck);
 				deck.SelectVersion(version);
-				WriteDecks();
-				DeckPickerList.AddAndSelectDeck(deck);
-				DeckPickerList.UpdateList();
-				UpdateDeckList(DeckPickerList.SelectedDeck);
+				DeckList.Save();
+				//DeckPickerList.AddAndSelectDeck(deck);
+				//DeckPickerList.UpdateList();
+				DeckPickerList.UpdateDecks();
+				UpdateDeckList(DeckList.Instance.ActiveDeck);
 				ManaCurveMyDecks.UpdateValues();
 				UseDeck(deck);
 				Console.WriteLine(version);
@@ -1227,7 +1204,7 @@ namespace Hearthstone_Deck_Tracker
 			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
 		}
 
-		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
+		private void DeckPickerList_OnOnDoubleClick(NewDeckPicker sender, Deck deck)
 		{
 			if(deck == null)
 				return;

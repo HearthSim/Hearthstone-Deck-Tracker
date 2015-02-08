@@ -872,8 +872,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
 			Game.Reset();
-			if(Helper.MainWindow.DeckPickerList.SelectedDeck != null)
-				Game.SetPremadeDeck((Deck)Helper.MainWindow.DeckPickerList.SelectedDeck.Clone());
+			if(DeckList.Instance.ActiveDeck != null)
+				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 			HsLogReader.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}
@@ -885,8 +885,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
 			Game.Reset();
-			if(Helper.MainWindow.DeckPickerList.SelectedDeck != null)
-				Game.SetPremadeDeck((Deck)Helper.MainWindow.DeckPickerList.SelectedDeck.Clone());
+			if(DeckList.Instance.ActiveDeck != null)
+				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 			HsLogReader.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}

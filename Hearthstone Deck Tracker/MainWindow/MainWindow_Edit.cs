@@ -16,14 +16,14 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckPickerList.SelectedDeck == null)
+			if(DeckList.Instance.ActiveDeck == null)
 				return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
 		}
 
 		private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 
@@ -79,9 +79,11 @@ namespace Hearthstone_Deck_Tracker
 
 			HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
-			DeckList.DecksList.Remove(deck);
-			WriteDecks();
-			DeckPickerList.RemoveDeck(deck);
+			DeckList.Instance.Decks.Remove(deck);
+			DeckList.Save();
+			;
+			//DeckPickerList.RemoveDeck(deck);
+			DeckPickerList.UpdateDecks();
 			ListViewDeck.ItemsSource = null;
 			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
 		}
@@ -98,7 +100,7 @@ namespace Hearthstone_Deck_Tracker
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
 
-			var clone = (Deck)DeckPickerList.SelectedDeck.CloneWithNewId(false);
+			var clone = (Deck)DeckList.Instance.ActiveDeck.CloneWithNewId(false);
 			var originalStatsEntry = clone.DeckStats;
 
 			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
@@ -114,9 +116,10 @@ namespace Hearthstone_Deck_Tracker
 				clone.Name = name;
 			}*/
 
-			DeckList.DecksList.Add(clone);
-			DeckPickerList.AddAndSelectDeck(clone);
-			WriteDecks();
+			DeckList.Instance.Decks.Add(clone);
+			//DeckPickerList.AddAndSelectDeck(clone);
+			DeckList.Save();
+			;
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
@@ -134,14 +137,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			DeckStatsList.Save();
-			DeckPickerList.UpdateList();
+			DeckPickerList.UpdateDecks();
 
 			HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.GetSelectedDeckVersion();
+			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
 			var cloneStats =
@@ -171,9 +174,10 @@ namespace Hearthstone_Deck_Tracker
 				clone.Name = name;
 			}*/
 
-			DeckList.DecksList.Add(clone);
-			DeckPickerList.AddAndSelectDeck(clone);
-			WriteDecks();
+			DeckList.Instance.Decks.Add(clone);
+			DeckPickerList.UpdateDecks();
+			DeckList.Save();
+			;
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
@@ -191,20 +195,21 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			DeckStatsList.Save();
-			DeckPickerList.UpdateList();
+			//DeckPickerList.UpdateList();
+			DeckPickerList.UpdateDecks();
 			HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;
-			if(DeckPickerList.SelectedDeck != null)
-				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDeck.Tags);
+			if(DeckList.Instance.ActiveDeck != null)
+				TagControlEdit.SetSelectedTags(DeckList.Instance.ActiveDeck.Tags);
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var selectedDeck = DeckPickerList.SelectedDeck;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
 			_originalDeck = selectedDeck;
@@ -213,7 +218,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var selectedDeck = DeckPickerList.SelectedDeck;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
 				return;
 			var deck = await DeckImporter.Import(selectedDeck.Url);

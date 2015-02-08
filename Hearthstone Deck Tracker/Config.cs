@@ -26,6 +26,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string AccentName = "";
 
+		[DefaultValue("00000000-0000-0000-0000-000000000000")]
+		public string ActiveDeckIdString = Guid.Empty.ToString();
+
 		[DefaultValue(true)]
 		public bool AdditionalOverlayTooltips = true;
 
@@ -238,8 +241,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string LastDeck = "";
 
-		[DefaultValue("00000000-0000-0000-0000-000000000000")]
-		public string LastDeckIdString = Guid.Empty.ToString();
+		//[DefaultValue("00000000-0000-0000-0000-000000000000")]
+		//public string LastDeckIdString = Guid.Empty.ToString();
 
 		[DefaultValue(0L)]
 		public long LastHearthStatsDecksSync = 0L;
@@ -415,6 +418,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(5)]
 		public double SecretsTop = 5;
 
+		[DefaultValue(new[] {HeroClassAll.All})]
+		public HeroClassAll[] SelectedDeckPickerClasses = {HeroClassAll.All};
+
 		[DefaultValue("Name")]
 		public string SelectedDeckSorting = "Name";
 
@@ -434,6 +440,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Theme")]
 		public string SelectedWindowBackground = "Theme";
 
+		[Obsolete]
 		[DefaultValue(false)]
 		public bool ShowAllDecks = false;
 
@@ -600,16 +607,16 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		[XmlIgnore]
-		public Guid LastDeckId
+		public Guid ActiveDeckId
 		{
 			get
 			{
 				Guid id;
-				if(Guid.TryParse(LastDeckIdString, out id))
+				if(Guid.TryParse(ActiveDeckIdString, out id))
 					return id;
 				return Guid.Empty;
 			}
-			set { LastDeckIdString = value.ToString(); }
+			set { ActiveDeckIdString = value.ToString(); }
 		}
 
 		#endregion

@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
@@ -48,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				_instance = XmlManager<DefaultDeckStats>.Load(file);
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
 				//failed loading deckstats 
 				var corruptedFile = Helper.GetValidFilePath(Config.Instance.DataDir, "DefaultDeckStats_corrupted", "xml");
@@ -74,18 +73,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 						File.Copy(backup.FullName, file);
 						_instance = XmlManager<DefaultDeckStats>.Load(file);
 					}
-					catch(Exception)
+					catch(Exception ex2)
 					{
 						throw new Exception(
-							"Error restoring DefaultDeckStats backup. Please manually rename \"DefaultDeckStats_backup.xml\" to \"DefaultDeckStats.xml\" in \"%appdata\\HearthstoneDeckTracker\".");
+							"Error restoring DefaultDeckStats backup. Please manually rename \"DefaultDeckStats_backup.xml\" to \"DefaultDeckStats.xml\" in \"%appdata\\HearthstoneDeckTracker\".",
+							ex2);
 					}
 				}
 				else
-				{
-					//can't call ShowMessageAsync on MainWindow at this point. todo: Add something like a message queue.
-					MessageBox.Show("Your DefaultDeckStats file got corrupted and there was no backup to restore from.",
-					                "Error restoring DefaultDeckStats backup");
-				}
+					throw new Exception("DefaultDeckStats.xml is corrupted.", ex);
 			}
 		}
 

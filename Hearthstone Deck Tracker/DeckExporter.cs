@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				if(deck.MissingCards.Any())
-					Helper.MainWindow.WriteDecks();
+					DeckList.Save();
 
 				// Clear search field now all cards have been entered
 

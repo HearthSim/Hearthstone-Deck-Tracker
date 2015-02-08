@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
 					if(deck != null)
 					{
 						if(deck.DeckStats.Games.Contains(selectedGame))
@@ -130,7 +130,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
-				Helper.MainWindow.DeckPickerList.Items.Refresh();
+				//Helper.MainWindow.DeckPickerList.Items.Refresh();
+				Helper.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
 			}
 			else if(count > 1)
@@ -151,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else
 					{
-						var deck = Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
+						var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Contains(selectedGame));
 						if(deck != null)
 						{
 							if(deck.DeckStats.Games.Contains(selectedGame))
@@ -177,7 +178,7 @@ namespace Hearthstone_Deck_Tracker
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games", "DeckStatsControl");
-				Helper.MainWindow.DeckPickerList.Items.Refresh();
+				Helper.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
 			}
 		}
@@ -234,10 +235,10 @@ namespace Hearthstone_Deck_Tracker
 
 			DataGridWinLossClass.Items.Clear();
 			var allGames =
-				Helper.MainWindow.DeckList.DecksList.Where(d => d.GetClass == _deck.GetClass)
-				      .SelectMany(d => FilterGames(d.DeckStats.Games).Where(g => !g.IsClone))
-				      .Concat(FilterGames(defaultStats.Games))
-				      .ToList();
+				DeckList.Instance.Decks.Where(d => d.GetClass == _deck.GetClass)
+				        .SelectMany(d => FilterGames(d.DeckStats.Games).Where(g => !g.IsClone))
+				        .Concat(FilterGames(defaultStats.Games))
+				        .ToList();
 
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "%"));
 			DataGridWinLossClass.Items.Add(new WinLoss(allGames, "Win - Loss"));
@@ -499,7 +500,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var heroPlayed = heroes.Any() ? heroes.OrderByDescending(x => x.Value).First().Key : "Any";
 
-			var possibleTargets = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
+			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
@@ -524,9 +525,10 @@ namespace Hearthstone_Deck_Tracker
 			selectedGame.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
 			selectedDeck.DeckStats.Games.Add(selectedGame);
 			DeckStatsList.Save();
-			Helper.MainWindow.WriteDecks();
+			DeckList.Save();
+			;
 			Refresh();
-			Helper.MainWindow.DeckPickerList.UpdateList();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 			if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 				HearthStatsManager.MoveMatchAsync(selectedGame, selectedDeck, background: true);
 		}
@@ -599,11 +601,7 @@ namespace Hearthstone_Deck_Tracker
 				var allGames = new List<GameStats>();
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithDeck
 				   || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
-				{
-					allGames.AddRange(
-					                  Helper.MainWindow.DeckList.DecksList.Where(x => x.Class == @class && MatchesTagFilters(x))
-					                        .SelectMany(d => d.DeckStats.Games));
-				}
+					allGames.AddRange(DeckList.Instance.Decks.Where(x => x.Class == @class && MatchesTagFilters(x)).SelectMany(d => d.DeckStats.Games));
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithoutDeck
 				   || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
 					allGames.AddRange(DefaultDeckStats.Instance.GetDeckStats(@class).Games);

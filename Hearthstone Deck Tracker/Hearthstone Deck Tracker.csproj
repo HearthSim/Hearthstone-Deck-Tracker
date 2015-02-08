@@ -104,6 +104,9 @@
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckPickerClassItem.xaml.cs">
+      <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckPickerItem.xaml.cs">
       <DependentUpon>DeckPickerItem.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,12 @@
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NewDeckPicker.xaml.cs">
+      <DependentUpon>NewDeckPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NewDeckPickerItem.xaml.cs">
+      <DependentUpon>NewDeckPickerItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
     <Compile Include="Enums\Hearthstone\GAME_TAG.cs" />
@@ -131,6 +140,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -229,7 +239,7 @@
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Decks.cs" />
+    <Compile Include="DeckList.cs" />
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="HsLogReader.cs" />
@@ -280,6 +290,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\DeckPickerClassItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DeckPickerItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -297,6 +311,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCostBarToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NewDeckPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NewDeckPickerItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2473,6 +2495,16 @@
     <Resource Include="Resources\warrior_small.png" />
     <Resource Include="Resources\armor.png" />
     <Resource Include="Resources\jaraxxus_small.png" />
+    <Resource Include="Resources\ClassIcons\druid.png" />
+    <Resource Include="Resources\ClassIcons\hunter.png" />
+    <Resource Include="Resources\ClassIcons\mage.png" />
+    <Resource Include="Resources\ClassIcons\paladin.png" />
+    <Resource Include="Resources\ClassIcons\priest.png" />
+    <Resource Include="Resources\ClassIcons\rogue.png" />
+    <Resource Include="Resources\ClassIcons\shaman.png" />
+    <Resource Include="Resources\ClassIcons\warlock.png" />
+    <Resource Include="Resources\ClassIcons\warrior.png" />
+    <Resource Include="Resources\ClassIcons\all.png" />
     <Content Include="Updater.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

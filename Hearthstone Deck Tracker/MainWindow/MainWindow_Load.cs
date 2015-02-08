@@ -602,24 +602,26 @@ namespace Hearthstone_Deck_Tracker
 			Options.SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
 			Options.SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 
-			DeckPickerList.ShowAll = Config.Instance.ShowAllDecks;
-			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
+			//DeckPickerList.ShowAll = Config.Instance.ShowAllDecks;
+			//DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
+
+			DeckPickerList.SelectClasses(Config.Instance.SelectedDeckPickerClasses.ToList());
 
 			Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 
 			var delay = Config.Instance.DeckExportDelay;
 			Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
 
-			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
+			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 
 			UpdateQuickFilterItemSource();
 
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
-			DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
+			//DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 
-			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
-			DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			//DeckPickerList.SetTagOperation(Config.Instance.TagOperation);
 			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
@@ -663,19 +665,33 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
 			MenuItemCheckBoxAutoUploadGames.IsChecked = Config.Instance.HearthStatsAutoUploadNewGames;
 			MenuItemCheckBoxAutoSyncBackground.IsChecked = Config.Instance.HearthStatsAutoSyncInBackground;
+
+			UpdatePanelVersionComboBox(DeckList.Instance.ActiveDeck);
+			if(Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
+			{
+				Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				Overlay.ListViewPlayer.Items.Refresh();
+				PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				PlayerWindow.ListViewPlayer.Items.Refresh();
+				Logger.WriteLine("Set player itemsource as playerdeck", "Tracker");
+			}
 		}
 
 		public void UpdateQuickFilterItemSource()
 		{
 			MenuItemQuickSelectFilter.ItemsSource =
-				DeckList.AllTags.Where(t => DeckList.DecksList.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
+				DeckList.Instance.AllTags.Where(
+				                                t =>
+				                                DeckList.Instance.Decks.Any(
+				                                                            d =>
+				                                                            d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
 				        .Select(x => x.ToUpperInvariant());
 		}
 
 		public void ReloadTags()
 		{
-			SortFilterDecksFlyout.LoadTags(DeckList.AllTags);
-			TagControlEdit.LoadTags(DeckList.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
 		}
 
 

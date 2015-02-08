@@ -315,7 +315,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Game.PlayingAs = hero;
 
-			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
+			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
 			if(!string.IsNullOrEmpty(hero))
 			{
@@ -324,7 +324,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
 				{
-					var classDecks = Helper.MainWindow.DeckList.DecksList.Where(d => d.Class == Game.PlayingAs).ToList();
+					var classDecks = DeckList.Instance.Decks.Where(d => d.Class == Game.PlayingAs).ToList();
 					if(classDecks.Count == 0)
 						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
 					else if(classDecks.Count == 1)
@@ -332,14 +332,14 @@ namespace Hearthstone_Deck_Tracker
 						Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
 						Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
 					}
-					else if(Helper.MainWindow.DeckList.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
+					else if(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
 					{
-						var lastDeck = Helper.MainWindow.DeckList.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
+						var lastDeck = DeckList.Instance.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
 						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 
 						var deck = lastDeck.Id == Guid.Empty
-							           ? Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.Name == lastDeck.Name)
-							           : Helper.MainWindow.DeckList.DecksList.FirstOrDefault(d => d.DeckId == lastDeck.Id);
+							           ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
+							           : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
 
 						if(deck != null)
 						{
@@ -392,7 +392,7 @@ namespace Hearthstone_Deck_Tracker
 			Game.IsInMenu = false;
 			Game.Reset();
 
-			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
+			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 			if(selectedDeck != null)
 				Game.SetPremadeDeck((Deck)selectedDeck.Clone());
 		}
@@ -420,7 +420,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			Game.CurrentGameStats.GameEnd();
-			var selectedDeck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
+			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 			if(selectedDeck != null)
 			{
 				if(Config.Instance.DiscardGameIfIncorrectDeck
@@ -569,7 +569,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(!Config.Instance.KeepDecksVisible)
 			{
-				var deck = Helper.MainWindow.DeckPickerList.GetSelectedDeckVersion();
+				var deck = DeckList.Instance.ActiveDeckVersion;
 				if(deck != null)
 					Game.SetPremadeDeck((Deck)deck.Clone());
 			}
@@ -626,7 +626,7 @@ namespace Hearthstone_Deck_Tracker
 					DeckStatsList.Save();
 				}
 
-				Helper.MainWindow.DeckPickerList.Items.Refresh();
+				Helper.MainWindow.DeckPickerList.UpdateDecks();
 				statsControl.Refresh();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(Game.CurrentGameStats))

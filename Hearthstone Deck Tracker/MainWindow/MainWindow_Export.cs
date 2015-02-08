@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDeck;
+			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 			ExportDeck(deck.GetSelectedDeckVersion());
@@ -57,10 +57,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckPickerList.SelectedDeck == null)
+			if(DeckList.Instance.ActiveDeck == null)
 				return;
-			Logger.WriteLine("Creating screenshot of " + DeckPickerList.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(Config.Instance, DeckPickerList.GetSelectedDeckVersion().Cards, true);
+			Logger.WriteLine("Creating screenshot of " + DeckList.Instance.ActiveDeckVersion.GetDeckInfo(), "Screenshot");
+			var screenShotWindow = new PlayerWindow(Config.Instance, DeckList.Instance.ActiveDeckVersion.Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckPickerList.GetSelectedDeckVersion().Name);
+			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckList.Instance.ActiveDeckVersion.Name);
 
 			screenShotWindow.Shutdown();
 			if(fileName == null)
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.GetSelectedDeckVersion();
+			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
 			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.GetSelectedDeckVersion();
+			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.GetSelectedDeckVersion();
+			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
 			this.ShowMissingCardsMessage(deck);

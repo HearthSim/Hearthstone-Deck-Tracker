@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
-				if(Helper.MainWindow.DeckList.AllTags.Contains("Arena"))
+				if(DeckList.Instance.AllTags.Contains("Arena"))
 					deck.Tags.Add("Arena");
 				return deck;
 			}
@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
-				if(Helper.MainWindow.DeckList.AllTags.Contains("Arena"))
+				if(DeckList.Instance.AllTags.Contains("Arena"))
 					deck.Tags.Add("Arena");
 				return deck;
 			}
@@ -386,12 +386,12 @@ namespace Hearthstone_Deck_Tracker
 				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'t-deck-type-label')]").InnerText;
 				if(decktype != "None" && Config.Instance.TagDecksOnImport)
 				{
-					if(!Helper.MainWindow.DeckList.AllTags.Contains(decktype))
+					if(!DeckList.Instance.AllTags.Contains(decktype))
 					{
-						Helper.MainWindow.DeckList.AllTags.Add(decktype);
-						Helper.MainWindow.WriteDecks();
-						Helper.MainWindow.SortFilterDecksFlyout.LoadTags(Helper.MainWindow.DeckList.AllTags);
-						Helper.MainWindow.TagControlEdit.LoadTags(Helper.MainWindow.DeckList.AllTags.Where(t => t != "All").ToList());
+						DeckList.Instance.AllTags.Add(decktype);
+						DeckList.Save();
+						Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+						Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
 					}
 					deck.Tags.Add(decktype);
 				}

@@ -160,8 +160,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if(EditingDeck && overwrite)
 			{
-				DeckList.DecksList.Remove(_newDeck);
-				DeckPickerList.RemoveDeck(_newDeck);
+				DeckList.Instance.Decks.Remove(_newDeck);
+				//DeckPickerList.RemoveDeck(_newDeck);
 			}
 
 			var oldDeckName = _newDeck.Name;
@@ -169,11 +169,12 @@ namespace Hearthstone_Deck_Tracker
 			_newDeck.Name = deckName;
 
 			var newDeckClone = (Deck)_newDeck.Clone();
-			DeckList.DecksList.Add(newDeckClone);
+			DeckList.Instance.Decks.Add(newDeckClone);
 
 			newDeckClone.LastEdited = DateTime.Now;
 
-			WriteDecks();
+			DeckList.Save();
+			;
 			Logger.WriteLine("Saved Decks", "SaveDeck");
 
 			if(EditingDeck)
@@ -222,14 +223,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			//after cloning the stats, otherwise new stats will be generated
-			DeckPickerList.AddAndSelectDeck(newDeckClone);
+			//DeckPickerList.AddAndSelectDeck(newDeckClone);
 
 			EditingDeck = false;
 
 			foreach(var tag in _newDeck.Tags)
 				SortFilterDecksFlyout.AddSelectedTag(tag);
 
-			DeckPickerList.UpdateList();
+			DeckPickerList.UpdateDecks();
+
 			DeckPickerList.SelectDeck(newDeckClone);
 
 			CloseNewDeck();
@@ -335,7 +337,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CloseNewDeck()
 		{
-			if(DeckPickerList.SelectedDeck != null)
+			if(DeckList.Instance.ActiveDeck != null)
 				EnableMenuItems(true);
 			if(GridNewDeck.Visibility != Visibility.Collapsed)
 			{
@@ -438,7 +440,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var tb = (TextBox)sender;
 			var name = tb.Text;
-			if(DeckList.DecksList.Any(d => d.Name == name) && !(EditingDeck && name == editedDeckName))
+			if(DeckList.Instance.Decks.Any(d => d.Name == name) && !(EditingDeck && name == editedDeckName))
 			{
 				if(DeckNameExistsWarning.Visibility == Visibility.Collapsed)
 					tb.Width -= 19;
@@ -464,7 +466,7 @@ namespace Hearthstone_Deck_Tracker
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckPickerList.SelectedDeck != null ? DeckPickerList.GetSelectedDeckVersion().Cards : null;
+			ListViewDeck.ItemsSource = DeckList.Instance.ActiveDeck != null ? DeckList.Instance.ActiveDeckVersion.Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;

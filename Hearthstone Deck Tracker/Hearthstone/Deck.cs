@@ -3,11 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 
@@ -15,7 +18,7 @@ using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class Deck : ICloneable
+	public class Deck : ICloneable, INotifyPropertyChanged
 	{
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -25,10 +28,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string HearthStatsArenaId;
 		public string HearthStatsDeckVersionId;
 		public string HearthStatsId;
-
-
-		[XmlIgnore]
-		public bool IsSelectedInGui;
 
 		public DateTime LastEdited;
 
@@ -54,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Guid _deckId;
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
+		private bool _isSelectedInGui;
 
 
 		public Deck()
@@ -106,6 +106,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public bool IsSelectedInGui
+		{
+			get { return _isSelectedInGui; }
+			set
+			{
+				_isSelectedInGui = value;
+				OnPropertyChanged("GetFontWeight");
+			}
+		}
+
 		public bool IsArenaDeck
 		{
 			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? Tags.Contains("Arena"); }
@@ -143,7 +154,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string NameAndVersion
 		{
-			get { return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor); }
+			get
+			{
+				return Versions.Count == 0
+					       ? Name.ToUpperInvariant()
+					       : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+			}
 		}
 
 		[XmlIgnore]
@@ -152,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				if(DeckStats.Games.Count == 0)
-					return "-%";
+					return "-";
 				return Math.Round(WinPercent, 0) + "%";
 			}
 		}
@@ -183,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public FontWeight GetFontWeight
 		{
-			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Bold; }
+			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Regular; }
 		}
 
 		[XmlIgnore]
@@ -283,6 +299,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
 			                DeckId, "", HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public bool? CheckIfArenaDeck()
 		{
@@ -482,6 +500,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public SerializableVersion GetMaxVerion()
 		{
 			return VersionsIncludingSelf.OrderByDescending(x => x).First();
+		}
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

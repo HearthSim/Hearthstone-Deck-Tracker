@@ -1,0 +1,24 @@
+﻿<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.NewDeckPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+    <ListView Name="ListViewClasses" Width="50" DockPanel.Dock="Left" SelectionChanged="Selector_OnSelectionChanged"  Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" Margin="0,0,1,0" 
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView.Resources>
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+        </ListView.Resources>
+    </ListView>
+    <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="1,0,0,0" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
+        <ListView.Resources>
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+            </ListView.Resources>
+    </ListView>
+
+</DockPanel>
