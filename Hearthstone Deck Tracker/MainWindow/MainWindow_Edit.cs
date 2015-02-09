@@ -77,8 +77,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
 			}
 
-			if(Config.Instance.HearthStatsAutoUploadNewDecks)
-				HearthStatsManager.DeleteDeckAsync(deck, false, true);
+			HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
 			DeckList.Instance.Decks.Remove(deck);
 			DeckList.Save();
