@@ -346,6 +346,7 @@ namespace Hearthstone_Deck_Tracker
 						if(_currentNewsId > oldNewsId
 						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
 						{
+							TopRow.Height = new GridLength(20);
 							StatusBarNews.Visibility = Visibility.Visible;
 							UpdateNews(0);
 						}
@@ -1317,7 +1318,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.IgnoreNewsId = _currentNewsId;
 			Config.Save();
 			StatusBarNews.Visibility = Visibility.Collapsed;
-			;
+			TopRow.Height = new GridLength(0);
 		}
 
 		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
