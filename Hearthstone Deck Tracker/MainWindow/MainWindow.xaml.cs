@@ -787,7 +787,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			try
 			{
-				ActivateWindow();
+				//ActivateWindow();
 				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
 					await Task.Delay(100);
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
@@ -840,7 +840,6 @@ namespace Hearthstone_Deck_Tracker
 		public void ActivateWindow()
 		{
 			Show();
-			WindowState = WindowState.Normal;
 			ShowInTaskbar = true;
 			Activate();
 		}
