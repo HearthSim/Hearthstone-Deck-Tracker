@@ -841,10 +841,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public void ActivateWindow()
 		{
-			ShowInTaskbar = true;
-			Activate();
-			WindowState = WindowState.Normal;
-			
+			try
+			{
+				ShowInTaskbar = true;
+				Activate();
+				WindowState = WindowState.Normal;
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString(), "ActivatingWindow");
+			}
 		}
 
 		#endregion
