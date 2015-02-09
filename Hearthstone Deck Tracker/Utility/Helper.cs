@@ -62,11 +62,12 @@ namespace Hearthstone_Deck_Tracker
 			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
-
+			
 			if(currentVersion != null)
 			{
 				try
 				{
+					Logger.WriteLine("Current version: " + currentVersion, "Helper");
 					var xml =
 						new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)}.DownloadString(versionXmlUrl);
 

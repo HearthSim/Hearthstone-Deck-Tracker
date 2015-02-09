@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker
 			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
 			if(cardInDeck != null)
 			{
-				if(!_newDeck.IsArenaDeck && cardInDeck.Count >= 2)
+				if(!_newDeck.IsArenaDeck && cardInDeck.Count >= 2 || cardInDeck.Rarity == "Legendary" && cardInDeck.Count >= 1)
 					return;
 				cardInDeck.Count++;
 			}

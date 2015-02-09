@@ -239,7 +239,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(background)
 				AddBackgroundActivity();
 			var first = deck.GetVersion(1, 0);
-			if(first.HasHearthStatsId && !deck.HasHearthStatsId && !deck.HearthStatsIdsAlreadyReset)
+			if(!first.IsArenaDeck && first.HasHearthStatsId && !deck.HasHearthStatsId && !deck.HearthStatsIdsAlreadyReset)
 			{
 				first.HearthStatsId = first.HearthStatsIdForUploading;
 				await HearthStatsAPI.DeleteDeckAsync(first);
