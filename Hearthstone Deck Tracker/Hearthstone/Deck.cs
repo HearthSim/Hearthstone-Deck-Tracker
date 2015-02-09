@@ -119,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsArenaDeck
 		{
-			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? Tags.Contains("Arena"); }
+			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
 			set { _isArenaDeck = value; }
 		}
 

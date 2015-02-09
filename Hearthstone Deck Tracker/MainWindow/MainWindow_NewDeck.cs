@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -174,7 +175,7 @@ namespace Hearthstone_Deck_Tracker
 			newDeckClone.LastEdited = DateTime.Now;
 
 			DeckList.Save();
-			;
+
 			Logger.WriteLine("Saved Decks", "SaveDeck");
 
 			if(EditingDeck)
@@ -230,12 +231,30 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var tag in _newDeck.Tags)
 				SortFilterDecksFlyout.AddSelectedTag(tag);
 
+			if(Config.Instance.SelectedDeckType != DeckType.All)
+			{
+				if(newDeckClone.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Arena)
+					DeckPickerList.SelectDeckType(DeckType.Arena);
+				else if(!newDeckClone.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Constructed)
+					DeckPickerList.SelectDeckType(DeckType.Constructed);
+			}
+
+			if(!DeckPickerList.SelectedClasses.Contains(HeroClassAll.All))
+			{
+				HeroClassAll deckClass;
+				if(Enum.TryParse(newDeckClone.Class, out deckClass))
+				{
+					if(!DeckPickerList.SelectedClasses.Contains(deckClass))
+						DeckPickerList.SelectClasses(new List<HeroClassAll> { deckClass });
+				}
+			}
+
 			DeckPickerList.UpdateDecks();
 
 			DeckPickerList.SelectDeck(newDeckClone);
-
 			CloseNewDeck();
 			ClearNewDeckSection();
+
 		}
 
 		private void ClearNewDeckSection()
@@ -268,9 +287,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(card == null)
 				return;
-			if(_newDeck.Cards.Contains(card))
+			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
+			if(cardInDeck != null)
 			{
-				var cardInDeck = _newDeck.Cards.First(c => c.Name == card.Name);
+				if(!_newDeck.IsArenaDeck && cardInDeck.Count >= 2)
+					return;
 				cardInDeck.Count++;
 			}
 			else
@@ -320,7 +341,7 @@ namespace Hearthstone_Deck_Tracker
 				ManaCurveMyDecks.SetDeck(deck);
 			}
 		}
-		 
+
 		private void ExpandNewDeck()
 		{
 			const int widthWithHistoryPanel = 485;
@@ -329,7 +350,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				GridNewDeck.Visibility = Visibility.Visible;
 				MenuNewDeck.Visibility = Visibility.Visible;
-				if(_newDeck.HasVersions)
+				if(_newDeck != null && _newDeck.HasVersions)
 				{
 					PanelDeckHistory.Visibility = Visibility.Visible;
 					GridNewDeck.Width = widthWithHistoryPanel;
@@ -374,7 +395,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//a menuitems clickevent does not fire if it has subitems
 			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
-			if(!MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
+			if(_newDeck.IsArenaDeck || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
 			{
 				MenuItemSave.IsSubmenuOpen = false;
 				await SaveDeckWithOverwriteCheck();
@@ -433,11 +454,19 @@ namespace Hearthstone_Deck_Tracker
 			CreateNewDeck("Warlock");
 		}
 
-		private void CreateNewDeck(string hero)
+		private async void CreateNewDeck(string hero)
 		{
+			_newDeck = new Deck {Class = hero};
+
+			var result =
+				await
+				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run"});
+			if(result == MessageDialogResult.Negative)
+				_newDeck.IsArenaDeck = true;
+
 			DeselectDeck();
 			ExpandNewDeck();
-			_newDeck = new Deck {Class = hero};
 			ListViewDeck.ItemsSource = _newDeck.Cards;
 			UpdateDeckHistoryPanel(_newDeck, true);
 			ManaCurveMyDecks.SetDeck(_newDeck);

@@ -606,6 +606,7 @@ namespace Hearthstone_Deck_Tracker
 			//DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
 			DeckPickerList.SelectClasses(Config.Instance.SelectedDeckPickerClasses.ToList());
+			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckType, true);
 
 			Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 

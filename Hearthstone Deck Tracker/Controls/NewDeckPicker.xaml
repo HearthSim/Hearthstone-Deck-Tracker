@@ -5,6 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="300">
+    <ListView Name="ListViewDeckType" SelectionChanged="ListViewDeckType_OnSelectionChanged" SelectionMode="Single" DockPanel.Dock="Top" Height="25" Margin="0,0,0,2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <ListView.Resources>
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+        </ListView.Resources>
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="49"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        <ListViewItem Name="ListViewItemAll"  Grid.Column="0">
+            <TextBlock Text="ALL" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+        </ListViewItem>
+        <ListViewItem Name="ListViewItemArena" Grid.Column="1" Margin="1,0,0,0">
+            <TextBlock Text="ARENA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+        </ListViewItem>
+        <ListViewItem Name="ListViewItemConstructed" Grid.Column="2">
+            <TextBlock Text="CONSTRUCTED" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+        </ListViewItem>
+    </ListView>
     <ListView Name="ListViewClasses" Width="50" DockPanel.Dock="Left" SelectionChanged="Selector_OnSelectionChanged"  Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" Margin="0,0,1,0" 
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.Resources>

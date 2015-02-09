@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using ListView = System.Windows.Controls.ListView;
+using ListViewItem = System.Windows.Controls.ListViewItem;
 
 #endregion
 
@@ -29,10 +30,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
 		public bool ChangedSelection;
+		private bool _ignoreSelectionChange;
 		private bool _refillingList;
 		private bool _reselecting;
-		private bool _wasClicked;
-		private bool _wasDoubleClicked;
 
 		public NewDeckPicker()
 		{
@@ -114,6 +114,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void SelectClasses(List<HeroClassAll> classes)
 		{
+			ListViewClasses.SelectedItems.Clear();
 			foreach(var item in ListViewClasses.Items)
 			{
 				var pickerItem = item as DeckPickerClassItem;
@@ -133,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              DeckMatchesSelectedTags(d)
+				                              DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
 				                              && SelectedClasses.Any(c => c.ToString() == "All" || d.Class == c.ToString())).ToList();
 			foreach(var deck in decks)
 				_displayedDecks.Add(new NewDeckPickerItem(deck));
@@ -143,6 +144,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(decks.Contains(DeckList.Instance.ActiveDeck))
 				SelectDeck(DeckList.Instance.ActiveDeck);
 			_reselecting = false;
+		}
+
+		private bool DeckMatchesSelectedDeckType(Deck deck)
+		{
+			if(Config.Instance.SelectedDeckType == DeckType.All)
+				return true;
+			return Config.Instance.SelectedDeckType == DeckType.Arena && deck.IsArenaDeck
+			       || Config.Instance.SelectedDeckType == DeckType.Constructed && !deck.IsArenaDeck;
 		}
 
 		public void Sort()
@@ -156,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			switch(Config.Instance.SelectedDeckSorting)
 			{
 				case "Name":
-					view1.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+					view1.SortDescriptions.Add(new SortDescription("DeckName", ListSortDirection.Ascending));
 					break;
 				case "Last Edited":
 					view1.SortDescriptions.Add(new SortDescription("LastEdited", ListSortDirection.Descending));
@@ -232,14 +241,50 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private async void ListViewDecks_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			_wasDoubleClicked = true;
 			if(OnDoubleClick != null)
 			{
 				//wait for doubleclick to be over to not reselect the deck
-				await Task.Delay(SystemInformation.DoubleClickTime); 
+				await Task.Delay(SystemInformation.DoubleClickTime);
 				OnDoubleClick(this, DeckList.Instance.ActiveDeck);
 			}
 		}
 
+		private void ListViewDeckType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(_ignoreSelectionChange)
+				return;
+			if(e.AddedItems.Count == 0)
+				Config.Instance.SelectedDeckType = DeckType.All;
+			else
+			{
+				var item = e.AddedItems[0] as ListViewItem;
+				if(item != null)
+				{
+					switch(item.Name)
+					{
+						case "ListViewItemAll":
+							Config.Instance.SelectedDeckType = DeckType.All;
+							break;
+						case "ListViewItemArena":
+							Config.Instance.SelectedDeckType = DeckType.Arena;
+							break;
+						case "ListViewItemConstructed":
+							Config.Instance.SelectedDeckType = DeckType.Constructed;
+							break;
+					}
+				}
+				Config.Save();
+				UpdateDecks();
+			}
+		}
+
+		public void SelectDeckType(DeckType selectedDeckType, bool ignoreSelectionChange = false)
+		{
+			if(ignoreSelectionChange)
+				_ignoreSelectionChange = true;
+			ListViewDeckType.SelectedIndex = (int)selectedDeckType;
+			if(ignoreSelectionChange)
+				_ignoreSelectionChange = false;
+		}
 	}
 }

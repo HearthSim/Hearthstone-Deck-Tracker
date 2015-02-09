@@ -424,6 +424,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Name")]
 		public string SelectedDeckSorting = "Name";
 
+		[DefaultValue(DeckType.All)]
+		public DeckType SelectedDeckType = DeckType.All;
+
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";
 

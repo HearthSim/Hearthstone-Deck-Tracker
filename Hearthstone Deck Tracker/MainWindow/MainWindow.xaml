@@ -6,8 +6,8 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
-                      Title="Hearthstone Deck Tracker" Height="575" Width="645"
-                      MinHeight="575" MinWidth="645"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="645"
+                      MinHeight="603" MinWidth="645"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -352,7 +352,7 @@
                 </ListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
-            <controls1:NewDeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
+                <controls1:NewDeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2"
                               Height="auto" Width="auto"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
