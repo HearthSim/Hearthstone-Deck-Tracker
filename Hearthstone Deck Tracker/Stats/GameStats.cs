@@ -180,7 +180,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool BelongsToDeckVerion(Deck deck)
 		{
-			return PlayerDeckVersion == deck.Version || HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId
+			return PlayerDeckVersion == deck.Version
+			       || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
 			       || (!HasHearthStatsDeckVersionId && HearthStatsDeckId == deck.HearthStatsId);
 		}
 
