@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -787,7 +788,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			try
 			{
-				//ActivateWindow();
+				await Task.Delay(10000);
+				ActivateWindow();
 				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
 					await Task.Delay(100);
 				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
@@ -839,9 +841,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public void ActivateWindow()
 		{
-			Show();
 			ShowInTaskbar = true;
 			Activate();
+			WindowState = WindowState.Normal;
+			
 		}
 
 		#endregion
