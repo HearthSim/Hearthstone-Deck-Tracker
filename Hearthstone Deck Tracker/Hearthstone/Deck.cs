@@ -317,6 +317,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck GetVersion(SerializableVersion version)
 		{
+			if(version == null)
+				return null;
 			return GetVersion(version.Major, version.Minor);
 		}
 

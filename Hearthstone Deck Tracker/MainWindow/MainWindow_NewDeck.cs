@@ -215,7 +215,7 @@ namespace Hearthstone_Deck_Tracker
 				if(EditingDeck)
 				{
 					if(previousVersion != newVersion)
-						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsId, background: true);
+						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsIdForUploading, background: true);
 					else
 						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true);
 				}

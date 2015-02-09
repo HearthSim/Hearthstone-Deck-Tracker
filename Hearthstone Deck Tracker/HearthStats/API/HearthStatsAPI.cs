@@ -263,7 +263,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "success")
 				{
 					deck.HearthStatsDeckVersionId = json.data.id;
-					//deck.HearthStatsId = hearthStatsId;
+					deck.HearthStatsIdForUploading = hearthStatsId;
 					Logger.WriteLine("assigned id to version: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}

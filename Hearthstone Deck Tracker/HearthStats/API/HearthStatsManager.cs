@@ -260,6 +260,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						await Task.Delay(VersionDelay);
 						await UploadVersionAsync(v, first.HearthStatsIdForUploading, false);
 					}
+					deck.HearthStatsId = first.HearthStatsId;
+					first.HearthStatsId = "";
+					first.HearthStatsIdForUploading = deck.HearthStatsId;
 				}
 				if(saveFilesAfter)
 					DeckList.Save();
@@ -484,7 +487,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					          .SelectMany(
 					                      x =>
 					                      x.Versions.Where(v => !v.HasHearthStatsDeckVersionId)
-					                       .Select(v => new {version = v, hearthStatsId = x.HearthStatsId}))
+					                       .Select(v => new {version = v, hearthStatsId = x.HearthStatsIdForUploading}))
 					          .ToList();
 				if(localNewVersions.Any())
 				{
@@ -516,7 +519,26 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					if(!background)
 						controller.SetMessage("Uploading " + newMatches.Count + " new matches...");
 					Logger.WriteLine("Uploading " + newMatches.Count + " new matches...", "HearthStatsManager");
-					await Task.Run(() => { Parallel.ForEach(newMatches, match => UploadMatch(match.game, match.deck, false)); });
+					await Task.Run(() => { Parallel.ForEach(newMatches, match =>
+					{
+						Deck deck;
+						if(match.game.HasHearthStatsDeckVersionId)
+
+						{
+							var version =
+								match.deck.VersionsIncludingSelf.Where(v => v != null).Select(match.deck.GetVersion).Where(v => v != null)
+								     .FirstOrDefault(
+								                     d =>
+								                     d.HasHearthStatsDeckVersionId && d.HasHearthStatsDeckVersionId == match.game.HasHearthStatsDeckVersionId);
+								deck = version ?? match.deck.GetVersion(match.game.PlayerDeckVersion);
+						}
+						else if(match.game.PlayerDeckVersion != null)
+							deck = match.deck.GetVersion(match.game.PlayerDeckVersion);
+						else
+							deck = match.deck;
+
+						UploadMatch(match.game, deck, false);
+					}); });
 					DeckStatsList.Save();
 				}
 				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - 600; //10 minute overlap
