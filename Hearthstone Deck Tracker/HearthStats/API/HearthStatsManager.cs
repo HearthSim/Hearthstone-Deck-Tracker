@@ -448,8 +448,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							DeckList.Instance.Decks.FirstOrDefault(
 							                                       d =>
 							                                       d.VersionsIncludingSelf.Select(v => d.GetVersion(v.Major, v.Minor))
-							                                        .Where(v => v != null)
-							                                        .Any(v => game.BelongsToDeckVerion(v)));
+							                                        .Where(v => v != null && v.HasHearthStatsDeckVersionId)
+							                                        .Any(v => game.HearthStatsDeckVersionId == v.HearthStatsDeckVersionId));
 						if(deck == null)
 						{
 							Logger.WriteLine(string.Format("no deck found for match {0}", game), "HearthStatsManager");

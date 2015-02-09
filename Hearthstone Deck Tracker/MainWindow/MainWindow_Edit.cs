@@ -77,7 +77,8 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
 			}
 
-			HearthStatsManager.DeleteDeckAsync(deck, false, true);
+			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+				HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
 			DeckList.Instance.Decks.Remove(deck);
 			DeckList.Save();
@@ -139,7 +140,8 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			DeckPickerList.UpdateDecks();
 
-			HearthStatsManager.UploadDeckAsync(clone);
+			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+				HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
@@ -197,7 +199,9 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			//DeckPickerList.UpdateList();
 			DeckPickerList.UpdateDecks();
-			HearthStatsManager.UploadDeckAsync(clone);
+
+			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+				HearthStatsManager.UploadDeckAsync(clone);
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
