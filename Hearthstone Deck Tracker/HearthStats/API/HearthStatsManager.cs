@@ -239,6 +239,23 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(background)
 				AddBackgroundActivity();
 			var first = deck.GetVersion(1, 0);
+			if(first.HasHearthStatsId && !deck.HasHearthStatsId && !deck.HearthStatsIdsAlreadyReset)
+			{
+				first.HearthStatsId = first.HearthStatsIdForUploading;
+				await HearthStatsAPI.DeleteDeckAsync(first);
+				await Task.Delay(1000);
+				//reset everything
+				foreach(var version in deck.VersionsIncludingSelf.Select(deck.GetVersion))
+				{
+					version.ResetHearthstatsIds();
+					foreach(var game in version.DeckStats.Games)
+					{
+						game.HearthStatsDeckId = null;
+						game.HearthStatsDeckVersionId = null;
+						game.HearthStatsId = null;
+					}
+				}
+			}
 			var result = await HearthStatsAPI.PostDeckAsync(first);
 			if(!result.Success && result.Retry)
 			{

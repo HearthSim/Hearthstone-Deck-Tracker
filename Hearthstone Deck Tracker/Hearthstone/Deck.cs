@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
+		public bool HearthStatsIdsAlreadyReset { get; set; }
 
 
 		public Deck()
@@ -71,6 +72,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckId = Guid.NewGuid();
 		}
 
+		public void ResetHearthstatsIds()
+		{
+			HearthStatsArenaId = null;
+			HearthStatsDeckVersionId = null;
+			HearthStatsId = null;
+			_hearthStatsIdClone = null;
+			HearthStatsIdsAlreadyReset = true;
+		}
+		
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
