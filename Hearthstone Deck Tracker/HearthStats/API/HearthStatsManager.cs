@@ -445,6 +445,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						}
 						Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
 						                 "HearthStatsManager");
+						game.PlayerDeckVersion = deck.Version;
 						deck.DeckStats.AddGameResult(game);
 					}
 					DeckStatsList.Save();
