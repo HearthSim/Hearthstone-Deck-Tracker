@@ -27,14 +27,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			InitializeComponent();
 			_tcs = new TaskCompletionSource<GameStats>();
-
-			var lastGame = deck.DeckStats.Games.LastOrDefault();
-			if(lastGame != null)
+			if(deck.IsArenaDeck)
 			{
-				ComboBoxMode.SelectedItem = lastGame.GameMode;
-				if(lastGame.GameMode == GameMode.Ranked)
-					TextBoxRank.Text = lastGame.Rank.ToString();
+				ComboBoxMode.SelectedItem = GameMode.Arena;
+				ComboBoxMode.IsEnabled = false;
+				TextBoxRank.IsEnabled = false;
 			}
+			else
+			{
+				ComboBoxMode.IsEnabled = true;
+				TextBoxRank.IsEnabled = true;
+				var lastGame = deck.DeckStats.Games.LastOrDefault();
+				if(lastGame != null)
+				{
+					ComboBoxMode.SelectedItem = lastGame.GameMode;
+					if(lastGame.GameMode == GameMode.Ranked)
+						TextBoxRank.Text = lastGame.Rank.ToString();
+				}
+			}
+
 			_deck = deck;
 		}
 
