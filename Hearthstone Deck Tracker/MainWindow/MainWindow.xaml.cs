@@ -1385,9 +1385,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				DeckList.Instance.ActiveDeck.ResetHearthstatsIds();
+				DeckList.Instance.ActiveDeck.DeckStats.HearthStatsDeckId = null;
 				DeckList.Instance.ActiveDeck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
 				DeckList.Instance.ActiveDeck.Versions.ForEach(v =>
 				{
+					v.DeckStats.HearthStatsDeckId = null;
 					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
 					v.ResetHearthstatsIds();
 				});
