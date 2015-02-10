@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 				var current = versions.FirstOrDefault(v => v.version == version);
 				if(current != null)
 					deck.HearthStatsDeckVersionId = current.deck_version_id.ToString();
+				deck.HearthStatsIdsAlreadyReset = true;
 				return deck;
 			}
 			catch(Exception e)
