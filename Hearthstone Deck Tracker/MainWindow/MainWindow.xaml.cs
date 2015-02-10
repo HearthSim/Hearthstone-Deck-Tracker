@@ -843,6 +843,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
+				Show();
 				ShowInTaskbar = true;
 				Activate();
 				WindowState = WindowState.Normal;
