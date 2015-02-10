@@ -129,8 +129,8 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-
-				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
+				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
+					HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
 				//Helper.MainWindow.DeckPickerList.Items.Refresh();
 				Helper.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
@@ -176,7 +176,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 
-				HearthStatsManager.DeleteMatchesAsync(selectedGames);
+				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId) && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
+					HearthStatsManager.DeleteMatchesAsync(selectedGames);
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games", "DeckStatsControl");

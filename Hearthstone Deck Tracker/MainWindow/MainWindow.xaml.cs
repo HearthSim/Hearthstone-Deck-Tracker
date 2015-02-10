@@ -1250,6 +1250,8 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
 			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
 			MenuItemHearthStatsSync.IsEnabled = enable;
+			MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
+			MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
 		}
 
 		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
@@ -1396,6 +1398,68 @@ namespace Hearthstone_Deck_Tracker
 				});
 
 			}
+		}
+
+		public async Task<bool> CheckHearthStatsDeckDeletion()
+		{
+			if(Config.Instance.HearthStatsAutoDeleteDecks.HasValue)
+				return Config.Instance.HearthStatsAutoDeleteDecks.Value;
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
+									  MessageDialogStyle.AffirmativeAndNegative,
+									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
+			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
+			Config.Save();
+			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
+		}
+
+		public async Task<bool> CheckHearthStatsMatchDeletion()
+		{
+			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
+				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
+									  MessageDialogStyle.AffirmativeAndNegative,
+									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
+			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
+			Config.Save();
+			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
+		}
+
+		private void MenuItemCheckBoxAutoDeleteDecks_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteDecks = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteDecks_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteDecks = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteGames_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteMatches = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteGames_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteMatches = false;
+			Config.Save();
 		}
 	}
 }

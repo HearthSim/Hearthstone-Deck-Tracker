@@ -53,6 +53,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
 
+		[DefaultValue(null)]
+		public bool? HearthStatsAutoDeleteDecks = null;
+
+		[DefaultValue(null)]
+		public bool? HearthStatsAutoDeleteMatches = null;
+
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;
 

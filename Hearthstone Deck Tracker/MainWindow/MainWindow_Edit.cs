@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker
 			DeleteDeck(deck);
 		}
 
-		private void DeleteDeck(Deck deck)
+		private async void DeleteDeck(Deck deck)
 		{
 			if(deck == null)
 				return;
@@ -77,7 +77,8 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
 			}
 
-			HearthStatsManager.DeleteDeckAsync(deck, false, true);
+			if(HearthStatsAPI.IsLoggedIn && deck.HasHearthStatsId && await CheckHearthStatsDeckDeletion())
+				HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
 			DeckList.Instance.Decks.Remove(deck);
 			DeckList.Save();
