@@ -102,11 +102,8 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			InitializeComponent();
-			if(!Directory.Exists("Logs"))
-				Directory.CreateDirectory("Logs");
 			Trace.AutoFlush = true;
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.TextBoxLog));
-			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter("Logs/hdt_log.txt", false)));
 
 			EnableMenuItems(false);
 
@@ -127,6 +124,12 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow = this;
 			/*_configPath =*/
 			Config.Load();
+
+			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
+            if(!Directory.Exists(logDir))
+				Directory.CreateDirectory(logDir);
+			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(Path.Combine(logDir, "hdt_log.txt"), false)));
+
 			HsLogReader.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
