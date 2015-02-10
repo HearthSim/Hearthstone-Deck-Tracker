@@ -801,6 +801,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				Refresh();
 			}
+			DeckStatsList.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 

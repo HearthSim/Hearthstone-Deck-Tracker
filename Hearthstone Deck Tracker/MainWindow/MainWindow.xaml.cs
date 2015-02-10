@@ -550,7 +550,7 @@ namespace Hearthstone_Deck_Tracker
 				StatsWindow.Shutdown();
 				Config.Save();
 				DeckList.Save();
-				;
+				DeckStatsList.Save();
 			}
 			catch(Exception)
 			{
