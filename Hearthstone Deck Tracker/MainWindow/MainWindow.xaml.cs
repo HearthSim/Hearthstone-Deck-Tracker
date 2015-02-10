@@ -1361,5 +1361,38 @@ namespace Hearthstone_Deck_Tracker
 				EnableHearthStatsMenu(false);
 			}
 		}
+
+
+		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckList.Instance.ActiveDeck;
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete \"" + deck + "\" on HearthStats?",
+				                      "This will delete the deck and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The deck or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
+				                      MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+
+			if(dialogResult == MessageDialogResult.Affirmative)
+			{
+				var controller = await this.ShowProgressAsync("Deleting deck...", "");
+				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(DeckList.Instance.ActiveDeck);
+				await controller.CloseAsync();
+				if(!deleteSuccessful)
+				{
+					await
+						this.ShowMessageAsync("Problem deleting deck",
+						                 "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
+				}
+
+				DeckList.Instance.ActiveDeck.ResetHearthstatsIds();
+				DeckList.Instance.ActiveDeck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+				DeckList.Instance.ActiveDeck.Versions.ForEach(v =>
+				{
+					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+					v.ResetHearthstatsIds();
+				});
+
+			}
+		}
 	}
 }

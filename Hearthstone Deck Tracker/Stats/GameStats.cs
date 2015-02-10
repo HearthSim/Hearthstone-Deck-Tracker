@@ -323,5 +323,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			return Result + " vs " + OpponentHero + ", " + StartTime;
 		}
+
+		public void ResetHearthstatsIds()
+		{
+			HearthStatsDeckId = null;
+			HearthStatsDeckVersionId = null;
+			HearthStatsId = null;
+		}
 	}
 }
