@@ -521,6 +521,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				EditingDeck = false;
 				_newDeck.ResetVersions();
+				_newDeck.ResetHearthstatsIds();
+				_newDeck.DeckId = Guid.NewGuid();
 			}
 			/*else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
 			{
