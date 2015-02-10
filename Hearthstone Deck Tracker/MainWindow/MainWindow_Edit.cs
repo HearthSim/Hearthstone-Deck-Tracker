@@ -102,6 +102,8 @@ namespace Hearthstone_Deck_Tracker
 
 			var clone = (Deck)DeckList.Instance.ActiveDeck.CloneWithNewId(false);
 			var originalStatsEntry = clone.DeckStats;
+			clone.ResetHearthstatsIds();
+			clone.Versions.ForEach(v => v.ResetHearthstatsIds());
 
 			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
@@ -159,6 +161,7 @@ namespace Hearthstone_Deck_Tracker
 				                       })) == MessageDialogResult.Affirmative;
 			var clone = (Deck)deck.CloneWithNewId(false);
 			clone.ResetVersions();
+			clone.ResetHearthstatsIds();
 
 			var originalStatsEntry = clone.DeckStats;
 
@@ -178,7 +181,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-			;
+			
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)

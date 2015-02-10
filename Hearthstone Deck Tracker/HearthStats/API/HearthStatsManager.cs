@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					localDecks.Where(x => x.HasHearthStatsId)
 					          .SelectMany(
 					                      x =>
-					                      x.Versions.Where(v => !v.HasHearthStatsDeckVersionId)
+					                      x.VersionsIncludingSelf.Select(x.GetVersion).Where(v => !v.HasHearthStatsDeckVersionId)
 					                       .Select(v => new {version = v, hearthStatsId = x.HearthStatsIdForUploading}))
 					          .ToList();
 				if(localNewVersions.Any())

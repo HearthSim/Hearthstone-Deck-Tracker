@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, "", HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
+			                DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -340,8 +340,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object CloneWithNewId(bool isVersion)
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
-			                Guid.NewGuid(), "", isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
+			                Guid.NewGuid(), HearthStatsDeckVersionId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
 		}
+
 
 		public void ResetVersions()
 		{

@@ -152,10 +152,10 @@ namespace Hearthstone_Deck_Tracker
 			var previousVersion = _newDeck.Version;
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
+				AddDeckHistory();
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
 				_newDeck.HearthStatsDeckVersionId = "";
-				AddDeckHistory();
 				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
 
@@ -674,6 +674,8 @@ namespace Hearthstone_Deck_Tracker
 		private void AddDeckHistory()
 		{
 			var currentClone = _originalDeck.Clone() as Deck;
+			if(currentClone == null)
+				return;
 			currentClone.Versions = new List<Deck>(); //empty ref to history
 			_newDeck.Versions.Add(currentClone);
 		}
