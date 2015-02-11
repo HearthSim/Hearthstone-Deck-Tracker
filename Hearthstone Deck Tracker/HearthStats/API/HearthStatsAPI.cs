@@ -230,12 +230,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("HearthStatsDeckVersionId assigned to deck: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -267,12 +267,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("assigned id to version: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -326,12 +326,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("assigned id to match: " + game.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -368,12 +368,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.WasSuccess;
 				}
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -425,12 +425,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.WasSuccess;
 				}
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -483,12 +483,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.WasSuccess;
 				}
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -523,12 +523,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "success")
 					return PostResult.WasSuccess;
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -589,12 +589,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("assigned arena id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
@@ -632,12 +632,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				var json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "success")
 					return PostResult.WasSuccess;
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
-				return PostResult.CanRetry;
+				return PostResult.Failed;
 			}
 		}
 
