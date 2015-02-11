@@ -7,7 +7,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Updater
+namespace HDTUpdater
 {
 	internal class Program
 	{
@@ -115,8 +115,8 @@ namespace Updater
 
 					var newFilePath = file.Replace(newPath, string.Empty);
 					Console.WriteLine("Writing {0}", newFilePath);
-					if(file.Contains("Updater"))
-						File.Copy(file, newFilePath.Replace("Updater", "Updater_new"));
+					if(file.Contains("HDTUpdater"))
+						File.Copy(file, newFilePath.Replace("HDTUpdater", "HDTUpdater_new"));
 					else
 						File.Copy(file, newFilePath, true);
 				}
