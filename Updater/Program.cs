@@ -107,7 +107,7 @@ namespace Updater
 					var newFilePath = file.Replace(newPath, string.Empty);
 					Console.WriteLine("Writing {0}", newFilePath);
 					if(file.Contains("Updater"))
-						File.Copy(file, file.Replace("Updater", "Updater_new"));
+						File.Copy(file, newFilePath.Replace("Updater", "Updater_new"));
 					else
 						File.Copy(file, newFilePath, true);
 				}
