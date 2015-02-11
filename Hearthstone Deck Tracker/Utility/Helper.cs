@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Microsoft.Win32;
 using Color = System.Drawing.Color;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
@@ -131,8 +132,11 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static string ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
+		public static bool ScreenshotDeck(PlayerWindow screenShotWindow, double dpiX, double dpiY, string name, out string fileName)
 		{
+			fileName = "";
+			var dlv = screenShotWindow.ListViewPlayer;
+
 			try
 			{
 				var rtb = new RenderTargetBitmap((int)dlv.ActualWidth, (int)dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
@@ -140,14 +144,29 @@ namespace Hearthstone_Deck_Tracker
 				var encoder = new PngBitmapEncoder();
 				encoder.Frames.Add(BitmapFrame.Create(rtb));
 
-				var path = GetValidFilePath("Screenshots", name, ".png");
-				using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-					encoder.Save(stream);
-				return path;
+				// Hide the screenshot window before we show the save file dialog
+				screenShotWindow.Shutdown();
+
+				var saveFileDialog = new SaveFileDialog();
+				saveFileDialog.FileName = name;
+				saveFileDialog.DefaultExt = ".png";
+				saveFileDialog.Filter = "PNG (*.png)|*.png";
+
+				bool? result = saveFileDialog.ShowDialog();
+
+				if (result == true)
+				{
+					fileName = saveFileDialog.FileName;
+
+					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+						encoder.Save(stream);
+				}
+
+				return result == true;
 			}
 			catch(Exception)
 			{
-				return null;
+				return false;
 			}
 		}
 
