@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Win32;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -79,14 +78,14 @@ namespace Hearthstone_Deck_Tracker
 
 			if (pngEncoder != null)
 			{
-				var fileName = ShowSaveFileDialog(deck.Name, "png");
+				var fileName = Helper.ShowSaveFileDialog(deck.Name, "png");
 
 				if (fileName != null)
 				{
 					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 						pngEncoder.Save(stream);
 
-					await ShowSavedFileMessage(fileName);
+					await this.ShowSavedFileMessage(fileName);
 					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
 				}
 			}
@@ -98,29 +97,14 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 
-			var fileName = ShowSaveFileDialog(deck.Name, "xml");
+			var fileName = Helper.ShowSaveFileDialog(deck.Name, "xml");
 
 			if (fileName != null)
 			{
 				XmlManager<Deck>.Save(fileName, deck);
-				await ShowSavedFileMessage(fileName);
+				await this.ShowSavedFileMessage(fileName);
 				Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
 			}
-		}
-
-		private string ShowSaveFileDialog(string filename, string ext)
-		{
-			var saveFileDialog = new SaveFileDialog();
-			saveFileDialog.FileName = filename;
-			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
-			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
-
-			bool? result = saveFileDialog.ShowDialog();
-
-			if (result == true)
-				return saveFileDialog.FileName;
-
-			return null;
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -131,14 +115,6 @@ namespace Hearthstone_Deck_Tracker
 			Clipboard.SetText(Helper.DeckToIdString(deck));
 			this.ShowMessage("", "copied to clipboard");
 			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard", "Export");
-		}
-
-		public async Task ShowSavedFileMessage(string fileName)
-		{
-			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
-			var result = await this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
-			if(result == MessageDialogResult.Negative)
-				Process.Start(Path.GetDirectoryName(fileName));
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)

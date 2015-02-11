@@ -148,6 +148,21 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public static string ShowSaveFileDialog(string filename, string ext)
+		{
+			var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+			saveFileDialog.FileName = filename;
+			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
+			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
+
+			bool? result = saveFileDialog.ShowDialog();
+
+			if (result == true)
+				return saveFileDialog.FileName;
+
+			return null;
+		}
+
 		public static string GetValidFilePath(string dir, string name, string extension)
 		{
 			var validDir = RemoveInvalidPathChars(dir);
