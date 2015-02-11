@@ -73,11 +73,30 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			string fileName;
-			var saved = Helper.ScreenshotDeck(screenShotWindow, dpiX, dpiY, DeckList.Instance.ActiveDeckVersion.Name, out fileName);
+			var deckName = DeckList.Instance.ActiveDeckVersion.Name;
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deckName);
+			screenShotWindow.Shutdown();
 
-			if (saved)
-				await ShowSavedFileMessage(fileName);
+			if (pngEncoder != null)
+			{
+				var saveFileDialog = new SaveFileDialog();
+				saveFileDialog.FileName = deckName;
+				saveFileDialog.DefaultExt = ".png";
+				saveFileDialog.Filter = "PNG (*.png)|*.png";
+
+				bool? result = saveFileDialog.ShowDialog();
+
+				if (result == true)
+				{
+					var fileName = saveFileDialog.FileName;
+
+					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+						pngEncoder.Save(stream);
+
+					await ShowSavedFileMessage(fileName);
+					Logger.WriteLine("Saved screenshot of " + deckName + " to file: " + fileName, "Export");
+				}
+			}
 		}
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
