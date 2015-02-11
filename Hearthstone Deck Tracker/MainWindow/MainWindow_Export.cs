@@ -73,28 +73,21 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var deckName = DeckList.Instance.ActiveDeckVersion.Name;
-			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deckName);
+			var deck = DeckList.Instance.ActiveDeckVersion;
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
 			screenShotWindow.Shutdown();
 
 			if (pngEncoder != null)
 			{
-				var saveFileDialog = new SaveFileDialog();
-				saveFileDialog.FileName = deckName;
-				saveFileDialog.DefaultExt = ".png";
-				saveFileDialog.Filter = "PNG (*.png)|*.png";
+				var fileName = ShowSaveFileDialog(deck.Name, "png");
 
-				bool? result = saveFileDialog.ShowDialog();
-
-				if (result == true)
+				if (fileName != null)
 				{
-					var fileName = saveFileDialog.FileName;
-
 					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 						pngEncoder.Save(stream);
 
 					await ShowSavedFileMessage(fileName);
-					Logger.WriteLine("Saved screenshot of " + deckName + " to file: " + fileName, "Export");
+					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
 				}
 			}
 		}
@@ -105,20 +98,29 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 
+			var fileName = ShowSaveFileDialog(deck.Name, "xml");
+
+			if (fileName != null)
+			{
+				XmlManager<Deck>.Save(fileName, deck);
+				await ShowSavedFileMessage(fileName);
+				Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+			}
+		}
+
+		private string ShowSaveFileDialog(string filename, string ext)
+		{
 			var saveFileDialog = new SaveFileDialog();
-			saveFileDialog.FileName = deck.Name;
-			saveFileDialog.DefaultExt = ".xml";
-			saveFileDialog.Filter = "XML (*.xml)|*.xml";
+			saveFileDialog.FileName = filename;
+			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
+			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
 
 			bool? result = saveFileDialog.ShowDialog();
 
 			if (result == true)
-			{
-				var path = saveFileDialog.FileName;
-				XmlManager<Deck>.Save(path, deck);
-				await ShowSavedFileMessage(path);
-				Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + path, "Export");
-			}
+				return saveFileDialog.FileName;
+
+			return null;
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -135,7 +137,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
 			var result = await this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
-			Logger.WriteLine("Saved to " + fileName, "Screenshot");
 			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(fileName));
 		}
