@@ -120,6 +120,16 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Logger.WriteLine("Error updating updater\n" + e);
 			}
+			try
+			{
+				//updater used pre v0.9.6
+				if(File.Exists("Updater.exe"))   
+					File.Delete("Updater.exe");
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine("Error deleting Updater.exe\n" + e);
+			}
 
 			Helper.MainWindow = this;
 			/*_configPath =*/
