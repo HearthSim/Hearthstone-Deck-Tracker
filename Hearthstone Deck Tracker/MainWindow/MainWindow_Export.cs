@@ -72,13 +72,23 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var fileName = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, DeckList.Instance.ActiveDeckVersion.Name);
-
+			var deck = DeckList.Instance.ActiveDeckVersion;
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
 			screenShotWindow.Shutdown();
-			if(fileName == null)
-				await this.ShowMessageAsync("", "Error saving screenshot");
-			else
-				await ShowSavedFileMessage(fileName, "Screenshots");
+
+			if (pngEncoder != null)
+			{
+				var fileName = Helper.ShowSaveFileDialog(deck.Name, "png");
+
+				if (fileName != null)
+				{
+					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+						pngEncoder.Save(stream);
+
+					await this.ShowSavedFileMessage(fileName);
+					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+				}
+			}
 		}
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
@@ -86,10 +96,15 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
-			var path = Helper.GetValidFilePath("SavedDecks", deck.Name, ".xml");
-			XmlManager<Deck>.Save(path, deck);
-			await ShowSavedFileMessage(path, "SavedDecks");
-			Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + path, "Export");
+
+			var fileName = Helper.ShowSaveFileDialog(deck.Name, "xml");
+
+			if (fileName != null)
+			{
+				XmlManager<Deck>.Save(fileName, deck);
+				await this.ShowSavedFileMessage(fileName);
+				Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+			}
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -100,15 +115,6 @@ namespace Hearthstone_Deck_Tracker
 			Clipboard.SetText(Helper.DeckToIdString(deck));
 			this.ShowMessage("", "copied to clipboard");
 			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard", "Export");
-		}
-
-		public async Task ShowSavedFileMessage(string fileName, string dir)
-		{
-			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
-			var result = await this.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
-			Logger.WriteLine("Saved to " + fileName, "Screenshot");
-			if(result == MessageDialogResult.Negative)
-				Process.Start(Path.GetDirectoryName(Application.ResourceAssembly.Location) + "\\" + dir);
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)

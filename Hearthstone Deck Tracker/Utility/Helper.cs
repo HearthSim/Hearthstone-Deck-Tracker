@@ -131,24 +131,36 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static string ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
+		public static PngBitmapEncoder ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
 		{
 			try
 			{
 				var rtb = new RenderTargetBitmap((int)dlv.ActualWidth, (int)dlv.ActualHeight, dpiX, dpiY, PixelFormats.Pbgra32);
 				rtb.Render(dlv);
+
 				var encoder = new PngBitmapEncoder();
 				encoder.Frames.Add(BitmapFrame.Create(rtb));
-
-				var path = GetValidFilePath("Screenshots", name, ".png");
-				using(var stream = new FileStream(path, FileMode.Create, FileAccess.Write))
-					encoder.Save(stream);
-				return path;
+				return encoder;
 			}
 			catch(Exception)
 			{
 				return null;
 			}
+		}
+
+		public static string ShowSaveFileDialog(string filename, string ext)
+		{
+			var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+			saveFileDialog.FileName = filename;
+			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
+			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
+
+			bool? result = saveFileDialog.ShowDialog();
+
+			if (result == true)
+				return saveFileDialog.FileName;
+
+			return null;
 		}
 
 		public static string GetValidFilePath(string dir, string name, string extension)

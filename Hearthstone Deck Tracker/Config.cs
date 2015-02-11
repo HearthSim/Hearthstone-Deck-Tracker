@@ -606,7 +606,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
 
-		private string _currentLogFile;
 		private GameDetailsConfig _gameDetails;
 
 		public GameDetailsConfig GameDetails
@@ -658,11 +657,6 @@ namespace Hearthstone_Deck_Tracker
 			get { return Path.Combine(DataDir, "Replays"); }
 		}
 
-		public string LogFilePath
-		{
-			get { return Instance._currentLogFile ?? GetLogFileName(); }
-		}
-
 		public static Config Instance
 		{
 			get
@@ -690,14 +684,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private Config()
 		{
-		}
-
-		private string GetLogFileName()
-		{
-			var date = DateTime.Now;
-			Instance._currentLogFile = string.Format("Logs/log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour, date.Minute,
-			                                         date.Second);
-			return _currentLogFile;
 		}
 
 		public static void Save()

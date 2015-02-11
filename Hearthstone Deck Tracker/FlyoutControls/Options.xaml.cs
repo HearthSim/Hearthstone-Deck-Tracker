@@ -1390,12 +1390,19 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 		}
 
-		private void BtnSaveLog_OnClick(object sender, RoutedEventArgs e)
+		private async void BtnSaveLog_OnClick(object sender, RoutedEventArgs e)
 		{
-			Directory.CreateDirectory("Logs");
-			using(var sr = new StreamWriter(Config.Instance.LogFilePath, false))
-				sr.Write(TextBoxLog.Text);
-			Helper.MainWindow.ShowMessage("", "Saved log to file: " + Config.Instance.LogFilePath);
+			var date = DateTime.Now;
+			var logName = string.Format("log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second);
+			var fileName = Helper.ShowSaveFileDialog(logName, "txt");
+
+			if (fileName != null)
+			{
+				using (var sr = new StreamWriter(fileName, false))
+					sr.Write(TextBoxLog.Text);
+
+				await Helper.MainWindow.ShowSavedFileMessage(fileName);
+			}
 		}
 
 		private void BtnClear_OnClick(object sender, RoutedEventArgs e)
