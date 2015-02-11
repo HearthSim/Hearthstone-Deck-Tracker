@@ -31,7 +31,7 @@ namespace Updater
 				if(Process.GetProcesses().Any(p => p.Id == procId))
 				{
 					Process.GetProcessById(procId).Kill();
-					Console.WriteLine("Killed Hearthston Deck Tracker process");
+					Console.WriteLine("Killed Hearthstone Deck Tracker process");
 				}
 			}
 			catch
@@ -76,8 +76,6 @@ namespace Updater
 				ZipFile.ExtractToDirectory(filePath, "temp");
 				const string newPath = "temp\\Hearthstone Deck Tracker\\";
 				CopyFiles("temp", newPath);
-				Console.WriteLine("Cleaning up...");
-				Console.WriteLine("Done!");
 
 				Process.Start("Hearthstone Deck Tracker.exe");
 			}
@@ -89,8 +87,19 @@ namespace Updater
 			}
 			finally
 			{
-				if(Directory.Exists("temp"))
-					Directory.Delete("temp", true);
+				try
+				{
+					Console.WriteLine("Cleaning up...");
+
+					if(Directory.Exists("temp"))
+						Directory.Delete("temp", true);
+
+					Console.WriteLine("Done!");
+				}
+				catch
+				{
+					Console.WriteLine("Failed to delete temp file directory");
+				}
 			}
 		}
 
