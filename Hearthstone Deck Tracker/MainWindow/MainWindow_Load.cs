@@ -670,6 +670,14 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
 
 			UpdatePanelVersionComboBox(DeckList.Instance.ActiveDeck);
+			if(DeckList.Instance.ActiveDeck != null && Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
+			{
+				Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				Overlay.ListViewPlayer.Items.Refresh();
+				PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				PlayerWindow.ListViewPlayer.Items.Refresh();
+				Logger.WriteLine("Set player itemsource as playerdeck", "Tracker");
+			}
 			ManaCurveMyDecks.SetDeck(DeckList.Instance.ActiveDeck);
 			EnableMenuItems(DeckList.Instance.ActiveDeck != null);
 		}

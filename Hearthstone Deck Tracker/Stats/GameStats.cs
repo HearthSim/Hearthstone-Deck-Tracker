@@ -178,11 +178,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId) && int.Parse(HearthStatsDeckVersionId) > 0; }
 		}
 
+		public bool HasHearthStatsDeckId
+		{
+			get { return !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0; }
+		}
+
 		public bool BelongsToDeckVerion(Deck deck)
 		{
 			return PlayerDeckVersion == deck.Version
 			       || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
-			       || (!HasHearthStatsDeckVersionId && HearthStatsDeckId == deck.HearthStatsId);
+			       || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId);
 		}
 
 		public GameStats CloneWithNewId()

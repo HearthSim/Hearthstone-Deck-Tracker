@@ -188,12 +188,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(DeckStats.Games.Count == 0)
+				var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+				if(relevantGames.Count == 0)
 					return 0.0;
-				return 100.0 * DeckStats.Games.Count(g => g.Result == GameResult.Win) / DeckStats.Games.Count;
+				return 100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count;
 			}
 		}
-
+		
 		[XmlIgnore]
 		public string GetClass
 		{

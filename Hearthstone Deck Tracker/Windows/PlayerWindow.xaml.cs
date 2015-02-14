@@ -94,13 +94,13 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			var wins =
-				selectedDeck.DeckStats.Games.Count(
+				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion())).Count(
 				                                   g =>
 				                                   g.Result == GameResult.Win
 				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
 				                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 			var losses =
-				selectedDeck.DeckStats.Games.Count(
+				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion())).Count(
 				                                   g =>
 				                                   g.Result == GameResult.Loss
 				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
