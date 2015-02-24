@@ -760,11 +760,49 @@ namespace Hearthstone_Deck_Tracker
 							clipboardLines.Remove(url);
 							url = url.Replace("url:", "").Trim();
 						}
+						bool? isArenaDeck = null;
+						var arena = clipboardLines.FirstOrDefault(line => line.StartsWith("arena:"));
+						if(!string.IsNullOrEmpty(arena))
+						{
+							clipboardLines.Remove(arena);
+							bool isArena;
+							if(bool.TryParse(arena, out isArena))
+								isArenaDeck = isArena;
+						}
+						var tagsRaw = clipboardLines.FirstOrDefault(line => line.StartsWith("tags:"));
+						var tags = new List<string>();
+						if(!string.IsNullOrEmpty(tagsRaw))
+						{
+							clipboardLines.Remove(tagsRaw);
+							tags = tagsRaw.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+						}
 						clipboardLines.RemoveAt(0); //"netdeckimport"
 
 						var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n));
 						if(deck != null)
 						{
+							if(tags.Any())
+							{
+								bool reloadTags = false;
+								foreach(var tag in tags)
+								{
+									if(!DeckList.Instance.AllTags.Contains(tag))
+									{
+										DeckList.Instance.AllTags.Add(tag);
+										reloadTags = true;
+									}
+									deck.Tags.Add(tag);
+								}
+								if(reloadTags)
+								{
+									DeckList.Save();
+									Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+									Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
+								}
+							}
+
+							if(isArenaDeck.HasValue)
+								deck.IsArenaDeck = isArenaDeck.Value;
 							deck.Url = url;
 							deck.Note = url;
 							deck.Name = deckName;
