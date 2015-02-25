@@ -172,6 +172,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+        [XmlIgnore]
+        public string WinLossString
+        {
+            get
+            {
+                var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+                if (DeckStats.Games.Count == 0)
+                    return "0-0";
+                return String.Format("{0}-{1}", 
+                    relevantGames.Count(g => g.Result == GameResult.Win),
+                    relevantGames.Count(g => g.Result == GameResult.Loss));
+            }
+        }
+
 		[XmlIgnore]
 		public string WinPercentString
 		{
