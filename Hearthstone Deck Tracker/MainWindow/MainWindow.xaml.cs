@@ -1270,7 +1270,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null)
 				return;
-			_originalDeck = deck;
 			SetNewDeck(deck, true);
 		}
 

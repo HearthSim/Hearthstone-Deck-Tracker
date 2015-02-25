@@ -320,11 +320,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck != null)
 			{
+
 				ClearNewDeckSection();
 				DeselectDeck();
 				EditingDeck = editing;
 				if(editing)
+				{
 					editedDeckName = deck.Name;
+					_originalDeck = deck;
+				}
 				_newDeck = (Deck)deck.Clone();
 
 				_newDeck.Cards.Clear();
@@ -675,6 +679,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void AddDeckHistory()
 		{
+			if(_originalDeck == null)
+				return;
 			var currentClone = _originalDeck.Clone() as Deck;
 			if(currentClone == null)
 				return;
