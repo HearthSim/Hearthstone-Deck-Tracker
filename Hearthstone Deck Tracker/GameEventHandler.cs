@@ -663,6 +663,18 @@ namespace Hearthstone_Deck_Tracker
 			Game.AddPlayToCurrentGame(PlayType.OpponentHeroPower, turn, cardId);
 		}
 
+        public static void HandlePlayerFatigue(int currentDamage)
+        {
+            LogEvent("PlayerFatigue", "", currentDamage);
+            Game.PlayerFatigueCount = currentDamage;
+        }
+
+        public static void HandleOpponentFatigue(int currentDamage)
+        {
+            LogEvent("OpponentFatigue", "", currentDamage);
+            Game.OpponentFatigueCount = currentDamage;
+        }
+
 		#region IGameHandlerImplementation
 
 		void IGameHandler.HandlePlayerBackToHand(string cardId, int turn)
@@ -819,6 +831,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			SetGameMode(mode);
 		}
+
+        void IGameHandler.HandlePlayerFatigue(int currentDamage)
+        {
+            HandlePlayerFatigue(currentDamage);
+        }
+
+        void IGameHandler.HandleOpponentFatigue(int currentDamage)
+        {
+            HandleOpponentFatigue(currentDamage);
+        }
 
 		#endregion IGameHandlerImplementation
 	}

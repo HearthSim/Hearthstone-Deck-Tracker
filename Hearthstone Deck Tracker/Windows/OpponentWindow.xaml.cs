@@ -117,7 +117,6 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Text = "Hand: " + cardCount;
 			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-
 			if(cardsLeftInDeck <= 0)
 			{
 				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
