@@ -656,6 +656,7 @@ namespace Hearthstone_Deck_Tracker
 		private void MinimizeToTray()
 		{
 			_notifyIcon.Visible = true;
+			Hide();
 			Visibility = Visibility.Collapsed;
 			ShowInTaskbar = false;
 		}
