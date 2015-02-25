@@ -53,6 +53,9 @@
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblOpponentDeckCount" Text="Deck: 0" FontSize="14"
                                             VerticalAlignment="Center" />
             </StackPanel>
+            <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
+                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

@@ -561,11 +561,13 @@ namespace Hearthstone_Deck_Tracker
 			LblDrawChance1.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblCardCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			LblDeckCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 
 			LblOpponentDrawChance1.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentCardCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+            LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDeckCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
@@ -926,9 +928,14 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Card Counter":
 						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-                        // TODO
+                        // TODO: Although it would make sense to use this here, 
+                        // it would be good to have it as a separate option.
+                        // I can't make it work the other way around though :s
                         StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
 						break;
+                    case "Fatigue Counter":
+                        StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
+                        break;
 					case "Deck Title":
 						StackPanelPlayer.Children.Add(LblDeckTitle);
 						break;
@@ -955,9 +962,14 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Card Counter":
 						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-                        // TODO
+                        // TODO: Although it would make sense to use this here, 
+                        // it would be good to have it as a separate option.
+                        // I can't make it work the other way around though :s
                         StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
-						break;
+                        break;
+                    case "Fatigue Counter":
+                        StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
+                        break;
 					case "Win Rate":
 						StackPanelOpponent.Children.Add(LblWinRateAgainst);
 						break;

@@ -192,6 +192,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOpponentCardCount = false;
 
+        [DefaultValue(false)]
+        public bool HideOpponentFatigueCount = false;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardMarks = false;
 
@@ -209,6 +212,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
+
+        [DefaultValue(false)]
+        public bool HidePlayerFatigueCount = false;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;
@@ -325,11 +331,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OwnsGoldenStalagg = false;
 
-		[DefaultValue(new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter"})]
-		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Draw Chances", "Card Counter"};
+		[DefaultValue(new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
+		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
 
-		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"})]
-		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter"};
+		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
+		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
 
 		[DefaultValue(65)]
 		public double PlayerDeckHeight = 65;
