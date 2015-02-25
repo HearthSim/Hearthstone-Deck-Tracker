@@ -18,14 +18,16 @@
                 <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" DockPanel.Dock="Right" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="1.618*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="{Binding WinPercentString}" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" FontWeight="Medium" Foreground="Black"/>
-                        <Viewbox Stretch="Uniform" StretchDirection="DownOnly" Grid.Row="1" Margin="2,0">
-                            <TextBlock Text="{Binding WinLossString}" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" FontWeight="Medium" Foreground="Black" Grid.Row="1"/>
-                        </Viewbox>                        
-                    </Grid>                    
+                        <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" Margin="-1" Grid.Row="1" >
+                            <Viewbox Stretch="Uniform" StretchDirection="DownOnly" Margin="2,0">
+                                <TextBlock Text="{Binding WinLossString}" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" FontWeight="Medium" Foreground="Black"/>
+                            </Viewbox>
+                        </Border>
+                    </Grid>
                 </Border>
                 <TextBlock Text="{Binding NameAndVersion}" TextTrimming="CharacterEllipsis" Margin="10,0" FontSize="14" FontWeight="{Binding SelectedFontWeight, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </DockPanel>
