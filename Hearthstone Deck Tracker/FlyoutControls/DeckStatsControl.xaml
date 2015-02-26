@@ -71,7 +71,6 @@
                               VerticalAlignment="Top"
                               Height="auto" Grid.Row="0"
                               PreviewMouseLeftButtonDown="GroupboxClassOverview_OnPreviewMouseLeftButtonDown">
-                                    <ScrollViewer VerticalScrollBarVisibility="Disabled">
                                         <DataGrid IsReadOnly="True" Name="DataGridWinLossClass" AutoGenerateColumns="False"
                                       HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto"
                                       CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
@@ -195,17 +194,12 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                    </ScrollViewer>
                                 </GroupBox>
                                 <GroupBox Name="GroupboxDeckOverview" Header="Overview Deck:  wins - losses"
                               VerticalAlignment="Top"
                               Height="450" Grid.Row="1"
                               PreviewMouseLeftButtonDown="GroupBoxDeckOverview_PreviewMouseLeftButtonDown"
-                              ScrollViewer.CanContentScroll="True"
-                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                               ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     >
-                                    <ScrollViewer>
                                         <DataGrid IsReadOnly="True" Name="DataGridWinLoss" AutoGenerateColumns="False"
                                       HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Width="auto"
                                       CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
@@ -336,7 +330,6 @@
                                                 </DataGridTextColumn>
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                    </ScrollViewer>
                                 </GroupBox>
                             </Grid>
                         </TabItem>
@@ -475,171 +468,168 @@
                                 <GroupBox Name="GroupboxOverallDetailOverview" Header="Overview Detail: wins - losses"
                                           VerticalAlignment="Top"
                                           Height="auto" Grid.Row="1" Grid.ColumnSpan="2">
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal">
+                                    <DockPanel>
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                                             <CheckBox Name="CheckBoxApplyTagFiltersOS"  Content="Apply tag filters" ToolTip="Tags selected in DECKS > SORT / FILTER" Checked="CheckBoxApplyTagFilters_OnChecked" Unchecked="CheckBoxApplyTagFilters_OnUnchecked"/>
                                             <CheckBox Name="CheckboxPercent" Content="Show as percent"
                                                   Checked="CheckboxPercent_Checked"
                                                   Unchecked="CheckboxPercent_Unchecked" Margin="10,4"/>
                                         </StackPanel>
-
-                                        <ScrollViewer VerticalScrollBarVisibility="Disabled" Margin="0,5,0,0">
-                                                <DataGrid IsReadOnly="True" Name="DataGridOverallWinLoss"
-                                                      AutoGenerateColumns="False"
+                                        <DataGrid IsReadOnly="True" Name="DataGridOverallWinLoss" 
+                                                      AutoGenerateColumns="False" Margin="0,5,0,0"
                                                       HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto"
                                                       Width="auto"
                                                       CanUserAddRows="False" CanUserDeleteRows="False"
                                                       CanUserResizeRows="False"
                                                       CanUserReorderColumns="False" CanUserSortColumns="False"
                                                       CanUserResizeColumns="False">
-                                                    <DataGrid.Columns>
-                                                        <DataGridTemplateColumn Header="You \ Vs">
-                                                            <DataGridTemplateColumn.CellTemplate>
-                                                                <DataTemplate>
-                                                                    <StackPanel>
-                                                                        <Image Source="{Binding PlayerHeroImage}" Width="24" Height="24" Visibility="{Binding VisibilityImage}" />
-                                                                        <TextBlock Text="{Binding PlayerText}" Visibility="{Binding VisibilityText}" HorizontalAlignment="Center" FontWeight="Medium"/>
-                                                                    </StackPanel>
-                                                                </DataTemplate>
-                                                            </DataGridTemplateColumn.CellTemplate>
-                                                        </DataGridTemplateColumn>
-                                                        <DataGridTextColumn Binding="{Binding Druid}" MinWidth="47"
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn Header="You \ Vs">
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel>
+                                                                <Image Source="{Binding PlayerHeroImage}" Width="24" Height="24" Visibility="{Binding VisibilityImage}" />
+                                                                <TextBlock Text="{Binding PlayerText}" Visibility="{Binding VisibilityText}" HorizontalAlignment="Center" FontWeight="Medium"/>
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Binding="{Binding Druid}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/druid_small.png" Width="24"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/druid_small.png" Width="24"
                                                                        Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Hunter}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Hunter}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/hunter_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/hunter_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Mage}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Mage}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/mage_small.png" Width="24"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/mage_small.png" Width="24"
                                                                        Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Paladin}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Paladin}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/paladin_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/paladin_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Priest}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Priest}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/priest_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/priest_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Rogue}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Rogue}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/rogue_small.png" Width="24"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/rogue_small.png" Width="24"
                                                                        Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Shaman}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Shaman}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/shaman_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/shaman_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Warlock}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Warlock}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/warlock_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/warlock_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Binding="{Binding Warrior}" MinWidth="47"
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Binding="{Binding Warrior}" MinWidth="47"
                                                                         Width="auto">
-                                                            <DataGridTextColumn.HeaderTemplate>
-                                                                <DataTemplate>
-                                                                    <Image Source="../Resources/warrior_small.png"
+                                                    <DataGridTextColumn.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <Image Source="../Resources/warrior_small.png"
                                                                        Width="24" Height="24" />
-                                                                </DataTemplate>
-                                                            </DataGridTextColumn.HeaderTemplate>
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                        <DataGridTextColumn Header="Total" Binding="{Binding Total}">
-                                                            <DataGridTextColumn.ElementStyle>
-                                                                <Style TargetType="TextBlock">
-                                                                    <Setter Property="HorizontalAlignment" Value="Center" />
-                                                                </Style>
-                                                            </DataGridTextColumn.ElementStyle>
-                                                        </DataGridTextColumn>
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </ScrollViewer>
-                                        </StackPanel>
+                                                        </DataTemplate>
+                                                    </DataGridTextColumn.HeaderTemplate>
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Total" Binding="{Binding Total}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </DockPanel>
                                 </GroupBox>
                             </Grid>
                         </TabItem>
