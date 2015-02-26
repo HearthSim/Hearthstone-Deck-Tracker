@@ -132,13 +132,39 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			Helper.MainWindow = this;
-			/*_configPath =*/
+
 			Config.Load();
 
+
 			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
+			var logFile = Path.Combine(logDir, "hdt_log.txt");
             if(!Directory.Exists(logDir))
 				Directory.CreateDirectory(logDir);
-			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(Path.Combine(logDir, "hdt_log.txt"), false)));
+			else
+            {
+				try
+				{
+					using(var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
+					{
+						//can access log file => no other instance of same installation running
+					}
+				}
+				catch(Exception)
+				{
+					try
+					{
+						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
+						using(var writer = new StreamWriter(errLogFile,true))
+							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
+					}
+					catch(Exception)
+					{
+					}
+					Application.Current.Shutdown();
+					return;
+				}
+			}
+			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
 
 			HsLogReader.Create();
 
