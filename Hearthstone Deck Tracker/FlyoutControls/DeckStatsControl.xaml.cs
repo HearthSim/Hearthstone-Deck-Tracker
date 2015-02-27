@@ -337,7 +337,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(selected != null)
 			{
-				if(selected.HasReplayFile)
+				if(selected.HasReplayFile && !Keyboard.IsKeyDown(Key.LeftCtrl)) //hold ctrl to open old game viewer
 					ReplayReader.Read(selected.ReplayFile);
 				else if(Config.Instance.StatsInWindow)
 				{
