@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error exporting deck: " + e.Message, "DeckExporter");
+				Logger.WriteLine("Error exporting deck: " + e, "DeckExporter");
 			}
 			finally
 			{
