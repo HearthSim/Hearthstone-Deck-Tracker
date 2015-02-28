@@ -20,7 +20,7 @@ using Microsoft.Win32;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using SystemColors = System.Windows.SystemColors;
 
 #endregion
@@ -1438,7 +1438,7 @@ namespace Hearthstone_Deck_Tracker
 			};
 			var dialogResult = dialog.ShowDialog();
 
-			if(dialogResult == true)
+			if(dialogResult == DialogResult.OK)
 			{
 				Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
 				Config.Save();
