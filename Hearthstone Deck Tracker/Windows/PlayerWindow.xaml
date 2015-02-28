@@ -57,6 +57,9 @@
                 <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblDeckCount" Text="Deck: 0" FontSize="14"
                                             VerticalAlignment="Center" />
             </StackPanel>
+            <StackPanel Name="StackPanelPlayerFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
+                <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
+            </StackPanel>
         </StackPanel>
 
     </Grid>

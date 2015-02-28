@@ -40,6 +40,10 @@ namespace Hearthstone_Deck_Tracker
 						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HidePlayerCardCount,
 						                                                          value => Config.Instance.HidePlayerCardCount = !value, true));
 						break;
+                    case "Fatigue Counter":
+                        Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Fatigue Counter", !Config.Instance.HidePlayerFatigueCount,
+						                                                          value => Config.Instance.HidePlayerFatigueCount = !value, true));
+						break;
 					case "Draw Chances":
 						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideDrawChances,
 						                                                          value => Config.Instance.HideDrawChances = !value, true));
@@ -66,6 +70,10 @@ namespace Hearthstone_Deck_Tracker
 						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HideOpponentCardCount,
 						                                                            value => Config.Instance.HideOpponentCardCount = !value, false));
 						break;
+                    case "Fatigue Counter":
+                        Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Fatigue Counter", !Config.Instance.HideOpponentFatigueCount,
+                                                                                    value => Config.Instance.HideOpponentFatigueCount = !value, false));
+                        break;
 					case "Draw Chances":
 						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideOpponentDrawChances,
 						                                                            value => Config.Instance.HideOpponentDrawChances = !value, false));
@@ -315,6 +323,19 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
+                if (configVersion <= new Version(0, 9, 6, 0))
+                {
+                    if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
+                    {
+                        Config.Instance.Reset("PanelOrderPlayer");
+                        converted = true;
+                    }
+                    if (!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
+                    {
+                        Config.Instance.Reset("PanelOrderOpponent");
+                        converted = true;
+                    }
+                }
 			}
 
 			if(converted)
