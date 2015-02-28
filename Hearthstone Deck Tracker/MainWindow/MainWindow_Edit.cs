@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker
 				                       })) == MessageDialogResult.Affirmative;
 
 			var clone = (Deck)DeckList.Instance.ActiveDeck.CloneWithNewId(false);
-			var originalStatsEntry = clone.DeckStats;
+			var originalStats = DeckList.Instance.ActiveDeck.DeckStats;
 			clone.ResetHearthstatsIds();
 			clone.Versions.ForEach(v => v.ResetHearthstatsIds());
 
@@ -122,7 +122,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.Decks.Add(clone);
 			//DeckPickerList.AddAndSelectDeck(clone);
 			DeckList.Save();
-			;
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
@@ -134,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 			//clone game stats
 			if(cloneStats)
 			{
-				foreach(var game in originalStatsEntry.Games)
+				foreach(var game in originalStats.Games)
 					newStatsEntry.AddGameResult(game.CloneWithNewId());
 				Logger.WriteLine("cloned gamestats", "Edit");
 			}

@@ -235,6 +235,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				ReplayFile = ReplayFile,
 				WasConceded = WasConceded,
 				VerifiedHeroes = VerifiedHeroes,
+				PlayerDeckVersion = PlayerDeckVersion,
 				IsClone = true
 			};
 			newGame.Save();
