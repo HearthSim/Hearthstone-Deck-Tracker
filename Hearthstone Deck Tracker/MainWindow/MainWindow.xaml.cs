@@ -24,7 +24,6 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
-using MahApps.Metro.Behaviours;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -123,7 +122,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				//updater used pre v0.9.6
-				if(File.Exists("Updater.exe"))   
+				if(File.Exists("Updater.exe"))
 					File.Delete("Updater.exe");
 			}
 			catch(Exception e)
@@ -138,10 +137,10 @@ namespace Hearthstone_Deck_Tracker
 
 			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
 			var logFile = Path.Combine(logDir, "hdt_log.txt");
-            if(!Directory.Exists(logDir))
+			if(!Directory.Exists(logDir))
 				Directory.CreateDirectory(logDir);
 			else
-            {
+			{
 				try
 				{
 					using(var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
@@ -154,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 					try
 					{
 						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
-						using(var writer = new StreamWriter(errLogFile,true))
+						using(var writer = new StreamWriter(errLogFile, true))
 							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
 					}
 					catch(Exception)
@@ -810,7 +809,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							if(tags.Any())
 							{
-								bool reloadTags = false;
+								var reloadTags = false;
 								foreach(var tag in tags)
 								{
 									if(!DeckList.Instance.AllTags.Contains(tag))
@@ -1072,6 +1071,8 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
+			MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)
@@ -1450,7 +1451,8 @@ namespace Hearthstone_Deck_Tracker
 				await
 				this.ShowMessageAsync("Delete \"" + deck + "\" on HearthStats?",
 				                      "This will delete the deck and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The deck or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
-				                      MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 
 			if(dialogResult == MessageDialogResult.Affirmative)
 			{
@@ -1461,7 +1463,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					await
 						this.ShowMessageAsync("Problem deleting deck",
-						                 "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
+						                      "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
 				}
 
 				DeckList.Instance.ActiveDeck.ResetHearthstatsIds();
@@ -1473,7 +1475,6 @@ namespace Hearthstone_Deck_Tracker
 					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
 					v.ResetHearthstatsIds();
 				});
-
 			}
 		}
 
@@ -1484,8 +1485,8 @@ namespace Hearthstone_Deck_Tracker
 			var dialogResult =
 				await
 				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-									  MessageDialogStyle.AffirmativeAndNegative,
-									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
 			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
 			Config.Save();
@@ -1499,8 +1500,8 @@ namespace Hearthstone_Deck_Tracker
 			var dialogResult =
 				await
 				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-									  MessageDialogStyle.AffirmativeAndNegative,
-									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
 			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
 			Config.Save();

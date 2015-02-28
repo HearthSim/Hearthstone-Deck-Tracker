@@ -182,7 +182,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-			
+
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)
@@ -251,6 +251,22 @@ namespace Hearthstone_Deck_Tracker
 			ManaCurveMyDecks.UpdateValues();
 
 			TagControlEdit.SetSelectedTags(deck.Tags);
+		}
+
+		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
+		{
+			DeckList.Instance.ActiveDeck.IsArenaDeck = true;
+			DeckPickerList.UpdateDecks();
+			MenuItemMoveDecktoArena.Visibility = Visibility.Collapsed;
+			MenuItemMoveDeckToConstructed.Visibility = Visibility.Visible;
+		}
+
+		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
+		{
+			DeckList.Instance.ActiveDeck.IsArenaDeck = false;
+			DeckPickerList.UpdateDecks();
+			MenuItemMoveDecktoArena.Visibility = Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = Visibility.Collapsed;
 		}
 	}
 }

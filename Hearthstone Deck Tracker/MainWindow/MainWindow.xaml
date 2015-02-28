@@ -218,6 +218,8 @@
                         <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
                         <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
                     </MenuItem>
+                    <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>
