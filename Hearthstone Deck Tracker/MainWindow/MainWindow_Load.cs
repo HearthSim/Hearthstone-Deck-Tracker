@@ -323,6 +323,19 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
+                if (configVersion <= new Version(0, 9, 6, 0))
+                {
+                    if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
+                    {
+                        Config.Instance.Reset("PanelOrderPlayer");
+                        converted = true;
+                    }
+                    if (!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
+                    {
+                        Config.Instance.Reset("PanelOrderOpponent");
+                        converted = true;
+                    }
+                }
 			}
 
 			if(converted)

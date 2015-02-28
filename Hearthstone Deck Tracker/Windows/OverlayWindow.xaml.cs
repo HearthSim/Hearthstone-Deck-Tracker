@@ -928,10 +928,6 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Card Counter":
 						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
-                        // TODO: Although it would make sense to use this here, 
-                        // it would be good to have it as a separate option.
-                        // I can't make it work the other way around though :s
-                        StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
 						break;
                     case "Fatigue Counter":
                         StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
@@ -962,10 +958,6 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Card Counter":
 						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-                        // TODO: Although it would make sense to use this here, 
-                        // it would be good to have it as a separate option.
-                        // I can't make it work the other way around though :s
-                        StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
                         break;
                     case "Fatigue Counter":
                         StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
