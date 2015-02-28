@@ -265,7 +265,7 @@ namespace Hearthstone_Deck_Tracker
 			_newDeck = null;
 			EditingDeck = false;
 			_newDeckUnsavedChanges = false;
-			UpdateTitle();
+			UpdateCardCount();
 		}
 
 		private void RemoveCardFromDeck(Card card)
@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				_newDeck.Cards.Remove(card);
 
-			UpdateTitle();
+			UpdateCardCount();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
 		}
@@ -296,7 +296,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				_newDeck.Cards.Add(card);
 
-			UpdateTitle();
+			UpdateCardCount();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
 			try
@@ -309,10 +309,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void UpdateTitle()
+		private void UpdateCardCount()
 		{
-			Title = _newDeck == null
-				        ? "Hearthstone Deck Tracker" : string.Format("Hearthstone Deck Tracker - Cards: {0}", _newDeck.Cards.Sum(c => c.Count));
+			var count = _newDeck == null ? 0 : _newDeck.Cards.Sum(c => c.Count);
+			LabelCardCount.Content = count + " / 30";
+			CardCountWarning.Visibility = count > 30 ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void SetNewDeck(Deck deck, bool editing = false)
@@ -340,7 +341,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateDeckHistoryPanel(deck, !editing);
 				UpdateDbListView();
 				ExpandNewDeck();
-				UpdateTitle();
+				UpdateCardCount();
 				ManaCurveMyDecks.SetDeck(_newDeck);
 			}
 		}
@@ -365,6 +366,8 @@ namespace Hearthstone_Deck_Tracker
 				MinWidth += GridNewDeck.ActualWidth;
 			}
 			DeckPickerListCover.Visibility = Visibility.Visible;
+			PanelVersionComboBox.Visibility = Visibility.Collapsed;
+			PanelCardCount.Visibility = Visibility.Visible;
 		}
 
 		private void CloseNewDeck()
@@ -382,6 +385,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			ClearNewDeckSection();
 			DeckPickerListCover.Visibility = Visibility.Hidden;
+			PanelVersionComboBox.Visibility = DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.HasVersions
+				                                  ? Visibility.Visible : Visibility.Collapsed;
+			PanelCardCount.Visibility = Visibility.Collapsed;
 		}
 
 		private void EnableMenuItems(bool enable)

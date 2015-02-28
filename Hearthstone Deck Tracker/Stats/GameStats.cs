@@ -21,6 +21,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public Guid GameId;
 		public string HearthStatsId;
+		private Guid? _deckId;
+		private string _deckName;
 		private List<TurnStats> _turnStats;
 
 		public GameStats()
@@ -66,7 +68,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
 
-		private Guid? _deckId;
 		public Guid DeckId
 		{
 			get
@@ -81,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { _deckId = value; }
 		}
 
-		private string _deckName;
 		public string DeckName
 		{
 			get

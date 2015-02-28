@@ -246,7 +246,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var card in deck.Cards)
 				_newDeck.Cards.Add(card);
 
-			UpdateTitle();
+			UpdateCardCount();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
 

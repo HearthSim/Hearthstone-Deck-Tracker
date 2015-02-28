@@ -311,10 +311,19 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding ShortVersionString}"/>
-                        </DataTemplate>
+                            </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
+                <StackPanel Name="PanelCardCount" Margin="10,6,10,0" Grid.Row="0" Orientation="Horizontal" Visibility="Collapsed">
+                    <Label Content="CARDS:"/>
+                    <Label Name="LabelCardCount" Content="0 / 30"/>
+                    <Rectangle Name="CardCountWarning" Width="16" Height="16" Visibility="Collapsed" Margin="3,0,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_warning}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
                 <ListView x:Name="ListViewDeck" Grid.Row="1"
                                     Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
