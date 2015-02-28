@@ -332,6 +332,7 @@ namespace Hearthstone_Deck_Tracker
 				_newDeck.Cards.Clear();
 				foreach(var card in deck.GetSelectedDeckVersion().Cards)
 					_newDeck.Cards.Add(card.Clone() as Card);
+				_newDeck.SelectedVersion = _newDeck.Version;
 
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
@@ -340,7 +341,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateDbListView();
 				ExpandNewDeck();
 				UpdateTitle();
-				ManaCurveMyDecks.SetDeck(deck);
+				ManaCurveMyDecks.SetDeck(_newDeck);
 			}
 		}
 
