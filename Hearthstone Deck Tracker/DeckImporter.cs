@@ -12,9 +12,8 @@ using System.Web;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using HtmlAgilityPack;
-using HtmlDocument = HtmlAgilityPack.HtmlDocument;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
 #endregion
 
@@ -421,55 +420,49 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-        private static async Task<Deck> ImportTempostorm(string url)
-        {
-            try
-            {
-                // check url looks correct
-                string pattern = "/decks/([^/]+)$";
-                Match match = System.Text.RegularExpressions.Regex.Match(url, pattern);
-                // get deck name from url, and post the json request
-                if (match.Success && match.Groups.Count == 2)
-                {
-                    string slug = match.Groups[1].ToString();
-                    var data = await PostJson("https://tempostorm.com/deck", "{\"slug\": \"" + slug + "\"}");
-                    // parse json
-                    var jsonObject = JsonConvert.DeserializeObject<dynamic>(data);
-                    if (jsonObject.success.ToObject<Boolean>())
-                    {
-                        var deck = new Deck();
+		private static async Task<Deck> ImportTempostorm(string url)
+		{
+			try
+			{
+				// check url looks correct
+				var pattern = "/decks/([^/]+)$";
+				var match = Regex.Match(url, pattern);
+				// get deck name from url, and post the json request
+				if(match.Success && match.Groups.Count == 2)
+				{
+					var slug = match.Groups[1].ToString();
+					var data = await PostJson("https://tempostorm.com/deck", "{\"slug\": \"" + slug + "\"}");
+					// parse json
+					var jsonObject = JsonConvert.DeserializeObject<dynamic>(data);
+					if(jsonObject.success.ToObject<Boolean>())
+					{
+						var deck = new Deck();
 
-                        deck.Name = jsonObject.deck.name.ToString();
-                        //deck.Class = jsonObject.deck.playerClass.ToString();
-                        var cards = jsonObject.deck.cards;
+						deck.Name = jsonObject.deck.name.ToString();
+						//deck.Class = jsonObject.deck.playerClass.ToString();
+						var cards = jsonObject.deck.cards;
 
-                        foreach (var item in cards)
-                        {
-                            var card = Game.GetCardFromName(item.card.name.ToString());                            
-                            card.Count = item.qty.ToString().Equals("2") ? 2 : 1;
-                            deck.Cards.Add(card);
-                            if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-                                deck.Class = card.PlayerClass;
-                        }
+						foreach(var item in cards)
+						{
+							var card = Game.GetCardFromName(item.card.name.ToString());
+							card.Count = item.qty.ToString().Equals("2") ? 2 : 1;
+							deck.Cards.Add(card);
+							if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+								deck.Class = card.PlayerClass;
+						}
 
-                        return deck;
-                    }
-                    else
-                    {
-                        throw new Exception("JSON request failed for '" + slug + "'.");
-                    }
-                }
-                else
-                {
-                    throw new Exception("The url (" + url + ") is not a vaild TempoStorm deck.");
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.WriteLine(e.ToString(), "DeckImporter");
-                return null;
-            }
-        }
+						return deck;
+					}
+					throw new Exception("JSON request failed for '" + slug + "'.");
+				}
+				throw new Exception("The url (" + url + ") is not a vaild TempoStorm deck.");
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "DeckImporter");
+				return null;
+			}
+		}
 
 		private static async Task<Deck> ImportHearthstoneheroes(string url)
 		{
@@ -603,18 +596,18 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-        public static async Task<string> PostJson(string url, string jsonData)
-        {
-            using (var wc = new WebClient())
-            {
-                wc.Encoding = Encoding.UTF8;
-                wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+		public static async Task<string> PostJson(string url, string jsonData)
+		{
+			using(var wc = new WebClient())
+			{
+				wc.Encoding = Encoding.UTF8;
+				wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-                string response = await wc.UploadStringTaskAsync(new Uri(url), jsonData);
+				var response = await wc.UploadStringTaskAsync(new Uri(url), jsonData);
 
-                return response;
-            }
-        }
+				return response;
+			}
+		}
 
 		public static async Task<HtmlDocument> GetHtmlDocJs(string url)
 		{

@@ -54,7 +54,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
-		public bool HearthStatsIdsAlreadyReset { get; set; }
 
 
 		public Deck()
@@ -72,15 +71,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckId = Guid.NewGuid();
 		}
 
-		public void ResetHearthstatsIds()
-		{
-			HearthStatsArenaId = null;
-			HearthStatsDeckVersionId = null;
-			HearthStatsId = null;
-			_hearthStatsIdClone = null;
-			HearthStatsIdsAlreadyReset = true;
-		}
-		
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
@@ -115,6 +105,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Versions.Add(d.CloneWithNewId(true) as Deck);
 			}
 		}
+
+		public bool HearthStatsIdsAlreadyReset { get; set; }
 
 		[XmlIgnore]
 		public bool IsSelectedInGui
@@ -172,19 +164,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-        [XmlIgnore]
-        public string WinLossString
-        {
-            get
-            {
-                var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
-                if (DeckStats.Games.Count == 0)
-                    return "0-0";
-                return String.Format("{0}-{1}", 
-                    relevantGames.Count(g => g.Result == GameResult.Win),
-                    relevantGames.Count(g => g.Result == GameResult.Loss));
-            }
-        }
+		[XmlIgnore]
+		public string WinLossString
+		{
+			get
+			{
+				var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+				if(DeckStats.Games.Count == 0)
+					return "0-0";
+				return String.Format("{0}-{1}", relevantGames.Count(g => g.Result == GameResult.Win),
+				                     relevantGames.Count(g => g.Result == GameResult.Loss));
+			}
+		}
 
 		[XmlIgnore]
 		public string WinPercentString
@@ -208,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return 100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count;
 			}
 		}
-		
+
 		[XmlIgnore]
 		public string GetClass
 		{
@@ -326,6 +317,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void ResetHearthstatsIds()
+		{
+			HearthStatsArenaId = null;
+			HearthStatsDeckVersionId = null;
+			HearthStatsId = null;
+			_hearthStatsIdClone = null;
+			HearthStatsIdsAlreadyReset = true;
+		}
 
 		public bool? CheckIfArenaDeck()
 		{

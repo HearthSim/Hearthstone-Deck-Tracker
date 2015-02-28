@@ -245,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Enum.TryParse(newDeckClone.Class, out deckClass))
 				{
 					if(!DeckPickerList.SelectedClasses.Contains(deckClass))
-						DeckPickerList.SelectClasses(new List<HeroClassAll> { deckClass });
+						DeckPickerList.SelectClasses(new List<HeroClassAll> {deckClass});
 				}
 			}
 
@@ -254,7 +254,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SelectDeck(newDeckClone);
 			CloseNewDeck();
 			ClearNewDeckSection();
-
 		}
 
 		private void ClearNewDeckSection()
@@ -320,7 +319,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck != null)
 			{
-
 				ClearNewDeckSection();
 				DeselectDeck();
 				EditingDeck = editing;
@@ -399,7 +397,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//a menuitems clickevent does not fire if it has subitems
 			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
-			if(_newDeck.IsArenaDeck || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
+			if(_newDeck.IsArenaDeck
+			   || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
 			{
 				MenuItemSave.IsSubmenuOpen = false;
 				await SaveDeckWithOverwriteCheck();

@@ -53,9 +53,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedFileMessage(this MainWindow window, string fileName)
 		{
-			var settings = new MetroDialogSettings { NegativeButtonText = "Open folder" };
-			var result = await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
-			if (result == MessageDialogResult.Negative)
+			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
+			var result =
+				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(fileName));
 		}
 

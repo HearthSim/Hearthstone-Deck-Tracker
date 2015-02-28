@@ -94,17 +94,19 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			var wins =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion())).Count(
-				                                   g =>
-				                                   g.Result == GameResult.Win
-				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
+				            .Count(
+				                   g =>
+				                   g.Result == GameResult.Win
+				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
+				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 			var losses =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion())).Count(
-				                                   g =>
-				                                   g.Result == GameResult.Loss
-				                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
+				            .Count(
+				                   g =>
+				                   g.Result == GameResult.Loss
+				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
+				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
 			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
 		}
 

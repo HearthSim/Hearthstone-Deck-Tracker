@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,13 +75,13 @@ namespace Hearthstone_Deck_Tracker
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
 			screenShotWindow.Shutdown();
 
-			if (pngEncoder != null)
+			if(pngEncoder != null)
 			{
 				var fileName = Helper.ShowSaveFileDialog(deck.Name, "png");
 
-				if (fileName != null)
+				if(fileName != null)
 				{
-					using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+					using(var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 						pngEncoder.Save(stream);
 
 					await this.ShowSavedFileMessage(fileName);
@@ -99,7 +98,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var fileName = Helper.ShowSaveFileDialog(deck.Name, "xml");
 
-			if (fileName != null)
+			if(fileName != null)
 			{
 				XmlManager<Deck>.Save(fileName, deck);
 				await this.ShowSavedFileMessage(fileName);

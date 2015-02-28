@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Microsoft.Win32;
 using Color = System.Drawing.Color;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
@@ -62,7 +63,7 @@ namespace Hearthstone_Deck_Tracker
 			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
-			
+
 			if(currentVersion != null)
 			{
 				try
@@ -150,14 +151,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string ShowSaveFileDialog(string filename, string ext)
 		{
-			var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+			var saveFileDialog = new SaveFileDialog();
 			saveFileDialog.FileName = filename;
 			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
 			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
 
-			bool? result = saveFileDialog.ShowDialog();
+			var result = saveFileDialog.ShowDialog();
 
-			if (result == true)
+			if(result == true)
 				return saveFileDialog.FileName;
 
 			return null;

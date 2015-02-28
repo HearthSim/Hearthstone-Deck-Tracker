@@ -176,7 +176,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 
-				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId) && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
+				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId)
+				   && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
 					HearthStatsManager.DeleteMatchesAsync(selectedGames);
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();

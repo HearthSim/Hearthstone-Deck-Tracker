@@ -504,7 +504,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					localDecks.Where(x => x.HasHearthStatsId)
 					          .SelectMany(
 					                      x =>
-					                      x.VersionsIncludingSelf.Select(x.GetVersion).Where(v => !v.HasHearthStatsDeckVersionId)
+					                      x.VersionsIncludingSelf.Select(x.GetVersion)
+					                       .Where(v => !v.HasHearthStatsDeckVersionId)
 					                       .Select(v => new {version = v, hearthStatsId = x.HearthStatsIdForUploading}))
 					          .ToList();
 				if(localNewVersions.Any())
@@ -537,26 +538,31 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					if(!background)
 						controller.SetMessage("Uploading " + newMatches.Count + " new matches...");
 					Logger.WriteLine("Uploading " + newMatches.Count + " new matches...", "HearthStatsManager");
-					await Task.Run(() => { Parallel.ForEach(newMatches, match =>
+					await Task.Run(() =>
 					{
-						Deck deck;
-						if(match.game.HasHearthStatsDeckVersionId)
-
+						Parallel.ForEach(newMatches, match =>
 						{
-							var version =
-								match.deck.VersionsIncludingSelf.Where(v => v != null).Select(match.deck.GetVersion).Where(v => v != null)
-								     .FirstOrDefault(
-								                     d =>
-								                     d.HasHearthStatsDeckVersionId && d.HasHearthStatsDeckVersionId == match.game.HasHearthStatsDeckVersionId);
-								deck = version ?? match.deck.GetVersion(match.game.PlayerDeckVersion);
-						}
-						else if(match.game.PlayerDeckVersion != null)
-							deck = match.deck.GetVersion(match.game.PlayerDeckVersion);
-						else
-							deck = match.deck;
+							Deck deck;
+							if(match.game.HasHearthStatsDeckVersionId)
 
-						UploadMatch(match.game, deck, false);
-					}); });
+							{
+								var version =
+									match.deck.VersionsIncludingSelf.Where(v => v != null)
+									     .Select(match.deck.GetVersion)
+									     .Where(v => v != null)
+									     .FirstOrDefault(
+									                     d =>
+									                     d.HasHearthStatsDeckVersionId && d.HasHearthStatsDeckVersionId == match.game.HasHearthStatsDeckVersionId);
+								deck = version ?? match.deck.GetVersion(match.game.PlayerDeckVersion);
+							}
+							else if(match.game.PlayerDeckVersion != null)
+								deck = match.deck.GetVersion(match.game.PlayerDeckVersion);
+							else
+								deck = match.deck;
+
+							UploadMatch(match.game, deck, false);
+						});
+					});
 					DeckStatsList.Save();
 				}
 				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - 600; //10 minute overlap

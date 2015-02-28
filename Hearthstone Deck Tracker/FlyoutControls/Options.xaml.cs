@@ -1396,9 +1396,9 @@ namespace Hearthstone_Deck_Tracker
 			var logName = string.Format("log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second);
 			var fileName = Helper.ShowSaveFileDialog(logName, "txt");
 
-			if (fileName != null)
+			if(fileName != null)
 			{
-				using (var sr = new StreamWriter(fileName, false))
+				using(var sr = new StreamWriter(fileName, false))
 					sr.Write(TextBoxLog.Text);
 
 				await Helper.MainWindow.ShowSavedFileMessage(fileName);
