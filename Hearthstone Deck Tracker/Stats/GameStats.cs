@@ -66,6 +66,36 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
 
+		private Guid? _deckId;
+		public Guid DeckId
+		{
+			get
+			{
+				if(!_deckId.HasValue)
+				{
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Any(g => g == this));
+					_deckId = deck != null ? deck.DeckId : Guid.Empty;
+				}
+				return _deckId.Value;
+			}
+			set { _deckId = value; }
+		}
+
+		private string _deckName;
+		public string DeckName
+		{
+			get
+			{
+				if(string.IsNullOrEmpty(_deckName))
+				{
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId);
+					_deckName = deck != null ? deck.Name : "none";
+				}
+				return _deckName;
+			}
+			set { _deckName = value; }
+		}
+
 		[XmlIgnore]
 		public bool HasRank
 		{
