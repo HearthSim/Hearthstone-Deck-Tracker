@@ -49,10 +49,64 @@ namespace Hearthstone_Deck_Tracker
 				await controller.CloseAsync();
 
 				if(deck.MissingCards.Any())
-					this.ShowMissingCardsMessage(deck);
+				{
+					string missingcards = MissingCardsMessage(deck);
+					var hsRect = User32.GetHearthstoneRect(false);
+					if(((float)hsRect.Width / (float)hsRect.Height) > 1.5)
+						Helper.MainWindow.Overlay.ShowMissingCards(missingcards);
+					else
+						this.ShowMissingCardsMessage(missingcards);
+				}
 			}
 		}
 
+		public string MissingCardsMessage (Deck deck)
+		{
+			if(!deck.MissingCards.Any())
+			{
+				return (string)"";
+			}
+			var message = "The following cards were \nnot found:\n";
+			var totalDust = 0;
+			var promo = "";
+			var nax = "";
+			foreach(var card in deck.MissingCards)
+			{
+				message += "\n• " + card.LocalizedName;
+
+				int dust;
+				switch(card.Rarity)
+				{
+					case "Common":
+						dust = 40;
+						break;
+					case "Rare":
+						dust = 100;
+						break;
+					case "Epic":
+						dust = 400;
+						break;
+					case "Legendary":
+						dust = 1600;
+						break;
+					default:
+						dust = 0;
+						break;
+				}
+
+				if(card.Count == 2)
+					message += " x2";
+
+				if(card.Set.Equals("CURSE OF NAXXRAMAS", System.StringComparison.CurrentCultureIgnoreCase))
+					nax = "\nand the Naxxramas DLC ";
+				else if(card.Set.Equals("PROMOTION", System.StringComparison.CurrentCultureIgnoreCase))
+					promo = "\nand Promotion cards ";
+				else
+					totalDust += dust * card.Count;
+			}
+			message += string.Format("\n\nYou need {0} dust {1}{2}\nto craft the missing cards.", totalDust, nax, promo);
+			return message;
+		}
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
@@ -135,7 +189,8 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
 				return;
-			this.ShowMissingCardsMessage(deck);
+			string missingcards = MissingCardsMessage(deck);
+			this.ShowMissingCardsMessage(missingcards);
 		}
 	}
 }
