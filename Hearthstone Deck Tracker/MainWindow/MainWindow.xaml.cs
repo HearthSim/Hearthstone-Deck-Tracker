@@ -1065,14 +1065,16 @@ namespace Hearthstone_Deck_Tracker
 			Game.Reset();
 
 			if(selected != null)
+			{
 				Game.SetPremadeDeck((Deck)selected.Clone());
+				MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+				MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+			}
 
 			//needs to be true for automatic deck detection to work
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
-			MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)
