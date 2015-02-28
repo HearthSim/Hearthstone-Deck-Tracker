@@ -269,7 +269,7 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_LAST GAME" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT GAME" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="LOAD _FiLE" Click="MenuItemReplayFromFile_OnClick"/>
+                    <MenuItem Header="LOAD _FILE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
                 <!--<MenuItem Header="MENUITEM">
                 </MenuItem>-->
