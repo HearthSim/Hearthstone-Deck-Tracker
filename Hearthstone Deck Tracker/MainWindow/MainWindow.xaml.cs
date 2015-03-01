@@ -626,7 +626,7 @@ namespace Hearthstone_Deck_Tracker
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              d.Class == Game.PlayingAs && Game.PlayerDrawn.All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				                              d.Class == Game.PlayingAs && Game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
 				        .ToList();
 
 			if(decks.Contains(DeckList.Instance.ActiveDeckVersion))
