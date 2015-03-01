@@ -457,7 +457,7 @@
     </Compile>
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <SplashScreen Include="SplashScreen.png" />
-    <Content Include="HDTUpdater.exe">
+    <Content Include="HDTUpdate.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\abomination.png">
@@ -2594,6 +2594,22 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
+    rmdir /S /Q "..\Hearthstone Deck Tracker"
+    mkdir "..\Hearthstone Deck Tracker"
+    mkdir "..\Hearthstone Deck Tracker/Images"
+    mkdir "..\Hearthstone Deck Tracker/Files"
+    xcopy /E /Y "Images\*.*" "..\Hearthstone Deck Tracker\Images"
+    xcopy /E /Y "Files\*.*" "..\Hearthstone Deck Tracker\Files"
+    xcopy /Y "Hearthstone Deck Tracker.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "System.Windows.Interactivity.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "Version.xml" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

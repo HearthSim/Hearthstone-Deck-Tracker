@@ -108,11 +108,11 @@ namespace Hearthstone_Deck_Tracker
 
 			try
 			{
-				if(File.Exists("HDTUpdater_new.exe"))
+				if(File.Exists("HDTUpdate_new.exe"))
 				{
-					if(File.Exists("HDTUpdater.exe"))
-						File.Delete("HDTUpdater.exe");
-					File.Move("HDTUpdater_new.exe", "HDTUpdater.exe");
+					if(File.Exists("HDTUpdate.exe"))
+						File.Delete("HDTUpdate.exe");
+					File.Move("HDTUpdate_new.exe", "HDTUpdate.exe");
 				}
 			}
 			catch(Exception e)

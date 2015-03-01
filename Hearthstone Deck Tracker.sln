@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hearthstone Deck Tracker", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTTests", "HDTTests\HDTTests.csproj", "{A99438AD-6733-4FDA-928C-30C37255FF1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUpdater", "HDTUpdater\HDTUpdater.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUpdate", "HDTUpdate\HDTUpdate.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

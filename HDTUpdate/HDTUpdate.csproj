@@ -7,8 +7,8 @@
     <ProjectGuid>{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HDTUpdater</RootNamespace>
-    <AssemblyName>HDTUpdater</AssemblyName>
+    <RootNamespace>HDTUpdate</RootNamespace>
+    <AssemblyName>HDTUpdate</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
