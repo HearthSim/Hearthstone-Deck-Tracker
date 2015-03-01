@@ -324,7 +324,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
 				{
-					var classDecks = DeckList.Instance.Decks.Where(d => d.Class == Game.PlayingAs).ToList();
+					var classDecks = DeckList.Instance.Decks.Where(d => d.Class == Game.PlayingAs && !d.Archived).ToList();
 					if(classDecks.Count == 0)
 						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
 					else if(classDecks.Count == 1)
@@ -341,6 +341,12 @@ namespace Hearthstone_Deck_Tracker
 							           ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
 							           : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
 
+						if(deck.Archived)
+						{
+							Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
+							deck = null;
+						}
+						
 						if(deck != null)
 						{
 							Helper.MainWindow.NeedToIncorrectDeckMessage = false;
@@ -447,6 +453,13 @@ namespace Hearthstone_Deck_Tracker
 				}
 				Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 				_assignedDeck = selectedDeck;
+
+				// Unarchive the active deck after we have played a game with it
+				if (_assignedDeck.Archived)
+				{
+					Logger.WriteLine("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game", "GameEventHandler");
+					Helper.MainWindow.ArchiveDeck(_assignedDeck, false);
+				}
 
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 				{

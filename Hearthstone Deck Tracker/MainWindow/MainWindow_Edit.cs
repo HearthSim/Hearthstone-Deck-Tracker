@@ -86,8 +86,62 @@ namespace Hearthstone_Deck_Tracker
 			;
 			//DeckPickerList.RemoveDeck(deck);
 			DeckPickerList.UpdateDecks();
+			DeckPickerList.UpdateArchivedClassVisibility();
 			ListViewDeck.ItemsSource = null;
 			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
+		}
+
+		internal void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			ArchiveDeck(DeckList.Instance.ActiveDeck, true);
+		}
+
+		internal void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			ArchiveDeck(DeckList.Instance.ActiveDeck, false);
+		}
+
+		public void ArchiveDeck(Deck deck, bool archive)
+		{
+			if(deck == null)
+				return;
+
+			var oldArchived = deck.Archived;
+			if(oldArchived == archive)
+				return;
+
+			deck.Archived = archive;
+
+			try
+			{
+				DeckList.Save();
+				DeckPickerList.UpdateDecks();
+
+				if(archive)
+				{
+					SelectDeck(null);
+				}
+				else
+				{
+					DeckPickerList.SelectDeckAndAppropriateView(deck);
+					UpdateMenuItemVisibility(deck);
+				}
+
+				DeckPickerList.UpdateArchivedClassVisibility();
+
+				var archivedLog = archive ? "archived" : "unarchived";
+				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
+
+				if (oldArchived != archive && Config.Instance.HearthStatsAutoUploadNewDecks)
+				{
+					Logger.WriteLine(String.Format("auto uploading {0} deck", archivedLog), "ArchiveDeck");
+					HearthStatsManager.UpdateDeckAsync(deck, background: true);
+				}
+			}
+			catch (Exception)
+			{
+				Logger.WriteLine(String.Format("Error {0} deck", archive ? "archiving" : "unarchiving", deck.Name), "ArchiveDeck");
+			}
 		}
 
 		internal async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
@@ -106,6 +160,7 @@ namespace Hearthstone_Deck_Tracker
 			var originalStats = DeckList.Instance.ActiveDeck.DeckStats;
 			clone.ResetHearthstatsIds();
 			clone.Versions.ForEach(v => v.ResetHearthstatsIds());
+			clone.Archived = false;
 
 			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
 			{
@@ -140,7 +195,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			DeckStatsList.Save();
-			DeckPickerList.UpdateDecks();
+			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks)
 				HearthStatsManager.UploadDeckAsync(clone);
@@ -163,6 +218,7 @@ namespace Hearthstone_Deck_Tracker
 			var clone = (Deck)deck.CloneWithNewId(false);
 			clone.ResetVersions();
 			clone.ResetHearthstatsIds();
+			clone.Archived = false;
 
 			var originalStatsEntry = clone.DeckStats;
 
@@ -201,7 +257,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsList.Save();
 			//DeckPickerList.UpdateList();
-			DeckPickerList.UpdateDecks();
+			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks)
 				HearthStatsManager.UploadDeckAsync(clone);

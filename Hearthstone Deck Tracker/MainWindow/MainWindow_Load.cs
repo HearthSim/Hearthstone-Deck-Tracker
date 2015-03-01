@@ -559,7 +559,12 @@ namespace Hearthstone_Deck_Tracker
 			//DeckPickerList.ShowAll = Config.Instance.ShowAllDecks;
 			//DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
 
-			DeckPickerList.SelectClasses(Config.Instance.SelectedDeckPickerClasses.ToList());
+			// Don't select the 'archived' class on load
+			var selectedClasses = Config.Instance.SelectedDeckPickerClasses.Where(c => c.ToString() != "Archived").ToList();
+			if(selectedClasses.Count == 0)
+				selectedClasses.Add(HeroClassAll.All);
+
+			DeckPickerList.SelectClasses(selectedClasses);
 			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckType, true);
 
 			//Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;

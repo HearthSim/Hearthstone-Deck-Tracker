@@ -8,7 +8,7 @@
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
                       Title="Hearthstone Deck Tracker" Height="603" Width="660"
-                      MinHeight="603" MinWidth="660"
+                      MinHeight="{Binding ElementName=DeckPickerList, Path=MinWindowHeight}" MinWidth="660"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -220,6 +220,8 @@
                     <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
                     <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
                     <Separator />
+                    <MenuItem Header="_ARCHIVE" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
+                    <MenuItem Header="UN_ARCHIVE" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
                     <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
                     <MenuItem Header="CLONE">
                         <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />

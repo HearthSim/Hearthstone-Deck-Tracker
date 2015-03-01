@@ -30,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string HearthStatsId;
 
 		public DateTime LastEdited;
+		public bool Archived;
 
 		[XmlArray(ElementName = "MissingCards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -64,6 +65,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = string.Empty;
 			Url = string.Empty;
 			Name = string.Empty;
+			Archived = false;
 			SyncWithHearthStats = null;
 			HearthStatsId = string.Empty;
 			Version = SerializableVersion.Default;
@@ -73,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
-		            DateTime lastEdited, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
+		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
 		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
 		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null)
 
@@ -88,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Note = note;
 			Url = url;
 			LastEdited = lastEdited;
+			Archived = archived;
 			Version = version;
 			SyncWithHearthStats = syncWithHearthStats;
 			HearthStatsId = hearthStatsId;
@@ -312,7 +315,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
 			                DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
 
@@ -373,7 +376,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object CloneWithNewId(bool isVersion)
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, MissingCards, Version, Versions, SyncWithHearthStats, "",
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, "",
 			                Guid.NewGuid(), HearthStatsDeckVersionId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
 		}
 

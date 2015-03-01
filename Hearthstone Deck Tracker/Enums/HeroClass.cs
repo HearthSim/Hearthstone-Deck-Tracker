@@ -24,6 +24,7 @@
 		Rogue,
 		Shaman,
 		Warlock,
-		Warrior
+		Warrior,
+		Archived
 	}
 }

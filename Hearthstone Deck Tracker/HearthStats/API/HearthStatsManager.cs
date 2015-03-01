@@ -340,6 +340,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						}
 						DeckList.Save();
 						Helper.MainWindow.DeckPickerList.UpdateDecks();
+						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 						background = false;
 					}
 					if(!background)
@@ -391,6 +392,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						}
 						DeckList.Save();
 						Helper.MainWindow.DeckPickerList.UpdateDecks();
+						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 					}
 					if(!background)
 					{
@@ -426,6 +428,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							}
 						}
 						Helper.MainWindow.DeckPickerList.UpdateDecks();
+						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 						DeckList.Save();
 						Logger.WriteLine("edited " + editedDecks.Count + " decks", "HearthStatsManager");
 					}
@@ -467,6 +470,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 					DeckStatsList.Save();
 					Helper.MainWindow.DeckPickerList.UpdateDecks();
+					Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 					Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
 				}
 

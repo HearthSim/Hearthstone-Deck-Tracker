@@ -170,6 +170,8 @@ namespace Hearthstone_Deck_Tracker
 			_newDeck.Name = deckName;
 
 			var newDeckClone = (Deck)_newDeck.Clone();
+			newDeckClone.Archived = false;
+
 			DeckList.Instance.Decks.Add(newDeckClone);
 
 			newDeckClone.LastEdited = DateTime.Now;
@@ -231,27 +233,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var tag in _newDeck.Tags)
 				SortFilterDecksFlyout.AddSelectedTag(tag);
 
-			if(Config.Instance.SelectedDeckType != DeckType.All)
-			{
-				if(newDeckClone.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Arena)
-					DeckPickerList.SelectDeckType(DeckType.Arena);
-				else if(!newDeckClone.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Constructed)
-					DeckPickerList.SelectDeckType(DeckType.Constructed);
-			}
-
-			if(!DeckPickerList.SelectedClasses.Contains(HeroClassAll.All))
-			{
-				HeroClassAll deckClass;
-				if(Enum.TryParse(newDeckClone.Class, out deckClass))
-				{
-					if(!DeckPickerList.SelectedClasses.Contains(deckClass))
-						DeckPickerList.SelectClasses(new List<HeroClassAll> {deckClass});
-				}
-			}
-
-			DeckPickerList.UpdateDecks();
-
-			DeckPickerList.SelectDeck(newDeckClone);
+			DeckPickerList.SelectDeckAndAppropriateView(newDeckClone);
 			CloseNewDeck();
 			ClearNewDeckSection();
 		}
@@ -533,6 +515,7 @@ namespace Hearthstone_Deck_Tracker
 				_newDeck.ResetVersions();
 				_newDeck.ResetHearthstatsIds();
 				_newDeck.DeckId = Guid.NewGuid();
+				_newDeck.Archived = false;
 			}
 			/*else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
 			{
@@ -558,6 +541,7 @@ namespace Hearthstone_Deck_Tracker
 			}*/
 
 			SaveDeck(EditingDeck, newVersion);
+			DeckPickerList.UpdateArchivedClassVisibility();
 
 			editedDeckName = string.Empty;
 		}

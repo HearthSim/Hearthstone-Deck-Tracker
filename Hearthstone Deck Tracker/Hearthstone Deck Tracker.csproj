@@ -2588,6 +2588,8 @@
     <Resource Include="Resources\ClassIcons\warlock.png" />
     <Resource Include="Resources\ClassIcons\warrior.png" />
     <Resource Include="Resources\ClassIcons\all.png" />
+    <Resource Include="Resources\ClassIcons\archived.png" />
+    <Resource Include="Resources\archived_marker.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

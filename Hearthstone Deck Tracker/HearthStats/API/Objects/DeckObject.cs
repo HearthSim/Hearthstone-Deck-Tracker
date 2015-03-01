@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 	public class DeckObject
 	{
 		private const string noteUrlRegex = @"\[(HDT-)?source=(?<url>(.*?))\]";
+		private const string noteArchived = "[HDT-archived]";
 		public int deck_version_id;
 		public int id;
 		public int klass_id;
@@ -25,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 			try
 			{
 				var url = "";
+				bool archived = false;
 				if(!string.IsNullOrEmpty(notes))
 				{
 					var match = Regex.Match(notes, noteUrlRegex);
@@ -32,6 +34,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					{
 						url = match.Groups["url"].Value;
 						notes = Regex.Replace(notes, noteUrlRegex, "");
+					}
+
+					if(notes.Contains(noteArchived))
+					{
+						archived = true;
+						notes = notes.Replace(noteArchived, "");
 					}
 				}
 
@@ -43,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					                    : cards.Where(x => x != null && x.count != null && x.id != null)
 					                           .Select(x => x.ToCard())
 					                           .Where(x => x != null)
-					                           .ToList(), tags ?? new string[0], notes ?? "", url, DateTime.Now, new List<Card>(),
+					                           .ToList(), tags ?? new string[0], notes ?? "", url, DateTime.Now, archived, new List<Card>(),
 				                    SerializableVersion.ParseOrDefault(version), new List<Deck>(), true, id.ToString(), Guid.NewGuid(),
 				                    deck_version_id.ToString());
 				if(versions.Length > 0)

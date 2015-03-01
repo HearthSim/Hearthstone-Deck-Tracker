@@ -198,6 +198,11 @@ namespace Hearthstone_Deck_Tracker
 			//_decksPath = Config.Instance.DataDir + "PlayerDecks.xml";
 			SetupDeckListFile();
 			DeckList.Load();
+
+			// Don't load active deck if it's archived
+			if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.Archived)
+				DeckList.Instance.ActiveDeck = null;
+
 			UpdateDeckList(DeckList.Instance.ActiveDeck);
 
 			//try
@@ -320,6 +325,7 @@ namespace Hearthstone_Deck_Tracker
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			//DeckPickerList.SortDecks();
 			DeckPickerList.UpdateDecks();
+			DeckPickerList.UpdateArchivedClassVisibility();
 
 			CopyReplayFiles();
 
@@ -666,7 +672,7 @@ namespace Hearthstone_Deck_Tracker
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              d.Class == Game.PlayingAs
+				                              d.Class == Game.PlayingAs && !d.Archived
 				                              && Game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
 				        .ToList();
 
@@ -684,7 +690,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(decks.Count > 0)
 			{
-				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, new List<Card>(),
+				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
 				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 
@@ -1088,17 +1094,24 @@ namespace Hearthstone_Deck_Tracker
 			{
 				DeckList.Instance.ActiveDeck = selected;
 				Game.SetPremadeDeck((Deck)selected.Clone());
-				MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-				MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-				MenuItemMissingCards.Visibility = selected.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-				MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(selected.Url) ? Visibility.Collapsed : Visibility.Visible;
-				MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(selected.Url) ? Visibility.Collapsed : Visibility.Visible;
+				UpdateMenuItemVisibility(selected);
 			}
 
 			//needs to be true for automatic deck detection to work
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
+		}
+
+		private void UpdateMenuItemVisibility(Deck deck)
+		{
+			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemArchive.Visibility = deck.Archived ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemUnarchive.Visibility = deck.Archived ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)

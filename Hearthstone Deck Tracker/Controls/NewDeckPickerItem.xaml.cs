@@ -73,6 +73,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return string.IsNullOrEmpty(Deck.Note) ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
+		public Visibility ArchivedVisibility
+		{
+			get { return Deck.Archived ? Visibility.Visible : Visibility.Collapsed; }
+		}
+
 		public string Note
 		{
 			get { return Deck.Note; }
@@ -113,6 +118,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemArchive.Visibility = deck.Archived ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemUnarchive.Visibility = deck.Archived ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -153,6 +160,16 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
 			Helper.MainWindow.BtnOpenDeckUrl_Click(sender, e);
+		}
+
+		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.BtnArchiveDeck_Click(sender, e);
+		}
+
+		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.BtnUnarchiveDeck_Click(sender, e);
 		}
 
 		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)

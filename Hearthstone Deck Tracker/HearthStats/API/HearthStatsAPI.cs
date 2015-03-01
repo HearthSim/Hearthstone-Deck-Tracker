@@ -713,6 +713,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(!string.IsNullOrEmpty(deck.Url))
 				note += "\r\n[HDT-source=" + deck.Url + "]";
 
+			if(deck.Archived)
+				note += "\r\n[HDT-archived]";
+
 			return note;
 		}
 
