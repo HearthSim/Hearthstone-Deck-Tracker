@@ -1332,6 +1332,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemHearthStatsSync.IsEnabled = enable;
 			MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
 			MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
+			MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
 		}
 
 		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
