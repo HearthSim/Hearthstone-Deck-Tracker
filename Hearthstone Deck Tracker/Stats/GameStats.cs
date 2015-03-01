@@ -67,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
+        public int OpponentRank { get; set; }
 
 		public Guid DeckId
 		{
@@ -107,6 +108,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get { return HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-"; }
 		}
+
+        [XmlIgnore]
+        public bool HasOpponentRank
+        {
+            get { return OpponentRank > 0 && OpponentRank <= 25; }
+        }
+
+        [XmlIgnore]
+        public string OpponentRankString
+        {
+            get { return HasOpponentRank && GameMode == GameMode.Ranked ? OpponentRank.ToString() : "-"; }
+        }
 
 		[XmlIgnore]
 		public string ResultString
