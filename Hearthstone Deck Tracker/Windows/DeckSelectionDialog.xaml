@@ -7,8 +7,14 @@
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
-        <local:DeckPicker x:Name="DeckPickerList" SelectionChanged="DeckPickerList_SelectionChanged" Height="auto"
-                          Margin="0,34,0,0" />
+        <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="0,34,0,0">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+        </ListView>
         <Label Content="Select your deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
                FontWeight="Bold" Margin="10,0,0,0" />
     </Grid>
