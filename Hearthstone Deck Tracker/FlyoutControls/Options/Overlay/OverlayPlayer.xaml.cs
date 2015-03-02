@@ -5,16 +5,16 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Decks
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 {
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class DecksPlayer
+	public partial class OverlayPlayer
 	{
 		private bool _initialized;
 
-		public DecksPlayer()
+		public OverlayPlayer()
 		{
 			InitializeComponent();
 		}
@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Decks
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 			SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
 			SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
+			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 
 			ElementSorterPlayer.IsPlayer = true;
 			foreach(var itemName in Config.Instance.PanelOrderPlayer)
@@ -99,8 +100,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Decks
 			SaveConfig(false);
 			Helper.MainWindow.Overlay.UpdateScaling();
 
-			if(Config.Instance.UseSameScaling && Helper.OptionsMain.OptionsDecksOpponent.SliderOverlayOpponentScaling.Value != scaling)
-				Helper.OptionsMain.OptionsDecksOpponent.SliderOverlayOpponentScaling.Value = scaling;
+			if(Config.Instance.UseSameScaling && Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value != scaling)
+				Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value = scaling;
 		}
 
 		private void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
@@ -166,6 +167,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Decks
 			Config.Save();
 			if(updateOverlay)
 				Helper.MainWindow.Overlay.Update(true);
+		}
+
+		private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = true;
+			Config.Instance.UseSameScaling = true;
+			Config.Save();
+		}
+
+		private void CheckboxSameScaling_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = false;
+			Config.Instance.UseSameScaling = false;
+			Config.Save();
 		}
 	}
 }

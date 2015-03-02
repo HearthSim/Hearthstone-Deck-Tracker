@@ -7,16 +7,16 @@ using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 {
 	/// <summary>
 	/// Interaction logic for Overlay.xaml
 	/// </summary>
-	public partial class GeneralOverlay
+	public partial class OverlayGeneral
 	{
 		private bool _initialized;
 
-		public GeneralOverlay()
+		public OverlayGeneral()
 		{
 			InitializeComponent();
 		}
@@ -30,12 +30,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
 			CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
 			CheckboxHideDecksInOverlay.IsChecked = Config.Instance.HideDecksInOverlay;
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
-			ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
 			CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
 			CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
 			CheckboxOverlayCardMarkToolTips.IsChecked = Config.Instance.OverlayCardMarkToolTips;
-			CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
-			CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 			CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
@@ -64,26 +61,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
 			if(!_initialized)
 				return;
 			Config.Instance.AdditionalOverlayTooltips = false;
-			SaveConfig(false);
-		}
-
-		private void ToggleSwitchExtraFeatures_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ExtraFeatures = true;
-			//Helper.MainWindow.Overlay.HookMouse();
-			CheckBoxForceExtraFeatures.IsEnabled = true;
-			SaveConfig(false);
-		}
-
-		private void ToggleSwitchExtraFeatures_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ExtraFeatures = false;
-			//Helper.MainWindow.Overlay.UnHookMouse();
-			CheckBoxForceExtraFeatures.IsEnabled = false;
 			SaveConfig(false);
 		}
 
@@ -273,24 +250,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardMarkToolTips = false;
-			Config.Save();
-		}
-
-		private void CheckBoxForceExtraFeatures_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ForceMouseHook = true;
-			Helper.MainWindow.Overlay.HookMouse();
-			Config.Save();
-		}
-
-		private void CheckBoxForceExtraFeatures_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ForceMouseHook = false;
-			Helper.MainWindow.Overlay.UnHookMouse();
 			Config.Save();
 		}
 

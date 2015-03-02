@@ -19,7 +19,9 @@
                                         <Hyperlink NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                                             RequestNavigate="Hyperlink_RequestNavigate">
                                             Download NetDeck (Chrome ext.)
-                                        </Hyperlink></TextBlock>
+                                        </Hyperlink>
+                    </TextBlock>
+                    <Button Width="200" Margin="10,5,0,0" HorizontalAlignment="Left" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonBase_OnClick"/>
 
                 </StackPanel>
             </ScrollViewer>

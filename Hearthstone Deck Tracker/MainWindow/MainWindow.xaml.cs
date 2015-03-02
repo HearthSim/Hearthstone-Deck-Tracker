@@ -482,8 +482,10 @@ namespace Hearthstone_Deck_Tracker
 		private void RemoveNoteUrls()
 		{
 			foreach(var deck in DeckList.Instance.Decks)
+			{
 				if(!string.IsNullOrEmpty(deck.Url))
 					deck.Note = deck.Note.Replace(deck.Url, "").Trim();
+			}
 			DeckList.Save();
 			Config.Instance.RemovedNoteUrls = true;
 			Config.Save();
@@ -1559,6 +1561,5 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HearthStatsAutoDeleteMatches = false;
 			Config.Save();
 		}
-
 	}
 }

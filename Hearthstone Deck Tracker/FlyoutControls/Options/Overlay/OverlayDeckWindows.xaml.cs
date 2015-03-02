@@ -12,16 +12,16 @@ using SystemColors = System.Windows.SystemColors;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 {
 	/// <summary>
 	/// Interaction logic for DeckWindows.xaml
 	/// </summary>
-	public partial class GeneralDeckWindows
+	public partial class OverlayDeckWindows
 	{
 		private bool _initialized;
 
-		public GeneralDeckWindows()
+		public OverlayDeckWindows()
 		{
 			InitializeComponent();
 		}

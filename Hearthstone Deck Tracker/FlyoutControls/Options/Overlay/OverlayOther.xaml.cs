@@ -6,16 +6,16 @@ using System.Windows.Input;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.General
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 {
 	/// <summary>
 	/// Interaction logic for Other.xaml
 	/// </summary>
-	public partial class GeneralOther
+	public partial class OverlayOther
 	{
 		private bool _initialized;
 
-		public GeneralOther()
+		public OverlayOther()
 		{
 			InitializeComponent();
 		}

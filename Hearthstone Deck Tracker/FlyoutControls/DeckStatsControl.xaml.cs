@@ -218,8 +218,7 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "%"));
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
 			//current version
-			var games =
-				filteredGames.Where(g => g.BelongsToDeckVerion(deck)).ToList();
+			var games = filteredGames.Where(g => g.BelongsToDeckVerion(deck)).ToList();
 			DataGridWinLoss.Items.Add(new WinLoss(games, "%", deck.Version));
 			DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", deck.Version));
 			//prev versions

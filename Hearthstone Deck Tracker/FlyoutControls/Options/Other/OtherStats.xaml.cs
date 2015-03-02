@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Windows;
 
 #endregion
@@ -191,6 +192,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 				return;
 			Config.Instance.SaveHSLogIntoReplay = false;
 			Config.Save();
+		}
+
+		private void CheckboxRecordReplays_Checked(object sender, RoutedEventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void CheckboxRecordReplays_Unchecked(object sender, RoutedEventArgs e)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

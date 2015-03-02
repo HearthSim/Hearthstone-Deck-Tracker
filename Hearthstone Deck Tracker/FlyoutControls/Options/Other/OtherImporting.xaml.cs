@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
+using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -79,6 +80,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 				return;
 			Config.Instance.AutoSaveOnImport = false;
 			Config.Save();
+		}
+
+		private async void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+		{
+			await
+				Helper.MainWindow.ShowMessageAsync("How this works:",
+				                                   "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.");
 		}
 	}
 }

@@ -4,41 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="Record Games">
+        <GroupBox Header="Stats">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <CheckBox x:Name="CheckboxRecordRanked" Content="Record Ranked"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                    <GroupBox Header="RECORD FOR">
+                        <StackPanel>
+                            <CheckBox x:Name="CheckboxRecordRanked" Content="Ranked"
+                                              HorizontalAlignment="Left" Margin="0,0,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
                                               Unchecked="CheckboxRecordRanked_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordArena" Content="Record Arena"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordArena" Content="Arena"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
                                               Unchecked="CheckboxRecordArena_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordCasual" Content="Record Casual"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordCasual" Content="Casual"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
                                               Unchecked="CheckboxRecordCasual_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordFriendly" Content="Record Friendly"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordFriendly" Content="Friendly"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
                                               Unchecked="CheckboxRecordFriendly_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordPractice" Content="Record Practice"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordPractice" Content="Practice"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
                                               Unchecked="CheckboxRecordPractice_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordSpectator" Content="Record Spectator"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordSpectator" Content="Spectator"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
                                               Unchecked="CheckboxRecordSpectator_Unchecked" />
-                    <CheckBox x:Name="CheckboxRecordOther" Content="Record Other"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                            <CheckBox x:Name="CheckboxRecordOther" Content="Other"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
                                               Unchecked="CheckboxRecordOther_Unchecked" />
+                        </StackPanel>
+                    </GroupBox>
                     <CheckBox x:Name="CheckboxDiscardGame"
-                                              Content="Discard game if incorrect deck"
+                                              Content="Discard game if deck does not match cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
                                               Unchecked="CheckboxDiscardGame_Unchecked" />
@@ -47,9 +51,14 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
                                               Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
+                    <CheckBox x:Name="CheckboxReplays" IsEnabled="False"
+                                              Content="Record Replays"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
+                                              Unchecked="CheckboxRecordReplays_Unchecked" />
                     <CheckBox x:Name="CheckboxSaveHSLogIntoReplayFile"
                                     	Content="Save original HS log into replay"
-                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                                    	HorizontalAlignment="Left" Margin="35,5,0,0"
                                     	VerticalAlignment="Top" Checked="CheckboxSaveHSLogIntoReplayFile_Checked" Unchecked="CheckboxSaveHSLogIntoReplayFile_Unchecked" />
                 </StackPanel>
             </ScrollViewer>

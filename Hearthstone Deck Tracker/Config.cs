@@ -391,6 +391,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
+		[DefaultValue(false)]
+		public bool RemovedNoteUrls = false;
+
 		[DefaultValue(660)]
 		public int ReplayWindowHeight = 660;
 
@@ -548,9 +551,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool TimerWindowOnStartup = false;
-
-		[DefaultValue(false)]
-		public bool RemovedNoteUrls = false;
 
 		[DefaultValue(null)]
 		public int? TimerWindowTop = null;

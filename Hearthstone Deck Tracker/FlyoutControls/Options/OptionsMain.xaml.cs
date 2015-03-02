@@ -3,9 +3,8 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Hearthstone_Deck_Tracker.FlyoutControls.Options.Decks;
-using Hearthstone_Deck_Tracker.FlyoutControls.Options.General;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Other;
+using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 
 #endregion
 
@@ -16,28 +15,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// </summary>
 	public partial class OptionsMain
 	{
-		public DecksGeneral OptionsDecksGeneral;
-		public DecksOpponent OptionsDecksOpponent;
-		public DecksPlayer OptionsDecksPlayer;
-		public GeneralDeckWindows OptionsGeneralDeckWindows;
-		public GeneralOther OptionsGeneralOther;
-		public GeneralOverlay OptionsGeneralOverlay;
 		public OtherExporting OptionsOtherExporting;
 		public OtherImporting OptionsOtherImporting;
 		public OtherLogging OptionsOtherLogging;
 		public OtherStats OptionsOtherStats;
 		public OtherTracker OptionsOtherTracker;
+		public OverlayDeckWindows OptionsOverlayDeckWindows;
+		public OverlayGeneral OptionsOverlayGeneral;
+		public OverlayInteractivity OptionsOverlayInteractivity;
+		public OverlayOpponent OptionsOverlayOpponent;
+		public OverlayOther OptionsOverlayOther;
+		public OverlayPlayer OptionsOverlayPlayer;
 
 		public OptionsMain()
 		{
 			InitializeComponent();
 			Helper.OptionsMain = this;
-			OptionsGeneralOverlay = new GeneralOverlay();
-			OptionsGeneralDeckWindows = new GeneralDeckWindows();
-			OptionsGeneralOther = new GeneralOther();
-			OptionsDecksGeneral = new DecksGeneral();
-			OptionsDecksOpponent = new DecksOpponent();
-			OptionsDecksPlayer = new DecksPlayer();
+			OptionsOverlayGeneral = new OverlayGeneral();
+			OptionsOverlayDeckWindows = new OverlayDeckWindows();
+			OptionsOverlayOther = new OverlayOther();
+			OptionsOverlayOpponent = new OverlayOpponent();
+			OptionsOverlayPlayer = new OverlayPlayer();
+			OptionsOverlayInteractivity = new OverlayInteractivity();
 			OptionsOtherExporting = new OtherExporting();
 			OptionsOtherImporting = new OtherImporting();
 			OptionsOtherLogging = new OtherLogging();
@@ -50,12 +49,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public void Load()
 		{
-			OptionsGeneralOverlay.Load();
-			OptionsGeneralOther.Load();
-			OptionsGeneralDeckWindows.Load();
-			OptionsDecksGeneral.Load();
-			OptionsDecksPlayer.Load();
-			OptionsDecksOpponent.Load();
+			OptionsOverlayGeneral.Load();
+			OptionsOverlayOther.Load();
+			OptionsOverlayDeckWindows.Load();
+			OptionsOverlayPlayer.Load();
+			OptionsOverlayOpponent.Load();
+			OptionsOverlayInteractivity.Load();
 			OptionsOtherTracker.Load();
 			OptionsOtherExporting.Load();
 			OptionsOtherImporting.Load();
@@ -66,32 +65,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsGeneralOverlay;
+			ContentControlOptions.Content = OptionsOverlayGeneral;
 		}
 
-		private void TreeViewItemGeneralDeckWindows_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsGeneralDeckWindows;
+			ContentControlOptions.Content = OptionsOverlayDeckWindows;
 		}
 
-		private void TreeViewItemGeneralOther_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemOverlayOther_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsGeneralOther;
+			ContentControlOptions.Content = OptionsOverlayOther;
 		}
 
-		private void TreeViewItemDecksGeneral_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsDecksGeneral;
+			ContentControlOptions.Content = OptionsOverlayOpponent;
 		}
 
-		private void TreeViewItemDecksOpponent_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsDecksOpponent;
-		}
-
-		private void TreeViewItemDecksPlayer_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsDecksPlayer;
+			ContentControlOptions.Content = OptionsOverlayPlayer;
 		}
 
 		private void TreeViewItemOtherTracker_OnSelected(object sender, RoutedEventArgs e)
@@ -117,6 +111,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemOtherLogging_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsOtherLogging;
+		}
+
+		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentControlOptions.Content = OptionsOverlayInteractivity;
 		}
 	}
 }

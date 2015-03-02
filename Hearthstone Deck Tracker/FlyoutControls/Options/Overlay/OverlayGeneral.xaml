@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.General.GeneralOverlay"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayGeneral"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="Overlay">
+        <GroupBox Header="General">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxHideOverlay" Content="Hide (completely)"
@@ -28,17 +28,15 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxHideOverlayInBackground_Checked"
                               Unchecked="CheckboxHideOverlayInBackground_Unchecked" />
-                    <DockPanel>
                         <CheckBox x:Name="CheckboxHideDecksInOverlay" Content="Hide decks"
                                   HorizontalAlignment="Left" Margin="10,5,0,0"
                                   VerticalAlignment="Top"
                                   Checked="CheckboxHideDecksInOverlay_Checked"
                                   Unchecked="CheckboxHideDecksInOverlay_Unchecked" />
                         <CheckBox x:Name="CheckboxHideTimers" Content="Hide timers"
-                                  HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
+                                  HorizontalAlignment="Left"
                                   VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
                                   Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
-                    </DockPanel>
                     <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxHideOpponentCardAge_Checked"
@@ -76,34 +74,19 @@
                               Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
                               HorizontalAlignment="Left" />
                     <DockPanel>
+                        <Slider x:Name="SliderOverlayOpacity" Margin="5,5,0,0" VerticalAlignment="Center" Value="100" Width="150"
+                                ValueChanged="SliderOverlayOpacity_ValueChanged" DockPanel.Dock="Right" />
                         <Label Content="Opacity:" HorizontalAlignment="Left" Margin="5,5,0,0"
-                               VerticalAlignment="Center" />
-                        <Slider x:Name="SliderOverlayOpacity" HorizontalAlignment="Left"
-                                Margin="5,5,0,0" VerticalAlignment="Center" Width="125" Value="100"
-                                ValueChanged="SliderOverlayOpacity_ValueChanged" />
+                               VerticalAlignment="Center" DockPanel.Dock="Left" />
                     </DockPanel>
-                    <DockPanel Margin="10,5,0,0">
-                        <Button Name="BtnUnlockOverlay" Content="Unlock" HorizontalAlignment="Left"
-                                VerticalAlignment="Top" Width="98" Click="BtnUnlockOverlay_Click" />
-                        <Button x:Name="BtnResetOverlay" Content="Reset" HorizontalAlignment="Left"
-                                Margin="10,0,0,0" VerticalAlignment="Top" Width="98"
-                                Click="BtnResetOverlay_Click" />
+                    <DockPanel Margin="5,5,0,0">
+                        <Button Name="BtnUnlockOverlay" Content="Unlock Overlay" Width="150" Click="BtnUnlockOverlay_Click" DockPanel.Dock="Right" />
+                        <Label Content="Move/resize objects:" DockPanel.Dock="Left"/>
                     </DockPanel>
-                    <GroupBox Header="Extra Features - may cause lag" Margin="5,10,5,0">
-                        <StackPanel>
-                            <TextBlock TextWrapping="Wrap">
-                                1) Gray out secrets when clicked<LineBreak />
-                                2) Hide leftmost cards when friendslist is open
-                            </TextBlock>
-                            <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures"
-                                                   OnLabel="Enabled" OffLabel="Disabled"
-                                                   Checked="ToggleSwitchExtraFeatures_Checked"
-                                                   Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
-                            <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force ON" Margin="10,0,0,0"
-                                      Checked="CheckBoxForceExtraFeatures_OnChecked"
-                                      Unchecked="CheckBoxForceExtraFeatures_OnUnchecked" />
-                        </StackPanel>
-                    </GroupBox>
+                    <DockPanel Margin="5,5,0,0">
+                        <Button x:Name="BtnResetOverlay" Content="Reset" Width="150" Click="BtnResetOverlay_Click" DockPanel.Dock="Right" />
+                        <Label Content="Reset positions:" DockPanel.Dock="Left"/>
+                    </DockPanel>
                 </StackPanel></ScrollViewer>
         </GroupBox>
     </Grid>

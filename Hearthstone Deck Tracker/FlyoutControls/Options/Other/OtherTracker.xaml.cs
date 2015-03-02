@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 				ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
 				Config.Instance.ThemeName = theme.Name;
 				//if(ComboboxWindowBackground.SelectedItem.ToString() != "Default")
-				Helper.OptionsMain.OptionsGeneralDeckWindows.UpdateAdditionalWindowsBackground();
+				Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 				SaveConfig(false);
 			}
 		}
