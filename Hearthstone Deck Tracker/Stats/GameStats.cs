@@ -217,7 +217,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			return PlayerDeckVersion == deck.Version
 			       || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
-			       || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId);
+			       || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
+				   || !IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0);
 		}
 
 		public GameStats CloneWithNewId()

@@ -219,18 +219,13 @@ namespace Hearthstone_Deck_Tracker
 			DataGridWinLoss.Items.Add(new WinLoss(filteredGames, "Win - Loss"));
 			//current version
 			var games =
-				filteredGames.Where(
-				                    g =>
-				                    g.BelongsToDeckVerion(deck) || !g.IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0))
-				             .ToList();
+				filteredGames.Where(g => g.BelongsToDeckVerion(deck)).ToList();
 			DataGridWinLoss.Items.Add(new WinLoss(games, "%", deck.Version));
 			DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", deck.Version));
 			//prev versions
 			foreach(var v in deck.Versions.OrderByDescending(d => d.Version))
 			{
-				games =
-					filteredGames.Where(g => g.BelongsToDeckVerion(v) || !g.IsAssociatedWithDeckVersion && v.Version == new SerializableVersion(1, 0))
-					             .ToList();
+				games = filteredGames.Where(g => g.BelongsToDeckVerion(v)).ToList();
 				DataGridWinLoss.Items.Add(new WinLoss(games, "%", v.Version));
 				DataGridWinLoss.Items.Add(new WinLoss(games, "Win - Loss", v.Version));
 			}
