@@ -32,6 +32,8 @@
                 <TextBlock Text="{Binding NameAndVersion}" TextTrimming="CharacterEllipsis" Margin="10,0" FontSize="14" FontWeight="{Binding SelectedFontWeight, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </DockPanel>
             <Label Content="{Binding TagList}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,23,48,0" Foreground="Black" />
+            <Ellipse Width="17" Height="17" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" HorizontalAlignment="Right" Margin="0,4,52,0" VerticalAlignment="Top" Visibility="{Binding NoteVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"/>
+            <Label Content="N" FontWeight="Medium" HorizontalAlignment="Right" Margin="0,-1,51,0" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Visibility="{Binding NoteVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" ToolTip="{Binding Note, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"/>
         </Grid>
     </Border>
     

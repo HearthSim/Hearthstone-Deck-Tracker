@@ -67,6 +67,16 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return Deck.TagList; }
 		}
 
+		public Visibility NoteVisibility
+		{
+			get { return string.IsNullOrEmpty(Deck.Note) ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public string Note
+		{
+			get { return Deck.Note; }
+		}
+
 		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
