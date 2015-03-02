@@ -891,7 +891,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					try
 					{
-						Process.Start("HDTUpdater.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
+						Process.Start("HDTUpdate.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
 						Close();
 						Application.Current.Shutdown();
 					}
