@@ -4,6 +4,10 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+// ReSharper disable RedundantUsingDirective
+using Hearthstone_Deck_Tracker.Windows;
+
+// ReSharper enable RedundantUsingDirective
 
 #endregion
 
