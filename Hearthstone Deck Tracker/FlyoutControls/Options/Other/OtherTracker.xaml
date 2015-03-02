@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Other.OtherTracker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="Tracker">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Theme:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="120"
+                                                  SelectionChanged="ComboboxTheme_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Accent:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="120"
+                                                  SelectionChanged="ComboboxAccent_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Language:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="120"
+                                                  SelectionChanged="ComboboxLanguages_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Key on game start:" HorizontalAlignment="Right"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="90"
+                                                  SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Key on game end:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="90"
+                                                  SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
+                    </DockPanel>
+                    <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
+                                              Content="Show Manacurve" HorizontalAlignment="Left"
+                                              Margin="10,5,0,0" VerticalAlignment="Top"
+                                              Checked="CheckboxManaCurveMyDecks_Checked"
+                                              Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
+                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
+                                              Unchecked="CheckboxConfigSaveAppData_Unchecked" />
+                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
+                                              Unchecked="CheckboxDataSaveAppData_Unchecked" />
+                    <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
+                                              Unchecked="CheckboxMinimizeTray_Unchecked" />
+                    <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
+                                              Unchecked="CheckboxStartMinimized_Unchecked" />
+                    <CheckBox x:Name="CheckboxStartWithWindows" Content="Start with windows"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
+                                              Unchecked="CheckboxStartWithWindows_Unchecked" />
+                    <CheckBox x:Name="CheckboxCloseWithHearthstone"
+                                              Content="Close with Hearthstone" HorizontalAlignment="Left"
+                                              Margin="10,5,0,0" VerticalAlignment="Top"
+                                              Checked="CheckboxCloseWithHearthstone_Checked"
+                                              Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
+                    <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
+                                              Unchecked="CheckboxCheckForUpdates_Unchecked" />
+                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
+                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                                    	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
+                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                    <CheckBox x:Name="CheckboxLogTab" Content="Show Log-tab"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
+                                              Unchecked="CheckboxLogTab_Unchecked" />
+                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
+                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
+                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path" Click="SelectSaveDataPath_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

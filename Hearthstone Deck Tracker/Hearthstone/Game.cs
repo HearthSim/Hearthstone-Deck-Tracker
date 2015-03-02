@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static ObservableCollection<Card> OpponentCards;
 		public static int OpponentHandCount;
-        public static int OpponentFatigueCount;
+		public static int OpponentFatigueCount;
 		public static bool IsInMenu;
 		public static bool IsUsingPremade;
 		public static int OpponentDeckCount;
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static ObservableCollection<Card> PlayerDeck;
 		public static ObservableCollection<Card> PlayerDrawn;
 		public static int PlayerHandCount;
-        public static int PlayerFatigueCount;
+		public static int PlayerFatigueCount;
 		public static string PlayingAgainst;
 		public static string PlayingAs;
 		public static string PlayerName;
@@ -153,11 +153,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentId = -1;
 			SavedReplay = false;
 			PlayerHandCount = 0;
-            PlayerFatigueCount = 0;
+			PlayerFatigueCount = 0;
 			OpponentSecretCount = 0;
 			OpponentCards.Clear();
 			OpponentHandCount = 0;
-            OpponentFatigueCount = 0;
+			OpponentFatigueCount = 0;
 			OpponentDeckCount = 30;
 			SecondToLastUsedId = null;
 			OpponentHandAge = new int[MaxHandSize];
@@ -238,8 +238,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return true;
 
 			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
-			if(drawnCard != null) 
-                drawnCard.Count++;
+			if(drawnCard != null)
+				drawnCard.Count++;
 			else
 			{
 				drawnCard = GetCardFromId(cardId);

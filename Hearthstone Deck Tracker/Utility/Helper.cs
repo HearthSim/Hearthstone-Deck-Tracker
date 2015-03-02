@@ -19,6 +19,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.Win32;
 using Color = System.Drawing.Color;
@@ -53,6 +54,7 @@ namespace Hearthstone_Deck_Tracker
 		};
 
 		public static MainWindow MainWindow { get; set; }
+		public static OptionsMain OptionsMain { get; set; }
 
 
 		public static Version CheckForUpdates(out Version newVersionOut)

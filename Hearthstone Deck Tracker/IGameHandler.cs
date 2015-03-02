@@ -34,8 +34,8 @@ namespace Hearthstone_Deck_Tracker
 		void SetGameMode(GameMode mode);
 		void HandleInMenu();
 		void HandleConcede();
-        void HandlePlayerFatigue(int currentDamage);
-        void HandleOpponentFatigue(int currentDamage);
+		void HandlePlayerFatigue(int currentDamage);
+		void HandleOpponentFatigue(int currentDamage);
 
 		void SetRank(int rank);
 

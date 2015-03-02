@@ -345,15 +345,15 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Text = "Hand: " + cardCount;
 			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-            if (cardsLeftInDeck <= 0)
-            {
-                LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
+			if(cardsLeftInDeck <= 0)
+			{
+				LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
 
-                LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
-                LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
-                return;
-            }
-            else LblOpponentFatigue.Text = "";
+				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
+				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
+				return;
+			}
+			LblOpponentFatigue.Text = "";
 
 			var handWithoutCoin = cardCount - (Game.OpponentHasCoin ? 1 : 0);
 
@@ -376,15 +376,15 @@ namespace Hearthstone_Deck_Tracker
 			LblCardCount.Text = "Hand: " + cardCount;
 			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
 
-            if(cardsLeftInDeck <= 0)
-            {
-                LblPlayerFatigue.Text = "Next draw fatigues for: " + (Game.PlayerFatigueCount + 1);
+			if(cardsLeftInDeck <= 0)
+			{
+				LblPlayerFatigue.Text = "Next draw fatigues for: " + (Game.PlayerFatigueCount + 1);
 
-                LblDrawChance2.Text = "[2]: -%";
-                LblDrawChance1.Text = "[1]: -%";
-                return;
-            }
-            else LblPlayerFatigue.Text = "";
+				LblDrawChance2.Text = "[2]: -%";
+				LblDrawChance1.Text = "[1]: -%";
+				return;
+			}
+			LblPlayerFatigue.Text = "";
 
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
@@ -561,13 +561,13 @@ namespace Hearthstone_Deck_Tracker
 			LblDrawChance1.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblCardCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
-            LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
+			LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			LblDeckCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 
 			LblOpponentDrawChance1.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDrawChance2.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentCardCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-            LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
+			LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDeckCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
@@ -929,9 +929,9 @@ namespace Hearthstone_Deck_Tracker
 					case "Card Counter":
 						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
 						break;
-                    case "Fatigue Counter":
-                        StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
-                        break;
+					case "Fatigue Counter":
+						StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
+						break;
 					case "Deck Title":
 						StackPanelPlayer.Children.Add(LblDeckTitle);
 						break;
@@ -958,10 +958,10 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					case "Card Counter":
 						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
-                        break;
-                    case "Fatigue Counter":
-                        StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
-                        break;
+						break;
+					case "Fatigue Counter":
+						StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
+						break;
 					case "Win Rate":
 						StackPanelOpponent.Children.Add(LblWinRateAgainst);
 						break;

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Other.OtherExporting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="Exporting to Hearthstone">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Speed:" />
+                        <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1"
+                                                  HorizontalAlignment="Right" Width="120"
+                                                  SelectionChanged="ComboboxExportSpeed_SelectionChanged">
+                            <system:String>Very Fast (20ms)</system:String>
+                            <system:String>Fast (40ms)</system:String>
+                            <system:String>Normal (60ms)</system:String>
+                            <system:String>Slow (100ms)</system:String>
+                            <system:String>Very Slow (150ms)</system:String>
+                        </ComboBox>
+                    </DockPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10,5,0,0" >
+                        <Label Content="Wait" />
+                        <TextBox x:Name="TextboxExportDelay" 
+                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                             TextWrapping="Wrap" Text="0" VerticalAlignment="Top"
+                                             Width="27" TextChanged="TextboxExportDelay_TextChanged" PreviewTextInput="TextboxExportDelay_PreviewTextInput"/>
+                        <Label Content="seconds before starting" />
+                    </StackPanel>
+                    <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked"
+                                              Unchecked="CheckboxPrioGolden_Unchecked" />
+                    <CheckBox x:Name="CheckboxExportName" Content="Set deck name"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
+                                              Unchecked="CheckboxExportName_Unchecked" />
+                    <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
+                                              Unchecked="CheckboxAutoClear_Unchecked" />
+                    <CheckBox x:Name="CheckboxExportPasteClipboard"
+                                              Content="Paste names from clipboard"
+                                              ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top"
+                                              Checked="CheckboxExportPasteClipboard_Checked"
+                                              Unchecked="CheckboxExportPasteClipboard_Unchecked" />
+                    <CheckBox x:Name="CheckboxGoldenFeugen" Content="Golden Feugen"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxGoldenFeugen_Checked"
+                                              Unchecked="CheckboxGoldenFeugen_Unchecked" />
+                    <CheckBox x:Name="CheckboxGoldenStalagg" Content="Golden Stalagg"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxGoldenStalagg_Checked"
+                                              Unchecked="CheckboxGoldenStalagg_Unchecked" />
+
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

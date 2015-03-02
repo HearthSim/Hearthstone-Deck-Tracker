@@ -142,6 +142,42 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="FlyoutControls\Options\Decks\DecksGeneral.xaml.cs">
+      <DependentUpon>DecksGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Decks\DecksOpponent.xaml.cs">
+      <DependentUpon>DecksOpponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Decks\DecksPlayer.xaml.cs">
+      <DependentUpon>DecksPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\General\GeneralDeckWindows.xaml.cs">
+      <DependentUpon>GeneralDeckWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\General\GeneralOther.xaml.cs">
+      <DependentUpon>GeneralOther.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\General\GeneralOverlay.xaml.cs">
+      <DependentUpon>GeneralOverlay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\OptionsMain.xaml.cs">
+      <DependentUpon>OptionsMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Other\OtherExporting.xaml.cs">
+      <DependentUpon>OtherExporting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Other\OtherImporting.xaml.cs">
+      <DependentUpon>OtherImporting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Other\OtherLogging.xaml.cs">
+      <DependentUpon>OtherLogging.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Other\OtherStats.xaml.cs">
+      <DependentUpon>OtherStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Other\OtherTracker.xaml.cs">
+      <DependentUpon>OtherTracker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
@@ -154,9 +190,6 @@
     </Compile>
     <Compile Include="FlyoutControls\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FlyoutControls\Options.xaml.cs">
-      <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="HearthStats\API\Objects\CardObject.cs" />
@@ -324,6 +357,54 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\Decks\DecksGeneral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Decks\DecksOpponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Decks\DecksPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\General\GeneralDeckWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\General\GeneralOther.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\General\GeneralOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\OptionsMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Other\OtherExporting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Other\OtherImporting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Other\OtherLogging.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Other\OtherStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Other\OtherTracker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddGameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -357,10 +438,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Help.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\Options.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

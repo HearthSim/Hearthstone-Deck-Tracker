@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				HeroClassAll heroClass;
 				if(Enum.TryParse(deck.Class, out heroClass))
 				{
-					SelectClasses(new List<HeroClassAll> { heroClass });
+					SelectClasses(new List<HeroClassAll> {heroClass});
 					dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 					if(dpi == null)
 						return;

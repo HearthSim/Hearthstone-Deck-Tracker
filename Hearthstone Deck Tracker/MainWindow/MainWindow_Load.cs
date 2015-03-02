@@ -9,7 +9,6 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -21,73 +20,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		private void FillElementSorters()
-		{
-			Options.ElementSorterPlayer.IsPlayer = true;
-			foreach(var itemName in Config.Instance.PanelOrderPlayer)
-			{
-				switch(itemName)
-				{
-					case "Deck Title":
-						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Deck Title", Config.Instance.ShowDeckTitle,
-						                                                          value => Config.Instance.ShowDeckTitle = value, true));
-						break;
-					case "Cards":
-						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Cards", !Config.Instance.HidePlayerCards,
-						                                                          value => Config.Instance.HidePlayerCards = !value, true));
-						break;
-					case "Card Counter":
-						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HidePlayerCardCount,
-						                                                          value => Config.Instance.HidePlayerCardCount = !value, true));
-						break;
-                    case "Fatigue Counter":
-                        Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Fatigue Counter", !Config.Instance.HidePlayerFatigueCount,
-						                                                          value => Config.Instance.HidePlayerFatigueCount = !value, true));
-						break;
-					case "Draw Chances":
-						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideDrawChances,
-						                                                          value => Config.Instance.HideDrawChances = !value, true));
-						break;
-					case "Wins":
-						Options.ElementSorterPlayer.AddItem(new ElementSorterItem("Wins", Config.Instance.ShowDeckWins,
-						                                                          value => Config.Instance.ShowDeckWins = value, true));
-						break;
-				}
-			}
-			Overlay.UpdatePlayerLayout();
-			PlayerWindow.UpdatePlayerLayout();
-
-			Options.ElementSorterOpponent.IsPlayer = false;
-			foreach(var itemName in Config.Instance.PanelOrderOpponent)
-			{
-				switch(itemName)
-				{
-					case "Cards":
-						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Cards", !Config.Instance.HideOpponentCards,
-						                                                            value => Config.Instance.HideOpponentCards = !value, false));
-						break;
-					case "Card Counter":
-						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Card Counter", !Config.Instance.HideOpponentCardCount,
-						                                                            value => Config.Instance.HideOpponentCardCount = !value, false));
-						break;
-                    case "Fatigue Counter":
-                        Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Fatigue Counter", !Config.Instance.HideOpponentFatigueCount,
-                                                                                    value => Config.Instance.HideOpponentFatigueCount = !value, false));
-                        break;
-					case "Draw Chances":
-						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Draw Chances", !Config.Instance.HideOpponentDrawChances,
-						                                                            value => Config.Instance.HideOpponentDrawChances = !value, false));
-						break;
-					case "Win Rate":
-						Options.ElementSorterOpponent.AddItem(new ElementSorterItem("Win Rate", Config.Instance.ShowWinRateAgainst,
-						                                                            value => Config.Instance.ShowWinRateAgainst = value, false));
-						break;
-				}
-			}
-			Overlay.UpdateOpponentLayout();
-			OpponentWindow.UpdateOpponentLayout();
-		}
-
 		public void CopyReplayFiles()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
@@ -323,19 +255,19 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
-                if (configVersion <= new Version(0, 9, 6, 0))
-                {
-                    if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
-                    {
-                        Config.Instance.Reset("PanelOrderPlayer");
-                        converted = true;
-                    }
-                    if (!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
-                    {
-                        Config.Instance.Reset("PanelOrderOpponent");
-                        converted = true;
-                    }
-                }
+				if(configVersion <= new Version(0, 9, 6, 0))
+				{
+					if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
+					{
+						Config.Instance.Reset("PanelOrderPlayer");
+						converted = true;
+					}
+					if(!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
+					{
+						Config.Instance.Reset("PanelOrderOpponent");
+						converted = true;
+					}
+				}
 			}
 
 			if(converted)
@@ -533,95 +465,90 @@ namespace Hearthstone_Deck_Tracker
 					MinimizeToTray();
 			}
 
-			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
-			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
-			Options.ComboboxTheme.SelectedItem = theme;
-			Options.ComboboxAccent.SelectedItem = accent;
+
+			Options.Load();
 
 
 			Game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
 			Game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
-			Options.CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
-			Options.CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
-			Options.CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
-			Options.CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
-			Options.CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
-			Options.CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
-			Options.CheckboxHideDecksInOverlay.IsChecked = Config.Instance.HideDecksInOverlay;
-			Options.CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
-			Options.CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
-			Options.CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
-			Options.CheckboxPlayerWindowOpenAutomatically.IsChecked = Config.Instance.PlayerWindowOnStart;
-			Options.CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
-			Options.CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;
-			Options.CheckboxTimerWindow.IsChecked = Config.Instance.TimerWindowOnStartup;
-			Options.CheckboxTimerTopmostHsForeground.IsChecked = Config.Instance.TimerWindowTopmostIfHsForeground;
-			Options.CheckboxTimerTopmostHsForeground.IsEnabled = Config.Instance.TimerWindowTopmost;
-			Options.CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
+			//Options.CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
+			//Options.CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
+			//Options.CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
+			//Options.CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
+			//Options.CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
+			//Options.CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;
+			//Options.CheckboxHideDecksInOverlay.IsChecked = Config.Instance.HideDecksInOverlay;
+			//Options.CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
+			//Options.CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
+			//Options.CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
+			//Options.CheckboxPlayerWindowOpenAutomatically.IsChecked = Config.Instance.PlayerWindowOnStart;
+			//Options.CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
+			//Options.CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;
+			//Options.CheckboxTimerWindow.IsChecked = Config.Instance.TimerWindowOnStartup;
+			//Options.CheckboxTimerTopmostHsForeground.IsChecked = Config.Instance.TimerWindowTopmostIfHsForeground;
+			//Options.CheckboxTimerTopmostHsForeground.IsEnabled = Config.Instance.TimerWindowTopmost;
+			//Options.CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
-			Options.CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
-			Options.CheckboxWinTopmostHsForeground.IsEnabled = Config.Instance.WindowsTopmost;
-			Options.CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
-			Options.CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
-			Options.CheckboxExportName.IsChecked = Config.Instance.ExportSetDeckName;
-			Options.CheckboxPrioGolden.IsChecked = Config.Instance.PrioritizeGolden;
-			Options.CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
-			Options.CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
-			Options.CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
-			Options.CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
-			Options.CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
-			Options.CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
-			Options.CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
-			Options.CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
-			Options.ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
-			Options.CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
-			Options.CheckboxRecordArena.IsChecked = Config.Instance.RecordArena;
-			Options.CheckboxRecordCasual.IsChecked = Config.Instance.RecordCasual;
-			Options.CheckboxRecordFriendly.IsChecked = Config.Instance.RecordFriendly;
-			Options.CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
-			Options.CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
-			Options.CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
-			Options.CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
-			Options.CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
-			Options.CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
-			Options.CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
-			Options.CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
-			Options.CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
-			Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
-			Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
-			Options.CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
-			Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
-			Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
-			Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
-			Options.CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
-			Options.CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
-			Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
-			Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
-			Options.CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			Options.CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
-			Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
-			Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
-			Options.CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
-			Options.CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
-			Options.CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
-			Options.CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
-			Options.CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
-			Options.CheckboxOverlayCardMarkToolTips.IsChecked = Config.Instance.OverlayCardMarkToolTips;
-			Options.ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
-			Options.CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
-			Options.CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
-			Options.CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
-			Options.CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
-			Options.CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
+			//Options.CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
+			//Options.CheckboxWinTopmostHsForeground.IsEnabled = Config.Instance.WindowsTopmost;
+			//Options.CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
+			//Options.CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
+			//Options.CheckboxExportName.IsChecked = Config.Instance.ExportSetDeckName;
+			//Options.CheckboxPrioGolden.IsChecked = Config.Instance.PrioritizeGolden;
+			//Options.CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
+			//Options.CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
+			//Options.CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
+			//Options.CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
+			//Options.CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
+			//Options.CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
+			//Options.CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
+			//Options.CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
+			//Options.ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
+			//Options.CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
+			//Options.CheckboxRecordArena.IsChecked = Config.Instance.RecordArena;
+			//Options.CheckboxRecordCasual.IsChecked = Config.Instance.RecordCasual;
+			//Options.CheckboxRecordFriendly.IsChecked = Config.Instance.RecordFriendly;
+			//Options.CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
+			//Options.CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
+			//Options.CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
+			//Options.CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
+			//Options.CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
+			//Options.CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
+			//Options.CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
+			//Options.CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
+			//Options.CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
+			//Options.CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
+			//Options.CheckboxOverlaySecretToolTipsOnly.IsChecked = Config.Instance.OverlaySecretToolTipsOnly;
+			//Options.CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
+			//Options.CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
+			//Options.CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
+			//Options.CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
+			//Options.CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
+			//Options.CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
+			//Options.CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
+			//Options.CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
+			//Options.CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
+			//Options.CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
+			//Options.CheckboxHideOverlayInSpectator.IsChecked = Config.Instance.HideOverlayInSpectator;
+			//Options.TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
+			//Options.CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
+			//Options.CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
+			//Options.CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
+			//Options.CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
+			//Options.CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
+			//Options.CheckboxOverlayCardMarkToolTips.IsChecked = Config.Instance.OverlayCardMarkToolTips;
+			//Options.ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
+			//Options.CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
+			//Options.CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
+			//Options.CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
+			//Options.CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
+			//Options.CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
 
-			Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
-			Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
-			Options.SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
-			Options.SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
-			Options.SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
+			//Options.SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
+			//Options.SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
+			//Options.SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
+			//Options.SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
+			//Options.SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 
 			//DeckPickerList.ShowAll = Config.Instance.ShowAllDecks;
 			//DeckPickerList.SetSelectedTags(Config.Instance.SelectedTags);
@@ -629,10 +556,10 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.SelectClasses(Config.Instance.SelectedDeckPickerClasses.ToList());
 			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckType, true);
 
-			Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
+			//Options.CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 
-			var delay = Config.Instance.DeckExportDelay;
-			Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
+			//var delay = Config.Instance.DeckExportDelay;
+			//Options.ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
 
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 
@@ -648,31 +575,31 @@ namespace Hearthstone_Deck_Tracker
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 
-			Options.ComboboxWindowBackground.SelectedItem = Config.Instance.SelectedWindowBackground;
-			Options.TextboxCustomBackground.IsEnabled = Config.Instance.SelectedWindowBackground == "Custom";
-			Options.TextboxCustomBackground.Text = string.IsNullOrEmpty(Config.Instance.WindowsBackgroundHex)
-				                                       ? "#696969" : Config.Instance.WindowsBackgroundHex;
-			Options.UpdateAdditionalWindowsBackground();
+			//Options.ComboboxWindowBackground.SelectedItem = Config.Instance.SelectedWindowBackground;
+			//Options.TextboxCustomBackground.IsEnabled = Config.Instance.SelectedWindowBackground == "Custom";
+			//Options.TextboxCustomBackground.Text = string.IsNullOrEmpty(Config.Instance.WindowsBackgroundHex)
+			//	                                       ? "#696969" : Config.Instance.WindowsBackgroundHex;
+			//Options.UpdateAdditionalWindowsBackground();
 
-			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
-				Options.ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
+			//if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
+			//	Options.ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 
 			if(!EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";
-			Options.ComboboxKeyPressGameStart.SelectedValue = Config.Instance.KeyPressOnGameStart;
+			//Options.ComboboxKeyPressGameStart.SelectedValue = Config.Instance.KeyPressOnGameStart;
 
 			if(!EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 				Config.Instance.KeyPressOnGameEnd = "None";
-			Options.ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
+			//Options.ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
-			Options.CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
+			//Options.CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
 
-			Options.CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
-			Options.CheckboxWindowCardToolTips.IsChecked = Config.Instance.WindowCardToolTips;
-			Options.CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
-			Options.CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
-			Options.CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
+			//Options.CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
+			//Options.CheckboxWindowCardToolTips.IsChecked = Config.Instance.WindowCardToolTips;
+			//Options.CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
+			//Options.CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
+			//Options.CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
 			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 

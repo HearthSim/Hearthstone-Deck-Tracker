@@ -105,9 +105,9 @@ namespace Hearthstone_Deck_Tracker
 					case "Card Counter":
 						StackPanelMain.Children.Add(StackPanelCount);
 						break;
-                    case "Fatigue Counter":
-                        StackPanelMain.Children.Add(StackPanelOpponentFatigue);
-                        break;
+					case "Fatigue Counter":
+						StackPanelMain.Children.Add(StackPanelOpponentFatigue);
+						break;
 					case "Win Rate":
 						StackPanelMain.Children.Add(LblWinRateAgainst);
 						break;
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(cardsLeftInDeck <= 0)
 			{
-                LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
+				LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
 
 				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
 				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";

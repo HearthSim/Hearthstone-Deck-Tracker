@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var deck in decks.OrderByDescending(d => d.Name))
 				ListViewDecks.Items.Add(new NewDeckPickerItem(deck));
 		}
-		
+
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var item = ListViewDecks.SelectedItem as NewDeckPickerItem;

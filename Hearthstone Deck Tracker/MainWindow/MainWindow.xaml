@@ -6,6 +6,7 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
+                      xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
                       Title="Hearthstone Deck Tracker" Height="603" Width="645"
                       MinHeight="603" MinWidth="645"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -59,7 +60,7 @@
         <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
             <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="Options"
                          Width="515">
-                <local:Options x:Name="Options" Margin="0,-35,0,0" />
+                <flyoutControls:OptionsMain x:Name="Options"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="Help"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">

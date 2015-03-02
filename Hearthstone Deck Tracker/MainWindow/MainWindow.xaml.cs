@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker
 
 			InitializeComponent();
 			Trace.AutoFlush = true;
-			Trace.Listeners.Add(new TextBoxTraceListener(Options.TextBoxLog));
+			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsOtherLogging.TextBoxLog));
 
 			EnableMenuItems(false);
 
@@ -279,12 +279,12 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.TimerWindowOnStartup)
 				TimerWindow.Show();
 
-			Options.ComboboxAccent.ItemsSource = ThemeManager.Accents;
-			Options.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
-			Options.ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
+			Options.OptionsOtherTracker.ComboboxAccent.ItemsSource = ThemeManager.Accents;
+			Options.OptionsOtherTracker.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
+			Options.OptionsOtherTracker.ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 
-			Options.ComboboxKeyPressGameStart.ItemsSource = EventKeys;
-			Options.ComboboxKeyPressGameEnd.ItemsSource = EventKeys;
+			Options.OptionsOtherTracker.ComboboxKeyPressGameStart.ItemsSource = EventKeys;
+			Options.OptionsOtherTracker.ComboboxKeyPressGameEnd.ItemsSource = EventKeys;
 
 			LoadConfig();
 			if(!Config.Instance.NetDeckClipboardCheck.HasValue)
@@ -302,8 +302,6 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.RemovedNoteUrls)
 				RemoveNoteUrls();
 
-			FillElementSorters();
-
 			//this has to happen before reader starts
 			//var lastDeck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
 
@@ -319,9 +317,6 @@ namespace Hearthstone_Deck_Tracker
 			UpdateDbListView();
 
 			_doUpdate = _foundHsDirectory;
-
-			Options.MainWindowInitialized();
-
 
 			//DeckPickerList.UpdateList();
 			//if(lastDeck != null)
@@ -643,7 +638,8 @@ namespace Hearthstone_Deck_Tracker
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              d.Class == Game.PlayingAs && Game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				                              d.Class == Game.PlayingAs
+				                              && Game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
 				        .ToList();
 
 			if(decks.Contains(DeckList.Instance.ActiveDeckVersion))
