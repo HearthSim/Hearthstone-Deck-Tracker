@@ -299,6 +299,9 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
+			if(!Config.Instance.RemovedNoteUrls)
+				RemoveNoteUrls();
+
 			FillElementSorters();
 
 			//this has to happen before reader starts
@@ -476,10 +479,19 @@ namespace Hearthstone_Deck_Tracker
 			}
 			DeckStatsList.Save();
 			DeckList.Save();
-			;
 			Config.Instance.ResolvedDeckStatsIds = true;
 			Config.Save();
 			return needToRestart;
+		}
+
+		private void RemoveNoteUrls()
+		{
+			foreach(var deck in DeckList.Instance.Decks)
+				if(!string.IsNullOrEmpty(deck.Url))
+					deck.Note = deck.Note.Replace(deck.Url, "").Trim();
+			DeckList.Save();
+			Config.Instance.RemovedNoteUrls = true;
+			Config.Save();
 		}
 
 		#endregion
@@ -1075,6 +1087,9 @@ namespace Hearthstone_Deck_Tracker
 				Game.SetPremadeDeck((Deck)selected.Clone());
 				MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
 				MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+				MenuItemMissingCards.Visibility = selected.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
+				MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(selected.Url) ? Visibility.Collapsed : Visibility.Visible;
+				MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(selected.Url) ? Visibility.Collapsed : Visibility.Visible;
 			}
 
 			//needs to be true for automatic deck detection to work
@@ -1548,5 +1563,6 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HearthStatsAutoDeleteMatches = false;
 			Config.Save();
 		}
+
 	}
 }

@@ -201,8 +201,9 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="_DECK" Click="BtnEditDeck_Click" />
-                    <MenuItem Header="SHOW MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
+                    <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
                     <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                    <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
                     <MenuItem Header="_NOTES" Click="BtnNotes_Click" />
                     <MenuItem Header="_TAGS" Click="BtnTags_Click" />
                     <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">

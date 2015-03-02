@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -266,6 +267,21 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerList.UpdateDecks();
 			MenuItemMoveDecktoArena.Visibility = Visibility.Visible;
 			MenuItemMoveDeckToConstructed.Visibility = Visibility.Collapsed;
+		}
+
+		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
+		{
+			if(DeckList.Instance.ActiveDeck != null)
+			{
+				try
+				{
+					Process.Start(DeckList.Instance.ActiveDeck.Url);
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error opening deck website " + ex);
+				}
+			}
 		}
 	}
 }

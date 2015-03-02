@@ -549,6 +549,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool TimerWindowOnStartup = false;
 
+		[DefaultValue(false)]
+		public bool RemovedNoteUrls = false;
+
 		[DefaultValue(null)]
 		public int? TimerWindowTop = null;
 
