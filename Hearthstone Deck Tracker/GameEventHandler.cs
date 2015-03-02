@@ -343,6 +343,7 @@ namespace Hearthstone_Deck_Tracker
 
 						if(deck != null)
 						{
+							Helper.MainWindow.NeedToIncorrectDeckMessage = false;
 							Helper.MainWindow.DeckPickerList.SelectDeck(deck);
 							Helper.MainWindow.UpdateDeckList(deck);
 							Helper.MainWindow.UseDeck(deck);

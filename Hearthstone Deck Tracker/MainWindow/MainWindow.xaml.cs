@@ -623,6 +623,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public void ShowIncorrectDeckMessage()
 		{
+			if(Game.PlayerDrawn.Count == 0)
+			{
+				IsShowingIncorrectDeckMessage = false;
+				return;
+			}
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
@@ -1066,6 +1071,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(selected != null)
 			{
+				DeckList.Instance.ActiveDeck = selected;
 				Game.SetPremadeDeck((Deck)selected.Clone());
 				MenuItemMoveDecktoArena.Visibility = selected.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
 				MenuItemMoveDeckToConstructed.Visibility = selected.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
