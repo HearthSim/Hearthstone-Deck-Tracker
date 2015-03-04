@@ -847,7 +847,6 @@ namespace Hearthstone_Deck_Tracker
 							if(isArenaDeck.HasValue)
 								deck.IsArenaDeck = isArenaDeck.Value;
 							deck.Url = url;
-							deck.Note = url;
 							deck.Name = deckName;
 							SetNewDeck(deck);
 							if(Config.Instance.AutoSaveOnImport)

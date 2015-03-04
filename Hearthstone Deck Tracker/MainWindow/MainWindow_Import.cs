@@ -35,9 +35,6 @@ namespace Hearthstone_Deck_Tracker
 				if(reimport) //keep old notes
 					deck.Note = _newDeck.Note;
 
-				if(!deck.Note.Contains(deck.Url))
-					deck.Note = deck.Url + "\n" + deck.Note;
-
 				SetNewDeck(deck, reimport);
 				TagControlEdit.SetSelectedTags(deck.Tags);
 				if(Config.Instance.AutoSaveOnImport)

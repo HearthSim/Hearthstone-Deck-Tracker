@@ -708,13 +708,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			var note = deck.Note;
 			if(!string.IsNullOrEmpty(deck.Url))
-			{
-				var urlString = "[source=" + deck.Url + "]";
-				if(!deck.Note.Contains(deck.Url))
-					note += "\r\n" + urlString;
-				else if(deck.Note.Contains(deck.Url) && !deck.Note.Contains(urlString))
-					note = note.Replace(deck.Url, urlString);
-			}
+				note += "\r\n[HDT-source=" + deck.Url + "]";
+
 			return note;
 		}
 

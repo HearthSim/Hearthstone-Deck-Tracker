@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 {
 	public class DeckObject
 	{
-		private const string noteRegex = @"\[source=(?<url>(.*?))\]";
+		private const string noteUrlRegex = @"\[(HDT-)?source=(?<url>(.*?))\]";
 		public int deck_version_id;
 		public int id;
 		public int klass_id;
@@ -27,13 +27,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 				var url = "";
 				if(!string.IsNullOrEmpty(notes))
 				{
-					var match = Regex.Match(notes, noteRegex);
+					var match = Regex.Match(notes, noteUrlRegex);
 					if(match.Success)
 					{
 						url = match.Groups["url"].Value;
-						notes = Regex.Replace(notes, noteRegex, url);
+						notes = Regex.Replace(notes, noteUrlRegex, "");
 					}
 				}
+
+				notes = notes.Trim();
 
 				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
 				                    cards == null
