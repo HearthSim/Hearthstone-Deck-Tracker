@@ -809,7 +809,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							clipboardLines.Remove(arena);
 							bool isArena;
-							if(bool.TryParse(arena, out isArena))
+							if(bool.TryParse(arena.Replace("arena:", "").Trim(), out isArena))
 								isArenaDeck = isArena;
 						}
 						var tagsRaw = clipboardLines.FirstOrDefault(line => line.StartsWith("tags:"));
@@ -817,7 +817,7 @@ namespace Hearthstone_Deck_Tracker
 						if(!string.IsNullOrEmpty(tagsRaw))
 						{
 							clipboardLines.Remove(tagsRaw);
-							tags = tagsRaw.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+							tags = tagsRaw.Replace("tags:", "").Trim().Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
 						}
 						clipboardLines.RemoveAt(0); //"netdeckimport"
 
