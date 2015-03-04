@@ -326,6 +326,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("assigned id to match: " + game.HearthStatsId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
+				if(json.status.ToString() == "fail" && json.message.ToString().Contains("Deck could not be found"))
+				{ 
+					//deck does not exist on hearthstats
+					deck.ResetHearthstatsIds();
+					DeckList.Save();
+					deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+					DeckStatsList.Save();
+				}
 				return PostResult.Failed;
 			}
 			catch(Exception e)
