@@ -305,6 +305,8 @@ namespace Hearthstone_Deck_Tracker
 			TagControlEdit.OperationSwitch.Visibility = Visibility.Collapsed;
 			TagControlEdit.PnlSortDecks.Visibility = Visibility.Collapsed;
 
+			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
+
 
 			UpdateDbListView();
 

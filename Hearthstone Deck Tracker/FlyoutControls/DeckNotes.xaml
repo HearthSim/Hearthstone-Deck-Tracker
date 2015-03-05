@@ -6,9 +6,10 @@
     x:Class="Hearthstone_Deck_Tracker.DeckNotes"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <DockPanel>
+        <Button Name="BtnSave" Content="Save" DockPanel.Dock="Bottom" Margin="5" ToolTip="Automatically saves when the dialog closes" IsEnabled="False" Click="BtnSave_Click"/>
         <TextBox x:Name="Textbox" Height="auto" Width="auto" TextChanged="Textbox_TextChanged" TextWrapping="Wrap"
                  AcceptsReturn="True" AcceptsTab="True" />
 
-    </Grid>
+    </DockPanel>
 </UserControl>
