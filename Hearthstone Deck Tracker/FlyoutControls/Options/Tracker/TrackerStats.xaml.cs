@@ -1,6 +1,9 @@
 ﻿#region
 
+using System;
 using System.Windows;
+using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -33,6 +36,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
 			CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
+			ComboboxDisplayedStats.ItemsSource = Enum.GetValues(typeof(DisplayedStats));
+			ComboboxDisplayedMode.ItemsSource = Enum.GetValues(typeof(GameMode));
+			ComboboxDisplayedStats.SelectedItem = Config.Instance.DisplayedStats;
+			ComboboxDisplayedMode.SelectedItem = Config.Instance.DisplayedMode;
 			_initialized = true;
 		}
 
@@ -242,6 +249,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.StatsInWindow = false;
 			Config.Save();
+		}
+
+		private void ComboboxDisplayedStats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Helper.MainWindow.Overlay.Update(true);
+		}
+
+		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Helper.MainWindow.Overlay.Update(true);
 		}
 	}
 }

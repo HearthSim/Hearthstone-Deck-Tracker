@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Point = System.Drawing.Point;
 
@@ -89,25 +88,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetWinRates()
 		{
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
-
-			var wins =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-				            .Count(
-				                   g =>
-				                   g.Result == GameResult.Win
-				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-			var losses =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-				            .Count(
-				                   g =>
-				                   g.Result == GameResult.Loss
-				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
+			LblWins.Text = string.Format("{0} ({1})", selectedDeck.WinLossString, selectedDeck.WinPercentString);
 		}
 
 		private void SetDeckTitle()

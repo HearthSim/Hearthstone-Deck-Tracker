@@ -213,8 +213,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
-			var data =
-				JsonConvert.SerializeObject(new {name = deck.Name, notes = notes, tags = deck.Tags, @class = deck.Class, cards});
+			var data = JsonConvert.SerializeObject(new {name = deck.Name, notes, tags = deck.Tags, @class = deck.Class, cards});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -327,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.WasSuccess;
 				}
 				if(json.status.ToString() == "fail" && json.message.ToString().Contains("Deck could not be found"))
-				{ 
+				{
 					//deck does not exist on hearthstats
 					deck.ResetHearthstatsIds();
 					DeckList.Save();
@@ -517,15 +516,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var url = BaseUrl + "/api/v2/decks/hdt_edit?auth_token=" + _authToken;
 			var cards = editedDeck.Cards.Select(x => new CardObject(x));
 			var data =
-				JsonConvert.SerializeObject(
-				                            new
-				                            {
-					                            deck_id = editedDeck.HearthStatsId,
-					                            name = editedDeck.Name,
-					                            notes = notes,
-					                            tags = editedDeck.Tags,
-					                            cards,
-				                            });
+				JsonConvert.SerializeObject(new {deck_id = editedDeck.HearthStatsId, name = editedDeck.Name, notes, tags = editedDeck.Tags, cards,});
 			try
 			{
 				var response = await PostAsync(url, data);

@@ -66,23 +66,13 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
 			if(Game.PlayingAgainst != string.Empty)
 			{
-				var winsVS =
-					selectedDeck.DeckStats.Games.Count(
-					                                   g =>
-					                                   g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst
-					                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-					                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-				var lossesVS =
-					selectedDeck.DeckStats.Games.Count(
-					                                   g =>
-					                                   g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst
-					                                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-					                                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				var winsVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst);
+				var lossesVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst);
 				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
 				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
 			}

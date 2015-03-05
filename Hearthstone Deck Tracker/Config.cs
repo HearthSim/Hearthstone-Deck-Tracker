@@ -96,6 +96,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool DisplayNetDeckAd = true;
 
+		[DefaultValue(GameMode.All)]
+		public GameMode DisplayedMode = GameMode.All;
+
+		[DefaultValue(DisplayedStats.Selected)]
+		public DisplayedStats DisplayedStats = DisplayedStats.Selected;
+
 		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 

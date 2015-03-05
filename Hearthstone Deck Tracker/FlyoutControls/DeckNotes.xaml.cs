@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -36,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnSave.IsEnabled = true;
 		}
 
-		private void BtnSave_Click(object sender, System.Windows.RoutedEventArgs e)
+		private void BtnSave_Click(object sender, RoutedEventArgs e)
 		{
 			SaveDeck();
 		}

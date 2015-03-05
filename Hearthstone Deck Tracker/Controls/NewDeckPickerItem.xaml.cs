@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			Helper.MainWindow.BtnTags_Click(sender, e);
-        }
+		}
 
 		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
 		{

@@ -358,7 +358,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							var raw = await client.DownloadStringTaskAsync(url);
 							var content = raw.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-                            try
+							try
 							{
 								_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
 							}
@@ -764,10 +764,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void UpdateCheck()
 		{
+			_lastUpdateCheck = DateTime.Now;
 			var newVersion = await Helper.CheckForUpdates();
 			if(newVersion != null)
 				ShowNewUpdateMessage(newVersion);
-			_lastUpdateCheck = DateTime.Now;
 		}
 
 		private async Task<bool> CheckClipboardForNetDeckImport()

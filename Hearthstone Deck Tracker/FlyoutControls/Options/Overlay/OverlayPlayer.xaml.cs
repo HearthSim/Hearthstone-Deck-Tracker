@@ -151,6 +151,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowPlayerGet = true;
+			Config.Save();
 			Helper.MainWindow.Overlay.Update(true);
 		}
 
@@ -159,6 +160,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowPlayerGet = false;
+			Config.Save();
 			Helper.MainWindow.Overlay.Update(true);
 		}
 

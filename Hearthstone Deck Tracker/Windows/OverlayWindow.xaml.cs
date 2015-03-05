@@ -600,42 +600,16 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetWinRates()
 		{
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
 
-			var wins =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-				            .Count(
-				                   g =>
-				                   g.Result == GameResult.Win
-				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-			var losses =
-				selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-				            .Count(
-				                   g =>
-				                   g.Result == GameResult.Loss
-				                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-				                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-			LblWins.Text = string.Format("{0} - {1} ({2})", wins, losses, Helper.GetWinPercentString(wins, losses));
+			LblWins.Text = string.Format("{0} ({1})", selectedDeck.WinLossString, selectedDeck.WinPercentString);
 
 			if(Game.PlayingAgainst != string.Empty)
 			{
-				var winsVS =
-					selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-					            .Count(
-					                   g =>
-					                   g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst
-					                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-					                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
-				var lossesVS =
-					selectedDeck.DeckStats.Games.Where(g => g.BelongsToDeckVerion(selectedDeck.GetSelectedDeckVersion()))
-					            .Count(
-					                   g =>
-					                   g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst
-					                   && (g.GameMode == Config.Instance.SelectedStatsFilterGameMode
-					                       || Config.Instance.SelectedStatsFilterGameMode == GameMode.All));
+				var winsVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst);
+				var lossesVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst);
 				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
 				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
 			}

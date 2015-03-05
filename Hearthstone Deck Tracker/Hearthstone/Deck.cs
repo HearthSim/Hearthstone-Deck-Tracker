@@ -169,10 +169,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+				var relevantGames = GetRelevantGames();
 				if(DeckStats.Games.Count == 0)
 					return "0-0";
-				return String.Format("{0}-{1}", relevantGames.Count(g => g.Result == GameResult.Win),
+				return string.Format("{0}-{1}", relevantGames.Count(g => g.Result == GameResult.Win),
 				                     relevantGames.Count(g => g.Result == GameResult.Loss));
 			}
 		}
@@ -193,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var relevantGames = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+				var relevantGames = GetRelevantGames();
 				if(relevantGames.Count == 0)
 					return 0.0;
 				return 100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count;
@@ -317,6 +317,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		public List<GameStats> GetRelevantGames()
+		{
+			var filtered = new List<GameStats>();
+			switch(Config.Instance.DisplayedStats)
+			{
+				case DisplayedStats.All:
+					filtered = DeckStats.Games;
+					break;
+				case DisplayedStats.Latest:
+					filtered = DeckStats.Games.Where(g => g.BelongsToDeckVerion(this)).ToList();
+					break;
+				case DisplayedStats.Selected:
+					filtered = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+					break;
+			}
+			return Config.Instance.DisplayedMode == GameMode.All
+				       ? filtered : filtered.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList();
+		}
 
 		public void ResetHearthstatsIds()
 		{

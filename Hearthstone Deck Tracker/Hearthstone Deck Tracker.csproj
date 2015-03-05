@@ -130,6 +130,7 @@
       <DependentUpon>NewDeckPickerItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\DeckType.cs" />
+    <Compile Include="Enums\DisplayedStats.cs" />
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
     <Compile Include="Enums\Hearthstone\GAME_TAG.cs" />
