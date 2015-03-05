@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayInteractivity"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="Interactivity">
+            <StackPanel>
+                <Label Content="WARNING:" FontWeight="Bold"/>
+                <Label Content="May cause the cursor to freeze occasionally" Margin="0,-10,0,0" />
+                <Label Content="FEATURES:" FontWeight="Bold"/>
+                <Label Content="- Gray out secrets when clicked"  Margin="0,-10,0,0"/>
+                <Label Content="- Hide deck when friendslist is open" Margin="0,-10,0,0"/>
+                <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures" Margin="10,0,0,0"
+                                                   OnLabel="Enabled" OffLabel="Disabled"
+                                                   Checked="ToggleSwitchExtraFeatures_Checked"
+                                                   Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
+                <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force ON" Margin="10,0,0,0"
+                                      Checked="CheckBoxForceExtraFeatures_OnChecked"
+                                      Unchecked="CheckBoxForceExtraFeatures_OnUnchecked" />
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

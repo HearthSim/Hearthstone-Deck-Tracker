@@ -876,14 +876,14 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else if(value == Game.OpponentId)
 					ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
-			} 
-            else if(tag == GAME_TAG.FATIGUE)
-            {
-                if (controller == Game.PlayerId)
-                    _gameHandler.HandlePlayerFatigue(Convert.ToInt32(rawValue));
-                else if (controller == Game.OpponentId)
-                    _gameHandler.HandleOpponentFatigue(Convert.ToInt32(rawValue));
-            }
+			}
+			else if(tag == GAME_TAG.FATIGUE)
+			{
+				if(controller == Game.PlayerId)
+					_gameHandler.HandlePlayerFatigue(Convert.ToInt32(rawValue));
+				else if(controller == Game.OpponentId)
+					_gameHandler.HandleOpponentFatigue(Convert.ToInt32(rawValue));
+			}
 			if(_waitForController != null)
 			{
 				if(!isRecursive)
