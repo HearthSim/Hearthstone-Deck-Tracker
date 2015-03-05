@@ -62,7 +62,8 @@ namespace Hearthstone_Deck_Tracker
 				"hearthstone-decks",
 				"heartharena",
 				"hearthstoneheroes",
-				"elitedecks"
+				"elitedecks",
+				"icy-veins"
 			};
 			if(validUrls.Any(clipboard.Contains))
 				settings.DefaultText = clipboard;

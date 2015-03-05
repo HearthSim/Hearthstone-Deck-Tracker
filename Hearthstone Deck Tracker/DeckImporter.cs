@@ -50,8 +50,36 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportHearthstoneheroes(url);
 			if(url.Contains("elitedecks"))
 				return await ImportEliteDecks(url);
+			if(url.Contains("icy-veins"))
+				return await ImportIcyVeins(url);
 			Logger.WriteLine("invalid url", "DeckImporter");
 			return null;
+		}
+
+		private static async Task<Deck> ImportIcyVeins(string url)
+		{
+			try
+			{
+				string json;
+				using(var wc = new WebClient())
+					json = await wc.DownloadStringTaskAsync(url + ".json");
+				var wrapper = JsonConvert.DeserializeObject<IcyVeinsWrapper>(json);
+				var deck = new Deck {Name = wrapper.deck_name};
+				foreach(var cardObj in wrapper.deck_cards)
+				{
+					var card = Game.GetCardFromName(cardObj.name);
+					card.Count = cardObj.quantity;
+					deck.Cards.Add(card);
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
+				}
+				return deck;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "DeckImporter");
+				return null;
+			}
 		}
 
 		private static async Task<Deck> ImportHsTopdeck(string url)
@@ -641,6 +669,18 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			return deckUrls;
+		}
+
+		private class IcyVeinsWrapper
+		{
+			public IcyVeinsCardObj[] deck_cards;
+			public string deck_name;
+
+			public class IcyVeinsCardObj
+			{
+				public string name;
+				public int quantity;
+			}
 		}
 	}
 }
