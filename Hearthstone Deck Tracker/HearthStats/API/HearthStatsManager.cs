@@ -256,12 +256,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 				}
 			}
-			var result = await HearthStatsAPI.PostDeckAsync(first);
+			var notes = HearthStatsAPI.AddSpecialTagsToNote(deck);
+			var result = await HearthStatsAPI.PostDeckAsync(first, notes);
 			if(!result.Success && result.Retry)
 			{
 				await Task.Delay(RetryDelay);
 				Logger.WriteLine("try #2 to upload deck " + deck, "HearthStatsManager");
-				result = await HearthStatsAPI.PostDeckAsync(first);
+				result = await HearthStatsAPI.PostDeckAsync(first, notes);
 			}
 			if(result.Success)
 			{
