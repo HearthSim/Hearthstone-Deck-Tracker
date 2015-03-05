@@ -73,6 +73,16 @@
                               Checked="CheckboxOverlayCardMarkToolTips_Checked"
                               Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
                               HorizontalAlignment="Left" />
+                    <CheckBox x:Name="CheckboxAutoGrayoutSecrets"
+                                          Content="Automatically gray out secrets"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxAutoGrayoutSecrets_Checked"
+                                          Unchecked="CheckboxAutoGrayoutSecrets_Unchecked" />
+                    <CheckBox x:Name="CheckboxKeepDecksVisible"
+                                          Content="Don't reset decks after a game" HorizontalAlignment="Left"
+                                          Margin="10,5,0,0" VerticalAlignment="Top" Width="200"
+                                          Checked="CheckboxKeepDecksVisible_Checked"
+                                          Unchecked="CheckboxKeepDecksVisible_Unchecked" />
                     <DockPanel>
                         <Slider x:Name="SliderOverlayOpacity" Margin="5,5,0,0" VerticalAlignment="Center" Value="100" Width="150"
                                 ValueChanged="SliderOverlayOpacity_ValueChanged" DockPanel.Dock="Right" />

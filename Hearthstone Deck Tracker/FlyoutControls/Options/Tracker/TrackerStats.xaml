@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Other.OtherStats"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerStats"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -51,7 +51,7 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
                                               Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
-                    <CheckBox x:Name="CheckboxReplays" IsEnabled="False"
+                    <CheckBox x:Name="CheckboxReplays"
                                               Content="Record Replays"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
@@ -60,6 +60,17 @@
                                     	Content="Save original HS log into replay"
                                     	HorizontalAlignment="Left" Margin="35,5,0,0"
                                     	VerticalAlignment="Top" Checked="CheckboxSaveHSLogIntoReplayFile_Checked" Unchecked="CheckboxSaveHSLogIntoReplayFile_Unchecked" />
+
+                    <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
+                                          Content="Keep stats when deleting a deck"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxDeleteDeckKeepStats_Checked"
+                                          Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
+                    <CheckBox x:Name="CheckboxStatsInWindow"
+                                          Content="Show deck stats in separate window"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxStatsInWindow_Checked"
+                                          Unchecked="CheckboxStatsInWindow_Unchecked" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

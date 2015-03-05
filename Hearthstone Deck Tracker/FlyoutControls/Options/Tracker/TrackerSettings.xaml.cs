@@ -14,22 +14,28 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
 	/// Interaction logic for OtherTracker.xaml
 	/// </summary>
-	public partial class OtherTracker
+	public partial class TrackerSettings
 	{
 		private bool _initialized;
 
-		public OtherTracker()
+		public TrackerSettings()
 		{
 			InitializeComponent();
 		}
 
 		public void Load()
 		{
+			ComboboxAccent.ItemsSource = ThemeManager.Accents;
+			ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
+			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
+			ComboboxKeyPressGameStart.ItemsSource = Helper.MainWindow.EventKeys;
+			ComboboxKeyPressGameEnd.ItemsSource = Helper.MainWindow.EventKeys;
+
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
@@ -51,13 +57,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 				Config.Instance.KeyPressOnGameEnd = "None";
 			ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
-			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
-
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
 				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
 			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
 				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
 			ComboboxTheme.SelectedItem = theme;
 			ComboboxAccent.SelectedItem = accent;
 
@@ -148,24 +151,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 			if(!_initialized)
 				return;
 			Config.Instance.KeyPressOnGameEnd = ComboboxKeyPressGameEnd.SelectedValue.ToString();
-			SaveConfig(false);
-		}
-
-		private void CheckboxManaCurveMyDecks_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ManaCurveMyDecks = true;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
-			SaveConfig(false);
-		}
-
-		private void CheckboxManaCurveMyDecks_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ManaCurveMyDecks = false;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			SaveConfig(false);
 		}
 
@@ -274,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 
 		private void CheckboxLogTab_Checked(object sender, RoutedEventArgs e)
 		{
-			Helper.OptionsMain.TreeViewItemOtherLogging.Visibility = Visibility.Visible;
+			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Visible;
 			//TabItemLog.Visibility = Visibility.Visible;
 			if(!_initialized)
 				return;
@@ -284,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 
 		private void CheckboxLogTab_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Helper.OptionsMain.TreeViewItemOtherLogging.Visibility = Visibility.Collapsed;
+			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Collapsed;
 			//TabItemLog.Visibility = Visibility.Hidden;
 			if(!_initialized)
 				return;

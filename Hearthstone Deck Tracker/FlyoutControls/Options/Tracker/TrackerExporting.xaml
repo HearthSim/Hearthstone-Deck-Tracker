@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Other.OtherExporting"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerExporting"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,7 +13,7 @@
                     <DockPanel Margin="10,5,10,0">
                         <Label Content="Speed:" />
                         <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1"
-                                                  HorizontalAlignment="Right" Width="120"
+                                                  HorizontalAlignment="Right" Width="150"
                                                   SelectionChanged="ComboboxExportSpeed_SelectionChanged">
                             <system:String>Very Fast (20ms)</system:String>
                             <system:String>Fast (40ms)</system:String>

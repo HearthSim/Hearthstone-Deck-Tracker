@@ -6,16 +6,16 @@ using System.Windows.Input;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
 	/// Interaction logic for OtherExporting.xaml
 	/// </summary>
-	public partial class OtherExporting
+	public partial class TrackerExporting
 	{
 		private bool _initialized;
 
-		public OtherExporting()
+		public TrackerExporting()
 		{
 			InitializeComponent();
 		}

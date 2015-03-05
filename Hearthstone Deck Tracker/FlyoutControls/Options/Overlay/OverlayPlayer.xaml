@@ -19,7 +19,7 @@
                         <Label Content="Scaling:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                         <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="125" Value="100"
+                                            VerticalAlignment="Center" Width="150" Value="100"
                                             ValueChanged="SliderOverlayPlayerScaling_ValueChanged"
                                             Minimum="0.0001" />
                     </DockPanel>
@@ -27,7 +27,7 @@
                         <Label Content="Opacity:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                         <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="125" Value="100"
+                                            VerticalAlignment="Center" Width="150" Value="100"
                                             ValueChanged="SliderPlayerOpacity_ValueChanged" />
 
                     </DockPanel>

@@ -23,7 +23,6 @@ using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -102,7 +101,7 @@ namespace Hearthstone_Deck_Tracker
 
 			InitializeComponent();
 			Trace.AutoFlush = true;
-			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsOtherLogging.TextBoxLog));
+			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
 
 			EnableMenuItems(false);
 
@@ -278,13 +277,6 @@ namespace Hearthstone_Deck_Tracker
 				OpponentWindow.Show();
 			if(Config.Instance.TimerWindowOnStartup)
 				TimerWindow.Show();
-
-			Options.OptionsOtherTracker.ComboboxAccent.ItemsSource = ThemeManager.Accents;
-			Options.OptionsOtherTracker.ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
-			Options.OptionsOtherTracker.ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
-
-			Options.OptionsOtherTracker.ComboboxKeyPressGameStart.ItemsSource = EventKeys;
-			Options.OptionsOtherTracker.ComboboxKeyPressGameEnd.ItemsSource = EventKeys;
 
 			LoadConfig();
 			if(!Config.Instance.NetDeckClipboardCheck.HasValue)

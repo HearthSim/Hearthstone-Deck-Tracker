@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -465,6 +466,11 @@ namespace Hearthstone_Deck_Tracker
 					MinimizeToTray();
 			}
 
+			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
+				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
+			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
+				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
+			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
 
 			Options.Load();
 

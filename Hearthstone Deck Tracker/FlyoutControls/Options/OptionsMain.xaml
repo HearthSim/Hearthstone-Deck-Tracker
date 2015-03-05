@@ -14,14 +14,14 @@
                     <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="Player" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="Opponent" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemOverlayInteractivity" Header="Interactivity" Selected="TreeViewItemOverlayInteractivity_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOverlayOther" Header="Other" Selected="TreeViewItemOverlayOther_OnSelected"/>
                 </TreeViewItem>
                 <TreeViewItem Header="Tracker">
-                    <TreeViewItem Name="TreeViewItemOtherTracker" Header="General" Selected="TreeViewItemOtherTracker_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOtherStats" Header="Stats" Selected="TreeViewItemOtherStats_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOtherExporting" Header="Exporting" Selected="TreeViewItemOtherExporting_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOtherImporting" Header="Importing" Selected="TreeViewItemOtherImporting_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOtherLogging" Header="Logging" Selected="TreeViewItemOtherLogging_OnSelected" Visibility="Collapsed"/>
+                    <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="General" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerStats" Header="Stats" Selected="TreeViewItemTrackerStats_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerExporting" Header="Exporting" Selected="TreeViewItemTrackerExporting_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerImporting" Header="Importing" Selected="TreeViewItemTrackerImporting_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerLogging" Header="Logging" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
                 </TreeViewItem>
             </TreeView>
             </Border>

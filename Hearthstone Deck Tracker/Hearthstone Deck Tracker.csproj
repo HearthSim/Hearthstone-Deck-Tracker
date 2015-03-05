@@ -145,20 +145,23 @@
     <Compile Include="FlyoutControls\Options\OptionsMain.xaml.cs">
       <DependentUpon>OptionsMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Other\OtherExporting.xaml.cs">
-      <DependentUpon>OtherExporting.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerExporting.xaml.cs">
+      <DependentUpon>TrackerExporting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Other\OtherImporting.xaml.cs">
-      <DependentUpon>OtherImporting.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml.cs">
+      <DependentUpon>TrackerGeneral.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Other\OtherLogging.xaml.cs">
-      <DependentUpon>OtherLogging.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml.cs">
+      <DependentUpon>TrackerImporting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Other\OtherStats.xaml.cs">
-      <DependentUpon>OtherStats.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml.cs">
+      <DependentUpon>TrackerLogging.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Other\OtherTracker.xaml.cs">
-      <DependentUpon>OtherTracker.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerStats.xaml.cs">
+      <DependentUpon>TrackerStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerSettings.xaml.cs">
+      <DependentUpon>TrackerSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Overlay\OverlayDeckWindows.xaml.cs">
       <DependentUpon>OverlayDeckWindows.xaml</DependentUpon>
@@ -171,9 +174,6 @@
     </Compile>
     <Compile Include="FlyoutControls\Options\Overlay\OverlayOpponent.xaml.cs">
       <DependentUpon>OverlayOpponent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FlyoutControls\Options\Overlay\OverlayOther.xaml.cs">
-      <DependentUpon>OverlayOther.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
@@ -361,23 +361,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Other\OtherExporting.xaml">
+    <Page Include="FlyoutControls\Options\Tracker\TrackerExporting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Other\OtherImporting.xaml">
+    <Page Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Other\OtherLogging.xaml">
+    <Page Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Other\OtherStats.xaml">
+    <Page Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Other\OtherTracker.xaml">
+    <Page Include="FlyoutControls\Options\Tracker\TrackerStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,10 +398,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\Options\Overlay\OverlayOpponent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FlyoutControls\Options\Overlay\OverlayOther.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -11,16 +11,16 @@ using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
 	/// Interaction logic for OtherLogging.xaml
 	/// </summary>
-	public partial class OtherLogging
+	public partial class TrackerLogging
 	{
 		private bool _initialized;
 
-		public OtherLogging()
+		public TrackerLogging()
 		{
 			InitializeComponent();
 		}

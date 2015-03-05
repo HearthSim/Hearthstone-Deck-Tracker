@@ -1,10 +1,11 @@
 ﻿#region
 
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Hearthstone_Deck_Tracker.FlyoutControls.Options.Other;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
+using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 
 #endregion
 
@@ -15,17 +16,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// </summary>
 	public partial class OptionsMain
 	{
-		public OtherExporting OptionsOtherExporting;
-		public OtherImporting OptionsOtherImporting;
-		public OtherLogging OptionsOtherLogging;
-		public OtherStats OptionsOtherStats;
-		public OtherTracker OptionsOtherTracker;
 		public OverlayDeckWindows OptionsOverlayDeckWindows;
 		public OverlayGeneral OptionsOverlayGeneral;
 		public OverlayInteractivity OptionsOverlayInteractivity;
 		public OverlayOpponent OptionsOverlayOpponent;
-		public OverlayOther OptionsOverlayOther;
 		public OverlayPlayer OptionsOverlayPlayer;
+		public TrackerExporting OptionsTrackerExporting;
+		public TrackerGeneral OptionsTrackerGeneral;
+		public TrackerImporting OptionsTrackerImporting;
+		public TrackerLogging OptionsTrackerLogging;
+		public TrackerSettings OptionsTrackerSettings;
+		public TrackerStats OptionsTrackerStats;
 
 		public OptionsMain()
 		{
@@ -33,34 +34,43 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			Helper.OptionsMain = this;
 			OptionsOverlayGeneral = new OverlayGeneral();
 			OptionsOverlayDeckWindows = new OverlayDeckWindows();
-			OptionsOverlayOther = new OverlayOther();
 			OptionsOverlayOpponent = new OverlayOpponent();
 			OptionsOverlayPlayer = new OverlayPlayer();
 			OptionsOverlayInteractivity = new OverlayInteractivity();
-			OptionsOtherExporting = new OtherExporting();
-			OptionsOtherImporting = new OtherImporting();
-			OptionsOtherLogging = new OtherLogging();
-			OptionsOtherStats = new OtherStats();
-			OptionsOtherExporting = new OtherExporting();
-			OptionsOtherTracker = new OtherTracker();
-			foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
-				treeItem.ExpandSubtree();
+			OptionsTrackerExporting = new TrackerExporting();
+			OptionsTrackerImporting = new TrackerImporting();
+			OptionsTrackerLogging = new TrackerLogging();
+			OptionsTrackerStats = new TrackerStats();
+			OptionsTrackerExporting = new TrackerExporting();
+			OptionsTrackerSettings = new TrackerSettings();
+			OptionsTrackerGeneral = new TrackerGeneral();
+			try
+			{
+				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
+					treeItem.ExpandSubtree();
+				//select overlay - general
+				TreeViewOptions.Items.Cast<TreeViewItem>().First().Items.Cast<TreeViewItem>().First().IsSelected = true;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "Options");
+			}
 		}
 
 		public void Load()
 		{
 			OptionsOverlayGeneral.Load();
-			OptionsOverlayOther.Load();
 			OptionsOverlayDeckWindows.Load();
 			OptionsOverlayPlayer.Load();
 			OptionsOverlayOpponent.Load();
 			OptionsOverlayInteractivity.Load();
-			OptionsOtherTracker.Load();
-			OptionsOtherExporting.Load();
-			OptionsOtherImporting.Load();
-			OptionsOtherLogging.Load();
-			OptionsOtherStats.Load();
-			OptionsOtherLogging.Load();
+			OptionsTrackerSettings.Load();
+			OptionsTrackerExporting.Load();
+			OptionsTrackerImporting.Load();
+			OptionsTrackerLogging.Load();
+			OptionsTrackerStats.Load();
+			OptionsTrackerLogging.Load();
+			OptionsTrackerGeneral.Load();
 		}
 
 		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)
@@ -73,11 +83,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentControlOptions.Content = OptionsOverlayDeckWindows;
 		}
 
-		private void TreeViewItemOverlayOther_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayOther;
-		}
-
 		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsOverlayOpponent;
@@ -88,34 +93,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentControlOptions.Content = OptionsOverlayPlayer;
 		}
 
-		private void TreeViewItemOtherTracker_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsOtherTracker;
+			ContentControlOptions.Content = OptionsTrackerGeneral;
 		}
 
-		private void TreeViewItemOtherStats_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsOtherStats;
+			ContentControlOptions.Content = OptionsTrackerStats;
 		}
 
-		private void TreeViewItemOtherExporting_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerExporting_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsOtherExporting;
+			ContentControlOptions.Content = OptionsTrackerExporting;
 		}
 
-		private void TreeViewItemOtherImporting_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsOtherImporting;
+			ContentControlOptions.Content = OptionsTrackerImporting;
 		}
 
-		private void TreeViewItemOtherLogging_OnSelected(object sender, RoutedEventArgs e)
+		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsOtherLogging;
+			ContentControlOptions.Content = OptionsTrackerLogging;
 		}
 
 		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsOverlayInteractivity;
+		}
+
+		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentControlOptions.Content = OptionsTrackerSettings;
 		}
 	}
 }

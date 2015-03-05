@@ -7,16 +7,16 @@ using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
 	/// Interaction logic for OtherImporting.xaml
 	/// </summary>
-	public partial class OtherImporting
+	public partial class TrackerImporting
 	{
 		private bool _initialized;
 
-		public OtherImporting()
+		public TrackerImporting()
 		{
 			InitializeComponent();
 		}

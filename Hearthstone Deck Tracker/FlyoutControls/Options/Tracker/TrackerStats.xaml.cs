@@ -1,20 +1,19 @@
 ﻿#region
 
-using System;
 using System.Windows;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
 	/// <summary>
 	/// Interaction logic for OtherStats.xaml
 	/// </summary>
-	public partial class OtherStats
+	public partial class TrackerStats
 	{
 		private bool _initialized;
 
-		public OtherStats()
+		public TrackerStats()
 		{
 			InitializeComponent();
 		}
@@ -31,6 +30,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 			CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
 			CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
 			CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
+			CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
+			CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
+			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
 			_initialized = true;
 		}
 
@@ -196,12 +198,50 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Other
 
 		private void CheckboxRecordReplays_Checked(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			if(!_initialized)
+				return;
+			Config.Instance.RecordReplays = true;
+			Config.Save();
 		}
 
 		private void CheckboxRecordReplays_Unchecked(object sender, RoutedEventArgs e)
 		{
-			throw new NotImplementedException();
+			if(!_initialized)
+				return;
+			Config.Instance.RecordReplays = false;
+			Config.Save();
+		}
+
+		private void CheckboxDeleteDeckKeepStats_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = true;
+			Config.Save();
+		}
+
+		private void CheckboxDeleteDeckKeepStats_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepStatsWhenDeletingDeck = false;
+			Config.Save();
+		}
+
+		private void CheckboxStatsInWindow_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsInWindow = true;
+			Config.Save();
+		}
+
+		private void CheckboxStatsInWindow_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.StatsInWindow = false;
+			Config.Save();
 		}
 	}
 }

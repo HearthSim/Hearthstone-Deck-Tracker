@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 						                      new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 					if(enableOptionResult == MessageDialogResult.Affirmative)
 					{
-						Options.OptionsOtherImporting.CheckboxImportNetDeck.IsChecked = true;
+						Options.OptionsTrackerImporting.CheckboxImportNetDeck.IsChecked = true;
 						Config.Instance.NetDeckClipboardCheck = true;
 						Config.Save();
 					}
@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{
-						Options.OptionsOtherImporting.CheckboxImportNetDeck.IsChecked = true;
+						Options.OptionsTrackerImporting.CheckboxImportNetDeck.IsChecked = true;
 						Config.Instance.NetDeckClipboardCheck = true;
 						Config.Save();
 					}

@@ -38,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
 			CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
+			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
+			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			_initialized = true;
 		}
 
@@ -354,6 +356,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideInBackground = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxAutoGrayoutSecrets_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoGrayoutSecrets = true;
+			Config.Save();
+		}
+
+		private void CheckboxAutoGrayoutSecrets_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoGrayoutSecrets = false;
+			Config.Save();
+		}
+
+		private void CheckboxKeepDecksVisible_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepDecksVisible = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxKeepDecksVisible_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.KeepDecksVisible = false;
 			SaveConfig(true);
 		}
 	}
