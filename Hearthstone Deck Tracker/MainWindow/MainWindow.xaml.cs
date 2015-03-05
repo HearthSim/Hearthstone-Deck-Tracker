@@ -1564,5 +1564,10 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.HearthStatsAutoDeleteMatches = false;
 			Config.Save();
 		}
+
+		private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
 	}
 }

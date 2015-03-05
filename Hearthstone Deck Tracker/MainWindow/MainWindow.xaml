@@ -7,8 +7,8 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
-                      Title="Hearthstone Deck Tracker" Height="603" Width="645"
-                      MinHeight="603" MinWidth="645"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="650"
+                      MinHeight="603" MinWidth="650"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
@@ -111,11 +111,11 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="1" Grid.ColumnSpan="3">
-                <MenuItem Header="_DECKS">
+                <MenuItem Header="_TRACKER">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_layer}" />
+                                <VisualBrush Visual="{StaticResource appbar_box}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
@@ -138,6 +138,8 @@
                               FontSize="14"
                               Checked="CheckboxClassCardsFirst_Checked"
                               Unchecked="CheckboxClassCardsFirst_Unchecked" />
+                    <Separator />
+                    <MenuItem Header="E_XIT" Click="MenuItemExit_OnClick"/>
                 </MenuItem>
                 <MenuItem Header="_NEW">
                     <MenuItem.Icon>
@@ -193,20 +195,17 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_EDIT" Name="MenuItemEdit">
+                <MenuItem Header="_DECK" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_edit}" />
+                                <VisualBrush Visual="{StaticResource appbar_layer}" />
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DECK" Click="BtnEditDeck_Click" />
-                    <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
-                    <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
-                    <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
-                    <MenuItem Header="_NOTES" Click="BtnNotes_Click" />
-                    <MenuItem Header="_TAGS" Click="BtnTags_Click" />
+                    <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
+                    <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
+                    <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
                     <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
@@ -214,14 +213,18 @@
                             </DataTemplate>
                         </MenuItem.ItemTemplate>
                     </MenuItem>
+                    <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
+                    <Separator />
+                    <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
+                    <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                    <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
                     <Separator />
                     <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
                     <MenuItem Header="CLONE">
                         <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
                         <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
                     </MenuItem>
-                    <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
                 </MenuItem>
                 <MenuItem Header="_IMPORT">
                     <MenuItem.Icon>

@@ -15,14 +15,14 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		private void BtnNotes_Click(object sender, RoutedEventArgs e)
+		internal void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
 			if(DeckList.Instance.ActiveDeck == null)
 				return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
 		}
 
-		private async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
+		internal async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null)
@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
 		}
 
-		private async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
+		internal async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var cloneStats =
 				(await
@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker
 				HearthStatsManager.UploadDeckAsync(clone);
 		}
 
-		private async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
+		internal async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
@@ -207,14 +207,14 @@ namespace Hearthstone_Deck_Tracker
 				HearthStatsManager.UploadDeckAsync(clone);
 		}
 
-		private void BtnTags_Click(object sender, RoutedEventArgs e)
+		internal void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;
 			if(DeckList.Instance.ActiveDeck != null)
 				TagControlEdit.SetSelectedTags(DeckList.Instance.ActiveDeck.Tags);
 		}
 
-		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
+		internal void BtnEditDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 			SetNewDeck(selectedDeck, true);
 		}
 
-		private async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
+		internal async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
@@ -253,7 +253,7 @@ namespace Hearthstone_Deck_Tracker
 			TagControlEdit.SetSelectedTags(deck.Tags);
 		}
 
-		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
+		internal void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
 		{
 			DeckList.Instance.ActiveDeck.IsArenaDeck = true;
 			DeckPickerList.UpdateDecks();
@@ -261,7 +261,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemMoveDeckToConstructed.Visibility = Visibility.Visible;
 		}
 
-		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
+		internal void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
 		{
 			DeckList.Instance.ActiveDeck.IsArenaDeck = false;
 			DeckPickerList.UpdateDecks();
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemMoveDeckToConstructed.Visibility = Visibility.Collapsed;
 		}
 
-		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
+		internal void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
 			if(DeckList.Instance.ActiveDeck != null)
 			{

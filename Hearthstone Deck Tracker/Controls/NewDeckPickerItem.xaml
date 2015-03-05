@@ -6,6 +6,32 @@
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Height="48">
+    <UserControl.ContextMenu>
+        <ContextMenu Opened="ContextMenu_OnOpened">
+            <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
+            <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
+            <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
+            <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+            <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
+            <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
+            <Separator />
+            <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
+            <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+            <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
+            <Separator />
+            <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
+            <MenuItem Header="CLONE">
+                <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
+                <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Border Name="BorderItem" BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Height="48">
         <Grid>
             <DockPanel>

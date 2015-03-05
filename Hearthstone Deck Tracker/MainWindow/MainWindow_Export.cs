@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
 		}
 
-		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
+		internal void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckList.Instance.ActiveDeckVersion;
 			if(deck == null)
