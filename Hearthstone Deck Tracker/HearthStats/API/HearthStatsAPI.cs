@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		public static async Task<PostResult> PostDeckAsync(Deck deck)
+		public static async Task<PostResult> PostDeckAsync(Deck deck, string notes)
 		{
 			if(deck == null)
 			{
@@ -214,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
 			var data =
-				JsonConvert.SerializeObject(new {name = deck.Name, notes = AddUrlToNote(deck), tags = deck.Tags, @class = deck.Class, cards});
+				JsonConvert.SerializeObject(new {name = deck.Name, notes = notes, tags = deck.Tags, @class = deck.Class, cards});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -507,10 +507,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("deck is null", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
+			var notes = AddSpecialTagsToNote(editedDeck);
 			if(!editedDeck.HasHearthStatsId)
 			{
 				Logger.WriteLine("deck does not exist yet, uploading", "HearthStatsAPI");
-				return await PostDeckAsync(editedDeck);
+				return await PostDeckAsync(editedDeck, notes);
 			}
 			Logger.WriteLine("editing deck: " + editedDeck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/hdt_edit?auth_token=" + _authToken;
@@ -521,7 +522,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				                            {
 					                            deck_id = editedDeck.HearthStatsId,
 					                            name = editedDeck.Name,
-					                            notes = AddUrlToNote(editedDeck),
+					                            notes = notes,
 					                            tags = editedDeck.Tags,
 					                            cards,
 				                            });
@@ -712,7 +713,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return true;
 		}
 
-		private static string AddUrlToNote(Deck deck)
+		public static string AddSpecialTagsToNote(Deck deck)
 		{
 			var note = deck.Note;
 			if(!string.IsNullOrEmpty(deck.Url))
