@@ -351,7 +351,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnOverallMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
 		{
-			MoveGameToOtherDeck(DataGridOverallGames.SelectedItem as GameStats);
+			MoveGameToOtherDeck(DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList());
 		}
 
 		private void BtnOverallDetails_Click(object sender, RoutedEventArgs e)
@@ -382,6 +382,12 @@ namespace Hearthstone_Deck_Tracker
 			BtnOverallNote.IsEnabled = enabled;
 			BtnOverallImportOpponentDeck.IsEnabled = enabled;
 			BtnOverallMoveToOtherDeck.IsEnabled = enabled;
+			if(DataGridOverallGames.SelectedItems.Count > 0)
+			{
+				var selectedGames = DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList();
+				var allTheSameHero = selectedGames.All(g => g.PlayerHero == selectedGames[0].PlayerHero);
+				BtnOverallMoveToOtherDeck.IsEnabled = allTheSameHero;
+			}
 		}
 
 		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -471,33 +477,23 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnMoveToOtherDeck_Click(object sender, RoutedEventArgs e)
 		{
-			MoveGameToOtherDeck(DataGridGames.SelectedItem as GameStats);
+			MoveGameToOtherDeck(DataGridGames.SelectedItems.Cast<GameStats>().ToList());
 		}
 
-		private void MoveGameToOtherDeck(GameStats selectedGame)
+		private void MoveGameToOtherDeck(List<GameStats> selectedGames)
 		{
-			if(selectedGame == null)
+			if(selectedGames == null)
 				return;
 
 			var heroes = new Dictionary<string, int>();
-			foreach(var turn in selectedGame.TurnStats)
+			foreach(var game in selectedGames)
 			{
-				foreach(var play in turn.Plays)
-				{
-					if(!play.Type.ToString().Contains("Player"))
-						continue;
-					var hero = Game.GetCardFromId(play.CardId).PlayerClass;
-					if(hero == null)
-						continue;
-					if(!heroes.ContainsKey(hero))
-						heroes.Add(hero, 0);
-					heroes[hero]++;
-				}
+				if(!heroes.ContainsKey(game.PlayerHero))
+					heroes.Add(game.PlayerHero, 0);
+				heroes[game.PlayerHero]++;
 			}
 
-
 			var heroPlayed = heroes.Any() ? heroes.OrderByDescending(x => x.Value).First().Key : "Any";
-
 			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
 
 			var dialog = new MoveGameDialog(possibleTargets);
@@ -511,24 +507,32 @@ namespace Hearthstone_Deck_Tracker
 
 			if(selectedDeck == null)
 				return;
-			var defaultDeck = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(selectedGame));
-			if(defaultDeck != null)
+			foreach(var game in selectedGames)
 			{
-				defaultDeck.Games.Remove(selectedGame);
-				DefaultDeckStats.Save();
+				var defaultDeck = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(game));
+				if(defaultDeck != null)
+				{
+					defaultDeck.Games.Remove(game);
+					DefaultDeckStats.Save();
+				}
+				else
+				{
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => game.DeckId == d.DeckId);
+					if(deck != null)
+						deck.DeckStats.Games.Remove(game);
+				}
+				game.PlayerDeckVersion = selectedDeck.Version; //move to latest version
+				game.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
+				game.DeckId = selectedDeck.DeckId;
+				game.DeckName = selectedDeck.Name;
+				selectedDeck.DeckStats.Games.Add(game);
+				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+					HearthStatsManager.MoveMatchAsync(game, selectedDeck, background: true);
 			}
-			else
-				_deck.DeckStats.Games.Remove(selectedGame);
-			selectedGame.PlayerDeckVersion = selectedDeck.Version; //move to latest version
-			selectedGame.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
-			selectedDeck.DeckStats.Games.Add(selectedGame);
 			DeckStatsList.Save();
 			DeckList.Save();
-			;
 			Refresh();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-				HearthStatsManager.MoveMatchAsync(selectedGame, selectedDeck, background: true);
 		}
 
 		private bool VerifyHeroes(GameStats game)
