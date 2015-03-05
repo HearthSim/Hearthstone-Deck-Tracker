@@ -331,7 +331,10 @@ namespace Hearthstone_Deck_Tracker
 			//UseDeck(lastDeck);
 			//}
 			if(DeckList.Instance.ActiveDeck != null)
+			{
+				SetupNotesAndStats(DeckList.Instance.ActiveDeck);
 				UseDeck(DeckList.Instance.ActiveDeck);
+			}
 
 			if(_foundHsDirectory)
 				HsLogReader.Instance.Start();
@@ -1009,21 +1012,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck != null)
 			{
-				//set up notes
-				DeckNotesEditor.SetDeck(deck);
-				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
-				FlyoutNotes.Header = flyoutHeader;
-				if(Config.Instance.StatsInWindow)
-				{
-					StatsWindow.Title = "Stats: " + deck.Name;
-					StatsWindow.StatsControl.SetDeck(deck);
-				}
-				else
-				{
-					FlyoutDeckStats.Header = "Stats: " + deck.Name;
-					DeckStatsFlyout.SetDeck(deck);
-				}
-
+				SetupNotesAndStats(deck);
 				UseDeck(deck);
 				Game.IsUsingPremade = true;
 				//change player deck itemsource
@@ -1095,6 +1084,29 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
+		}
+
+		private void SetupNotesAndStats(Deck selected)
+		{
+			if(selected == null)
+				return;
+
+			//set up notes
+			DeckNotesEditor.SetDeck(selected);
+			var flyoutHeader = selected.Name.Length >= 20 ? string.Join("", selected.Name.Take(17)) + "..." : selected.Name;
+			FlyoutNotes.Header = flyoutHeader;
+
+			//set up stats
+			if (Config.Instance.StatsInWindow)
+			{
+				StatsWindow.Title = "Stats: " + selected.Name;
+				StatsWindow.StatsControl.SetDeck(selected);
+			}
+			else
+			{
+				FlyoutDeckStats.Header = "Stats: " + selected.Name;
+				DeckStatsFlyout.SetDeck(selected);
+			}
 		}
 
 		public void UpdateDeckList(Deck selected)
