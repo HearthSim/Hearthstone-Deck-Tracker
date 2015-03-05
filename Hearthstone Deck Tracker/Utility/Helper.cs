@@ -9,7 +9,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Cache;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -57,10 +56,9 @@ namespace Hearthstone_Deck_Tracker
 		public static OptionsMain OptionsMain { get; set; }
 
 
-		public static Version CheckForUpdates(out Version newVersionOut)
+		public static async Task<Version> CheckForUpdates()
 		{
 			Logger.WriteLine("Checking for updates...", "Helper");
-			newVersionOut = null;
 
 			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
@@ -71,21 +69,22 @@ namespace Hearthstone_Deck_Tracker
 				try
 				{
 					Logger.WriteLine("Current version: " + currentVersion, "Helper");
-					var xml =
-						new WebClient {Proxy = null, CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload)}.DownloadString(versionXmlUrl);
+					string xml;
+					using(var wc = new WebClient())
+						xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
+					Logger.WriteLine("Latest version: " + newVersion, "Helper");
 
 					if(newVersion > currentVersion)
-						newVersionOut = newVersion;
+						return newVersion;
 				}
 				catch(Exception e)
 				{
 					MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
 				}
 			}
-
-			return currentVersion;
+			return null;
 		}
 
 		// A bug in the SerializableVersion.ToString() method causes this to load Version.xml incorrectly.

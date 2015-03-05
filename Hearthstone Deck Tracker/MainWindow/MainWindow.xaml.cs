@@ -46,7 +46,6 @@ namespace Hearthstone_Deck_Tracker
 		private const int HearthStatsAutoSyncInterval = 300;
 		//public readonly DeckList DeckList;
 		public readonly List<Deck> DefaultDecks;
-		public readonly Version NewVersion;
 		public readonly OpponentWindow OpponentWindow;
 		public readonly OverlayWindow Overlay;
 		public readonly PlayerWindow PlayerWindow;
@@ -168,15 +167,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 
-			Version currentVersion;
-			if(Config.Instance.CheckForUpdates)
-			{
-				currentVersion = Helper.CheckForUpdates(out NewVersion);
-				_lastUpdateCheck = DateTime.Now;
-			}
-			else
-				currentVersion = Helper.GetCurrentVersion();
-
+			var currentVersion = Helper.GetCurrentVersion();
 			var versionString = string.Empty;
 			if(currentVersion != null)
 			{
@@ -365,9 +356,9 @@ namespace Hearthstone_Deck_Tracker
 						var oldNewsId = _currentNewsId;
 						using(var client = new WebClient())
 						{
-							var content =
-								client.DownloadString(url).Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-							try
+							var raw = await client.DownloadStringTaskAsync(url);
+							var content = raw.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+                            try
 							{
 								_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
 							}
@@ -700,6 +691,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void UpdateOverlayAsync()
 		{
+			UpdateCheck();
 			var hsForegroundChanged = false;
 			while(_doUpdate)
 			{
@@ -710,13 +702,7 @@ namespace Hearthstone_Deck_Tracker
 					if(!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)
 					{
 						if(!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0) && !_showingUpdateMessage)
-						{
-							Version newVersion;
-							var currentVersion = Helper.CheckForUpdates(out newVersion);
-							if(currentVersion != null && newVersion != null)
-								ShowNewUpdateMessage(newVersion);
-							_lastUpdateCheck = DateTime.Now;
-						}
+							UpdateCheck();
 					}
 
 					Game.IsRunning = true;
@@ -774,6 +760,14 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
 			_canShowDown = true;
+		}
+
+		private async void UpdateCheck()
+		{
+			var newVersion = await Helper.CheckForUpdates();
+			if(newVersion != null)
+				ShowNewUpdateMessage(newVersion);
+			_lastUpdateCheck = DateTime.Now;
 		}
 
 		private async Task<bool> CheckClipboardForNetDeckImport()
@@ -861,15 +855,14 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		private async Task ShowNewUpdateMessage(Version newVersion = null)
+		private async void ShowNewUpdateMessage(Version newVersion)
 		{
 			if(_showingUpdateMessage)
 				return;
 			_showingUpdateMessage = true;
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
-			var version = newVersion ?? NewVersion;
-			if(version == null)
+			if(newVersion == null)
 			{
 				_showingUpdateMessage = false;
 				return;
@@ -880,7 +873,7 @@ namespace Hearthstone_Deck_Tracker
 				ActivateWindow();
 				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
 					await Task.Delay(100);
-				var newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+				var newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
 				var result =
 					await
 					this.ShowMessageAsync("New Update available!", "Press \"Download\" to automatically download.",
@@ -891,9 +884,9 @@ namespace Hearthstone_Deck_Tracker
 					//recheck, in case there was no immediate response to the dialog
 					if((DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
 					{
-						Helper.CheckForUpdates(out version);
-						if(version != null)
-							newVersionString = string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+						newVersion = await Helper.CheckForUpdates();
+						if(newVersion != null)
+							newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
 					}
 					try
 					{
@@ -1089,7 +1082,7 @@ namespace Hearthstone_Deck_Tracker
 			FlyoutNotes.Header = flyoutHeader;
 
 			//set up stats
-			if (Config.Instance.StatsInWindow)
+			if(Config.Instance.StatsInWindow)
 			{
 				StatsWindow.Title = "Stats: " + selected.Name;
 				StatsWindow.StatsControl.SetDeck(selected);

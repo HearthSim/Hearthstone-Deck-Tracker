@@ -666,9 +666,6 @@ namespace Hearthstone_Deck_Tracker
 			if(_updatedVersion != null)
 				await this.ShowUpdateNotesMessage();
 
-			if(NewVersion != null)
-				await ShowNewUpdateMessage();
-
 			if(!_foundHsDirectory)
 				await this.ShowHsNotInstalledMessage();
 			else if(_updatedLogConfig)
