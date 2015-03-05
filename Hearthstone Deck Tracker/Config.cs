@@ -388,7 +388,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool RecordRanked = true;
 
-		[DefaultValue(false)]
+		[DefaultValue(true)]
 		public bool RecordReplays = true;
 
 		[DefaultValue(false)]
