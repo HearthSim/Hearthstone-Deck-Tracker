@@ -421,7 +421,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			Game.CurrentGameStats.GameEnd();
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
+			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck != null)
 			{
 				if(Config.Instance.DiscardGameIfIncorrectDeck

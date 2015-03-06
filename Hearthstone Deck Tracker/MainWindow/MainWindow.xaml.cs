@@ -284,6 +284,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!Config.Instance.RemovedNoteUrls)
 				RemoveNoteUrls();
+			if(!Config.Instance.ResolvedDeckStatsIssue)
+				ResolveDeckStatsIssue();
 
 			//this has to happen before reader starts
 			//var lastDeck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
@@ -334,9 +336,49 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
+
 		public Thickness TitleBarMargin
 		{
 			get { return new Thickness(0, TitlebarHeight, 0, 0); }
+		}
+
+		private void ResolveDeckStatsIssue()
+		{
+			foreach(var deck in DeckList.Instance.Decks)
+			{
+				foreach(var deckVersion in deck.Versions)
+				{
+					if(deckVersion.DeckStats.Games.Any())
+					{
+						var games = deckVersion.DeckStats.Games.ToList();
+						foreach(var game in games)
+						{
+							deck.DeckStats.AddGameResult(game);
+							deckVersion.DeckStats.Games.Remove(game);
+						}
+					}
+				}
+			}
+			foreach(var deckStats in DeckStatsList.Instance.DeckStats)
+			{
+				if(deckStats.Games.Any() && !DeckList.Instance.Decks.Any(d => deckStats.BelongsToDeck(d)))
+				{
+					var games = deckStats.Games.ToList();
+					foreach(var game in games)
+					{
+						var defaultStats = DefaultDeckStats.Instance.GetDeckStats(game.PlayerHero);
+						if(defaultStats != null)
+						{
+							defaultStats.AddGameResult(game);
+							deckStats.Games.Remove(game);
+						}
+					}
+				}
+			}
+
+			DeckStatsList.Save();
+			Config.Instance.ResolvedDeckStatsIssue = true;
+			Config.Save();
 		}
 
 		private async void UpdateAsync()
