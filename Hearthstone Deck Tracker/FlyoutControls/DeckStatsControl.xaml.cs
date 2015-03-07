@@ -521,8 +521,8 @@ namespace Hearthstone_Deck_Tracker
 					if(deck != null)
 						deck.DeckStats.Games.Remove(game);
 				}
-				game.PlayerDeckVersion = selectedDeck.Version; //move to latest version
-				game.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
+				game.PlayerDeckVersion = dialog.SelectedVersion;
+				game.HearthStatsDeckVersionId = selectedDeck.GetVersion(dialog.SelectedVersion).HearthStatsDeckVersionId;
 				game.DeckId = selectedDeck.DeckId;
 				game.DeckName = selectedDeck.Name;
 				selectedDeck.DeckStats.Games.Add(game);
