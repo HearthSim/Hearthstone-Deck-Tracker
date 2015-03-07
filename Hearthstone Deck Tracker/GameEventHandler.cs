@@ -439,6 +439,7 @@ namespace Hearthstone_Deck_Tracker
 				Game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.HearthStatsDeckVersionId;
 
 				_lastGame = Game.CurrentGameStats;
+				_lastGame.PlayerDeckVersion = DeckList.Instance.ActiveDeckVersion.Version;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
 				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
