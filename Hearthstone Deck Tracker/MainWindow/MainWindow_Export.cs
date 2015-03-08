@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(pngEncoder != null)
 			{
-				var fileName = Helper.ShowSaveFileDialog(deck.Name, "png");
+				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png");
 
 				if(fileName != null)
 				{
@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 
-			var fileName = Helper.ShowSaveFileDialog(deck.Name, "xml");
+			var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
 
 			if(fileName != null)
 			{
