@@ -615,6 +615,7 @@ namespace Hearthstone_Deck_Tracker
 			StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
+			MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;

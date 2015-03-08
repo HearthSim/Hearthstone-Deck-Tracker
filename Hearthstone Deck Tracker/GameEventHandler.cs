@@ -511,9 +511,43 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("set aside: " + id, "GameEventHandler");
 		}
 
+		public void ResetConstructedImporting()
+		{
+			Logger.WriteLine("Reset constructed importing", "GameEventHandler");
+			_doneImportingConstructed = false;
+			_lastManaCost = 0;
+			Game.ResetConstructedCards();
+		}
+
+		private bool _doneImportingConstructed;
+		private int _lastManaCost;
+
+		public void HandlePossibleConstructedCard(string id, bool canBeDoneImporting)
+		{
+			if(_doneImportingConstructed)
+				return;
+			var card = Game.GetCardFromId(id);
+			if(card == null)
+				return;
+			if(canBeDoneImporting)
+			{
+				if(card.Cost < _lastManaCost)
+				{
+					_doneImportingConstructed = true;
+					return;
+				}
+				_lastManaCost = card.Cost;
+				Helper.MainWindow.MenuItemImportConstructed.IsEnabled = true;
+			}
+			if(!Game.PossibleConstructedCards.Contains(card))
+				Game.PossibleConstructedCards.Add(card);
+		}
+
 		public void HandlePossibleArenaCard(string id)
 		{
 			var card = Game.GetCardFromId(id);
+			if(card == null)
+				return;
 			if(!Game.PossibleArenaCards.Contains(card))
 				Game.PossibleArenaCards.Add(card);
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;

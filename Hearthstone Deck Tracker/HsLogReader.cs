@@ -444,8 +444,14 @@ namespace Hearthstone_Deck_Tracker
 						_foundRanked = true;
 						_gameHandler.SetGameMode(GameMode.Ranked);
 					}
-					else if(_unloadCardRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
-						_gameHandler.HandlePossibleArenaCard(_unloadCardRegex.Match(logLine).Groups["id"].Value);
+					else if(_unloadCardRegex.IsMatch(logLine))
+					{
+						var id = _unloadCardRegex.Match(logLine).Groups["id"].Value;
+						if(Game.CurrentGameMode == GameMode.Arena)
+							_gameHandler.HandlePossibleArenaCard(id);
+						else
+							_gameHandler.HandlePossibleConstructedCard(id, true);
+					}
 				}
 					#endregion
 					#region [Bob]
@@ -468,17 +474,22 @@ namespace Hearthstone_Deck_Tracker
 						GameEnd();
 				}
 				else if(logLine.StartsWith("[Bob] ---RegisterFriendChallenge---"))
-				{
-					//if(++_friendChallengeCount > 1)
 					_gameHandler.HandleInMenu();
-				}
+				else if(logLine.StartsWith("[Bob] ---RegisterScreenCollectionManager---"))
+					_gameHandler.ResetConstructedImporting();
 					#endregion
 					#region [Rachelle]
 
 				else if(logLine.StartsWith("[Rachelle]"))
 				{
-					if(_cardAlreadyInCacheRegex.IsMatch(logLine) && Game.CurrentGameMode == GameMode.Arena)
-						_gameHandler.HandlePossibleArenaCard(_cardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value);
+					if(_cardAlreadyInCacheRegex.IsMatch(logLine))
+					{
+						var id = _cardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value;
+						if(Game.CurrentGameMode == GameMode.Arena)
+							_gameHandler.HandlePossibleArenaCard(id);
+						else
+							_gameHandler.HandlePossibleConstructedCard(id, false);
+					}
 				}
 					#endregion
 					#region [Zone]

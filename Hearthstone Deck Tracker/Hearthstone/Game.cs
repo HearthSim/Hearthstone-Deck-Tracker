@@ -86,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static CardMark[] OpponentHandMarks { get; private set; }
 		public static Card[] OpponentStolenCardsInformation { get; private set; }
 		public static List<Card> PossibleArenaCards { get; set; }
+		public static List<Card> PossibleConstructedCards { get; set; }
 		public static int? SecondToLastUsedId;
 
 		//public static List<Entity> Entities;
@@ -109,6 +110,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PlayerDrawn = new ObservableCollection<Card>();
 			OpponentCards = new ObservableCollection<Card>();
 			PossibleArenaCards = new List<Card>();
+			PossibleConstructedCards = new List<Card>();
 			_cardDb = new Dictionary<string, Card>();
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
@@ -762,6 +764,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			PossibleArenaCards.Clear();
 			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
+		}
+
+		public static void ResetConstructedCards()
+		{
+			PossibleConstructedCards.Clear();
+			Helper.MainWindow.MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
 		}
 
 		public static void AddHSLogLine(string logLine)

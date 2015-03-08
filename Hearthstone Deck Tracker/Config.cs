@@ -477,6 +477,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowArenaImportMessage = true;
 
+		[DefaultValue(true)]
+		public bool ShowConstructedImportMessage = true;
+
 		[DefaultValue(false)]
 		public bool ShowDeckTitle = false;
 

@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -308,7 +309,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				await
 					this.ShowMessageAsync("How this works:",
-					                      "Looks like this is your first time using this feature, so let me explain:\n\n1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.");
+					                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.");
 				Config.Instance.ShowArenaImportMessage = false;
 				Config.Save();
 				MenuItemImportArena.IsEnabled = Game.PossibleArenaCards.Count > 0;
@@ -323,6 +324,51 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.GetPlayerClass;
 			}
 			deck.Tags.Add("Arena");
+			SetNewDeck(deck);
+		}
+
+		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
+		{
+			if(Config.Instance.ShowConstructedImportMessage)
+			{
+				await
+					this.ShowMessageAsync("How this works:",
+					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2)Enter the collection and open the deck you want to import (do not edit the deck at this point)\n\n3)Leave the collection screen and go back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2.");
+				Config.Instance.ShowConstructedImportMessage = false;
+				Config.Save();
+				MenuItemImportConstructed.IsEnabled = Game.PossibleConstructedCards.Count > 0;
+				return;
+			}
+
+			var deck = new Deck();
+			var possibleClasses = new Dictionary<string, int>();
+			foreach(var card in Game.PossibleConstructedCards)
+			{
+				if(!string.IsNullOrEmpty(card.PlayerClass))
+				{
+					if(!possibleClasses.ContainsKey(card.PlayerClass))
+						possibleClasses.Add(card.PlayerClass, 0);
+					possibleClasses[card.PlayerClass]++;
+				}
+			}
+			deck.Class = possibleClasses.OrderByDescending(x => x.Value).First().Key;
+
+			var legendary = Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
+			var remaining =
+				Game.PossibleConstructedCards.Where(
+				                                    c =>
+				                                    c.Rarity != "Legendary" && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
+				    .ToList();
+			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
+			foreach(var card in Game.PossibleConstructedCards)
+			{
+				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
+					continue;
+				card.Count = card.Rarity == "Legendary" ? 1 : count;
+				deck.Cards.Add(card);
+				if(deck.Class == null && card.GetPlayerClass != "Neutral")
+					deck.Class = card.GetPlayerClass;
+			}
 			SetNewDeck(deck);
 		}
 	}

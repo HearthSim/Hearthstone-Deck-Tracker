@@ -21,7 +21,8 @@
                                             Download NetDeck (Chrome ext.)
                                         </Hyperlink>
                     </TextBlock>
-                    <Button Width="200" Margin="10,5,0,0" HorizontalAlignment="Left" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonBase_OnClick"/>
+                    <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick"/>
+                    <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW CONSTRUCTED IMPORTING HOW-TO" Click="ButtonConstructedHowTo_OnClick"/>
 
                 </StackPanel>
             </ScrollViewer>
