@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetDeck(Deck deck)
 		{
+			SaveDeck();
 			_currentDeck = deck;
 			Textbox.Text = deck.Note;
 			_noteChanged = false;
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SaveDeck()
 		{
-			if(!_noteChanged)
+			if(!_noteChanged || _currentDeck == null)
 				return;
 			DeckList.Save();
 			if(Config.Instance.HearthStatsAutoUploadNewDecks)
