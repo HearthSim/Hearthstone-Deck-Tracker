@@ -516,11 +516,14 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Reset constructed importing", "GameEventHandler");
 			_doneImportingConstructed = false;
 			_lastManaCost = 0;
+			_unloadedCardCount = 0;
 			Game.ResetConstructedCards();
 		}
 
 		private bool _doneImportingConstructed;
 		private int _lastManaCost;
+		private int _unloadedCardCount;
+		private const int MaxCardsOnCollectionPage = 8;
 
 		public void HandlePossibleConstructedCard(string id, bool canBeDoneImporting)
 		{
@@ -531,7 +534,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			if(canBeDoneImporting)
 			{
-				if(card.Cost < _lastManaCost)
+				_unloadedCardCount++;
+				if(_unloadedCardCount > MaxCardsOnCollectionPage && card.Cost < _lastManaCost)
 				{
 					_doneImportingConstructed = true;
 					return;

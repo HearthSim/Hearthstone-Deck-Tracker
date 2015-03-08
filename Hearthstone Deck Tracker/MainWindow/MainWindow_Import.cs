@@ -341,17 +341,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var deck = new Deck();
-			var possibleClasses = new Dictionary<string, int>();
-			foreach(var card in Game.PossibleConstructedCards)
-			{
-				if(!string.IsNullOrEmpty(card.PlayerClass))
-				{
-					if(!possibleClasses.ContainsKey(card.PlayerClass))
-						possibleClasses.Add(card.PlayerClass, 0);
-					possibleClasses[card.PlayerClass]++;
-				}
-			}
-			deck.Class = possibleClasses.OrderByDescending(x => x.Value).First().Key;
+			deck.Class = Game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
 
 			var legendary = Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
