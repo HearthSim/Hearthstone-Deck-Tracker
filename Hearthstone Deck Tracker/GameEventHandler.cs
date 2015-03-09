@@ -346,7 +346,7 @@ namespace Hearthstone_Deck_Tracker
 							Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
 							deck = null;
 						}
-						
+
 						if(deck != null)
 						{
 							Helper.MainWindow.NeedToIncorrectDeckMessage = false;
@@ -455,7 +455,7 @@ namespace Hearthstone_Deck_Tracker
 				_assignedDeck = selectedDeck;
 
 				// Unarchive the active deck after we have played a game with it
-				if (_assignedDeck.Archived)
+				if(_assignedDeck.Archived)
 				{
 					Logger.WriteLine("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game", "GameEventHandler");
 					Helper.MainWindow.ArchiveDeck(_assignedDeck, false);
@@ -530,6 +530,7 @@ namespace Hearthstone_Deck_Tracker
 			_doneImportingConstructed = false;
 			_lastManaCost = 0;
 			_unloadedCardCount = 0;
+			_ignoreCachedIds = new List<string>(Config.Instance.ConstructedImportingIgnoreCachedIds);
 			Game.ResetConstructedCards();
 		}
 
@@ -537,6 +538,10 @@ namespace Hearthstone_Deck_Tracker
 		private int _lastManaCost;
 		private int _unloadedCardCount;
 		private const int MaxCardsOnCollectionPage = 8;
+
+		private int _lastCachedManaCost;
+		private bool _startImportingCached;
+		private List<string> _ignoreCachedIds;
 
 		public void HandlePossibleConstructedCard(string id, bool canBeDoneImporting)
 		{
@@ -548,13 +553,32 @@ namespace Hearthstone_Deck_Tracker
 			if(canBeDoneImporting)
 			{
 				_unloadedCardCount++;
-				if(_unloadedCardCount > MaxCardsOnCollectionPage && card.Cost < _lastManaCost)
+				var containsOtherThanDruid =
+					Game.PossibleConstructedCards.Any(c => !string.IsNullOrEmpty(c.PlayerClass) && c.PlayerClass != "Druid");
+				var cardCount =
+					Game.PossibleConstructedCards.Where(c => !Config.Instance.ConstructedImportingIgnoreCachedIds.Contains(c.Id))
+					    .Count(c => (!containsOtherThanDruid || c.PlayerClass != "Druid"));
+				if(_unloadedCardCount > MaxCardsOnCollectionPage && card.Cost < _lastManaCost && cardCount > 10)
 				{
 					_doneImportingConstructed = true;
 					return;
 				}
 				_lastManaCost = card.Cost;
 				Helper.MainWindow.MenuItemImportConstructed.IsEnabled = true;
+			}
+			else
+			{
+				if(Helper.SettingUpConstructedImporting)
+				{
+					if(!Game.PossibleConstructedCards.Contains(card))
+						Game.PossibleConstructedCards.Add(card);
+					return;
+				}
+				if(_ignoreCachedIds.Contains(card.Id))
+				{
+					_ignoreCachedIds.Remove(card.Id);
+					return;
+				}
 			}
 			if(!Game.PossibleConstructedCards.Contains(card))
 				Game.PossibleConstructedCards.Add(card);

@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -332,6 +331,10 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.ShowConstructedImportMessage)
 			{
 				await
+					this.ShowMessageAsync("[unfinished]",
+					                      "quick semi-automatic setup required. HDT needs to know whichs cards on the first page for each class exists as golden and normal.");
+				await Helper.SetupConstructedImporting();
+				await
 					this.ShowMessageAsync("How this works:",
 					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2)Enter the collection and open the deck you want to import (do not edit the deck at this point)\n\n3)Leave the collection screen and go back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2.");
 				Config.Instance.ShowConstructedImportMessage = false;
@@ -360,6 +363,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.GetPlayerClass;
 			}
 			SetNewDeck(deck);
+			HsLogReader.Instance.ClearLog();
 		}
 	}
 }

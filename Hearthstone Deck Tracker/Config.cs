@@ -68,6 +68,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool CloseWithHearthstone = false;
 
+		[DefaultValue(new string[0])]
+		public string[] ConstructedImportingIgnoreCachedIds = new string[0];
+
 		[DefaultValue("")]
 		public string CreatedByVersion = "";
 
