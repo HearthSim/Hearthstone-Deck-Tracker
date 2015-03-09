@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public double WinPercent
 		{
-			get { return Deck.WinPercent; }
+			get { return Deck.WinPercentAll; }
 		}
 
 		public string DeckName

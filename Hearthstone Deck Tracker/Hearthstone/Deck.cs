@@ -184,12 +184,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(DeckStats.Games.Count == 0)
 					return "-";
-				return Math.Round(WinPercent, 0) + "%";
+				return 
+                    "Sel: " + Math.Round(WinPercentCurrentVersion, 0) + "%" + Environment.NewLine +
+                    "Tot: " + Math.Round(WinPercentAll, 0) + "%";
 			}
 		}
 
 		[XmlIgnore]
-		public double WinPercent
+		public double WinPercentAll
 		{
 			get
 			{
@@ -199,6 +201,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return 100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count;
 			}
 		}
+
+        [XmlIgnore]
+        public double WinPercentCurrentVersion
+        {
+            get
+            {
+                if (DeckStats.Games.Count == 0)
+                {
+                    return 0.0;
+                }
+                double wonGamesCount = DeckStats.Games.Count(g => 
+                    g.Result == GameResult.Win 
+                    && (g.PlayerDeckVersion == SelectedVersion
+                        || (g.PlayerDeckVersion == null && Versions.Count == 0) //old decks before versioning
+                    )); 
+                double totalGamesCount = DeckStats.Games.Count(g => 
+                    (g.PlayerDeckVersion == SelectedVersion
+                        || (g.PlayerDeckVersion == null && Versions.Count == 0) //old decks before versioning
+                    ));
+                return 100.0 * 
+                     wonGamesCount
+                    / totalGamesCount;
+            }
+        }
 
 		[XmlIgnore]
 		public string GetClass

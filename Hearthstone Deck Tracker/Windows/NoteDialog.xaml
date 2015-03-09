@@ -6,9 +6,44 @@
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
                       WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Button Content="Set" Margin="10,140,158,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Note..." Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <CheckBox Name="CheckBoxEnterToSave" Content="Save with ENTER" HorizontalAlignment="Right" Margin="0,0,10,10" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom"/>
+    <Grid Name="FormGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="107*"/>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Set" Margin="10,3.667,158,0" VerticalAlignment="Top" Click="Button_Click" Grid.Row="2" Height="20"/>
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Note..."  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" Margin="10,10,10,5"/>
+        <CheckBox Name="CheckBoxEnterToSave" Content="Save with ENTER" HorizontalAlignment="Right" Margin="0,0,10,9.667" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom" Grid.Row="2"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,2" Height="26">
+            <TextBlock Grid.Row="1" VerticalAlignment="Center">Opponent rank </TextBlock>
+            <ComboBox Name="ComboBoxOpponentRank" HorizontalAlignment="Left" Height="26" Margin="10,0,0,0" VerticalAlignment="Center" Grid.Row="1">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>3</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>5</ComboBoxItem>
+                <ComboBoxItem>6</ComboBoxItem>
+                <ComboBoxItem>7</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>9</ComboBoxItem>
+                <ComboBoxItem>10</ComboBoxItem>
+                <ComboBoxItem>11</ComboBoxItem>
+                <ComboBoxItem>12</ComboBoxItem>
+                <ComboBoxItem>13</ComboBoxItem>
+                <ComboBoxItem>14</ComboBoxItem>
+                <ComboBoxItem>15</ComboBoxItem>
+                <ComboBoxItem>16</ComboBoxItem>
+                <ComboBoxItem>17</ComboBoxItem>
+                <ComboBoxItem>18</ComboBoxItem>
+                <ComboBoxItem>19</ComboBoxItem>
+                <ComboBoxItem>20</ComboBoxItem>
+                <ComboBoxItem>21</ComboBoxItem>
+                <ComboBoxItem>22</ComboBoxItem>
+                <ComboBoxItem>23</ComboBoxItem>
+                <ComboBoxItem>24</ComboBoxItem>
+                <ComboBoxItem>25</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </controls:MetroWindow>

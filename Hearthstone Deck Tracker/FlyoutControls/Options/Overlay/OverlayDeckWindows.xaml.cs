@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
@@ -202,8 +203,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Helper.MainWindow.PlayerWindow.Show();
 			Helper.MainWindow.PlayerWindow.Activate();
+            Dictionary<string, int> breakdownLeft = Helper.CalculateDeckBreakdown(Game.PlayerDeck);
 			Helper.MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount,
-			                                            30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
+			                                            30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count),
+                                                        breakdownLeft);
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}

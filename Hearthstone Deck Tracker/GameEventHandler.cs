@@ -440,28 +440,28 @@ namespace Hearthstone_Deck_Tracker
 
 				_lastGame = Game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
-				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
-				{
-					_showedNoteDialog = true;
-					new NoteDialog(Game.CurrentGameStats);
-				}
 				Logger.WriteLine("Assigned current game to deck: " + selectedDeck.Name, "GameStats");
 				_assignedDeck = selectedDeck;
 
-				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-				{
-					if(Game.CurrentGameMode == GameMode.None)
-						await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
-					if(Game.CurrentGameMode == GameMode.Casual)
-						await HsLogReader.Instance.RankedDetection();
-					if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
-						await RankDetection(5);
-					await GameModeSaved(15);
-					if(Game.CurrentGameMode == GameMode.Arena)
-						HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-					else
-						HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
-				}
+				if(Game.CurrentGameMode == GameMode.None)
+					await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
+				if(Game.CurrentGameMode == GameMode.Casual)
+					await HsLogReader.Instance.RankedDetection();
+				if(Game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
+					await RankDetection(5);
+				await GameModeSaved(15);
+                if (HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+                {
+                    if (Game.CurrentGameMode == GameMode.Arena)
+                        HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+                    else
+                        HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
+                }
+                if (Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
+                {
+                    _showedNoteDialog = true;
+                    new NoteDialog(_lastGame);
+                }
 				_lastGame = null;
 			}
 			else

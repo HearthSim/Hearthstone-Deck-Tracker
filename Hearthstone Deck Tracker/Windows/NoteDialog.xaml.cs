@@ -16,16 +16,24 @@ namespace Hearthstone_Deck_Tracker
 		private readonly GameStats _game;
 		private readonly bool _initialized;
 
-		public NoteDialog(GameStats game)
-		{
-			InitializeComponent();
-			_game = game;
-			CheckBoxEnterToSave.IsChecked = Config.Instance.EnterToSaveNote;
-			Show();
-			Activate();
-			TextBoxNote.Focus();
-			_initialized = true;
-		}
+        public NoteDialog(GameStats game)
+        {
+            InitializeComponent();
+            _game = game;
+            CheckBoxEnterToSave.IsChecked = Config.Instance.EnterToSaveNote;
+            Show();
+            Activate();
+            TextBoxNote.Focus();
+            if (game.GameMode == Enums.GameMode.Ranked)
+            {
+                ComboBoxOpponentRank.SelectedIndex = game.Rank - 1;
+            }
+            else
+            {
+                FormGrid.RowDefinitions[1].Height = new GridLength(0);
+            }            
+            _initialized = true;
+        }
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
@@ -37,7 +45,11 @@ namespace Hearthstone_Deck_Tracker
 			if(_game != null)
 			{
 				_game.Note = TextBoxNote.Text;
-				DeckStatsList.Save();
+                if (_game.GameMode == Enums.GameMode.Ranked)
+                {
+                    _game.OpponentRank = ComboBoxOpponentRank.SelectedIndex + 1;
+                }
+                DeckStatsList.Save();
 				(Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout).Refresh();
 			}
 			Close();
