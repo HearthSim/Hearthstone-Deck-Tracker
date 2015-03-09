@@ -229,7 +229,7 @@ namespace Hearthstone_Deck_Tracker
 				ContextMenu = new ContextMenu(),
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
-			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => DeselectDeck());
+			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => SelectDeck(null));
 			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect deck")
 			{
 				MenuItems =
@@ -312,8 +312,7 @@ namespace Hearthstone_Deck_Tracker
 			//UpdateDeckList(lastDeck);
 			//UseDeck(lastDeck);
 			//}
-			if(DeckList.Instance.ActiveDeck != null)
-				SelectDeck(DeckList.Instance.ActiveDeck);
+			SelectDeck(DeckList.Instance.ActiveDeck);
 
 			if(_foundHsDirectory)
 				HsLogReader.Instance.Start();
@@ -699,7 +698,9 @@ namespace Hearthstone_Deck_Tracker
 				if(selectedDeck != null)
 				{
 					if(selectedDeck.Name == "Use no deck")
-						DeselectDeck();
+					{
+						SelectDeck(null);
+					}
 					else
 					{
 						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
@@ -980,39 +981,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ButtonNoDeck_Click(object sender, RoutedEventArgs e)
 		{
-			DeselectDeck();
-		}
-
-		public void DeselectDeck()
-		{
-			Logger.WriteLine("set player item source to PlayerDrawn", "DelsectDeck");
-			Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
-			PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
-			Game.IsUsingPremade = false;
-
-			if(Config.Instance.StatsInWindow)
-			{
-				StatsWindow.Title = "Stats";
-				StatsWindow.StatsControl.SetDeck(null);
-			}
-			else
-			{
-				FlyoutDeckStats.Header = "Stats";
-				DeckStatsFlyout.SetDeck(null);
-			}
-
-			if(DeckList.Instance.ActiveDeck != null)
-				DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
-
-			DeckList.Instance.ActiveDeck = null;
-			DeckPickerList.DeselectDeck();
-			//DeckPickerList.SelectedIndex = -1;
-			//DeckPickerList.ListboxPicker.Items.Refresh();
-
-			UpdateDeckList(null);
-			UseDeck(null);
-			EnableMenuItems(false);
-			ManaCurveMyDecks.ClearDeck();
+			SelectDeck(null);
 		}
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
@@ -1046,31 +1015,14 @@ namespace Hearthstone_Deck_Tracker
 				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
 				FlyoutNotes.Header = flyoutHeader;
 
-				//set up stats
-				if(Config.Instance.StatsInWindow)
-				{
-					StatsWindow.Title = "Stats: " + deck.Name;
-					StatsWindow.StatsControl.SetDeck(deck);
-				}
-				else
-				{
-					FlyoutDeckStats.Header = "Stats: " + deck.Name;
-					DeckStatsFlyout.SetDeck(deck);
-				}
+				//set up tags
+				TagControlEdit.SetSelectedTags(deck.Tags);
+				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
+				MenuItemQuickSetTag.Items.Refresh();
 
-				//change player deck itemsource
-				if(Overlay.ListViewPlayer.ItemsSource != Game.PlayerDeck)
-				{
-					Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					Overlay.ListViewPlayer.Items.Refresh();
-					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					PlayerWindow.ListViewPlayer.Items.Refresh();
-					Logger.WriteLine("Set player itemsource as playerdeck", "Tracker");
-				}
-
-				UseDeck(deck);
-				UpdateDeckList(deck);
-				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
+				Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+				Logger.WriteLine("Set player itemsource as PlayerDeck", "Tracker");
 
 				//set and save last used deck for class
 				while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
@@ -1083,22 +1035,40 @@ namespace Hearthstone_Deck_Tracker
 				}
 				DeckList.Instance.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
 				DeckList.Save();
-				EnableMenuItems(true);
-				ManaCurveMyDecks.SetDeck(deck);
-				TagControlEdit.SetSelectedTags(deck.Tags);
-				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
-				MenuItemQuickSetTag.Items.Refresh();
-				MenuItemUpdateDeck.IsEnabled = !string.IsNullOrEmpty(deck.Url);
 
-				ComboBoxDeckVersion.ItemsSource = deck.VersionsIncludingSelf;
-				ComboBoxDeckVersion.SelectedItem = deck.SelectedVersion;
-				UpdatePanelVersionComboBox(deck);
+				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
 			}
 			else
 			{
-				UpdatePanelVersionComboBox(null);
-				EnableMenuItems(false);
+				Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+				PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+				Logger.WriteLine("set player item source to PlayerDrawn", "Tracker");
+
+				Game.IsUsingPremade = false;
+
+				if(DeckList.Instance.ActiveDeck != null)
+					DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
+
+				DeckList.Instance.ActiveDeck = null;
+				DeckPickerList.DeselectDeck();
+
+				Logger.WriteLine("Deselected deck", "Tracker");
 			}
+
+			//set up stats
+			var statsTitle = String.Format("Stats{0}", deck == null ? "" : ": " + deck.Name);
+			StatsWindow.Title = statsTitle;
+			FlyoutDeckStats.Header = statsTitle;
+			StatsWindow.StatsControl.SetDeck(deck);
+			DeckStatsFlyout.SetDeck(deck);
+
+			UseDeck(deck);
+			UpdateDeckList(deck);
+			EnableMenuItems(deck != null);
+			ManaCurveMyDecks.SetDeck(deck);
+			UpdatePanelVersionComboBox(deck);
+			Overlay.ListViewPlayer.Items.Refresh();
+			PlayerWindow.ListViewPlayer.Items.Refresh();
 		}
 
 		private void UpdatePanelVersionComboBox(Deck deck)
