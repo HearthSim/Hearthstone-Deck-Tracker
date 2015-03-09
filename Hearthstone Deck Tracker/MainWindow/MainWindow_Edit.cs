@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				return;
 
-			DeselectDeck();
+			SelectDeck(null);
 			DeleteDeck(deck);
 		}
 
