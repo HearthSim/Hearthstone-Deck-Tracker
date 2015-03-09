@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		public static async Task<PostResult> PostDeckAsync(Deck deck, string notes)
+		public static async Task<PostResult> PostDeckAsync(Deck deck, Deck masterDeck = null)
 		{
 			if(deck == null)
 			{
@@ -211,9 +211,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			Logger.WriteLine("uploading deck: " + deck, "HearthStatsAPI");
 
+			var name = masterDeck == null ? deck.Name : masterDeck.Name;
+			var tags = masterDeck == null ? deck.Tags : masterDeck.Tags;
+			var notes = masterDeck == null ? AddSpecialTagsToNote(deck) : AddSpecialTagsToNote(masterDeck);
+
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
 			var cards = deck.Cards.Select(x => new CardObject(x));
-			var data = JsonConvert.SerializeObject(new {name = deck.Name, notes, tags = deck.Tags, @class = deck.Class, cards});
+			var data = JsonConvert.SerializeObject(new {name, notes, tags, @class = deck.Class, cards});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -506,17 +510,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("deck is null", "HearthStatsAPI");
 				return PostResult.Failed;
 			}
-			var notes = AddSpecialTagsToNote(editedDeck);
 			if(!editedDeck.HasHearthStatsId)
 			{
 				Logger.WriteLine("deck does not exist yet, uploading", "HearthStatsAPI");
-				return await PostDeckAsync(editedDeck, notes);
+				return await PostDeckAsync(editedDeck);
 			}
 			Logger.WriteLine("editing deck: " + editedDeck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/hdt_edit?auth_token=" + _authToken;
 			var cards = editedDeck.Cards.Select(x => new CardObject(x));
 			var data =
-				JsonConvert.SerializeObject(new {deck_id = editedDeck.HearthStatsId, name = editedDeck.Name, notes, tags = editedDeck.Tags, cards,});
+				JsonConvert.SerializeObject(new {deck_id = editedDeck.HearthStatsId, name = editedDeck.Name, notes = AddSpecialTagsToNote(editedDeck), tags = editedDeck.Tags, cards,});
 			try
 			{
 				var response = await PostAsync(url, data);
@@ -704,7 +707,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return true;
 		}
 
-		public static string AddSpecialTagsToNote(Deck deck)
+		private static string AddSpecialTagsToNote(Deck deck)
 		{
 			var note = deck.Note;
 			if(!string.IsNullOrEmpty(deck.Url))
