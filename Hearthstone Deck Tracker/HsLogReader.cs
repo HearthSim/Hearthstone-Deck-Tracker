@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private readonly string _fullOutputPath;
 		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
+		private readonly Regex _goldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
 		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
 		private readonly bool _ifaceUpdateNeeded = true;
 
@@ -489,6 +490,23 @@ namespace Hearthstone_Deck_Tracker
 							_gameHandler.HandlePossibleArenaCard(id);
 						else
 							_gameHandler.HandlePossibleConstructedCard(id, false);
+					}
+					else if(_goldProgressRegex.IsMatch(logLine))
+					{
+						int wins;
+						var rawWins = _goldProgressRegex.Match(logLine).Groups["wins"].Value;
+						if(int.TryParse(rawWins, out wins))
+						{
+							if(Config.Instance.GoldProgressLastReset.Date != DateTime.Today)
+							{
+								Config.Instance.GoldProgressTotal = 0;
+								Config.Instance.GoldProgressLastReset = DateTime.Today;
+							}
+							Config.Instance.GoldProgress = wins == 3 ? 0 : wins;
+							if(wins == 3)
+								Config.Instance.GoldProgressTotal += 10;
+							Config.Save();
+						}
 					}
 				}
 					#endregion

@@ -470,6 +470,21 @@ namespace Hearthstone_Deck_Tracker
 
 			Canvas.SetTop(LblGrid, Height * 0.03);
 
+			//Gold progress
+			var goldFrameHeight = Height * 25 / 768;
+			var goldFrameWidth = 6 * goldFrameHeight;
+			var goldFrameOffset = 85 / 25 * goldFrameHeight;
+			RectGoldDisplay.Height = goldFrameHeight;
+			RectGoldDisplay.Width = goldFrameWidth;
+			LblGoldProgress.Height = goldFrameHeight;
+			var left = Width - RectGoldDisplay.ActualWidth - goldFrameOffset;
+			var top = Height - RectGoldDisplay.ActualHeight - 2;
+			Canvas.SetTop(RectGoldDisplay, top);
+			Canvas.SetLeft(RectGoldDisplay, left);
+			Canvas.SetTop(LblGoldProgress, top + (goldFrameHeight - LblGoldProgress.ActualHeight) / 2 - 2);
+			Canvas.SetLeft(LblGoldProgress, left - LblGoldProgress.ActualWidth - 10);
+
+
 			var ratio = Width / Height;
 			LblGrid.Width = ratio < 1.5 ? Width * 0.3 : Width * 0.15 * (ratio / 1.33);
 		}
@@ -591,6 +606,7 @@ namespace Hearthstone_Deck_Tracker
 			SetWinRates();
 
 			ReSizePosLists();
+
 
 			if(Helper.MainWindow.PlayerWindow.Visibility == Visibility.Visible)
 				Helper.MainWindow.PlayerWindow.Update();
@@ -781,6 +797,16 @@ namespace Hearthstone_Deck_Tracker
 				else if(_mouseInput != null)
 					UnHookMouse();
 			}
+
+			if(Game.IsInMenu
+			   && PointInsideControl(RectGoldDisplay.PointFromScreen(new Point(pos.X, pos.Y)), RectGoldDisplay.ActualWidth,
+			                         RectGoldDisplay.ActualHeight))
+			{
+				LblGoldProgress.Visibility = Visibility.Visible;
+				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress, Config.Instance.GoldProgressTotal);
+			}
+			else
+				LblGoldProgress.Visibility = Visibility.Hidden;
 		}
 
 

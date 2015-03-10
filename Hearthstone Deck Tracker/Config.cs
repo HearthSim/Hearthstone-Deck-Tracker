@@ -162,6 +162,23 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
+		[DefaultValue(0.075)]
+		public double GoldProgessX = 0.76;
+
+		[DefaultValue(0.075)]
+		public double GoldProgessY = 0.93;
+
+		[DefaultValue(0)]
+		//move this to some data file
+		public int GoldProgress = 0;
+
+		//move this to some data file
+		public DateTime GoldProgressLastReset = DateTime.Today;
+
+		[DefaultValue(0)]
+		//move this to some data file
+		public int GoldProgressTotal = 0;
+
 		[DefaultValue(null)]
 		public bool? HearthStatsAutoDeleteDecks = null;
 
