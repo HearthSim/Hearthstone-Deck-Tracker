@@ -850,6 +850,13 @@ namespace Hearthstone_Deck_Tracker
 							if(bool.TryParse(arena.Replace("arena:", "").Trim(), out isArena))
 								isArenaDeck = isArena;
 						}
+						var localized = false;
+						var nonEnglish = clipboardLines.FirstOrDefault(line => line.StartsWith("nonenglish:"));
+						if(!string.IsNullOrEmpty(nonEnglish))
+						{
+							clipboardLines.Remove(nonEnglish);
+							bool.TryParse(nonEnglish.Replace("nonenglish:", "").Trim(), out localized);
+						}
 						var tagsRaw = clipboardLines.FirstOrDefault(line => line.StartsWith("tags:"));
 						var tags = new List<string>();
 						if(!string.IsNullOrEmpty(tagsRaw))
@@ -859,7 +866,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						clipboardLines.RemoveAt(0); //"netdeckimport"
 
-						var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n));
+						var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n), localized);
 						if(deck != null)
 						{
 							if(tags.Any())

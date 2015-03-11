@@ -724,14 +724,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
-		public static Card GetCardFromName(string name)
+		public static Card GetCardFromName(string name, bool localized = false)
 		{
-			if(GetActualCards().Any(c => string.Equals(c.Name, name, StringComparison.InvariantCultureIgnoreCase)))
-			{
-				var card = GetActualCards().FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
-				if(card != null)
-					return (Card)card.Clone();
-			}
+			var card =
+				GetActualCards()
+					.FirstOrDefault(c => string.Equals(localized ? c.LocalizedName : c.Name, name, StringComparison.InvariantCultureIgnoreCase));
+			if(card != null)
+				return (Card)card.Clone();
 
 			//not sure with all the values here
 			Logger.WriteLine("Could not get card from name: " + name, "Game");

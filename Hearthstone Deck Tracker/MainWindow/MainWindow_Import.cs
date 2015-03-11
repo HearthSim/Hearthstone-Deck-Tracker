@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private Deck ParseCardString(string cards)
+		private Deck ParseCardString(string cards, bool localizedNames = false)
 		{
 			try
 			{
@@ -221,7 +221,7 @@ namespace Hearthstone_Deck_Tracker
 						cardName = match.Groups["cardname"].Value.Trim();
 					}
 
-					var card = Game.GetCardFromName(cardName);
+					var card = Game.GetCardFromName(cardName, localizedNames);
 					if(card == null || string.IsNullOrEmpty(card.Name))
 						continue;
 					card.Count = count;
