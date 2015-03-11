@@ -427,6 +427,13 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Region" Binding="{Binding RegionString}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
                                             </DataGrid.Columns>
                                         </DataGrid>
@@ -738,6 +745,13 @@
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Started"
                                                                     Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
+                                                    <DataGridTextColumn.ElementStyle>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        </Style>
+                                                    </DataGridTextColumn.ElementStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn Header="Region" Binding="{Binding RegionString}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />

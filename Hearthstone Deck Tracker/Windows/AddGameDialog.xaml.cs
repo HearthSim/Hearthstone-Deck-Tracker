@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			InitializeComponent();
 			_tcs = new TaskCompletionSource<GameStats>();
+			var lastGame = deck.DeckStats.Games.LastOrDefault();
 			if(deck.IsArenaDeck)
 			{
 				ComboBoxMode.SelectedItem = GameMode.Arena;
@@ -37,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				ComboBoxMode.IsEnabled = true;
 				TextBoxRank.IsEnabled = true;
-				var lastGame = deck.DeckStats.Games.LastOrDefault();
 				if(lastGame != null)
 				{
 					ComboBoxMode.SelectedItem = lastGame.GameMode;
@@ -45,7 +45,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 						TextBoxRank.Text = lastGame.Rank.ToString();
 				}
 			}
-
+			if(lastGame != null && lastGame.Region != Region.UNKNOWN)
+				ComboBoxRegion.SelectedItem = lastGame.Region;
 			_deck = deck;
 		}
 
@@ -75,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					Turns = turns,
 					WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes,
 					VerifiedHeroes = true,
+					Region = (Region)ComboBoxRegion.SelectedItem,
 					PlayerDeckVersion = _deck.SelectedVersion
 				};
 				_tcs.SetResult(gs);

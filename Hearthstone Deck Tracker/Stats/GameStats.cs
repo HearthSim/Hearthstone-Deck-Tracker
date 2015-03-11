@@ -67,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
+		public Region Region { get; set; }
 
 		public Guid DeckId
 		{
@@ -94,6 +95,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 				return _deckName;
 			}
 			set { _deckName = value; }
+		}
+
+		[XmlIgnore]
+		public string RegionString
+		{
+			get { return Region == Region.UNKNOWN ? "-" : Region.ToString(); }
 		}
 
 		[XmlIgnore]

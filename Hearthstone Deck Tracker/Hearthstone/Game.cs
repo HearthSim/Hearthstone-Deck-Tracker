@@ -189,7 +189,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!IsInMenu && resetStats)
 			{
 				CurrentGameMode = GameMode.None;
-				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs) {PlayerName = PlayerName, OpponentName = OpponentName};
+				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
+				{
+					PlayerName = PlayerName,
+					OpponentName = OpponentName,
+					Region = CurrentRegion
+				};
 			}
 			hsLogLines = new List<string>();
 		}

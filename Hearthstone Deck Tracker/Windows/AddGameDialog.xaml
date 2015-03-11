@@ -42,6 +42,14 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,2,0,0">
+            <Label Content="Region:" Width="90"/>
+            <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                <enums:Region>US</enums:Region>
+                <enums:Region>EU</enums:Region>
+                <enums:Region>ASIA</enums:Region>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
             <Label Content="Rank:" Width="90"/>
             <TextBox Name="TextBoxRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
         </DockPanel>
