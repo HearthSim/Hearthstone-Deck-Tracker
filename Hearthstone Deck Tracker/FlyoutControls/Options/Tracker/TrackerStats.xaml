@@ -49,7 +49,13 @@
                         <StackPanel>
                             <Label Content="(on decks and in overlay)" Margin="0,-8,0,0"/>
                             <DockPanel>
-                                <ComboBox Name="ComboboxDisplayedStats" Width="150" SelectionChanged="ComboboxDisplayedStats_SelectionChanged" DockPanel.Dock="Right" HorizontalAlignment="Left"/>
+                                <ComboBox Name="ComboboxDisplayedStats" Width="150" SelectionChanged="ComboboxDisplayedStats_SelectionChanged" DockPanel.Dock="Right" HorizontalAlignment="Left">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <Label Content="Version(s):"/>
                             </DockPanel>
                             <DockPanel Margin="0,5,0,0">

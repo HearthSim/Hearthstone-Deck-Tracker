@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
+		public bool Archived;
+
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card")]
 		public ObservableCollection<Card> Cards;
@@ -30,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string HearthStatsId;
 
 		public DateTime LastEdited;
-		public bool Archived;
 
 		[XmlArray(ElementName = "MissingCards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -315,8 +316,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, HearthStatsId,
-			                DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
+			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
+			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -334,6 +335,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					break;
 				case DisplayedStats.Selected:
 					filtered = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+					break;
+				case DisplayedStats.LatestMajor:
+					filtered =
+						DeckStats.Games.Where(
+						                      g =>
+						                      VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
+						         .ToList();
+					break;
+				case DisplayedStats.SelectedMajor:
+					filtered =
+						DeckStats.Games.Where(
+						                      g =>
+						                      VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major)
+						                                           .Select(GetVersion)
+						                                           .Any(g.BelongsToDeckVerion)).ToList();
 					break;
 			}
 			return Config.Instance.DisplayedMode == GameMode.All
