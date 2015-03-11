@@ -200,7 +200,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Load();
 
 			// Don't load active deck if it's archived
-			if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.Archived)
+			if(DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.Archived)
 				DeckList.Instance.ActiveDeck = null;
 
 			UpdateDeckList(DeckList.Instance.ActiveDeck);
@@ -704,9 +704,7 @@ namespace Hearthstone_Deck_Tracker
 				if(selectedDeck != null)
 				{
 					if(selectedDeck.Name == "Use no deck")
-					{
 						SelectDeck(null);
-					}
 					else
 					{
 						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
@@ -743,6 +741,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
+					if(!Game.IsRunning)
+					{
+						//game started
+						HsLogReader.Instance.GetCurrentRegion();
+					}
 					Overlay.UpdatePosition();
 
 					if(!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)

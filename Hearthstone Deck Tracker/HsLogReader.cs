@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool _foundRanked;
 		private bool _gameEnded;
 		private IGameHandler _gameHandler;
+		private bool _gameLoaded;
 		private DateTime _lastAssetUnload;
 		private long _lastGameEnd;
 		private int _lastId;
@@ -478,6 +479,8 @@ namespace Hearthstone_Deck_Tracker
 					_gameHandler.HandleInMenu();
 				else if(logLine.StartsWith("[Bob] ---RegisterScreenCollectionManager---"))
 					_gameHandler.ResetConstructedImporting();
+				else if(logLine.StartsWith("[Bob] ---RegisterProfileNotices---"))
+					_gameLoaded = true;
 					#endregion
 					#region [Rachelle]
 
@@ -982,6 +985,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Error cleared log file: " + e, "LogReader");
 				}
 			}
+			_gameLoaded = false;
 		}
 
 		internal void Reset(bool full)
@@ -1017,6 +1021,40 @@ namespace Hearthstone_Deck_Tracker
 					break;
 			}
 			return _foundRanked;
+		}
+
+		public async void GetCurrentRegion()
+		{
+			try
+			{
+				var regex = new Regex(@"AccountListener.OnAccountLevelInfoUpdated.*currentRegion=(?<region>(\d))");
+				var conLogPath = Path.Combine(Config.Instance.HearthstoneDirectory, "ConnectLog.txt");
+				while(!_gameLoaded)
+					await Task.Delay(100);
+				using(var fs = new FileStream(conLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				using(var reader = new StreamReader(fs))
+				{
+					var lines = reader.ReadToEnd().Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+					foreach(var line in lines)
+					{
+						var match = regex.Match(line);
+						if(match.Success)
+						{
+							Region region;
+							if(Enum.TryParse(match.Groups["region"].Value, out region))
+							{
+								Game.CurrentRegion = region;
+								Logger.WriteLine("Current region: " + region, "LogReader");
+								break;
+							}
+						}
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error getting region:\n" + ex, "LogReader");
+			}
 		}
 	}
 }

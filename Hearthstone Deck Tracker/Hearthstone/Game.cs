@@ -40,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool OpponentHasCoin;
 		public static int OpponentSecretCount;
 		public static bool IsRunning;
+		public static Region CurrentRegion { get; set; }
 
 		private static GameMode _currentGameMode;
 

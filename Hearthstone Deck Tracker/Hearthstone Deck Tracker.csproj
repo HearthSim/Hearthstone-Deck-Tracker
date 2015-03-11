@@ -139,6 +139,7 @@
     <Compile Include="Enums\Hearthstone\TAG_PLAYSTATE.cs" />
     <Compile Include="Enums\Hearthstone\TAG_ZONE.cs" />
     <Compile Include="Enums\HeroClass.cs" />
+    <Compile Include="Enums\Region.cs" />
     <Compile Include="Enums\SortDirection.cs" />
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
