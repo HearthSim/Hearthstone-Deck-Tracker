@@ -276,6 +276,7 @@ namespace Hearthstone_Deck_Tracker
 						_gameHandler.HandleGameStart();
 						_gameEnded = false;
 						_addToTurn = -1;
+						_gameLoaded = true;
 					}
 					else if(_gameEntityRegex.IsMatch(logLine))
 					{
