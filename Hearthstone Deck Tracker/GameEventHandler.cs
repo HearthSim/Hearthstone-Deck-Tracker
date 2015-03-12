@@ -656,6 +656,8 @@ namespace Hearthstone_Deck_Tracker
 				Game.Reset(false);
 			if(Game.CurrentGameStats != null && Game.CurrentGameStats.Result != GameResult.None)
 				Game.CurrentGameStats = null;
+			if(Game.CurrentGameMode == GameMode.Spectator)
+				SetGameMode(GameMode.None);
 		}
 
 		public void HandleConcede()

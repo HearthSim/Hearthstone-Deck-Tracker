@@ -188,7 +188,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(!IsInMenu && resetStats)
 			{
-				CurrentGameMode = GameMode.None;
+				if(CurrentGameMode != GameMode.Spectator)
+					CurrentGameMode = GameMode.None;
 				CurrentGameStats = new GameStats(GameResult.None, PlayingAgainst, PlayingAs)
 				{
 					PlayerName = PlayerName,

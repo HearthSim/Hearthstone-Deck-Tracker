@@ -81,6 +81,8 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
+		private bool foundSpectatorStart;
+
 		/// <summary>
 		/// Update deckTracker interface (true by default)
 		/// </summary>
@@ -239,18 +241,37 @@ namespace Hearthstone_Deck_Tracker
 			using(var sr = new StreamReader(fs))
 			{
 				long offset = 0, tempOffset = 0;
-				var lines = sr.ReadToEnd().Split('\n');
+				var lines = sr.ReadToEnd().Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
 
 				foreach(var line in lines)
 				{
-					if(line.Contains("CREATE_GAME"))
+					if(line.Contains("Begin Spectating"))
 					{
+						offset = tempOffset;
+						foundSpectatorStart = true;
+					}
+					else if(line.Contains("End Spectator"))
+						offset = tempOffset;
+					else if(line.Contains("CREATE_GAME"))
+					{
+						if(foundSpectatorStart)
+						{
+							foundSpectatorStart = false;
+							continue;
+						}
 						offset = tempOffset;
 						continue;
 					}
 					tempOffset += line.Length + 1;
 					if(line.StartsWith("[Bob] legend rank"))
+					{
+						if(foundSpectatorStart)
+						{
+							foundSpectatorStart = false;
+							continue;
+						}
 						offset = tempOffset;
+					}
 				}
 
 				return offset;
@@ -378,6 +399,11 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
 						_gameHandler.SetGameMode(GameMode.Spectator);
+					else if(logLine.Contains("End Spectator"))
+					{
+						_gameHandler.SetGameMode(GameMode.Spectator);
+						_gameHandler.HandleGameEnd();
+					}
 					else if(_entityNameRegex.IsMatch(logLine))
 					{
 						var match = _entityNameRegex.Match(logLine);
@@ -1019,6 +1045,7 @@ namespace Hearthstone_Deck_Tracker
 			_first = true;
 			_addToTurn = -1;
 			_gameEnded = false;
+			foundSpectatorStart = false;
 		}
 
 
