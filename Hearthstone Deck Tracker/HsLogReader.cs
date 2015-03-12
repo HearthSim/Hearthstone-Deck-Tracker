@@ -501,14 +501,29 @@ namespace Hearthstone_Deck_Tracker
 						var rawWins = _goldProgressRegex.Match(logLine).Groups["wins"].Value;
 						if(int.TryParse(rawWins, out wins))
 						{
-							if(Config.Instance.GoldProgressLastReset.Date != DateTime.Today)
+							TimeZoneInfo timeZone = null;
+							switch(Game.CurrentRegion)
 							{
-								Config.Instance.GoldProgressTotal = 0;
-								Config.Instance.GoldProgressLastReset = DateTime.Today;
+								case Region.EU:
+									timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+									break;
+								case Region.US:
+									timeZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+									break;
+								case Region.ASIA:
+									timeZone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
+									break;
 							}
-							Config.Instance.GoldProgress = wins == 3 ? 0 : wins;
+							var region = (int)Game.CurrentRegion - 1;
+							var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
+							if(Config.Instance.GoldProgressLastReset[region].Date != date)
+							{
+								Config.Instance.GoldProgressTotal[region] = 0;
+								Config.Instance.GoldProgressLastReset[region] = date;
+							}
+							Config.Instance.GoldProgress[region] = wins == 3 ? 0 : wins;
 							if(wins == 3)
-								Config.Instance.GoldProgressTotal += 10;
+								Config.Instance.GoldProgressTotal[region] += 10;
 							Config.Save();
 						}
 					}

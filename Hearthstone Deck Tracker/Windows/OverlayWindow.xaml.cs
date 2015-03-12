@@ -802,8 +802,9 @@ namespace Hearthstone_Deck_Tracker
 			   && PointInsideControl(RectGoldDisplay.PointFromScreen(new Point(pos.X, pos.Y)), RectGoldDisplay.ActualWidth,
 			                         RectGoldDisplay.ActualHeight))
 			{
+				var region = (int)Game.CurrentRegion - 1;
 				LblGoldProgress.Visibility = Visibility.Visible;
-				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress, Config.Instance.GoldProgressTotal);
+				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region], Config.Instance.GoldProgressTotal[region]);
 			}
 			else
 				LblGoldProgress.Visibility = Visibility.Hidden;
