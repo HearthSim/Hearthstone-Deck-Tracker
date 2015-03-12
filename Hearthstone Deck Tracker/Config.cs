@@ -170,10 +170,10 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(new[] {0, 0, 0})]
 		//move this to some data file
-		public int[] GoldProgress = { 0, 0, 0 };
+		public int[] GoldProgress = {0, 0, 0};
 
 		//move this to some data file
-		public DateTime[] GoldProgressLastReset = { DateTime.MinValue, DateTime.MinValue, DateTime.MinValue };
+		public DateTime[] GoldProgressLastReset = {DateTime.MinValue, DateTime.MinValue, DateTime.MinValue};
 
 		[DefaultValue(new[] {0, 0, 0})]
 		//move this to some data file
@@ -679,6 +679,11 @@ namespace Hearthstone_Deck_Tracker
 		public string HomeDir
 		{
 			get { return Instance.SaveInAppData ? AppDataPath + "/" : string.Empty; }
+		}
+
+		public string BackupDir
+		{
+			get { return Path.Combine(DataDir, "Backups"); }
 		}
 
 		public string ConfigPath

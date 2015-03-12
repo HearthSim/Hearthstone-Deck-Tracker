@@ -334,6 +334,7 @@ namespace Hearthstone_Deck_Tracker
 			UpdateOverlayAsync();
 			UpdateAsync();
 
+			BackupManager.Run();
 
 			_initialized = true;
 		}
