@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -21,14 +22,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public new class Tag
 		{
-			public Tag(string name, bool selected = false)
+			public Tag(string name, bool? selected = false)
 			{
 				Name = name;
 				Selected = selected;
 			}
 
 			public string Name { get; set; }
-			public bool Selected { get; set; }
+			public bool? Selected { get; set; }
 
 			public override bool Equals(object obj)
 			{
@@ -76,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public List<string> GetTags()
 		{
-			return Tags.Where(t => t.Selected).Select(t => t.Name).ToList();
+			return Tags.Where(t => t.Selected == true).Select(t => t.Name).ToList();
 		}
 
 		public void SetSelectedTags(List<string> tags)
@@ -88,11 +89,27 @@ namespace Hearthstone_Deck_Tracker
 			ListboxTags.Items.Refresh();
 		}
 
+		public void SetSelectedTags(List<Deck> decks)
+		{
+			if(!decks.Any())
+				return;
+			foreach(var tag in Tags)
+			{
+				if(decks.All(d => d.Tags.Contains(tag.Name)))
+					tag.Selected = true;
+				else if(!decks.Any(d => d.Tags.Contains(tag.Name)))
+					tag.Selected = false;
+				else
+					tag.Selected = null;
+			}
+			ListboxTags.Items.Refresh();
+		}
+
 		public void AddSelectedTag(string tag)
 		{
 			if(Tags.All(t => t.Name != tag))
 				return;
-			if(Tags.First(t => t.Name == "All").Selected)
+			if(Tags.First(t => t.Name == "All").Selected == true)
 				return;
 
 			Tags.First(t => t.Name == tag).Selected = true;
@@ -291,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 			//only set tags if tags were changed in "My Decks"
 			if(Name == "SortFilterDecksFlyout")
 			{
-				var tags = Tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
+				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
 				//Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
@@ -301,11 +318,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(Name == "TagControlEdit")
 			{
-				var tags = Tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
-				DeckList.Instance.ActiveDeck.Tags = new List<string>(tags);
+				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
+				var ignore = Tags.Where(tag => tag.Selected == null).Select(tag => tag.Name).ToList();
+				//DeckList.Instance.ActiveDeck.Tags = new List<string>(tags);
+				foreach(var deck in Helper.MainWindow.DeckPickerList.SelectedDecks)
+				{
+					var keep = deck.Tags.Intersect(ignore);
+					deck.Tags = new List<string>(tags.Concat(keep));
+				}
 				Helper.MainWindow.DeckPickerList.UpdateDecks();
 				DeckList.Save();
-				;
 				Helper.MainWindow.UpdateQuickFilterItemSource();
 			}
 		}
@@ -353,7 +375,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.AllTags.RemoveAt(from);
 			DeckList.Instance.AllTags.Insert(to, tagName);
 			DeckList.Save();
-			;
 			Helper.MainWindow.ReloadTags();
 			ListboxTags.SelectedIndex = to - 1;
 			Helper.MainWindow.UpdateQuickFilterItemSource();

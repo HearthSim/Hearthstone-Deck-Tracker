@@ -24,28 +24,27 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class NewDeckPicker : INotifyPropertyChanged
 	{
-		bool _anyArchived;
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		public delegate void DoubleClickHandler(NewDeckPicker sender, Deck deck);
 
 		public delegate void SelectedDeckHandler(NewDeckPicker sender, Deck deck);
 
-		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
-		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly DeckPickerClassItem _archivedClassItem;
+		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
+		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
 		public bool ChangedSelection;
+		private bool _anyArchived;
+		private bool _clearingClasses;
 		private bool _ignoreSelectionChange;
 		private bool _refillingList;
-		private bool _reselectingDecks;
 		private bool _reselectingClasses;
-		private bool _clearingClasses;
+		private bool _reselectingDecks;
 
 		public NewDeckPicker()
 		{
 			InitializeComponent();
-			_classItems = new ObservableCollection<DeckPickerClassItem>(
-				Enum.GetValues(typeof(HeroClassAll)).OfType<HeroClassAll>().Select(x => new DeckPickerClassItem { DataContext = x }));
+			_classItems =
+				new ObservableCollection<DeckPickerClassItem>(
+					Enum.GetValues(typeof(HeroClassAll)).OfType<HeroClassAll>().Select(x => new DeckPickerClassItem {DataContext = x}));
 			_archivedClassItem = _classItems.ElementAt((int)HeroClassAll.Archived);
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
@@ -53,7 +52,19 @@ namespace Hearthstone_Deck_Tracker.Controls
 			ListViewDecks.ItemsSource = _displayedDecks;
 		}
 
+		public List<Deck> SelectedDecks
+		{
+			get { return ListViewDecks.SelectedItems.Cast<NewDeckPickerItem>().Select(dpi => dpi.Deck).ToList(); }
+		}
+
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; private set; }
+
+		public double MinWindowHeight
+		{
+			get { return _anyArchived ? 649 : 603; }
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public event SelectedDeckHandler OnSelectedDeckChanged;
 		public event DoubleClickHandler OnDoubleClick;
@@ -129,9 +140,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 						removedAllClassItem = dpci;
 					}
 					else
-					{
 						DeselectPickerClassItem(dpci);
-					}
 				}
 
 				var allIsSelected = SelectedClasses.Contains(HeroClassAll.All);
@@ -177,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 						removedAllClassItem = null;
 					}
 				}
-	
+
 				// If we removed the 'All' class earlier, raise the DeckPickerClassItem's OnDeselected event now
 				if(removedAllClassItem != null)
 					removedAllClassItem.OnDelselected();
@@ -189,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void SelectPickerClassItem(DeckPickerClassItem dpci)
 		{
 			var heroClass = dpci.DataContext as HeroClassAll?;
-			if (heroClass != null && !SelectedClasses.Contains(heroClass.Value))
+			if(heroClass != null && !SelectedClasses.Contains(heroClass.Value))
 			{
 				SelectedClasses.Add(heroClass.Value);
 				dpci.OnSelected();
@@ -250,8 +259,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 				DeckList.Instance.Decks.Where(
 				                              d =>
 				                              DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
-				                              && (SelectedClasses.Any(c => ((c.ToString() == "All" || d.Class == c.ToString()) && !d.Archived) 
-				                                 || (c.ToString() == "Archived" && d.Archived)))).ToList();
+				                              && (SelectedClasses.Any(
+				                                                      c =>
+				                                                      ((c.ToString() == "All" || d.Class == c.ToString()) && !d.Archived)
+				                                                      || (c.ToString() == "Archived" && d.Archived)))).ToList();
 			foreach(var deck in decks)
 				_displayedDecks.Add(new NewDeckPickerItem(deck));
 			Sort();
@@ -271,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				if(!_classItems.Contains(_archivedClassItem))
 				{
 					_classItems.Add(_archivedClassItem);
-					
+
 					if(PropertyChanged != null)
 						PropertyChanged(this, new PropertyChangedEventArgs("MinWindowHeight"));
 				}
@@ -287,11 +298,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 				if(SelectedClasses.Count == 0)
 					SelectClass(HeroClassAll.All);
 			}
-		}
-
-		public double MinWindowHeight
-		{
-			get { return _anyArchived ? 649 : 603; }
 		}
 
 		private bool DeckMatchesSelectedDeckType(Deck deck)
@@ -361,9 +367,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 
 			if(deck.Archived && !SelectedClasses.Contains(HeroClassAll.Archived))
-			{
 				SelectClass(HeroClassAll.Archived);
-			} 
 			else if(!SelectedClasses.Contains(HeroClassAll.All))
 			{
 				HeroClassAll deckClass;
@@ -389,16 +393,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(dpi == null)
 			{
 				if(deck.Archived)
-				{
 					SelectClass(HeroClassAll.Archived);
-				}
 				else
 				{
 					HeroClassAll heroClass;
 					if(Enum.TryParse(deck.Class, out heroClass))
-					{
 						SelectClass(heroClass);
-					}
 				}
 
 				UpdateDecks();

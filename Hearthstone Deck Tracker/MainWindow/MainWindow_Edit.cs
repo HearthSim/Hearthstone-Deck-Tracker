@@ -24,8 +24,8 @@ namespace Hearthstone_Deck_Tracker
 
 		internal async void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
-			if(deck == null)
+			var decks = DeckPickerList.SelectedDecks;
+			if(!decks.Any())
 				return;
 
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
@@ -34,13 +34,14 @@ namespace Hearthstone_Deck_Tracker
 				                    : "The stats will be deleted (can be changed in options)";
 			var result =
 				await
-				this.ShowMessageAsync("Deleting " + deck.Name, "Are you Sure?\n" + keepStatsInfo, MessageDialogStyle.AffirmativeAndNegative,
-				                      settings);
+				this.ShowMessageAsync("Deleting " + (decks.Count == 1 ? decks.First().Name : decks.Count + " decks"),
+				                      "Are you Sure?\n" + keepStatsInfo, MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 				return;
 
 			SelectDeck(null);
-			DeleteDeck(deck);
+			foreach(var deck in decks)
+				DeleteDeck(deck);
 		}
 
 		private async void DeleteDeck(Deck deck)
@@ -93,12 +94,14 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
-			ArchiveDeck(DeckList.Instance.ActiveDeck, true);
+			foreach(var deck in DeckPickerList.SelectedDecks)
+				ArchiveDeck(deck, true);
 		}
 
 		internal void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
-			ArchiveDeck(DeckList.Instance.ActiveDeck, false);
+			foreach(var deck in DeckPickerList.SelectedDecks)
+				ArchiveDeck(deck, false);
 		}
 
 		public void ArchiveDeck(Deck deck, bool archive)
@@ -118,9 +121,7 @@ namespace Hearthstone_Deck_Tracker
 				DeckPickerList.UpdateDecks();
 
 				if(archive)
-				{
 					SelectDeck(null);
-				}
 				else
 				{
 					DeckPickerList.SelectDeckAndAppropriateView(deck);
@@ -132,13 +133,13 @@ namespace Hearthstone_Deck_Tracker
 				var archivedLog = archive ? "archived" : "unarchived";
 				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
 
-				if (oldArchived != archive && Config.Instance.HearthStatsAutoUploadNewDecks)
+				if(oldArchived != archive && Config.Instance.HearthStatsAutoUploadNewDecks)
 				{
 					Logger.WriteLine(String.Format("auto uploading {0} deck", archivedLog), "ArchiveDeck");
 					HearthStatsManager.UpdateDeckAsync(deck, background: true);
 				}
 			}
-			catch (Exception)
+			catch(Exception)
 			{
 				Logger.WriteLine(String.Format("Error {0} deck", archive ? "archiving" : "unarchiving", deck.Name), "ArchiveDeck");
 			}
@@ -267,7 +268,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;
 			if(DeckList.Instance.ActiveDeck != null)
-				TagControlEdit.SetSelectedTags(DeckList.Instance.ActiveDeck.Tags);
+				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 		}
 
 		internal void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -311,7 +312,8 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
 		{
-			DeckList.Instance.ActiveDeck.IsArenaDeck = true;
+			foreach(var deck in DeckPickerList.SelectedDecks)
+				deck.IsArenaDeck = true;
 			DeckPickerList.UpdateDecks();
 			MenuItemMoveDecktoArena.Visibility = Visibility.Collapsed;
 			MenuItemMoveDeckToConstructed.Visibility = Visibility.Visible;
@@ -319,7 +321,8 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			DeckList.Instance.ActiveDeck.IsArenaDeck = false;
+			foreach(var deck in DeckPickerList.SelectedDecks)
+				deck.IsArenaDeck = false;
 			DeckPickerList.UpdateDecks();
 			MenuItemMoveDecktoArena.Visibility = Visibility.Visible;
 			MenuItemMoveDeckToConstructed.Visibility = Visibility.Collapsed;
