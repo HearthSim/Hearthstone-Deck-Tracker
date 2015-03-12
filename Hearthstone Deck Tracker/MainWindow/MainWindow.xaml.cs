@@ -1033,7 +1033,7 @@ namespace Hearthstone_Deck_Tracker
 				FlyoutNotes.Header = flyoutHeader;
 
 				//set up tags
-				TagControlEdit.SetSelectedTags(deck.Tags);
+				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				MenuItemQuickSetTag.Items.Refresh();
 

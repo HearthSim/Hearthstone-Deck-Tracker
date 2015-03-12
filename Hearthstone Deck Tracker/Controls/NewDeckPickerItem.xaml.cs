@@ -112,6 +112,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckList.Instance.ActiveDeck;
+			Helper.MainWindow.TagControlEdit.SetSelectedTags(Helper.MainWindow.DeckPickerList.SelectedDecks);
 			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
 			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
