@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 				var archivedLog = archive ? "archived" : "unarchived";
 				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
 
-				if(oldArchived != archive && Config.Instance.HearthStatsAutoUploadNewDecks)
+				if(Config.Instance.HearthStatsAutoUploadNewDecks)
 				{
 					Logger.WriteLine(String.Format("auto uploading {0} deck", archivedLog), "ArchiveDeck");
 					HearthStatsManager.UpdateDeckAsync(deck, background: true);
