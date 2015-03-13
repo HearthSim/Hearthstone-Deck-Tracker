@@ -111,16 +111,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
-			Helper.MainWindow.TagControlEdit.SetSelectedTags(Helper.MainWindow.DeckPickerList.SelectedDecks);
+			var activeDeck = DeckList.Instance.ActiveDeck;
+			var selectedDecks = Helper.MainWindow.DeckPickerList.SelectedDecks;
+			Helper.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
 			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
-			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemArchive.Visibility = deck.Archived ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemUnarchive.Visibility = deck.Archived ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMoveDecktoArena.Visibility = activeDeck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = activeDeck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMissingCards.Visibility = activeDeck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)

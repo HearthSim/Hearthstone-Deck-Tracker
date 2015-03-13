@@ -1121,8 +1121,8 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemArchive.Visibility = deck.Archived ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemUnarchive.Visibility = deck.Archived ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)
