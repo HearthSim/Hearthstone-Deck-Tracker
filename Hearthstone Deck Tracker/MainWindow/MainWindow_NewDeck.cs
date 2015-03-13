@@ -351,12 +351,36 @@ namespace Hearthstone_Deck_Tracker
 			PanelVersionComboBox.Visibility = Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Visible;
 
-			//move window left if opening the edit panel causes it to be outside of the screen
-			var topRight = new System.Drawing.Point((int)(Left + Width) - 5, (int)Top + 5);
-			if(!System.Windows.Forms.Screen.AllScreens.Any(s => s.WorkingArea.Contains(topRight)))
+			//move window left if opening the edit panel causes it to be outside of a screen
+			foreach(var screen in System.Windows.Forms.Screen.AllScreens)
 			{
-				Left -= GridNewDeck.ActualWidth;
-				_movedLeft = GridNewDeck.ActualWidth;
+				int windowLeft = (int)Left;
+				int windowRight = (int)(Left + Width);
+				int screenLeft = screen.WorkingArea.X;
+				int screenRight = screen.WorkingArea.Right;
+
+				//if the window is completely outside of this screen, just skip this screen
+				if(windowRight < screenLeft || windowLeft > screenRight)
+					continue;
+
+				//if the original window was partially on this screen but mostly on the screen to the right, just skip this screen
+				if(windowLeft + (Width - GridNewDeck.ActualWidth) / 2 > screenRight && windowLeft > screenLeft)
+					continue;
+
+				//if the new window is partially on this screen and partially on the screen to the right
+				if(windowRight > screenRight && windowLeft < screenRight)
+				{
+					//move window left by the change in width
+					Left -= (int)GridNewDeck.ActualWidth;
+
+					//if we would leave a distance to the edge of the screen greater than 50px
+					//just fully align the window to the right of the screen instead
+					if(screenRight - (Left + Width) > 50)
+						Left = screenRight - Width;
+
+					_movedLeft = windowLeft - Left;
+					break;
+				}
 			}
 		}
 
