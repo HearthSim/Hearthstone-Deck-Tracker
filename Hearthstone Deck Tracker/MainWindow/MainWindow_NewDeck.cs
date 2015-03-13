@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -350,6 +349,11 @@ namespace Hearthstone_Deck_Tracker
 			DeckPickerListCover.Visibility = Visibility.Visible;
 			PanelVersionComboBox.Visibility = Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Visible;
+
+			//move window left if opening the edit panel causes it to be outside of the screen
+			var topRight = new System.Drawing.Point((int)(Left + Width) - 5, (int)Top + 5);
+			if(!System.Windows.Forms.Screen.AllScreens.Any(s => s.WorkingArea.Contains(topRight)))
+				Left -= GridNewDeck.ActualWidth;
 		}
 
 		private void CloseNewDeck()
