@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker
 	public partial class MainWindow
 	{
 		private string editedDeckName;
+		internal double? _movedLeft;
 
 		private void UpdateDbListView()
 		{
@@ -353,7 +354,10 @@ namespace Hearthstone_Deck_Tracker
 			//move window left if opening the edit panel causes it to be outside of the screen
 			var topRight = new System.Drawing.Point((int)(Left + Width) - 5, (int)Top + 5);
 			if(!System.Windows.Forms.Screen.AllScreens.Any(s => s.WorkingArea.Contains(topRight)))
+			{
 				Left -= GridNewDeck.ActualWidth;
+				_movedLeft = GridNewDeck.ActualWidth;
+			}
 		}
 
 		private void CloseNewDeck()
@@ -374,6 +378,12 @@ namespace Hearthstone_Deck_Tracker
 			PanelVersionComboBox.Visibility = DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.HasVersions
 				                                  ? Visibility.Visible : Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Collapsed;
+
+			if(_movedLeft.HasValue)
+			{
+				Left += _movedLeft.Value;
+				_movedLeft = null;
+			}
 		}
 
 		private void EnableMenuItems(bool enable)

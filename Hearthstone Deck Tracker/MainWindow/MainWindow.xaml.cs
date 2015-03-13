@@ -592,7 +592,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visibility.Visible ? GridNewDeck.ActualWidth : 0));
 				Config.Instance.WindowHeight = (int)Height;
 				Config.Instance.TrackerWindowTop = (int)Top;
-				Config.Instance.TrackerWindowLeft = (int)Left;
+				Config.Instance.TrackerWindowLeft = (int)(Left + (_movedLeft.HasValue ? _movedLeft.Value : 0));
 
 				//position of add. windows is NaN if they were never opened.
 				if(!double.IsNaN(PlayerWindow.Left))
@@ -1594,6 +1594,11 @@ namespace Hearthstone_Deck_Tracker
 		private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
 		{
 			Close();
+		}
+
+		private void MetroWindow_LocationChanged(object sender, EventArgs e)
+		{
+			_movedLeft = null;
 		}
 	}
 }

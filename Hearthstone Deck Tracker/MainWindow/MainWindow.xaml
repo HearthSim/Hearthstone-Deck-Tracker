@@ -13,7 +13,7 @@
                       Icon="..\Images\HearthstoneDeckTracker.ico" Activated="MetroWindow_Activated"
                       Deactivated="MetroWindow_Deactivated"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
