@@ -41,10 +41,14 @@ namespace Hearthstone_Deck_Tracker
 
 			SelectDeck(null);
 			foreach(var deck in decks)
-				DeleteDeck(deck);
+				DeleteDeck(deck, false);
+			DeckStatsList.Save();
+			DeckList.Save();
+			DeckPickerList.UpdateDecks();
+			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
-		private async void DeleteDeck(Deck deck)
+		private async void DeleteDeck(Deck deck, bool saveAndUpdate = true)
 		{
 			if(deck == null)
 				return;
@@ -75,7 +79,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				DeckStatsList.Instance.DeckStats.Remove(deckStats);
-				DeckStatsList.Save();
+				if(saveAndUpdate)
+					DeckStatsList.Save();
 				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
 			}
 
@@ -83,11 +88,12 @@ namespace Hearthstone_Deck_Tracker
 				HearthStatsManager.DeleteDeckAsync(deck, false, true);
 
 			DeckList.Instance.Decks.Remove(deck);
-			DeckList.Save();
-			;
-			//DeckPickerList.RemoveDeck(deck);
-			DeckPickerList.UpdateDecks();
-			DeckPickerList.UpdateArchivedClassVisibility();
+			if(saveAndUpdate)
+			{
+				DeckList.Save();
+				DeckPickerList.UpdateDecks();
+				DeckPickerList.UpdateArchivedClassVisibility();
+			}
 			ListViewDeck.ItemsSource = null;
 			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
 		}
@@ -95,16 +101,27 @@ namespace Hearthstone_Deck_Tracker
 		internal void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
 			foreach(var deck in DeckPickerList.SelectedDecks)
-				ArchiveDeck(deck, true);
+				ArchiveDeck(deck, true, false);
+
+			DeckList.Save();
+			DeckPickerList.UpdateDecks();
+			SelectDeck(null);
+			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
 		internal void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
 			foreach(var deck in DeckPickerList.SelectedDecks)
-				ArchiveDeck(deck, false);
+				ArchiveDeck(deck, false, false);
+
+			DeckList.Save();
+			DeckPickerList.UpdateDecks();
+			DeckPickerList.SelectDeckAndAppropriateView(DeckList.Instance.ActiveDeck);
+			UpdateMenuItemVisibility(DeckList.Instance.ActiveDeck);
+			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
-		public void ArchiveDeck(Deck deck, bool archive)
+		public void ArchiveDeck(Deck deck, bool archive, bool saveAndUpdate = true)
 		{
 			if(deck == null)
 				return;
@@ -117,18 +134,21 @@ namespace Hearthstone_Deck_Tracker
 
 			try
 			{
-				DeckList.Save();
-				DeckPickerList.UpdateDecks();
-
-				if(archive)
-					SelectDeck(null);
-				else
+				if(saveAndUpdate)
 				{
-					DeckPickerList.SelectDeckAndAppropriateView(deck);
-					UpdateMenuItemVisibility(deck);
-				}
+					DeckList.Save();
+					DeckPickerList.UpdateDecks();
 
-				DeckPickerList.UpdateArchivedClassVisibility();
+					if(archive)
+						SelectDeck(null);
+					else
+					{
+						DeckPickerList.SelectDeckAndAppropriateView(deck);
+						UpdateMenuItemVisibility(deck);
+					}
+
+					DeckPickerList.UpdateArchivedClassVisibility();
+				}
 
 				var archivedLog = archive ? "archived" : "unarchived";
 				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
@@ -267,8 +287,7 @@ namespace Hearthstone_Deck_Tracker
 		internal void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
 			FlyoutMyDecksSetTags.IsOpen = true;
-			if(DeckList.Instance.ActiveDeck != null)
-				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
+			TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 		}
 
 		internal void BtnEditDeck_Click(object sender, RoutedEventArgs e)

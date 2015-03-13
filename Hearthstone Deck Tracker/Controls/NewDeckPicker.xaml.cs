@@ -192,7 +192,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 					removedAllClassItem.OnDelselected();
 			}
 
-			UpdateDecks();
+			if(Helper.MainWindow.IsLoaded)
+				UpdateDecks();
 		}
 
 		private void SelectPickerClassItem(DeckPickerClassItem dpci)
@@ -342,8 +343,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 				{
 					DeckList.Instance.ActiveDeck = pickerItem.DataContext as Deck;
 					pickerItem.OnSelected();
-					if(!_reselectingDecks && OnSelectedDeckChanged != null)
-						OnSelectedDeckChanged(this, DeckList.Instance.ActiveDeck);
 				}
 			}
 			foreach(var item in e.RemovedItems)
@@ -354,6 +353,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 				if(!_refillingList)
 					pickerItem.OnDelselected();
 			}
+
+			if(e.AddedItems.Count > 0 && !_reselectingDecks && OnSelectedDeckChanged != null)
+				OnSelectedDeckChanged(this, DeckList.Instance.ActiveDeck);
 		}
 
 		public void SelectDeckAndAppropriateView(Deck deck)

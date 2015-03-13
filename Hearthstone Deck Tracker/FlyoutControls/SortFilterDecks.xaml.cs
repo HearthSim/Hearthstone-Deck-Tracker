@@ -278,7 +278,7 @@ namespace Hearthstone_Deck_Tracker
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			//Helper.MainWindow.DeckPickerList.SortDecks();
-			if(!_initialized)
+			if(!_initialized || !Helper.MainWindow.IsLoaded)
 				return;
 
 			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
