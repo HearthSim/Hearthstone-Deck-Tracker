@@ -326,7 +326,7 @@ namespace Hearthstone_Deck_Tracker
 					var keep = deck.Tags.Intersect(ignore);
 					deck.Tags = new List<string>(tags.Concat(keep));
 				}
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				Helper.MainWindow.DeckPickerList.UpdateDecks(false, false);
 				DeckList.Save();
 				Helper.MainWindow.UpdateQuickFilterItemSource();
 			}

@@ -252,10 +252,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public void UpdateDecks()
+		public void UpdateDecks(bool reselectActiveDeck = true, bool simpleRefill = true)
 		{
 			_refillingList = true;
-			_displayedDecks.Clear();
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
@@ -264,12 +263,40 @@ namespace Hearthstone_Deck_Tracker.Controls
 				                                                      c =>
 				                                                      ((c.ToString() == "All" || d.Class == c.ToString()) && !d.Archived)
 				                                                      || (c.ToString() == "Archived" && d.Archived)))).ToList();
-			foreach(var deck in decks)
-				_displayedDecks.Add(new NewDeckPickerItem(deck));
+
+			if(simpleRefill)
+			{
+				_displayedDecks.Clear();
+				foreach(var deck in decks)
+					_displayedDecks.Add(new NewDeckPickerItem(deck));
+			}
+			else
+			{
+				var displayedDecksTemp = new List<NewDeckPickerItem>();
+				foreach(var dpi in _displayedDecks)
+				{
+					if(!decks.Contains(dpi.Deck))
+						displayedDecksTemp.Add(dpi);
+				}
+
+				foreach(var dpi in displayedDecksTemp)
+					_displayedDecks.Remove(dpi);
+
+				displayedDecksTemp.Clear();
+				foreach(var deck in decks)
+				{
+					if(!_displayedDecks.Any(x => x.Deck == deck))
+						displayedDecksTemp.Add(new NewDeckPickerItem(deck));
+				}
+
+				foreach(var dpi in displayedDecksTemp)
+					_displayedDecks.Add(dpi);
+			}
+
 			Sort();
 			_refillingList = false;
 			_reselectingDecks = true;
-			if(decks.Contains(DeckList.Instance.ActiveDeck))
+			if(reselectActiveDeck && decks.Contains(DeckList.Instance.ActiveDeck))
 				SelectDeck(DeckList.Instance.ActiveDeck);
 			_reselectingDecks = false;
 		}
@@ -380,7 +407,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				}
 			}
 
-			UpdateDecks();
+			UpdateDecks(false);
 			SelectDeck(deck);
 		}
 

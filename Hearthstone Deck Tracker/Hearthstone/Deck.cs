@@ -40,10 +40,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string Note;
 		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
 
-		[XmlArray(ElementName = "Tags")]
-		[XmlArrayItem(ElementName = "Tag")]
-		public List<string> Tags;
-
 		public string Url;
 
 		public SerializableVersion Version = new SerializableVersion(1, 0);
@@ -56,6 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
+		private List<string> _tags;
 
 
 		public Deck()
@@ -220,6 +217,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public FontWeight GetFontWeight
 		{
 			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Regular; }
+		}
+
+		[XmlArray(ElementName = "Tags")]
+		[XmlArrayItem(ElementName = "Tag")]
+		public List<string> Tags
+		{
+			get { return _tags; }
+			set { _tags = value; OnPropertyChanged("TagList"); }
 		}
 
 		[XmlIgnore]
