@@ -395,14 +395,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task SetupConstructedImporting()
 		{
-			await MainWindow.ShowMessageAsync("[unfinished]", "Go to main menu");
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "continue"};
+			if(!Game.IsRunning)
+				await MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
+			await MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
 			SettingUpConstructedImporting = true;
 			await
-				MainWindow.ShowMessageAsync("[unfinished]",
-				                            "open collection and click each class icon at the top once. Do not click on neutral, do not open any decks and do not flip the pages.\n\nClick ok when done.");
+				MainWindow.ShowMessageAsync("Step 2:",
+				                            "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
+				                            settings: new MetroDialogSettings {AffirmativeButtonText = "done"});
 			Config.Instance.ConstructedImportingIgnoreCachedIds = Game.PossibleConstructedCards.Select(c => c.Id).ToArray();
 			Config.Save();
-			Logger.WriteLine("ids: " + Game.PossibleConstructedCards.Select(c => c.Id).Aggregate((c, n) => c + ", " + n));
 			SettingUpConstructedImporting = false;
 		}
 	}
