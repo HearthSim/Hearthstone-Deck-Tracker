@@ -540,17 +540,20 @@ namespace Hearthstone_Deck_Tracker
 									timeZone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
 									break;
 							}
-							var region = (int)Game.CurrentRegion - 1;
-							var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
-							if(Config.Instance.GoldProgressLastReset[region].Date != date)
+							if(timeZone != null)
 							{
-								Config.Instance.GoldProgressTotal[region] = 0;
-								Config.Instance.GoldProgressLastReset[region] = date;
+								var region = (int)Game.CurrentRegion - 1;
+								var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
+								if(Config.Instance.GoldProgressLastReset[region].Date != date)
+								{
+									Config.Instance.GoldProgressTotal[region] = 0;
+									Config.Instance.GoldProgressLastReset[region] = date;
+								}
+								Config.Instance.GoldProgress[region] = wins == 3 ? 0 : wins;
+								if(wins == 3)
+									Config.Instance.GoldProgressTotal[region] += 10;
+								Config.Save();
 							}
-							Config.Instance.GoldProgress[region] = wins == 3 ? 0 : wins;
-							if(wins == 3)
-								Config.Instance.GoldProgressTotal[region] += 10;
-							Config.Save();
 						}
 					}
 				}
