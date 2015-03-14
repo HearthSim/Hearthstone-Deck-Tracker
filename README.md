@@ -39,7 +39,10 @@ Features:
   - Select which game modes to track (Options > Other).  
   - Import your opponent's (partial) deck from a tracked game as a new deck.
 
-![Stats](http://i.imgur.com/giLIQRE.png "Deck stats")
+![Stats](http://i.imgur.com/Wke3Cuw.png "Deck stats")
+
+- **Replays**:
+![Stats](http://i.imgur.com/tuxOFmg.png "Deck stats")
 
 
 How to use: 
