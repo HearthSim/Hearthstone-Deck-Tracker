@@ -361,5 +361,20 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 		}
+
+		internal async void BtnName_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckList.Instance.ActiveDeck;
+			if(deck == null)
+				return;
+			var settings = new MetroDialogSettings {AffirmativeButtonText = "set", NegativeButtonText = "cancel", DefaultText = deck.Name};
+			var newName = await this.ShowInputAsync("Set deck name", "", settings);
+			if(!string.IsNullOrEmpty(newName))
+			{
+				deck.Name = newName;
+				DeckList.Save();
+				DeckPickerList.UpdateDecks();
+			}
+		}
 	}
 }

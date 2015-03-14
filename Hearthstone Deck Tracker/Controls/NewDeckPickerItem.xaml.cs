@@ -188,5 +188,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			Helper.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
 		}
+
+		private void BtnName_Click(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.BtnName_Click(sender, e);
+		}
 	}
 }

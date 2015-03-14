@@ -204,6 +204,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
+                    <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
                     <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
                     <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
                     <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
