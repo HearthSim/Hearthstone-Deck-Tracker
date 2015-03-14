@@ -65,6 +65,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void LoadTags(List<string> tags)
 		{
+			FixTagOrder();
 			var oldTag = new List<Tag>(Tags);
 			Tags.Clear();
 			foreach(var tag in tags)
@@ -73,6 +74,23 @@ namespace Hearthstone_Deck_Tracker
 				Tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
 			}
 			_initialized = true;
+		}
+
+		private void FixTagOrder()
+		{
+			var changed = false;
+			if(DeckList.Instance.AllTags.IndexOf("All") != 0)
+			{
+				MoveTag("All", DeckList.Instance.AllTags.IndexOf("All"), 0);
+				changed = true;
+			}
+			if(DeckList.Instance.AllTags.IndexOf("None") != 1)
+			{
+				MoveTag("None", DeckList.Instance.AllTags.IndexOf("None"), 1);
+				changed = true;
+			}
+			if(changed)
+				DeckList.Save();
 		}
 
 		public List<string> GetTags()
@@ -337,7 +355,7 @@ namespace Hearthstone_Deck_Tracker
 			var selectedTag = ListboxTags.SelectedItem as Tag;
 			if(selectedTag == null)
 				return;
-			var index = Tags.IndexOf(selectedTag) + 1; //decklist.alltags includes "all", this does not
+			var index = Tags.IndexOf(selectedTag) + 2; //decklist.alltags includes "all" and "none", this does not
 			if(index > 1)
 				MoveTag(selectedTag.Name, index, index - 1);
 		}
@@ -347,7 +365,7 @@ namespace Hearthstone_Deck_Tracker
 			var selectedTag = ListboxTags.SelectedItem as Tag;
 			if(selectedTag == null)
 				return;
-			var index = Tags.IndexOf(selectedTag) + 1;
+			var index = Tags.IndexOf(selectedTag) + 2;
 			if(index < Tags.Count)
 				MoveTag(selectedTag.Name, index, index + 1);
 		}
@@ -357,8 +375,8 @@ namespace Hearthstone_Deck_Tracker
 			var selectedTag = ListboxTags.SelectedItem as Tag;
 			if(selectedTag == null)
 				return;
-			var index = Tags.IndexOf(selectedTag) + 1;
-			MoveTag(selectedTag.Name, index, 1);
+			var index = Tags.IndexOf(selectedTag) + 2;
+			MoveTag(selectedTag.Name, index, 2);
 		}
 
 		private void BtnBottom_OnClick(object sender, RoutedEventArgs e)
@@ -366,8 +384,8 @@ namespace Hearthstone_Deck_Tracker
 			var selectedTag = ListboxTags.SelectedItem as Tag;
 			if(selectedTag == null)
 				return;
-			var index = Tags.IndexOf(selectedTag) + 1;
-			MoveTag(selectedTag.Name, index, Tags.Count);
+			var index = Tags.IndexOf(selectedTag) + 2;
+			MoveTag(selectedTag.Name, index, Tags.Count + 1);
 		}
 
 		private void MoveTag(string tagName, int from, int to)
@@ -376,7 +394,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Instance.AllTags.Insert(to, tagName);
 			DeckList.Save();
 			Helper.MainWindow.ReloadTags();
-			ListboxTags.SelectedIndex = to - 1;
+			ListboxTags.SelectedIndex = to - 2;
 			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 	}
