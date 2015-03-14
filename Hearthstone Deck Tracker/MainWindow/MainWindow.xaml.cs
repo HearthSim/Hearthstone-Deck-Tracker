@@ -827,7 +827,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Clipboard.ContainsText())
 				{
 					var clipboardContent = Clipboard.GetText();
-					if(clipboardContent.StartsWith("netdeckimport"))
+					if(clipboardContent.StartsWith("netdeckimport") || clipboardContent.StartsWith("trackerimport"))
 					{
 						var clipboardLines = clipboardContent.Split('\n').ToList();
 						var deckName = clipboardLines.FirstOrDefault(line => line.StartsWith("name:"));
@@ -865,7 +865,7 @@ namespace Hearthstone_Deck_Tracker
 							clipboardLines.Remove(tagsRaw);
 							tags = tagsRaw.Replace("tags:", "").Trim().Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
 						}
-						clipboardLines.RemoveAt(0); //"netdeckimport"
+						clipboardLines.RemoveAt(0); //"netdeckimport" / "trackerimport"
 
 						var deck = ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n), localized);
 						if(deck != null)
