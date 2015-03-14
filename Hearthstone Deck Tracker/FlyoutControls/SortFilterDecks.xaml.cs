@@ -366,7 +366,7 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedTag == null)
 				return;
 			var index = Tags.IndexOf(selectedTag) + 2;
-			if(index < Tags.Count)
+			if(index < Tags.Count + 1)
 				MoveTag(selectedTag.Name, index, index + 1);
 		}
 
