@@ -374,6 +374,8 @@ namespace Hearthstone_Deck_Tracker
 				deck.Name = newName;
 				DeckList.Save();
 				DeckPickerList.UpdateDecks();
+				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
+					HearthStatsManager.UpdateDeckAsync(deck, true, true);
 			}
 		}
 	}
