@@ -122,6 +122,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
+			SeparatorDeck1.Visibility = string.IsNullOrEmpty(activeDeck.Url) && !activeDeck.MissingCards.Any()
+				                            ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
