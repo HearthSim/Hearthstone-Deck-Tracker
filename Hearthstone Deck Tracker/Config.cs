@@ -39,6 +39,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AlwaysOverwriteLogConfig = true;
 
 		[DefaultValue(true)]
+		public bool AskBeforeDiscardingGame = true;
+
+		[DefaultValue(true)]
 		public bool AutoClearDeck = true;
 
 		[DefaultValue(true)]

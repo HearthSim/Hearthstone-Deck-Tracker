@@ -130,6 +130,7 @@
       <DependentUpon>NewDeckPickerItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\DeckType.cs" />
+    <Compile Include="Enums\DiscardGameDialogResult.cs" />
     <Compile Include="Enums\DisplayedStats.cs" />
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
@@ -293,6 +294,9 @@
     <Compile Include="Utility\TextBoxTraceListener.cs" />
     <Compile Include="Windows\DeckSelectionDialog.xaml.cs">
       <DependentUpon>DeckSelectionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DiscardGameDialog.xaml.cs">
+      <DependentUpon>DiscardGameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MessageDialogs.cs" />
     <Compile Include="Windows\MoveGameDialog.xaml.cs">
@@ -486,6 +490,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DeckSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DiscardGameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

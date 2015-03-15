@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -314,7 +315,8 @@ namespace Hearthstone_Deck_Tracker
 		public static void SetPlayerHero(string hero)
 		{
 			Game.PlayingAs = hero;
-
+			if(Game.CurrentGameStats != null)
+				Game.CurrentGameStats.PlayerHero = hero;
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
 			if(!string.IsNullOrEmpty(hero))
@@ -436,13 +438,54 @@ namespace Hearthstone_Deck_Tracker
 				                            c.IsStolen
 				                            || selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => c.Id == c2.Id && c.Count <= c2.Count)))
 				{
-					Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played", "GameEventHandler");
-					Game.CurrentGameStats.DeleteGameFile();
-					_assignedDeck = null;
-					return;
+					if(Config.Instance.AskBeforeDiscardingGame)
+					{
+						var discardDialog = new DiscardGameDialog(Game.CurrentGameStats);
+						discardDialog.Topmost = true;
+						discardDialog.ShowDialog();
+						if(discardDialog.Result == DiscardGameDialogResult.Discard)
+						{
+							Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played (dialogresult: discard)",
+							                 "GameEventHandler");
+							Game.CurrentGameStats.DeleteGameFile();
+							_assignedDeck = null;
+							return;
+						}
+						if(discardDialog.Result == DiscardGameDialogResult.MoveToOther)
+						{
+							var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == Game.CurrentGameStats.PlayerHero));
+							moveDialog.Topmost = true;
+							moveDialog.ShowDialog();
+							var targetDeck = moveDialog.SelectedDeck;
+							if(targetDeck != null)
+							{
+								selectedDeck = targetDeck;
+								Game.CurrentGameStats.PlayerDeckVersion = moveDialog.SelectedVersion;
+								Game.CurrentGameStats.HearthStatsDeckVersionId = targetDeck.GetVersion(moveDialog.SelectedVersion).HearthStatsDeckVersionId;
+								//...continue as normal
+							}
+							else
+							{
+								Logger.WriteLine("No deck selected in move game dialog after discard dialog, discarding game", "GameEventHandler");
+								Game.CurrentGameStats.DeleteGameFile();
+								_assignedDeck = null;
+								return;
+							}
+						}
+					}
+					else
+					{
+						Logger.WriteLine("Assigned current game to NO deck - selected deck does not match cards played (no dialog)", "GameEventHandler");
+						Game.CurrentGameStats.DeleteGameFile();
+						_assignedDeck = null;
+						return;
+					}
 				}
-				Game.CurrentGameStats.PlayerDeckVersion = DeckList.Instance.ActiveDeckVersion.Version;
-				Game.CurrentGameStats.HearthStatsDeckVersionId = DeckList.Instance.ActiveDeckVersion.HearthStatsDeckVersionId;
+				else
+				{
+					Game.CurrentGameStats.PlayerDeckVersion = DeckList.Instance.ActiveDeckVersion.Version;
+					Game.CurrentGameStats.HearthStatsDeckVersionId = DeckList.Instance.ActiveDeckVersion.HearthStatsDeckVersionId;
+				}
 
 				_lastGame = Game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
