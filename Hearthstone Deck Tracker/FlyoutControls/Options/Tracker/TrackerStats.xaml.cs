@@ -38,8 +38,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
 			ComboboxDisplayedStats.ItemsSource = Enum.GetValues(typeof(DisplayedStats));
 			ComboboxDisplayedMode.ItemsSource = Enum.GetValues(typeof(GameMode));
+			ComboboxDisplayedTimeFrame.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
 			ComboboxDisplayedStats.SelectedItem = Config.Instance.DisplayedStats;
 			ComboboxDisplayedMode.SelectedItem = Config.Instance.DisplayedMode;
+			ComboboxDisplayedTimeFrame.SelectedItem = Config.Instance.DisplayedTimeFrame;
+			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
+				                                  ? Visibility.Visible : Visibility.Collapsed;
+			DatePickerCustomTimeFrame.SelectedDate = Config.Instance.CustomDisplayedTimeFrame;
 			_initialized = true;
 		}
 
@@ -266,6 +271,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Helper.MainWindow.Overlay.Update(true);
+		}
+
+		private void ComboboxDisplayedTimeFrame_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Helper.MainWindow.Overlay.Update(true);
+			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
+				                                  ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
 			Helper.MainWindow.Overlay.Update(true);

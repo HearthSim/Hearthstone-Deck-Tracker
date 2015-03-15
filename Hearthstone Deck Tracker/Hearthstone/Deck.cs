@@ -224,7 +224,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string> Tags
 		{
 			get { return _tags; }
-			set { _tags = value; OnPropertyChanged("TagList"); }
+			set
+			{
+				_tags = value;
+				OnPropertyChanged("TagList");
+			}
 		}
 
 		[XmlIgnore]
@@ -329,36 +333,55 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public List<GameStats> GetRelevantGames()
 		{
-			var filtered = new List<GameStats>();
+			var filtered = Config.Instance.DisplayedMode == GameMode.All
+				               ? DeckStats.Games : DeckStats.Games.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList();
+			switch(Config.Instance.DisplayedTimeFrame)
+			{
+				case DisplayedTimeFrame.AllTime:
+					break;
+				case DisplayedTimeFrame.CurrentSeason:
+					filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)).ToList();
+					break;
+				case DisplayedTimeFrame.ThisWeek:
+					filtered =
+						filtered.Where(
+						               g =>
+						               g.StartTime
+						               > new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - (int)g.StartTime.DayOfWeek - 1))
+						        .ToList();
+					break;
+				case DisplayedTimeFrame.Today:
+					filtered = filtered.Where(g => g.StartTime > DateTime.Today).ToList();
+					break;
+				case DisplayedTimeFrame.Custom:
+					if(Config.Instance.CustomDisplayedTimeFrame.HasValue)
+						filtered = filtered.Where(g => g.StartTime > Config.Instance.CustomDisplayedTimeFrame.Value).ToList();
+					break;
+			}
 			switch(Config.Instance.DisplayedStats)
 			{
 				case DisplayedStats.All:
-					filtered = DeckStats.Games;
 					break;
 				case DisplayedStats.Latest:
-					filtered = DeckStats.Games.Where(g => g.BelongsToDeckVerion(this)).ToList();
+					filtered = filtered.Where(g => g.BelongsToDeckVerion(this)).ToList();
 					break;
 				case DisplayedStats.Selected:
-					filtered = DeckStats.Games.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+					filtered = filtered.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
 					break;
 				case DisplayedStats.LatestMajor:
 					filtered =
-						DeckStats.Games.Where(
-						                      g =>
-						                      VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
-						         .ToList();
+						filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
+						        .ToList();
 					break;
 				case DisplayedStats.SelectedMajor:
 					filtered =
-						DeckStats.Games.Where(
-						                      g =>
-						                      VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major)
-						                                           .Select(GetVersion)
-						                                           .Any(g.BelongsToDeckVerion)).ToList();
+						filtered.Where(
+						               g =>
+						               VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
+						        .ToList();
 					break;
 			}
-			return Config.Instance.DisplayedMode == GameMode.All
-				       ? filtered : filtered.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList();
+			return filtered;
 		}
 
 		public void ResetHearthstatsIds()

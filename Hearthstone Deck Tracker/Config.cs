@@ -74,6 +74,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string CreatedByVersion = "";
 
+		[DefaultValue(null)]
+		public DateTime? CustomDisplayedTimeFrame = null;
+
 		[DefaultValue(-1)]
 		public int CustomHeight = -1;
 
@@ -104,6 +107,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DisplayedStats.Selected)]
 		public DisplayedStats DisplayedStats = DisplayedStats.Selected;
+
+		[DefaultValue(DisplayedTimeFrame.AllTime)]
+		public DisplayedTimeFrame DisplayedTimeFrame = DisplayedTimeFrame.AllTime;
 
 		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;

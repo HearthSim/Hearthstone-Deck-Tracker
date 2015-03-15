@@ -62,6 +62,20 @@
                                 <ComboBox Name="ComboboxDisplayedMode" VerticalAlignment="Bottom" Width="150" DockPanel.Dock="Right" SelectionChanged="ComboboxGameMode_SelectionChanged" />
                                 <Label Content="Mode:"/>
                             </DockPanel>
+                            <DockPanel Margin="0,5,0,0">
+                                <ComboBox Name="ComboboxDisplayedTimeFrame" VerticalAlignment="Bottom" Width="150" DockPanel.Dock="Right" SelectionChanged="ComboboxDisplayedTimeFrame_SelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Label Content="Timeframe:"/>
+                            </DockPanel>
+                            <DockPanel Name="PanelCustomTimeFrame" Margin="0,5,0,0">
+                                <DatePicker Name="DatePickerCustomTimeFrame" Width="150" DockPanel.Dock="Right" SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged"/>
+                                <Label Content="Since:"/>
+                            </DockPanel>
                         </StackPanel>
                     </GroupBox>
                     <CheckBox x:Name="CheckboxDiscardGame"

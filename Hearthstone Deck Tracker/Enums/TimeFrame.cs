@@ -41,4 +41,22 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("All Time")]
 		AllTime
 	}
+
+	public enum DisplayedTimeFrame
+	{
+		[Description("Today")]
+		Today,
+
+		[Description("This Week")]
+		ThisWeek,
+
+		[Description("Current Season")]
+		CurrentSeason,
+
+		[Description("All Time")]
+		AllTime,
+
+		[Description("Custom")]
+		Custom
+	}
 }
