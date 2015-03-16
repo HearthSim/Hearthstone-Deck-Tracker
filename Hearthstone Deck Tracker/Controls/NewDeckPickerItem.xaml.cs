@@ -113,6 +113,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			var activeDeck = DeckList.Instance.ActiveDeck;
 			var selectedDecks = Helper.MainWindow.DeckPickerList.SelectedDecks;
+			if(activeDeck == null || !selectedDecks.Any())
+				return;
 			Helper.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
 			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
 			MenuItemMoveDecktoArena.Visibility = activeDeck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
