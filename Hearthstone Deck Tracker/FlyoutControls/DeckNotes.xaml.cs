@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_noteChanged || _currentDeck == null)
 				return;
 			DeckList.Save();
-			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine(string.Format("auto updating {0} deck", _currentDeck), "NoteDialog");
 				HearthStatsManager.UpdateDeckAsync(_currentDeck, background: true);

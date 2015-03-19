@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker
 				var archivedLog = archive ? "archived" : "unarchived";
 				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
 
-				if(Config.Instance.HearthStatsAutoUploadNewDecks)
+				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				{
 					Logger.WriteLine(String.Format("auto uploading {0} deck", archivedLog), "ArchiveDeck");
 					HearthStatsManager.UpdateDeckAsync(deck, background: true);
@@ -218,7 +218,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
-			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.UploadDeckAsync(clone);
 		}
 
@@ -280,7 +280,7 @@ namespace Hearthstone_Deck_Tracker
 			//DeckPickerList.UpdateList();
 			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
-			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.UploadDeckAsync(clone);
 		}
 

@@ -211,7 +211,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 
-			if(Config.Instance.HearthStatsAutoUploadNewDecks)
+			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("auto uploading new/edited deck", "SaveDeck");
 				if(EditingDeck)
