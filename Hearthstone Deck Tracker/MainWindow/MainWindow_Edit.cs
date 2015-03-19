@@ -369,7 +369,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "set", NegativeButtonText = "cancel", DefaultText = deck.Name};
 			var newName = await this.ShowInputAsync("Set deck name", "", settings);
-			if(!string.IsNullOrEmpty(newName))
+			if(!string.IsNullOrEmpty(newName) && deck.Name != newName)
 			{
 				deck.Name = newName;
 				DeckList.Save();
