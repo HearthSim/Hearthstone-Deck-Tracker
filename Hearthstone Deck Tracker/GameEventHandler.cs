@@ -343,14 +343,14 @@ namespace Hearthstone_Deck_Tracker
 							           ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
 							           : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
 
-						if(deck.Archived)
-						{
-							Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
-							deck = null;
-						}
-
 						if(deck != null)
 						{
+							if(deck.Archived)
+							{
+								Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
+								return;
+							}
+
 							Helper.MainWindow.NeedToIncorrectDeckMessage = false;
 							Helper.MainWindow.DeckPickerList.SelectDeck(deck);
 							Helper.MainWindow.UpdateDeckList(deck);
