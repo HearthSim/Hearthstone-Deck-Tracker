@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -112,8 +113,42 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck));
-			this.ShowMessage("", "copied to clipboard");
+			this.ShowMessage("", "copied ids to clipboard");
 			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard", "Export");
+		}
+
+		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckList.Instance.ActiveDeckVersion;
+			if(deck == null)
+				return;
+			var english = true;
+			if(Config.Instance.SelectedLanguage != "enUS")
+			{
+				try
+				{
+					english =
+						await
+						this.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
+						                      new MetroDialogSettings
+						                      {
+							                      AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
+							                      NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
+						                      })
+						== MessageDialogResult.Affirmative;
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine(ex.ToString());
+				}
+			}
+			var names =
+				deck.GetSelectedDeckVersion()
+				    .Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+				    .Aggregate((c, n) => c + Environment.NewLine + n);
+			Clipboard.SetText(names);
+			this.ShowMessage("", "copied names to clipboard");
+			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
