@@ -17,9 +17,9 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		private readonly Regex _cardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'-]+)");
-		private readonly Regex _cardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'-]+)(\s+(x\s*)(?<count>\d))(\s*)$");
-		private readonly Regex _cardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'-]+)(\s+(?<count>\d))(\s*)$");
+		private readonly Regex _cardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!-]+)");
+		private readonly Regex _cardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(x\s*)(?<count>\d))(\s*)$");
+		private readonly Regex _cardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(?<count>\d))(\s*)$");
 
 		private async void BtnWeb_Click(object sender, RoutedEventArgs e)
 		{
