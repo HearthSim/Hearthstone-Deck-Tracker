@@ -314,50 +314,57 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SetPlayerHero(string hero)
 		{
-			Game.PlayingAs = hero;
-			if(Game.CurrentGameStats != null)
-				Game.CurrentGameStats.PlayerHero = hero;
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
-
-			if(!string.IsNullOrEmpty(hero))
+			try
 			{
-				if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection)
-					return;
+				Game.PlayingAs = hero;
+				if(Game.CurrentGameStats != null)
+					Game.CurrentGameStats.PlayerHero = hero;
+				var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
-				if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
+				if(!string.IsNullOrEmpty(hero))
 				{
-					var classDecks = DeckList.Instance.Decks.Where(d => d.Class == Game.PlayingAs && !d.Archived).ToList();
-					if(classDecks.Count == 0)
-						Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
-					else if(classDecks.Count == 1)
-					{
-						Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
-						Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
-					}
-					else if(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
-					{
-						var lastDeck = DeckList.Instance.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
-						Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
+					if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection)
+						return;
 
-						var deck = lastDeck.Id == Guid.Empty
-							           ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
-							           : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
-
-						if(deck != null)
+					if(selectedDeck == null || selectedDeck.Class != Game.PlayingAs)
+					{
+						var classDecks = DeckList.Instance.Decks.Where(d => d.Class == Game.PlayingAs && !d.Archived).ToList();
+						if(classDecks.Count == 0)
+							Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
+						else if(classDecks.Count == 1)
 						{
-							if(deck.Archived)
-							{
-								Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
-								return;
-							}
+							Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
+							Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
+						}
+						else if(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
+						{
+							var lastDeck = DeckList.Instance.LastDeckClass.First(ldc => ldc.Class == Game.PlayingAs);
+							Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 
-							Helper.MainWindow.NeedToIncorrectDeckMessage = false;
-							Helper.MainWindow.DeckPickerList.SelectDeck(deck);
-							Helper.MainWindow.UpdateDeckList(deck);
-							Helper.MainWindow.UseDeck(deck);
+							var deck = lastDeck.Id == Guid.Empty
+								           ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
+								           : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
+
+							if(deck != null)
+							{
+								if(deck.Archived)
+								{
+									Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
+									return;
+								}
+
+								Helper.MainWindow.NeedToIncorrectDeckMessage = false;
+								Helper.MainWindow.DeckPickerList.SelectDeck(deck);
+								Helper.MainWindow.UpdateDeckList(deck);
+								Helper.MainWindow.UseDeck(deck);
+							}
 						}
 					}
 				}
+			}
+			catch(Exception exception)
+			{
+				Logger.WriteLine("Error setting player hero: " + exception, "GameEventHandler");
 			}
 		}
 
