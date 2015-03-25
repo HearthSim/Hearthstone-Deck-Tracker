@@ -119,6 +119,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
+			LblOpponentFatigue.Text = "";
+
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
 			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
@@ -171,7 +173,6 @@ namespace Hearthstone_Deck_Tracker
 			ListViewOpponent.Items.Refresh();
 			Topmost = true;
 		}
-
 
 		internal void Shutdown()
 		{

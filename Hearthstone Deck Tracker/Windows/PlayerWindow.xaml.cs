@@ -143,6 +143,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
+			LblPlayerFatigue.Text = "";
+
 			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
 			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
 		}
@@ -189,7 +191,6 @@ namespace Hearthstone_Deck_Tracker
 			ListViewPlayer.Items.Refresh();
 			Topmost = true;
 		}
-
 
 		internal void Shutdown()
 		{
