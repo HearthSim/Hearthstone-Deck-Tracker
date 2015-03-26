@@ -160,6 +160,9 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml.cs">
       <DependentUpon>TrackerLogging.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerPlugins.xaml.cs">
+      <DependentUpon>TrackerPlugins.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerStats.xaml.cs">
       <DependentUpon>TrackerStats.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,9 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\IPlugin.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
@@ -381,6 +387,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerPlugins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
