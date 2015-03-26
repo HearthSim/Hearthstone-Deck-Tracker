@@ -531,16 +531,6 @@ namespace Hearthstone_Deck_Tracker
 		private bool _closeAnyway;
 		private bool _showingUpdateMessage;
 
-		private void MetroWindow_Activated(object sender, EventArgs e)
-		{
-			Topmost = true;
-		}
-
-		private void MetroWindow_Deactivated(object sender, EventArgs e)
-		{
-			Topmost = false;
-		}
-
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
 			if(Config.Instance.MinimizeToTray && WindowState == WindowState.Minimized)
