@@ -696,5 +696,25 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("success updating deck " + deck, "HearthStatsManager");
 			return result;
 		}
+
+		public static async void UpdateArenaMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
+		{
+			var result = await DeleteMatchesAsync(new List<GameStats>() {game}, saveFilesAfter, background);
+			if(result == PostResult.WasSuccess)
+			{
+				game.ResetHearthstatsIds();
+				await UploadArenaMatchAsync(game, deck, saveFilesAfter, background);
+			}
+		}
+
+		public static async void UpdateMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
+		{
+			var result = await DeleteMatchesAsync(new List<GameStats>() { game }, saveFilesAfter, background);
+			if(result == PostResult.WasSuccess)
+			{
+				game.ResetHearthstatsIds();
+				await UploadMatchAsync(game, deck, saveFilesAfter, background);
+			}
+		}
 	}
 }

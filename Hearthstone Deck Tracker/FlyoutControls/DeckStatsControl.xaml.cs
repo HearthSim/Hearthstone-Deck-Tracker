@@ -382,6 +382,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnOverallNote.IsEnabled = enabled;
 			BtnOverallImportOpponentDeck.IsEnabled = enabled;
 			BtnOverallMoveToOtherDeck.IsEnabled = enabled;
+			BtnOverallEditGame.IsEnabled = enabled;
 			if(DataGridOverallGames.SelectedItems.Count > 0)
 			{
 				var selectedGames = DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList();
@@ -416,6 +417,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnImportOpponentDeck.IsEnabled = enabled;
 			BtnNote.IsEnabled = enabled;
 			BtnMoveToOtherDeck.IsEnabled = enabled;
+			BtnEditGame.IsEnabled = enabled;
 		}
 
 		private void BtnEditNote_Click(object sender, RoutedEventArgs e)
@@ -935,6 +937,46 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
+		}
+
+		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
+		{
+			var game = DataGridGames.SelectedItem as GameStats;
+			if(game != null)
+				EditGame(game);
+		}
+
+		private void BtnOverallEditGame_Click(object sender, RoutedEventArgs e)
+		{
+			var game = DataGridOverallGames.SelectedItem as GameStats;
+			if(game != null)
+				EditGame(game);
+		}
+
+		private async void EditGame(GameStats game)
+		{
+			if(game == null)
+				return;
+
+			var dialog = new AddGameDialog(game);
+			await
+				Helper.MainWindow.ShowMetroDialogAsync(dialog,
+													   new MetroDialogSettings { AffirmativeButtonText = "save", NegativeButtonText = "cancel" });
+			var result = await dialog.WaitForButtonPressAsync();
+			await Helper.MainWindow.HideMetroDialogAsync(dialog);
+			if(result == null) //cancelled
+				return;
+			Refresh();
+			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
+			{
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
+				if(game.GameMode == GameMode.Arena)
+					HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
+				else
+					HearthStatsManager.UpdateMatchAsync(game, _deck.GetVersion(game.PlayerDeckVersion), true, true);
+			}
+			DeckStatsList.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 	}
 }
