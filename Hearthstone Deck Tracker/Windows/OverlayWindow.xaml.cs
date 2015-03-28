@@ -568,10 +568,10 @@ namespace Hearthstone_Deck_Tracker
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
 			if(!_playerCardsHidden)
-				StackPanelPlayer.Visibility = Config.Instance.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
+				StackPanelPlayer.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu)) && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
 
 			if(!_opponentCardsHidden)
-				StackPanelOpponent.Visibility = Config.Instance.HideDecksInOverlay ? Visibility.Collapsed : Visibility.Visible;
+				StackPanelOpponent.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu)) && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
 
 			LblDrawChance1.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
@@ -584,7 +584,7 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentCardCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentDeckCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-			if(Game.IsInMenu)
+			if(Game.IsInMenu && !_uiMovable)
 				HideTimers();
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
@@ -604,6 +604,18 @@ namespace Hearthstone_Deck_Tracker
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
+
+			if(Game.IsInMenu)
+			{
+				if(Config.Instance.AlwaysShowGoldProgress)
+				{
+					UpdateGoldProgress();
+					LblGoldProgress.Visibility = Visibility.Visible;
+				}
+			}
+			else
+				LblGoldProgress.Visibility = Visibility.Collapsed;
+
 			SetDeckTitle();
 			SetWinRates();
 
@@ -614,6 +626,13 @@ namespace Hearthstone_Deck_Tracker
 				Helper.MainWindow.PlayerWindow.Update();
 			if(Helper.MainWindow.OpponentWindow.Visibility == Visibility.Visible)
 				Helper.MainWindow.OpponentWindow.Update();
+		}
+
+		private void UpdateGoldProgress()
+		{
+			var region = (int)Game.CurrentRegion - 1;
+			if(region > 0)
+				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region], Config.Instance.GoldProgressTotal[region]);
 		}
 
 		private void SetWinRates()
@@ -684,7 +703,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 				//player card tooltips
-			else if(ListViewPlayer.Visibility == Visibility.Visible
+			else if(ListViewPlayer.Visibility == Visibility.Visible && StackPanelPlayer.Visibility == Visibility.Visible
 			        && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
@@ -708,7 +727,7 @@ namespace Hearthstone_Deck_Tracker
 				ToolTipCard.Visibility = visibility;
 			}
 				//opponent card tooltips
-			else if(StackPanelOpponent.Visibility == Visibility.Visible
+			else if(ListViewOpponent.Visibility == Visibility.Visible && StackPanelOpponent.Visibility == Visibility.Visible
 			        && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
 				//card size = card list height / ammount of cards
@@ -800,16 +819,18 @@ namespace Hearthstone_Deck_Tracker
 					UnHookMouse();
 			}
 
-			if(Game.IsInMenu
-			   && PointInsideControl(RectGoldDisplay.PointFromScreen(new Point(pos.X, pos.Y)), RectGoldDisplay.ActualWidth,
-			                         RectGoldDisplay.ActualHeight))
+			if(!Config.Instance.AlwaysShowGoldProgress)
 			{
-				var region = (int)Game.CurrentRegion - 1;
-				LblGoldProgress.Visibility = Visibility.Visible;
-				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region], Config.Instance.GoldProgressTotal[region]);
+				if(Game.IsInMenu
+				   && PointInsideControl(RectGoldDisplay.PointFromScreen(new Point(pos.X, pos.Y)), RectGoldDisplay.ActualWidth,
+				                         RectGoldDisplay.ActualHeight))
+				{
+					UpdateGoldProgress();
+					LblGoldProgress.Visibility = Visibility.Visible;
+				}
+				else
+					LblGoldProgress.Visibility = Visibility.Hidden;
 			}
-			else
-				LblGoldProgress.Visibility = Visibility.Hidden;
 		}
 
 
@@ -853,7 +874,6 @@ namespace Hearthstone_Deck_Tracker
 			//hide the overlay depenting on options
 			ShowOverlay(
 			            !((Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
-			              || (Config.Instance.HideInMenu && Game.IsInMenu)
 			              || (Config.Instance.HideOverlayInSpectator && Game.CurrentGameMode == GameMode.Spectator)
 			              || Config.Instance.HideOverlay || ForceHidden));
 
@@ -1043,6 +1063,7 @@ namespace Hearthstone_Deck_Tracker
 		public async Task<bool> UnlockUI()
 		{
 			_uiMovable = !_uiMovable;
+			Update(false);
 			if(_uiMovable)
 			{
 				//if(!Config.Instance.ExtraFeatures)

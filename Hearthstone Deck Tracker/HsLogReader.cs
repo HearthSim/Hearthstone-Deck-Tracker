@@ -1075,8 +1075,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var regex = new Regex(@"AccountListener.OnAccountLevelInfoUpdated.*currentRegion=(?<region>(\d))");
 				var conLogPath = Path.Combine(Config.Instance.HearthstoneDirectory, "ConnectLog.txt");
-				while(!_gameLoaded)
-					await Task.Delay(100);
+				//while(!_gameLoaded)
+				//	await Task.Delay(100);
 				using(var fs = new FileStream(conLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				using(var reader = new StreamReader(fs))
 				{
