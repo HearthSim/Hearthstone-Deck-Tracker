@@ -15,7 +15,8 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
-using TreeView = System.Windows.Controls.TreeView;
+using MahApps.Metro;
+using DataGrid = System.Windows.Controls.DataGrid;
 
 #endregion
 
@@ -26,11 +27,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 	/// </summary>
 	public partial class ReplayViewer
 	{
-		public List<ReplayKeyPoint> Replay;
+		private readonly bool _initialized;
 		private ReplayKeyPoint _currentGameState;
 		private int _opponentController;
 		private int _playerController;
-		private List<TreeViewItem> _treeViewTurnItems;
+		public List<ReplayKeyPoint> Replay;
 
 		public ReplayViewer()
 		{
@@ -54,6 +55,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 				Top = 100;
 				Left = 100;
 			}
+			CheckBoxAttack.IsChecked = Config.Instance.ReplayViewerShowAttack;
+			CheckBoxDeath.IsChecked = Config.Instance.ReplayViewerShowDeath;
+			CheckBoxDiscard.IsChecked = Config.Instance.ReplayViewerShowDiscard;
+			CheckBoxDraw.IsChecked = Config.Instance.ReplayViewerShowDraw;
+			CheckBoxHeroPower.IsChecked = Config.Instance.ReplayViewerShowHeroPower;
+			CheckBoxPlay.IsChecked = Config.Instance.ReplayViewerShowPlay;
+			CheckBoxSecret.IsChecked = Config.Instance.ReplayViewerShowSecret;
+			_initialized = true;
 		}
 
 		private Entity PlayerEntity
@@ -676,29 +685,89 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			if(replay == null || replay.Count == 0)
 				return;
+			DataGridKeyPoints.Items.Clear();
+			var selectedKeypoint = DataGridKeyPoints.SelectedItem;
 			Replay = replay;
 			_currentGameState = Replay[0];
 			_playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
 			_opponentController = OpponentEntity.GetTag(GAME_TAG.CONTROLLER);
-			_treeViewTurnItems = new List<TreeViewItem>();
+			var currentTurn = -1;
 			foreach(var kp in Replay)
 			{
-				var tvItem = _treeViewTurnItems.FirstOrDefault(x => (string)x.Header == "Turn " + kp.Turn);
-				if(tvItem == null)
+				var turn = kp.Turn / 2;
+				if(turn > currentTurn)
 				{
-					tvItem = new TreeViewItem {Header = "Turn " + kp.Turn, IsExpanded = true};
-					_treeViewTurnItems.Add(tvItem);
+					currentTurn = turn;
+					DataGridKeyPoints.Items.Add(new TurnViewItem {Turn = turn});
+					continue;
 				}
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
 				if(entity == null || string.IsNullOrEmpty(entity.CardId))
 					continue;
 				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
 					continue;
-				tvItem.Items.Add(kp);
+				switch(kp.Type)
+				{
+					case KeyPointType.Attack:
+						if(!Config.Instance.ReplayViewerShowAttack)
+							continue;
+						break;
+					case KeyPointType.Death:
+						if(!Config.Instance.ReplayViewerShowDeath)
+							continue;
+						break;
+					case KeyPointType.DeckDiscard:
+					case KeyPointType.HandDiscard:
+						if(!Config.Instance.ReplayViewerShowDiscard)
+							continue;
+						break;
+					case KeyPointType.Draw:
+					case KeyPointType.Mulligan:
+					case KeyPointType.Obtain:
+					case KeyPointType.PlayToDeck:
+					case KeyPointType.PlayToHand:
+						if(!Config.Instance.ReplayViewerShowDraw)
+							continue;
+						break;
+					case KeyPointType.HeroPower:
+						if(!Config.Instance.ReplayViewerShowHeroPower)
+							continue;
+						break;
+					case KeyPointType.SecretPlayed:
+					case KeyPointType.SecretStolen:
+					case KeyPointType.SecretTriggered:
+						if(!Config.Instance.ReplayViewerShowSecret)
+							continue;
+						break;
+					case KeyPointType.Play:
+					case KeyPointType.PlaySpell:
+					case KeyPointType.Summon:
+						if(!Config.Instance.ReplayViewerShowPlay)
+							continue;
+						break;
+				}
+				var tvi = new TurnViewItem();
+				if(kp.Player == ActivePlayer.Player)
+				{
+					tvi.PlayerAction = kp.Type.ToString();
+					tvi.AdditionalInfoPlayer = kp.GetAdditionalInfo();
+				}
+				else
+				{
+					tvi.OpponentAction = kp.Type.ToString();
+					tvi.AdditionalInfoOpponent = kp.GetAdditionalInfo();
+				}
+				tvi.KeyPoint = kp;
+				DataGridKeyPoints.Items.Add(tvi);
 			}
-			foreach(var tvi in _treeViewTurnItems)
-				TreeViewKeyPoints.Items.Add(tvi);
+			if(selectedKeypoint != null && DataGridKeyPoints.Items.Contains(selectedKeypoint))
+				DataGridKeyPoints.SelectedItem = selectedKeypoint;
 			DataContext = this;
+		}
+
+		public void ReloadKeypoints()
+		{
+			Load(Replay);
 		}
 
 		private async void Update()
@@ -829,15 +898,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 			return zone.FirstOrDefault(x => x.HasTag(GAME_TAG.ZONE_POSITION) && x.GetTag(GAME_TAG.ZONE_POSITION) == index + 1);
 		}
 
-		private void TreeViewKeyPoints_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		private void DataGridKeyPoints_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
 		{
-			var selected = ((TreeView)sender).SelectedItem as ReplayKeyPoint;
-			if(selected == null)
+			var selected = ((DataGrid)sender).SelectedItem as TurnViewItem;
+			if(selected == null || selected.KeyPoint == null)
 				return;
-			_currentGameState = selected;
+			_currentGameState = selected.KeyPoint;
 			Update();
 		}
-
 
 		private void ReplayViewer_OnClosing(object sender, CancelEventArgs e)
 		{
@@ -851,6 +919,181 @@ namespace Hearthstone_Deck_Tracker.Replay
 			catch(Exception ex)
 			{
 				Logger.WriteLine(ex.ToString(), "ReplayViewer");
+			}
+		}
+
+		private void CheckBoxDraw_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDraw = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxDraw_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDraw = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxPlay_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowPlay = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxPlay_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowPlay = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxHeroPower_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowHeroPower = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxHeroPower_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowHeroPower = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxDeath_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDeath = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxDeath_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDeath = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxSecret_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowSecret = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxSecret_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowSecret = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxDiscard_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDiscard = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxDiscard_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowDiscard = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxAttack_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowAttack = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxAttack_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowAttack = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		public class TurnViewItem
+		{
+			public ReplayKeyPoint KeyPoint;
+			public string PlayerAction { get; set; }
+			public string OpponentAction { get; set; }
+			public string AdditionalInfoPlayer { get; set; }
+			public string AdditionalInfoOpponent { get; set; }
+			public int? Turn { get; set; }
+
+			public string TurnString
+			{
+				get { return Turn.HasValue ? "Turn " + Turn.Value : ""; }
+			}
+
+			public bool IsTurnRow
+			{
+				get { return Turn.HasValue; }
+			}
+
+			public SolidColorBrush RowBackground
+			{
+				get
+				{
+					return
+						new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
+				}
+			}
+
+			public Visibility VisibilityTurnRow
+			{
+				get { return Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
+			}
+
+			public Visibility VisibilityKeyPoint
+			{
+				get { return !Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
+			}
+
+			public Visibility VisibilityPlayer
+			{
+				get { return !string.IsNullOrEmpty(PlayerAction) ? Visibility.Visible : Visibility.Hidden; }
+			}
+
+			public Visibility VisibilityOpponent
+			{
+				get { return !string.IsNullOrEmpty(OpponentAction) ? Visibility.Visible : Visibility.Hidden; }
 			}
 		}
 	}

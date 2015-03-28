@@ -11,9 +11,63 @@
         <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <controls:Arrow x:Name="PlayArrow" Stroke="Black" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <DockPanel>
-            <DockPanel Width="250">
-                <!--<Button Content="Next" Name="BtnNext" Click="BtnNext_Click" DockPanel.Dock="Top"></Button>-->
-                <TreeView Name="TreeViewKeyPoints" SelectedItemChanged="TreeViewKeyPoints_OnSelectedItemChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            <DockPanel Width="Auto">
+                <DataGrid Name="DataGridKeyPoints" SelectedCellsChanged="DataGridKeyPoints_OnSelectedCellsChanged" HorizontalScrollBarVisibility="Disabled" HeadersVisibility="None" IsReadOnly="True">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" />
+                            <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" />
+                            <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked"/>
+                            <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked"/>
+                            <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked"/>
+                            <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked"/>
+                            <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="65"/>
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0" VerticalAlignment="Center">
+                                            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Visibility="{Binding VisibilityOpponent}">
+                                                <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" >
+                                                    <TextBlock Text="{Binding OpponentAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                    <TextBlock Text="{Binding AdditionalInfoOpponent}" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                        <Grid  Grid.Column="1" VerticalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Height="2" Width="Auto" Fill="{DynamicResource AccentColorBrush}" Visibility="{Binding VisibilityOpponent}" Grid.Column="0"/>
+                                            <Rectangle Height="2" Width="Auto" Fill="{DynamicResource AccentColorBrush}" Visibility="{Binding VisibilityPlayer}" Grid.Column="1"/>
+                                            <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="Auto" Width="2" Fill="{DynamicResource AccentColorBrush}" Margin="0,-1"/>
+                                        </Grid>
+                                        <Grid Grid.Column="2"  VerticalAlignment="Center">
+                                            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Visibility="{Binding VisibilityPlayer}">
+                                                <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                                    <TextBlock Text="{Binding PlayerAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                    <TextBlock Text="{Binding AdditionalInfoPlayer}" Margin="5,0,0,0" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+                                        <Rectangle Width="Auto" Height="20" Stroke="{DynamicResource AccentColorBrush}" Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Grid.ColumnSpan="3" Visibility="{Binding VisibilityTurnRow}"/>
+                                        <TextBlock Text="{Binding TurnString}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Visibility="{Binding VisibilityTurnRow}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </DockPanel>
             <DockPanel>
                 <DockPanel Height="140" Dock="Top">

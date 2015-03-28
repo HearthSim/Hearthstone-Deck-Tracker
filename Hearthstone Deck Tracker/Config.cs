@@ -435,6 +435,30 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RemovedNoteUrls = false;
 
+		[DefaultValue(true)]
+		public bool ReplayViewerShowAttack = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowDeath = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowDiscard = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowDraw = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowHeroPower = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowPlay = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowSecret = true;
+
+		[DefaultValue(true)]
+		public bool ReplayViewerShowSummon = true;
+
 		[DefaultValue(660)]
 		public int ReplayWindowHeight = 660;
 
