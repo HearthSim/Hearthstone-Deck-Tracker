@@ -7,23 +7,45 @@
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
         Title="ReplayViewer" Height="660" Width="1250" 
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Closing="ReplayViewer_OnClosing">
+    <Window.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="../Resources/Icons.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+    </Window.Resources>
+    <controls1:MetroWindow.LeftWindowCommands>
+        <controls1:WindowCommands>
+            <Button Click="ButtonFilter_OnClick">
+                <Button.ContextMenu>
+                    <ContextMenu Name="ContextMenuFilter">
+                        <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" />
+                        <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked"/>
+                        <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" />
+                        <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked"/>
+                        <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked"/>
+                        <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked"/>
+                        <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked"/>
+                        <CheckBox Name="CheckBoxSummon" Content="Summon" Checked="CheckBoxSummon_OnChecked" Unchecked="CheckBoxSummon_OnUnchecked"/>
+                    </ContextMenu>
+                    </Button.ContextMenu>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12" Height="14">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_filter_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="filter" />
+                </StackPanel>
+            </Button>
+        </controls1:WindowCommands>
+    </controls1:MetroWindow.LeftWindowCommands>
     <Grid>
         <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <controls:Arrow x:Name="PlayArrow" Stroke="Black" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <DockPanel>
             <DockPanel Width="Auto">
                 <DataGrid Name="DataGridKeyPoints" SelectedCellsChanged="DataGridKeyPoints_OnSelectedCellsChanged" HorizontalScrollBarVisibility="Disabled" HeadersVisibility="None" IsReadOnly="True">
-                    <DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" />
-                            <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" />
-                            <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked"/>
-                            <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked"/>
-                            <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked"/>
-                            <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked"/>
-                            <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked"/>
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
