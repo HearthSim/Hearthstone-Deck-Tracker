@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
 
+		[DefaultValue(false)]
+		public bool AlwaysShowGoldProgress = false;
+
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
@@ -849,7 +852,7 @@ namespace Hearthstone_Deck_Tracker
 			proper.SetValue(this, attr.Value);
 		}
 
-		[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
+		[AttributeUsage(AttributeTargets.All, Inherited = false)]
 		private sealed class DefaultValueAttribute : Attribute
 		{
 			// This is a positional argument

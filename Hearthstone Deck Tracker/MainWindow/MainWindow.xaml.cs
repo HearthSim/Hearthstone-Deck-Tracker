@@ -30,6 +30,7 @@ using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Clipboard = System.Windows.Clipboard;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
+using Region = Hearthstone_Deck_Tracker.Enums.Region;
 
 #endregion
 
@@ -735,7 +736,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
-					if(!Game.IsRunning)
+					if(!Game.IsRunning || Game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
 						HsLogReader.Instance.GetCurrentRegion();
