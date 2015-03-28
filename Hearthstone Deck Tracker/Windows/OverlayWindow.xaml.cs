@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker
 				LblCard6,
 				LblCard7,
 				LblCard8,
-				LblCard9,
+				LblCard9
 			};
 			_cardMarkLabels = new List<HearthstoneTextBlock>
 			{
@@ -87,9 +87,9 @@ namespace Hearthstone_Deck_Tracker
 				LblCardMark6,
 				LblCardMark7,
 				LblCardMark8,
-				LblCardMark9,
+				LblCardMark9
 			};
-			_stackPanelsMarks = new List<StackPanel> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9,};
+			_stackPanelsMarks = new List<StackPanel> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
 			_movableElements = new Dictionary<UIElement, ResizeGrip>
 			{
 				{StackPanelPlayer, new ResizeGrip()},
@@ -103,7 +103,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public bool ForceHidden { get; set; }
-
 		public static double Scaling { get; set; }
 		public static double OpponentScaling { get; set; }
 
@@ -568,10 +567,16 @@ namespace Hearthstone_Deck_Tracker
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
 			if(!_playerCardsHidden)
-				StackPanelPlayer.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu)) && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
+			{
+				StackPanelPlayer.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu)) && !_uiMovable
+					                              ? Visibility.Collapsed : Visibility.Visible;
+			}
 
 			if(!_opponentCardsHidden)
-				StackPanelOpponent.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu)) && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
+			{
+				StackPanelOpponent.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && Game.IsInMenu))
+				                                && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
+			}
 
 			LblDrawChance1.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
@@ -632,7 +637,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var region = (int)Game.CurrentRegion - 1;
 			if(region > 0)
-				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region], Config.Instance.GoldProgressTotal[region]);
+			{
+				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region],
+				                                     Config.Instance.GoldProgressTotal[region]);
+			}
 		}
 
 		private void SetWinRates()
@@ -702,7 +710,7 @@ namespace Hearthstone_Deck_Tracker
 					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visibility.Visible : Visibility.Hidden;
 				}
 			}
-				//player card tooltips
+			//player card tooltips
 			else if(ListViewPlayer.Visibility == Visibility.Visible && StackPanelPlayer.Visibility == Visibility.Visible
 			        && PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
@@ -726,7 +734,7 @@ namespace Hearthstone_Deck_Tracker
 
 				ToolTipCard.Visibility = visibility;
 			}
-				//opponent card tooltips
+			//opponent card tooltips
 			else if(ListViewOpponent.Visibility == Visibility.Visible && StackPanelOpponent.Visibility == Visibility.Visible
 			        && PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
@@ -832,7 +840,6 @@ namespace Hearthstone_Deck_Tracker
 					LblGoldProgress.Visibility = Visibility.Hidden;
 			}
 		}
-
 
 		private double GetListViewOffset(StackPanel stackPanel)
 		{

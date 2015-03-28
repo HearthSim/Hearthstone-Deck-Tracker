@@ -451,6 +451,9 @@
                                             <Button x:Name="BtnNote" IsEnabled="False" Content="Edit Note" Margin="5,0,0,0"
                                         Width="75"
                                         VerticalAlignment="Bottom" Click="BtnEditNote_Click" />
+                                            <Button x:Name="BtnEditGame" IsEnabled="False" Content="Edit Game" Margin="5,0,0,0"
+                                        Width="75"
+                                        VerticalAlignment="Bottom" Click="BtnEditGame_Click" />
                                             <Button x:Name="BtnDelete" IsEnabled="False" Content="Delete" Margin="5,0,0,0"
                                         Width="75"
                                         VerticalAlignment="Bottom" Click="BtnDelete_Click" />
@@ -775,6 +778,9 @@
                                             <Button x:Name="BtnOverallNote" IsEnabled="False" Content="Edit Note"
                                                     Margin="5,0,0,0" Width="75"
                                                     VerticalAlignment="Bottom" Click="BtnOverallEditNote_Click" />
+                                            <Button x:Name="BtnOverallEditGame" IsEnabled="False" Content="Edit Game" Margin="5,0,0,0"
+                                                    Width="75"
+                                                    VerticalAlignment="Bottom" Click="BtnOverallEditGame_Click" />
                                             <Button x:Name="BtnOverallDelete" IsEnabled="False" Content="Delete"
                                                     Margin="5,0,0,0" Width="75"
                                                     VerticalAlignment="Bottom" Click="BtnOverallDelete_Click" />

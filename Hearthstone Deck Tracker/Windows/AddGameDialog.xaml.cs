@@ -21,12 +21,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	public partial class AddGameDialog : CustomDialog
 	{
 		private readonly Deck _deck;
+		private readonly bool _editing;
+		private readonly GameStats _game;
 		private readonly TaskCompletionSource<GameStats> _tcs;
 
 		public AddGameDialog(Deck deck)
 		{
 			InitializeComponent();
 			_tcs = new TaskCompletionSource<GameStats>();
+			_editing = false;
 			var lastGame = deck.DeckStats.Games.LastOrDefault();
 			if(deck.IsArenaDeck)
 			{
@@ -48,6 +51,33 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			if(lastGame != null && lastGame.Region != Region.UNKNOWN)
 				ComboBoxRegion.SelectedItem = lastGame.Region;
 			_deck = deck;
+			_game = new GameStats();
+			BtnSave.Content = "add game";
+		}
+
+		public AddGameDialog(GameStats game)
+		{
+			InitializeComponent();
+			_tcs = new TaskCompletionSource<GameStats>();
+			_editing = true;
+			_game = game;
+			if(game == null)
+				return;
+			ComboBoxResult.SelectedItem = game.Result;
+			ComboBoxOpponent.SelectedItem = (HeroClass)Enum.Parse(typeof(HeroClass), game.OpponentHero);
+			ComboBoxMode.SelectedItem = game.GameMode;
+			ComboBoxRegion.SelectedItem = game.Region;
+			if(game.GameMode == GameMode.Ranked)
+				TextBoxRank.Text = game.Rank.ToString();
+			TextBoxRank.IsEnabled = game.GameMode == GameMode.Ranked;
+			ComboBoxCoin.SelectedItem = game.Coin ? YesNo.Yes : YesNo.No;
+			ComboBoxConceded.SelectedItem = game.WasConceded ? YesNo.Yes : YesNo.No;
+			TextBoxTurns.Text = game.Turns.ToString();
+			TextBoxDuration.Text = game.Duration;
+			TextBoxDuration.IsEnabled = false;
+			TextBoxNote.Text = game.Note;
+			TextBoxOppName.Text = game.OpponentName;
+			BtnSave.Content = "save";
 		}
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)
@@ -60,26 +90,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				int.TryParse(TextBoxRank.Text, out rank);
 				int turns;
 				int.TryParse(TextBoxTurns.Text, out turns);
-				var gs = new GameStats
+				if(!_editing)
 				{
-					Result = (GameResult)ComboBoxResult.SelectedItem,
-					GameMode = (GameMode)ComboBoxMode.SelectedItem,
-					OpponentHero = ComboBoxOpponent.SelectedValue.ToString(),
-					StartTime = DateTime.Now,
-					GameId = Guid.NewGuid(),
-					Coin = (YesNo)ComboBoxCoin.SelectedValue == YesNo.Yes,
-					EndTime = DateTime.Now.AddMinutes(duration),
-					Rank = rank,
-					Note = TextBoxNote.Text,
-					OpponentName = TextBoxOppName.Text,
-					PlayerHero = _deck.Class,
-					Turns = turns,
-					WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes,
-					VerifiedHeroes = true,
-					Region = (Region)ComboBoxRegion.SelectedItem,
-					PlayerDeckVersion = _deck.SelectedVersion
-				};
-				_tcs.SetResult(gs);
+					_game.StartTime = DateTime.Now;
+					_game.GameId = Guid.NewGuid();
+					_game.EndTime = DateTime.Now.AddMinutes(duration);
+					_game.PlayerHero = _deck.Class;
+					_game.PlayerDeckVersion = _deck.SelectedVersion;
+					_game.VerifiedHeroes = true;
+				}
+				_game.Result = (GameResult)ComboBoxResult.SelectedItem;
+				_game.GameMode = (GameMode)ComboBoxMode.SelectedItem;
+				_game.OpponentHero = ComboBoxOpponent.SelectedValue.ToString();
+				_game.Coin = (YesNo)ComboBoxCoin.SelectedValue == YesNo.Yes;
+				_game.Rank = rank;
+				_game.Note = TextBoxNote.Text;
+				_game.OpponentName = TextBoxOppName.Text;
+				_game.Turns = turns;
+				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes;
+				_game.Region = (Region)ComboBoxRegion.SelectedItem;
+				_tcs.SetResult(_game);
 			}
 			catch(Exception ex)
 			{
