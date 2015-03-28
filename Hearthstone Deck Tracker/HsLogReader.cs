@@ -308,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 					else if(_tagChangeRegex.IsMatch(logLine))
 					{
 						var match = _tagChangeRegex.Match(logLine);
-						var rawEntity = match.Groups["entity"].Value;
+						var rawEntity = match.Groups["entity"].Value.Replace("UNKNOWN ENTITY ", "");
 						int entityId;
 						if(rawEntity.StartsWith("[") && _entityRegex.IsMatch(rawEntity))
 						{
