@@ -16,14 +16,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 	{
 		public const int RetryDelay = 5000;
 		public const int VersionDelay = 1000;
-		private static bool _syncInProgress;
-
 		private static int _backgroundActivities;
-
-		public static bool SyncInProgress
-		{
-			get { return _syncInProgress; }
-		}
+		public static bool SyncInProgress { get; private set; }
 
 		private static void AddBackgroundActivity()
 		{
@@ -309,12 +303,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			try
 			{
-				if(_syncInProgress)
+				if(SyncInProgress)
 				{
 					Logger.WriteLine("error: sync already in progress", "HearthStatsManager");
 					return;
 				}
-				_syncInProgress = true;
+				SyncInProgress = true;
 				if(background)
 					AddBackgroundActivity();
 
@@ -576,13 +570,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					await controller.CloseAsync();
 
 				RemoveBackgroundActivity();
-				_syncInProgress = false;
+				SyncInProgress = false;
 				Logger.WriteLine("finished sync process", "HearthStatsManager");
 			}
 			catch(Exception e)
 			{
 				Logger.WriteLine("There was an error syncing with HearthStats:\n" + e, "HearthStatsManager");
-				_syncInProgress = false;
+				SyncInProgress = false;
 			}
 		}
 
@@ -699,7 +693,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async void UpdateArenaMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
-			var result = await DeleteMatchesAsync(new List<GameStats>() {game}, saveFilesAfter, background);
+			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
 			if(result == PostResult.WasSuccess)
 			{
 				game.ResetHearthstatsIds();
@@ -709,7 +703,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async void UpdateMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
-			var result = await DeleteMatchesAsync(new List<GameStats>() { game }, saveFilesAfter, background);
+			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
 			if(result == PostResult.WasSuccess)
 			{
 				game.ResetHearthstatsIds();

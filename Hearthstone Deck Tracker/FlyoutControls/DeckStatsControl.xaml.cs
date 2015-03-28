@@ -10,8 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
@@ -591,7 +591,6 @@ namespace Hearthstone_Deck_Tracker
 			return modifiedHero;
 		}
 
-
 		public void LoadOverallStats()
 		{
 			var needToSaveDeckStats = false;
@@ -643,7 +642,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			DataGridOverallGames.Items.Refresh();
 		}
-
 
 		private bool MatchesTagFilters(Deck deck)
 		{
@@ -807,6 +805,56 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
+		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
+		{
+			var game = DataGridGames.SelectedItem as GameStats;
+			if(game != null)
+				EditGame(game);
+		}
+
+		private void BtnOverallEditGame_Click(object sender, RoutedEventArgs e)
+		{
+			var game = DataGridOverallGames.SelectedItem as GameStats;
+			if(game != null)
+				EditGame(game);
+		}
+
+		private async void EditGame(GameStats game)
+		{
+			if(game == null)
+				return;
+
+			var dialog = new AddGameDialog(game);
+			await
+				Helper.MainWindow.ShowMetroDialogAsync(dialog,
+				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
+			var result = await dialog.WaitForButtonPressAsync();
+			await Helper.MainWindow.HideMetroDialogAsync(dialog);
+			if(result == null) //cancelled
+				return;
+			Refresh();
+			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
+			{
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
+				if(game.GameMode == GameMode.Arena)
+					HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
+				else
+					HearthStatsManager.UpdateMatchAsync(game, _deck.GetVersion(game.PlayerDeckVersion), true, true);
+			}
+			DeckStatsList.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void TabControlDeck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			TabControlOverall.SelectedIndex = TabControlDeck.SelectedIndex;
+		}
+
+		private void TabControlOverall_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			TabControlDeck.SelectedIndex = TabControlOverall.SelectedIndex;
+		}
+
 		public class WinLoss
 		{
 			private readonly bool _percent;
@@ -937,46 +985,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				return _percent ? GetPercent(hsClass) : GetWinLoss(hsClass);
 			}
-		}
-
-		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
-		{
-			var game = DataGridGames.SelectedItem as GameStats;
-			if(game != null)
-				EditGame(game);
-		}
-
-		private void BtnOverallEditGame_Click(object sender, RoutedEventArgs e)
-		{
-			var game = DataGridOverallGames.SelectedItem as GameStats;
-			if(game != null)
-				EditGame(game);
-		}
-
-		private async void EditGame(GameStats game)
-		{
-			if(game == null)
-				return;
-
-			var dialog = new AddGameDialog(game);
-			await
-				Helper.MainWindow.ShowMetroDialogAsync(dialog,
-													   new MetroDialogSettings { AffirmativeButtonText = "save", NegativeButtonText = "cancel" });
-			var result = await dialog.WaitForButtonPressAsync();
-			await Helper.MainWindow.HideMetroDialogAsync(dialog);
-			if(result == null) //cancelled
-				return;
-			Refresh();
-			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
-			{
-				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
-				if(game.GameMode == GameMode.Arena)
-					HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
-				else
-					HearthStatsManager.UpdateMatchAsync(game, _deck.GetVersion(game.PlayerDeckVersion), true, true);
-			}
-			DeckStatsList.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 	}
 }
