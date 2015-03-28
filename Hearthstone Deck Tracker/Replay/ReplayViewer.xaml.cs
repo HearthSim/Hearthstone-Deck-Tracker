@@ -693,6 +693,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			_playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
 			_opponentController = OpponentEntity.GetTag(GAME_TAG.CONTROLLER);
 			var currentTurn = -1;
+			TurnViewItem tvi = null;
 			foreach(var kp in Replay)
 			{
 				var turn = (kp.Turn + 1) / 2;
@@ -704,7 +705,10 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(turn > currentTurn)
 				{
 					currentTurn = turn;
-					DataGridKeyPoints.Items.Add(new TurnViewItem {Turn = turn});
+					if(tvi != null && tvi.IsTurnRow)
+						DataGridKeyPoints.Items.Remove(tvi); //remove empty turns
+					tvi = new TurnViewItem { Turn = turn };
+					DataGridKeyPoints.Items.Add(tvi);
 				}
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
 				if(entity == null || string.IsNullOrEmpty(entity.CardId))
@@ -754,7 +758,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 							continue;
 						break;
 				}
-				var tvi = new TurnViewItem();
+				tvi = new TurnViewItem();
 				if(kp.Player == ActivePlayer.Player)
 				{
 					tvi.PlayerAction = kp.Type.ToString();
