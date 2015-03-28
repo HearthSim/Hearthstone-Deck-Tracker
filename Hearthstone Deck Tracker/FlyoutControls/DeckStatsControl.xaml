@@ -60,7 +60,7 @@
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                     ScrollViewer.CanContentScroll="True">
-                    <TabControl Name="TabControlDeck" Grid.Row="0">
+                    <TabControl Name="TabControlDeck" Grid.Row="0" SelectionChanged="TabControlDeck_OnSelectionChanged">
                         <TabItem Header="Stats" Height="41" VerticalAlignment="Bottom">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -468,7 +468,7 @@
             </TabItem>
             <TabItem Name="TabItemOverall" Header="Overall" PreviewMouseDown="TabItemOverall_OnPreviewMouseDown">
                 <Grid>
-                    <TabControl Name="TabControlOverall" Grid.Row="0">
+                    <TabControl Name="TabControlOverall" Grid.Row="0" SelectionChanged="TabControlOverall_OnSelectionChanged">
                         <TabItem Header="Stats" Height="41" VerticalAlignment="Bottom">
                             <Grid>
                                 <Grid.RowDefinitions>
