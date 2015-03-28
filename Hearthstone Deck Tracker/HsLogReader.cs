@@ -18,8 +18,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class HsLogReader
 	{
-		#region Properties
-
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
 
@@ -30,9 +28,7 @@ namespace Hearthstone_Deck_Tracker
 			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
 		private readonly Regex _creationRegex = new Regex(@"FULL_ENTITY\ -\ Creating\ ID=(?<id>(\d+))\ CardID=(?<cardId>(\w*))");
-
 		private readonly Regex _creationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
-
 		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
 
 		private readonly Regex _entityRegex =
@@ -49,15 +45,10 @@ namespace Hearthstone_Deck_Tracker
 			new Regex(@"Player\ EntityID=(?<id>(\d+))\ PlayerID=(?<playerId>(\d+))\ GameAccountId=(?<gameAccountId>(.+))");
 
 		private readonly Regex _tagChangeRegex = new Regex(@"TAG_CHANGE\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
-
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
-
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
-
 		private readonly int _updateDelay;
-
 		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
-
 		private int _addToTurn;
 		private bool _awaitingRankedDetection;
 		private bool _currentEntityHasCardId;
@@ -78,9 +69,6 @@ namespace Hearthstone_Deck_Tracker
 		private ReplayKeyPoint _proposedKeyPoint;
 		private dynamic _waitForController;
 		private bool _waitingForFirstAssetUnload;
-
-		#endregion
-
 		private bool foundSpectatorStart;
 
 		/// <summary>
@@ -95,7 +83,6 @@ namespace Hearthstone_Deck_Tracker
 				hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
 			_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
 		}
-
 
 		private HsLogReader(string hsDirectory, int updateDeclay, bool interfaceUpdateNeeded)
 		{
@@ -382,14 +369,20 @@ namespace Hearthstone_Deck_Tracker
 						var match = _updatingEntityRegex.Match(logLine);
 						var cardId = match.Groups["cardId"].Value;
 						var rawEntity = match.Groups["entity"].Value;
+						int entityId;
 						if(rawEntity.StartsWith("[") && _entityRegex.IsMatch(rawEntity))
 						{
 							var entity = _entityRegex.Match(rawEntity);
-							var id = int.Parse(entity.Groups["id"].Value);
-							_currentEntityId = id;
-							if(!Game.Entities.ContainsKey(id))
-								Game.Entities.Add(id, new Entity(id));
-							Game.Entities[id].CardId = cardId;
+							entityId = int.Parse(entity.Groups["id"].Value);
+						}
+						else if(!int.TryParse(rawEntity, out entityId))
+							entityId = -1;
+						if(entityId != -1)
+						{
+							_currentEntityId = entityId;
+							if(!Game.Entities.ContainsKey(entityId))
+								Game.Entities.Add(entityId, new Entity(entityId));
+							Game.Entities[entityId].CardId = cardId;
 						}
 					}
 					else if(_creationTagRegex.IsMatch(logLine) && !logLine.Contains("HIDE_ENTITY"))
@@ -1050,7 +1043,6 @@ namespace Hearthstone_Deck_Tracker
 			_gameEnded = false;
 			foundSpectatorStart = false;
 		}
-
 
 		public async Task<bool> RankedDetection(int timeoutInSeconds = 3)
 		{
