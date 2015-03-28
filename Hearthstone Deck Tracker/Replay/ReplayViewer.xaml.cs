@@ -62,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			CheckBoxHeroPower.IsChecked = Config.Instance.ReplayViewerShowHeroPower;
 			CheckBoxPlay.IsChecked = Config.Instance.ReplayViewerShowPlay;
 			CheckBoxSecret.IsChecked = Config.Instance.ReplayViewerShowSecret;
+			CheckBoxSummon.IsChecked = Config.Instance.ReplayViewerShowSummon;
 			_initialized = true;
 		}
 
@@ -694,12 +695,16 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var currentTurn = -1;
 			foreach(var kp in Replay)
 			{
-				var turn = kp.Turn / 2;
+				var turn = (kp.Turn + 1) / 2;
+				if(turn == 1)
+				{
+					if(!kp.Data.Any(x => x.IsPlayer && x.GetTag(GAME_TAG.RESOURCES) == 1))
+						turn = 0;
+				}
 				if(turn > currentTurn)
 				{
 					currentTurn = turn;
 					DataGridKeyPoints.Items.Add(new TurnViewItem {Turn = turn});
-					continue;
 				}
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
 				if(entity == null || string.IsNullOrEmpty(entity.CardId))
@@ -733,7 +738,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 						if(!Config.Instance.ReplayViewerShowHeroPower)
 							continue;
 						break;
-					case KeyPointType.SecretPlayed:
 					case KeyPointType.SecretStolen:
 					case KeyPointType.SecretTriggered:
 						if(!Config.Instance.ReplayViewerShowSecret)
@@ -741,8 +745,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 						break;
 					case KeyPointType.Play:
 					case KeyPointType.PlaySpell:
-					case KeyPointType.Summon:
+					case KeyPointType.SecretPlayed:
 						if(!Config.Instance.ReplayViewerShowPlay)
+							continue;
+						break;
+					case KeyPointType.Summon:
+						if(!Config.Instance.ReplayViewerShowSummon)
 							continue;
 						break;
 				}
@@ -1046,6 +1054,29 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Config.Instance.ReplayViewerShowAttack = false;
 			Config.Save();
 			ReloadKeypoints();
+		}
+
+		private void CheckBoxSummon_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowSummon = true;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void CheckBoxSummon_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ReplayViewerShowSummon = false;
+			Config.Save();
+			ReloadKeypoints();
+		}
+
+		private void ButtonFilter_OnClick(object sender, RoutedEventArgs e)
+		{
+			ContextMenuFilter.IsOpen = true;
 		}
 
 		public class TurnViewItem

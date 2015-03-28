@@ -39,6 +39,9 @@
     <Canvas x:Key="appbar_filter" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="38" Height="41.1667" Canvas.Left="19" Canvas.Top="20.5833" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 34.8333,61.75L 34.8333,42.75L 19,20.5833L 57,20.5833L 41.1667,42.75L 41.1667,58.5833L 34.8333,61.75 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_filter_white" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="41.1667" Canvas.Left="19" Canvas.Top="20.5833" Stretch="Fill" Fill="White" Data="F1 M 34.8333,61.75L 34.8333,42.75L 19,20.5833L 57,20.5833L 41.1667,42.75L 41.1667,58.5833L 34.8333,61.75 Z "/>
+    </Canvas>
     <Canvas x:Key="appbar_heart" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="33.4542" Height="28.4779" Canvas.Left="21.2717" Canvas.Top="25.733" Stretch="Fill" Fill="White" Data="F1 M 52.2716,27.8072C 48.9356,24.164 42.0671,25.7204 38.0992,31.3618C 33.0737,25.3024 27.0713,24.164 23.7257,27.8072C 14.4142,37.9485 34.3451,52.5246 37.9599,54.1634L 38.0438,54.2109L 38.0438,54.1634C 41.6554,52.5246 61.5832,37.9485 52.2716,27.8072 Z "/>
     </Canvas>
