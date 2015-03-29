@@ -1115,6 +1115,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var tvi = grid.DataContext as TurnViewItem;
 				if(tvi != null && tvi.Turn.HasValue)
 				{
+					DataGridKeyPoints.SelectedItem = tvi;
 					if(_collapsedTurns.Contains(tvi.Turn.Value))
 						_collapsedTurns.Remove(tvi.Turn.Value);
 					else
