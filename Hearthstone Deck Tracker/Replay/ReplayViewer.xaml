@@ -58,6 +58,11 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0" VerticalAlignment="Center">
                                             <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Visibility="{Binding VisibilityOpponent}">
+                                                <Border.ToolTip>
+                                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                        <hearthstoneDeckTracker:CardToolTip DataContext="{Binding Card}"/>
+                                                    </ToolTip>
+                                                </Border.ToolTip>
                                                 <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" >
                                                     <TextBlock Text="{Binding OpponentAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                                                     <TextBlock Text="{Binding AdditionalInfoOpponent}" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -75,6 +80,11 @@
                                         </Grid>
                                         <Grid Grid.Column="2"  VerticalAlignment="Center">
                                             <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Visibility="{Binding VisibilityPlayer}">
+                                                <Border.ToolTip>
+                                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                        <hearthstoneDeckTracker:CardToolTip DataContext="{Binding Card}"/>
+                                                    </ToolTip>
+                                                </Border.ToolTip>
                                                 <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                                                     <TextBlock Text="{Binding PlayerAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                                                     <TextBlock Text="{Binding AdditionalInfoPlayer}" Margin="5,0,0,0" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
