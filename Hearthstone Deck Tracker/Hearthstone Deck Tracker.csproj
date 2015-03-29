@@ -145,6 +145,9 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
+      <DependentUpon>OpponentDeck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\Options\OptionsMain.xaml.cs">
       <DependentUpon>OptionsMain.xaml</DependentUpon>
     </Compile>
@@ -361,6 +364,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NewDeckPickerItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\OpponentDeck.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
