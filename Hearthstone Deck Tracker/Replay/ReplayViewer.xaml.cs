@@ -691,8 +691,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			if(replay == null || replay.Count == 0)
 				return;
+			var selectedKeypoint = DataGridKeyPoints.SelectedItem as TurnViewItem;
 			DataGridKeyPoints.Items.Clear();
-			var selectedKeypoint = DataGridKeyPoints.SelectedItem;
 			Replay = replay;
 			_currentGameState = Replay[0];
 			_playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
@@ -779,8 +779,21 @@ namespace Hearthstone_Deck_Tracker.Replay
 				tvi.KeyPoint = kp;
 				DataGridKeyPoints.Items.Add(tvi);
 			}
-			if(selectedKeypoint != null && DataGridKeyPoints.Items.Contains(selectedKeypoint))
-				DataGridKeyPoints.SelectedItem = selectedKeypoint;
+			if(selectedKeypoint != null)
+			{
+				var newSelection = selectedKeypoint.Turn.HasValue
+					                   ? DataGridKeyPoints.Items.Cast<TurnViewItem>()
+					                                      .FirstOrDefault(x => x.Turn.HasValue && x.Turn.Value == selectedKeypoint.Turn.Value)
+					                   : DataGridKeyPoints.Items.Cast<TurnViewItem>().FirstOrDefault(x => x.KeyPoint == selectedKeypoint.KeyPoint);
+				if(newSelection != null)
+				{
+					DataGridKeyPoints.SelectedItem = newSelection;
+					DataGridKeyPoints.ScrollIntoView(newSelection);
+					var index = DataGridKeyPoints.Items.IndexOf(newSelection);
+					DataGridRow dgrow = (DataGridRow)DataGridKeyPoints.ItemContainerGenerator.ContainerFromItem(DataGridKeyPoints.Items[index]);
+					dgrow.MoveFocus(new TraversalRequest(FocusNavigationDirection.Up));
+				}
+			}
 			DataContext = this;
 		}
 
