@@ -73,8 +73,10 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
                 <local:GameDetails x:Name="GameDetailsFlyout" />
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right"
-                         Width="255" Height="auto" Panel.ZIndex="100">
+            <controls:Flyout x:Name="FlyoutOpponentDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
+                    <flyoutControls:OpponentDeck x:Name="OpponentDeckFlyout" />
+             </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutNotes" Header="Notes" Position="Right" Width="255" Height="auto"

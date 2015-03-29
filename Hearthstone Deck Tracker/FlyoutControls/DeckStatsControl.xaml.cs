@@ -380,7 +380,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnOverallDelete.IsEnabled = enabled;
 			BtnOverallDetails.IsEnabled = enabled;
 			BtnOverallNote.IsEnabled = enabled;
-			BtnOverallImportOpponentDeck.IsEnabled = enabled;
+			BtnOverallShowOpponentDeck.IsEnabled = enabled;
 			BtnOverallMoveToOtherDeck.IsEnabled = enabled;
 			BtnOverallEditGame.IsEnabled = enabled;
 			if(DataGridOverallGames.SelectedItems.Count > 0)
@@ -414,7 +414,7 @@ namespace Hearthstone_Deck_Tracker
 			var enabled = DataGridGames.SelectedItems.Count > 0;
 			BtnDelete.IsEnabled = enabled;
 			BtnDetails.IsEnabled = enabled;
-			BtnImportOpponentDeck.IsEnabled = enabled;
+			BtnShowOpponentDeck.IsEnabled = enabled;
 			BtnNote.IsEnabled = enabled;
 			BtnMoveToOtherDeck.IsEnabled = enabled;
 			BtnEditGame.IsEnabled = enabled;
@@ -727,14 +727,14 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelUnassignedFilter.Visibility = Visibility.Visible;
 		}
 
-		private void BtnOverallImportOpponentDeck_Click(object sender, RoutedEventArgs e)
+		private void BtnOverallShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var game = DataGridOverallGames.SelectedItem as GameStats;
 			if(game != null)
 				ImportOpponentDeck(game);
 		}
 
-		private void BtnImportOpponentDeck_Click(object sender, RoutedEventArgs e)
+		private void BtnShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var game = DataGridGames.SelectedItem as GameStats;
 			if(game != null)
@@ -775,8 +775,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 			}
-			Helper.MainWindow.SetNewDeck(deck);
-			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
+			Helper.MainWindow.OpponentDeckFlyout.SetDeck(deck);
+			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = true;
 		}
 
 		private async void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
