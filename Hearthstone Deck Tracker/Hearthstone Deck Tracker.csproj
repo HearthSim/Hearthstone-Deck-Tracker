@@ -191,6 +191,7 @@
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
