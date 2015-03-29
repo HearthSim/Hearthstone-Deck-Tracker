@@ -8,11 +8,11 @@
         Title="ReplayViewer" Height="660" Width="1250" 
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Closing="ReplayViewer_OnClosing">
     <Window.Resources>
-    <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="../Resources/Icons.xaml" />
-        </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <controls1:MetroWindow.LeftWindowCommands>
         <controls1:WindowCommands>
@@ -45,7 +45,7 @@
         <controls:Arrow x:Name="PlayArrow" Stroke="Black" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <DockPanel>
             <DockPanel Width="Auto">
-                <DataGrid Name="DataGridKeyPoints" SelectedCellsChanged="DataGridKeyPoints_OnSelectedCellsChanged" HorizontalScrollBarVisibility="Disabled" HeadersVisibility="None" IsReadOnly="True">
+                <DataGrid Name="DataGridKeyPoints" SelectedCellsChanged="DataGridKeyPoints_OnSelectedCellsChanged" HorizontalScrollBarVisibility="Disabled" HeadersVisibility="None" IsReadOnly="True" PreviewKeyDown="DataGridKeyPoints_OnPreviewKeyDown">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
@@ -83,6 +83,30 @@
                                         </Grid>
                                         <Rectangle Width="Auto" Height="20" Stroke="{DynamicResource AccentColorBrush}" Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Grid.ColumnSpan="3" Visibility="{Binding VisibilityTurnRow}"/>
                                         <TextBlock Text="{Binding TurnString}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Visibility="{Binding VisibilityTurnRow}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                        <Rectangle Width="14" Height="14" Visibility="{Binding VisibilityTurnRow}" HorizontalAlignment="Left" Margin="3" PreviewMouseLeftButtonDown="RectangleCollapseExpand_OnPreviewMouseLeftButtonDown">
+                                            <Rectangle.Resources>
+                                                <VisualBrush x:Key="VisualBrushCollapse" Visual="{StaticResource appbar_section_collapse}" />
+                                                <VisualBrush x:Key="VisualBrushExpand" Visual="{StaticResource appbar_section_expand}" />
+                                            </Rectangle.Resources>
+                                            <Rectangle.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Rectangle.IsMouseOver" Value="True">
+                                                            <Setter Property="Rectangle.Opacity" Value="1"/>
+                                                        </Trigger>
+                                                        <Trigger Property="Rectangle.IsMouseOver" Value="False">
+                                                            <Setter Property="Rectangle.Opacity" Value="0.7"/>
+                                                        </Trigger>
+                                                        <DataTrigger Binding="{Binding IsCollapsed}" Value="True">
+                                                            <Setter Property="Rectangle.Fill" Value="{StaticResource VisualBrushExpand}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsCollapsed}" Value="False">
+                                                            <Setter Property="Rectangle.Fill" Value="{StaticResource VisualBrushCollapse}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Rectangle.Style>
+                                        </Rectangle>
 
                                     </Grid>
                                 </DataTemplate>
