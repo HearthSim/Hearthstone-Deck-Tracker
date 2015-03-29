@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
 
 namespace Hearthstone_Deck_Tracker.Replay
@@ -14,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public int? Turn { get; set; }
 		public bool IsCollapsed { get; set; }
 		public bool ShowAll { get; set; }
-
+		public Card Card { get { return KeyPoint == null ? null : Game.GetCardFromId(KeyPoint.GetCardId()); } }
 		public string TurnString
 		{
 			get { return Turn.HasValue ? "Turn " + Turn.Value : ""; }
