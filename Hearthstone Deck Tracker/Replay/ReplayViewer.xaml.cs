@@ -17,7 +17,6 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
-using MahApps.Metro;
 using DataGrid = System.Windows.Controls.DataGrid;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
@@ -32,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 	{
 		private readonly List<int> _collapsedTurns;
 		private readonly bool _initialized;
+		private readonly List<int> _showAllTurns;
 		private ReplayKeyPoint _currentGameState;
 		private int _opponentController;
 		private int _playerController;
@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				Left = 100;
 			}
 			_collapsedTurns = new List<int>();
+			_showAllTurns = new List<int>();
 			CheckBoxAttack.IsChecked = Config.Instance.ReplayViewerShowAttack;
 			CheckBoxDeath.IsChecked = Config.Instance.ReplayViewerShowDeath;
 			CheckBoxDiscard.IsChecked = Config.Instance.ReplayViewerShowDiscard;
@@ -712,7 +713,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					currentTurn = turn;
 					if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue && !_collapsedTurns.Contains(tvi.Turn.Value))
 						DataGridKeyPoints.Items.Remove(tvi); //remove empty turns
-					tvi = new TurnViewItem {Turn = turn, IsCollapsed = _collapsedTurns.Contains(turn)};
+					tvi = new TurnViewItem {Turn = turn, IsCollapsed = _collapsedTurns.Contains(turn), ShowAll = _showAllTurns.Contains(turn)};
 					DataGridKeyPoints.Items.Add(tvi);
 				}
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
@@ -720,48 +721,51 @@ namespace Hearthstone_Deck_Tracker.Replay
 					continue;
 				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
 					continue;
-				switch(kp.Type)
+				if(!_showAllTurns.Contains(turn))
 				{
-					case KeyPointType.Attack:
-						if(!Config.Instance.ReplayViewerShowAttack)
-							continue;
-						break;
-					case KeyPointType.Death:
-						if(!Config.Instance.ReplayViewerShowDeath)
-							continue;
-						break;
-					case KeyPointType.DeckDiscard:
-					case KeyPointType.HandDiscard:
-						if(!Config.Instance.ReplayViewerShowDiscard)
-							continue;
-						break;
-					case KeyPointType.Draw:
-					case KeyPointType.Mulligan:
-					case KeyPointType.Obtain:
-					case KeyPointType.PlayToDeck:
-					case KeyPointType.PlayToHand:
-						if(!Config.Instance.ReplayViewerShowDraw)
-							continue;
-						break;
-					case KeyPointType.HeroPower:
-						if(!Config.Instance.ReplayViewerShowHeroPower)
-							continue;
-						break;
-					case KeyPointType.SecretStolen:
-					case KeyPointType.SecretTriggered:
-						if(!Config.Instance.ReplayViewerShowSecret)
-							continue;
-						break;
-					case KeyPointType.Play:
-					case KeyPointType.PlaySpell:
-					case KeyPointType.SecretPlayed:
-						if(!Config.Instance.ReplayViewerShowPlay)
-							continue;
-						break;
-					case KeyPointType.Summon:
-						if(!Config.Instance.ReplayViewerShowSummon)
-							continue;
-						break;
+					switch(kp.Type)
+					{
+						case KeyPointType.Attack:
+							if(!Config.Instance.ReplayViewerShowAttack)
+								continue;
+							break;
+						case KeyPointType.Death:
+							if(!Config.Instance.ReplayViewerShowDeath)
+								continue;
+							break;
+						case KeyPointType.DeckDiscard:
+						case KeyPointType.HandDiscard:
+							if(!Config.Instance.ReplayViewerShowDiscard)
+								continue;
+							break;
+						case KeyPointType.Draw:
+						case KeyPointType.Mulligan:
+						case KeyPointType.Obtain:
+						case KeyPointType.PlayToDeck:
+						case KeyPointType.PlayToHand:
+							if(!Config.Instance.ReplayViewerShowDraw)
+								continue;
+							break;
+						case KeyPointType.HeroPower:
+							if(!Config.Instance.ReplayViewerShowHeroPower)
+								continue;
+							break;
+						case KeyPointType.SecretStolen:
+						case KeyPointType.SecretTriggered:
+							if(!Config.Instance.ReplayViewerShowSecret)
+								continue;
+							break;
+						case KeyPointType.Play:
+						case KeyPointType.PlaySpell:
+						case KeyPointType.SecretPlayed:
+							if(!Config.Instance.ReplayViewerShowPlay)
+								continue;
+							break;
+						case KeyPointType.Summon:
+							if(!Config.Instance.ReplayViewerShowSummon)
+								continue;
+							break;
+					}
 				}
 				if(_collapsedTurns.Contains(turn))
 					continue;
@@ -1109,7 +1113,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			if(grid != null)
 			{
 				var tvi = grid.DataContext as TurnViewItem;
-				if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue)
+				if(tvi != null && tvi.Turn.HasValue)
 				{
 					if(_collapsedTurns.Contains(tvi.Turn.Value))
 						_collapsedTurns.Remove(tvi.Turn.Value);
@@ -1130,7 +1134,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			else
 				return;
 			var tvi = DataGridKeyPoints.SelectedItem as TurnViewItem;
-			if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue)
+			if(tvi != null && tvi.Turn.HasValue)
 			{
 				if(!collapse && _collapsedTurns.Contains(tvi.Turn.Value))
 				{
@@ -1145,53 +1149,43 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 		}
 
-		public class TurnViewItem
+		private void MenuItemShowAll_OnClick(object sender, RoutedEventArgs e)
 		{
-			public ReplayKeyPoint KeyPoint;
-			public string PlayerAction { get; set; }
-			public string OpponentAction { get; set; }
-			public string AdditionalInfoPlayer { get; set; }
-			public string AdditionalInfoOpponent { get; set; }
-			public int? Turn { get; set; }
-			public bool IsCollapsed { get; set; }
-
-			public string TurnString
+			object parent = sender;
+			while(!(parent is Grid))
 			{
-				get { return Turn.HasValue ? "Turn " + Turn.Value : ""; }
+				parent = VisualTreeHelper.GetParent((DependencyObject)parent);
+				if(parent == null)
+					return;
 			}
-
-			public bool IsTurnRow
+			var tvi = ((Grid)parent).DataContext as TurnViewItem;
+			if(tvi != null && tvi.Turn.HasValue)
 			{
-				get { return Turn.HasValue; }
-			}
-
-			public SolidColorBrush RowBackground
-			{
-				get
+				if(!_showAllTurns.Contains(tvi.Turn.Value))
 				{
-					return
-						new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
+					_showAllTurns.Add(tvi.Turn.Value);
+					ReloadKeypoints();
 				}
 			}
+		}
 
-			public Visibility VisibilityTurnRow
+		private void MenuItemShowFiltered_OnClick(object sender, RoutedEventArgs e)
+		{
+			object parent = sender;
+			while(!(parent is Grid))
 			{
-				get { return Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
+				parent = VisualTreeHelper.GetParent((DependencyObject)parent);
+				if(parent == null)
+					return;
 			}
-
-			public Visibility VisibilityKeyPoint
+			var tvi = ((Grid)parent).DataContext as TurnViewItem;
+			if(tvi != null && tvi.Turn.HasValue)
 			{
-				get { return !Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
-			}
-
-			public Visibility VisibilityPlayer
-			{
-				get { return !string.IsNullOrEmpty(PlayerAction) ? Visibility.Visible : Visibility.Hidden; }
-			}
-
-			public Visibility VisibilityOpponent
-			{
-				get { return !string.IsNullOrEmpty(OpponentAction) ? Visibility.Visible : Visibility.Hidden; }
+				if(_showAllTurns.Contains(tvi.Turn.Value))
+				{
+					_showAllTurns.Remove(tvi.Turn.Value);
+					ReloadKeypoints();
+				}
 			}
 		}
 	}

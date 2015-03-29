@@ -81,7 +81,14 @@
                                                 </StackPanel>
                                             </Border>
                                         </Grid>
-                                        <Rectangle Width="Auto" Height="20" Stroke="{DynamicResource AccentColorBrush}" Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Grid.ColumnSpan="3" Visibility="{Binding VisibilityTurnRow}"/>
+                                        <Rectangle Width="Auto" Height="20" Stroke="{DynamicResource AccentColorBrush}" Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Grid.ColumnSpan="3" Visibility="{Binding VisibilityTurnRow}">
+                                            <Rectangle.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="SHOW ALL" Visibility="{Binding VisibilityShowAll}" Click="MenuItemShowAll_OnClick"/>
+                                                    <MenuItem Header="SHOW FILTERED" Visibility="{Binding VisibilityShowFiltered}" Click="MenuItemShowFiltered_OnClick"/>
+                                                </ContextMenu>
+                                            </Rectangle.ContextMenu>
+                                        </Rectangle>
                                         <TextBlock Text="{Binding TurnString}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Visibility="{Binding VisibilityTurnRow}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                                         <Rectangle Width="14" Height="14" Visibility="{Binding VisibilityTurnRow}" HorizontalAlignment="Left" Margin="3" PreviewMouseLeftButtonDown="RectangleCollapseExpand_OnPreviewMouseLeftButtonDown">
                                             <Rectangle.Resources>

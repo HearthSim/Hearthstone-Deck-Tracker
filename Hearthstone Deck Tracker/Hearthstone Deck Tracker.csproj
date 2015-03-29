@@ -185,6 +185,7 @@
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
