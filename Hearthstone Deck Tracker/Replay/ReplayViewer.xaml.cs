@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -17,6 +19,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
 using MahApps.Metro;
 using DataGrid = System.Windows.Controls.DataGrid;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
 #endregion
 
@@ -27,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 	/// </summary>
 	public partial class ReplayViewer
 	{
+		private readonly List<int> _collapsedTurns;
 		private readonly bool _initialized;
 		private ReplayKeyPoint _currentGameState;
 		private int _opponentController;
@@ -55,6 +59,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				Top = 100;
 				Left = 100;
 			}
+			_collapsedTurns = new List<int>();
 			CheckBoxAttack.IsChecked = Config.Instance.ReplayViewerShowAttack;
 			CheckBoxDeath.IsChecked = Config.Instance.ReplayViewerShowDeath;
 			CheckBoxDiscard.IsChecked = Config.Instance.ReplayViewerShowDiscard;
@@ -705,9 +710,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(turn > currentTurn)
 				{
 					currentTurn = turn;
-					if(tvi != null && tvi.IsTurnRow)
+					if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue && !_collapsedTurns.Contains(tvi.Turn.Value))
 						DataGridKeyPoints.Items.Remove(tvi); //remove empty turns
-					tvi = new TurnViewItem { Turn = turn };
+					tvi = new TurnViewItem {Turn = turn, IsCollapsed = _collapsedTurns.Contains(turn)};
 					DataGridKeyPoints.Items.Add(tvi);
 				}
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
@@ -758,6 +763,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 							continue;
 						break;
 				}
+				if(_collapsedTurns.Contains(turn))
+					continue;
 				tvi = new TurnViewItem();
 				if(kp.Player == ActivePlayer.Player)
 				{
@@ -1083,6 +1090,48 @@ namespace Hearthstone_Deck_Tracker.Replay
 			ContextMenuFilter.IsOpen = true;
 		}
 
+		private void RectangleCollapseExpand_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			var grid = VisualTreeHelper.GetParent((Rectangle)sender) as Grid;
+			if(grid != null)
+			{
+				var tvi = grid.DataContext as TurnViewItem;
+				if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue)
+				{
+					if(_collapsedTurns.Contains(tvi.Turn.Value))
+						_collapsedTurns.Remove(tvi.Turn.Value);
+					else
+						_collapsedTurns.Add(tvi.Turn.Value);
+					ReloadKeypoints();
+				}
+			}
+		}
+
+		private void DataGridKeyPoints_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			bool collapse;
+			if(e.Key == Key.Left)
+				collapse = true;
+			else if(e.Key == Key.Right)
+				collapse = false;
+			else
+				return;
+			var tvi = DataGridKeyPoints.SelectedItem as TurnViewItem;
+			if(tvi != null && tvi.IsTurnRow && tvi.Turn.HasValue)
+			{
+				if(!collapse && _collapsedTurns.Contains(tvi.Turn.Value))
+				{
+					_collapsedTurns.Remove(tvi.Turn.Value);
+					ReloadKeypoints();
+				}
+				else if(collapse && !_collapsedTurns.Contains(tvi.Turn.Value))
+				{
+					_collapsedTurns.Add(tvi.Turn.Value);
+					ReloadKeypoints();
+				}
+			}
+		}
+
 		public class TurnViewItem
 		{
 			public ReplayKeyPoint KeyPoint;
@@ -1091,6 +1140,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			public string AdditionalInfoPlayer { get; set; }
 			public string AdditionalInfoOpponent { get; set; }
 			public int? Turn { get; set; }
+			public bool IsCollapsed { get; set; }
 
 			public string TurnString
 			{

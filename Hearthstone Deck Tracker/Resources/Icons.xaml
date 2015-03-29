@@ -66,4 +66,10 @@
     <Canvas x:Key="appbar_box" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 38,19L 57,28.5L 57,47.5L 38,57L 19,47.5L 19,28.5L 38,19 Z M 22.1667,30.0833L 22.1667,45.9167L 25.3333,47.5L 36.4167,53.0417L 36.4167,37.2083L 22.1667,30.0833 Z M 50.6666,47.5L 53.8333,45.9167L 53.8333,30.0833L 39.5833,37.2083L 39.5833,53.0417L 50.6666,47.5 Z M 38,22.1667L 25.3333,28.5L 38,34.8334L 50.6666,28.5L 38,22.1667 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_section_collapse" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="36" Height="36" Canvas.Left="20" Canvas.Top="20" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 20,20L 56,20L 56,56L 20,56L 20,20 Z M 24,24L 24,52L 52,52L 52,24L 24,24 Z M 31,36L 45,36L 45,40L 31,40L 31,36 Z "/>
+    </Canvas>
+    <Canvas x:Key="appbar_section_expand" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="36" Height="36" Canvas.Left="20" Canvas.Top="20" Stretch="Fill" Fill="{DynamicResource AccentColorBrush}" Data="F1 M 20,20L 56,20L 56,56L 20,56L 20,20 Z M 24,24L 24,52L 52,52L 52,24L 24,24 Z M 31,36L 36,36L 36,31L 40,31L 40,36L 45,36L 45,40L 40,40L 40,45L 36,45L 36,40L 31,40L 31,36 Z "/>
+    </Canvas>
 </ResourceDictionary>
