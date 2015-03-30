@@ -19,14 +19,70 @@
             <Button Click="ButtonFilter_OnClick">
                 <Button.ContextMenu>
                     <ContextMenu Name="ContextMenuFilter">
-                        <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" />
-                        <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked"/>
-                        <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" />
-                        <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked"/>
-                        <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked"/>
-                        <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked"/>
-                        <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked"/>
-                        <CheckBox Name="CheckBoxSummon" Content="Summon" Checked="CheckBoxSummon_OnChecked" Unchecked="CheckBoxSummon_OnUnchecked"/>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <CheckBox Name="CheckBoxSummon" Content="Summon" Checked="CheckBoxSummon_OnChecked" Unchecked="CheckBoxSummon_OnUnchecked" Margin="5,0,0,0"/>
+                        </StackPanel>
                     </ContextMenu>
                     </Button.ContextMenu>
                 <StackPanel Orientation="Horizontal">
@@ -63,10 +119,15 @@
                                                         <hearthstoneDeckTracker:CardToolTip DataContext="{Binding Card}"/>
                                                     </ToolTip>
                                                 </Border.ToolTip>
-                                                <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" >
-                                                    <TextBlock Text="{Binding OpponentAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                                                    <TextBlock Text="{Binding AdditionalInfoOpponent}" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                                                </StackPanel>
+                                                <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                                    <!--<Rectangle Width="20" Height="20">
+                                                        <Rectangle.Fill>
+                                                            <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>-->
+                                                    <TextBlock Text="{Binding Action}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>
+                                                    <TextBlock Text="{Binding AdditionalInfoOpponent}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Margin="5,0,0,0"/>
+                                                </DockPanel>
                                             </Border>
                                         </Grid>
                                         <Grid  Grid.Column="1" VerticalAlignment="Stretch">
@@ -76,7 +137,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Rectangle Height="2" Width="Auto" Fill="{DynamicResource AccentColorBrush}" Visibility="{Binding VisibilityOpponent}" Grid.Column="0"/>
                                             <Rectangle Height="2" Width="Auto" Fill="{DynamicResource AccentColorBrush}" Visibility="{Binding VisibilityPlayer}" Grid.Column="1"/>
-                                            <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="Auto" Width="2" Fill="{DynamicResource AccentColorBrush}" Margin="0,-1"/>
+                                            <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="Auto" Width="2" Fill="{DynamicResource AccentColorBrush}" Margin="0,-3"/>
                                         </Grid>
                                         <Grid Grid.Column="2"  VerticalAlignment="Center">
                                             <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Visibility="{Binding VisibilityPlayer}">
@@ -85,10 +146,15 @@
                                                         <hearthstoneDeckTracker:CardToolTip DataContext="{Binding Card}"/>
                                                     </ToolTip>
                                                 </Border.ToolTip>
-                                                <StackPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-                                                    <TextBlock Text="{Binding PlayerAction}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                                                    <TextBlock Text="{Binding AdditionalInfoPlayer}" Margin="5,0,0,0" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                                                </StackPanel>
+                                                <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                                    <!--<Rectangle Width="20" Height="20">
+                                                        <Rectangle.Fill>
+                                                            <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>-->
+                                                    <TextBlock Text="{Binding Action}" HorizontalAlignment="Left" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>
+                                                    <TextBlock Text="{Binding AdditionalInfoPlayer}" Margin="5,0,0,0" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                </DockPanel>
                                             </Border>
                                         </Grid>
                                         <Rectangle Width="Auto" Height="20" Stroke="{DynamicResource AccentColorBrush}" Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Grid.ColumnSpan="3" Visibility="{Binding VisibilityTurnRow}">

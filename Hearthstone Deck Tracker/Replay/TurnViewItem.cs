@@ -15,7 +15,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public int? Turn { get; set; }
 		public bool IsCollapsed { get; set; }
 		public bool ShowAll { get; set; }
-		public Card Card { get { return KeyPoint == null ? null : Game.GetCardFromId(KeyPoint.GetCardId()); } }
+
+		public Card Card
+		{
+			get { return KeyPoint == null ? null : Game.GetCardFromId(KeyPoint.GetCardId()); }
+		}
+
 		public string TurnString
 		{
 			get { return Turn.HasValue ? "Turn " + Turn.Value : ""; }
@@ -30,8 +35,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			get
 			{
-				return
-					new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
+				return new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
 			}
 		}
 
@@ -63,6 +67,43 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public Visibility VisibilityOpponent
 		{
 			get { return !string.IsNullOrEmpty(OpponentAction) ? Visibility.Visible : Visibility.Hidden; }
+		}
+
+		public string Action
+		{
+			get
+			{
+				if(KeyPoint == null)
+					return "";
+				switch(KeyPoint.Type)
+				{
+					case KeyPointType.Attack:
+						return "(atk)";
+					case KeyPointType.Death:
+						return "(dth)";
+					case KeyPointType.DeckDiscard:
+					case KeyPointType.HandDiscard:
+						return "(dsc)";
+					case KeyPointType.Draw:
+					case KeyPointType.Mulligan:
+					case KeyPointType.Obtain:
+					case KeyPointType.PlayToDeck:
+					case KeyPointType.PlayToHand:
+						return "(drw)";
+					case KeyPointType.HeroPower:
+						return "(hrp)";
+					case KeyPointType.SecretStolen:
+					case KeyPointType.SecretTriggered:
+						return "(scr)";
+					case KeyPointType.Play:
+					case KeyPointType.PlaySpell:
+					case KeyPointType.SecretPlayed:
+						return "(ply)";
+					case KeyPointType.Summon:
+						return "(smn)";
+				}
+				return "";
+			}
 		}
 	}
 }

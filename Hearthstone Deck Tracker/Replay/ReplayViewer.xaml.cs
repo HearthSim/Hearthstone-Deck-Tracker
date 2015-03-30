@@ -702,6 +702,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 			TurnViewItem tvi = null;
 			foreach(var kp in Replay)
 			{
+				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
+				if(entity == null || string.IsNullOrEmpty(entity.CardId))
+					continue;
+				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
+					continue;
 				var turn = (kp.Turn + 1) / 2;
 				if(turn == 1)
 				{
@@ -716,11 +721,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 					tvi = new TurnViewItem {Turn = turn, IsCollapsed = _collapsedTurns.Contains(turn), ShowAll = _showAllTurns.Contains(turn)};
 					DataGridKeyPoints.Items.Add(tvi);
 				}
-				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
-				if(entity == null || string.IsNullOrEmpty(entity.CardId))
-					continue;
-				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
-					continue;
 				if(!_showAllTurns.Contains(turn))
 				{
 					switch(kp.Type)
