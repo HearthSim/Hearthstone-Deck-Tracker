@@ -37,7 +37,7 @@
                         </ListBox>
                     </Border>
                 </DockPanel>
-                <GroupBox Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <GroupBox Name="GroupBoxDetails"  Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}" DockPanel.Dock="Right" Margin="5,0,0,0">
                     <DockPanel>
                         <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="Enabled" OffLabel="Disabled" IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
                         <Separator DockPanel.Dock="Top" Margin="0,0,0,5"/>

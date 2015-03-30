@@ -32,7 +32,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
 			if(ListBoxPlugins.Items.Count > 0)
 				ListBoxPlugins.SelectedIndex = 0;
-		}
+			else
+				GroupBoxDetails.Visibility = Visibility.Hidden;
+        }
 
 		private void ListBoxPlugins_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
