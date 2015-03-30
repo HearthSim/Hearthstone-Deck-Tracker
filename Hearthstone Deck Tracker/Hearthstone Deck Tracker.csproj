@@ -2608,6 +2608,10 @@
     <Resource Include="Resources\ClassIcons\all.png" />
     <Resource Include="Resources\ClassIcons\archived.png" />
     <Resource Include="Resources\archived_marker.png" />
+    <Page Include="Resources\ReplayViewIcons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
