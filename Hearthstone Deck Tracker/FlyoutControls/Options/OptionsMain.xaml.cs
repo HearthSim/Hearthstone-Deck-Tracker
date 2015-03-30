@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerStats.Load();
 			OptionsTrackerLogging.Load();
 			OptionsTrackerGeneral.Load();
-			OptionsTrackerPlugins.Load();
+			//OptionsTrackerPlugins.Load(); - load in main after loading plugins
 		}
 
 		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)

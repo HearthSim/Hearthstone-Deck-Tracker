@@ -5,13 +5,17 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginWrapper
 	{
+		public PluginWrapper()
+		{
+			_loaded = true;
+		}
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
 		private bool _loaded;
 
 		public string Name
 		{
-			get { return Plugin != null ? Plugin.Name + " (v" + Plugin.Version + ")" : FileName; }
+			get { return Plugin != null ? Plugin.Name : FileName; }
 		}
 
 		private bool _isEnabled;
@@ -45,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public void Load()
 		{
-			if(Plugin == null || !IsEnabled)
+			if(Plugin == null || (!IsEnabled && _loaded))
 				return;
 			try
 			{

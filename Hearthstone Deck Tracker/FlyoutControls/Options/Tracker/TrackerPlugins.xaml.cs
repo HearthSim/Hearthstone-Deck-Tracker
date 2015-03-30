@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
+			if(ListBoxPlugins.Items.Count > 0)
+				ListBoxPlugins.SelectedIndex = 0;
 		}
 
 		private void ListBoxPlugins_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

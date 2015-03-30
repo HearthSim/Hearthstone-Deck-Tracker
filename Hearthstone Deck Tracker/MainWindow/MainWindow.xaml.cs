@@ -341,6 +341,7 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 
 			PluginManager.Instance.LoadPlugins();
+			Options.OptionsTrackerPlugins.Load();
 			PluginManager.Instance.StartUpdateAsync();
 		}
 
@@ -625,7 +626,8 @@ namespace Hearthstone_Deck_Tracker
 				Config.Save();
 				DeckList.Save();
 				DeckStatsList.Save();
-			}
+				PluginManager.SavePluginsSettings();
+            }
 			catch(Exception)
 			{
 				//doesnt matter

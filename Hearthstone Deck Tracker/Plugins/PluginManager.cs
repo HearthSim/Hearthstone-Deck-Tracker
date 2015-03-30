@@ -13,9 +13,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginManager
 	{
-		public static int MaxPluginExecutionTime { get { return 2000; } }
 		private const string DefaultPath = "Plugins";
-		public List<PluginWrapper> Plugins { get; private set; }
 		private static PluginManager _instance;
 		private bool _update;
 
@@ -24,9 +22,21 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			Plugins = new List<PluginWrapper>();
 		}
 
+		public static int MaxPluginExecutionTime
+		{
+			get { return 2000; }
+		}
+
+		public List<PluginWrapper> Plugins { get; private set; }
+
 		public static PluginManager Instance
 		{
 			get { return _instance ?? (_instance = new PluginManager()); }
+		}
+
+		private static string PluginSettingsFile
+		{
+			get { return Path.Combine(Config.Instance.ConfigDir, "plugins.xml"); }
 		}
 
 		public void LoadPlugins()
@@ -51,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						Plugins.Add(p);
 				}
 			}
-
+			LoadPluginSettings();
 			Logger.WriteLine("Loading Plugins...", "PluginManager");
 			foreach(var p in Plugins)
 				p.Load();
@@ -74,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 							continue;
 						var instance = Activator.CreateInstance(type) as IPlugin;
 						if(instance != null)
-							plugins.Add(new PluginWrapper(type.Name, instance));
+							plugins.Add(new PluginWrapper(pFileName, instance));
 					}
 					catch(Exception ex)
 					{
@@ -118,6 +128,39 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public void StopUpdate()
 		{
 			_update = false;
+		}
+
+		private void LoadPluginSettings()
+		{
+			if(!File.Exists(PluginSettingsFile))
+				return;
+			try
+			{
+				var settings = XmlManager<List<PluginSettings>>.Load(PluginSettingsFile);
+				foreach(var setting in settings)
+				{
+					var plugin = Plugins.FirstOrDefault(x => x.FileName == setting.FileName && x.Name == setting.Name);
+					if(plugin != null)
+						plugin.IsEnabled = setting.IsEnabled;
+				}
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error loading plugin settings:\n" + ex, "PluginManager");
+			}
+		}
+
+		internal static void SavePluginsSettings()
+		{
+			try
+			{
+				var settings = Instance.Plugins.Select(x => new PluginSettings(x)).ToList();
+				XmlManager<List<PluginSettings>>.Save(PluginSettingsFile, settings);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error saving plugin settings:\n" + ex, "PluginManager");
+			}
 		}
 	}
 }

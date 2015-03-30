@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -10,19 +11,33 @@
         <GroupBox Header="Plugins">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Right" Width="150" Margin="5,0,0,0">
-                    <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Name}" DockPanel.Dock="Top" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top">
+                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Name}" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Version}" TextWrapping="Wrap" Margin="2,0,0,0"/>
+                        </StackPanel>
                     <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top">
                         <TextBlock Text="By" TextWrapping="Wrap"/>
                         <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}" TextWrapping="Wrap" Margin="2,0,0,0"/>
                     </StackPanel>
+                    <controls:ToggleSwitch Margin="2" DockPanel.Dock="Bottom" OnLabel="Enabled" OffLabel="Disabled" IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
                     <Button Name="ButtonSettings" Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}" DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick"/>
                     <TextBlock Name="TextBlockDescription" Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}" TextWrapping="Wrap"/>
                 </DockPanel>
                 <DockPanel DockPanel.Dock="Right" Margin="5,0,0,0">
-                    <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single" SelectedIndex="0">
+                    <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <CheckBox Content="{Binding Path=Plugin.Name}" IsChecked="{Binding Path=IsEnabled}"/>
+                                <TextBlock Text="{Binding Path=Plugin.Name}">
+                                    <TextBlock.Style>
+                                        <Style>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
