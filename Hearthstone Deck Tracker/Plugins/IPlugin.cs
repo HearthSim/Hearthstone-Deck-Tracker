@@ -11,9 +11,11 @@ namespace Hearthstone_Deck_Tracker.Plugins
 	{
 		string Name { get; }
 		string Description { get; }
+		string ButtonText { get; }
+		string Author { get; }
 		Version Version { get; }
-		void Load();
-		void Unload();
+		void OnLoad();
+		void OnUnload();
 		void OnButtonPress();
 		void OnUpdate();
 	}

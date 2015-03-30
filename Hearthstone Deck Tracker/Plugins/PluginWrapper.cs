@@ -21,7 +21,11 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			set
 			{
 				if(value)
+				{
 					Logger.WriteLine("Enabled " + Name, "PluginWrapper");
+					if(!_loaded)
+						Load();
+				}
 				else
 				{
 					Logger.WriteLine("Disabled " + Name, "PluginWrapper");
@@ -46,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			try
 			{
 				Logger.WriteLine("Loading " + Name, "PluginWrapper");
-				Plugin.Load();
+				Plugin.OnLoad();
 				_loaded = true;
 			}
 			catch(Exception ex)
@@ -68,9 +72,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				Logger.WriteLine("Error updating " + Name + ":\n" + ex, "PluginWrapper");
 			}
-			if(sw.ElapsedMilliseconds > 2000)
+			if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 			{
 				Logger.WriteLine(string.Format("Updating {0} took {1} ms. Plugin disabled", Name, sw.ElapsedMilliseconds), "PluginWrapper");
+				//TODO: ACTUALLY DISABLE
 			}
 		}
 
@@ -94,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				return;
 			try
 			{
-				Plugin.Unload();
+				Plugin.OnUnload();
 				_loaded = false;
 			}
 			catch (Exception ex)

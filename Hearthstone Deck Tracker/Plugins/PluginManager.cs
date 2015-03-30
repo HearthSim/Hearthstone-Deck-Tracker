@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginManager
 	{
+		public static int MaxPluginExecutionTime { get { return 2000; } }
 		private const string DefaultPath = "Plugins";
 		public List<PluginWrapper> Plugins { get; private set; }
 		private static PluginManager _instance;

@@ -43,12 +43,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			selected.OnButtonPress();
 		}
-
-		private void ButtonReloadPlugins_OnClick(object sender, RoutedEventArgs e)
-		{
-			//Old plugins will still be loaded, but won't be called on "update" any longer
-			PluginManager.Instance.LoadPlugins();
-			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
-		}
 	}
 }
