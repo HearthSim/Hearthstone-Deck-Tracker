@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(selected == null)
 				return;
 			selected.OnButtonPress();
+		}
+
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+		{
+			Process.Start(e.Uri.AbsoluteUri);
 		}
 	}
 }

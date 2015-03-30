@@ -18,6 +18,11 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			get { return Plugin != null ? Plugin.Name : FileName; }
 		}
 
+		public string NameAndVersion
+		{
+			get { return Name + " " + (Plugin != null ? Plugin.Version.ToString() : ""); }
+		}
+
 		private bool _isEnabled;
 		public bool IsEnabled
 		{

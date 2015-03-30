@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -1082,6 +1083,8 @@ namespace Hearthstone_Deck_Tracker
 			UpdatePanelVersionComboBox(deck);
 			Overlay.ListViewPlayer.Items.Refresh();
 			PlayerWindow.ListViewPlayer.Items.Refresh();
+
+			DeckManagerEvents.OnDeckSelected.Execute(deck);
 		}
 
 		private void UpdatePanelVersionComboBox(Deck deck)

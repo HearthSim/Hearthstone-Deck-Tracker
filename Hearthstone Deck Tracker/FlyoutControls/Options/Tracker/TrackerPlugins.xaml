@@ -10,38 +10,46 @@
     <Grid>
         <GroupBox Header="Plugins">
             <DockPanel>
-                <DockPanel DockPanel.Dock="Right" Width="150" Margin="5,0,0,0">
-                    <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top">
-                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Name}" TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Version}" TextWrapping="Wrap" Margin="2,0,0,0"/>
+                <DockPanel DockPanel.Dock="Left" Margin="5,0,0,0" Width="120">
+                    <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom">
+                                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker#plugins"
+                                            RequestNavigate="Hyperlink_RequestNavigate">
+                                            Available plugins
+                                        </Hyperlink>
+                    </TextBlock>
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                                        <Setter Property="TextBlock.FontStyle" Value="Italic"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </DockPanel>
+                <GroupBox Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}" DockPanel.Dock="Right" Margin="5,0,0,0">
+                    <DockPanel>
+                        <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="Enabled" OffLabel="Disabled" IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
+                        <Separator DockPanel.Dock="Top" Margin="0,0,0,5"/>
+                        <StackPanel Orientation="Horizontal"  DockPanel.Dock="Bottom">
+                            <TextBlock Text="Created by" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}" TextWrapping="Wrap" Margin="2,0,0,0"/>
                         </StackPanel>
-                    <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top">
-                        <TextBlock Text="By" TextWrapping="Wrap"/>
-                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}" TextWrapping="Wrap" Margin="2,0,0,0"/>
-                    </StackPanel>
-                    <controls:ToggleSwitch Margin="2" DockPanel.Dock="Bottom" OnLabel="Enabled" OffLabel="Disabled" IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
-                    <Button Name="ButtonSettings" Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}" DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick"/>
-                    <TextBlock Name="TextBlockDescription" Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}" TextWrapping="Wrap"/>
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Right" Margin="5,0,0,0">
-                    <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Plugin.Name}">
-                                    <TextBlock.Style>
-                                        <Style>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
-                                                    <Setter Property="TextBlock.FontStyle" Value="Italic"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </DockPanel>
+                        <Button Name="ButtonSettings" Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}" DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2"/>
+                        <TextBlock Name="TextBlockDescription" Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}" DockPanel.Dock="Top" TextWrapping="Wrap"/>
+
+                    </DockPanel>
+                </GroupBox>
             </DockPanel>
         </GroupBox>
     </Grid>
