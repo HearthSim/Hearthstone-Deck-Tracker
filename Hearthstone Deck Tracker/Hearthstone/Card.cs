@@ -259,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new ImageBrush();
 				try
 				{
-					var cardFileName = Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "")
+					var cardFileName = Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",","")
 					                   + ".png";
 
 
