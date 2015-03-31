@@ -121,7 +121,7 @@
                                                     </ToolTip>
                                                 </Border.ToolTip>
                                                 <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-                                                    <Border DockPanel.Dock="Left" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="-1">
+                                                    <Border DockPanel.Dock="Right" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="-1">
                                                         <Rectangle Width="24" Height="24" Margin="1" Fill="{Binding ActionIcon}" DockPanel.Dock="Right"/>
                                                     </Border>
                                                     <!--<TextBlock Text="{Binding Action}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>-->
