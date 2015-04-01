@@ -557,7 +557,7 @@
                         <Button.Content>
                             <Rectangle Width="8" Height="8">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_close}" />
+                                    <VisualBrush Visual="{StaticResource appbar_close_white}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Button.Content>

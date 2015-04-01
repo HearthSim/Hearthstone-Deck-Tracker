@@ -6,12 +6,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListView = System.Windows.Controls.ListView;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 
@@ -62,6 +64,20 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public double MinWindowHeight
 		{
 			get { return _anyArchived ? 649 : 603; }
+		}
+
+		public bool SearchBarVisibile { get; set; }
+
+		public string DeckNameFilter { get; set; }
+
+		public Visibility VisibilitySearchIcon
+		{
+			get { return SearchBarVisibile ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public Visibility VisibilitySearchBar
+		{
+			get { return SearchBarVisibile ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -258,7 +274,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
+											  (string.IsNullOrEmpty(DeckNameFilter) || d.Name.ToLowerInvariant().Contains(DeckNameFilter.ToLowerInvariant()))
+				                              && DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
 				                              && (SelectedClasses.Any(
 				                                                      c =>
 				                                                      ((c.ToString() == "All" || d.Class == c.ToString()) && !d.Archived)
@@ -500,6 +517,51 @@ namespace Hearthstone_Deck_Tracker.Controls
 			ListViewDeckType.SelectedIndex = (int)selectedDeckType;
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = false;
+		}
+		
+		private void RectangleSearchIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			SearchBarVisibile = true;
+			if(PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs("VisibilitySearchBar"));
+				PropertyChanged(this, new PropertyChangedEventArgs("VisibilitySearchIcon"));
+			}
+			TextBoxSearchBar.Focus();
+		}
+
+		private void RectangleCloseIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			CloseSearchField();
+		}
+
+		private void TextBoxSearchBar_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.Enter)
+			{
+				DeckNameFilter = TextBoxSearchBar.Text;
+				UpdateDecks();
+				e.Handled = true;
+			}
+			else if(e.Key == Key.Escape)
+			{
+				CloseSearchField();
+			}
+		}
+
+		private void CloseSearchField()
+		{
+			bool updateDecks = !string.IsNullOrEmpty(DeckNameFilter);
+			TextBoxSearchBar.Clear();
+			DeckNameFilter = null;
+			SearchBarVisibile = false;
+			if(PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs("VisibilitySearchBar"));
+				PropertyChanged(this, new PropertyChangedEventArgs("VisibilitySearchIcon"));
+			}
+			if(updateDecks)
+				UpdateDecks();
 		}
 	}
 }
