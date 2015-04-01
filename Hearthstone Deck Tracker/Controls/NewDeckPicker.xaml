@@ -63,7 +63,7 @@
         </ListView>
     </DockPanel>
     <ListView Name="ListViewClasses" Width="50" DockPanel.Dock="Left" SelectionChanged="Selector_OnSelectionChanged"  Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" Margin="0,0,1,0" 
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True">
         <ListView.Resources>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Visibility" Value="Collapsed" />
