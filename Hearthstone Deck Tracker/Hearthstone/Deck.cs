@@ -347,7 +347,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						filtered.Where(
 						               g =>
 						               g.StartTime
-						               > new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day - (int)g.StartTime.DayOfWeek - 1))
+						               > DateTime.Today.AddDays(- ((int)g.StartTime.DayOfWeek + 1)))
 						        .ToList();
 					break;
 				case DisplayedTimeFrame.Today:
