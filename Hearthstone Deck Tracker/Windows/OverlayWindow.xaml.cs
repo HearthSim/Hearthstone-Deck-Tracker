@@ -637,7 +637,7 @@ namespace Hearthstone_Deck_Tracker
 		private void UpdateGoldProgress()
 		{
 			var region = (int)Game.CurrentRegion - 1;
-			if(region > 0)
+			if(region >= 0)
 			{
 				LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region],
 				                                     Config.Instance.GoldProgressTotal[region]);
