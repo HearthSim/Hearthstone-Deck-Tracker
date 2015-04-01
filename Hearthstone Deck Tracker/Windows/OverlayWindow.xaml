@@ -132,7 +132,7 @@
             </UniformGrid>
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203"
                                Visibility="Hidden" />
-            <StackPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" />
+            <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
             <Rectangle Name="RectGoldDisplay" Width="150" Height="25" Visibility="Hidden"/>
             <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" Margin="3" FontSize="16" Visibility="Hidden"/>
         </Canvas>

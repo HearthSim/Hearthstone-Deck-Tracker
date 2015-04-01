@@ -409,6 +409,7 @@ namespace Hearthstone_Deck_Tracker
 			Height = (_customHeight == -1) ? height : _customHeight;
 			CanvasInfo.Width = (_customWidth == -1) ? width : _customWidth;
 			CanvasInfo.Height = (_customHeight == -1) ? height : _customHeight;
+			StackPanelAdditionalTooltips.MaxHeight = Height;
 		}
 
 		private void ReSizePosLists()
