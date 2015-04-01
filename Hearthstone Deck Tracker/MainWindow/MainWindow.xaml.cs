@@ -235,23 +235,19 @@ namespace Hearthstone_Deck_Tracker
 				ContextMenu = new ContextMenu(),
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
-			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => SelectDeck(null));
-			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect deck")
-			{
-				MenuItems =
-				{
-					new MenuItem("On", (sender, args) => AutoDeckDetection(true)),
-					new MenuItem("Off", (sender, args) => AutoDeckDetection(false))
-				}
-			});
-			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Class cards first")
-			{
-				MenuItems =
-				{
-					new MenuItem("Yes", (sender, args) => SortClassCardsFirst(true)),
-					new MenuItem("No", (sender, args) => SortClassCardsFirst(false))
-				}
-			});
+
+            MenuItem useNoDeckMenuItem=new MenuItem("Use no deck",(sender,args)=>SelectDeck(null));
+            useNoDeckMenuItem.Name = "useNoDeck";
+			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
+
+            MenuItem autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu());
+            autoSelectDeckMenuItem.Name = "autoSelectDeck";
+            _notifyIcon.ContextMenu.MenuItems.Add(autoSelectDeckMenuItem);
+
+            MenuItem classCardsFirstMenuItem = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu());
+            classCardsFirstMenuItem.Name = "classCardsFirst";
+			_notifyIcon.ContextMenu.MenuItems.Add(classCardsFirstMenuItem);
+
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 			_notifyIcon.MouseClick += (sender, args) =>
@@ -1045,6 +1041,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Save();
 
 				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
+
+                int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 			}
 			else
 			{
@@ -1061,6 +1060,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckPickerList.DeselectDeck();
 
 				Logger.WriteLine("Deselected deck", "Tracker");
+                int useNoDeckMenuItem=_notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
 
 			//set up stats
@@ -1181,16 +1182,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AutoDeckDetection = true;
-			Config.Save();
+            AutoDeckDetection(true);
 		}
 
 		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AutoDeckDetection = false;
-			Config.Save();
+            AutoDeckDetection(false);
 		}
 
 		private void AutoDeckDetection(bool enable)
@@ -1198,7 +1197,14 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxDeckDetection.IsChecked = enable;
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
+            setContextMenuProperty("autoSelectDeck", "Checked", enable);
+            //MenuItem autoSelectMenuItem=(MenuItem)ContextMenu.Items[1];
 		}
+        private void AutoDeckDetectionContextMenu()
+        {
+            bool enable = (bool)getContextMenuProperty("autoSelectDeck", "Checked");
+            AutoDeckDetection(!enable);
+        }
 
 		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e)
 		{
@@ -1220,7 +1226,14 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
+            setContextMenuProperty("classCardsFirst", "Checked", classFirst);
+
 		}
+        private void SortClassCardsFirstContextMenu()
+        {
+            bool enable = (bool)getContextMenuProperty("classCardsFirst", "Checked");
+            SortClassCardsFirst(!enable);
+        }
 
 		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
 		{
@@ -1592,5 +1605,21 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_movedLeft = null;
 		}
+        private int IndexOfKeyContextMenuItem(String key)
+        {
+            return _notifyIcon.ContextMenu.MenuItems.IndexOfKey(key);
+        }
+        private void setContextMenuProperty(String key, String property, object value)
+        {
+            int menuItemInd = IndexOfKeyContextMenuItem(key);
+            object target=_notifyIcon.ContextMenu.MenuItems[menuItemInd];
+            target.GetType().GetProperty(property).SetValue(target, value);
+        }
+        private object getContextMenuProperty(String key, String property)
+        {
+            int menuItemInd = IndexOfKeyContextMenuItem(key);
+            object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
+            return target.GetType().GetProperty(property).GetValue(target, null);
+        }
 	}
 }
