@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
@@ -325,6 +326,15 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
+			var target = e.OriginalSource as DependencyObject;
+			if(target == null)
+				return;
+			while(!(target is DataGridRow))
+			{
+				target = VisualTreeHelper.GetParent(target);
+				if(target == null)
+					return;
+			}
 			OpenGameDetails(DataGridGames.SelectedItem as GameStats);
 		}
 
@@ -371,6 +381,15 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DGridOverall_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
+			var target = e.OriginalSource as DependencyObject;
+			if(target == null)
+				return;
+			while(!(target is DataGridRow))
+			{
+				target = VisualTreeHelper.GetParent(target);
+				if(target == null)
+					return;
+			}
 			OpenGameDetails(DataGridOverallGames.SelectedItem as GameStats);
 		}
 

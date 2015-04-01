@@ -78,7 +78,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Classic",
 			"Promotion",
 			"Curse of Naxxramas",
-			"Goblins vs Gnomes"
+			"Goblins vs Gnomes",
+			"Blackrock Mountain"
 		};
 
 		public static List<Card> DrawnLastGame;
@@ -652,7 +653,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		#region Database
 
-		private static void LoadCardDb(string languageTag)
+		/*private static void LoadCardDb(string languageTag)
 		{
 			try
 			{
@@ -708,6 +709,32 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_cardDb = new Dictionary<string, Card>(tempDb);
 			}
 			catch(Exception e)
+			{
+				Logger.WriteLine("Error loading db: \n" + e, "Game");
+			}
+		}*/
+
+		private static void LoadCardDb(string languageTag)
+		{
+			try
+			{
+				var db = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", "enUS"));
+				_cardDb = db.Cards.Where(x => ValidCardSets.Any(set => x.CardSet == set)).ToDictionary(x => x.CardId, x => x.ToCard());
+				if(languageTag != "enUS")
+				{
+					var localized = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", languageTag));
+					foreach(var card in localized.Cards)
+					{
+						Card c;
+						if(_cardDb.TryGetValue(card.CardId, out c))
+						{
+							c.LocalizedName = card.Name;
+							c.Text = card.Text;
+						}
+					}
+				}
+			}
+			catch (Exception e)
 			{
 				Logger.WriteLine("Error loading db: \n" + e, "Game");
 			}

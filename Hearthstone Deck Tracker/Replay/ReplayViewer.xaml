@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Icons.xaml" />
+                <ResourceDictionary Source="../Resources/ReplayViewIcons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -20,65 +21,65 @@
                 <Button.ContextMenu>
                     <ContextMenu Name="ContextMenuFilter">
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_attack}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxAttack" Content="Attack" Checked="CheckBoxAttack_OnChecked" Unchecked="CheckBoxAttack_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_play}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxPlay" Content="Play" Checked="CheckBoxPlay_OnChecked" Unchecked="CheckBoxPlay_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_draw}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxDraw" Content="Draw" Checked="CheckBoxDraw_OnChecked" Unchecked="CheckBoxDraw_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_discard}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxDiscard" Content="Discard" Checked="CheckBoxDiscard_OnChecked" Unchecked="CheckBoxDiscard_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_play}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxHeroPower" Content="HeroPower" Checked="CheckBoxHeroPower_OnChecked" Unchecked="CheckBoxHeroPower_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_death}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxDeath" Content="Death" Checked="CheckBoxDeath_OnChecked" Unchecked="CheckBoxDeath_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_secret}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxSecret" Content="Secret" Checked="CheckBoxSecret_OnChecked" Unchecked="CheckBoxSecret_OnUnchecked" Margin="5,0,0,0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="-24,0,0,0">
-                            <Rectangle Width="20" Height="20">
+                            <Rectangle Width="24" Height="24">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_question_black}" />
+                                    <VisualBrush Visual="{StaticResource action_summon}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <CheckBox Name="CheckBoxSummon" Content="Summon" Checked="CheckBoxSummon_OnChecked" Unchecked="CheckBoxSummon_OnUnchecked" Margin="5,0,0,0"/>
@@ -120,12 +121,10 @@
                                                     </ToolTip>
                                                 </Border.ToolTip>
                                                 <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-                                                    <!--<Rectangle Width="20" Height="20">
-                                                        <Rectangle.Fill>
-                                                            <VisualBrush Visual="{StaticResource appbar_question_black}" />
-                                                        </Rectangle.Fill>
-                                                    </Rectangle>-->
-                                                    <TextBlock Text="{Binding Action}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>
+                                                    <Border DockPanel.Dock="Right" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="-1">
+                                                        <Rectangle Width="24" Height="24" Margin="1" Fill="{Binding ActionIcon}" DockPanel.Dock="Right"/>
+                                                    </Border>
+                                                    <!--<TextBlock Text="{Binding Action}" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>-->
                                                     <TextBlock Text="{Binding AdditionalInfoOpponent}" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Margin="5,0,0,0"/>
                                                 </DockPanel>
                                             </Border>
@@ -147,12 +146,10 @@
                                                     </ToolTip>
                                                 </Border.ToolTip>
                                                 <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
-                                                    <!--<Rectangle Width="20" Height="20">
-                                                        <Rectangle.Fill>
-                                                            <VisualBrush Visual="{StaticResource appbar_question_black}" />
-                                                        </Rectangle.Fill>
-                                                    </Rectangle>-->
-                                                    <TextBlock Text="{Binding Action}" HorizontalAlignment="Left" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>
+                                                    <Border DockPanel.Dock="Left" Margin="-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                                                        <Rectangle Width="24" Height="24" Margin="1" Fill="{Binding ActionIcon}" />
+                                                    </Border>
+                                                    <!--<TextBlock Text="{Binding Action}" HorizontalAlignment="Left" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="30"/>-->
                                                     <TextBlock Text="{Binding AdditionalInfoPlayer}" Margin="5,0,0,0" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                                                 </DockPanel>
                                             </Border>

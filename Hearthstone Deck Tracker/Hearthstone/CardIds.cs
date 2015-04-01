@@ -31,7 +31,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"NEW1_006",
 			"NAX",
 			"FP1_006",
-			"PART"
+			"PART",
+			"BRMA"
 		};
 
 		public static readonly List<string> SecretIdsHunter = new List<string>
@@ -83,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			},
 			{
 				//Bane of Doom
-				"EX1_320", new[] {"EX1_306", "CS2_065", "EX1_319", "EX1_301", "CS2_059", "CS2_064"}
+				"EX1_320", new[] {"EX1_306", "CS2_065", "EX1_319", "EX1_301", "CS2_059", "CS2_064", "EX1_323", "GVG_021", "EX1_614", "EX1_310", "GVG_100", "EX1_313", "FP1_022", "EX1_304", "GVG_018", "BRM_006" }
 			},
 			{
 				//Power of the Horde

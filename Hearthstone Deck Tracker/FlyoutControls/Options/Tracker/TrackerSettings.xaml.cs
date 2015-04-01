@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			var selectedLanguage = Helper.LanguageDict[language];
 
-			if(!File.Exists(string.Format("Files/cardsDB.{0}.json", selectedLanguage)))
+			if(!File.Exists(string.Format("Files/cardDB.{0}.xml", selectedLanguage)))
 				return;
 
 			Config.Instance.SelectedLanguage = selectedLanguage;

@@ -105,5 +105,50 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return "";
 			}
 		}
+
+		public VisualBrush ActionIcon
+		{
+			get
+			{
+				var resource = GetResourceName();
+				if(string.IsNullOrEmpty(resource))
+					return new VisualBrush();
+				return new VisualBrush((Visual)Application.Current.FindResource(resource));
+			}
+		}
+
+		private string GetResourceName()
+		{
+			if(KeyPoint == null)
+				return "";
+			switch(KeyPoint.Type)
+			{
+				case KeyPointType.Attack:
+					return "action_attack";
+				case KeyPointType.Death:
+					return "action_death";
+				case KeyPointType.DeckDiscard:
+				case KeyPointType.HandDiscard:
+					return "action_discard";
+				case KeyPointType.Draw:
+				case KeyPointType.Mulligan:
+				case KeyPointType.Obtain:
+				case KeyPointType.PlayToDeck:
+				case KeyPointType.PlayToHand:
+					return "action_draw";
+				case KeyPointType.HeroPower:
+					return "action_play";
+				case KeyPointType.SecretStolen:
+				case KeyPointType.SecretTriggered:
+					return "action_secret";
+				case KeyPointType.Play:
+				case KeyPointType.PlaySpell:
+				case KeyPointType.SecretPlayed:
+					return "action_play";
+				case KeyPointType.Summon:
+					return "action_summon";
+			}
+			return "";
+		}
 	}
 }
