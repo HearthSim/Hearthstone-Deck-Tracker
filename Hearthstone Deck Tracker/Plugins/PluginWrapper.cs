@@ -1,5 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Remoting;
+using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
@@ -12,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
 		private bool _loaded;
+		private int MenuItemIndex { get; set; }
 
 		public string Name
 		{
@@ -31,14 +35,19 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				if(value)
 				{
-					Logger.WriteLine("Enabled " + Name, "PluginWrapper");
 					if(!_loaded)
+					{
 						Load();
+						Logger.WriteLine("Enabled " + Name, "PluginWrapper");
+					}
 				}
 				else
 				{
-					Logger.WriteLine("Disabled " + Name, "PluginWrapper");
-					Unload();
+					if(_loaded)
+					{
+						Logger.WriteLine("Disabled " + Name, "PluginWrapper");
+						Unload();
+					}
 				}
 				_isEnabled = value;
 			} 
@@ -48,19 +57,19 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		{
 			FileName = fileName;
 			Plugin = plugin;
-			IsEnabled = true;
-			//todo: load enabled from config
 		}
 
 		public void Load()
 		{
-			if(Plugin == null || (!IsEnabled && _loaded))
+			if(Plugin == null)
 				return;
 			try
 			{
 				Logger.WriteLine("Loading " + Name, "PluginWrapper");
 				Plugin.OnLoad();
 				_loaded = true;
+				if(Plugin.MenuItem != null)
+					MenuItemIndex = Helper.MainWindow.MenuItemPlugins.Items.Add(Plugin.MenuItem);
 			}
 			catch(Exception ex)
 			{
@@ -104,12 +113,14 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public void Unload()
 		{
-			if(Plugin == null || !IsEnabled || !_loaded)
+			if(Plugin == null)
 				return;
 			try
 			{
 				Plugin.OnUnload();
 				_loaded = false;
+				if(Plugin.MenuItem != null)
+					Helper.MainWindow.MenuItemPlugins.Items.RemoveAt(MenuItemIndex);
 			}
 			catch (Exception ex)
 			{

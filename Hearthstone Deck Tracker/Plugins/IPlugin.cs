@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿#region
+
+using System;
+using System.Windows.Controls;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		string ButtonText { get; }
 		string Author { get; }
 		Version Version { get; }
+		MenuItem MenuItem { get; }
 		void OnLoad();
 		void OnUnload();
 		void OnButtonPress();

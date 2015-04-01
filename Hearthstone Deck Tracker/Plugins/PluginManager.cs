@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 #endregion
 
@@ -63,10 +64,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						Plugins.Add(p);
 				}
 			}
-			LoadPluginSettings();
 			Logger.WriteLine("Loading Plugins...", "PluginManager");
-			foreach(var p in Plugins)
-				p.Load();
+			LoadPluginSettings();
 		}
 
 		private IEnumerable<PluginWrapper> GetModule(string pFileName, Type pTypeInterface)
