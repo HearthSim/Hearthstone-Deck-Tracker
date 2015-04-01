@@ -733,13 +733,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 							if(!Config.Instance.ReplayViewerShowDeath)
 								continue;
 							break;
+						case KeyPointType.Mulligan:
 						case KeyPointType.DeckDiscard:
 						case KeyPointType.HandDiscard:
 							if(!Config.Instance.ReplayViewerShowDiscard)
 								continue;
 							break;
 						case KeyPointType.Draw:
-						case KeyPointType.Mulligan:
 						case KeyPointType.Obtain:
 						case KeyPointType.PlayToDeck:
 						case KeyPointType.PlayToHand:
