@@ -893,7 +893,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "NetDeckClipboardCheck");
+				Logger.WriteLine(e.ToString(), "NetDeckClipbardCheck");
 				return false;
 			}
 			return false;
