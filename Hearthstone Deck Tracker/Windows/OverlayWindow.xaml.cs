@@ -994,7 +994,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
 						break;
 					case "Win Rate":
-						StackPanelOpponent.Children.Add(LblWinRateAgainst);
+						StackPanelOpponent.Children.Add(ViewBoxWinRateAgainst);
 						break;
 				}
 			}
