@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker
 
 				foreach(var line in lines)
 				{
-					if(line.Contains("Begin Spectating"))
+					if(line.Contains("Begin Spectating") || line.Contains("Start Spectator"))
 					{
 						offset = tempOffset;
 						foundSpectatorStart = true;
@@ -390,7 +390,7 @@ namespace Hearthstone_Deck_Tracker
 						var match = _creationTagRegex.Match(logLine);
 						TagChange(match.Groups["tag"].Value, _currentEntityId, match.Groups["value"].Value);
 					}
-					else if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
+					else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && Game.IsInMenu)
 						_gameHandler.SetGameMode(GameMode.Spectator);
 					else if(logLine.Contains("End Spectator"))
 					{
@@ -567,18 +567,14 @@ namespace Hearthstone_Deck_Tracker
 						//	_gameHandler.PlayerSetAside(id);
 
 						//game start/end
-						if(id.Contains("HERO") || (id.Contains("NAX") && id.Contains("_01")))
+						if(id.Contains("HERO") || (id.Contains("NAX") && id.Contains("_01")) || id.StartsWith("BRMA"))
 						{
 							if(!from.Contains("PLAY"))
 							{
 								if(to.Contains("FRIENDLY"))
-									_gameHandler.SetPlayerHero(CardIds.HeroIdDict[id]);
+									_gameHandler.SetPlayerHero(Game.GetHeroNameFromId(id));
 								else if(to.Contains("OPPOSING"))
-								{
-									string heroName;
-									if(CardIds.HeroIdDict.TryGetValue(id, out heroName))
-										_gameHandler.SetOpponentHero(heroName);
-								}
+									_gameHandler.SetOpponentHero(Game.GetHeroNameFromId(id));
 							}
 							continue;
 						}

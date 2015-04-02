@@ -127,11 +127,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 					return "action_attack";
 				case KeyPointType.Death:
 					return "action_death";
+				case KeyPointType.Mulligan:
 				case KeyPointType.DeckDiscard:
 				case KeyPointType.HandDiscard:
 					return "action_discard";
 				case KeyPointType.Draw:
-				case KeyPointType.Mulligan:
 				case KeyPointType.Obtain:
 				case KeyPointType.PlayToDeck:
 				case KeyPointType.PlayToHand:

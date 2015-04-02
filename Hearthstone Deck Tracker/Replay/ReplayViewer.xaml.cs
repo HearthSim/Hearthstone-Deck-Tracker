@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return string.Empty;
 				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var cardId = GetHero(_opponentController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -733,13 +733,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 							if(!Config.Instance.ReplayViewerShowDeath)
 								continue;
 							break;
+						case KeyPointType.Mulligan:
 						case KeyPointType.DeckDiscard:
 						case KeyPointType.HandDiscard:
 							if(!Config.Instance.ReplayViewerShowDiscard)
 								continue;
 							break;
 						case KeyPointType.Draw:
-						case KeyPointType.Mulligan:
 						case KeyPointType.Obtain:
 						case KeyPointType.PlayToDeck:
 						case KeyPointType.PlayToHand:

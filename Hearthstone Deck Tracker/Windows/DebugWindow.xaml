@@ -1,0 +1,15 @@
+﻿<Window x:Class="Hearthstone_Deck_Tracker.Windows.DebugWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        Title="DebugWindow" Height="300" Width="300">
+    <DockPanel>
+        <ComboBox DockPanel.Dock="Top" SelectedIndex="0" Name="ComboBoxData">
+            <ComboBox.Items>
+                <system:String>Game</system:String>
+                <system:String>Entities</system:String>
+            </ComboBox.Items>
+        </ComboBox>
+        <DataGrid Name="DataGridProperties" AutoGenerateColumns="True"/>
+    </DockPanel>
+</Window>

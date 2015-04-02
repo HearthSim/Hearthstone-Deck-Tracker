@@ -58,5 +58,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.LogLevel = int.Parse(ComboBoxLogLevel.SelectedValue.ToString());
 			Config.Save();
 		}
+
+		private void BtnDebugWindow_OnClick(object sender, RoutedEventArgs e)
+		{
+			var debugWindow = new DebugWindow();
+			debugWindow.Show();
+		}
 	}
 }

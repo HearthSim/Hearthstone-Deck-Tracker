@@ -20,6 +20,7 @@
                     <system:String>0</system:String>
                     <system:String>1</system:String>
                 </ComboBox>
+                <Button Name="BtnDebugWindow" Content="DebugWindow" Click="BtnDebugWindow_OnClick" Margin="5,0,0,0"/>
             </StackPanel>
         </GroupBox>
         <GroupBox Grid.Row="1">

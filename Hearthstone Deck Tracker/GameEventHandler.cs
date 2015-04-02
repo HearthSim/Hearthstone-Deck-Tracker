@@ -421,6 +421,12 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.Overlay.HideTimers();
 			if(Game.CurrentGameStats == null)
 				return;
+			if(Game.CurrentGameMode == GameMode.Spectator && !Config.Instance.RecordSpectator)
+			{
+				Logger.WriteLine("Game is in Spectator mode, discarded. (Record Spectator disabled)", "GameEventHandler");
+				_assignedDeck = null;
+				return;
+			}
 			var player = Game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
 			var opponent = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
 			if(player.Value != null)
