@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker
 
 				foreach(var line in lines)
 				{
-					if(line.Contains("Begin Spectating"))
+					if(line.Contains("Begin Spectating") || line.Contains("Start Spectator"))
 					{
 						offset = tempOffset;
 						foundSpectatorStart = true;
@@ -390,7 +390,7 @@ namespace Hearthstone_Deck_Tracker
 						var match = _creationTagRegex.Match(logLine);
 						TagChange(match.Groups["tag"].Value, _currentEntityId, match.Groups["value"].Value);
 					}
-					else if(logLine.Contains("Begin Spectating") && Game.IsInMenu)
+					else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && Game.IsInMenu)
 						_gameHandler.SetGameMode(GameMode.Spectator);
 					else if(logLine.Contains("End Spectator"))
 					{
