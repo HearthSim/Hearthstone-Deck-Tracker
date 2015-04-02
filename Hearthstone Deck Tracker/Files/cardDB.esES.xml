@@ -28,7 +28,9 @@ Restaura 2 p. de salud.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga &lt;b&gt;Provocar&lt;/b&gt; y +2/+2 a un esbirro. &lt;i&gt;(+2 p. de ataque/+2 p. de salud)&lt;/i&gt;</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Tu héroe tiene +1 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Este esbirro ha sido transformado en una oveja 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $3 p. de daño a un personaje y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; a todos los esbirros enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Invoca a dos esbirros 0/2 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; a cualquier personaje dañado por este esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@ Inflige 1 p. de daño.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $1 p. de daño a un personaje enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@ Inflige 1 p. de daño.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga &lt;b&gt;Viento Furioso&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@ Inflige 1 p. de daño.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Restaura toda la salud de un esbirro y le otorga &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@ Inflige 1 p. de daño.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@ Inflige 1 p. de daño.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 3 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@ Inflige 1 p. de daño.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Este personaje tiene +3 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@ Inflige 1 p. de daño.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@ Invoca un tótem aleatorio.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@ Invoca un tótem aleatorio.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@ Roba una carta y recibe 2 p. de daño.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño a todos los demás personajes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@ Roba una carta y recibe 2 p. de daño.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@ Equipa una daga 1/2.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@ Equipa una daga 1/2.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 6 p. de salud a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@ Obtiene 2 p. de armadura.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga +2 p. de ataque y &lt;b&gt;Cargar&lt;/b&gt; a un esbirro amistoso.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@ Obtiene 2 p. de armadura.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Tus demás esbirros tienen +1 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@ Obtiene 2 p. de armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@ Obtiene 2 p. de armadura.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 2 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@ Obtiene 2 p. de armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@ Obtiene 2 p. de armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca un jabalí 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Tus demás esbirros tienen +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +1/+1 por cada esbirro amistoso adicional en el campo de batalla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@ Obtiene 2 p. de armadura.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@ Obtiene 2 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Cuando se sana a un esbirro, roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@ Obtiene 2 p. de armadura.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 2 p. de salud a todos los personajes amistosos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +2/+2 y &lt;b&gt;Provocar&lt;/b&gt; a una bestia amistosa.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Tus demás bestias tienen +1 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Tus bestias tienen &lt;b&gt;Cargar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 2 p. de salud.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +1/+1 a un esbirro amistoso.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca un dragonizo mecánico 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye el arma de tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@ Inflige 2 p. de daño al héroe enemigo.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Cada vez que invocas a un esbirro con 3 p. de ataque o menos, este recibe &lt;b&gt;Cargar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Transforma a un esbirro en una rana 0/1 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>¡Este esbirro está transformado!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $3 p. de daño que se dividen aleatoriamente entre todos los enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Descarta una carta aleatoria.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga &lt;b&gt;Escudo divino&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca a un explorador múrloc 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>Todos los demás múrlocs tienen +1 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Los esbirros adyacentes tienen +2 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;Viento Furioso&lt;/b&gt; a un esbirro amistoso.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla: &lt;/b&gt;Inflige 3 p. de daño al héroe enemigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3008,7 +3111,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3067,7 +3172,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3098,7 +3205,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3141,7 +3250,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3169,7 +3280,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3214,7 +3327,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 p. de daño a todos los esbirros enemigos y los &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3230,7 +3345,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; a un personaje. Si ya estaba &lt;b&gt;congelado&lt;/b&gt;, en su lugar inflige $4 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3246,9 +3363,7 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga a un esbirro: "&lt;b&gt;Último aliento:&lt;/b&gt; Vuelve a invocar a este esbirro".</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3308,7 +3423,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;. Al final de tu turno, otorga +1 p. de salud a otro esbirro amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3337,7 +3454,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga a un esbirro +2 p. de ataque. &lt;b&gt;Combo:&lt;/b&gt; +4 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3406,7 +3525,9 @@ Roba una carta.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 3 p. de salud.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3422,9 +3543,7 @@ Roba una carta.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Tiene &lt;b&gt;Cargar&lt;/b&gt; mientras tengas un arma equipada.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3439,7 +3558,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca a un escudero 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3467,7 +3588,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3483,7 +3606,9 @@ Roba una carta.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3498,7 +3623,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Se inflige 4 p. de daño a sí mismo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3525,7 +3652,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +2 p. de ataque a un esbirro este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3538,7 +3667,9 @@ Roba una carta.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Este esbirro tiene +2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3554,7 +3685,7 @@ Roba una carta.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; &lt;b&gt;Silencia&lt;/b&gt; a un esbirro.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3570,7 +3701,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; Tu arma tiene +2 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3597,7 +3730,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Tus esbirros cuestan (3) cristales más.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3627,7 +3762,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Destruye tu arma e inflige su daño a todos los enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3774,7 +3911,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a un esbirro enemigo con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3815,7 +3952,9 @@ Roba una carta.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla&lt;/b&gt;: Destruye a un esbirro con 7 p. de ataque o más.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3859,7 +3998,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3874,7 +4015,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +5 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3889,7 +4032,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3904,7 +4049,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;. &lt;b&gt;Último aliento:&lt;/b&gt; Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3919,7 +4067,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Da 2 plátanos a tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3957,7 +4107,9 @@ Roba una carta.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Toma el control de un esbirro enemigo aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3973,7 +4125,9 @@ Roba una carta.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3988,7 +4142,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4003,7 +4159,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4018,7 +4176,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4034,7 +4194,9 @@ Roba una carta.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4049,7 +4211,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 2 p. de daño al héroe enemigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4064,7 +4228,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4079,7 +4246,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4095,7 +4264,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +1 p. de salud por cada carta que tengas en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4164,7 +4335,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga a un esbirro +2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4177,7 +4350,9 @@ Roba una carta.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4192,7 +4367,7 @@ Roba una carta.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; &lt;b&gt;Silencia&lt;/b&gt; a un esbirro.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4208,7 +4383,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Devuelve a tu mano a un esbirro amistoso del campo de batalla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4224,7 +4401,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Cada jugador roba 2 cartas.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4252,7 +4431,9 @@ Roba una carta.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>La adicta al maná tiene ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4266,7 +4447,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Devuelve a tu mano a un esbirro amistoso del campo de batalla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4282,7 +4465,7 @@ Roba una carta.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;Provocar&lt;/b&gt; a los esbirros adyacentes.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4298,7 +4481,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Intercambia el ataque y la salud de un esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4325,7 +4510,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;, &lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4340,7 +4528,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>El primer esbirro que juegues cada turno cuesta (1) cristal menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4355,9 +4545,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Cada vez que se juega un &lt;b&gt;secreto&lt;/b&gt;, obtiene +1/+1.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4384,7 +4572,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 3 p. de daño que se dividen aleatoriamente entre todos los demás personajes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4399,7 +4589,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Transforma a otro esbirro aleatorio en un demosaurio 5/5 o en una ardilla 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4414,7 +4606,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tu oponente tiene 4 esbirros o más, tomas el control de uno aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4429,7 +4623,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Da un cristal de maná a tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4445,7 +4642,9 @@ Roba una carta.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Toma el control de un esbirro enemigo con 2 p. de ataque o menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4461,7 +4660,7 @@ Roba una carta.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +1/+1 y &lt;b&gt;Provocar&lt;/b&gt; a los esbirros adyacentes.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4504,7 +4703,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4519,7 +4720,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último aliento:&lt;/b&gt; Inflige 2 p. de daño a todos los personajes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4566,7 +4770,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +2 p. de salud a todos los demás múrlocs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4608,7 +4814,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a Baine Pezuña de Sangre (4/5).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4635,7 +4843,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca dos crías 1/1 para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4663,7 +4874,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 p. de daño. &lt;b&gt;Combo:&lt;/b&gt; Inflige $4 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4695,9 +4908,7 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga &lt;b&gt;Sigilo&lt;/b&gt; a tus esbirros hasta tu siguiente turno.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4726,7 +4937,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un enemigo ataca, invoca a un defensor 2/1 como nuevo objetivo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4756,7 +4969,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Invoca a un bandido Defias 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4785,7 +5000,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu héroe recibe daño, inflige la misma cantidad de daño al héroe enemigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4801,7 +5018,10 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño. &lt;b&gt;Combo:&lt;/b&gt; Inflige 2 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4817,7 +5037,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Inflige 2 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4833,7 +5055,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando uno de tus esbirros muere, vuelve a la vida con 1 p. de salud.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4849,7 +5073,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 p. de daño al héroe enemigo. &lt;b&gt;Combo:&lt;/b&gt; Devuelve esta carta a tu mano el siguiente turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4895,7 +5121,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>El próximo hechizo que lances este turno costará (3) cristales menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4954,9 +5182,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; Otorga +4 p. de ataque a un esbirro, o bien +4 p. de salud y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5026,9 +5252,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Otorga a tus esbirros "&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un antárbol 2/2".</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5157,7 +5381,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Los esbirros adyacentes tienen +1 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5229,10 +5456,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; &lt;b&gt;Cargar&lt;/b&gt;, o bien + 2 p. de salud y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5278,7 +5502,9 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5293,7 +5519,9 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5308,9 +5536,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; Inflige 2 p. de daño, o bien &lt;b&gt;Silencia&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5339,7 +5565,9 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencia&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5354,7 +5582,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Destruye a cualquier esbirro dañado por este esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5370,9 +5600,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; +5 p. de ataque, o bien +5 p. de salud y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5474,7 +5702,9 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5490,7 +5720,9 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencia&lt;/b&gt; a un esbirro y luego le inflige $1 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5522,9 +5754,7 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Invoca dos espíritus de lobo 2/3 con &lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5555,7 +5785,9 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5631,9 +5863,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Si controlas un &lt;b&gt;secreto&lt;/b&gt; al final de tu turno, obtiene +2/+2.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5662,7 +5892,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; a un esbirro y a los esbirros adyacentes al mismo y les inflige $1 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5693,7 +5925,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; &lt;b&gt;Congela&lt;/b&gt; a un personaje.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5709,7 +5944,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5725,7 +5963,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu oponente lanza un hechizo, lo &lt;b&gt;contrarrestas&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5741,7 +5981,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Tu héroe obtiene 8 p. de armadura cuando vaya a recibir un ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5757,7 +5999,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu oponente juega un esbirro, invocas una copia de ese esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5773,7 +6017,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu héroe vaya a recibir daño letal, lo evita y se vuelve &lt;b&gt;inmune&lt;/b&gt; ese turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5787,7 +6033,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Tu héroe es &lt;b&gt;inmune&lt;/b&gt; este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5818,7 +6066,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye uno de tus cristales de maná.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5834,7 +6085,9 @@ Roba una carta.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Destruye a un esbirro amistoso e inflige un daño equivalente a su ataque a todos los esbirros enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5850,7 +6103,9 @@ Roba una carta.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a los esbirros adyacentes y obtiene su ataque y salud.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5896,7 +6151,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Descarta dos cartas aleatorias.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5929,7 +6187,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 5 p. de daño a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5945,7 +6205,9 @@ Roba una carta.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Tus esbirros cuestan (2) cristales menos, pero no menos de (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6023,7 +6285,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 3 p. de daño a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6055,7 +6319,9 @@ Roba una carta.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a tu héroe y lo reemplaza con Lord Jaraxxus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6098,7 +6364,9 @@ Roba una carta.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencia&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6298,7 +6566,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;Escudo divino&lt;/b&gt; a un esbirro amistoso.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6401,7 +6669,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu oponente juega un esbirro, reduce su salud a 1 p.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6430,7 +6700,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Cambia el ataque de un esbirro enemigo a 1 p.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6459,7 +6731,11 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;. &lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último aliento:&lt;/b&gt; Equipa una Crematoria 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6488,7 +6764,9 @@ Roba una carta.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $8 p. de daño que se dividen aleatoriamente entre todos los enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6503,7 +6781,10 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Enfurecer:&lt;/b&gt; +3 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6550,7 +6831,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +3 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6565,7 +6848,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6581,7 +6866,9 @@ Roba una carta.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Equipa un arma 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6624,7 +6911,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6713,7 +7002,9 @@ Roba una carta.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige 1 p. de daño a un esbirro por cada punto de armadura que tengas.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6771,7 +7062,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; &lt;b&gt;Viento Furioso&lt;/b&gt; y +1 p. de ataque.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6789,7 +7080,10 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;.
 &lt;b&gt;Enfurecer:&lt;/b&gt; +6 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6805,7 +7099,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>Todos los demás múrlocs tienen +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6861,7 +7157,10 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;. Destruye a todo esbirro dañado por este esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6906,7 +7205,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un personaje vaya a atacar a tu héroe, en su lugar atacará a otro personaje aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6922,7 +7223,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca dos hienas 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6952,9 +7255,7 @@ Roba una carta.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Obtiene +1 p. de durabilidad cada vez que se revela un &lt;b&gt;secreto&lt;/b&gt; amistoso.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -6998,9 +7299,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Invoca un perro 1/1 con &lt;b&gt;Cargar&lt;/b&gt; por cada esbirro enemigo.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7015,7 +7314,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7031,7 +7332,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7047,10 +7350,7 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Todos los esbirros pierden &lt;b&gt;Sigilo&lt;/b&gt;. Destruye todos los &lt;b&gt;secretos&lt;/b&gt; del enemigo. Roba una carta.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7080,7 +7380,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 p. de ataque e &lt;b&gt;Inmune&lt;/b&gt; este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7095,7 +7397,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando atacan a uno de tus esbirros, invoca tres culebras 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7126,7 +7430,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca un gólem dañado 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7156,7 +7462,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye el arma de tu oponente y roba una cantidad de cartas equivalente a su durabilidad.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7204,7 +7512,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Fija la salud restante de un héroe en 15 p.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7232,7 +7542,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca crías 1/1 hasta que tu lado del campo de batalla esté lleno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7248,7 +7560,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+5 p. de daño con hechizos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7263,7 +7577,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Elige a un esbirro y se convierte en una copia de este.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7279,7 +7595,9 @@ Roba una carta.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Viento Furioso, Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7308,7 +7626,9 @@ Roba una carta.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7323,9 +7643,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Invoca tres antárboles 2/2 con &lt;b&gt;Cargar&lt;/b&gt; que mueren al final del turno.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7357,9 +7675,7 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; Otorga +2/+2 a tus otros esbirros, o bien invoca dos antárboles 2/2 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7415,7 +7731,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7447,7 +7765,9 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca un Finkle Einhorn 3/3 para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7463,7 +7783,9 @@ Roba una carta.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige a un esbirro un daño equivalente al ataque de tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7478,7 +7800,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 4 p. de salud a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7494,7 +7818,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt; a los esbirros adyacentes.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7538,7 +7862,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Todos los esbirros pierden &lt;b&gt;Escudo divino&lt;/b&gt;. Obtiene +3/+3 por cada escudo perdido.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7568,7 +7892,9 @@ Roba una carta.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Tus cartas y poderes que restauran salud ahora infligen daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7584,7 +7910,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un esbirro va a atacar a tu héroe, es destruido.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7675,7 +8003,9 @@ Roba una carta.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño a un esbirro y le otorga +2 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7762,7 +8092,9 @@ Roba una carta.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Tus hechizos cuestan (1) cristal menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7778,7 +8110,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu oponente juega un esbirro, le inflige $4 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7794,7 +8128,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando vayan a atacar a tu héroe, inflige $2 p. de daño a todos los enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7810,7 +8146,9 @@ Roba una carta.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un esbirro enemigo vaya a atacar, lo devuelve a la mano de su dueño y cuesta (2) cristales más.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7840,7 +8178,7 @@ Roba una carta.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; El siguiente &lt;b&gt;Secreto&lt;/b&gt; que juegues este turno costará (0) cristales.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7855,7 +8193,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Tu siguiente secreto cuesta (0) cristales.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7870,7 +8210,9 @@ Roba una carta.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Obtiene +2/+2 por cada carta que se haya jugado en este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7925,7 +8267,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Todos los esbirros cuestan (1) cristal más.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8014,7 +8358,9 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +3 p. de salud a un esbirro amistoso.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8100,7 +8446,9 @@ Inflige 3 p. de daño.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Silencia&lt;/b&gt; a todos los esbirros enemigos. Roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8129,7 +8477,9 @@ Inflige 3 p. de daño.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8171,7 +8521,9 @@ Inflige 3 p. de daño.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8216,7 +8568,9 @@ Invoca un infernal 6/6.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;. Al final del turno, destruye a este esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8230,7 +8584,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Devuelve a un esbirro a la mano de su dueño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8327,7 +8683,12 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Viento Furioso, Cargar, Escudo divino, Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8371,7 +8732,7 @@ Invoca un infernal 6/6.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;Sigilo&lt;/b&gt; a un esbirro amistoso.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8387,7 +8748,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a un múrloc y obtiene +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8414,7 +8777,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene una cantidad de puntos de ataque equivalente al ataque de tu arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8483,7 +8848,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Provocar.&lt;/b&gt; Cuesta (1) cristal menos por cada punto de ataque de tu arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8513,7 +8880,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +1/+1 a tu arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8540,7 +8909,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Elimina 1 p. de durabilidad del arma de tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8592,7 +8963,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Tus otros piratas tienen +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8618,7 +8991,9 @@ Invoca un infernal 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Los hechizos enemigos cuestan (0) cristales el próximo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8646,7 +9021,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a todos los demás esbirros y descarta tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8675,7 +9052,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>La salud no puede bajar de 1 p. este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8688,7 +9067,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>La salud de tus esbirros no puede bajar de 1 p. este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8753,9 +9134,7 @@ Invoca un infernal 6/6.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>Al final de tu turno, invoca a un gnoll 2/2 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8768,7 +9147,9 @@ Invoca un infernal 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8782,7 +9163,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a un esbirro enemigo aleatorio con 2 p. de ataque o menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8839,7 +9222,9 @@ Invoca un infernal 6/6.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un enemigo lanza un hechizo contra un esbirro, invoca a un esbirro 1/3 como nuevo objetivo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9089,7 +9474,9 @@ Invoca un infernal 6/6.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;. Tiene +1 p. de ataque por cada múrloc adicional en el campo de batalla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9104,7 +9491,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Coloca a un pirata aleatorio de tu mazo en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9232,7 +9621,9 @@ Invoca un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>¿Hay algo dentro de este barril?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9324,7 +9715,9 @@ Invoca un infernal 6/6.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>El rey Mukla tiene +8 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9561,7 +9954,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Lanza plátanos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9574,7 +9969,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9587,7 +9984,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9665,7 +10064,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9833,7 +10234,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10283,7 +10686,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10369,7 +10774,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca un invento GENIAL.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10454,7 +10861,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>¡Se ha transformado en un pollo!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10480,7 +10889,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; ¡Otorga a ambos jugadores el poder del ROCK! (con una carta de acorde)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10542,7 +10953,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Restaura 5 p. de salud al héroe enemigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10557,7 +10970,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca dos arañas espectrales 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10582,7 +10997,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca una copia exacta de este esbirro al final del turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10597,7 +11014,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Coloca un &lt;b&gt;secreto&lt;/b&gt; de tu mazo en el campo de batalla.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10612,7 +11029,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Sigilo.&lt;/b&gt; Al comienzo de tu turno, obtiene +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10637,7 +11056,10 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cargar. Último aliento:&lt;/b&gt; Inflige 3 p. de daño a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10650,7 +11072,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca un nerubiano 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10692,6 +11116,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Text>&lt;b&gt;Provocar. Último aliento:&lt;/b&gt; Tu oponente coloca un esbirro de su mazo en el campo de batalla.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10707,7 +11132,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Destruye a cualquier esbirro dañado por este esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10723,7 +11150,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Añade una carta de bestia aleatoria a tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10738,7 +11167,10 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar.
 Último aliento:&lt;/b&gt; Invoca una babosa 1/2 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10751,7 +11183,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10778,7 +11212,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Si Feugen también ha muerto durante esta partida, invoca a Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10804,7 +11240,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Si Stalagg también ha muerto durante esta partida, invoca a Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10819,7 +11257,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla: Silencia&lt;/b&gt; a tus demás esbirros.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10835,7 +11273,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Text>Los esbirros con &lt;b&gt;Grito de batalla&lt;/b&gt; cuestan (2) cristales más.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10851,7 +11289,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando un esbirro amistoso muere, coloca 2 copias del mismo en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10893,7 +11333,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando uno de tus esbirros muere, otorga +3/+2 a un esbirro amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10921,7 +11363,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 1 p. de daño a todos los esbirros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10937,7 +11381,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Coloca un demonio aleatorio de tu mano en el campo de batalla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10952,7 +11398,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Otorga +3 p. de salud a un esbirro amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10979,7 +11427,10 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último aliento:&lt;/b&gt; Inflige 1 p. de daño a todos los esbirros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11010,7 +11461,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Devuelve a un esbirro amistoso aleatorio a tu mano.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11039,9 +11490,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Obtiene +1 p. de ataque cada vez que invocas a un esbirro con &lt;b&gt;Último aliento&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11067,7 +11516,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Tu oponente roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11081,7 +11532,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Los hechizos enemigos cuestan (5) cristales más el próximo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11108,7 +11561,7 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>0</Durability>
     <Text>Tus esbirros activan su &lt;b&gt;Último aliento&lt;/b&gt; dos veces.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11144,7 +11597,9 @@ Invoca a dos esbirros 2/1.</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Coloca esta arma en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11157,7 +11612,10 @@ Invoca a dos esbirros 2/1.</Text>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;
 &lt;b&gt;Último aliento:&lt;/b&gt; Coloca esta carta en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11254,9 +11712,7 @@ Inflige 2 p. de daño a todos los enemigos. Si alguno muere, invoca una babosa.<
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Otorga +4/+4 y &lt;b&gt;Provocar&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11268,9 +11724,7 @@ Inflige 2 p. de daño a todos los enemigos. Si alguno muere, invoca una babosa.<
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11390,7 +11844,9 @@ Cambia la salud de los esbirros enemigos a 1 p.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11532,7 +11988,9 @@ Destruye a todos los esbirros enemigos que no estén &lt;b&gt;congelados&lt;/b&g
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Congelado permanentemente. Los esbirros adyacentes son inmunes a Aliento de Escarcha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11544,7 +12002,9 @@ Destruye a todos los esbirros enemigos que no estén &lt;b&gt;congelados&lt;/b&g
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Inflige $8 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11601,7 +12061,9 @@ Destruye a todos los esbirros enemigos que no estén &lt;b&gt;congelados&lt;/b&g
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
 Inflige 2 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11614,7 +12076,9 @@ Inflige 2 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
 Inflige 3 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11626,7 +12090,9 @@ Inflige 3 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11638,7 +12104,9 @@ Inflige 3 p. de daño al héroe enemigo y lo &lt;b&gt;congela&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11807,7 +12275,9 @@ Invoca un nerubiano 3/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
 Lanza un proyectil por cada carta que haya en la mano del oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11820,7 +12290,9 @@ Lanza un proyectil por cada carta que haya en la mano del oponente.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
 Lanza un proyectil por cada carta en la mano del oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11832,7 +12304,9 @@ Lanza un proyectil por cada carta en la mano del oponente.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Tu héroe tiene +1 p. de ataque durante tu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11844,7 +12318,9 @@ Lanza un proyectil por cada carta en la mano del oponente.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Tu héroe tiene +3 p. de ataque durante tu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12122,7 +12598,9 @@ Inflige 3 p. de daño al héroe enemigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Otorga +8 p. de ataque a todos los esbirros enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12180,7 +12658,9 @@ Inflige 3 p. de daño al héroe enemigo.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12302,7 +12782,9 @@ Roba una carta. Obtiene un cristal de maná.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un practicante espectral para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12326,7 +12808,9 @@ Roba una carta. Obtiene un cristal de maná.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un guerrero espectral para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12350,7 +12834,9 @@ Roba una carta. Obtiene un cristal de maná.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un jinete espectral para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12529,7 +13015,9 @@ Roba 2 cartas.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Los esbirros adyacentes a este también mueren.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12541,7 +13029,9 @@ Roba 2 cartas.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Destruye el arma de tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12603,7 +13093,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tienes un robot, inflige 4 p. de daño que se dividen aleatoriamente entre todos los enemigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12633,7 +13125,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Tus robots cuestan (1) cristal menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12664,7 +13158,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Inflige a cada esbirro un daño equivalente a su ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12679,7 +13175,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 3 p. de daño a cada héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12694,9 +13192,7 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Otorga a un esbirro +2/+4 y &lt;b&gt;+1 p. de daño con hechizos&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12723,7 +13219,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Aplica a un esbirro -2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12736,7 +13234,9 @@ Roba 2 cartas.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12764,7 +13264,9 @@ Roba 2 cartas.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Tiene +2 p. de ataque mientras tengas un robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12779,7 +13281,9 @@ Roba 2 cartas.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Intercambia su salud con la de otro esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12915,7 +13419,9 @@ Si es una bestia, cuesta (4) cristales menos.</Text>
     <Race>Demon</Race>
     <Text>Tus demás demonios tienen +2/+2.
 Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12943,7 +13449,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Otorga +3 p. de ataque a tu arma. &lt;b&gt;Combo:&lt;/b&gt; Otorga +3 p. de ataque a un esbirro amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12983,7 +13491,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +1 p. de ataque a tu arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13010,7 +13520,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Tiene +2 p. de ataque mientras tengas un robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13026,9 +13538,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Cada vez que invocas a un pirata, obtiene &lt;b&gt;Sigilo&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13043,9 +13553,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Activa el &lt;b&gt;Último aliento&lt;/b&gt; de todos tus esbirros.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13134,7 +13642,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;.&lt;b&gt;Elige una:&lt;/b&gt;
 +1 p. de ataque, o bien +1 p. de salud.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13289,7 +13799,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Mete a este esbirro en tu mazo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13304,7 +13816,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Último aliento&lt;/b&gt;: Otorga +2/+2 a un robot amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13333,7 +13847,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13395,9 +13911,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Elige una:&lt;/b&gt; Invoca 5 fuegos fatuos, o bien otorga a un esbirro +5/+5 y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13451,7 +13965,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Añade 4 múrlocs aleatorios a tu mano. &lt;b&gt;Sobrecarga:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13466,7 +13982,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +1 p. de ataque a un esbirro amistoso aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13537,7 +14055,10 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +1 p. de ataque por cada otra bestia que tengas.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13583,7 +14104,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla&lt;/b&gt;: Otorga +2 p. de ataque a tus otros robots.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13656,7 +14179,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +1 p. de ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13686,7 +14211,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtienes 5 p. de armadura.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13717,7 +14244,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla&lt;/b&gt;: Otorga +2/+2 a un robot amistoso.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13746,7 +14275,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Mete una mina en el mazo de tu oponente. Cuando la roba, inflige 10 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13760,7 +14291,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Cuando robas esta carta, explota. Te inflige 10 p. de daño y robas una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13775,7 +14308,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Restaura #4 p. de salud a tu héroe y le otorga +2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13788,7 +14323,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 p. de ataque este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13803,7 +14340,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13819,8 +14358,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga &lt;b&gt;Escudo divino&lt;/b&gt; y &lt;b&gt;Provocar&lt;/b&gt; a un esbirro amistoso aleatorio.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13836,7 +14374,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +2/+2 a tus Reclutas Mano de Plata.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13880,9 +14420,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Cada vez que invocas a un robot, obtiene &lt;b&gt;Escudo divino&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13953,7 +14491,9 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Viento Furioso, Sobrecarga: (1)&lt;/b&gt;
 Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13980,7 +14520,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14006,7 +14548,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14020,7 +14564,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Restaura 8 p. de salud a tu héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14107,7 +14653,7 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Te haces con el control de un &lt;b&gt;secreto&lt;/b&gt; enemigo aleatorio.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14137,7 +14683,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 2 p. de daño a todos los esbirros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14180,7 +14728,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Da una &lt;b&gt;Pieza de repuesto&lt;/b&gt; a cada jugador.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14195,7 +14745,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14210,7 +14762,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tienes una bestia, este esbirro se transforma en un 7/7.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14238,7 +14792,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14253,7 +14809,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Añade una &lt;b&gt;Pieza de repuesto&lt;/b&gt; a tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14269,7 +14827,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga +4 p. de salud a un robot amistoso.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14284,7 +14844,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14300,7 +14862,10 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 &lt;b&gt;Escudo divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14360,7 +14925,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;
 50% de probabilidad de atacar al enemigo que no es.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14374,9 +14941,7 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Si controlas un &lt;b&gt;secreto&lt;/b&gt; al final de tu turno, restaura 4 p. de salud a tu héroe.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14390,7 +14955,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 6 p. de daño que se dividen aleatoriamente entre todos los demás personajes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14406,7 +14973,9 @@ Tiene un 50% de probabilidad de atacar al enemigo que no es.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14420,7 +14989,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Roba una carta. Si es un esbirro, lo convierte en un pollo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14447,7 +15018,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14476,7 +15049,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Tiene +4 p. de ataque mientras tu oponente tenga 6 cartas o más en la mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14491,7 +15066,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca un esbirro aleatorio de coste 2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14507,7 +15084,8 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 &lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +1/+1 por cada esbirro enemigo con &lt;b&gt;Último aliento&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14523,7 +15101,10 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;
 &lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14537,7 +15118,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla: &lt;/b&gt;Inflige 4 p. de daño a un esbirro enemigo aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14582,7 +15165,7 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de batalla&lt;/b&gt;: Inflige 2 p. de daño a todos los esbirros con &lt;b&gt;Último aliento&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14610,7 +15193,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tienes un robot, obtiene +1/+1 y añade una &lt;b&gt;Pieza de repuesto&lt;/b&gt; a tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14678,7 +15263,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca un esbirro aleatorio de coste 4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14722,9 +15309,7 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Otorga a tus demás esbirros &lt;b&gt;Viento Furioso&lt;/b&gt;, &lt;b&gt;Provocar&lt;/b&gt; o &lt;b&gt;Escudo divino&lt;/b&gt;.
 &lt;i&gt;(Al azar)&lt;/i&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14739,7 +15324,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Transforma a un esbirro amistoso en un esbirro aleatorio del mismo coste.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14754,7 +15341,10 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Sigilo&lt;/b&gt;
 &lt;b&gt;+1 p. de daño con hechizos.&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14768,7 +15358,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla&lt;/b&gt;: Invoca a dos robots bum 1/1. &lt;i&gt;AVISO: Los robots bum pueden explotar.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14782,7 +15374,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 1 - 4 p. de daño a un enemigo aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14812,7 +15406,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;
 &lt;b&gt;Megaviento Furioso&lt;/b&gt; &lt;i&gt;(puede atacar cuatro veces por turno)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14856,7 +15452,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un esbirro legendario aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14870,7 +15468,10 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla y Último aliento:&lt;/b&gt; Añade una &lt;b&gt;Pieza de repuesto&lt;/b&gt; a tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14928,7 +15529,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Cada jugador equipa un arma aleatoria.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14942,7 +15545,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a una bestia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14972,7 +15577,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Los esbirros adyacentes no pueden ser objetivo de hechizos ni de poderes de héroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15004,7 +15611,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>+2 p. de daño con hechizos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15054,9 +15663,7 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Otorga &lt;b&gt;Provocar&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15069,9 +15676,7 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Otorga &lt;b&gt;Sigilo&lt;/b&gt; a un esbirro amistoso hasta tu siguiente turno.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15096,7 +15701,9 @@ No puede ser objetivo de hechizos ni de poderes de héroe.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Congela&lt;/b&gt; a un esbirro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15231,7 +15838,9 @@ Coloca dos esbirros de tu mazo y uno del mazo de tu oponente en el campo de bata
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15291,7 +15900,9 @@ Invoca a un espectador 1/1 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15339,7 +15950,9 @@ Inflige 30 p. de daño.</Text>
     <Durability>0</Durability>
     <Text>No se puede usar el poder de héroe de Thaurissan.
 Nunca ataca a esbirros a menos que tengan &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15352,7 +15965,9 @@ Nunca ataca a esbirros a menos que tengan &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>No se puede usar el poder de héroe de Thaurissan.
 Nunca ataca a esbirros a menos que tengan &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15399,7 +16014,9 @@ Inflige 1 p. de daño a todos los esbirros.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 1 p. de daño al héroe enemigo por cada jurafuegos que haya muerto este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15411,7 +16028,9 @@ Inflige 1 p. de daño a todos los esbirros.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 3 p. de daño al héroe enemigo por cada jurafuegos que haya muerto este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15853,7 +16472,9 @@ Invoca a dos orcos 2/2 con &lt;b&gt;Provocar&lt;/b&gt;. Obtiene un nuevo poder d
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15865,7 +16486,9 @@ Invoca a dos orcos 2/2 con &lt;b&gt;Provocar&lt;/b&gt;. Obtiene un nuevo poder d
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16242,7 +16865,9 @@ Al final de tu turno, añade una carta de aflicción del linaje a la mano del op
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Mientras esta carta está en tu mano, recibes 1 p. de daño al comienzo de tu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16254,7 +16879,9 @@ Al final de tu turno, añade una carta de aflicción del linaje a la mano del op
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Mientras esta carta está en tu mano, recibes 3 p. de daño al comienzo de tu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16494,7 +17121,9 @@ Coloca un hechizo aleatorio de la clase de tu oponente en tu mano.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 6 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16506,7 +17135,9 @@ Coloca un hechizo aleatorio de la clase de tu oponente en tu mano.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16518,7 +17149,9 @@ Coloca un hechizo aleatorio de la clase de tu oponente en tu mano.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Viento Furioso&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16530,7 +17163,9 @@ Coloca un hechizo aleatorio de la clase de tu oponente en tu mano.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Inflige $8 p. de daño a un enemigo aleatorio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16592,7 +17227,9 @@ Activa un "tron" aleatorio.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16643,7 +17280,9 @@ Activa un "tron" aleatorio.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Ambos jugadores tienen &lt;b&gt;+2 p. de daño con hechizos&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16737,7 +17376,9 @@ Activa un "tron" aleatorio.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Todos los hechizos cuestan (3) cristales menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16791,7 +17432,9 @@ Activa un "tron" aleatorio.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Cada vez que un jugador juega una carta, Magmatron le inflige 2 p. de daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16890,7 +17533,9 @@ Tus esbirros tienen +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cargar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17114,7 +17759,9 @@ Invoca dos ensamblajes osarios 4/2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17214,7 +17861,9 @@ Obtienes 4 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Ataque cambiado a 0 p. este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17257,7 +17906,9 @@ Obtienes 4 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Cuesta (3) cristales menos este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17272,7 +17923,9 @@ Obtienes 4 p. de armadura.</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +2 p. de salud si hay un dragón en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17310,7 +17963,9 @@ Obtienes 4 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Inflige $2 p. de daño a todos los esbirros que no sean demonios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17369,7 +18024,9 @@ Obtienes 4 p. de armadura.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 2 p. de daño a todos los esbirros enemigos que no hayan recibido daño.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17385,7 +18042,9 @@ Obtienes 4 p. de armadura.</Text>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 Cuesta (1) cristal menos por cada esbirro que haya muerto este turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17490,7 +18149,9 @@ Desbloquea tus cristales de maná con &lt;b&gt;Sobrecarga&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Las cartas que juegues este turno no provocan &lt;b&gt;Sobrecarga&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17504,7 +18165,9 @@ Desbloquea tus cristales de maná con &lt;b&gt;Sobrecarga&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene 1-4 p. de ataque. &lt;b&gt;Sobrecarga:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17532,7 +18195,9 @@ Desbloquea tus cristales de maná con &lt;b&gt;Sobrecarga&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Text>Inflige $3 p. de daño.
 Si tu mano está vacía, roba una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17548,7 +18213,9 @@ Si tu mano está vacía, roba una carta.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tu mano está vacía, obtiene +3/+3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17622,7 +18289,9 @@ Si tu mano está vacía, roba una carta.</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; El siguiente dragón que juegues costará (2) cristales menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17719,7 +18388,9 @@ Si tu mano está vacía, roba una carta.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tu oponente tiene 15 p. de salud o menos, obtiene +3/+3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17761,7 +18432,9 @@ Si tu mano está vacía, roba una carta.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Invoca a un esbirro aleatorio de coste 1 para tu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17775,7 +18448,9 @@ Si tu mano está vacía, roba una carta.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Reemplaza a tu héroe con Ragnaros, Señor del Fuego.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17852,7 +18527,9 @@ Inflige 8 p. de daño a un enemigo aleatorio. DOS VECES.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a un esbirro &lt;b&gt;legendario&lt;/b&gt; si hay un dragón en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17867,7 +18544,9 @@ Inflige 8 p. de daño a un enemigo aleatorio. DOS VECES.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Añade 2 hechizos aleatorios a tu mano &lt;i&gt;(de la clase de tu oponente)&lt;/i&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17909,7 +18588,9 @@ Inflige 8 p. de daño a un enemigo aleatorio. DOS VECES.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Obtiene +1/+1 si hay un dragón en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17936,7 +18617,9 @@ Inflige 8 p. de daño a un enemigo aleatorio. DOS VECES.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 3 p. de daño si hay un dragón en tu mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

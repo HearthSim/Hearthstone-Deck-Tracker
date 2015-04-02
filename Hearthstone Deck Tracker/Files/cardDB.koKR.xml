@@ -28,7 +28,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>이번 턴에 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 &lt;b&gt;도발&lt;/b&gt;과 +2/+2를 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>이번 턴에 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>이번 턴에 공격력 +1</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>1/1 양으로 변이됨</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>캐릭터 하나에게 피해를 $3 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>모든 적 하수인을 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt; 능력이 있는 0/2 하수인을 둘 소환합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>이 하수인에게 피해를 입은 캐릭터는 &lt;b&gt;빙결&lt;/b&gt; 상태가 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>적 캐릭터 하나에게 피해를 $1 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 &lt;b&gt;질풍&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나의 생명력을 모두 회복시키고 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>도발</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 3 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>이번 턴에 공격력 +3</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>이번 턴에 공격력 +3</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 &lt;b&gt;모든&lt;/b&gt; 캐릭터에게 피해를 1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>이번 턴에 공격력 +1</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 6 회복합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>아군 하수인 하나에게 공격력 +2와 &lt;b&gt;돌진&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>이번 턴에 공격력 +4</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>내 다른 하수인들이 공격력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 1/1 멧돼지 1마리를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>내 다른 하수인들이 +1/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 다른 아군 하수인 하나당 +1/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>하수인이 하나 치유될 때마다 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 모든 아군 캐릭터의 생명력을 2 회복시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 야수 1마리에게 +2/+2와 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>나의 다른 야수들이 공격력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>나의 야수들이 &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 생명력을 2 회복시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나에게 +1/+1을 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 2/1 소형 기계용을 1마리 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 무기를 파괴합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>공격력이 3 이하인 하수인을 소환할 때마다 그 하수인에게 &lt;b&gt;돌진&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나를 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 0/1 개구리로 변신시킵니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>변신!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>모든 적에게 $3의 피해를 무작위로 나누어 입힙니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 카드 1장을 버립니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 1/1 멀록 정찰병을 1마리 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>다른 &lt;b&gt;모든&lt;/b&gt; 멀록이 공격력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>양옆의 하수인들이 공격력을 +2 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나에게 &lt;b&gt;질풍&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성: &lt;/b&gt;적 영웅에게 피해를 3 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3008,7 +3111,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3067,7 +3172,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3098,7 +3205,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3141,7 +3250,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3169,7 +3280,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3214,7 +3327,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>모든 적 하수인에게 피해를 $2 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3230,7 +3345,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>캐릭터 하나를 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다. 이미 &lt;b&gt;빙결&lt;/b&gt; 상태라면 피해를 $4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3246,9 +3363,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 "&lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 하수인을 다시 소환합니다." 능력을 부여합니다.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3308,7 +3423,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;은신&lt;/b&gt;. 내 턴이 끝날 때, 무작위로 선택된 다른 아군 하수인 하나에게 생명력을 +1 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3337,7 +3454,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 공격력을 +2 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 공격력을 +4 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3406,7 +3525,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 생명력을 3 회복시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3422,9 +3543,7 @@
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>내 영웅이 무기를 장착하고 있으면 &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3439,7 +3558,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 2/2 종자를 1명 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3467,7 +3588,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3483,7 +3606,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3498,7 +3623,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 자신에게 피해를 4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3525,7 +3652,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이번 턴에 하수인 하나에게 공격력을 +2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3538,7 +3667,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3554,7 +3685,7 @@
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인을 하나 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3570,7 +3701,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;격노:&lt;/b&gt; 내 무기의 공격력이 +2 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3597,7 +3730,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>내 하수인들의 비용이 (3) 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3627,7 +3762,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>내 무기를 파괴하고 그 무기의 공격력만큼 모든 적에게 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3774,7 +3911,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; &lt;b&gt;도발&lt;/b&gt; 능력이 있는 적 하수인을 하나 처치합니다.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3815,7 +3952,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 공격력 7 이상인 하수인을 하나 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3859,7 +3998,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3874,7 +4015,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;격노:&lt;/b&gt; 공격력 +5</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3889,7 +4032,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3904,7 +4049,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;. &lt;b&gt;죽음의 메아리:&lt;/b&gt; 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3919,7 +4067,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편에게 바나나 2개를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3957,7 +4107,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 적 하수인 하나를 내 편으로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3973,7 +4125,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3988,7 +4142,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4003,7 +4159,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4018,7 +4176,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4034,7 +4194,9 @@
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4049,7 +4211,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 적 영웅에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4064,7 +4228,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4079,7 +4246,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4095,7 +4264,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 있는 카드 1장당 생명력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4164,7 +4335,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이번 턴에 하수인 하나에게 공격력을 +2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4177,7 +4350,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4192,7 +4367,7 @@
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4208,7 +4383,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 아군 하수인 하나를 내 손으로 다시 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4224,7 +4401,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 플레이어가 카드를 2장씩 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4252,7 +4431,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>공격력 증가</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4266,7 +4447,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 아군 하수인 하나를 내 손으로 다시 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4282,7 +4465,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 양옆의 하수인들에게 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4298,7 +4481,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인 하나의 공격력과 생명력을 바꿉니다. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4325,7 +4510,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;, &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4340,7 +4528,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>내 턴마다 처음 내는 하수인은 비용이 (1) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4355,9 +4545,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>각 플레이어가 &lt;b&gt;비밀&lt;/b&gt;을 낼 때마다 +1/+1을 얻습니다.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4384,7 +4572,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 모든 캐릭터에게 3의 피해를 무작위로 나누어 입힙니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4399,7 +4589,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 다른 하수인 하나를 5/5 데빌사우루스 또는 1/1 다람쥐로 변신시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4414,7 +4606,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 상대편 하수인이 넷 이상 있으면, 무작위로 선택된 적 하수인 하나를 내 편으로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4429,7 +4623,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 상대편에게 마나 수정을 1개 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4445,7 +4642,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 공격력이 2 이하인 적 하수인 하나를 내 편으로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4461,7 +4660,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 양옆의 하수인들에게 +1/+1과 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4504,7 +4703,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4520,7 +4721,10 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;죽음의 메아리:&lt;/b&gt;
 &lt;b&gt;모든&lt;/b&gt; 캐릭터에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4567,7 +4771,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 &lt;b&gt;모든&lt;/b&gt; 멀록에게 생명력을 +2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4609,7 +4815,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 4/5 바인 블러드후프를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4636,7 +4844,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 상대편에게 1/1 새끼용을 둘 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4664,7 +4875,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>피해를 $2 줍니다. &lt;b&gt;연계:&lt;/b&gt; 피해를 $4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4696,9 +4909,7 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>나의 다음 턴까지 아군 하수인들에게 &lt;b&gt;은신&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4727,7 +4938,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 적이 공격할 때, 대신 맞아주는 2/1 수호자를 1명 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4757,7 +4970,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;연계:&lt;/b&gt; 2/1 데피아즈단 무법자를 1명 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4786,7 +5001,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 피해를 입으면, 적 영웅에게도 같은 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4802,7 +5019,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 1 줍니다. &lt;b&gt;연계:&lt;/b&gt; 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4818,7 +5038,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;연계:&lt;/b&gt; 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4834,7 +5056,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인이 죽으면, 1의 생명력과 함께 부활시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4851,7 +5075,9 @@
     <Faction>Neutral</Faction>
     <Text>적 영웅에게 피해를 $2 줍니다.
 &lt;b&gt;연계:&lt;/b&gt; 다음 턴에 이 카드를 다시 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4897,7 +5123,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>이번 턴에 내가 시전하는 다음 주문의 비용이 (3) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4956,9 +5184,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;선택&lt;/b&gt; - 하수인 하나에게 공격력을 +4 부여합니다. 또는 생명력 +4와 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5028,9 +5254,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>내 하수인들에게 "&lt;b&gt;죽음의 메아리:&lt;/b&gt; 2/2 나무정령 하나 소환" 능력을 부여합니다.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5159,7 +5383,10 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>양옆의 하수인들이 공격력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5232,10 +5459,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;선택 - &lt;/b&gt;
 &lt;b&gt;돌진&lt;/b&gt; 또는 생명력 +2와 &lt;b&gt;도발&lt;/b&gt;을 얻습니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5281,7 +5505,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5296,7 +5522,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5311,9 +5539,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;선택&lt;/b&gt; - 피해를 2 줍니다. 또는 하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5342,7 +5568,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5357,7 +5585,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>이 하수인에게 피해를 입은 하수인은 무조건 죽습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5374,9 +5604,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;선택&lt;/b&gt; -
 공격력 +5 또는 생명력 +5와 &lt;b&gt;도발&lt;/b&gt; 능력을 얻습니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5478,7 +5706,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;질풍&lt;/b&gt;. &lt;b&gt;과부하:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5494,7 +5724,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시키고, 피해를 $1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5526,9 +5758,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt; 능력이 있는 2/3 늑대 정령을 둘 소환합니다. &lt;b&gt;과부하:&lt;/b&gt; (2) </Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5559,7 +5789,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;과부하:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5635,9 +5867,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면 +2/+2를 얻습니다.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5666,7 +5896,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>선택한 하수인과 그 양옆의 하수인들을 &lt;b&gt;빙결&lt;/b&gt; 상태로 만들고 피해를 $1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5697,7 +5929,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 캐릭터 하나를 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5713,7 +5948,10 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5729,7 +5967,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 주문을 시전하면 &lt;b&gt;차단&lt;/b&gt;합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5745,7 +5985,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면 방어도를 +8 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5761,7 +6003,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 하수인을 내면, 그 하수인을 복사합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5777,7 +6021,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 치명적인 피해를 입으면, 피해를 막고 이번 턴에 &lt;b&gt;피해 면역&lt;/b&gt; 상태가 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5791,7 +6037,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>이번 턴에 &lt;b&gt;피해 면역&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5823,7 +6071,10 @@
     <Race>Demon</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt;
 내 마나 수정 1개를 파괴합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5839,7 +6090,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>아군 하수인 하나를 처치하고 그 하수인의 공격력만큼 모든 적 하수인에게 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5855,7 +6108,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이 하수인 양옆에 있는 하수인들을 처치하고 그들의 공격력과 생명력을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5901,7 +6156,10 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 카드 2장을 버립니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5934,7 +6192,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅에게 피해를 5 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5950,7 +6210,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>내 하수인들의 비용이 (2) 감소합니다. 단, (1)보다 낮아지진 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6028,7 +6290,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅에게 피해를 3 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6060,7 +6324,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅을 군주 자락서스로 교체합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6103,7 +6369,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6303,7 +6571,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6406,7 +6674,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 하수인을 내면, 그 하수인의 생명력이 1로 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6435,7 +6705,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 적 하수인 하나의 공격력을 1로 바꿉니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6464,7 +6736,11 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;. &lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;죽음의 메아리:&lt;/b&gt; 5/3 파멸의 인도자를 장착합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6493,7 +6769,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>모든 적에게 $8의 피해를 무작위로 나누어 입힙니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6508,7 +6786,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;격노:&lt;/b&gt; 공격력 +3</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6555,7 +6836,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;격노:&lt;/b&gt; 공격력 +3</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6570,7 +6853,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6586,7 +6871,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 2/2 무기를 장착합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6629,7 +6916,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6718,7 +7007,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>내가 가진 방어도만큼 하수인 하나에게 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6776,7 +7067,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;격노:&lt;/b&gt; &lt;b&gt;질풍&lt;/b&gt;, 공격력 +1</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6794,7 +7085,10 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;
 &lt;b&gt;격노:&lt;/b&gt; 공격력 +6</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6810,7 +7104,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>다른 &lt;b&gt;모든&lt;/b&gt; 멀록이 +2/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6866,7 +7162,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;은신&lt;/b&gt;. 이 하수인에게 피해를 입은 하수인은 무조건 죽습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6911,7 +7210,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅을 공격하는 캐릭터가 무작위로 선택된 다른 캐릭터 하나를 공격하게 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6927,7 +7228,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 2/2 하이에나를 2마리 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6957,9 +7260,7 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>내 &lt;b&gt;비밀&lt;/b&gt;이 밝혀질 때마다 내구도를 +1 얻습니다.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -7003,9 +7304,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>적 하수인 하나당 &lt;b&gt;돌진&lt;/b&gt; 능력이 있는 1/1 사냥개를 1마리씩 소환합니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7020,7 +7319,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7036,7 +7337,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7052,10 +7355,7 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>모든 하수인이 &lt;b&gt;은신&lt;/b&gt; 상태에서 벗어납니다. 적의 모든 &lt;b&gt;비밀&lt;/b&gt;을 없앱니다. 카드를 1장 뽑습니다.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7085,7 +7385,9 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>이번 턴에 공격력 +2, &lt;b&gt;피해 면역&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7100,7 +7402,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인이 공격받으면 1/1 뱀을 셋 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7131,7 +7435,9 @@
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 2/1 손상된 골렘을 하나 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7161,7 +7467,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 무기를 파괴하고 그 무기의 내구도만큼 카드를 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7209,7 +7517,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 선택한 영웅의 남은 생명력을 15로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7237,7 +7547,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 하수인을 소환할 공간이 다 찰 때까지 1/1 새끼용을 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7253,7 +7565,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;주문 공격력 +5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7268,7 +7582,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 선택한 하수인으로 변신합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7284,7 +7600,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;질풍, 과부하:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7313,7 +7631,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +4</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7328,9 +7648,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt; 능력이 있는 2/2 나무정령을 셋 소환합니다. 이들은 내 턴이 끝날 때 모두 죽습니다.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7363,9 +7681,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;선택&lt;/b&gt; - 내 다른 하수인들에게 +2/+2를 부여합니다. 또는 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 2/2 나무정령을 둘 소환합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7421,7 +7737,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7453,7 +7771,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편에게 3/3 핑클 아인혼을 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7469,7 +7789,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>하수인 하나에게 내 영웅의 공격력만큼 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7484,7 +7806,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 4 회복합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7500,7 +7824,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 양옆의 하수인들에게 &lt;b&gt;주문 공격력 +1&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7544,7 +7868,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; &lt;b&gt;모든&lt;/b&gt; 하수인의 &lt;b&gt;천상의 보호막&lt;/b&gt;을 흡수하여, 보호막 1개당 +3/+3을 얻습니다.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7574,7 +7898,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>생명력을 회복시키는 내 카드와 능력들이 이제 그만큼의 피해를 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7590,7 +7916,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 하수인이 내 영웅을 공격하면, 그 하수인을 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7681,7 +8009,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인 하나에게 피해를 1 주고 공격력을 +2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7768,7 +8098,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>내가 쓰는 주문의 비용이 (1) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7784,7 +8116,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 하수인을 내면 그 하수인에게 피해를 $4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7800,7 +8134,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면 모든 적에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7816,7 +8152,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 적 하수인이 공격하면, 그 하수인을 주인의 손으로 돌려보내고 비용을 (2) 증가시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7846,7 +8184,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이번 턴에 내는 나의 다음 &lt;b&gt;비밀&lt;/b&gt; 비용이 (0)이 됩니다.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7861,7 +8199,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>다음 비밀 비용 (0)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7876,7 +8216,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;연계:&lt;/b&gt; 이번 턴에 앞서 낸 카드 1장당 +2/+2를 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7931,7 +8273,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;모든&lt;/b&gt; 하수인의 비용이 (1) 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8021,7 +8365,9 @@
     <Class>Priest</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt;
 아군 하수인 하나에게 생명력을 +3 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8107,7 +8453,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>모든 적 하수인을 &lt;b&gt;침묵&lt;/b&gt;시킵니다. 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8136,7 +8484,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8178,7 +8528,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8223,7 +8575,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;돌진&lt;/b&gt;. 턴이 끝날 때, 이 하수인을 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8237,7 +8591,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;연계:&lt;/b&gt; 하수인 하나를 주인의 손으로 돌려보냅니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8334,7 +8690,12 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;질풍, 돌진, 도발, 천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8378,7 +8739,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나에게 &lt;b&gt;은신&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8394,7 +8755,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 멀록 1마리를 처치하고 +2/+2를 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8421,7 +8784,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 무기의 공격력만큼 공격력을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8490,7 +8855,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;도발.&lt;/b&gt; 내 무기의 공격력만큼 비용이 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8520,7 +8887,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 무기에 +1/+1을 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8547,7 +8916,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 무기 내구도를 1 감소시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8599,7 +8970,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>나의 다른 해적들이 +1/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8625,7 +8998,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음 턴에 적이 쓰는 주문의 비용이 (0)이 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8653,7 +9028,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 다른 모든 하수인을 처치하고 내 손의 카드를 모두 버립니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8682,7 +9059,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>이번 턴에는 생명력이 1 미만으로 내려가지 않음</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8695,7 +9074,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>이번 턴에는 내 하수인들의 생명력이 1 미만으로 내려가지 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8760,9 +9141,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>내 턴이 끝날 때, &lt;b&gt;도발&lt;/b&gt; 능력이 있는 2/2 놀을 1마리 소환합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8775,7 +9154,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8789,7 +9170,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 공격력 2 이하의 하수인 하나를 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8846,7 +9229,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 적이 하수인 하나에게 주문을 시전하면, 그 효과를 대신 받는 1/3 하수인 하나를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9097,7 +9482,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;. 전장의 다른 멀록 하나당 공격력 +1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9112,7 +9499,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 덱에서 무작위로 선택된 해적 카드 1장을 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9240,7 +9629,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>통에 뭔가 있나요?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9332,7 +9723,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +8</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9569,7 +9962,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 바나나를 던집니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9582,7 +9977,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9595,7 +9992,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9673,7 +10072,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9841,7 +10242,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10291,7 +10694,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10377,7 +10782,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 끝내주는 발명품을 1개 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10462,7 +10869,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>닭으로 변신!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10488,7 +10897,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 두 플레이어 모두 파워 코드 카드를 1장 뽑고 &lt;b&gt;로큰롤&lt;/b&gt;에 흠뻑 취합니다!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10550,7 +10961,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 적 영웅의 생명력을 5 회복시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10565,7 +10978,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 1/1 유령 거미를 2마리 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10590,7 +11005,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 턴이 끝날 때, 이 하수인을 복사합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10605,7 +11022,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 덱에 있는 &lt;b&gt;비밀&lt;/b&gt; 카드 1장을 사용합니다.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10620,7 +11037,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;은신.&lt;/b&gt; 내 턴이 시작될 때, +1/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10645,7 +11064,10 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;돌진. 죽음의 메아리:&lt;/b&gt; 내 영웅에게 피해를 3 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10658,7 +11080,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 4/4 네루비안을 하나 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10700,6 +11124,7 @@
     <Text>&lt;b&gt;도발. 죽음의 메아리:&lt;/b&gt; 상대편이 덱에 있는 하수인 하나를 전장에 놓습니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10715,7 +11140,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>이 하수인에게 피해를 입은 하수인은 무조건 죽습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10731,7 +11158,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 야수 카드 1장을 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10746,7 +11175,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발.
 죽음의 메아리:&lt;/b&gt; &lt;b&gt;도발&lt;/b&gt; 능력을 가진 1/2 수액괴물을 1마리 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10759,7 +11191,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10786,7 +11220,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 만약 퓨진이 죽은 상태라면 타디우스를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10812,7 +11248,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 만약 스탈라그가 죽은 상태라면 타디우스를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10827,7 +11265,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 다른 하수인들을 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10843,7 +11281,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성&lt;/b&gt; 능력을 가진 하수인의 비용이 (2) 증가합니다.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10859,7 +11297,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 아군 하수인이 죽으면, 그 하수인 카드 2장을 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10901,7 +11341,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인 중 하나가 죽으면, 무작위로 선택된 아군 하수인 하나에게 +3/+2를 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10929,7 +11371,9 @@
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 무기가 파괴될 때, &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10945,7 +11389,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 손에서 무작위로 선택된 악마 하나를 전장에 놓습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10960,7 +11406,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 생명력을 +3 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10987,7 +11435,10 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;죽음의 메아리:&lt;/b&gt; &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 1 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11018,7 +11469,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나를 내 손으로 다시 가져옵니다.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11047,9 +11498,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>내가 &lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 하수인을 소환할 때마다 공격력을 +1 얻습니다.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11075,7 +11524,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편이 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11089,7 +11540,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음 턴에 적이 쓰는 주문의 비용이 (5) 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11116,7 +11569,7 @@
     <Durability>0</Durability>
     <Text>내 하수인들의 &lt;b&gt;죽음의 메아리&lt;/b&gt; 능력이 2번 발동됩니다.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11152,7 +11605,9 @@
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 무기 카드를 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11165,7 +11620,10 @@
     <Durability>8</Durability>
     <Text>&lt;b&gt;질풍&lt;/b&gt;
 &lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 무기 카드를 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11262,9 +11720,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>하수인 하나에게 &lt;b&gt;도발&lt;/b&gt;과 +4/+4를 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11276,9 +11732,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;, +4/+4</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11398,7 +11852,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +6</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11540,7 +11996,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>영구 빙결. 양옆의 하수인들이 냉기 숨결에 면역이 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11552,7 +12010,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>적 영웅에게 피해를 $8 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11609,7 +12069,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 적 영웅에게 피해를 2 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11622,7 +12084,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 적 영웅에게 피해를 3 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11634,7 +12098,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11646,7 +12112,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11815,7 +12283,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 상대편의 손에 있는 카드 수만큼 화살을 발사합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11828,7 +12298,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 상대편의 손에 있는 카드 수만큼 화살을 발사합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11840,7 +12312,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>내 턴에 내 영웅의 공격력이 +1 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11852,7 +12326,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>내 턴에 내 영웅의 공격력이 +3 증가합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12130,7 +12606,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 모든 적 하수인에게 공격력을 +8 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12188,7 +12666,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12310,7 +12790,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편에게 유령 수련생 하나를 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12334,7 +12816,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편에게 유령 전사 하나를 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12358,7 +12842,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편에게 유령 기병 하나를 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12537,7 +13023,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 양옆에 있는 하수인들을 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12549,7 +13037,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 상대편의 무기를 파괴합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12611,7 +13101,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 내 기계 하수인이 있으면 모든 적에게 4의 피해를 무작위로 나누어 입힙니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12641,7 +13133,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>내 기계 하수인의 비용이 (1) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12672,7 +13166,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;모든&lt;/b&gt; 하수인들이 자신의 공격력만큼 피해를 입습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12687,7 +13183,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 영웅에게 피해를 3씩 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12702,9 +13200,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>하수인 하나에게 +2/+4와 &lt;b&gt;주문 공격력 +1&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12731,7 +13227,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이번 턴에 하수인 하나에게 공격력을 -2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12744,7 +13242,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 -2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12772,7 +13272,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>내 전장에 기계 하수인이 있으면 공격력을 +2 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12787,7 +13289,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 하수인 하나와 생명력을 바꿉니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12923,7 +13427,9 @@
     <Race>Demon</Race>
     <Text>내 다른 악마들이 +2/+2를 얻습니다.
 내 영웅이 &lt;b&gt;피해 면역&lt;/b&gt; 상태가 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12951,7 +13457,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>내 무기에 공격력을 +3 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 공격력을 +3 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12991,7 +13499,9 @@
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 무기에 공격력을 +1 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13018,7 +13528,9 @@
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>내 전장에 기계 하수인이 있으면 공격력을 +2 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13034,9 +13546,7 @@
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>해적을 소환할 때마다, &lt;b&gt;은신&lt;/b&gt;을 얻습니다.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13051,9 +13561,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>내 하수인들의 &lt;b&gt;죽음의 메아리&lt;/b&gt;를 모두 발동시킵니다.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13142,7 +13650,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;선택 -&lt;/b&gt;
 공격력 +1 또는 생명력 +1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13297,7 +13807,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 하수인을 내 덱에 다시 섞어 넣습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13312,7 +13824,9 @@
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt;: 무작위로 선택된 아군 기계 하수인 하나에게 +2/+2를 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13341,7 +13855,9 @@
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13403,9 +13919,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;선택 -&lt;/b&gt; 위습 5마리를 소환합니다. 또는 하수인 하나에게 +5/+5와 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13459,7 +13973,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 멀록 4마리를 내 손으로 가져옵니다. &lt;b&gt;과부하:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13474,7 +13990,9 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 공격력을 +1 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13545,7 +14063,10 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 다른 아군 야수 하나당 공격력을 +1 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13591,7 +14112,9 @@
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 내 다른 기계 하수인들에게 공격력을 +2 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13664,7 +14187,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;격노:&lt;/b&gt; 공격력 +1</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13694,7 +14219,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 방어도를 +5 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13725,7 +14252,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 아군 기계 하수인 하나에게 +2/+2를 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13754,7 +14283,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 덱에 지뢰 카드를 섞어 넣습니다. 상대편이 지뢰를 뽑으면 폭발하며 피해를 10 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13768,7 +14299,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>이 카드를 뽑으면 폭발하여 내게 피해를 10 줍니다. 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13783,7 +14316,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>내 영웅의 생명력을 #4 회복시키고 이번 턴에 공격력을 +2 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13796,7 +14331,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>이번 턴에 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13811,7 +14348,9 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13827,8 +14366,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;과 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13844,7 +14382,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 은빛 성기사단 신병들에게 +2/+2를 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13888,9 +14428,7 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>내가 기계 하수인을 소환할 때마다, &lt;b&gt;천상의 보호막&lt;/b&gt;을 얻습니다.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13961,7 +14499,9 @@
     <Class>Shaman</Class>
     <Text>&lt;b&gt;질풍, 과부하: (1)&lt;/b&gt;
 50%의 확률로 엉뚱한 적을 공격합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13988,7 +14528,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>공격력 증가</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14014,7 +14556,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>공격력 증가</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14028,7 +14572,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 8 회복합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14115,7 +14661,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 적에게 걸려 있는 &lt;b&gt;비밀&lt;/b&gt; 중에 무작위로 선택된 하나를 가져옵니다.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14145,7 +14691,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14188,7 +14736,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 각 플레이어에게 &lt;b&gt;예비 부품&lt;/b&gt;을 하나 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14203,7 +14753,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14218,7 +14770,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 야수가 있다면, 7/7로 변신합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14246,7 +14800,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14261,7 +14817,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14277,7 +14835,9 @@
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 기계 하수인 하나에게 생명력을 +4 부여합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14292,7 +14852,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14308,7 +14870,10 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;
 &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14368,7 +14933,9 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;은신&lt;/b&gt;
 50%의 확률로 엉뚱한 적을 공격합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14382,9 +14949,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면 내 영웅의 생명력을 4 회복시킵니다.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14398,7 +14963,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 모든 캐릭터에게 6의 피해를 무작위로 나누어 입힙니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14414,7 +14981,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;
 이 하수인은 주문이나 영웅 능력의 대상으로 지정되지 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14428,7 +14997,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다. 뽑은 카드가 하수인이면 닭으로 변신시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14455,7 +15026,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14484,7 +15057,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>상대편의 손에 카드가 6장 이상 있으면 공격력을 +4 갖습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14499,7 +15074,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 비용 2짜리 하수인 하나를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14515,7 +15092,8 @@
     <Text>&lt;b&gt;도발&lt;/b&gt;
 &lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 &lt;b&gt;죽음의 메아리&lt;/b&gt; 하수인 하나당 +1/+1을 얻습니다.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14531,7 +15109,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;돌진&lt;/b&gt;
 &lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14545,7 +15126,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 적 하수인 하나에게 피해를 4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14590,7 +15173,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: &lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 2 줍니다.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14618,7 +15201,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 기계 하수인이 있다면, +1/+1을 얻고 &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14686,7 +15271,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 비용 4짜리 하수인 하나를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14729,9 +15316,7 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 다른 하수인들에게 무작위로 &lt;b&gt;질풍&lt;/b&gt;, &lt;b&gt;도발&lt;/b&gt;, &lt;b&gt;천상의 보호막&lt;/b&gt; 중 하나를 부여합니다.</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14746,7 +15331,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나를 무작위로 선택된 같은 비용의 하수인으로 변신시킵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14761,7 +15348,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;은신&lt;/b&gt;
 &lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14775,7 +15365,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 1/1 폭탄로봇을 2대 소환합니다. &lt;i&gt;경고: 로봇이 폭발할 수 있음.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14789,7 +15381,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 적 하나에게 피해를 1-4 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14819,7 +15413,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;돌진&lt;/b&gt;
 &lt;b&gt;광풍&lt;/b&gt; &lt;i&gt;(한 턴에 4번 공격 가능)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14863,7 +15459,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 전설 하수인 하나를 소환합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14877,7 +15475,10 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성과 죽음의 메아리:&lt;/b&gt; &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14935,7 +15536,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 플레이어가 무작위로 선택된 무기를 하나씩 장착합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14949,7 +15552,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 야수를 1마리 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14979,7 +15584,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>양옆의 하수인들을 주문이나 영웅 능력의 대상으로 지정할 수 없습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15011,7 +15618,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>주문 공격력 +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15061,9 +15670,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>하수인 하나에게 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15076,9 +15683,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>나의 다음 턴까지 아군 하수인 하나에게 &lt;b&gt;은신&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15103,7 +15708,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>하수인 하나를 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15238,7 +15845,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15298,7 +15907,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15346,7 +15957,9 @@
     <Durability>0</Durability>
     <Text>타우릿산이 영웅 능력을 쓸 수 없습니다.
 &lt;b&gt;도발&lt;/b&gt; 능력이 없는 하수인은 절대로 공격하지 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15359,7 +15972,9 @@
     <Durability>0</Durability>
     <Text>타우릿산이 영웅 능력을 쓸 수 없습니다.
 &lt;b&gt;도발&lt;/b&gt; 능력이 없는 하수인은 절대로 공격하지 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15406,7 +16021,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 적 영웅에게 이번 턴에 죽은 불꽃의 추종자 하나당 피해를 1씩 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15418,7 +16035,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 적 영웅에게 이번 턴에 죽은 불꽃의 추종자 하나당 피해를 3씩 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15860,7 +16479,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15872,7 +16493,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16249,7 +16872,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>내 손에 이 카드가 있으면, 내 턴이 시작될 때 피해를 1 입습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16261,7 +16886,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>내 손에 이 카드가 있으면, 내 턴이 시작될 때 피해를 3 입습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16501,7 +17128,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 6 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16513,7 +17142,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16525,7 +17156,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16537,7 +17170,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>무작위로 선택된 적 하나에게 피해를 $8 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16599,7 +17234,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16650,7 +17287,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>두 플레이어 모두 &lt;b&gt;주문 공격력 +2&lt;/b&gt;를 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16744,7 +17383,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>모든 주문의 비용이 (3) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16798,7 +17439,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>각 플레이어가 카드를 낼 때마다 그 플레이어에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16897,7 +17540,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17121,7 +17766,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17221,7 +17868,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>이번 턴에 공격력이 0이 됩니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17264,7 +17913,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>이번 턴에 비용이 (3) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17279,7 +17930,9 @@
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 내 손에 용족 하수인이 있으면 생명력을 +2 얻습니다. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17317,7 +17970,9 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>악마를 제외한 &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 $2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17376,7 +18031,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 입지 않은 모든 적 하수인에게 피해를 2 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17392,7 +18049,9 @@
     <Class>Druid</Class>
     <Text>&lt;b&gt;도발&lt;/b&gt;
 이번 턴에 죽은 하수인 하나당 비용이 (1)씩 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17497,7 +18156,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>이번 턴에 내가 내는 카드는 &lt;b&gt;과부하&lt;/b&gt; 효과가 발동하지 않습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17511,7 +18172,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 공격력을 1-4 얻습니다. &lt;b&gt;과부하:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17539,7 +18202,9 @@
     <Class>Hunter</Class>
     <Text>피해를 $3 줍니다.
 만약 내 손에 카드가 없으면 카드를 1장 뽑습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17555,7 +18220,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 내 손에 카드가 없으면 +3/+3을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17629,7 +18296,9 @@
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음에 내가 내는 용족 하수인의 비용이 (2) 감소합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17726,7 +18395,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 상대편의 생명력이 15 이하라면 +3/+3을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17768,7 +18439,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 비용 1짜리 하수인 하나를 상대편에게 소환해 줍니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17782,7 +18455,9 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 영웅을 불의 군주 라그나로스로 교체합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17859,7 +18534,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 &lt;b&gt;전설&lt;/b&gt; 하수인 하나를 처치합니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17874,7 +18551,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 &lt;i&gt;상대편 직업&lt;/i&gt;의 주문 카드 2장을 내 손으로 가져옵니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17916,7 +18595,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 +1/+1을 얻습니다.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17943,7 +18624,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 피해를 3 줍니다. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>
