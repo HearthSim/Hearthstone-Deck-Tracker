@@ -2337,6 +2337,9 @@
     <Content Include="Images\rockbiter-weapon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\rogues-do-it.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\runeblade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
