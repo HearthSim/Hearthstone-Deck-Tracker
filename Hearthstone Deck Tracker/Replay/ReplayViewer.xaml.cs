@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return string.Empty;
 				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var cardId = GetHero(_opponentController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 

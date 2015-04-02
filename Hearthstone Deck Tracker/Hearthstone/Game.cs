@@ -775,6 +775,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			        select card).ToList();
 		}
 
+		public static string GetHeroNameFromId(string id)
+		{
+			string name;
+			if(CardIds.HeroIdDict.TryGetValue(id, out name))
+				return name;
+			var card = GetCardFromId(id);
+			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN")
+				return id;
+			return card.Name;
+		}
+
 		#endregion
 
 		public static void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
