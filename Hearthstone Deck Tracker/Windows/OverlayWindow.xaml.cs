@@ -620,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelWarning.Visibility =  showWarning ? Visibility.Visible : Visibility.Collapsed;
 			if(showWarning)
 			{
-				var drawn = new Deck() {Cards = new ObservableCollection<Card>(Game.PlayerDrawn)};
+				var drawn = new Deck() {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
 				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
 				var count = diff.Count > 3 ? 3 : diff.Count;
 				LblWarningCards.Text = diff.Take(count).Select(c => c.LocalizedName).Aggregate((c, n) => c + ", " + n);
