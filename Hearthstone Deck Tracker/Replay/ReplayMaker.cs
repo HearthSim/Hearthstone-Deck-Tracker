@@ -119,8 +119,6 @@ namespace Hearthstone_Deck_Tracker.Replay
 		private static void ResolveZonePos()
 		{
 			//ZONE_POSITION changes happen after draws, meaning drawn card will not appear. 
-
-			var playerController = Points[0].Data.First(x => x.IsPlayer).GetTag(GAME_TAG.CONTROLLER);
 			var handPos = new Dictionary<int, int>();
 			var boardPos = new Dictionary<int, int>();
 			Points.Reverse();
