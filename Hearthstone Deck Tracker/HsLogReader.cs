@@ -62,6 +62,7 @@ namespace Hearthstone_Deck_Tracker
 		private IGameHandler _gameHandler;
 		private bool _gameLoaded;
 		private DateTime _lastAssetUnload;
+		private DateTime _lastGameStart;
 		private long _lastGameEnd;
 		private int _lastId;
 		private bool _opponentUsedHeroPower;
@@ -145,6 +146,7 @@ namespace Hearthstone_Deck_Tracker
 			_doUpdate = true;
 			_gameEnded = false;
 			_gameHandler = new GameEventHandler();
+			_lastGameStart = DateTime.Now;
 			ReadFileAsync();
 		}
 
@@ -286,6 +288,7 @@ namespace Hearthstone_Deck_Tracker
 						_gameEnded = false;
 						_addToTurn = -1;
 						_gameLoaded = true;
+						_lastGameStart = DateTime.Now;
 					}
 					else if(_gameEntityRegex.IsMatch(logLine))
 					{
@@ -553,7 +556,7 @@ namespace Hearthstone_Deck_Tracker
 						else
 							_gameHandler.HandlePossibleConstructedCard(id, false);
 					}
-					else if(_goldProgressRegex.IsMatch(logLine))
+					else if(_goldProgressRegex.IsMatch(logLine) && (DateTime.Now - _lastGameStart) > TimeSpan.FromSeconds(10))
 					{
 						int wins;
 						var rawWins = _goldProgressRegex.Match(logLine).Groups["wins"].Value;
