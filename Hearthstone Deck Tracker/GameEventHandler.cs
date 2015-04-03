@@ -25,6 +25,15 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayerName = name;
 		}
 
+		public void HandlePlayerGetToDeck(string cardId, int turn)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			LogEvent("PlayerGetToDeck", cardId);
+			Game.PlayerGetToDeck(cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
+		}
+
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -170,6 +179,13 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentName(string name)
 		{
 			Game.OpponentName = name;
+		}
+
+		public void HandleOpponentGetToDeck(int turn)
+		{
+			LogEvent("OpponentGetToDeck", turn: turn);
+			Game.OpponentGetToDeck(turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentGetToDeck, turn, string.Empty);
 		}
 
 		public void SetRank(int rank)

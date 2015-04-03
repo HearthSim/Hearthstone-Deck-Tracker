@@ -601,7 +601,7 @@ namespace Hearthstone_Deck_Tracker
 			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
 			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
-			SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
+			SetCardCount(Game.PlayerHandCount, Game.PlayerDeckSize - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 

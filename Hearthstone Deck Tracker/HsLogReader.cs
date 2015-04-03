@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _cardAlreadyInCacheRegex =
 			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
 
+		private readonly Regex _cardIdRegex = new Regex(@"cardId=(?<cardId>(\w+))");
 		private readonly Regex _cardMovementRegex =
 			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
@@ -38,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _fullOutputPath;
 		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 		private readonly Regex _goldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
-		private readonly Regex _heroPowerRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*");
+		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
 		private readonly bool _ifaceUpdateNeeded = true;
 
 		private readonly Regex _playerEntityRegex =
@@ -407,23 +408,59 @@ namespace Hearthstone_Deck_Tracker
 						else if(player == 2)
 							_gameHandler.HandleOpponentName(name);
 					}
-					else
+					else if(_actionStartRegex.IsMatch(logLine))
 					{
 						var playerEntity =
 							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.PlayerId);
 						var opponentEntity =
 							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId);
 
-						if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
-						   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
+						var match = _actionStartRegex.Match(logLine);
+						var id = match.Groups["Id"].Value.Trim();
+						if(!string.IsNullOrEmpty(id))
 						{
-							if(_heroPowerRegex.IsMatch(logLine))
+							if(id == "BRM_007") //Gang Up
 							{
-								var id = _heroPowerRegex.Match(logLine).Groups["Id"].Value.Trim();
-								if(!string.IsNullOrEmpty(id))
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 								{
-									var heroPower = Game.GetCardFromId(id);
-									if(heroPower.Type == "Hero Power")
+									var target = match.Groups["target"].Value.Trim();
+									if(target.StartsWith("[") && _entityRegex.IsMatch(target))
+									{
+										var cardIdMatch = _cardIdRegex.Match(target);
+										if(cardIdMatch.Success)
+										{
+											var cardId = cardIdMatch.Groups["cardId"].Value.Trim();
+											for(int i = 0; i < 3; i++)
+												_gameHandler.HandlePlayerGetToDeck(cardId, GetTurnNumber());
+										}
+									}
+								}
+								else
+								{
+									//if I pass the entity id here I could know if a drawn card is one of the copies.
+									// (should probably not be implemented :))
+									for(int i = 0; i < 3; i++)
+										_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+								}
+
+							}
+							else if(id == "GVG_056") //Iron Juggernaut
+							{
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+									_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+								else
+									_gameHandler.HandlePlayerGetToDeck("GVG_056t", GetTurnNumber());
+							}
+
+
+							else
+							{
+
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
+								   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
+								{
+									var card = Game.GetCardFromId(id);
+									if(card.Type == "Hero Power")
 									{
 										if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 										{
@@ -437,7 +474,9 @@ namespace Hearthstone_Deck_Tracker
 										}
 									}
 								}
+
 							}
+
 						}
 					}
 				}
