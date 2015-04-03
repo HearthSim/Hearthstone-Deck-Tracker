@@ -147,6 +147,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static int PlayerDeckSize { get; set; }
+		public static bool NoMatchingDeck { get; set; }
 
 		public static void Reset(bool resetStats = true)
 		{
@@ -171,6 +172,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandMarks = new CardMark[MaxHandSize];
 			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets.ClearSecrets();
+			NoMatchingDeck = false;
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{

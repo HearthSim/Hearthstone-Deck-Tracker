@@ -668,6 +668,7 @@ namespace Hearthstone_Deck_Tracker
 				decks.Remove(DeckList.Instance.ActiveDeckVersion);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
+			Game.NoMatchingDeck = decks.Count == 0;
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
