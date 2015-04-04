@@ -749,6 +749,9 @@ namespace Hearthstone_Deck_Tracker
 							UpdateCheck();
 					}
 
+					if(!Game.IsRunning)
+						Overlay.Update(true);
+
 					Game.IsRunning = true;
 					if(User32.IsHearthstoneInForeground())
 					{
