@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
 			CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
 			TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
+			CheckboxShowDialog.IsChecked = Config.Instance.ShowExportingDialog;
 
 			var delay = Config.Instance.DeckExportDelay;
 			ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
@@ -189,6 +190,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
+		}
+
+		private void CheckboxShowDialog_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowExportingDialog = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowDialog_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowExportingDialog = false;
+			Config.Save();
 		}
 	}
 }
