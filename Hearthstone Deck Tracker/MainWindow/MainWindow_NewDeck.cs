@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -227,6 +228,11 @@ namespace Hearthstone_Deck_Tracker
 
 			//after cloning the stats, otherwise new stats will be generated
 			//DeckPickerList.AddAndSelectDeck(newDeckClone);
+			if(EditingDeck)
+				DeckManagerEvents.OnDeckUpdated.Execute(newDeckClone);
+			else
+				DeckManagerEvents.OnDeckCreated.Execute(newDeckClone);
+
 
 			EditingDeck = false;
 
