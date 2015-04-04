@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
 		private bool _loaded;
-		private int MenuItemIndex { get; set; }
+		private MenuItem MenuItem { get; set; }
 
 		public string Name
 		{
@@ -68,8 +68,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				Logger.WriteLine("Loading " + Name, "PluginWrapper");
 				Plugin.OnLoad();
 				_loaded = true;
-				if(Plugin.MenuItem != null)
-					MenuItemIndex = Helper.MainWindow.MenuItemPlugins.Items.Add(Plugin.MenuItem);
+				MenuItem = Plugin.MenuItem;
+				if(MenuItem != null)
+					Helper.MainWindow.MenuItemPlugins.Items.Add(MenuItem);
 			}
 			catch(Exception ex)
 			{
@@ -119,8 +120,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				Plugin.OnUnload();
 				_loaded = false;
-				if(Plugin.MenuItem != null)
-					Helper.MainWindow.MenuItemPlugins.Items.RemoveAt(MenuItemIndex);
+				if(MenuItem != null)
+					Helper.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
 			}
 			catch (Exception ex)
 			{
