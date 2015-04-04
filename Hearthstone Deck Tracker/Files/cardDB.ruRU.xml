@@ -28,7 +28,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Выбранное существо получает способность &lt;b&gt;«Провокация»&lt;/b&gt; и +2/+2.&lt;i&gt; (+2 к атаке и +2 к здоровью)&lt;/i&gt; </Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Ваш герой получил +1 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Это существо было превращено в овцу 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $3 ед. урона выбранному персонажу и &lt;b&gt;замораживает&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Замораживает&lt;/b&gt; всех существ противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Призывает на поле боя двух существ 0/2 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text> &lt;b&gt;Замораживает&lt;/b&gt; любого персонажа, которому наносит урон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $1 ед. урона выбранному персонажу противника и &lt;b&gt;замораживает&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Выбранное существо получает способность &lt;b&gt;«Неистовство ветра»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Полностью восстанавливает здоровье выбранному существу и дает ему способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Провокация.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Этот персонаж получил +3 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона ВСЕМ прочим персонажам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 6 ед. здоровья вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Ваше выбранное существо получает +2 к атаке и способность &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Другие ваши существа получают +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 2 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя вепря 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Другие ваши существа получают +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1/+1 за каждое другое ваше существо на поле боя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Когда любое существо восстанавливает здоровье, вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 2 ед. здоровья всем вашим персонажам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш выбранный зверь получает +2/+2 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Другие ваши звери получают +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Ваши звери получают способность &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 2 ед. здоровья.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше выбранное существо получает +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя механодракончика 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает оружие противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Каждый раз, когда вы призываете существо с атакой 3 или меньше, оно получает способность &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Превращает выбранное существо в лягушку 0/1 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Это существо было превращено в другое!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $3 ед. урона, случайно распределяемого между всеми персонажами противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы сбрасываете случайную карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Выбранное существо получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя мурлока-разведчика 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>ВСЕ прочие мурлоки получают +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Находящиеся по обе стороны существа получают +2 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше выбранное существо получает способность &lt;b&gt;«Неистовство ветра»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона герою противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3007,7 +3110,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3066,7 +3171,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3097,7 +3204,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3140,7 +3249,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3168,7 +3279,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3213,7 +3326,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $2 ед. урона всем существам противника и &lt;b&gt;замораживает&lt;/b&gt; их.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3229,7 +3344,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Замораживает&lt;/b&gt; выбранного персонажа. Если персонаж уже &lt;b&gt;заморожен&lt;/b&gt;, наносит ему $4 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3245,9 +3362,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Выбранное существо получает способность «&lt;b&gt;Предсмертный хрип:&lt;/b&gt; после смерти это существо вернется на поле боя».</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3307,7 +3422,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;. В конце вашего хода другое ваше случайное существо получает +1 к здоровью.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3336,7 +3453,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Выбранное существо получает +2 к атаке. &lt;b&gt;Серия приемов:&lt;/b&gt; вместо этого существо получает +4 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3405,7 +3524,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 3 ед. здоровья.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3421,9 +3542,7 @@
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Получает &lt;b&gt;Рывок&lt;/b&gt;, пока у вас в руках есть оружие.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3438,7 +3557,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя оруженосца 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3466,7 +3587,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3482,7 +3605,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3497,7 +3622,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона самому себе.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3524,7 +3651,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; выбранное существо получает +2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3537,7 +3666,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Это существо получило +2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3553,7 +3684,7 @@
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; накладывает эффект &lt;b&gt;немоты&lt;/b&gt; на выбранное существо.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3569,7 +3700,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Исступление:&lt;/b&gt; ваше оружие получает +2 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3596,7 +3729,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Ваши существа стоят на (3) маны больше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3626,7 +3761,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Уничтожает ваше оружие и наносит урон, равный его атаке, всем персонажам противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3773,7 +3910,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает существо противника со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3814,7 +3951,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает существо с атакой 7 или больше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3858,7 +3997,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3873,7 +4014,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Исступление:&lt;/b&gt; +5 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3888,7 +4031,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3903,7 +4048,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;. &lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3918,7 +4066,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш противник получает 2 банана.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3956,7 +4106,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы получаете контроль над случайным существом противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3972,7 +4124,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3987,7 +4141,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4002,7 +4158,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4017,7 +4175,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4033,7 +4193,9 @@
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4048,7 +4210,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 2 ед. урона герою противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4063,7 +4227,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Божественный щит&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4078,7 +4245,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4094,7 +4263,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; это существо получает +1 к здоровью за каждую карту в вашей руке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4163,7 +4334,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; выбранное существо получает +2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4176,7 +4349,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4191,7 +4366,7 @@
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; накладывает эффект &lt;b&gt;немоты&lt;/b&gt; на выбранное существо.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4207,7 +4382,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; возвращает ваше существо с поля боя в руку.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4223,7 +4400,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок берет 2 карты.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4251,7 +4430,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Атака &lt;i&gt;Любительницы маны&lt;/i&gt; увеличена.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4265,7 +4446,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; возвращает ваше существо с поля боя в вашу руку.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4281,7 +4464,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; Находящиеся по обе стороны существа получают способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4297,7 +4480,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; меняет местами атаку и здоровье выбранного существа. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4324,7 +4509,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. &lt;b&gt;Божественный щит&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4339,7 +4527,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Первое существо, которое вы разыгрываете на каждом ходу, стоит на (1) ману меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4354,9 +4544,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Каждый раз, когда разыгрывается &lt;b&gt;Секрет&lt;/b&gt;, это существо получает +1/+1.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4383,7 +4571,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона, случайно распределяемого между всеми остальными персонажами.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4398,7 +4588,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; превращает другое случайное существо в дьявозавра 5/5 или белку 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4413,7 +4605,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если у вашего противника есть 4 или более существ, вы получаете контроль над одним из них, выбранным случайно.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4428,7 +4622,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; ваш противник получает кристалл маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4444,7 +4641,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете контроль над существом противника с атакой 2 или меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4460,7 +4659,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; существа, находящиеся по обе стороны, получают +1/+1 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4503,7 +4702,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4518,7 +4719,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 2 ед. урона ВСЕМ персонажам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4565,7 +4769,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; все прочие мурлоки получают +2 к здоровью.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4607,7 +4813,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя Бейна Кровавое Копыто 4/5.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4634,7 +4842,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; призывает на сторону вашего противника двух дракончиков 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4662,7 +4873,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $2 ед. урона. &lt;b&gt;Серия приемов:&lt;/b&gt; вместо этого наносит $4 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4694,9 +4907,7 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Ваши существа получают способность &lt;b&gt;«Маскировка»&lt;/b&gt; до вашего следующего хода.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4725,7 +4936,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда персонаж противника атакует, вы призываете на поле боя защитника 2/1, который принимает на себя удар.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4755,7 +4968,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; призывает на поле боя бандита Братства 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4784,7 +4999,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда ваш герой получает урон, вы наносите такое же количество урона герою противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4800,7 +5017,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона. &lt;b&gt;Серия приемов:&lt;/b&gt; вместо этого наносит 2 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4816,7 +5036,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; наносит 2 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4832,7 +5054,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда одно из ваших существ умирает, вы возвращаете его на поле боя с 1 ед. здоровья.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4848,7 +5072,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $2 ед. урона герою противника. &lt;b&gt;Серия приемов:&lt;/b&gt; карта возвращается в вашу руку в конце хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4894,7 +5120,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Следующее заклинание, которое вы разыграете на этом ходу, стоит на (3) маны меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4953,9 +5181,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; существо получает +4 к атаке; или +4 к здоровью и &lt;b&gt;«Провокацию»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5025,9 +5251,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Ваши существа получают способность &lt;b&gt;«Предсмертный хрип»:&lt;/b&gt; призывает на поле боя древня 2/2.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5156,7 +5380,10 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Находящиеся по обе стороны существа получают +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5228,10 +5455,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; &lt;b&gt;Рывок&lt;/b&gt;; или +2 к здоровью и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5277,7 +5501,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5292,7 +5518,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5307,9 +5535,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; наносит 2 ед. урона; или накладывает &lt;b&gt;немоту&lt;/b&gt; на выбранное существо.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5338,7 +5564,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Накладывает на существо эффект &lt;b&gt;немоты&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5353,7 +5581,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Уничтожает любое существо, которому нанесла урон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5371,9 +5601,7 @@
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt;
 +5 к атаке; 
  или +5 к здоровью и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5475,7 +5703,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5491,7 +5721,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Накладывает на выбранное существо эффект &lt;b&gt;немоты&lt;/b&gt; и затем наносит ему $1 ед. урона. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5523,9 +5755,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Призывает на поле боя двух духов волка 2/3 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5557,7 +5787,9 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;.
 &lt;b&gt;Перегрузка:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5633,9 +5865,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Если в конце хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;, это существо получает +2/+2.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5664,7 +5894,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Замораживает&lt;/b&gt; выбранное существо и существа по обе стороны от него и наносит им $1 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5695,7 +5927,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; &lt;b&gt;замораживает&lt;/b&gt; выбранного персонажа.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5711,7 +5946,10 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5727,7 +5965,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда противник разыгрывает заклинание, вы &lt;b&gt;отменяете&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5743,7 +5983,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда вашего героя атакуют, он получает +8 к броне.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5759,7 +6001,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда противник разыгрывает карту существа, вы призываете на свою сторону его копию.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5775,7 +6019,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; предотвращает наносимый вашему герою смертельный урон и дает ему &lt;b&gt;неуязвимость&lt;/b&gt; до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5789,7 +6035,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Ваш герой &lt;b&gt;неуязвим&lt;/b&gt; до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5820,7 +6068,10 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает один из ваших кристаллов маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5836,7 +6087,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Уничтожает ваше существо и наносит урон, равный его атаке, всем существам противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5852,7 +6105,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает существа по обе стороны от себя и получает их атаку и здоровье.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5898,7 +6153,10 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; вы сбрасываете две случайных карты.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5931,7 +6189,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 5 ед. урона вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5947,7 +6207,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Ваши существа стоят на (2) маны меньше, но не меньше (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6025,7 +6287,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6057,7 +6321,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает вашего героя и заменяет его лордом Джараксусом.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6100,7 +6366,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Накладывает на существо эффект &lt;b&gt;немоты&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6300,7 +6568,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше выбранное существо получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6403,7 +6671,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда противник разыгрывает карту существа, здоровье этого существа становится равно 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6432,7 +6702,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; атака выбранного существа противника становится равна 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6461,7 +6733,11 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;. &lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы берете в руки Испепелитель 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6490,7 +6766,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит $8 ед. урона, случайно распределяемого между всеми персонажами противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6505,7 +6783,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Исступление:&lt;/b&gt; получает +3 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6552,7 +6833,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Исступление:&lt;/b&gt; +3 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6567,7 +6850,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6583,7 +6868,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; снаряжает вас оружием 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6626,7 +6913,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6715,7 +7004,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит выбранному существу 1 ед. урона за каждую единицу брони вашего героя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6773,7 +7064,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Исступление:&lt;/b&gt; &lt;b&gt;Неистовство ветра&lt;/b&gt; и +1 к атаке.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6791,7 +7082,10 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. 
 &lt;b&gt;Исступление:&lt;/b&gt; +6 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6807,7 +7101,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>ВСЕ прочие мурлоки получают +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6863,7 +7159,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;. Уничтожает любое существо, которому наносит урон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6908,7 +7207,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда персонаж атакует вашего героя, вместо этого он атакует другого случайного персонажа.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6924,7 +7225,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя двух гиен 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6954,9 +7257,7 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Каждый раз, когда открывается ваш &lt;b&gt;Секрет&lt;/b&gt;, это оружие получает +1 к прочности.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -7000,9 +7301,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>За каждое существо противника призывает по гончей 1/1 со способностью &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7017,7 +7316,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7033,7 +7334,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7049,10 +7352,7 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Все существа теряют &lt;b&gt;«Маскировку»&lt;/b&gt;. Уничтожает все &lt;b&gt;Секреты&lt;/b&gt; противника. Вы берете карту.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7082,7 +7382,9 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 к атаке и &lt;b&gt;неуязвимость&lt;/b&gt; до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7097,7 +7399,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда одно из ваших существ будет атаковано, вы призываете на поле боя трех змей 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7128,7 +7432,9 @@
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя поврежденного голема 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7158,7 +7464,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает оружие противника. Вы берете карты в количестве, равном его прочности.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7206,7 +7514,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; текущее здоровье выбранного героя становится равно 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7234,7 +7544,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на вашу сторону дракончиков 1/1, пока поле боя не заполнится.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7250,7 +7562,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Урон от заклинаний +5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7265,7 +7579,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; становится копией выбранного существа.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7281,7 +7597,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7310,7 +7628,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7325,9 +7645,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Призывает на поле боя трех древней 2/2 со способностью &lt;b&gt;«Рывок»&lt;/b&gt;, которые умрут в конце хода.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7359,9 +7677,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; остальные ваши существа получают +2/+2; или призовите на поле боя двух древней 2/2 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7417,7 +7733,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7449,7 +7767,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на сторону вашего противника Айса Вентурона 3/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7465,7 +7785,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Наносит существу противника урон, равный силе атаки вашего героя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7480,7 +7802,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 4 ед. здоровья вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7496,7 +7820,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; находящиеся по обе стороны существа получают &lt;b&gt;урон от заклинаний +1&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7540,7 +7864,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; все существа теряют &lt;b&gt;«Божественный щит»&lt;/b&gt;. Рыцарь получает +3/+3 за каждый поглощенный щит.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7570,7 +7894,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Ваши карты и способности, восстанавливающие здоровье, вместо этого наносят урон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7586,7 +7912,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; уничтожает существо, которое атакует вашего героя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7677,7 +8005,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона выбранному существу. При этом существо получает +2 к атаке. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7764,7 +8094,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Ваши заклинания стоят на (1) ману меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7780,7 +8112,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда ваш противник разыгрывает карту существа, оно получает $4 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7796,7 +8130,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда вашего героя атакуют, наносит 2 ед. урона всем персонажам противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7812,7 +8148,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда существо противника атакует, возвращает его в руку владельца. Его стоимость увеличивается на (2) маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7842,7 +8180,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; следующий &lt;b&gt;Секрет&lt;/b&gt;, который вы разыграете на этом ходу, будет стоить (0) маны.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7857,7 +8195,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Ваш следующий секрет стоит (0) маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7872,7 +8212,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; это существо получает +2/+2 за каждую другую карту, разыгранную ранее на этом ходу.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7927,7 +8269,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Все существа стоят на (1) ману больше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8016,7 +8360,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; увеличивает здоровье вашего выбранного существа на 3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8102,7 +8448,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Накладывает на всех существ противника эффект &lt;b&gt;немоты&lt;/b&gt;. Вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8131,7 +8479,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8173,7 +8523,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8218,7 +8570,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. В конце хода это существо будет уничтожено.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8232,7 +8586,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; возвращает выбранное существо в руку владельца.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8329,7 +8685,12 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Неистовство ветра, Рывок, Божественный щит, Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8373,7 +8734,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше существо получает &lt;b&gt;«Маскировку»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8389,7 +8750,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает выбранного мурлока и получает +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8416,7 +8779,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает бонус к атаке, равный атаке вашего оружия.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8485,7 +8850,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. Стоит на (1) ману меньше за каждую единицу атаки вашего оружия.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8515,7 +8882,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше оружие получает +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8542,7 +8911,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уменьшает прочность оружия противника на 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8594,7 +8965,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Другие ваши пираты получают +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8620,7 +8993,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; в следующий ход противника его заклинания стоят (0) маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8648,7 +9023,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает все прочие существа. Вы сбрасываете все карты из вашей руки.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8677,7 +9054,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Здоровье не может быть меньше 1 до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8690,7 +9069,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Здоровье ваших существ не может быть уменьшено ниже 1 ед. до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8755,9 +9136,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>В конце вашего хода вы призываете на поле боя гнолла 2/2 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8770,7 +9149,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8784,7 +9165,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает случайное существо противника с атакой 2 или меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8841,7 +9224,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда противник выбирает целью заклинания существо, призывает существо 1/3, которое становится новой целью.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9091,7 +9476,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;. +1 к атаке за каждого другого мурлока на поле боя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9106,7 +9493,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; положите в руку случайного пирата из вашей колоды.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9234,7 +9623,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>В этой бочке что-то есть!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9326,7 +9717,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Король Мукла получает +8 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9563,7 +9956,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; бросает бананы.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9576,7 +9971,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9589,7 +9986,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9667,7 +10066,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9835,7 +10236,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10285,7 +10688,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10371,7 +10776,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя удивительное изобретение.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10456,7 +10863,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Превращение в курицу!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10482,7 +10891,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; оба игрока получают силу РОКА! (а также одну из карт серии «Мощный аккорд»)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10544,7 +10955,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; восстанавливает 5 ед. здоровья герою противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10559,7 +10972,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя двух призрачных пауков 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10584,7 +10999,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; в конце вашего хода призывает на поле боя копию этого существа.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10599,7 +11016,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете на поле боя &lt;b&gt;секрет&lt;/b&gt; из вашей колоды.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10614,7 +11031,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;. В начале вашего хода получает +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10639,7 +11058,10 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Рывок. Предсмертный хрип:&lt;/b&gt; наносит 3 ед. урона вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10652,7 +11074,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя неруба 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10694,6 +11118,7 @@
     <Text>&lt;b&gt;Провокация. Предсмертный хрип:&lt;/b&gt; ваш противник кладет существо из своей колоды на поле боя.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10709,7 +11134,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Уничтожает любое существо, которому нанесла урон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10725,7 +11152,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку случайную карту зверя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10740,7 +11169,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация.
 Предсмертный хрип:&lt;/b&gt; призывает на поле боя слизь 1/2 со способностью &lt;b&gt;Провокация.&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10753,7 +11185,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10780,7 +11214,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Фойген, призывает на поле боя Таддиуса.  </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10806,7 +11242,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Сталагг, призывает на поле боя Таддиуса.  </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10821,7 +11259,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; накладывает эффект &lt;b&gt;немоты&lt;/b&gt; на прочих ваших существ.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10837,7 +11275,7 @@
     <Durability>0</Durability>
     <Text>Существа со способностью &lt;b&gt;Боевой клич&lt;/b&gt; стоят на (2) маны больше.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10853,7 +11291,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда умирает ваше существо, вы кладете в руку две его копии.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10895,7 +11335,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда одно из ваших существ умирает, случайное ваше существо получает +3/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10923,7 +11365,9 @@
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 1 ед. урона всем существам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10939,7 +11383,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы призываете на поле боя случайного демона из вашей руки.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10954,7 +11400,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; увеличивает здоровье вашего случайного существа на 3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10981,7 +11429,10 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 1 ед. урона всем существам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11012,7 +11463,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; возвращает ваше случайное существо в руку.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11041,9 +11492,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Получает +1 к атаке, когда вы призываете на поле боя существо со способностью &lt;b&gt;«Предсмертный хрип»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11069,7 +11518,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; противник берет карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11083,7 +11534,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; в следующий ход противника его заклинания стоят на (5) маны больше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11110,7 +11563,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;«Предсмертный хрип»&lt;/b&gt; ваших существ срабатывает дважды.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11146,7 +11599,9 @@
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; это оружие возвращается вам в руку.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11159,7 +11614,10 @@
     <Durability>8</Durability>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;
 &lt;b&gt;Предсмертный хрип:&lt;/b&gt; это оружие возвращается вам в руку.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11256,9 +11714,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Выбранное существо получает +4/+4 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11270,9 +11726,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11392,7 +11846,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11534,7 +11990,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Постоянно находится под эффектом &lt;b&gt;заморозки&lt;/b&gt;. Находящиеся по обе стороны существа получают неуязвимость к Ледяному дыханию.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11546,7 +12004,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Наносит $8 ед. урона герою противника и &lt;b&gt;замораживает&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11603,7 +12063,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
 Наносит 2 ед. урона герою противника и &lt;b&gt;замораживает&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11616,7 +12078,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
 Наносит 3 ед. урона герою противника и &lt;b&gt;замораживает&lt;/b&gt; его.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11628,7 +12092,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11640,7 +12106,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11809,7 +12277,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
 Делает по выстрелу за каждую карту в руке противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11822,7 +12292,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
 Делает по выстрелу за каждую карту в руке противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11834,7 +12306,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Герой получает +1 к атаке в свой ход.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11846,7 +12320,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Герой получает +3 к атаке в свой ход.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12124,7 +12600,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; все существа противника получают +8 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12182,7 +12660,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12304,7 +12784,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на сторону вашего противника призрачного новобранца.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12328,7 +12810,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на сторону вашего противника призрачного воина.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12352,7 +12836,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на сторону вашего противника призрачного всадника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12531,7 +13017,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; уничтожает находящихся рядом с ним существ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12543,7 +13031,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; уничтожает оружие противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12605,7 +13095,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона, случайно распределяемого между всеми персонажами противника, если у вас есть механизм.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12635,7 +13127,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Ваши механизмы стоят на (1) ману меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12666,7 +13160,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Наносит каждому существу урон, равный показателю его атаки.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12681,7 +13177,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона каждому герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12696,9 +13194,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Выбранное существо получает +2/+4 и &lt;b&gt;урон от заклинаний +1&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12725,7 +13221,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; выбранное существо получает -2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12738,7 +13236,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12766,7 +13266,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Получает +2 к атаке, если у вас под контролем есть механизм.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12781,7 +13283,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; меняется здоровьем с другим выбранным существом.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12917,7 +13421,9 @@
     <Race>Demon</Race>
     <Text>Другие ваши демоны получают +2/+2.
 Ваш герой &lt;b&gt;неуязвим&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12945,7 +13451,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Ваше оружие получает +3 к атаке. &lt;b&gt;Серия приемов:&lt;/b&gt; ваше случайное существо получает +3 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12985,7 +13493,9 @@
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше оружие получает +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13012,7 +13522,9 @@
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Получает +2 к атаке, если у вас под контролем есть механизм.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13028,9 +13540,7 @@
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Получает способность &lt;b&gt;«Маскировка»&lt;/b&gt; каждый раз, когда вы призываете на поле боя пирата.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13045,9 +13555,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Заставляет сработать все эффекты способности &lt;b&gt;«Предсмертный хрип»&lt;/b&gt; ваших существ.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13136,7 +13644,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;.&lt;b&gt;Выберите эффект:&lt;/b&gt;
 +1 к атаке или +1 к здоровью.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13292,7 +13802,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы замешиваете это существо в свою колоду.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13307,7 +13819,9 @@
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Предсмертный хрип&lt;/b&gt;: ваш случайный механизм получает +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13336,7 +13850,9 @@
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13399,9 +13915,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; призывает на поле боя 5 огоньков; выбранное существо получает +5/+5 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13455,7 +13969,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете 4 случайные карты мурлоков к себе в руку. &lt;b&gt;Перегрузка:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13470,7 +13986,9 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше случайное существо получает +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13541,7 +14059,10 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Боевой клич:&lt;/b&gt; получает +1 к атаке за каждого другого зверя под вашим контролем.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13587,7 +14108,9 @@
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич&lt;/b&gt;: другие ваши механизмы получают +2 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13660,7 +14183,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Исступление:&lt;/b&gt; +1 к атаке.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13690,7 +14215,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете +5 к броне.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13721,7 +14248,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич&lt;/b&gt;: ваш выбранный механизм получает +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13750,7 +14279,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; замешивает карту мины в колоду противника. Когда он ее вытаскивает, мина взрывается, нанося ему 10 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13764,7 +14295,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Когда вы вытаскиваете эту карту из своей колоды, она взрывается. Вы получаете 10 ед. урона и берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13779,7 +14312,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Восстанавливает #4 ед. здоровья вашему герою и дает ему +2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13792,7 +14327,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 к атаке до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13807,7 +14344,9 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13823,8 +14362,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше случайное существо получает способности &lt;b&gt;«Божественный щит»&lt;/b&gt; и &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13840,7 +14378,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваши паладины-рекруты получают +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13884,9 +14424,7 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt; каждый раз, когда вы призываете механизм на поле боя. </Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13957,7 +14495,9 @@
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;.
 С 50% вероятностью атакует не того персонажа противника. &lt;b&gt;Перегрузка:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13984,7 +14524,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Атака увеличена</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14010,7 +14552,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Атака увеличена</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14024,7 +14568,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 8 ед. здоровья вашему герою.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14111,7 +14657,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете контроль над случайным &lt;b&gt;секретом&lt;/b&gt; противника.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14141,7 +14687,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 2 ед. урона всем существам.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14184,7 +14732,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; каждый игрок получает карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14199,7 +14749,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14214,7 +14766,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если у вас под контролем есть зверь, характеристики этого существа становятся равны 7/7.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14242,7 +14796,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14257,7 +14813,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14273,7 +14831,9 @@
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш механизм получает +4 к здоровью.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14288,7 +14848,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14303,7 +14865,10 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;. &lt;b&gt;Божественный щит&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14363,7 +14928,9 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;.
 С 50% вероятностью атакует не того персонажа противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14377,9 +14944,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Если в конце хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;, ваш герой восстанавливает 4 ед. здоровья.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14393,7 +14958,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 6 ед. урона, случайно распределяемого между всеми остальными персонажами.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14409,7 +14976,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;.
 Не может быть целью заклинаний или силы героя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14423,7 +14992,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете карту. Если это карта существа, оно превращается в курицу.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14450,7 +15021,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14479,7 +15052,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Получает +4 к атаке, если у противника в руке 6 или больше карт.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14494,7 +15069,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя случайное существо стоимостью 2 маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14510,7 +15087,8 @@
     <Text>&lt;b&gt;Провокация&lt;/b&gt;.
 &lt;b&gt;Боевой клич:&lt;/b&gt; получает +1/+1 за каждое существо противника со способностью &lt;b&gt;Предсмертный хрип&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14526,7 +15104,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;.
 &lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14540,7 +15121,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона случайному существу противника. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14585,7 +15168,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Боевой клич&lt;/b&gt;: наносит 2 ед. урона всем существам со способностью &lt;b&gt;Предсмертный хрип&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14613,7 +15196,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если под вашим контролем есть механизм, &lt;i&gt;Гном-техник&lt;/i&gt; получает +1/+1 и вы кладете в руку карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14681,7 +15266,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя случайное существо за 4 маны.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14724,9 +15311,7 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; другие ваши существа получают &lt;i&gt;случайную&lt;/i&gt; способность: &lt;b&gt;«Неистовство ветра»&lt;/b&gt;, &lt;b&gt;«Провокация»&lt;/b&gt; или &lt;b&gt;«Божественный щит»&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14741,7 +15326,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; превращает ваше выбранное существо в случайное существо за ту же ману. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14756,7 +15343,10 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Маскировка&lt;/b&gt;.
 &lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14770,7 +15360,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает на поле боя двух взрыв-ботов 1/1. &lt;i&gt;ВНИМАНИЕ: боты взрывоопасны.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14784,7 +15376,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 1-4 ед. урона случайному персонажу противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14815,7 +15409,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;
 &lt;b&gt;Мега-неистовство ветра&lt;/b&gt; &lt;i&gt;(может атаковать четыре раза за ход.)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14859,7 +15455,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя случайное легендарное существо.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14873,7 +15471,10 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич, предсмертный хрип:&lt;/b&gt; вы кладете в руку карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14931,7 +15532,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок берет в руки случайное оружие.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14945,7 +15548,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает выбранного зверя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14975,7 +15580,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Находящиеся рядом существа не могут быть целью заклинаний или силы героя.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15007,7 +15614,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Урон от заклинаний +2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15057,9 +15666,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Выбранное существо получает способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15072,9 +15679,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Ваше выбранное существо получает способность &lt;b&gt;«Маскировка»&lt;/b&gt; до вашего следующего хода.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15099,7 +15704,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Замораживает&lt;/b&gt; выбранное существо.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15234,7 +15841,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15294,7 +15903,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15342,7 +15953,9 @@
     <Durability>0</Durability>
     <Text>Тауриссан не может использовать свою силу героя.
 Не может атаковать существ без способности &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15355,7 +15968,9 @@
     <Durability>0</Durability>
     <Text>Тауриссан не может использовать свою силу героя.
 Не может атаковать существ без способности &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15402,7 +16017,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 1 ед. урона герою противника за каждый огнекамень, умерший на этом ходу.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15414,7 +16031,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 3 ед. урона герою противника за каждый огнекамень, умерший на этом ходу.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15856,7 +16475,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15868,7 +16489,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16245,7 +16868,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Пока у вас в руке находится эта карта, ваш герой получает 1 ед. урона в начале вашего хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16257,7 +16882,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Пока у вас в руке находится эта карта, ваш герой получает 3 ед. урона в начале вашего хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16497,7 +17124,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 6 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16509,7 +17138,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16521,7 +17152,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16533,7 +17166,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Наносит $8 ед. урона случайному персонажу противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16595,7 +17230,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16646,7 +17283,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Оба игрока получают &lt;b&gt;урон от заклинаний +2&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16740,7 +17379,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Все заклинания стоят на (3) маны меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16794,7 +17435,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Каждый раз, когда игрок разыгрывает карту, Магматрон наносит ему 2 ед. урона.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16893,7 +17536,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17117,7 +17762,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17216,7 +17863,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Атака стала равна 0 до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17259,7 +17908,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Стоит на (3) маны меньше до конца хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17274,7 +17925,9 @@
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +2 к здоровью, если у вас в руке есть дракон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17312,7 +17965,9 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Наносит $2 ед. урона всем существам, не являющимся демонами.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17371,7 +18026,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 2 ед. урона всем существам противника с полным здоровьем.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17387,7 +18044,9 @@
     <Class>Druid</Class>
     <Text>&lt;b&gt;Провокация.&lt;/b&gt;
 Стоит на (1) ману меньше за каждое существо, умершее на этом ходу.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17492,7 +18151,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Карты, которые вы разыграете на этом ходу, не вызывают &lt;b&gt;Перегрузку&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17506,7 +18167,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1-4 к атаке. &lt;b&gt;Перегрузка:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17534,7 +18197,9 @@
     <Class>Hunter</Class>
     <Text>Наносит $3 ед. урона.
 Если у вас в руке нет карт, вы берете карту.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17550,7 +18215,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +3/+3, если у вас в руке больше нет карт.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17624,7 +18291,9 @@
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; следующий дракон, которого вы разыграете, будет стоить на (2) маны меньше.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17721,7 +18390,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +3/+3, если у героя вашего противника осталось 15 или меньше ед. здоровья.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17763,7 +18434,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает случайное существо за 1 ману на сторону вашего противника.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17777,7 +18450,9 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; заменяет вашего героя Рагнаросом.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17854,7 +18529,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает &lt;b&gt;легендарное&lt;/b&gt; существо, если у вас в руке есть дракон. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17869,7 +18546,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете в руку два случайных заклинания &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17911,7 +18590,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1/+1, если у вас в руке есть дракон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17938,7 +18619,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона, если у вас в руке есть дракон.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

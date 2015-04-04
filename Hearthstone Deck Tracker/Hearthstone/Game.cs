@@ -146,6 +146,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return hsLogLines; }
 		}
 
+		public static int PlayerDeckSize { get; set; }
+		public static bool NoMatchingDeck { get; set; }
+
 		public static void Reset(bool resetStats = true)
 		{
 			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<", "Game");
@@ -163,11 +166,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandCount = 0;
 			OpponentFatigueCount = 0;
 			OpponentDeckCount = 30;
+			PlayerDeckSize = 30;
 			SecondToLastUsedId = null;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
 			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets.ClearSecrets();
+			NoMatchingDeck = false;
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{
@@ -450,9 +455,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+
+		public static void PlayerGetToDeck(string cardId, int turn)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+
+			PlayerDeckSize++;
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
+			if(deckCard != null)
+			{
+				deckCard.Count++;
+				LogDeckChange(false, deckCard, false);
+			}
+			else
+			{
+				deckCard = GetCardFromId(cardId);
+				deckCard.IsStolen = true;
+				PlayerDeck.Add(deckCard);
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
+			}
+		}
+
 		#endregion
 
 		#region Opponent
+
+		public static void OpponentGetToDeck(int turn)
+		{
+			OpponentDeckCount++;
+		}
 
 		public static void OpponentDraw(int turn)
 		{
@@ -807,13 +839,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void ResetArenaCards()
 		{
 			PossibleArenaCards.Clear();
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 
 		public static void ResetConstructedCards()
 		{
 			PossibleConstructedCards.Clear();
-			Helper.MainWindow.MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
 		}
 
 		public static void AddHSLogLine(string logLine)

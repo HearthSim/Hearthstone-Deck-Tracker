@@ -304,15 +304,19 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnArena_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowArenaImportMessage)
+			if(Config.Instance.ShowArenaImportMessage || Game.PossibleArenaCards.Count < 10)
 			{
 				await
 					this.ShowMessageAsync("How this works:",
 					                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
-				Config.Instance.ShowArenaImportMessage = false;
-				Config.Save();
-				MenuItemImportArena.IsEnabled = Game.PossibleArenaCards.Count > 0;
-				return;
+
+				if(Config.Instance.ShowArenaImportMessage)
+				{
+					Config.Instance.ShowArenaImportMessage = false;
+					Config.Save();
+				}
+				if(Game.PossibleArenaCards.Count < 10)
+					return;
 			}
 
 			var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
@@ -328,25 +332,30 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowConstructedImportMessage)
+			if(Config.Instance.ShowConstructedImportMessage || Game.PossibleConstructedCards.Count < 10)
 			{
-				var result =
-					await
-					this.ShowMessageAsync("Setting up",
-					                      "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
-					                      MessageDialogStyle.AffirmativeAndNegative,
-					                      new MetroDialogSettings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
-				if(result != MessageDialogResult.Affirmative)
-					return;
-				await Helper.SetupConstructedImporting();
+				if(Config.Instance.ShowConstructedImportMessage)
+				{
+					var result =
+						await
+						this.ShowMessageAsync("Setting up",
+											  "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
+											  MessageDialogStyle.AffirmativeAndNegative,
+											  new MetroDialogSettings { AffirmativeButtonText = "start", NegativeButtonText = "cancel" });
+					if(result != MessageDialogResult.Affirmative)
+						return;
+					await Helper.SetupConstructedImporting();
+					Config.Instance.ShowConstructedImportMessage = false;
+					Config.Save();
+				}
 				await
-					this.ShowMessageAsync("How this works:",
-					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				Config.Instance.ShowConstructedImportMessage = false;
-				Config.Save();
-				MenuItemImportConstructed.IsEnabled = Game.PossibleConstructedCards.Count > 0;
-				return;
+				   this.ShowMessageAsync("How this works:",
+										 "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
+				if(Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
+					&& Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
+					return;
 			}
+			
 
 			var deck = new Deck();
 			deck.Class = Game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;

@@ -28,6 +28,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckStatsControl
 	{
+		private const string BtnOpponentDeckTextShow = "Show Opp. Deck";
+		private const string BtnOpponentDeckTextHide = "Hide Opp. Deck";
 		private const int GroupBoxHeaderHeight = 28;
 		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
 		private Deck _deck;
@@ -69,6 +71,12 @@ namespace Hearthstone_Deck_Tracker
 
 			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 			DataGridOverallGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
+
+			Helper.MainWindow.FlyoutOpponentDeck.ClosingFinished += (sender, args) =>
+			{
+				BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
+				BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
+			};
 		}
 
 		private void BtnDelete_Click(object sender, RoutedEventArgs e)
@@ -301,7 +309,7 @@ namespace Hearthstone_Deck_Tracker
 				            g =>
 				            (g.GameMode == selectedGameMode || selectedGameMode == GameMode.All) && g.StartTime >= startTime
 				            && g.StartTime <= endTime
-				            && (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.Contains(noteFilter)));
+				            && (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.ToLowerInvariant().Contains(noteFilter.ToLowerInvariant())));
 		}
 
 		public void Refresh()
@@ -407,6 +415,12 @@ namespace Hearthstone_Deck_Tracker
 				var selectedGames = DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList();
 				var allTheSameHero = selectedGames.All(g => g.PlayerHero == selectedGames[0].PlayerHero);
 				BtnOverallMoveToOtherDeck.IsEnabled = allTheSameHero;
+				if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+				{
+					var game = DataGridOverallGames.SelectedItem as GameStats;
+					if(game != null)
+						ImportOpponentDeck(game);
+				}
 			}
 		}
 
@@ -437,6 +451,12 @@ namespace Hearthstone_Deck_Tracker
 			BtnNote.IsEnabled = enabled;
 			BtnMoveToOtherDeck.IsEnabled = enabled;
 			BtnEditGame.IsEnabled = enabled;
+			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+			{
+				var game = DataGridGames.SelectedItem as GameStats;
+				if(game != null)
+					ImportOpponentDeck(game);
+			}
 		}
 
 		private void BtnEditNote_Click(object sender, RoutedEventArgs e)
@@ -748,18 +768,34 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnOverallShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var game = DataGridOverallGames.SelectedItem as GameStats;
-			if(game != null)
-				ImportOpponentDeck(game);
+			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+				CloseOpponentDeckFlyout();
+			else
+			{
+				var game = DataGridOverallGames.SelectedItem as GameStats;
+				if(game != null)
+					ImportOpponentDeck(game);
+			}
 		}
 
 		private void BtnShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var game = DataGridGames.SelectedItem as GameStats;
-			if(game != null)
-				ImportOpponentDeck(game);
+			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+				CloseOpponentDeckFlyout();
+			else
+			{
+				var game = DataGridGames.SelectedItem as GameStats;
+				if(game != null)
+					ImportOpponentDeck(game);
+			}
 		}
 
+		private void CloseOpponentDeckFlyout()
+		{
+			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = false;
+			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
+			BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
+		}
 		private void ImportOpponentDeck(GameStats stats)
 		{
 			var ignoreCards = new List<Card>();
@@ -796,6 +832,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Helper.MainWindow.OpponentDeckFlyout.SetDeck(deck);
 			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = true;
+			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextHide;
+			BtnShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 		}
 
 		private async void BtnAddNewGame_Click(object sender, RoutedEventArgs e)

@@ -28,7 +28,9 @@ Rend 2 PV.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@ Vous piochez une carte.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Confère &lt;b&gt;Provocation&lt;/b&gt; et +2/+2 à un serviteur.&lt;i&gt; (+2 ATQ/+2 PV)&lt;/i&gt;</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Votre héros a +1 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Ce serviteur a été transformé en mouton 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $3 |4(point,points) de dégâts à un personnage et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Gèle&lt;/b&gt; tous les serviteurs adverses.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Invoque deux serviteurs 0/2 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Gèle&lt;/b&gt; tout personnage blessé par ce serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@ Inflige 1 point de dégâts.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $1 |4(point,points) de dégâts à un personnage adverse, et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@ Inflige 1 point de dégâts.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Confère &lt;b&gt;Furie des vents&lt;/b&gt; à un serviteur.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@ Inflige 1 point de dégâts.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Rend tous ses points de vie à un serviteur et lui confère &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@ Inflige 1 point de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Provocation.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@ Inflige 1 point de dégâts.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@ Inflige 1 point de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Ce personnage a +3 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@ Inflige 1 point de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@ Invoque un totem aléatoire.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@ Invoque un totem aléatoire.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@ Subit 2 points de dégâts. Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts à TOUS les autres personnages.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@ Subit 2 points de dégâts. Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@ Subit 2 points de dégâts. Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1065,7 +1093,9 @@ Subit 2 points de dégâts. Vous piochez une carte.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 6 points de vie à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@ Confère 2 points d’armure.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Confère +2 ATQ et &lt;b&gt;Charge&lt;/b&gt; à un serviteur allié.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@ Confère 2 points d’armure.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Vos autres serviteurs ont +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@ Confère 2 points d’armure.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@ Confère 2 points d’armure.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 2 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@ Confère 2 points d’armure.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@ Confère 2 points d’armure.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque un sanglier 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1797,7 +1867,9 @@ Confère 2 points d’armure.</Text>
     <Faction>Alliance</Faction>
     <Text>Vos autres serviteurs
 ont +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1824,7 +1896,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1/+1 pour chaque autre serviteur allié sur le champ de bataille.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1852,7 +1926,9 @@ ont +1/+1.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1882,7 +1958,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Vous piochez une carte chaque fois qu’un serviteur est soigné.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1956,7 +2034,9 @@ ont +1/+1.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -2000,7 +2080,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 2 points de vie à tous les personnages alliés.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2017,7 +2099,7 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère +2/+2 et &lt;b&gt;Provocation&lt;/b&gt; à une Bête alliée.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2049,7 +2131,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Race>Beast</Race>
     <Text>Vos autres Bêtes ont
 +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2079,9 +2163,7 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Vos Bêtes ont &lt;b&gt;Charge&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2173,7 +2255,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 2 points de vie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2188,7 +2272,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2203,7 +2289,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère +1/+1 à un serviteur allié.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2231,7 +2319,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque un petit dragon mécanique 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2260,7 +2350,9 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit l’arme de votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2276,9 +2368,7 @@ Inflige 2 points de dégâts au héros adverse.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Chaque fois que vous invoquez un serviteur avec 3 ATQ ou moins, lui confère &lt;b&gt;Charge&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2385,9 +2475,7 @@ Vous piochez une carte.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Transforme un serviteur en grenouille 0/1 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2401,7 +2489,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Ce serviteur a été transformé !</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2416,7 +2506,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $3 |4(point,points) de dégâts répartis de façon aléatoire entre tous les adversaires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2465,7 +2557,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous défausse d’une carte aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2527,9 +2621,7 @@ Vous piochez une carte.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Confère &lt;b&gt;Bouclier divin&lt;/b&gt; à un serviteur.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2588,7 +2680,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque un éclaireur murloc 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2618,7 +2712,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TOUS les autres murlocs ont +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2663,7 +2759,10 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Les serviteurs adjacents ont +2 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2707,7 +2806,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2724,7 +2825,7 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère &lt;b&gt;Furie des vents&lt;/b&gt; à un serviteur allié.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2740,7 +2841,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts au héros adverse.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3010,7 +3113,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3069,7 +3174,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3100,7 +3207,9 @@ Vous piochez une carte.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3143,7 +3252,9 @@ Vous piochez une carte.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3171,7 +3282,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3216,7 +3329,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 |4(point,points) de dégâts à tous les serviteurs adverses et les &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3232,7 +3347,9 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Gèle&lt;/b&gt; un personnage. S’il est déjà &lt;b&gt;gelé&lt;/b&gt;, inflige $4 |4(point,points) de dégâts à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3248,9 +3365,7 @@ Vous piochez une carte.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Confère à un serviteur « &lt;b&gt;Râle d’agonie :&lt;/b&gt; réinvoque ce serviteur. »</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3310,7 +3425,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;. À la fin de votre tour, donne +1 PV à un autre serviteur allié aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3339,7 +3456,9 @@ Vous piochez une carte.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Confère +2 ATQ à un serviteur. &lt;b&gt;Combo :&lt;/b&gt; +4 ATQ à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3408,7 +3527,9 @@ Vous piochez une carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 3 points de vie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3424,9 +3545,7 @@ Vous piochez une carte.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>A &lt;b&gt;Charge&lt;/b&gt; tant que vous êtes équipé d’une arme.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3441,7 +3560,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque un écuyer 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3469,7 +3590,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3485,7 +3608,9 @@ Vous piochez une carte.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3500,7 +3625,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; s’inflige 4 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3527,7 +3654,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère +2 ATQ à un serviteur pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3540,7 +3669,9 @@ Vous piochez une carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ce serviteur a +2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3556,7 +3687,7 @@ Vous piochez une carte.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; réduit au &lt;b&gt;Silence&lt;/b&gt; un serviteur.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3572,7 +3703,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Accès de rage :&lt;/b&gt; votre arme a +2 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3599,7 +3732,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Vos serviteurs coûtent (3) cristaux de plus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3629,7 +3764,9 @@ Vous piochez une carte.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Détruit votre arme, dont les dégâts sont infligés à tous les adversaires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3776,7 +3913,7 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un serviteur adverse avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3817,7 +3954,9 @@ Vous piochez une carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un serviteur avec 7 Attaque ou plus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3861,7 +4000,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3876,7 +4017,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Accès de rage :&lt;/b&gt; +5 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3891,7 +4034,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3907,7 +4052,10 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;.
 &lt;b&gt;Râle d’agonie :&lt;/b&gt; vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3922,7 +4070,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne 2 bananes à votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3960,7 +4110,9 @@ Vous piochez une carte.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; prend le contrôle d’un serviteur adverse aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3976,7 +4128,9 @@ Vous piochez une carte.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3991,7 +4145,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4006,7 +4162,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4021,7 +4179,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4037,7 +4197,9 @@ Vous piochez une carte.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4052,7 +4214,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 2 points de dégâts au héros adverse.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4068,7 +4232,10 @@ Vous piochez une carte.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;
 &lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4083,7 +4250,9 @@ Vous piochez une carte.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4099,7 +4268,9 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1 PV pour chaque carte dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4169,7 +4340,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +2 ATQ à un serviteur pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4182,7 +4355,9 @@ gagne +1/+1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4197,7 +4372,7 @@ gagne +1/+1.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; réduit au &lt;b&gt;Silence&lt;/b&gt; un serviteur.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4213,7 +4388,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; renvoie un serviteur allié du champ de bataille et le place dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4229,7 +4406,9 @@ gagne +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; chaque joueur pioche 2 cartes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4257,7 +4436,9 @@ gagne +1/+1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>L’Attaque de l’accro au mana est augmentée.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4271,7 +4452,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; renvoie un serviteur allié du champ de bataille et le place dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4287,7 +4470,7 @@ gagne +1/+1.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère &lt;b&gt;Provocation&lt;/b&gt; aux serviteurs adjacents.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4303,7 +4486,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; échange l’Attaque et la Vie d’un serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4331,7 +4516,10 @@ gagne +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;
 &lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4346,7 +4534,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Le premier serviteur que vous jouez à chaque tour coûte (1) cristal de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4361,9 +4551,7 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Chaque fois qu’un &lt;b&gt;Secret&lt;/b&gt; est joué, gagne +1/+1.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4390,7 +4578,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts répartis de façon aléatoire entre tous les autres personnages.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4405,7 +4595,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; transforme un autre serviteur aléatoire soit en diablosaure 5/5, soit en écureuil 1/1 .</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4420,7 +4612,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si l’adversaire a 4 serviteurs ou plus, prend le contrôle de l’un d’eux au hasard.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4435,7 +4629,10 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; donne à votre adversaire un cristal de mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4451,7 +4648,9 @@ gagne +1/+1.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; prend le contrôle d’un serviteur adverse avec 2 en Attaque ou moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4467,7 +4666,7 @@ gagne +1/+1.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne aux serviteurs adjacents +1/+1 et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4510,7 +4709,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4526,7 +4727,10 @@ gagne +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;.
 &lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 2 points de dégâts à TOUS les personnages.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4573,7 +4777,9 @@ gagne +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +2 PV à TOUS les autres murlocs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4615,7 +4821,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque Baine Sabot-de-Sang avec 4/5.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4642,7 +4850,10 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; invoque deux dragonnets 1/1 pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4670,7 +4881,9 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 |4(point,points) de dégâts. &lt;b&gt;Combo :&lt;/b&gt; inflige $4 |4(point,points) de dégâts à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4702,9 +4915,7 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Confère &lt;b&gt;Camouflage&lt;/b&gt; à vos serviteurs jusqu’à votre prochain tour.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4733,7 +4944,9 @@ gagne +1/+1.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; invoque un défenseur 2/1 qui devient la cible de l’adversaire sur le point d’attaquer.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4763,7 +4976,9 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo :&lt;/b&gt; invoque un bandit défias 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4792,7 +5007,9 @@ gagne +1/+1.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; inflige au héros adverse autant de dégâts que ceux subis par votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4808,7 +5025,10 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts. &lt;b&gt;Combo :&lt;/b&gt; inflige 2 points de dégâts à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4824,7 +5044,9 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo :&lt;/b&gt; inflige 2 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4841,7 +5063,9 @@ gagne +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un de vos serviteurs meurt, il est ressuscité avec
 1 PV.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4857,7 +5081,9 @@ gagne +1/+1.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $2 |4(point,points) de dégâts au héros adverse. &lt;b&gt;Combo :&lt;/b&gt; renvoie cette carte dans votre main au tour suivant.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4903,7 +5129,9 @@ gagne +1/+1.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Le prochain sort que vous lancez pendant ce tour coûte (3) cristaux de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4962,9 +5190,7 @@ gagne +1/+1.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; donne +4 ATQ à un serviteur ou +4 PV et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5034,9 +5260,7 @@ gagne +1/+1.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Confère à vos serviteurs « &lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un tréant 2/2. »</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5166,7 +5390,10 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Les serviteurs adjacents ont +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5238,10 +5465,7 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; &lt;b&gt;Charge&lt;/b&gt; ou confère +2 PV et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5287,7 +5511,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5302,7 +5528,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5317,9 +5545,7 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; inflige 2 points de dégâts ou réduit au &lt;b&gt;Silence&lt;/b&gt; un serviteur.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5348,7 +5574,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Réduit au &lt;b&gt;Silence&lt;/b&gt; un serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5363,7 +5591,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Détruit tout serviteur blessé par ce serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5380,9 +5610,7 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; 
 +5 ATQ ou +5 PV et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5487,7 +5715,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;
 &lt;b&gt;Surcharge :&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5503,7 +5733,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Réduit un serviteur au &lt;b&gt;Silence&lt;/b&gt;, puis lui inflige $1 |4(point,points) de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5535,9 +5767,7 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Invoque deux esprits du loup 2/3 avec &lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Surcharge :&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5569,7 +5799,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;
 &lt;b&gt;Surcharge :&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5645,9 +5877,7 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Si vous contrôlez un &lt;b&gt;Secret&lt;/b&gt; à la fin de votre tour, gagne +2/+2.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5676,7 +5906,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Gèle&lt;/b&gt; et inflige $1 |4(point,points) de dégâts à un serviteur et ceux à côté de lui.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5707,7 +5939,10 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; &lt;b&gt;gèle&lt;/b&gt; un personnage.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5724,7 +5959,10 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;.
 &lt;b&gt;Cri de guerre :&lt;/b&gt; vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5740,7 +5978,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire lance un sort, le &lt;b&gt;contre&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5756,7 +5996,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre héros est attaqué, il gagne 8 points d’armure.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5772,7 +6014,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire joue un serviteur, en invoque une copie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5788,7 +6032,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; protège votre héros des dégâts mortels, et le rend &lt;b&gt;Insensible&lt;/b&gt; pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5802,7 +6048,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Votre héros est &lt;b&gt;Insensible&lt;/b&gt; pour ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5833,7 +6081,10 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un de vos cristaux de mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5849,7 +6100,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Détruit un serviteur allié et inflige des dégâts équivalents à ses points d’attaque à tous les serviteurs adverses.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5865,7 +6118,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit les serviteurs adjacents et gagne leurs points d’Attaque et de Vie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5911,7 +6166,10 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; vous défausse de deux cartes aléatoires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5944,7 +6202,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 5 points de dégâts à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5961,7 +6221,9 @@ donne à vos serviteurs +1/+1 ou invoque une panthère 3/2.</Text>
     <Faction>Neutral</Faction>
     <Text>Vos serviteurs coûtent (2) cristaux de moins, mais jamais moins
 de (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6039,7 +6301,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6071,7 +6335,9 @@ de (1).</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; le seigneur Jaraxxus détruit votre héros et prend sa place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6114,7 +6380,9 @@ de (1).</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Réduit au &lt;b&gt;Silence&lt;/b&gt; un serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6314,7 +6582,7 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère &lt;b&gt;Bouclier divin&lt;/b&gt; à un serviteur allié.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6417,7 +6685,9 @@ de (1).</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire joue un serviteur, ses points de vie sont réduits à 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6446,7 +6716,9 @@ de (1).</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; l’Attaque d’un serviteur adverse passe à 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6475,7 +6747,11 @@ de (1).</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;. &lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Râle d’agonie :&lt;/b&gt; vous équipe de Porte-cendres 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6504,7 +6780,9 @@ de (1).</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige $8 |4(point,points) de dégâts répartis de façon aléatoire entre tous les adversaires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6520,7 +6798,10 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;.
 &lt;b&gt;Accès de rage :&lt;/b&gt; +3 ATQ</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6567,7 +6848,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Accès de rage :&lt;/b&gt; +3 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6582,7 +6865,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6598,7 +6883,9 @@ de (1).</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous équipe d’une arme 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6641,7 +6928,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6730,7 +7019,9 @@ de (1).</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige 1 point de dégâts à un serviteur pour chaque point d’Armure que vous avez.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6788,7 +7079,7 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Accès de rage :&lt;/b&gt; &lt;b&gt;Furie des vents&lt;/b&gt; et +1 ATQ</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6806,7 +7097,10 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;.
 &lt;b&gt;Accès de rage :&lt;/b&gt; +6 ATQ</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6822,7 +7116,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TOUS les autres murlocs ont +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6879,7 +7175,10 @@ de (1).</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;. Détruit tout serviteur blessé par ce serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6924,7 +7223,9 @@ de (1).</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un personnage attaque votre héros, il attaque un autre personnage aléatoire à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6940,7 +7241,9 @@ de (1).</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque deux hyènes 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6970,9 +7273,7 @@ de (1).</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Chaque fois qu’un &lt;b&gt;Secret&lt;/b&gt; allié est révélé, gagne +1 Durabilité.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -7016,9 +7317,7 @@ de (1).</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Invoque un chien 1/1 avec &lt;b&gt;Charge&lt;/b&gt; pour chaque serviteur adverse.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7033,7 +7332,9 @@ de (1).</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7049,7 +7350,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7065,10 +7368,7 @@ de (1).</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Tous les serviteurs perdent le &lt;b&gt;Camouflage&lt;/b&gt;. Détruit tous les &lt;b&gt;Secrets&lt;/b&gt; adverses. Vous piochez une carte.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7098,7 +7398,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 ATQ et &lt;b&gt;Insensible&lt;/b&gt; pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7113,7 +7415,9 @@ de (1).</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un de vos serviteurs est attaqué, invoque trois serpents 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7144,7 +7448,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un golem endommagé 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7174,7 +7480,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit l’arme de votre adversaire. Vous piochez le nombre de cartes équivalent à sa durabilité.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7222,7 +7530,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; fixe les points de vie restants d’un héros à 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7250,7 +7560,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque des dragonnets 1/1 jusqu’à remplir votre côté du plateau.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7266,7 +7578,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Dégâts des sorts : +5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7281,7 +7595,9 @@ de (1).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; choisit un serviteur et en devient la copie conforme.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7298,7 +7614,9 @@ de (1).</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furie des vents
 Surcharge :&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7327,7 +7645,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7342,9 +7662,7 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Invoque trois tréants 2/2 avec &lt;b&gt;Charge&lt;/b&gt; qui meurent à la fin du tour.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7376,9 +7694,7 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; confère +2/+2 à vos autres serviteurs ou invoque deux tréants 2/2 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7434,7 +7750,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7466,7 +7784,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque Finkle Einhorn 3/3 pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7482,7 +7802,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Inflige des dégâts d’un montant équivalent à l’Attaque de votre héros à un serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7497,7 +7819,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 4 points de vie à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7513,7 +7837,7 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne aux serviteurs adjacents &lt;b&gt;+1 aux dégâts des sorts&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7557,7 +7881,7 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; tous les serviteurs perdent &lt;b&gt;Bouclier divin&lt;/b&gt;. Gagne +3/+3 pour chaque bouclier perdu.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7587,7 +7911,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Vos cartes et pouvoirs rendant de la Vie infligent désormais des dégâts à la place.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7603,7 +7929,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un serviteur attaque votre héros, le détruit.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7697,7 +8025,9 @@ Surcharge :&lt;/b&gt; (2)</Text>
 1 point de dégâts à
 un serviteur et lui
 donne +2 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7784,7 +8114,9 @@ donne +2 ATQ.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Vos sorts coûtent (1) cristal de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7800,7 +8132,9 @@ donne +2 ATQ.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire joue un serviteur, lui inflige $4 |4(point,points) de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7816,7 +8150,9 @@ donne +2 ATQ.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre héros est attaqué, inflige $2 |4(point,points) de dégâts à tous les adversaires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7832,7 +8168,9 @@ donne +2 ATQ.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un serviteur adverse attaque, le renvoie dans la main de son propriétaire et il coûte désormais (2) cristaux de plus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7862,7 +8200,7 @@ donne +2 ATQ.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; le prochain &lt;b&gt;Secret&lt;/b&gt; que vous jouez ce tour-ci coûte (0).</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7877,7 +8215,9 @@ donne +2 ATQ.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Votre prochain Secret coûte (0).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7892,7 +8232,9 @@ donne +2 ATQ.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo :&lt;/b&gt; gagne +2/+2 pour chaque carte jouée auparavant pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7947,7 +8289,9 @@ donne +2 ATQ.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>TOUS les serviteurs coûtent (1) cristal de plus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8036,7 +8380,9 @@ donne +2 ATQ.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +3 PV à un serviteur allié.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8122,7 +8468,9 @@ Inflige 3 points de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Réduit au &lt;b&gt;Silence&lt;/b&gt; tous les serviteurs adverses. Vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8151,7 +8499,9 @@ Inflige 3 points de dégâts.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8193,7 +8543,9 @@ Inflige 3 points de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8238,7 +8590,9 @@ Invoque un infernal 6/6.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Charge&lt;/b&gt;. Ce serviteur est détruit à la fin du tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8252,7 +8606,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Combo :&lt;/b&gt; renvoie un serviteur dans la main de son propriétaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8349,7 +8705,12 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Furie des vents, Charge, Bouclier divin, Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8393,7 +8754,7 @@ Invoque un infernal 6/6.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère &lt;b&gt;Camouflage&lt;/b&gt; à un serviteur allié.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8409,7 +8770,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un murloc et gagne +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8436,7 +8799,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne des points d’Attaque d’un montant équivalent à ceux de votre arme.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8505,7 +8870,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;. Coûte (1) cristal de moins par Attaque de votre arme.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8535,7 +8902,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère +1/+1 à votre arme.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8562,7 +8931,9 @@ Invoque un infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; ôte 1 Durabilité à l’arme de votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8615,7 +8986,9 @@ Invoque un infernal 6/6.</Text>
     <Race>Pirate</Race>
     <Text>Vos autres pirates
 ont +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8641,7 +9014,9 @@ ont +1/+1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; les sorts adverses coûtent (0) au prochain tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8669,7 +9044,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit tous les autres serviteurs et vous défausse de votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8698,7 +9075,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Ne peut pas avoir moins de 1 PV pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8711,7 +9090,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Les points de vie de vos serviteurs ne peuvent pas passer en dessous de 1 ce tour-ci.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8776,9 +9157,7 @@ ont +1/+1.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>À la fin de votre tour, invoque un gnoll 2/2 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8791,7 +9170,9 @@ ont +1/+1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8805,7 +9186,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un serviteur adverse aléatoire avec 2 en Attaque ou moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8862,7 +9245,9 @@ ont +1/+1.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire lance un sort sur un serviteur, invoque un 1/3 qui devient la nouvelle cible.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9112,7 +9497,9 @@ ont +1/+1.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Charge&lt;/b&gt;. A +1 ATQ pour chaque autre murloc sur le champ de bataille.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9127,7 +9514,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place un pirate aléatoire de votre deck dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9255,7 +9644,9 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Il y a quelque chose dans ce tonneau ?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9347,7 +9738,9 @@ ont +1/+1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Le roi Mukla a +8 en Attaque pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9584,7 +9977,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; lance des bananes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9597,7 +9992,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9610,7 +10007,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9688,7 +10087,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9856,7 +10257,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10306,7 +10709,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10392,7 +10797,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque une invention GÉNIALE.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10477,7 +10884,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>A été transformé en poulet !</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10503,7 +10912,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère aux deux joueurs la puissance du ROCK ! (grâce à une carte au riff dément !)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10565,7 +10976,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; rend 5 PV au héros adverse.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10580,7 +10993,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque deux araignées spectrales 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10605,7 +11020,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque une copie conforme de ce serviteur à la fin du tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10620,7 +11037,7 @@ Invoque deux serviteurs 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; place un &lt;b&gt;Secret&lt;/b&gt; de votre deck sur le champ de bataille.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10636,7 +11053,9 @@ Invoque deux serviteurs 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;
 Gagne +1/+1 au début de votre tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10661,7 +11080,10 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Charge. Râle d’agonie :&lt;/b&gt; inflige 3 points de dégâts à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10674,7 +11096,9 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un nérubien 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10716,6 +11140,7 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Text>&lt;b&gt;Provocation. Râle d’agonie :&lt;/b&gt; votre adversaire place un serviteur de son deck sur le champ de bataille.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10731,7 +11156,9 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Détruit tout serviteur blessé par ce serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10747,7 +11174,9 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute une carte Bête aléatoire dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10762,7 +11191,10 @@ Gagne +1/+1 au début de votre tour.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation.
 Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10775,7 +11207,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10802,7 +11236,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; si Feugen est aussi mort pendant cette partie, invoque Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10828,7 +11264,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; si Stalagg est aussi mort pendant cette partie, invoque Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10843,7 +11281,7 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; réduit au &lt;b&gt;Silence&lt;/b&gt; vos autres serviteurs.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10859,7 +11297,7 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Text>Les serviteurs avec &lt;b&gt;Cri de guerre&lt;/b&gt; coûtent (2) cristaux de plus.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10875,7 +11313,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un serviteur allié meurt, en place 2 copies dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10917,7 +11357,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Secret :&lt;/b&gt; quand l’un de vos serviteurs meurt, donne +3/+2 à un serviteur allié aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10945,7 +11387,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 1 point de dégâts à tous les serviteurs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10961,7 +11405,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; place un démon aléatoire de votre main sur le champ de bataille.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10976,7 +11422,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; confère +3 PV à un serviteur allié aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -11004,7 +11452,10 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;
 &lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 1 point de dégâts à tous les serviteurs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11035,7 +11486,7 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; renvoie un serviteur allié aléatoire dans votre main.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11064,9 +11515,7 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Gagne +1 ATQ chaque fois que vous invoquez un serviteur avec &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11092,7 +11541,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; votre adversaire pioche une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11106,7 +11557,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; les sorts adverses coûtent (5) cristaux de plus au prochain tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11133,7 +11586,7 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>0</Durability>
     <Text>Vos serviteurs déclenchent deux fois leur &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11169,7 +11622,9 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; place cette arme dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11182,7 +11637,10 @@ Râle d’agonie :&lt;/b&gt; invoque une gelée 1/2 avec &lt;b&gt;Provocation&l
     <Durability>8</Durability>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;
 &lt;b&gt;Râle d’agonie :&lt;/b&gt; place cette arme dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11281,9 +11739,7 @@ Inflige 2 points de dégâts à
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Confère à un serviteur +4/+4 et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11295,9 +11751,7 @@ Inflige 2 points de dégâts à
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11417,7 +11871,9 @@ Fait passer les points de vie des serviteurs adverses à 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11560,7 +12016,9 @@ Détruit tous les serviteurs
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Gelé pour toute la partie. Les serviteurs adjacents sont immunisés contre Souffle de givre.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11572,7 +12030,9 @@ Détruit tous les serviteurs
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Inflige $8 |4(point,points) de dégâts au héros adverse, et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11629,7 +12089,9 @@ Détruit tous les serviteurs
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
 Inflige 2 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11642,7 +12104,9 @@ Inflige 2 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</T
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
 Inflige 3 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11654,7 +12118,9 @@ Inflige 3 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</T
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11666,7 +12132,9 @@ Inflige 3 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</T
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11836,7 +12304,9 @@ Invoque un nérubien 3/1.</Text>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
 Tire un missile pour chaque
  carte dans la main de votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11850,7 +12320,9 @@ Tire un missile pour chaque
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
 Tire un missile pour chaque
  carte dans la main de votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11862,7 +12334,9 @@ Tire un missile pour chaque
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Votre héros a +1 ATQ pendant votre tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11874,7 +12348,9 @@ Tire un missile pour chaque
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Votre héros a +3 ATQ pendant votre tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12152,7 +12628,9 @@ Inflige 3 points de dégâts au héros adverse.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; donne +8 ATQ à tous les serviteurs adverses.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12210,7 +12688,9 @@ Inflige 3 points de dégâts au héros adverse.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12332,7 +12812,9 @@ Vous piochez une carte et gagnez un cristal de mana.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque une jeune recrue spectrale pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12356,7 +12838,9 @@ Vous piochez une carte et gagnez un cristal de mana.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un guerrier spectral pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12380,7 +12864,9 @@ Vous piochez une carte et gagnez un cristal de mana.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un cavalier spectral pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12559,7 +13045,9 @@ Pioche deux cartes.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; détruit les serviteurs adjacents.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12571,7 +13059,9 @@ Pioche deux cartes.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; détruit l’arme de votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12633,7 +13123,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous possédez un Méca, inflige 4 points de dégâts répartis de façon aléatoire entre tous les adversaires.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12663,7 +13155,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Vos Méca coûtent (1) |4(cristal,cristaux) de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12694,7 +13188,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Inflige à chaque serviteur des dégâts équivalents à leur ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12709,7 +13205,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts aux héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12724,9 +13222,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Confère à un serviteur +2/+4 et &lt;b&gt;+1 aux dégâts des sorts&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12753,7 +13249,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne à un serviteur -2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12766,7 +13264,9 @@ Pioche deux cartes.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12794,7 +13294,9 @@ Pioche deux cartes.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>A +2 ATQ tant que vous avez un Méca.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12809,7 +13311,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; échange sa Vie avec un autre serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12943,7 +13447,9 @@ Pioche deux cartes.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>Vos autres démons ont +2/+2. Votre héros est &lt;b&gt;insensible&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12971,7 +13477,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Confère à votre arme +3 ATQ. &lt;b&gt;Combo :&lt;/b&gt; donne à un serviteur allié aléatoire +3 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -13011,7 +13519,9 @@ Pioche deux cartes.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; confère à votre arme +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13038,7 +13548,9 @@ Pioche deux cartes.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>A +2 ATQ tant que vous avez un Méca.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13054,9 +13566,7 @@ Pioche deux cartes.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Chaque fois que vous jouez un pirate, gagne &lt;b&gt;Camouflage&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13071,9 +13581,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Déclenche tous les &lt;b&gt;Râles d’agonie&lt;/b&gt; de vos serviteurs.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13162,7 +13670,9 @@ Pioche deux cartes.</Text>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;.
 &lt;b&gt;Choix des armes :&lt;/b&gt;
 +1 ATQ ou +1 PV.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13317,7 +13827,9 @@ Pioche deux cartes.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; replace ce serviteur dans votre deck.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13332,7 +13844,9 @@ Pioche deux cartes.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; donne à un Méca allié aléatoire +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13361,7 +13875,9 @@ Pioche deux cartes.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13424,9 +13940,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; invoque 5 feux follets ou donne +5/+5 et &lt;b&gt;Provocation&lt;/b&gt; à un serviteur.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13481,7 +13995,9 @@ Pioche deux cartes.</Text>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; ajoute 4 murlocs aléatoires dans votre main.
 &lt;b&gt;Surcharge :&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13496,7 +14012,9 @@ Pioche deux cartes.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +1 ATQ à un serviteur allié aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13567,7 +14085,10 @@ Pioche deux cartes.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1 ATQ pour chacune de vos autres Bêtes.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13613,7 +14134,9 @@ Pioche deux cartes.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +2 ATQ à vos autres Méca.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13686,7 +14209,9 @@ Pioche deux cartes.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Accès de rage :&lt;/b&gt; +1 ATQ.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13716,7 +14241,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne 5 points d’armure.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13747,7 +14274,9 @@ Pioche deux cartes.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +2/+2 à un Méca allié.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13776,7 +14305,9 @@ Pioche deux cartes.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place une mine dans le deck de votre adversaire. Quand elle est piochée, elle explose et inflige 10 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13790,7 +14321,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Quand vous la piochez, elle explose, vous infligeant 10 points de dégâts. Vous piochez une carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13805,7 +14338,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Rend #4 |4(point,points) de vie à votre héros et lui confère +2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13818,7 +14353,9 @@ Pioche deux cartes.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 ATQ pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13833,7 +14370,9 @@ Pioche deux cartes.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13849,8 +14388,7 @@ Pioche deux cartes.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne &lt;b&gt;Bouclier divin&lt;/b&gt; et &lt;b&gt;Provocation&lt;/b&gt; à un serviteur allié aléatoire.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13866,7 +14404,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +2/+2 à vos recrues de la Main d’argent.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13910,9 +14450,7 @@ Pioche deux cartes.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Chaque fois que vous invoquez un Méca, gagne &lt;b&gt;Bouclier divin&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13984,7 +14522,9 @@ Pioche deux cartes.</Text>
     <Text>&lt;b&gt;Furie des vents.&lt;/b&gt;
 50% de chance d’attaquer le mauvais adversaire. 
 &lt;b&gt;Surcharge :&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -14011,7 +14551,9 @@ Pioche deux cartes.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Attaque augmentée.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14037,7 +14579,9 @@ Pioche deux cartes.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Attaque augmentée.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14051,7 +14595,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 8 PV à votre héros.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14138,7 +14684,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; prend le contrôle d’un &lt;b&gt;Secret&lt;/b&gt; adverse aléatoire.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14168,7 +14714,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 2 points de dégâts à tous les serviteurs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14211,7 +14759,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; donne une &lt;b&gt;Pièce détachée&lt;/b&gt; à chaque joueur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14226,7 +14776,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14241,7 +14793,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous avez une Bête, transforme ce serviteur en une carte 7/7.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14269,7 +14823,9 @@ Pioche deux cartes.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14284,7 +14840,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute une carte &lt;b&gt;Pièce détachée&lt;/b&gt; dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14300,7 +14858,9 @@ Pioche deux cartes.</Text>
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +4 PV à un Méca allié.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14315,7 +14875,9 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14331,7 +14893,10 @@ Pioche deux cartes.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;
 &lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14391,7 +14956,9 @@ Pioche deux cartes.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;
 50% de chance d’attaquer le mauvais adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14405,9 +14972,7 @@ Pioche deux cartes.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Si vous contrôlez un &lt;b&gt;Secret&lt;/b&gt; à la fin de votre tour, rend 4 PV à votre héros.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14421,7 +14986,9 @@ Pioche deux cartes.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 6 points de dégâts répartis de façon aléatoire entre tous les autres personnages.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14437,7 +15004,9 @@ Pioche deux cartes.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;
 Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14451,7 +15020,9 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous piochez une carte. Si c’est un serviteur, le transforme en poulet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14478,7 +15049,9 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14507,7 +15080,9 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>A +4 ATQ tant que votre adversaire a 6 cartes ou plus dans sa main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14522,7 +15097,9 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un serviteur aléatoire coûtant 2 cristaux.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14537,7 +15114,8 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1/+1 pour chaque serviteur adverse avec &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14553,7 +15131,10 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Charge&lt;/b&gt;
 &lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14567,7 +15148,9 @@ Ne peut pas être la cible de sorts ou de pouvoirs héroïques.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 4 points de dégâts à un serviteur adverse aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14613,7 +15196,7 @@ gagne +2/+2.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 2 points de dégâts à tous les serviteurs avec &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14641,7 +15224,9 @@ gagne +2/+2.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous avez un Méca, gagne +1/+1 et ajoute une &lt;b&gt;Pièce détachée&lt;/b&gt; dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14709,7 +15294,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un serviteur aléatoire coûtant 4 cristaux.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14752,9 +15339,7 @@ gagne +2/+2.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne à vos autres serviteurs &lt;b&gt;Furie des vents&lt;/b&gt;, &lt;b&gt;Provocation&lt;/b&gt; ou &lt;b&gt;Bouclier divin&lt;/b&gt;. &lt;i&gt;(Au hasard)&lt;/i&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14769,7 +15354,9 @@ gagne +2/+2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; transforme un serviteur allié en un serviteur aléatoire de même coût.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14784,7 +15371,10 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Camouflage&lt;/b&gt;
 &lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14798,7 +15388,9 @@ gagne +2/+2.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque deux Ro’Boum 1/1. &lt;i&gt;ATTENTION : les Ro’Boum peuvent exploser.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14812,7 +15404,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 1 à 4 points de dégâts à un adversaire aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14843,7 +15437,9 @@ gagne +2/+2.</Text>
     <Text>&lt;b&gt;Charge&lt;/b&gt;
 &lt;b&gt;Méga furie des vents&lt;/b&gt;
 &lt;i&gt;(Peut attaquer quatre fois par tour.)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14887,7 +15483,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un serviteur légendaire aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14901,7 +15499,10 @@ gagne +2/+2.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre et Râle d’agonie :&lt;/b&gt; ajoute une carte &lt;b&gt;Pièce détachée&lt;/b&gt; dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14959,7 +15560,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; équipe chaque joueur d’une arme aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14973,7 +15576,9 @@ gagne +2/+2.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit une Bête.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -15003,7 +15608,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Les serviteurs adjacents ne peuvent pas être la cible de sorts ou de pouvoirs héroïques.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15035,7 +15642,9 @@ gagne +2/+2.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>+2 aux dégâts des sorts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15085,9 +15694,7 @@ gagne +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Confère &lt;b&gt;Provocation&lt;/b&gt; à un serviteur.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15100,9 +15707,7 @@ gagne +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Confère &lt;b&gt;Camouflage&lt;/b&gt; à un serviteur allié jusqu’à votre prochain tour.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15127,7 +15732,9 @@ gagne +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Gèle&lt;/b&gt; un serviteur.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15262,7 +15869,9 @@ Place deux serviteurs de votre deck et un de votre adversaire sur le champ de ba
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15322,7 +15931,9 @@ Invoque un spectateur 1/1 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15370,7 +15981,9 @@ Inflige 30 points de dégâts.</Text>
     <Durability>0</Durability>
     <Text>Thaurissan ne peut pas utiliser son pouvoir héroïque.
 N’attaque jamais de serviteurs à moins qu’ils n’aient &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15383,7 +15996,9 @@ N’attaque jamais de serviteurs à moins qu’ils n’aient &lt;b&gt;Provocatio
     <Durability>0</Durability>
     <Text>Thaurissan ne peut pas utiliser son pouvoir héroïque.
 N’attaque jamais de serviteurs à moins qu’ils n’aient &lt;b&gt;Provocation&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15430,7 +16045,9 @@ Inflige 1 point de dégâts à tous les serviteurs.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 1 point de dégâts au héros adverse pour chaque lige du feu mort pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15442,7 +16059,9 @@ Inflige 1 point de dégâts à tous les serviteurs.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 3 points de dégâts au héros adverse pour chaque lige du feu mort pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15884,7 +16503,9 @@ Invoque deux orcs 2/2 avec &lt;b&gt;Provocation&lt;/b&gt;. Change de pouvoir hé
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15896,7 +16517,9 @@ Invoque deux orcs 2/2 avec &lt;b&gt;Provocation&lt;/b&gt;. Change de pouvoir hé
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16273,7 +16896,9 @@ Ajoute une carte Affliction de l’espèce dans la main de votre adversaire à l
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Vous subissez 1 point de dégâts au début de votre tour tant que vous avez cette carte dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16285,7 +16910,9 @@ Ajoute une carte Affliction de l’espèce dans la main de votre adversaire à l
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Vous subissez 3 points de dégâts au début de votre tour tant que vous avez cette carte dans votre main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16525,7 +17152,9 @@ Place un sort aléatoire de la classe de votre adversaire dans votre main.</Text
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 6 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16537,7 +17166,9 @@ Place un sort aléatoire de la classe de votre adversaire dans votre main.</Text
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16549,7 +17180,9 @@ Place un sort aléatoire de la classe de votre adversaire dans votre main.</Text
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furie des vents&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16561,7 +17194,9 @@ Place un sort aléatoire de la classe de votre adversaire dans votre main.</Text
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Inflige $8 |4(point,points) de dégâts à un adversaire aléatoire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16623,7 +17258,9 @@ Active un Tron aléatoire.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16674,7 +17311,9 @@ Active Arcanotron !</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Chaque joueur a &lt;b&gt;+2 aux dégâts des sorts&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16768,7 +17407,9 @@ Active Électron !</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Tous les sorts coûtent (3) |4(cristal,cristaux) de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16822,7 +17463,9 @@ Active Magmatron !</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Chaque fois qu’un joueur joue une carte, lui inflige 2 points de dégâts.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16921,7 +17564,9 @@ Vos serviteurs ont +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17145,7 +17790,9 @@ Invoque deux assemblages d’os 4/2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17245,7 +17892,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>L’Attaque passe à 0 pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17288,7 +17937,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Coûte (3) cristaux de moins pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17303,7 +17954,9 @@ Vous confère 4 points d’armure.</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +2 PV si vous avez un Dragon en main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17341,7 +17994,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Inflige $2 |4(point,points) de dégâts à tous les serviteurs qui ne sont pas des démons.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17400,7 +18055,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 2 points de dégâts à tous les serviteurs adverses qui ne sont pas blessés.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17416,7 +18073,9 @@ Vous confère 4 points d’armure.</Text>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocation&lt;/b&gt;.
  Coûte (1) |4(cristal,cristaux) de moins pour chaque serviteur mort pendant ce tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17520,7 +18179,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Les cartes que vous jouez pendant ce tour n’entraînent pas de &lt;b&gt;Surcharge&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17534,7 +18195,9 @@ Vous confère 4 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne 1 à 4 points d’Attaque. &lt;b&gt;Surcharge :&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17562,7 +18225,9 @@ Vous confère 4 points d’armure.</Text>
     <Class>Hunter</Class>
     <Text>Inflige $3 |4(point,points) de dégâts.
 Vous piochez une carte si votre main est vide.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17578,7 +18243,9 @@ Vous piochez une carte si votre main est vide.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +3/+3 si votre main est vide.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17652,7 +18319,9 @@ Vous piochez une carte si votre main est vide.</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; le prochain Dragon que vous jouez coûte (2) cristaux de moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17749,7 +18418,9 @@ Vous piochez une carte si votre main est vide.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +3/+3 si votre adversaire a 15 PV ou moins.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17791,7 +18462,9 @@ Vous piochez une carte si votre main est vide.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque un serviteur aléatoire à 1 cristal pour votre adversaire.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17805,7 +18478,9 @@ Vous piochez une carte si votre main est vide.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; remplace votre héros par Ragnaros, le seigneur du feu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17882,7 +18557,9 @@ Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; détruit un serviteur &lt;b&gt;légendaire&lt;/b&gt; si vous avez un Dragon en main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17897,7 +18574,9 @@ Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; ajoute 2 sorts aléatoires dans votre main &lt;i&gt;(de la classe de votre adversaire)&lt;/i&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17939,7 +18618,9 @@ Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1/+1 si vous avez un Dragon en main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17966,7 +18647,9 @@ Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 3 points de dégâts si vous avez un Dragon en main.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

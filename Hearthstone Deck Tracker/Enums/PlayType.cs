@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		PlayerSecretPlayed,
 		PlayerHeroPower,
 		PlayerPlayToDeck,
+		PlayerGetToDeck,
 		OpponentPlay,
 		OpponentDraw,
 		OpponentGet,
@@ -23,5 +24,6 @@ namespace Hearthstone_Deck_Tracker.Enums
 		OpponentSecretPlayed,
 		OpponentSecretTriggered,
 		OpponentHeroPower,
+		OpponentGetToDeck
 	}
 }

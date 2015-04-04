@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker
 		private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			_currentDeck.Note = Textbox.Text;
+			_currentDeck.Edited();
 			_noteChanged = true;
 			BtnSave.IsEnabled = true;
 		}

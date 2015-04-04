@@ -25,6 +25,15 @@ namespace Hearthstone_Deck_Tracker
 			Game.PlayerName = name;
 		}
 
+		public void HandlePlayerGetToDeck(string cardId, int turn)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			LogEvent("PlayerGetToDeck", cardId);
+			Game.PlayerGetToDeck(cardId, turn);
+			Game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
+		}
+
 		public static void HandlePlayerGet(string cardId, int turn)
 		{
 			if(string.IsNullOrEmpty(cardId))
@@ -170,6 +179,13 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentName(string name)
 		{
 			Game.OpponentName = name;
+		}
+
+		public void HandleOpponentGetToDeck(int turn)
+		{
+			LogEvent("OpponentGetToDeck", turn: turn);
+			Game.OpponentGetToDeck(turn);
+			Game.AddPlayToCurrentGame(PlayType.OpponentGetToDeck, turn, string.Empty);
 		}
 
 		public void SetRank(int rank)
@@ -604,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_doneImportingConstructed)
 				return;
 			var card = Game.GetCardFromId(id);
-			if(card == null)
+			if(!Game.IsActualCard(card))
 				return;
 			if(canBeDoneImporting)
 			{
@@ -620,7 +636,6 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 				_lastManaCost = card.Cost;
-				Helper.MainWindow.MenuItemImportConstructed.IsEnabled = true;
 			}
 			else
 			{
@@ -643,11 +658,10 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePossibleArenaCard(string id)
 		{
 			var card = Game.GetCardFromId(id);
-			if(card == null)
+			if(!Game.IsActualCard(card))
 				return;
 			if(!Game.PossibleArenaCards.Contains(card))
 				Game.PossibleArenaCards.Add(card);
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
 		public static void HandleWin()

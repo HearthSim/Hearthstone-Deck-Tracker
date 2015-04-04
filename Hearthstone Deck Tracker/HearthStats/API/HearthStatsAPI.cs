@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API.Objects;
@@ -315,7 +316,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObj.notes = game.Note;
 			if(game.GameMode == GameMode.Ranked && game.HasRank)
 				gameObj.ranklvl = game.Rank.ToString();
-			gameObj.created_at = game.StartTime.ToString("s") + "Z";
+			gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
 
 			var data = JsonConvert.SerializeObject(gameObj);
 
@@ -348,34 +349,40 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<PostResult> DeleteDeckAsync(Deck deck)
 		{
-			if(deck == null)
-			{
-				Logger.WriteLine("error: deck is null", "HearthStatsAPI");
-				return PostResult.Failed;
-			}
-			if(!deck.HasHearthStatsId)
-			{
-				Logger.WriteLine("error: deck has no HearthStatsId", "HearthStatsAPI");
-				return PostResult.Failed;
-			}
-			Logger.WriteLine("deleting deck: " + deck, "HearthStatsAPI");
+			return await DeleteDeckAsync(new[] {deck});
+		}
 
-			long deckId;
-			if(!long.TryParse(deck.HearthStatsId, out deckId))
+		public static async Task<PostResult> DeleteDeckAsync(IEnumerable<Deck> decks)
+		{
+			var filtered = decks.Where(d => d != null).ToList();
+			var noId = filtered.Where(d => !d.HasHearthStatsId).ToList();
+			foreach(var deck in noId)
 			{
-				Logger.WriteLine("error: invalid HearthStatsId", "HearthStatsAPI");
-				return PostResult.Failed;
+				Logger.WriteLine("error: deck " + deck.Name + " has no HearthStatsId", "HearthStatsAPI");
+				filtered.Remove(deck);
 			}
+			var invalidId = filtered.Where(d => !Regex.IsMatch(d.HearthStatsId, @"^\d+$")).ToList();
+			foreach(var deck in invalidId)
+			{
+				Logger.WriteLine("error: deck " + deck.Name + " has no valid HearthStatsId", "HearthStatsAPI");
+				filtered.Remove(deck);
+			}
+			if(!filtered.Any())
+				return PostResult.Failed;
+
+			Logger.WriteLine("deleting decks: " + filtered.Select(d => d.Name).Aggregate((c, n) => c + ", " + n), "HearthStatsAPI");
+
+			var ids = filtered.Select(d => long.Parse(d.HearthStatsId)).ToArray();
 
 			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken; // TODO 
-			var data = JsonConvert.SerializeObject(new {deck_id = new[] {deckId}});
+			var data = JsonConvert.SerializeObject(new {deck_id = ids});
 			try
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "success")
 				{
-					Logger.WriteLine("deleted deck", "HearthStatsAPI");
+					Logger.WriteLine("deleted decks", "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
 				Logger.WriteLine("error: " + response, "HearthStatsAPI");

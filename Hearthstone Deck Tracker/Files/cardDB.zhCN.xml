@@ -28,7 +28,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>在本回合中，获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从获得&lt;b&gt;嘲讽&lt;/b&gt;和+2/+2。&lt;i&gt;（+2攻击力/+2生命值）&lt;/i&gt;</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>在本回合中，获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>在本回合中，你的英雄获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>该随从被变形成为1/1的绵羊。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>对一个角色造成$3点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冻结&lt;/b&gt;所有敌方随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>召唤两个0/2，并具有&lt;b&gt;嘲讽&lt;/b&gt;的随从。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冻结&lt;/b&gt;任何受到该随从伤害的角色。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>对一个敌方角色造成$1点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从获得&lt;b&gt;风怒&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>为一个随从恢复所有生命值并使其获得&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>嘲讽</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>在本回合中，该角色获得+3攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>在本回合中，获得+3攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对所有其他角色造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>这把武器本回合获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为你的英雄恢复6点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>使一个友方随从获得+2攻击力和&lt;b&gt;冲锋&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>在本回合中，+4攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>你的其他随从获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤一个1/1的野猪。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>你的其他随从获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;战场上每有一个其他友方随从，便获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>每当一个随从获得治疗时，抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为所有友方角色恢复2点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方野兽获得+2/+2并获得&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>你的其他野兽获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>你的野兽获得&lt;b&gt;冲锋&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;恢复2点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤一个2/1的机械幼龙。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;摧毁对手的武器。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>每当你召唤一个攻击力小于或等于3的随从，使该随从获得&lt;b&gt;冲锋&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从变形成为一个0/1并具有&lt;b&gt;嘲讽&lt;/b&gt;的青蛙。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>该随从被变形了！</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>造成$3点伤害，随机分配到所有敌人身上。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机弃一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从获得&lt;b&gt;圣盾&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤一个1/1的鱼人斥候。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>所有其他鱼人获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>相邻的随从获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从获得&lt;b&gt;风怒&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对敌方英雄造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3008,7 +3111,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3067,7 +3172,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3098,7 +3205,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3141,7 +3250,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3169,7 +3280,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3214,7 +3327,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>对所有敌方随从造成$2点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3230,7 +3345,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>使一个角色&lt;b&gt;冻结&lt;/b&gt;，如果它已经被&lt;b&gt;冻结&lt;/b&gt;，则改为对其造成$4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3246,9 +3363,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从获得“&lt;b&gt;亡语&lt;/b&gt;：再次召唤该随从。”</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3308,7 +3423,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;潜行&lt;/b&gt;，在你的回合结束时，使另一个随机友方随从获得+1生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3337,7 +3454,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>使一个随从获得+2攻击力；&lt;b&gt;连击：&lt;/b&gt;改为获得+4攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3406,7 +3525,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;恢复3点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3422,9 +3543,7 @@
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>当你装备一把武器时，该随从获得&lt;b&gt;冲锋&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3439,7 +3558,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤一个2/2的侍从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3467,7 +3588,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;潜行&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3483,7 +3606,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3498,7 +3623,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对自身造成4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3525,7 +3652,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;本回合中，使一个随从获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3538,7 +3667,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，该随从获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3554,7 +3685,7 @@
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;&lt;b&gt;沉默&lt;/b&gt;一个随从。</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3570,7 +3701,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;激怒：&lt;/b&gt;你的武器获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3597,7 +3730,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>你的随从牌的法力值消耗增加（3）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3627,7 +3762,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>摧毁你的武器，对所有敌人造成等同于其攻击力的伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3774,7 +3911,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭一个具有&lt;b&gt;嘲讽&lt;/b&gt;的敌方随从。</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3815,7 +3952,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭一个攻击力大于或等于7的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3859,7 +3998,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3874,7 +4015,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;激怒：&lt;/b&gt;+5攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3889,7 +4032,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;潜行&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3904,7 +4049,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;，&lt;b&gt;亡语：&lt;/b&gt;抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3919,7 +4067,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使你的对手获得两个香蕉。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3957,7 +4107,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;随机获得一个敌方随从的控制权。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3973,7 +4125,9 @@
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;潜行&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3988,7 +4142,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4003,7 +4159,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4018,7 +4176,9 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4034,7 +4194,9 @@
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;潜行&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4049,7 +4211,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;对敌方英雄造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4064,7 +4228,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;圣盾&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4079,7 +4246,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4095,7 +4264,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;你每有一张手牌，便获得+1生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4164,7 +4335,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;本回合中，使一个随从获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4177,7 +4350,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4192,7 +4367,7 @@
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;&lt;b&gt;沉默&lt;/b&gt;一个随从。</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4208,7 +4383,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从从战场上移回你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4224,7 +4401,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;每个玩家抽两张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4252,7 +4431,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>魔瘾者的攻击力增加。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4266,7 +4447,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从从战场上移回你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4282,7 +4465,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使相邻的随从获得&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4298,7 +4481,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个随从的攻击力和生命值互换。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4325,7 +4510,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，&lt;b&gt;圣盾&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4340,7 +4528,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>你每个回合使用的第一张随从牌的法力值消耗减少（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4355,9 +4545,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>每当有一张&lt;b&gt;奥秘&lt;/b&gt;牌被使用时，便获得+1/+1。</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4384,7 +4572,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成3点伤害，随机分配于其他角色身上。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4399,7 +4589,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使另一个随机随从变形成为一个5/5的恐龙或一个1/1的松鼠。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4414,7 +4606,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的对手拥有4个或者更多随从，随机获得其中一个的控制权。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4429,7 +4623,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;使你的对手获得一个法力水晶。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4445,7 +4642,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;获得一个攻击力小于或等于2的敌方随从的控制权。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4461,7 +4660,7 @@
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使相邻的随从获得+1/+1和&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4504,7 +4703,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4519,7 +4720,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;亡语：&lt;/b&gt;对所有角色造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4566,7 +4770,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使所有其他鱼人获得+2生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4608,7 +4814,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;召唤一个4/5的贝恩·血蹄。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4635,7 +4843,10 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;为你的对手召唤两只1/1的雏龙。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4663,7 +4874,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>造成$2点伤害；&lt;b&gt;连击：&lt;/b&gt;改为造成$4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4695,9 +4908,7 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>直到你的下个回合，使所有友方随从获得&lt;b&gt;潜行&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4726,7 +4937,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个敌人攻击时，召唤一个2/1的防御者，并使其成为攻击的目标。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4756,7 +4969,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;连击：&lt;/b&gt;召唤一个2/1的迪菲亚强盗。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4785,7 +5000,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的英雄受到伤害时，对敌方英雄造成等量伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4801,7 +5018,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成1点伤害。&lt;b&gt;连击：&lt;/b&gt;改为造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4817,7 +5037,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;连击：&lt;/b&gt;造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4833,7 +5055,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个你的随从死亡时，使其回到战场，并具有1点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4849,7 +5073,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>对敌方英雄造成$2点伤害；&lt;b&gt;连击：&lt;/b&gt;在下个回合将其移回你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4895,7 +5121,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>在本回合中，你所施放的下一个法术的法力值消耗减少（3）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4954,9 +5182,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;抉择&lt;/b&gt;：使一个随从获得+4攻击力；或者+4生命值并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5026,9 +5252,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>使你的所有随从获得“&lt;b&gt;亡语：&lt;/b&gt;召唤一个2/2的树人。”</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5157,7 +5381,10 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>相邻的随从获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5229,10 +5456,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;抉择&lt;/b&gt;：&lt;b&gt;冲锋&lt;/b&gt;；或者+2生命值并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5278,7 +5502,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5293,7 +5519,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5308,9 +5536,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;抉择&lt;/b&gt;：造成2点伤害；或者&lt;b&gt;沉默&lt;/b&gt;一个随从。</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5339,7 +5565,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;沉默&lt;/b&gt;一个随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5354,7 +5582,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>消灭任何受到该随从伤害的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5371,9 +5601,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;抉择&lt;/b&gt;：
 +5攻击力；或者+5生命值并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5475,7 +5703,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;风怒&lt;/b&gt;，&lt;b&gt;过载：&lt;/b&gt;（2）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5491,7 +5721,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;沉默&lt;/b&gt;一个随从，然后对其造成$1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5523,9 +5755,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>召唤2个2/3并具有&lt;b&gt;嘲讽&lt;/b&gt;的幽灵狼。&lt;b&gt;过载：&lt;/b&gt;（2）</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5556,7 +5786,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;过载：&lt;/b&gt;（3）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5632,9 +5864,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>如果在你的回合结束时，你控制任何&lt;b&gt;奥秘&lt;/b&gt;，该随从便获得+2/+2。</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5663,7 +5893,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冻结&lt;/b&gt;一个随从和其相邻的随从，并对它们造成$1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5694,7 +5926,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;&lt;b&gt;冻结&lt;/b&gt;一个角色。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5710,7 +5945,10 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;法术伤害+1&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5726,7 +5964,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的对手施放法术时，&lt;b&gt;反制&lt;/b&gt;该法术。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5742,7 +5982,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的英雄受到攻击时，获得8点护甲值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5758,7 +6000,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的对手打出一张随从牌时，召唤一个该随从的复制。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5774,7 +6018,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的英雄将要承受致命伤害时，防止这些伤害，并使其在本回合中获得&lt;b&gt;免疫&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5788,7 +6034,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>在本回合中，你的英雄获得&lt;b&gt;免疫&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5819,7 +6067,10 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;摧毁你的一个法力水晶。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5835,7 +6086,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>消灭一个友方随从，对所有敌方随从造成等同于其攻击力的伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5851,7 +6104,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭该随从两侧的随从，并获得他们的攻击力和生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5897,7 +6152,10 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;随机弃两张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5930,7 +6188,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对你的英雄造成5点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5946,7 +6206,9 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>你的随从牌的法力值消耗减少（2）点，但不能少于（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6024,7 +6286,9 @@
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对你的英雄造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6056,7 +6320,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭你的英雄，并用加拉克苏斯大王替换他。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6099,7 +6365,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;沉默&lt;/b&gt;一个随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6299,7 +6567,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个其他友方随从获得&lt;b&gt;圣盾&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6402,7 +6670,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的对手召唤一个随从，使该随从的生命值降为1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6431,7 +6701,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个敌方随从的攻击力变为1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6460,7 +6732,11 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;，&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;亡语：&lt;/b&gt;装备一把5/3的灰烬使者。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6489,7 +6765,9 @@
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>造成$8点伤害，随机分配到所有敌人身上。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6504,7 +6782,10 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;激怒：&lt;/b&gt;+3攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6551,7 +6832,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;激怒：&lt;/b&gt;+3攻击力</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6566,7 +6849,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6582,7 +6867,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;装备一把2/2的武器。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6625,7 +6912,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6714,7 +7003,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>你每有1点护甲值，便对一个随从造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6772,7 +7063,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;激怒：&lt;/b&gt;+1攻击力并具有&lt;b&gt;风怒&lt;/b&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6790,7 +7081,10 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;
 &lt;b&gt;激怒：&lt;/b&gt;+6攻击力</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6806,7 +7100,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>所有其他鱼人获得+2/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6862,7 +7158,10 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;潜行&lt;/b&gt;。消灭任何受到该随从伤害的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6907,7 +7206,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个角色攻击你的英雄时，改为该角色攻击另一个随机角色。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6923,7 +7224,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;召唤两个2/2的土狼。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6953,9 +7256,7 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>每当有一张你的&lt;b&gt;奥秘&lt;/b&gt;牌被揭示时，便获得+1耐久度。</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -6999,9 +7300,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>战场上每有一个敌方随从，便召唤一个1/1并具有&lt;b&gt;冲锋&lt;/b&gt;的猎犬。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7016,7 +7315,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7032,7 +7333,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7048,10 +7351,7 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>所有随从失去&lt;b&gt;潜行&lt;/b&gt;，摧毁所有敌方&lt;b&gt;奥秘&lt;/b&gt;，抽一张牌。</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7081,7 +7381,9 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>在本回合中，+2攻击力并具有&lt;b&gt;免疫&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7096,7 +7398,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的随从受到攻击时，召唤3条1/1的蛇。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7127,7 +7431,9 @@
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;召唤一个2/1的损坏的傀儡。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7157,7 +7463,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;摧毁对手的武器，并抽数量等同于其耐久度的牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7205,7 +7513,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个英雄的剩余生命值成为15。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7233,7 +7543,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤数个1/1的雏龙，直到你的随从数量达到上限。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7249,7 +7561,9 @@
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;法术伤害+5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7264,7 +7578,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;选择一个随从，成为它的复制。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7280,7 +7596,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;风怒，过载：&lt;/b&gt;（2）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7309,7 +7627,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，获得+4攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7324,9 +7644,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>召唤三个2/2并具有&lt;b&gt;冲锋&lt;/b&gt;的树人，在回合结束时，消灭这些树人。</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7358,9 +7676,7 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;抉择：&lt;/b&gt;使你的所有其他随从获得+2/+2；或者召唤两个2/2并具有&lt;b&gt;嘲讽&lt;/b&gt;的树人。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7416,7 +7732,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7448,7 +7766,9 @@
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;为你的对手召唤1个3/3的芬克·恩霍尔。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7464,7 +7784,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>对一个随从造成等同于你的英雄攻击力的伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7479,7 +7801,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为你的英雄恢复4点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7495,7 +7819,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使相邻的随从获得&lt;b&gt;法术伤害+1&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7539,7 +7863,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;所有随从失去&lt;b&gt;圣盾&lt;/b&gt;。每有一个随从失去圣盾，便获得+3/+3。</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7569,7 +7893,9 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>你的恢复生命值的牌和技能改为造成等量的伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7585,7 +7911,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个随从攻击你的英雄，将其消灭。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7676,7 +8004,9 @@
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对一个随从造成1点伤害，并使其获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7763,7 +8093,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>你的法术的法力值消耗减少（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7779,7 +8111,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的对手打出一张随从牌时，对该随从造成$4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7795,7 +8129,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的英雄受到攻击，对所有敌人造成$2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7811,7 +8147,9 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个敌方随从进攻时，将其移回其拥有者的手中，并使其法力值消耗增加（2）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7841,7 +8179,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;在本回合中，你使用的下一个&lt;b&gt;奥秘&lt;/b&gt;的法力值消耗为（0）点。</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7856,7 +8194,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>你的下一个奥秘的法力值消耗为（0）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7871,7 +8211,9 @@
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;连击：&lt;/b&gt;在本回合中，使用此牌前每打出一张其他牌，便获得+2/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7926,7 +8268,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>召唤所有随从的法力值消耗增加（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8015,7 +8359,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从获得+3生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8101,7 +8447,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;沉默&lt;/b&gt;所有敌方随从，抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8130,7 +8478,9 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8172,7 +8522,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8217,7 +8569,9 @@
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，在回合结束时，消灭该随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8231,7 +8585,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;连击：&lt;/b&gt;将一个随从移回其拥有者的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8328,7 +8684,12 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;风怒，冲锋，圣盾，嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8372,7 +8733,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方随从获得&lt;b&gt;潜行&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8388,7 +8749,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭一个鱼人，并获得+2/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8415,7 +8778,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;获得等同于你的武器攻击力的攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8484,7 +8849,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，你的武器每有1点攻击力，该牌的法力值消耗便减少（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8514,7 +8881,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使你的武器获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8541,7 +8910,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使对手的武器失去1点耐久度。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8593,7 +8964,9 @@
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>你的其他海盗获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8619,7 +8992,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;下个回合敌方法术的法力值消耗为（0）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8647,7 +9022,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭所有其他随从，并弃掉你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8676,7 +9053,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>在本回合中，生命值无法被降到1点以下。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8689,7 +9068,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>在本回合中，你的随从的生命值无法被降到1点以下。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8754,9 +9135,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>在你的回合结束时，召唤一个2/2并具有&lt;b&gt;嘲讽&lt;/b&gt;的豺狼人。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8769,7 +9148,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8783,7 +9164,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机消灭一个攻击力小于或等于2的敌方随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8840,7 +9223,9 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个敌方法术以一个随从为目标时，召唤一个1/3的随从并使其成为新的目标。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9090,7 +9475,9 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;，在战场上每有一个其他鱼人便获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9105,7 +9492,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机从你的牌库中将一张海盗牌置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9233,7 +9622,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>这木桶里有什么东西？</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9325,7 +9716,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，穆克拉获得+8攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9562,7 +9955,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;扔香蕉。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9575,7 +9970,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9588,7 +9985,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9666,7 +10065,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9834,7 +10235,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10284,7 +10687,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10370,7 +10775,9 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;进行一次惊人的发明。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10455,7 +10862,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>被变形为小鸡。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10481,7 +10890,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;让两位玩家都具有摇滚的能力！（双方各获得一张强力和弦牌）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10543,7 +10954,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;为敌方英雄恢复5点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10558,7 +10971,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;召唤两个1/1的鬼灵蜘蛛。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10583,7 +10998,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;在回合结束时召唤一个该随从的复制。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10598,7 +11015,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;将一个&lt;b&gt;奥秘&lt;/b&gt;从你的牌库中置入战场。</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10613,7 +11030,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;潜行。&lt;/b&gt;在你的回合开始时，获得+1/+1。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10638,7 +11057,10 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;冲锋，亡语：&lt;/b&gt;对你的英雄造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10651,7 +11073,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;召唤一个4/4的蛛魔。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10693,6 +11117,7 @@
     <Text>&lt;b&gt;嘲讽，亡语：&lt;/b&gt;你的对手将一个随从从其牌库置入战场。</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10708,7 +11133,9 @@
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>消灭任何受到该随从伤害的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10724,7 +11151,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;随机将一张野兽牌置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10738,7 +11167,10 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽，亡语：&lt;/b&gt;召唤一个1/2并具有&lt;b&gt;嘲讽&lt;/b&gt;的泥浆怪。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10751,7 +11183,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10778,7 +11212,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;如果费尔根也在本局对战中死亡，召唤塔迪乌斯。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10804,7 +11240,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;如果斯塔拉格也在本局对战中死亡，召唤塔迪乌斯。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10819,7 +11257,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：沉默&lt;/b&gt;你的其他随从。</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10835,7 +11273,7 @@
     <Durability>0</Durability>
     <Text>具有&lt;b&gt;战吼&lt;/b&gt;的随从法力值消耗增加(2)点。</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10851,7 +11289,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当一个友方随从死亡时，将两个该随从的复制置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10893,7 +11333,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;奥秘：&lt;/b&gt;当你的随从死亡时，使一个随机友方随从获得+3/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10921,7 +11363,9 @@
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;对所有随从造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10937,7 +11381,9 @@
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;随机将一个恶魔从你的手牌置入战场。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10952,7 +11398,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;使一个随机友方随从获得+3生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10979,7 +11427,10 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽，亡语：&lt;/b&gt;对所有随从造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11010,7 +11461,7 @@
     <Class>Rogue</Class>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;将一个随机友方随从移回你的手牌。</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11039,9 +11490,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>每当你召唤一个具有&lt;b&gt;亡语&lt;/b&gt;的随从，便获得+1攻击力。</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11067,7 +11516,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;你的对手抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11081,7 +11532,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;下个回合敌方法术的法力值消耗增加(5)点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11108,7 +11561,7 @@
     <Durability>0</Durability>
     <Text>你的随从的&lt;b&gt;亡语&lt;/b&gt;效果将触发两次。</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11144,7 +11597,9 @@
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;将这把武器移回你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11157,7 +11612,10 @@
     <Durability>8</Durability>
     <Text>&lt;b&gt;风怒&lt;/b&gt;
 &lt;b&gt;亡语：&lt;/b&gt;将这把武器移回你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11254,9 +11712,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>使一个随从获得+4/+4并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11268,9 +11724,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11390,7 +11844,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，获得+6攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11532,7 +11988,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>被永久冻结。相邻的随从免疫冰霜吐息。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11544,7 +12002,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>对敌方英雄造成$8点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11601,7 +12061,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄技能&lt;/b&gt;
 对敌方英雄造成2点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11614,7 +12076,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄技能&lt;/b&gt;
 对敌方英雄造成3点伤害，并使其&lt;b&gt;冻结&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11626,7 +12090,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11638,7 +12104,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11807,7 +12275,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄技能&lt;/b&gt;
 你的对手每有一张手牌，便发射一枚飞弹。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11820,7 +12290,9 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄技能&lt;/b&gt;
 你的对手每有一张手牌，便发射一枚飞弹。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11832,7 +12304,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>你的英雄在你的回合获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11844,7 +12318,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>你的英雄在你的回合获得+3攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12122,7 +12598,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;使所有敌方随从获得+8攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12180,7 +12658,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12302,7 +12782,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;为你的对手召唤一个鬼灵学徒。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12326,7 +12808,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;为你的对手召唤一个鬼灵战士。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12350,7 +12834,9 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;为你的对手召唤一个鬼灵骑兵。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12529,7 +13015,9 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;消灭与该随从相邻的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12541,7 +13029,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;摧毁对手的武器。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12603,7 +13093,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你控制任何机械，则造成4点伤害，随机分配到所有敌人身上。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12633,7 +13125,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>你的机械的法力值消耗减少（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12664,7 +13158,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>对所有随从造成等同于其攻击力的伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12679,7 +13175,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对每个英雄造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12694,9 +13192,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>使一个随从获得+2/+4并具有&lt;b&gt;法术伤害+1&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12723,7 +13219,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;在本回合中，使一个随从获得-2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12736,7 +13234,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，获得-2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12764,7 +13264,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>如果你控制任何机械，便获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12779,7 +13281,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;与另一个随从交换生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12914,7 +13418,9 @@
     <Race>Demon</Race>
     <Text>你的其他恶魔获得+2/+2。
 你的英雄获得&lt;b&gt;免疫&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12942,7 +13448,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>使你的武器获得+3攻击力。&lt;b&gt;连击：&lt;/b&gt;使一个随机友方随从获得+3攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12982,7 +13490,9 @@
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使你的武器获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13009,7 +13519,9 @@
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>如果你控制任何机械，便获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13025,9 +13537,7 @@
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>每当你召唤一个海盗，便获得&lt;b&gt;潜行&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13042,9 +13552,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>触发所有友方随从的&lt;b&gt;亡语&lt;/b&gt;效果。</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13132,7 +13640,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;嘲讽，抉择：&lt;/b&gt;
 +1攻击力；或者+1生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13287,7 +13797,9 @@
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;将该随从洗入你的牌库。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13302,7 +13814,9 @@
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;使一个随机友方机械获得+2/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13331,7 +13845,9 @@
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13394,9 +13910,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;抉择：&lt;/b&gt;召唤5个小精灵；或者使一个随从获得+5/+5并具有&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13450,7 +13964,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;将四张随机鱼人牌置入你的手牌，&lt;b&gt;过载：&lt;/b&gt;（3）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13465,7 +13981,9 @@
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个随机友方随从获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13536,7 +14054,10 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;你每控制一只其他野兽，便获得+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13582,7 +14103,9 @@
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使你的其他机械获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13655,7 +14178,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;激怒：&lt;/b&gt;+1攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13685,7 +14210,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;获得5点护甲值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13716,7 +14243,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方机械获得+2/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13745,7 +14274,9 @@
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;将一张“地雷” 牌洗入你的对手的牌库。当你的对手抽到该牌，便对其造成10点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13759,7 +14290,9 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>当你抽到这张牌时会发生爆炸。你受到10点伤害并抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13774,7 +14307,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>为你的英雄恢复#4点生命值，并在本回合中获得+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13787,7 +14322,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>在本回合中，+2攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13802,7 +14339,9 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13818,8 +14357,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个随机友方随从获得&lt;b&gt;圣盾&lt;/b&gt;和&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13835,7 +14373,9 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使你的白银之手新兵获得+2/+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13879,9 +14419,7 @@
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>每当你召唤一个机械，便获得&lt;b&gt;圣盾&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13952,7 +14490,9 @@
     <Class>Shaman</Class>
     <Text>&lt;b&gt;风怒，过载：&lt;/b&gt;（1）
 50%几率攻击错误的敌人。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13979,7 +14519,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>攻击力增加。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14005,7 +14547,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>攻击力增加。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14019,7 +14563,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为你的英雄恢复8点生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14106,7 +14652,7 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机获得一个敌方&lt;b&gt;奥秘&lt;/b&gt;的控制权。</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14136,7 +14682,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;对所有随从造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14179,7 +14727,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;使每个玩家获得一个&lt;b&gt;零件&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14194,7 +14744,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14209,7 +14761,9 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你控制任何野兽，将该随从变形成为7/7。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14237,7 +14791,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;潜行&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14252,7 +14808,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;将一张&lt;b&gt;零件&lt;/b&gt;牌置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14268,7 +14826,9 @@
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;使一个友方机械获得+4生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14283,7 +14843,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14298,7 +14860,10 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;嘲讽，圣盾&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14357,7 +14922,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;潜行，&lt;/b&gt;50%几率攻击错误的敌人。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14371,9 +14938,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>如果在你的回合结束时，你控制任何&lt;b&gt;奥秘&lt;/b&gt;，则为你的英雄恢复4点生命值。</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14387,7 +14952,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成6点伤害，随机分配于其他角色身上。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14402,7 +14969,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;嘲讽，&lt;/b&gt;无法成为法术或英雄技能的目标。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14416,7 +14985,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;抽一张牌，如果该牌是随从牌，则将其变形成为一只小鸡。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14443,7 +15014,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14472,7 +15045,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>如果你的对手的手牌数量等于或大于6张，便具有+4攻击力。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14487,7 +15062,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt; 随机召唤一个法力值消耗为（2）点的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14502,7 +15079,8 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;，&lt;b&gt;战吼：&lt;/b&gt;每有一个具有&lt;b&gt;亡语&lt;/b&gt;的敌方随从，便获得+1/+1。</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14517,7 +15095,10 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;冲锋，嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14531,7 +15112,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对一个随机敌方随从造成4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14576,7 +15159,7 @@
     <Class>Paladin</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对所有具有&lt;b&gt;亡语&lt;/b&gt;的随从造成2点伤害。</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14604,7 +15187,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你控制一个机械，便获得+1/+1并将一张&lt;b&gt;零件&lt;/b&gt;牌置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14672,7 +15257,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;随机召唤一个法力值消耗为（4）点的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14715,9 +15302,7 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机使你的其他随从分别获得&lt;b&gt;风怒&lt;/b&gt;，&lt;b&gt;嘲讽&lt;/b&gt;，或者&lt;b&gt;圣盾&lt;/b&gt;效果中的一种。</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14732,7 +15317,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;将一个友方随从随机变形成为一个法力值消耗相同的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14746,7 +15333,10 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;潜行，法术伤害+1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14760,7 +15350,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;召唤两个1/1的砰砰机器人。&lt;i&gt;警告：该机器人随时可能爆炸。&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14774,7 +15366,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;对一个随机敌人造成1到4点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14804,7 +15398,9 @@
     <Race>Mech</Race>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;
 &lt;b&gt;超级风怒&lt;/b&gt; &lt;i&gt;（每个回合攻击四次）&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14848,7 +15444,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;随机召唤一个传说随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14862,7 +15460,10 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼，亡语：&lt;/b&gt;将一张&lt;b&gt;零件&lt;/b&gt;牌置入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14920,7 +15521,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为每个玩家装备一把武器。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14934,7 +15537,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;消灭一只野兽。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14964,7 +15569,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>相邻的随从无法成为法术或英雄技能的目标。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -14996,7 +15603,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>法术伤害+2。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15046,9 +15655,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>使一个随从获得&lt;b&gt;嘲讽&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15061,9 +15668,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>直到你的下一个回合，使一个友方随从获得&lt;b&gt;潜行&lt;/b&gt;。</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15088,7 +15693,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;冻结&lt;/b&gt;一个随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15223,7 +15830,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15283,7 +15892,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15331,7 +15942,9 @@
     <Durability>0</Durability>
     <Text>索瑞森无法使用他的英雄技能。
 不攻击随从，除了具有&lt;b&gt;嘲讽&lt;/b&gt;的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15344,7 +15957,9 @@
     <Durability>0</Durability>
     <Text>索瑞森无法使用他的英雄技能。
 不攻击随从，除了具有&lt;b&gt;嘲讽&lt;/b&gt;的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15391,7 +16006,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;在本回合中每死亡一个火誓者，便对敌方英雄造成1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15403,7 +16020,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;在本回合中每死亡一个火誓者，便对敌方英雄造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15845,7 +16464,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15857,7 +16478,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16234,7 +16857,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>如果这张牌在你的手牌中，在你的回合开始时，你的英雄受到1点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16246,7 +16871,9 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>如果这张牌在你的手牌中，在你的回合开始时，你的英雄受到3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16486,7 +17113,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;造成6点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16498,7 +17127,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16510,7 +17141,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;风怒&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16522,7 +17155,9 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>对一个随机敌人造成$8点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16584,7 +17219,9 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16635,7 +17272,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>每个玩家获得&lt;b&gt;法术伤害+2&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16729,7 +17368,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>所有法术的法力值消耗减少（3）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16783,7 +17424,9 @@
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>每当一个玩家使用一张牌时，熔岩金刚便对其造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16882,7 +17525,9 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;冲锋&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17106,7 +17751,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17206,7 +17853,9 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>在本回合中，攻击力变为0点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17249,7 +17898,9 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>在本回合中，法力值消耗减少（3）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17264,7 +17915,9 @@
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的手牌中有龙牌，便获得+2生命值。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17302,7 +17955,9 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>对所有非恶魔随从造成$2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17361,7 +18016,9 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;对所有未受伤的敌方随从造成2点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17377,7 +18034,9 @@
     <Class>Druid</Class>
     <Text>&lt;b&gt;嘲讽&lt;/b&gt;
 在本回合中每有一个随从死亡，该牌的法力值消耗就减少（1）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17482,7 +18141,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>所有在本回合中使用的牌不会造成&lt;b&gt;过载&lt;/b&gt;。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17496,7 +18157,9 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;获得1-4点攻击力。&lt;b&gt;过载：&lt;/b&gt;（1）</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17524,7 +18187,9 @@
     <Class>Hunter</Class>
     <Text>造成$3点伤害。
 如果你没有其他手牌，则抽一张牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17540,7 +18205,9 @@
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你没有其他手牌，则获得+3/+3。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17614,7 +18281,9 @@
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;你的下一张龙牌的法力值消耗减少（2）点。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17711,7 +18380,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的对手的生命值小于或等于15点，便获得+3/+3。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17753,7 +18424,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;为你的对手随机召唤一个法力值消耗为（1）点的随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17767,7 +18440,9 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;亡语：&lt;/b&gt;用炎魔之王拉格纳罗斯替换你的英雄。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17844,7 +18519,9 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的手牌中有龙牌，则消灭一个&lt;b&gt;传说&lt;/b&gt;随从。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17859,7 +18536,9 @@
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;随机将两张&lt;i&gt;（你的对手职业的）&lt;/i&gt;法术牌加入你的手牌。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17901,7 +18580,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的手牌中有龙牌，便获得+1/+1。 </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17928,7 +18609,9 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;战吼：&lt;/b&gt;如果你的手牌中有龙牌，则造成3点伤害。</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

@@ -137,6 +137,11 @@
             <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
             <Rectangle Name="RectGoldDisplay" Width="150" Height="25" Visibility="Hidden"/>
             <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" Margin="3" FontSize="16" Visibility="Hidden"/>
+            <StackPanel Orientation="Horizontal" Name="StackPanelWarning">
+                <local:HearthstoneTextBlock Text="Warning!" Margin="3" FontSize="16" Fill="Red"/>
+                <local:HearthstoneTextBlock x:Name="LblWarning" Text="Cards not found in deck:" Margin="3" FontSize="16" Fill="White"/>
+                <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
+            </StackPanel>
         </Canvas>
 
     </Grid>

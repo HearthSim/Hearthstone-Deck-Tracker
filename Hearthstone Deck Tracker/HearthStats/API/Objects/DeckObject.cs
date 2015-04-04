@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		public string name;
 		public string notes;
 		public string[] tags;
+		public DateTime updated_at;
 
 		public Deck ToDeck(CardObject[] cards, DeckVersion[] versions, string version)
 		{
@@ -54,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					                           .ToList(), tags ?? new string[0], notes ?? "", url, DateTime.Now, archived, new List<Card>(),
 				                    SerializableVersion.ParseOrDefault(version), new List<Deck>(), true, id.ToString(), Guid.NewGuid(),
 				                    deck_version_id.ToString());
+				deck.LastEdited = updated_at.ToLocalTime();
 				if(versions.Length > 0)
 					deck.Versions = versions.Where(v => v.version != version).Select(v => v.ToDeck(deck)).ToList();
 				var current = versions.FirstOrDefault(v => v.version == version);

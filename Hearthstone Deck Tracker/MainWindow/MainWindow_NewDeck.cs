@@ -262,6 +262,14 @@ namespace Hearthstone_Deck_Tracker
 			UpdateCardCount();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
+			try
+			{
+				TextBoxDBFilter.Focus();
+				TextBoxDBFilter.Select(0, TextBoxDBFilter.Text.Length);
+			}
+			catch
+			{
+			}
 		}
 
 		private void AddCardToDeck(Card card)

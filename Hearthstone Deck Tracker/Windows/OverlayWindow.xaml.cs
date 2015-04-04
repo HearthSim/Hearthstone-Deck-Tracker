@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -105,6 +106,8 @@ namespace Hearthstone_Deck_Tracker
 		public bool ForceHidden { get; set; }
 		public static double Scaling { get; set; }
 		public static double OpponentScaling { get; set; }
+
+		public Visibility WarningVisibility { get; set; }
 
 		private void MouseInputOnLmbUp(object sender, EventArgs eventArgs)
 		{
@@ -304,11 +307,14 @@ namespace Hearthstone_Deck_Tracker
 						}
 						else if(panel.Visibility == Visibility.Collapsed)
 						{
-							panel.Visibility = Visibility.Visible;
-							if(panel.Equals(StackPanelPlayer))
-								_playerCardsHidden = false;
-							else
-								_opponentCardsHidden = false;
+							if(!(Game.IsInMenu && Config.Instance.HideInMenu))
+							{
+								panel.Visibility = Visibility.Visible;
+								if(panel.Equals(StackPanelPlayer))
+									_playerCardsHidden = false;
+								else
+									_opponentCardsHidden = false;
+							}
 						}
 					}
 				}
@@ -601,7 +607,7 @@ namespace Hearthstone_Deck_Tracker
 			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
 			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
-			SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
+			SetCardCount(Game.PlayerHandCount, Game.PlayerDeckSize - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(c => c.Count));
 
 			SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount);
 
@@ -610,6 +616,17 @@ namespace Hearthstone_Deck_Tracker
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
+			var showWarning = !Game.IsInMenu && Game.NoMatchingDeck;
+			StackPanelWarning.Visibility =  showWarning ? Visibility.Visible : Visibility.Collapsed;
+			if(showWarning)
+			{
+				var drawn = new Deck() {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
+				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
+				var count = diff.Count > 3 ? 3 : diff.Count;
+				LblWarningCards.Text = diff.Take(count).Select(c => c.LocalizedName).Aggregate((c, n) => c + ", " + n);
+				if(diff.Count > 3)
+					LblWarningCards.Text += ", ...";
+			}
 
 			if(Game.IsInMenu)
 			{

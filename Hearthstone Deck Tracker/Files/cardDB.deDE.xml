@@ -28,7 +28,9 @@ Stellt 2 Leben wieder her.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -166,7 +168,9 @@ Stellt 2 Leben wieder her.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -213,9 +217,7 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem Diener &lt;b&gt;Spott&lt;/b&gt; und +2/+2.&lt;i&gt; (+2 Angriff/+2 Leben)&lt;/i&gt;</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -258,7 +260,9 @@ Stellt 2 Leben wieder her.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -333,7 +337,9 @@ Stellt 2 Leben wieder her.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Euer Held hat +1 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -364,7 +370,9 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Dieser Diener wurde in ein Schaf (1/1) verwandelt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -395,7 +403,9 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt einem Charakter $3 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -427,7 +437,9 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Friert&lt;/b&gt; alle feindlichen Diener ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -443,9 +455,7 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Ruft zwei Diener (0/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -493,7 +503,9 @@ Stellt 2 Leben wieder her.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Friert&lt;/b&gt; jeden Charakter ein, der von diesem Diener verletzt wurde.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -525,7 +537,9 @@ Verursacht 1 Schaden.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt einem feindlichen Charakter $1 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -541,9 +555,7 @@ Verursacht 1 Schaden.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem Diener &lt;b&gt;Windzorn&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -559,9 +571,7 @@ Verursacht 1 Schaden.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Stellt das volle Leben eines Dieners wieder her und verleiht ihm &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -575,7 +585,9 @@ Verursacht 1 Schaden.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -590,7 +602,9 @@ Verursacht 1 Schaden.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 3 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -620,7 +634,9 @@ Verursacht 1 Schaden.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Dieser Charakter hat +3 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -649,7 +665,9 @@ Verursacht 1 Schaden.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -696,7 +714,9 @@ Beschwört ein zufälliges Totem.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -712,7 +732,9 @@ Beschwört ein zufälliges Totem.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -821,7 +843,9 @@ Zieht eine Karte und erleidet 2 Schaden.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt ALLEN anderen Charakteren 1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -838,7 +862,9 @@ Zieht eine Karte und erleidet 2 Schaden.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -989,7 +1015,9 @@ Legt einen Dolch (1/2) an.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1063,7 +1091,9 @@ Legt einen Dolch (1/2) an.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt bei Eurem Helden 6 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1232,9 +1262,7 @@ Erhaltet 2 Rüstung.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem befreundeten Diener +2 Angriff und &lt;b&gt;Ansturm&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1277,7 +1305,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1394,7 +1424,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1408,7 +1440,9 @@ Erhaltet 2 Rüstung.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Eure anderen Diener haben +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1435,7 +1469,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1451,7 +1487,9 @@ Erhaltet 2 Rüstung.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1467,7 +1505,9 @@ Erhaltet 2 Rüstung.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1482,7 +1522,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1497,7 +1539,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 1 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1512,7 +1556,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1527,7 +1573,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1542,7 +1590,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 2 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1557,7 +1607,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1572,7 +1624,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1603,7 +1657,9 @@ Erhaltet 2 Rüstung.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1634,7 +1690,9 @@ Erhaltet 2 Rüstung.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1649,7 +1707,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1692,7 +1752,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1707,7 +1769,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 1 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1722,7 +1786,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft einen Eber (1/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1737,7 +1803,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1779,7 +1847,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1794,7 +1864,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Eure anderen Diener haben +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1821,7 +1893,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1/+1 für jeden anderen befreundeten Diener auf dem Schlachtfeld.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1849,7 +1923,9 @@ Erhaltet 2 Rüstung.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1879,7 +1955,9 @@ Erhaltet 2 Rüstung.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Zieht jedes Mal eine Karte, wenn ein Diener geheilt wird.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1953,7 +2031,9 @@ Erhaltet 2 Rüstung.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1997,7 +2077,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt bei allen befreundeten Charakteren 2 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2014,7 +2096,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Wildtier +2/+2 und &lt;b&gt;Spott&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2045,7 +2127,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Eure anderen Wildtiere haben +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2075,9 +2159,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Eure Wildtiere haben &lt;b&gt;Ansturm&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2169,7 +2251,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt 2 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2184,7 +2268,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2199,7 +2285,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Diener +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2227,7 +2315,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft einen Mechanischen Drachling (2/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2256,7 +2346,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zerstört die Waffe Eures Gegners.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2272,9 +2364,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Jedes Mal, wenn Ihr einen Diener mit max. 3 Angriff herbeiruft, erhält dieser &lt;b&gt;Ansturm&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2380,9 +2470,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Verwandelt einen Diener in einen Frosch (0/1) mit &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2396,7 +2484,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Dieser Diener wurde verwandelt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2411,7 +2501,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Verursacht $3 Schaden, der zufällig auf alle Feinde verteilt wird.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2460,7 +2552,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Werft eine zufällige Karte ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2522,9 +2616,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem Diener &lt;b&gt;Gottesschild&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2583,7 +2675,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft einen Murlocspäher (1/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2613,7 +2707,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>ALLE anderen Murlocs haben +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2658,7 +2754,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Benachbarte Diener haben +2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2702,7 +2801,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2719,7 +2820,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Diener &lt;b&gt;Windzorn&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2735,7 +2836,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei: &lt;/b&gt;Fügt dem feindlichen Helden 3 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3004,7 +3107,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3063,7 +3168,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3094,7 +3201,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3137,7 +3246,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3165,7 +3276,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3210,7 +3323,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt allen feindlichen Dienern $2 Schaden zu und &lt;b&gt;friert&lt;/b&gt; sie ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3226,7 +3341,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Friert&lt;/b&gt; einen Charakter ein. Wenn er bereits &lt;b&gt;eingefroren&lt;/b&gt; ist, werden ihm stattdessen $4 Schaden zugefügt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3242,9 +3359,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem Diener „&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft diesen Diener erneut herbei.“</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3304,7 +3419,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;. Verleiht am Ende Eures Zuges einem anderen zufälligen befreundeten Diener +1 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3333,7 +3450,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht einem Diener +2 Angriff. &lt;b&gt;Combo:&lt;/b&gt; Stattdessen +4 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3402,7 +3521,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt 3 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3418,9 +3539,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Hat &lt;b&gt;Ansturm&lt;/b&gt;, während Ihr eine Waffe angelegt habt.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3435,7 +3554,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft einen Knappen (2/2) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3463,7 +3584,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3479,7 +3602,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3494,7 +3619,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt SICH SELBST 4 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3521,7 +3648,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem Diener +2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3534,7 +3663,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Dieser Diener hat +2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3550,7 +3681,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3566,7 +3697,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Wutanfall:&lt;/b&gt; Eure Waffe hat +2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3593,7 +3726,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Eure Diener kosten (3) mehr.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3623,7 +3758,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Zerstört Eure Waffe und fügt allen Feinden den Schaden dieser Waffe zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3770,7 +3907,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet einen feindlichen Diener mit &lt;b&gt;Spott&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3811,7 +3948,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet einen Diener mit mind. 7 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3855,7 +3994,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3870,7 +4011,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Wutanfall:&lt;/b&gt; +5 Angriff</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3885,7 +4028,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3900,7 +4045,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;. &lt;b&gt;Todesröcheln:&lt;/b&gt; Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3915,7 +4063,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Gebt Eurem Gegner 2 Bananen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3953,7 +4103,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Übernehmt die Kontrolle über einen zufälligen feindlichen Diener.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3969,7 +4121,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3984,7 +4138,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -3999,7 +4155,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4014,7 +4172,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4030,7 +4190,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4045,7 +4207,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt dem feindlichen Helden 2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4060,7 +4224,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;, &lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4075,7 +4242,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4091,7 +4260,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1 Leben für jede Karte auf Eurer Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4160,7 +4331,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem Diener +2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4173,7 +4346,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4188,7 +4363,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4204,7 +4379,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Lasst einen befreundeten Diener vom Schlachtfeld auf Eure Hand zurückkehren.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4220,7 +4397,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Jeder Spieler zieht 2 Karten.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4248,7 +4427,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Die Manasüchtige hat erhöhten Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4262,7 +4443,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Lasst einen befreundeten Diener vom Schlachtfeld auf Eure Hand zurückkehren.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4278,7 +4461,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht benachbarten Dienern &lt;b&gt;Spott&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4294,7 +4477,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vertauscht Angriff und Leben eines Dieners.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4321,7 +4506,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4336,7 +4524,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Der erste Diener, den Ihr in einem Zug ausspielt, kostet (1) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4351,9 +4541,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Erhält jedes Mal +1/+1, wenn ein &lt;b&gt;Geheimnis&lt;/b&gt; ausgespielt wird.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4380,7 +4568,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 3 Schaden, der zufällig auf alle anderen Charaktere verteilt wird.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4395,7 +4585,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verwandelt einen anderen zufälligen Diener in einen Teufelssaurier (5/5) oder ein Eichhörnchen (1/1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4410,7 +4602,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Falls Euer Gegner mind. 4 Diener hat, übernehmt zufällig die Kontrolle über einen davon.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4425,7 +4619,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Gebt Eurem Gegner 1 Manakristall.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4441,7 +4638,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Übernehmt die Kontrolle über einen feindlichen Diener mit max. 2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4457,7 +4656,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht benachbarten Dienern +1/+1 und &lt;b&gt;Spott&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4500,7 +4699,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4515,7 +4716,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt ALLEN Charakteren 2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4562,7 +4766,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht ALLEN anderen Murlocs +2 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4604,7 +4810,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Baine Bluthuf (4/5) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4631,7 +4839,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft zwei Welplinge (1/1) für Euren Gegner herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4659,7 +4870,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Verursacht $2 Schaden. &lt;b&gt;Combo:&lt;/b&gt; Verursacht stattdessen $4 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4691,9 +4904,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht Euren Dienern bis zu Eurem nächsten Zug &lt;b&gt;Verstohlenheit&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4722,7 +4933,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn ein Feind angreift, ruft Ihr einen Verteidiger (2/1) als neues Ziel herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4752,7 +4965,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Ruft einen Banditen der Defias (2/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4781,7 +4996,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Held Schaden erleidet, wird dem feindlichen Helden ebenso viel Schaden zugefügt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4797,7 +5014,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 1 Schaden. &lt;b&gt;Combo:&lt;/b&gt; Verursacht stattdessen 2 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4813,7 +5033,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Verursacht 2 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4829,7 +5051,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn einer Eurer Diener stirbt, wird er mit 1 Leben wiederbelebt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4845,7 +5069,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt dem feindlichen Helden $2 Schaden zu. &lt;b&gt;Combo:&lt;/b&gt; Lasst die Karte im nächsten Zug wieder auf Eure Hand zurückkehren.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4891,7 +5117,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Der nächste Zauber, den Ihr in diesem Zug wirkt, kostet (3) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4950,9 +5178,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Verleiht einem Diener +4 Angriff; oder +4 Leben und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5022,9 +5248,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Verleiht Euren Dienern „&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Treant (2/2) herbei.“</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5153,7 +5377,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Benachbarte Diener haben +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5225,10 +5452,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; &lt;b&gt;Ansturm&lt;/b&gt;; oder +2 Leben und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5274,7 +5498,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5289,7 +5515,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5304,9 +5532,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Verursacht 2 Schaden; oder bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5335,7 +5561,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5350,7 +5578,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Vernichtet jeden Diener, der von diesem Diener verletzt wurde.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5366,9 +5596,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; +5 Angriff; oder +5 Leben und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5470,7 +5698,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;, &lt;b&gt;Überladung:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5486,7 +5716,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt; und fügt ihm dann $1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5518,9 +5750,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Ruft zwei Geisterwölfe (2/3) mit &lt;b&gt;Spott&lt;/b&gt; herbei. &lt;b&gt;Überladung:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5551,7 +5781,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;, &lt;b&gt;Überladung:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5627,9 +5859,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Erhält +2/+2, wenn Ihr am Ende Eures Zuges über ein aktives &lt;b&gt;Geheimnis&lt;/b&gt; verfügt.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5658,7 +5888,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Friert&lt;/b&gt; einen Diener sowie seine benachbarten Diener ein und fügt ihnen $1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5689,7 +5921,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; &lt;b&gt;Friert&lt;/b&gt; einen Charakter ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5705,7 +5940,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Zauberschaden +1&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5721,7 +5959,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Gegner einen Zauber wirkt, &lt;b&gt;kontert&lt;/b&gt; Ihr ihn.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5737,7 +5977,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Held angegriffen wird, erhält er 8 Rüstung.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5753,7 +5995,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Gegner einen Diener ausspielt, beschwört Ihr eine Kopie desselben herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5769,7 +6013,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Held tödlichen Schaden erleidet, wird dieser verhindert und der Held wird &lt;b&gt;immun&lt;/b&gt; in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5783,7 +6029,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Euer Held ist &lt;b&gt;immun&lt;/b&gt; in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5814,7 +6062,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Zerstört einen Eurer Manakristalle.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5830,7 +6081,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Vernichtet einen befreundeten Diener und fügt allen feindlichen Dienern Schaden zu, der seinem Angriff entspricht.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5846,7 +6099,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet die benachbarten Diener und verleiht ihm deren Angriff und Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5892,7 +6147,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Werft zwei zufällige Karten ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5925,7 +6183,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt Eurem Helden 5 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5941,7 +6201,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Eure Diener kosten (2) weniger, aber nicht weniger als (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6019,7 +6281,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt Eurem Helden 3 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6051,7 +6315,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet Euren Helden und ersetzt ihn durch Lord Jaraxxus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6094,7 +6360,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Bringt einen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6294,7 +6562,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Diener &lt;b&gt;Gottesschild&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6397,7 +6665,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Gegner einen Diener ausspielt, wird dessen Leben auf 1 verringert.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6426,7 +6696,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Setzt den Angriff eines feindlichen Dieners auf 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6455,7 +6727,11 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;. &lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Todesröcheln:&lt;/b&gt; Legt einen Aschenbringer (5/3) an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6484,7 +6760,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Verursacht $8 Schaden, der zufällig auf alle Feinde verteilt wird.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6499,7 +6777,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;, &lt;b&gt;Wutanfall:&lt;/b&gt; +3 Angriff</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6546,7 +6827,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wutanfall:&lt;/b&gt; +3 Angriff</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6561,7 +6844,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6577,7 +6862,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Legt eine Waffe (2/2) an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6620,7 +6907,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6709,7 +6998,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt einem Diener für jeden Eurer Rüstungspunkte 1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6767,7 +7058,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wutanfall:&lt;/b&gt; &lt;b&gt;Windzorn&lt;/b&gt; und +1 Angriff</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6784,7 +7075,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Wutanfall:&lt;/b&gt; +6 Angriff</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6800,7 +7094,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>ALLE anderen Murlocs haben +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6856,7 +7152,10 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;. Vernichtet jeden Diener, der von diesem Diener verletzt wurde.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6901,7 +7200,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn ein Charakter Euren Helden angreift, greift er stattdessen einen zufälligen anderen Charakter an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6917,7 +7218,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft zwei Hyänen (2/2) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6947,9 +7250,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Erhält jedes Mal +1 Haltbarkeit, wenn ein eigenes &lt;b&gt;Geheimnis&lt;/b&gt; aufgedeckt wird.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -6993,9 +7294,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Ruft für jeden feindlichen Diener einen Jagdhund (1/1) mit &lt;b&gt;Ansturm&lt;/b&gt; herbei.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7010,7 +7309,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7026,7 +7327,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7042,10 +7345,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Alle Diener verlieren &lt;b&gt;Verstohlenheit&lt;/b&gt;. Zerstört alle feindlichen &lt;b&gt;Geheimnisse&lt;/b&gt;. Zieht eine Karte.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7075,7 +7375,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 Angriff und &lt;b&gt;immun&lt;/b&gt; in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7090,7 +7392,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn einer Eurer Diener angegriffen wird, ruft Ihr drei Schlangen (1/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7121,7 +7425,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Beschädigten Golem (2/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7151,7 +7457,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zerstört die Waffe Eures Gegners. Zieht ihrer Haltbarkeit entsprechend Karten.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7199,7 +7507,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Setzt das verbleibende Leben eines Helden auf 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7227,7 +7537,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft Welplinge (1/1) herbei, bis Eure Seite des Schlachtfelds voll ist.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7243,7 +7555,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Zauberschaden +5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7258,7 +7572,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Wählt einen Diener aus, um Gesichtsloser Manipulator in eine Kopie desselben zu verwandeln.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7274,7 +7590,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;, &lt;b&gt;Überladung:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7303,7 +7621,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7318,9 +7638,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Ruft drei Treants (2/2) mit &lt;b&gt;Ansturm&lt;/b&gt; herbei, die am Ende des Zuges sterben.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7352,9 +7670,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Verleiht Euren anderen Dienern +2/+2; oder ruft zwei Treants (2/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7410,7 +7726,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7442,7 +7760,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Finkle Einhorn (3/3) für Euren Gegner herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7458,7 +7778,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Fügt einem Diener Schaden zu, der dem Angriff Eures Helden entspricht.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7473,7 +7795,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt bei Eurem Helden 4 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7489,7 +7813,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht benachbarten Dienern &lt;b&gt;Zauberschaden +1&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7533,7 +7857,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Alle Diener verlieren &lt;b&gt;Gottesschild&lt;/b&gt;. Erhält +3/+3 für jeden verlorenen Schild.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7563,7 +7887,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Eure Karten und Fähigkeiten, die Leben wiederherstellen, verursachen stattdessen nun Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7579,7 +7905,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn ein Diener Euren Helden angreift, wird er vernichtet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7670,7 +7998,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt einem Diener 1 Schaden zu und verleiht ihm +2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7757,7 +8087,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Eure Zauber kosten (1) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7773,7 +8105,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Gegner einen Diener ausspielt, werden diesem $4 Schaden zugefügt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7789,7 +8123,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Held angegriffen wird, erleiden alle Feinde $2 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7805,7 +8141,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn ein feindlicher Diener angreift, lasst ihn auf die Hand seines Besitzers zurückkehren. Zusätzlich kostet er (2) mehr.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7835,7 +8173,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Das nächste &lt;b&gt;Geheimnis&lt;/b&gt;, das Ihr in diesem Zug ausspielt, kostet (0).</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7850,7 +8188,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Euer nächstes Geheimnis kostet (0).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7865,7 +8205,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Erhält für jede in diesem Zug bereits ausgespielte Karte +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7920,7 +8262,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>ALLE Diener kosten (1) mehr.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8009,7 +8353,9 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Diener +3 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8095,7 +8441,9 @@ Verursacht 3 Schaden.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Bringt alle feindlichen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;. Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8124,7 +8472,9 @@ Verursacht 3 Schaden.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8166,7 +8516,9 @@ Verursacht 3 Schaden.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8211,7 +8563,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;. Vernichtet diesen Diener am Ende des Zuges.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8225,7 +8579,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Lasst einen Diener auf die Hand seines Besitzers zurückkehren.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8322,7 +8678,12 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;, &lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Gottesschild&lt;/b&gt;, &lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8366,7 +8727,7 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Diener &lt;b&gt;Verstohlenheit&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8382,7 +8743,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet einen Murloc und erhält +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8409,7 +8772,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält Angriff entsprechend dem Angriff Eurer Waffe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8478,7 +8843,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Spott.&lt;/b&gt; Kostet (1) weniger für jeden Angriffspunkt Eurer Waffe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8508,7 +8875,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht Eurer Waffe +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8535,7 +8904,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zieht 1 Haltbarkeit von der Waffe Eures Gegners ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8587,7 +8958,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Eure anderen Piraten haben +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8613,7 +8986,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Im nächsten Zug kosten Zauber für Euren Gegner (0) Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8641,7 +9016,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet alle anderen Diener und werft Eure Hand ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8670,7 +9047,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Kann in diesem Zug nicht unter 1 Leben fallen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8683,7 +9062,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Das Leben Eurer Diener kann in diesem Zug nicht unter 1 fallen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8748,9 +9129,7 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>Ruft am Ende Eures Zuges einen Gnoll (2/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8763,7 +9142,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8777,7 +9158,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet einen zufälligen feindlichen Diener mit max. 2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8834,7 +9217,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn Euer Gegner einen Zauber auf einen Diener wirkt, ruft Ihr einen Diener (1/3) als neues Ziel herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9084,7 +9469,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;. Hat +1 Angriff für jeden anderen Murloc auf dem Schlachtfeld.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9099,7 +9486,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhaltet einen zufälligen Piraten aus Eurem Deck auf die Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9227,7 +9616,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Was ist in dem Fass?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9319,7 +9710,9 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>König Mukla hat +8 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9556,7 +9949,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Wirft Bananen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9569,7 +9964,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9582,7 +9979,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9660,7 +10059,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9828,7 +10229,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10278,7 +10681,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10364,7 +10769,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Konstruiert eine FANTASTISCHE Erfindung.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10449,7 +10856,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Wurde in ein Huhn verwandelt!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10475,7 +10884,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht beiden Spielern die Macht des ROCK! (durch eine Powerakkordkarte)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10537,7 +10948,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Stellt beim feindlichen Helden 5 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10552,7 +10965,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft zwei Spektrale Spinnen (1/1) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10577,7 +10992,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Beschwört am Ende des Zuges eine exakte Kopie dieses Dieners.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10592,7 +11009,7 @@ Beschwört zwei Diener (2/1).</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Legt ein &lt;b&gt;Geheimnis&lt;/b&gt; aus Eurem Deck auf das Schlachtfeld.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10607,7 +11024,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;. Erhält zu Beginn Eures Zuges +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10632,7 +11051,10 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ansturm. Todesröcheln:&lt;/b&gt; Fügt Eurem Helden 3 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10645,7 +11067,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Neruber (4/4) herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10687,6 +11111,7 @@ Beschwört zwei Diener (2/1).</Text>
     <Text>&lt;b&gt;Spott. Todesröcheln:&lt;/b&gt; Euer Gegner legt einen Diener aus seinem Deck auf das Schlachtfeld.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10702,7 +11127,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Vernichtet jeden Diener, der von diesem Diener verletzt wurde.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10718,7 +11145,9 @@ Beschwört zwei Diener (2/1).</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt Eurer Hand ein zufälliges Wildtier hinzu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10733,7 +11162,10 @@ Beschwört zwei Diener (2/1).</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott.
 Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10746,7 +11178,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10773,7 +11207,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Feugen in diesem Duell bereits gestorben ist.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10799,7 +11235,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Stalagg in diesem Duell bereits gestorben ist.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10814,7 +11252,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Bringt Eure anderen Diener zum &lt;b&gt;Schweigen&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10830,7 +11268,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Text>Diener mit &lt;b&gt;Kampfschrei&lt;/b&gt; kosten (2) mehr.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10846,7 +11284,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn ein befreundeter Diener stirbt, erhaltet Ihr 2 Kopien dieses Dieners auf Eure Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10888,7 +11328,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Geheimnis:&lt;/b&gt; Wenn einer Eurer Diener stirbt, erhält ein zufälliger befreundeter Diener +3/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10916,7 +11358,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt allen Dienern 1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10932,7 +11376,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Legt einen zufälligen Dämon aus Eurer Hand auf das Schlachtfeld.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10947,7 +11393,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Verleiht einem zufälligen befreundeten Diener +3 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10974,7 +11422,10 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt allen Dienern 1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11005,7 +11456,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Lasst einen zufälligen befreundeten Diener auf Eure Hand zurückkehren.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11034,9 +11485,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Erhält jedes Mal +1 Angriff, wenn Ihr einen Diener mit &lt;b&gt;Todesröcheln&lt;/b&gt; herbeiruft.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11062,7 +11511,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Euer Gegner zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11076,7 +11527,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Im nächsten Zug kosten Zauber für Euren Gegner (5) mehr.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11103,7 +11556,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>0</Durability>
     <Text>Die &lt;b&gt;Todesröcheln&lt;/b&gt;-Effekte Eurer Diener werden 2-mal ausgelöst.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11139,7 +11592,9 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Erhaltet diese Waffe auf Eure Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11152,7 +11607,10 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Durability>8</Durability>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;
 &lt;b&gt;Todesröcheln:&lt;/b&gt; Erhaltet diese Waffe auf Eure Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11249,9 +11707,7 @@ Fügt allen Feinden 2 Schaden zu. Ruft einen Schleim herbei, wenn dabei ein Fein
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Verleiht einem Diener +4/+4 und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11263,9 +11719,7 @@ Fügt allen Feinden 2 Schaden zu. Ruft einen Schleim herbei, wenn dabei ein Fein
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11385,7 +11839,9 @@ Setzt das Leben aller feindlichen Diener auf 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11527,7 +11983,9 @@ Vernichtet alle feindlichen Diener, die nicht &lt;b&gt;eingefroren&lt;/b&gt; sin
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Dauerhaft eingefroren. Benachbarte Diener sind immun gegen Frostatem.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11539,7 +11997,9 @@ Vernichtet alle feindlichen Diener, die nicht &lt;b&gt;eingefroren&lt;/b&gt; sin
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Fügt dem feindlichen Helden $8 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11596,7 +12056,9 @@ Vernichtet alle feindlichen Diener, die nicht &lt;b&gt;eingefroren&lt;/b&gt; sin
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
 Fügt dem feindlichen Helden 2 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11609,7 +12071,9 @@ Fügt dem feindlichen Helden 2 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
 Fügt dem feindlichen Helden 3 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11621,7 +12085,9 @@ Fügt dem feindlichen Helden 3 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11633,7 +12099,9 @@ Fügt dem feindlichen Helden 3 Schaden zu und &lt;b&gt;friert&lt;/b&gt; ihn ein.
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11802,7 +12270,9 @@ Beschwört einen Neruber (3/1).</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
 Feuert für jede Karte in der Hand Eures Gegners ein Geschoss ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11815,7 +12285,9 @@ Feuert für jede Karte in der Hand Eures Gegners ein Geschoss ab.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
 Feuert für jede Karte in der Hand Eures Gegners ein Geschoss ab.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11827,7 +12299,9 @@ Feuert für jede Karte in der Hand Eures Gegners ein Geschoss ab.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Euer Held hat +1 Angriff, wenn Ihr am Zug seid.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11839,7 +12313,9 @@ Feuert für jede Karte in der Hand Eures Gegners ein Geschoss ab.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Euer Held hat +3 Angriff, wenn Ihr am Zug seid.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12117,7 +12593,9 @@ Fügt dem feindlichen Helden 3 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Verleiht allen feindlichen Dienern +8 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12175,7 +12653,9 @@ Fügt dem feindlichen Helden 3 Schaden zu.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12297,7 +12777,9 @@ Zieht eine Karte. Erhaltet 1 Manakristall.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Spektralen Lehrling für Euren Gegner herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12321,7 +12803,9 @@ Zieht eine Karte. Erhaltet 1 Manakristall.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Spektralen Krieger für Euren Gegner herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12345,7 +12829,9 @@ Zieht eine Karte. Erhaltet 1 Manakristall.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen Spektralen Reiter für Euren Gegner herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12524,7 +13010,9 @@ Zieht 2 Karten.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Vernichtet benachbarte Diener.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12536,7 +13024,9 @@ Zieht 2 Karten.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Zerstört die Waffe Eures Gegners.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12598,7 +13088,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 4 Schaden, wenn Ihr einen Mech auf dem Schlachtfeld habt. Der Schaden wird zufällig auf alle Feinde verteilt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12628,7 +13120,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Eure Mechs kosten (1) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12659,7 +13153,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Fügt jedem Diener Schaden zu, der seinem Angriff entspricht.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12674,7 +13170,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt jedem Helden 3 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12689,9 +13187,7 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Verleiht einem Diener +2/+4 und &lt;b&gt;Zauberschaden +1&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12718,7 +13214,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem Diener -2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12731,7 +13229,9 @@ Zieht 2 Karten.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12759,7 +13259,9 @@ Zieht 2 Karten.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Hat +2 Angriff, solange Ihr einen Mech auf dem Schlachtfeld habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12774,7 +13276,9 @@ Zieht 2 Karten.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vertauscht das Leben dieses Dieners mit dem eines anderen Dieners.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12909,7 +13413,9 @@ Zieht 2 Karten.</Text>
     <Race>Demon</Race>
     <Text>Verleiht Euren anderen Dämonen +2/+2.
 Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12937,7 +13443,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Verleiht Eurer Waffe +3 Angriff. &lt;b&gt;Combo:&lt;/b&gt; Verleiht einem zufälligen befreundeten Diener +3 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12977,7 +13485,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht Eurer Waffe +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13004,7 +13514,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Hat +2 Angriff, solange Ihr einen Mech auf dem Schlachtfeld habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13020,9 +13532,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Erhält jedes Mal &lt;b&gt;Verstohlenheit&lt;/b&gt;, wenn Ihr einen Piraten herbeiruft.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13037,9 +13547,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Löst alle &lt;b&gt;Todesröcheln&lt;/b&gt;-Effekte Eurer Diener aus.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13127,7 +13635,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Wählt aus:&lt;/b&gt; +1 Angriff; oder +1 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13282,7 +13792,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Mischt diesen Diener in Euer Deck.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13297,7 +13809,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Verleiht einem zufälligen befreundeten Mech +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13326,7 +13840,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13389,9 +13905,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Ruft 5 Irrwische herbei; oder verleiht einem Diener +5/+5 und &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13445,7 +13959,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt Eurer Hand 4 zufällige Murlocs hinzu. &lt;b&gt;Überladung:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13460,7 +13976,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem zufälligen befreundeten Diener +1 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13531,7 +14049,10 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1 Angriff für jedes andere Eurer Wildtiere auf dem Schlachtfeld.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13577,7 +14098,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht Euren anderen Mechs +2 Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13650,7 +14173,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Wutanfall:&lt;/b&gt; +1 Angriff</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13680,7 +14205,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhaltet 5 Rüstung.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13711,7 +14238,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Mech +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13740,7 +14269,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt dem Deck Eures Gegners eine Mine hinzu. Wenn die Mine gezogen wird, verursacht sie 10 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13754,7 +14285,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Wenn Ihr diese Karte zieht, explodiert sie und fügt Euch 10 Schaden zu. Zieht eine Karte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13769,7 +14302,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Stellt bei Eurem Helden #4 Leben wieder her und verleiht ihm +2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13782,7 +14317,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 Angriff in diesem Zug.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13797,7 +14334,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13813,8 +14352,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem zufälligen befreundeten Diener &lt;b&gt;Gottesschild&lt;/b&gt; und &lt;b&gt;Spott&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13830,7 +14368,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht Euren Rekruten der Silbernen Hand +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13874,9 +14414,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Erhält jedes Mal &lt;b&gt;Gottesschild&lt;/b&gt;, wenn Ihr einen Mech herbeiruft.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13947,7 +14485,9 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Windzorn, Überladung:&lt;/b&gt; (1)
 Chance von 50%, einen anderen Feind anzugreifen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13974,7 +14514,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Erhöhter Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14000,7 +14542,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Erhöhter Angriff.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14014,7 +14558,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Stellt bei Eurem Helden 8 Leben wieder her.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14101,7 +14647,7 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Übernehmt die Kontrolle über ein zufälliges feindliches &lt;b&gt;Geheimnis&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14131,7 +14677,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt allen Dienern 2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14174,7 +14722,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Jeder Spieler erhält ein &lt;b&gt;Ersatzteil&lt;/b&gt; auf die Hand.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14189,7 +14739,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14204,7 +14756,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Wird verwandelt und erhält die Werte 7/7, wenn Ihr ein Wildtier auf dem Schlachtfeld habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14232,7 +14786,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14247,7 +14803,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt Eurer Hand ein &lt;b&gt;Ersatzteil&lt;/b&gt; hinzu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14263,7 +14821,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht einem befreundeten Mech +4 Leben.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14278,7 +14838,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14293,7 +14855,10 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;, &lt;b&gt;Gottesschild&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14352,7 +14917,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;. Chance von 50%, einen anderen Feind anzugreifen.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14366,9 +14933,7 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Stellt bei Eurem Helden 4 Leben wieder her, wenn Ihr am Ende Eures Zuges über ein aktives &lt;b&gt;Geheimnis&lt;/b&gt; verfügt.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14382,7 +14947,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 6 Schaden, der zufällig auf alle anderen Charaktere verteilt wird.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14398,7 +14965,9 @@ Chance von 50%, einen anderen Feind anzugreifen.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;.
 Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14412,7 +14981,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Zieht eine Karte. Verwandelt sie in ein Huhn, wenn es ein Diener ist.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14439,7 +15010,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14468,7 +15041,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Hat +4 Angriff, wenn Euer Gegner 6 oder mehr Karten auf der Hand hat.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14483,7 +15058,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen zufälligen Diener herbei, der (2) kostet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14498,7 +15075,8 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. &lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1/+1 für jeden feindlichen Diener mit &lt;b&gt;Todesröcheln&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14513,7 +15091,10 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14527,7 +15108,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt einem zufälligen feindlichen Diener 4 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14572,7 +15155,7 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt allen Dienern mit &lt;b&gt;Todesröcheln&lt;/b&gt; 2 Schaden zu.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14600,7 +15183,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1/+1 und Ihr erhaltet ein &lt;b&gt;Ersatzteil&lt;/b&gt; auf die Hand, wenn Ihr einen Mech auf dem Schlachtfeld habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14668,7 +15253,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen zufälligen Diener herbei, der (4) kostet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14712,9 +15299,7 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verleiht Euren anderen Dienern &lt;b&gt;Windzorn&lt;/b&gt;, &lt;b&gt;Spott&lt;/b&gt; oder &lt;b&gt;Gottesschild&lt;/b&gt;.
 &lt;i&gt;(Zufällige Auswahl)&lt;/i&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14729,7 +15314,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verwandelt einen befreundeten Diener in einen zufälligen Diener, der gleich viel kostet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14743,7 +15330,10 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Verstohlenheit&lt;/b&gt;, &lt;b&gt;Zauberschaden +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14757,7 +15347,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft zwei Bummbots (1/1) herbei. &lt;i&gt;WARNUNG: Explosionsgefahr.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14771,7 +15363,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt einem zufälligen Feind 1–4 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14800,7 +15394,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Super-Windzorn&lt;/b&gt; &lt;i&gt;(Kann 4-mal pro Zug angreifen.)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14844,7 +15440,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft einen zufälligen legendären Diener herbei.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14858,7 +15456,10 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei und Todesröcheln:&lt;/b&gt; Fügt Eurer Hand ein &lt;b&gt;Ersatzteil&lt;/b&gt; hinzu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14916,7 +15517,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Beide Helden legen eine zufällige Waffe an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14930,7 +15533,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet ein Wildtier.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14960,7 +15565,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Benachbarte Diener können nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -14992,7 +15599,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Zauberschaden +2&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15042,9 +15651,7 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Verleiht einem Diener &lt;b&gt;Spott&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15057,9 +15664,7 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Verleiht einem befreundeten Diener bis zu Eurem nächsten Zug &lt;b&gt;Verstohlenheit&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15084,7 +15689,9 @@ Kann nicht als Ziel von Zaubern oder Heldenfähigkeiten gewählt werden.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Friert&lt;/b&gt; einen Diener ein.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15219,7 +15826,9 @@ Legt zwei Diener aus Eurem Deck und einen aus dem Eures Gegners auf das Schlacht
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15279,7 +15888,9 @@ Ruft einen Zuschauer (1/1) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15326,7 +15937,9 @@ Verursacht 30 Schaden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Thaurissan kann seine Heldenfähigkeit nicht einsetzen. Greift keine Diener ohne &lt;b&gt;Spott&lt;/b&gt; an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15338,7 +15951,9 @@ Verursacht 30 Schaden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Thaurissan kann seine Heldenfähigkeit nicht einsetzen. Greift keine Diener ohne &lt;b&gt;Spott&lt;/b&gt; an.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15385,7 +16000,9 @@ Fügt allen Dienern 1 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt dem feindlichen Helden für jeden Feueranbeter, der in diesem Zug gestorben ist, 1 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15397,7 +16014,9 @@ Fügt allen Dienern 1 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Fügt dem feindlichen Helden für jeden Feueranbeter, der in diesem Zug gestorben ist, 3 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15839,7 +16458,9 @@ Ruft zwei Orcs (2/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei. Erhaltet eine neue Hel
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15851,7 +16472,9 @@ Ruft zwei Orcs (2/2) mit &lt;b&gt;Spott&lt;/b&gt; herbei. Erhaltet eine neue Hel
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16228,7 +16851,9 @@ Fügt der Hand Eures Gegners am Ende Eures Zuges eine Brutgebrechen-Karte hinzu.
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Erleidet zu Beginn Eures Zuges 1 Schaden, solange Ihr diese Karte auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16240,7 +16865,9 @@ Fügt der Hand Eures Gegners am Ende Eures Zuges eine Brutgebrechen-Karte hinzu.
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Erleidet zu Beginn Eures Zuges 3 Schaden, solange Ihr diese Karte auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16480,7 +17107,9 @@ Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 6 Schaden.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16492,7 +17121,9 @@ Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16504,7 +17135,9 @@ Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16516,7 +17149,9 @@ Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Fügt einem zufälligen Feind $8 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16578,7 +17213,9 @@ Aktiviert eine zufällige Tron-Einheit.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16629,7 +17266,9 @@ Aktiviert Arkanotron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Zauberschaden +2&lt;/b&gt; für beide Spieler.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16723,7 +17362,9 @@ Aktiviert Elektron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Alle Zauber kosten (3) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16777,7 +17418,9 @@ Aktiviert Magmatron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Jedes Mal, wenn ein Spieler eine Karte ausspielt, fügt ihm Magmatron 2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16876,7 +17519,9 @@ Verleiht Euren Dienern +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ansturm&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17100,7 +17745,9 @@ Ruft zwei Knochenkonstrukte (4/2) herbei.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17199,7 +17846,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Angriff in diesem Zug auf 0 gesetzt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17242,7 +17891,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Kostet in diesem Zug (3) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17257,7 +17908,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +2 Leben, wenn Ihr einen Drachen auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17295,7 +17948,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Fügt allen nicht dämonischen Dienern $2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17354,7 +18009,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt allen unverletzten feindlichen Dienern 2 Schaden zu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17369,7 +18026,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Spott&lt;/b&gt;. Kostet (1) weniger für jeden Diener, der in diesem Zug gestorben ist.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17473,7 +18132,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Karten, die Ihr in diesem Zug ausspielt, lösen keine &lt;b&gt;Überladung&lt;/b&gt; aus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17487,7 +18148,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält 1–4 Angriff. &lt;b&gt;Überladung:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17514,7 +18177,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Verursacht $3 Schaden. Zieht eine Karte, wenn Ihr keine Karten auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17530,7 +18195,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +3/+3, wenn Ihr keine Karten auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17604,7 +18271,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Der nächste Drache, den Ihr ausspielt, kostet (2) weniger.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17701,7 +18370,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +3/+3, wenn Euer Gegner max. 15 Leben hat.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17743,7 +18414,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft für Euren Gegner einen zufälligen Diener herbei, der (1) kostet.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17757,7 +18430,9 @@ Nefarian lässt Feuer vom Himmel regnen!</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ersetzt Euren Helden durch Ragnaros den Feuerfürsten.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17834,7 +18509,9 @@ Fügt einem zufälligen Feind 8 Schaden zu. ZWEIMAL.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Vernichtet einen &lt;b&gt;legendären&lt;/b&gt; Diener, wenn Ihr einen Drachen auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17849,7 +18526,9 @@ Fügt einem zufälligen Feind 8 Schaden zu. ZWEIMAL.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt Eurer Hand 2 zufällige Zauber von der Klasse Eures Gegners hinzu.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17891,7 +18570,9 @@ Fügt einem zufälligen Feind 8 Schaden zu. ZWEIMAL.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhält +1/+1, wenn Ihr einen Drachen auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17918,7 +18599,9 @@ Fügt einem zufälligen Feind 8 Schaden zu. ZWEIMAL.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 3 Schaden, wenn Ihr einen Drachen auf der Hand habt.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>
