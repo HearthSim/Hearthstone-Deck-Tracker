@@ -82,6 +82,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public string GetAdditionalInfo()
 		{
+			if(Type == KeyPointType.Victory || Type == KeyPointType.Defeat)
+				return Type.ToString();
 			var cardId = GetCardId();
 			return string.IsNullOrEmpty(cardId) ? "Entity " + Id : Game.GetCardFromId(GetCardId()).LocalizedName;
 		}

@@ -126,6 +126,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				case KeyPointType.Attack:
 					return "action_attack";
 				case KeyPointType.Death:
+				case KeyPointType.Defeat:
 					return "action_death";
 				case KeyPointType.Mulligan:
 				case KeyPointType.DeckDiscard:
@@ -147,6 +148,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 					return "action_play";
 				case KeyPointType.Summon:
 					return "action_summon";
+				case KeyPointType.Victory:
+					return "action_victory";
 			}
 			return "";
 		}

@@ -703,7 +703,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			foreach(var kp in Replay)
 			{
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
-				if(entity == null || string.IsNullOrEmpty(entity.CardId))
+				if(entity == null || (string.IsNullOrEmpty(entity.CardId) && kp.Type != KeyPointType.Victory && kp.Type != KeyPointType.Defeat))
 					continue;
 				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
 					continue;
