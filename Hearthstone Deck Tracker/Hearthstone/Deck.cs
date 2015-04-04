@@ -604,5 +604,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		public void Edited()
+		{
+			LastEdited = DateTime.Now;
+		}
 	}
 }

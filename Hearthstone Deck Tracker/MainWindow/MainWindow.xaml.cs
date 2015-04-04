@@ -1503,35 +1503,45 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var decks = DeckPickerList.SelectedDecks;
+			if(!decks.Any(d => d.HasHearthStatsId))
+			{
+				await
+					this.ShowMessageAsync("None synced",
+										  "None of the selected decks have HearthStats ids.");
+				return;
+			}
 			var dialogResult =
 				await
-				this.ShowMessageAsync("Delete \"" + deck + "\" on HearthStats?",
-				                      "This will delete the deck and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The deck or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
+				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
+				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
 				                      MessageDialogStyle.AffirmativeAndNegative,
 				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 
 			if(dialogResult == MessageDialogResult.Affirmative)
 			{
-				var controller = await this.ShowProgressAsync("Deleting deck...", "");
-				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(DeckList.Instance.ActiveDeck);
+				var controller = await this.ShowProgressAsync("Deleting decks...", "");
+				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(decks);
 				await controller.CloseAsync();
 				if(!deleteSuccessful)
 				{
 					await
-						this.ShowMessageAsync("Problem deleting deck",
+						this.ShowMessageAsync("Problem deleting decks",
 						                      "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
 				}
-
-				DeckList.Instance.ActiveDeck.ResetHearthstatsIds();
-				DeckList.Instance.ActiveDeck.DeckStats.HearthStatsDeckId = null;
-				DeckList.Instance.ActiveDeck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-				DeckList.Instance.ActiveDeck.Versions.ForEach(v =>
+				foreach(var deck in decks)
 				{
-					v.DeckStats.HearthStatsDeckId = null;
-					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-					v.ResetHearthstatsIds();
-				});
+					deck.ResetHearthstatsIds();
+					deck.DeckStats.HearthStatsDeckId = null;
+					deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+					deck.Versions.ForEach(v =>
+					{
+						v.DeckStats.HearthStatsDeckId = null;
+						v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+						v.ResetHearthstatsIds();
+					});
+				}
+				DeckList.Save();
 			}
 		}
 
