@@ -132,6 +132,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			deck.Archived = archive;
+			deck.Edited();
 
 			try
 			{
@@ -322,6 +323,7 @@ namespace Hearthstone_Deck_Tracker
 			_newDeck.Cards.Clear();
 			foreach(var card in deck.Cards)
 				_newDeck.Cards.Add(card);
+			_newDeck.Edited();
 
 			UpdateCardCount();
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
@@ -373,6 +375,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!string.IsNullOrEmpty(newName) && deck.Name != newName)
 			{
 				deck.Name = newName;
+				deck.Edited();
 				DeckList.Save();
 				DeckPickerList.UpdateDecks();
 				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)

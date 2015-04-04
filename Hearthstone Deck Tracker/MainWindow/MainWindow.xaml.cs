@@ -237,23 +237,19 @@ namespace Hearthstone_Deck_Tracker
 				ContextMenu = new ContextMenu(),
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
-			_notifyIcon.ContextMenu.MenuItems.Add("Use no deck", (sender, args) => SelectDeck(null));
-			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Autoselect deck")
-			{
-				MenuItems =
-				{
-					new MenuItem("On", (sender, args) => AutoDeckDetection(true)),
-					new MenuItem("Off", (sender, args) => AutoDeckDetection(false))
-				}
-			});
-			_notifyIcon.ContextMenu.MenuItems.Add(new MenuItem("Class cards first")
-			{
-				MenuItems =
-				{
-					new MenuItem("Yes", (sender, args) => SortClassCardsFirst(true)),
-					new MenuItem("No", (sender, args) => SortClassCardsFirst(false))
-				}
-			});
+
+            MenuItem useNoDeckMenuItem=new MenuItem("Use no deck",(sender,args)=>SelectDeck(null));
+            useNoDeckMenuItem.Name = "useNoDeck";
+			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
+
+            MenuItem autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu());
+            autoSelectDeckMenuItem.Name = "autoSelectDeck";
+            _notifyIcon.ContextMenu.MenuItems.Add(autoSelectDeckMenuItem);
+
+            MenuItem classCardsFirstMenuItem = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu());
+            classCardsFirstMenuItem.Name = "classCardsFirst";
+			_notifyIcon.ContextMenu.MenuItems.Add(classCardsFirstMenuItem);
+
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
 			_notifyIcon.ContextMenu.MenuItems.Add("Exit", (sender, args) => Close());
 			_notifyIcon.MouseClick += (sender, args) =>
@@ -678,6 +674,7 @@ namespace Hearthstone_Deck_Tracker
 				decks.Remove(DeckList.Instance.ActiveDeckVersion);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
+			Game.NoMatchingDeck = decks.Count == 0;
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
@@ -1051,6 +1048,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Save();
 
 				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
+
+                int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 			}
 			else
 			{
@@ -1067,6 +1067,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckPickerList.DeselectDeck();
 
 				Logger.WriteLine("Deselected deck", "Tracker");
+                int useNoDeckMenuItem=_notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
 
 			//set up stats
@@ -1189,16 +1191,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AutoDeckDetection = true;
-			Config.Save();
+            AutoDeckDetection(true);
 		}
 
 		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AutoDeckDetection = false;
-			Config.Save();
+            AutoDeckDetection(false);
 		}
 
 		private void AutoDeckDetection(bool enable)
@@ -1206,7 +1206,14 @@ namespace Hearthstone_Deck_Tracker
 			CheckboxDeckDetection.IsChecked = enable;
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
+            setContextMenuProperty("autoSelectDeck", "Checked", enable);
+            //MenuItem autoSelectMenuItem=(MenuItem)ContextMenu.Items[1];
 		}
+        private void AutoDeckDetectionContextMenu()
+        {
+            bool enable = (bool)getContextMenuProperty("autoSelectDeck", "Checked");
+            AutoDeckDetection(!enable);
+        }
 
 		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e)
 		{
@@ -1228,7 +1235,14 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
+            setContextMenuProperty("classCardsFirst", "Checked", classFirst);
+
 		}
+        private void SortClassCardsFirstContextMenu()
+        {
+            bool enable = (bool)getContextMenuProperty("classCardsFirst", "Checked");
+            SortClassCardsFirst(!enable);
+        }
 
 		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
 		{
@@ -1497,35 +1511,45 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var decks = DeckPickerList.SelectedDecks;
+			if(!decks.Any(d => d.HasHearthStatsId))
+			{
+				await
+					this.ShowMessageAsync("None synced",
+										  "None of the selected decks have HearthStats ids.");
+				return;
+			}
 			var dialogResult =
 				await
-				this.ShowMessageAsync("Delete \"" + deck + "\" on HearthStats?",
-				                      "This will delete the deck and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The deck or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
+				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
+				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
 				                      MessageDialogStyle.AffirmativeAndNegative,
 				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 
 			if(dialogResult == MessageDialogResult.Affirmative)
 			{
-				var controller = await this.ShowProgressAsync("Deleting deck...", "");
-				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(DeckList.Instance.ActiveDeck);
+				var controller = await this.ShowProgressAsync("Deleting decks...", "");
+				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(decks);
 				await controller.CloseAsync();
 				if(!deleteSuccessful)
 				{
 					await
-						this.ShowMessageAsync("Problem deleting deck",
+						this.ShowMessageAsync("Problem deleting decks",
 						                      "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
 				}
-
-				DeckList.Instance.ActiveDeck.ResetHearthstatsIds();
-				DeckList.Instance.ActiveDeck.DeckStats.HearthStatsDeckId = null;
-				DeckList.Instance.ActiveDeck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-				DeckList.Instance.ActiveDeck.Versions.ForEach(v =>
+				foreach(var deck in decks)
 				{
-					v.DeckStats.HearthStatsDeckId = null;
-					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-					v.ResetHearthstatsIds();
-				});
+					deck.ResetHearthstatsIds();
+					deck.DeckStats.HearthStatsDeckId = null;
+					deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+					deck.Versions.ForEach(v =>
+					{
+						v.DeckStats.HearthStatsDeckId = null;
+						v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+						v.ResetHearthstatsIds();
+					});
+				}
+				DeckList.Save();
 			}
 		}
 
@@ -1600,5 +1624,21 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_movedLeft = null;
 		}
+        private int IndexOfKeyContextMenuItem(String key)
+        {
+            return _notifyIcon.ContextMenu.MenuItems.IndexOfKey(key);
+        }
+        private void setContextMenuProperty(String key, String property, object value)
+        {
+            int menuItemInd = IndexOfKeyContextMenuItem(key);
+            object target=_notifyIcon.ContextMenu.MenuItems[menuItemInd];
+            target.GetType().GetProperty(property).SetValue(target, value);
+        }
+        private object getContextMenuProperty(String key, String property)
+        {
+            int menuItemInd = IndexOfKeyContextMenuItem(key);
+            object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
+            return target.GetType().GetProperty(property).GetValue(target, null);
+        }
 	}
 }

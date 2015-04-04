@@ -28,7 +28,9 @@ Restaure 2 de Vida.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda &lt;b&gt;Provocar&lt;/b&gt; e +2/+2 a um lacaio.&lt;i&gt; (+2 de Ataque/+2 de Vida)&lt;/i&gt;</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Seu herói tem +1 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Este lacaio foi transformado em uma Ovelha 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $3 de dano a um personagem e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congele&lt;/b&gt; todos os lacaios inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Evoque dois lacaios 0/2 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congele&lt;/b&gt; qualquer personagem que receber dano deste lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@ Cause 1 de dano.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $1 de dano a um personagem inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@ Cause 1 de dano.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda &lt;b&gt;Fúria dos Ventos&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@ Cause 1 de dano.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Restaure toda a Vida de um lacaio e conceda &lt;b&gt;Provocar&lt;/b&gt; a ele.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@ Cause 1 de dano.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Provocar.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@ Cause 1 de dano.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@ Cause 1 de dano.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Este personagem tem +3 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@ Cause 1 de dano.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@ Evoque um Totem aleatório.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@ Evoque um Totem aleatório.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@ Compre um card e receba 2 de dano.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano a TODOS os personagens.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@ Compre um card e receba 2 de dano.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@ Equipe uma Adaga 1/2.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@ Equipe uma Adaga 1/2.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 6 de Vida do seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@ Receba 2 Armadura.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda +2 de Ataque e &lt;b&gt;Investida&lt;/b&gt; a um lacaio aliado.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@ Receba 2 Armadura.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Seus outros lacaios têm +1 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@ Receba 2 Armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@ Receba 2 Armadura.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 2 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@ Receba 2 Armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@ Receba 2 Armadura.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque um Javali 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Seus outros lacaios têm +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba +1/+1 para cada outro lacaio aliado no campo de batalha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@ Receba 2 Armadura.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@ Receba 2 Armadura.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Sempre que um lacaio for curado, compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@ Receba 2 Armadura.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 2 de Vida de todos os personagens aliados.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2/+2 e &lt;b&gt;Provocar&lt;/b&gt; a uma Fera aliada.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Suas outras Feras têm +1 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Suas Feras têm &lt;b&gt;Investida&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 2 de Vida.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1/+1 a um lacaio aliado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque um Dragonete Mecânico 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua a arma do seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Toda vez que evocar um lacaio com 3 ou menos de Ataque, conceda &lt;b&gt;Investida&lt;/b&gt; a ele.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Transforme um lacaio num Sapo 0/1 com &lt;B&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Este lacaio foi transformado!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $3 de dano dividido aleatoriamente entre todos os inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Descarte um card aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda &lt;b&gt;Escudo Divino&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque um Batedor Murloc 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TODOS os outros Murlocs têm +1 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Lacaios adjacentes têm +2 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Fúria dos Ventos&lt;/b&gt; a um lacaio aliado.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano ao herói inimigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3008,7 +3111,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3067,7 +3172,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3098,7 +3205,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3141,7 +3250,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3169,7 +3280,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3214,7 +3327,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $2 de dano a todos os lacaios inimigos e &lt;b&gt;Congele&lt;/b&gt;-os.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3230,7 +3345,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congele&lt;/b&gt; um personagem. Se ele já estiver &lt;b&gt;Congelado&lt;/b&gt;, cause $4 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3246,9 +3363,7 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda a um lacaio: "&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque este lacaio novamente."</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3308,7 +3423,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;. No fim do seu turno, conceda +1 de Vida a outro lacaio aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3337,7 +3454,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda +2 de Ataque a um lacaio. &lt;b&gt;Combo:&lt;/b&gt; +4 de Ataque em vez de +2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3406,7 +3525,9 @@ Compre um card.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 3 de Vida.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3422,9 +3543,7 @@ Compre um card.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Tem &lt;b&gt;Investida&lt;/b&gt; enquanto você tiver uma arma equipada.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3439,7 +3558,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque um Escudeiro 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3467,7 +3588,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3483,7 +3606,9 @@ Compre um card.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3498,7 +3623,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 4 de dano a ELE MESMO.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3525,7 +3652,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2 de Ataque a um lacaio neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3538,7 +3667,9 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Este lacaio tem +2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3554,7 +3685,7 @@ Compre um card.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; &lt;b&gt;Silencie&lt;/b&gt; um lacaio.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3570,7 +3701,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; Sua arma tem +2 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3597,7 +3730,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Seus lacaios custam (3) a mais.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3627,7 +3762,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Destrua sua arma e cause o dano dela a todos os inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3774,7 +3911,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua um lacaio inimigo com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3815,7 +3952,9 @@ Compre um card.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua um lacaio com 7 ou mais de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3859,7 +3998,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3874,7 +4015,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +5 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3889,7 +4032,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3904,7 +4049,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;. &lt;b&gt;Último Suspiro:&lt;/b&gt; Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3919,7 +4067,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda 2 Bananas ao seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3957,7 +4107,9 @@ Compre um card.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Assuma o controle de um lacaio inimigo aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3973,7 +4125,9 @@ Compre um card.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3988,7 +4142,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4003,7 +4159,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4018,7 +4176,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4034,7 +4194,9 @@ Compre um card.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4049,7 +4211,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 2 de dano ao herói inimigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4064,7 +4228,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4079,7 +4246,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4095,7 +4264,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba +1 de Vida para cada card na sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4164,7 +4335,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2 de Ataque a um lacaio neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4177,7 +4350,9 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4192,7 +4367,7 @@ Compre um card.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; &lt;b&gt;Silencie&lt;/b&gt; um lacaio.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4208,7 +4383,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Devolva um lacaio aliado do campo de batalha à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4224,7 +4401,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cada jogador compra 2 cards.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4252,7 +4431,9 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Viciada em Mana tem o Ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4266,7 +4447,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Devolva um lacaio aliado do campo de batalha à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4282,7 +4465,7 @@ Compre um card.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Provocar&lt;/b&gt; aos lacaios adjacentes.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4298,7 +4481,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Troque o Ataque pela Vida de um lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4325,7 +4510,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;, &lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4340,7 +4528,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>O primeiro lacaio que você joga a cada turno custa (1) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4355,9 +4545,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Sempre que um &lt;b&gt;Segredo&lt;/b&gt; for jogado, receba +1/+1.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4384,7 +4572,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano divididos aleatoriamente entre todos os outros personagens.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4399,7 +4589,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Transforme outro lacaio aleatório em um Demossauro 5/5 ou em um Esquilo 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4414,7 +4606,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se seu oponente tem 4 ou mais lacaios, assuma o controle de um aleatoriamente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4429,7 +4623,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda um Cristal de Mana ao seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4445,7 +4642,9 @@ Compre um card.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Assuma o controle de um lacaio inimigo que tenha 2 ou menos de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4461,7 +4660,7 @@ Compre um card.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1/+1 e &lt;b&gt;Provocar&lt;/b&gt; aos lacaios adjacentes.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4504,7 +4703,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4519,7 +4720,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 2 de dano a TODOS os personagens.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4566,7 +4770,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2 de Vida a TODOS os outros Murlocs.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4608,7 +4814,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque Baine Casco Sangrento 4/5.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4635,7 +4843,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque dois Dragonetes 1/1 para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4663,7 +4874,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $2 de dano. &lt;b&gt;Combo:&lt;/b&gt; Em vez de $2, cause $4 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4695,9 +4908,7 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda &lt;b&gt;Furtividade&lt;/b&gt; aos seus lacaios até o próximo turno.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4726,7 +4937,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um inimigo atacar, evoque um Defensor 2/1 para ser o novo alvo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4756,7 +4969,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Evoque um Bandido Défias 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4785,7 +5000,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando o seu herói receber dano, cause a mesma quantidade de dano ao herói inimigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4801,7 +5018,10 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano. &lt;b&gt;Combo:&lt;/b&gt; Em vez de 1, cause 2 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4817,7 +5037,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Cause 2 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4833,7 +5055,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um de seus lacaios morrer, reviva-o com 1 de Vida.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4849,7 +5073,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $2 de dano ao herói inimigo. &lt;b&gt;Combo:&lt;/b&gt; Devolva este card à sua mão no próximo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4895,7 +5121,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>O próximo feitiço que você lançar neste turno custará (3) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4954,9 +5182,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escolha Um&lt;/b&gt; - Conceda +4 de Ataque a um lacaio; ou +4 de Vida e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5026,9 +5252,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Conceda aos seus lacaios: &lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Arvoroso 2/2.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5157,7 +5381,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Lacaios adjacentes têm +1 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5229,10 +5456,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escolha Um -&lt;/b&gt; &lt;b&gt;Investida&lt;/b&gt;; ou +2 de Vida e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5278,7 +5502,9 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5293,7 +5519,9 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5308,9 +5536,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escolha Um&lt;/b&gt; - Cause 2 de dano; ou &lt;b&gt;Silencie&lt;/b&gt; um lacaio.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5339,7 +5565,9 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencie&lt;/b&gt; um lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5354,7 +5582,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Destrua qualquer lacaio atingido por este lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5371,9 +5601,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escolha Um&lt;/b&gt; -
 +5 de Ataque; ou +5 de Vida e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5475,7 +5703,9 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5491,7 +5721,9 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencie&lt;/b&gt; um lacaio, e cause $1 de dano a ele.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5523,9 +5755,7 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Evoque dois Lobos Espirituais 2/3 com &lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5556,7 +5786,9 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Sobrecarga:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5632,9 +5864,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Se você controlar um &lt;b&gt;Segredo&lt;/b&gt; no final do seu turno, receba +2/+2.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5663,7 +5893,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congele&lt;/b&gt; um lacaio e os lacaios vizinhos, causando-lhes $1 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5694,7 +5926,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; &lt;b&gt;Congele&lt;/b&gt; um personagem.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5710,7 +5945,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5726,7 +5964,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu oponente lançar um feitiço, &lt;b&gt;Anule&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5742,7 +5982,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu herói for atacado, receba 8 de Armadura.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5758,7 +6000,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu oponente jogar um lacaio, evoque uma cópia dele.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5774,7 +6018,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu herói receber dano fatal, ignore-o e fique &lt;b&gt;Imune&lt;/b&gt; até o fim do turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5788,7 +6034,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Seu herói fica &lt;b&gt;Imune&lt;/b&gt; até o final do turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5819,7 +6067,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua um de seus Cristais de Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5835,7 +6086,9 @@ Compre um card.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Destrua um lacaio aliado e cause o dano de ataque dele a todos os lacaios inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5851,7 +6104,9 @@ Compre um card.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua os lacaios dos dois lados deste e receba o Ataque e a Vida deles.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5897,7 +6152,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Descarte dois cards aleatórios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5930,7 +6188,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 5 de dano ao seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5946,7 +6206,9 @@ Compre um card.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Seus lacaios custam (2) a menos, mas nunca menos de (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6024,7 +6286,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano ao seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6056,7 +6320,9 @@ Compre um card.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua seu herói e substitua-o por Lorde Jaraxxus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6099,7 +6365,9 @@ Compre um card.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silencie&lt;/b&gt; um lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6299,7 +6567,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Escudo Divino&lt;/b&gt; a um lacaio aliado.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6402,7 +6670,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu oponente jogar um lacaio, reduza a Vida dele para 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6431,7 +6701,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Mude o Ataque de um lacaio inimigo para 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6460,7 +6732,11 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;. &lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último Suspiro:&lt;/b&gt; Equipe uma Crematória 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6489,7 +6765,9 @@ Compre um card.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Cause $8 de dano dividido aleatoriamente entre todos os inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6504,7 +6782,10 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Enfurecer:&lt;/b&gt; +3 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6551,7 +6832,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +3 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6566,7 +6849,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6582,7 +6867,9 @@ Compre um card.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Equipe uma arma 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6625,7 +6912,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6714,7 +7003,9 @@ Compre um card.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Cause 1 de dano a um lacaio para cada ponto de Armadura que você tiver.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6772,7 +7063,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; &lt;b&gt;Fúria dos Ventos&lt;/b&gt; e +1 de Ataque</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6790,7 +7081,10 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;
 &lt;b&gt;Enfurecer:&lt;/b&gt; +6 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6806,7 +7100,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TODOS os outros Murlocs têm +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6862,7 +7158,10 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;. Destrua qualquer lacaio atingido por este lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6907,7 +7206,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um personagem tentar atacar o seu herói, ele atacará outro personagem aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6923,7 +7224,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque duas Hienas 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6953,9 +7256,7 @@ Compre um card.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Sempre que um &lt;b&gt;Segredo&lt;/b&gt; aliado for revelado, receba +1 de Durabilidade.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -6999,9 +7300,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Para cada lacaio inimigo, evoque um Cão 1/1 com &lt;b&gt;Investida&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7016,7 +7315,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7032,7 +7333,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7048,10 +7351,7 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Todos os lacaios perdem &lt;b&gt;Furtividade&lt;/b&gt;. Destrua todos os &lt;b&gt;Segredos&lt;/b&gt; do inimigo. Compre um card.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7081,7 +7381,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 de Ataque e &lt;b&gt;Imunidade&lt;/b&gt; neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7096,7 +7398,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um de seus lacaios for atacado, evoque três Cobras 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7127,7 +7431,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Golem Danificado 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7157,7 +7463,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua a arma de seu oponente e compre o mesmo número de cards que a durabilidade da arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7205,7 +7513,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Defina a vida remanescente do herói para 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7233,7 +7543,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque Dragonetes 1/1 até seu lado do campo de batalha estar cheio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7249,7 +7561,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+5 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7264,7 +7578,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Escolha um lacaio e torne-se uma cópia dele.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7280,7 +7596,9 @@ Compre um card.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Fúria dos Ventos, Sobrecarga:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7309,7 +7627,9 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7324,9 +7644,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Evoque três Arvorosos 2/2 com &lt;b&gt;Investida&lt;/b&gt;, que morrerão no fim do turno.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7358,9 +7676,7 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Escolha Um&lt;/b&gt; - Conceda +2/+2 aos seus outros lacaios ou evoque dois Arvorosos 2/2 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7416,7 +7732,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7448,7 +7766,9 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Jonas Tiragosto 3/3 para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7464,7 +7784,9 @@ Compre um card.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Cause dano equivalente ao Ataque do seu herói a um lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7479,7 +7801,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 4 de Vida do seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7495,7 +7819,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;+1 de Dano Mágico&lt;/b&gt; aos lacaios adjacentes.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7539,7 +7863,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Todos os lacaios perdem &lt;b&gt;Escudo Divino&lt;/b&gt;. Receba +3/+3 para cada Escudo perdido.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7569,7 +7893,9 @@ Compre um card.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Seus cards e poderes que restauram Vida agora deixam de restaurar e causam dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7585,7 +7911,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um lacaio atacar seu herói, destrua-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7676,7 +8004,9 @@ Compre um card.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano a um lacaio e conceda-lhe +2 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7763,7 +8093,9 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Seus feitiços custam (1) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7779,7 +8111,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu oponente jogar um lacaio, cause $4 de dano ao lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7795,7 +8129,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu herói for atacado, cause $2 de dano a todos os inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7811,7 +8147,9 @@ Compre um card.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um lacaio inimigo atacar, devolva-o à mão do dono custando (2) a mais.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7841,7 +8179,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; O próximo &lt;b&gt;Segredo&lt;/b&gt; que você lançar neste turno custará (0).</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7856,7 +8194,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Seu próximo Segredo custará (0).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7871,7 +8211,9 @@ Compre um card.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Receba +2/+2 para cada um dos cards jogados antes neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7926,7 +8268,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>TODOS os lacaios custam (1) a mais.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8015,7 +8359,9 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +3 de Vida a um lacaio aliado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8101,7 +8447,9 @@ Cause 3 de dano.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Silencie&lt;/b&gt; todos os lacaios inimigos. Compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8130,7 +8478,9 @@ Cause 3 de dano.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8172,7 +8522,9 @@ Cause 3 de dano.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8217,7 +8569,9 @@ Evoque um Infernal 6/6.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Investida&lt;/b&gt;. No final do turno, destrua este lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8231,7 +8585,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; Devolva um lacaio à mão do dono.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8328,7 +8684,12 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Fúria dos Ventos, Investida, Escudo Divino, Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8372,7 +8733,7 @@ Evoque um Infernal 6/6.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Furtividade&lt;/b&gt; a um lacaio aliado.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8388,7 +8749,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua um murloc e receba +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8415,7 +8778,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Ela recebe Ataque equivalente ao Ataque da sua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8484,7 +8849,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. Custa (1) a menos por Ataque da sua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8514,7 +8881,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1/+1 à sua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8541,7 +8910,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Remova 1 de Durabilidade da arma do seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8593,7 +8964,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Seus outros Piratas têm +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8619,7 +8992,9 @@ Evoque um Infernal 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Feitiços inimigos custam (0) no próximo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8647,7 +9022,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua todos os outros lacaios e descarte a sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8676,7 +9053,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Não podem ser reduzidos a menos de 1 de Vida neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8689,7 +9068,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>A Vida de seus lacaios não pode ser reduzida a menos de 1 neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8754,9 +9135,7 @@ Evoque um Infernal 6/6.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>No final do seu turno, evoque um Gnoll 2/2 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8769,7 +9148,9 @@ Evoque um Infernal 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8783,7 +9164,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua um lacaio inimigo aleatório com 2 ou menos de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8840,7 +9223,9 @@ Evoque um Infernal 6/6.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um inimigo lançar um feitiço em um lacaio, evoque um 1/3 para servir de alvo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9090,7 +9475,9 @@ Evoque um Infernal 6/6.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;. Ganha +1 de Ataque para cada um dos demais Murlocs no campo de batalha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9105,7 +9492,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Coloque um Pirata aleatório do seu deck na sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9233,7 +9622,9 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Tem alguma coisa no barril?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9325,7 +9716,9 @@ Evoque um Infernal 6/6.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>O Rei Mukla tem +8 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9562,7 +9955,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Arremessa Bananas.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9575,7 +9970,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9588,7 +9985,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9666,7 +10065,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9834,7 +10235,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10284,7 +10687,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10370,7 +10775,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque uma invenção FABULOSA.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10455,7 +10862,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Foi transformado em galinha!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10481,7 +10890,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Dê aos dois jogadores o poder do ROCK! (com um card de Acorde Poderoso)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10543,7 +10954,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Restaure 5 de Vida do Herói inimigo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10558,7 +10971,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque duas Aranhas Espectrais 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10583,7 +10998,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; No final do turno, evoque uma cópia exata deste lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10598,7 +11015,7 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Coloque um &lt;b&gt;Segredo&lt;/b&gt; do seu deck no campo de batalha.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10613,7 +11030,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtividade.&lt;/b&gt; No início do seu turno, receba +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10638,7 +11057,10 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Investida. Último Suspiro:&lt;/b&gt; Cause 3 de dano ao seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10651,7 +11073,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Nerubiano 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10693,6 +11117,7 @@ Evoque dois lacaios 2/1.</Text>
     <Text>&lt;b&gt;Provocar. Último Suspiro:&lt;/b&gt; Seu oponente coloca um lacaio do próprio deck no campo de batalha.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10708,7 +11133,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Destrua qualquer lacaio atingido por este lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10724,7 +11151,9 @@ Evoque dois lacaios 2/1.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Adicione um card de Fera aleatório à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10739,7 +11168,10 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar.
 Último Suspiro:&lt;/b&gt; Evoque um Visgo 1/2 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10752,7 +11184,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10779,7 +11213,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Se Feugen também morreu nesta partida, evoque Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10805,7 +11241,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Se Stalagg também morreu nesta partida, evoque Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10820,7 +11258,7 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra: Silencie&lt;/b&gt; seus outros lacaios.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10836,7 +11274,7 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Text>Lacaios com &lt;b&gt;Grito de Guerra&lt;/b&gt; custam (2) a mais.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10852,7 +11290,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um lacaio aliado morrer, coloque 2 cópias dele na sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10894,7 +11334,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um de seus lacaios morrer, conceda +3/+2 a um lacaio aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10922,7 +11364,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 1 de dano a todos os lacaios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10938,7 +11382,9 @@ Evoque dois lacaios 2/1.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Coloque um Demônio aleatório da sua mão no campo de batalha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10953,7 +11399,9 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Conceda +3 de Vida a um lacaio aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10980,7 +11428,10 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 1 de dano a todos os lacaios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11011,7 +11462,7 @@ Evoque dois lacaios 2/1.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Devolva um lacaio aliado aleatório à sua mão.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11040,9 +11491,7 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Toda vez que evocar um lacaio com &lt;b&gt;Último Suspiro&lt;/b&gt;, receba +1 de ataque.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11068,7 +11517,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Seu oponente compra um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11082,7 +11533,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Feitiços inimigos custam (5) a mais no próximo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11109,7 +11562,7 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Text>Seus lacaios ativam os &lt;b&gt;Últimos Suspiros&lt;/b&gt; duas vezes.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11145,7 +11598,9 @@ Evoque dois lacaios 2/1.</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Coloque esta arma na sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11158,7 +11613,10 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;
 &lt;b&gt;Último Suspiro:&lt;/b&gt; Coloque esta arma na sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11255,9 +11713,7 @@ Cause 2 de dano a todos os inimigos. Se algum morrer, evoque um visgo.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Conceda +4/+4 e &lt;b&gt;Provocar&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11269,9 +11725,7 @@ Cause 2 de dano a todos os inimigos. Se algum morrer, evoque um visgo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11391,7 +11845,9 @@ Mude a Vida dos lacaios inimigos para 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11533,7 +11989,9 @@ Destrua todos os lacaios inimigos que não estejam &lt;b&gt;Congelados&lt;/b&gt;
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Congelado permanentemente. Os lacaios adjacentes ficam imunes a Sopro Gélido.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11545,7 +12003,9 @@ Destrua todos os lacaios inimigos que não estejam &lt;b&gt;Congelados&lt;/b&gt;
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Cause $8 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11602,7 +12062,9 @@ Destrua todos os lacaios inimigos que não estejam &lt;b&gt;Congelados&lt;/b&gt;
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
 Cause 2 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11615,7 +12077,9 @@ Cause 2 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
 Cause 3 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11627,7 +12091,9 @@ Cause 3 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11639,7 +12105,9 @@ Cause 3 de dano ao herói inimigo e &lt;b&gt;Congele&lt;/b&gt;-o.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11808,7 +12276,9 @@ Evoque um Nerubiano 3/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
 Dispare um míssil para cada card na mão de seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11821,7 +12291,9 @@ Dispare um míssil para cada card na mão de seu oponente.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
 Dispare um míssil para cada card na mão de seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11833,7 +12305,9 @@ Dispare um míssil para cada card na mão de seu oponente.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Seu herói tem +1 de Ataque no seu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11845,7 +12319,9 @@ Dispare um míssil para cada card na mão de seu oponente.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Seu herói tem +3 de Ataque no seu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12123,7 +12599,9 @@ Cause 3 de dano ao herói inimigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Conceda +8 de Ataque a todos os lacaios inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12181,7 +12659,9 @@ Cause 3 de dano ao herói inimigo.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12303,7 +12783,9 @@ Compre um card. Receba um Cristal de Mana.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Aprendiz Espectral para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12327,7 +12809,9 @@ Compre um card. Receba um Cristal de Mana.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Guerreiro Espectral para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12351,7 +12835,9 @@ Compre um card. Receba um Cristal de Mana.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Cavalgante Espectral para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12530,7 +13016,9 @@ Compre 2 cards.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Destrua os lacaios próximos a este também.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12542,7 +13030,9 @@ Compre 2 cards.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Destrua a arma do seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12604,7 +13094,9 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Mecanoide, cause 4 de dano dividido aleatoriamente entre todos os inimigos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12634,7 +13126,9 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Seus Mecanoides custam (1) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12665,7 +13159,9 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Cause dano a todos os lacaios igual ao Ataque de cada um.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12680,7 +13176,9 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano a cada herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12695,9 +13193,7 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Conceda +2/+4 e &lt;b&gt;+1 de Dano Mágico&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12725,7 +13221,9 @@ Compre 2 cards.</Text>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda
 -2 de Ataque a um lacaio neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12738,7 +13236,9 @@ Compre 2 cards.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12766,7 +13266,9 @@ Compre 2 cards.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Ganha +2 de Ataque enquanto você tiver um Mecanoide.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12781,7 +13283,9 @@ Compre 2 cards.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Troque a Vida deste lacaio pela de outro.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12917,7 +13421,9 @@ Se for uma Fera, ela custará (4) a menos.</Text>
     <Race>Demon</Race>
     <Text>Seus outros Demônios ganham +2/+2.
 Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12945,7 +13451,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Conceda +3 de Ataque à sua arma. &lt;b&gt;Combo:&lt;/b&gt; Conceda +3 de Ataque a um lacaio aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12985,7 +13493,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Conceda +1 de Ataque à sua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13012,7 +13522,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Ganha +2 de Ataque enquanto você tiver um Mecanoide.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13028,9 +13540,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Sempre que você evocar um Pirata, receba &lt;b&gt;Furtividade&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13045,9 +13555,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Ative todos os &lt;b&gt;Últimos Suspiros&lt;/b&gt; dos seus lacaios.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13136,7 +13644,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Escolha um -&lt;/b&gt;
 +1 de Ataque ou +1 de Vida.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13291,7 +13801,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Coloque este lacaio no seu deck.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13306,7 +13818,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Conceda +2/+2 a um Mecanoide aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13335,7 +13849,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13397,9 +13913,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Escolha Um -&lt;/b&gt; Evoque 5 Fogos-fátuos ou Conceda +5/+5 e &lt;b&gt;Provocar&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13453,7 +13967,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione 4 Murlocs aleatórios à sua mão. &lt;b&gt;Sobrecarga:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13468,7 +13984,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1 de Ataque a um lacaio aliado aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13539,7 +14057,10 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Grito de Guerra:&lt;/b&gt; Ganhe +1 de Ataque para cada outra Fera que você tiver.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13585,7 +14106,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Conceda +2 de Ataque aos seus outros Mecanoides.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13658,7 +14181,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Enfurecer:&lt;/b&gt; +1 de Ataque.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13688,7 +14213,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba 5 de Armadura.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13719,7 +14246,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Conceda +2/+2 a um Mecanoide aliado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13748,7 +14277,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Coloque uma Mina no deck do seu oponente. Ao ser comprada, ela explode causando 10 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13762,7 +14293,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Ao comprar este card, ele explode. Recebe 10 de dano e compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13777,7 +14310,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Restaure #4 de Vida do seu herói e ganhe +2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13790,7 +14325,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 de Ataque neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13805,7 +14342,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13821,8 +14360,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Escudo Divino&lt;/b&gt; e &lt;b&gt;Provocar&lt;/b&gt; a um lacaio aliado aleatório.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13838,7 +14376,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2/+2 aos seus Recrutas do Punho de Prata.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13882,9 +14422,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Sempre que você evocar um Mecanoide, ganhe &lt;b&gt;Escudo Divino&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13955,7 +14493,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Fúria dos Ventos, Sobrecarga: (1)&lt;/b&gt;
 50% de chance de atacar o inimigo errado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13982,7 +14522,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14008,7 +14550,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ataque aumentado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14022,7 +14566,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Recupere 8 de Vida do seu herói.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14109,7 +14655,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Assuma o controle de um &lt;b&gt;Segredo&lt;/b&gt; aleatório do inimigo.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14139,7 +14685,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 2 de dano a todos os lacaios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14182,7 +14730,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Concede uma &lt;b&gt;Peça Sobressalente&lt;/b&gt; a cada jogador.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14197,7 +14747,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14212,7 +14764,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver uma Fera, este lacaio torna-se 7/7.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14240,7 +14794,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14255,7 +14811,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Adicione um card &lt;b&gt;Peça Sobressalente&lt;/b&gt; à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14271,7 +14829,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +4 de Vida a um Mecanoide aliado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14286,7 +14846,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14302,7 +14864,10 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 &lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14362,7 +14927,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;
 50% de chance de atacar o inimigo errado.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14376,9 +14943,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Se você controlar um &lt;b&gt;Segredo&lt;/b&gt; no final do seu turno, restaure 4 de Vida do seu herói.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14392,7 +14957,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 6 de dano divididos aleatoriamente entre todos os outros personagens.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14408,7 +14975,9 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14422,7 +14991,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Compre um card. Se for um lacaio, transforme-o em uma Galinha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14449,7 +15020,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14478,7 +15051,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Tem +4 de Ataque enquanto seu oponente tiver 6 ou mais cards na mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14493,7 +15068,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um lacaio aleatório com 2 de Custo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14509,7 +15086,8 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 &lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba +1/+1 para cada lacaio inimigo com &lt;b&gt;Último Suspiro&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14525,7 +15103,10 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Investida&lt;/b&gt;
 &lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14539,7 +15120,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 4 de dano a um lacaio inimigo aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14584,7 +15167,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Cause 2 de dano a todos os lacaios com &lt;b&gt;Último Suspiro&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14612,7 +15195,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Mecanoide, receba +1/+1 e adicione uma &lt;b&gt;Peça Sobressalente&lt;/b&gt; à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14680,7 +15265,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um lacaio aleatório com 4 de Custo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14724,9 +15311,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Fúria dos Ventos&lt;/b&gt;, &lt;b&gt;Provocar&lt;/b&gt; ou &lt;b&gt;Escudo Divino&lt;/b&gt; aos seus outros lacaios.
 &lt;i&gt;(aleatoriamente)&lt;/i&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14741,7 +15326,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Transforme um lacaio aliado em um lacaio aleatório com o mesmo Custo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14756,7 +15343,10 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtividade&lt;/b&gt;
 &lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14770,7 +15360,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt;: Evoque duas 1/1 Robombas. &lt;i&gt;ATENÇÃO: Os Robôs podem explodir.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14784,7 +15376,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 1-4 de dano a um inimigo aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14814,7 +15408,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Investida&lt;/b&gt;
 &lt;b&gt;Mega-Fúria dos Ventos&lt;/b&gt; &lt;i&gt;(Pode atacar quatro vezes em um turno.)&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14858,7 +15454,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um lacaio lendário aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14872,7 +15470,10 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra e Último Suspiro:&lt;/b&gt; Adicione um card &lt;b&gt;Peça Sobressalente&lt;/b&gt; à sua mão.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14930,7 +15531,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Equipe uma arma aleatória para cada jogador.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14944,7 +15547,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Destrua uma Fera.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14974,7 +15579,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Lacaios adjacentes não podem ser alvo de feitiços nem de Poderes Heroicos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15006,7 +15613,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>+2 de Dano Mágico.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15056,9 +15665,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Conceda &lt;b&gt;Provocar&lt;/b&gt; a um lacaio.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15071,9 +15678,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Conceda &lt;b&gt;Furtividade&lt;/b&gt; a um lacaio aliado até o seu próximo turno.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15098,7 +15703,9 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Congele&lt;/b&gt; um lacaio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15233,7 +15840,9 @@ Coloque dois lacaios do seu deck e um do deck adversário no campo de batalha.</
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15293,7 +15902,9 @@ Evoque um Espectador 1/1 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15341,7 +15952,9 @@ Cause 30 de dano.</Text>
     <Durability>0</Durability>
     <Text>O Poder Heroico de Thaurissan não pode ser usado.
 Só ataca lacaios com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15354,7 +15967,9 @@ Só ataca lacaios com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>O Poder Heroico de Thaurissan não pode ser usado.
 Só ataca lacaios com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15401,7 +16016,9 @@ Cause 1 de dano a todos os lacaios.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 1 de dano ao herói inimigo para cada Devoto do Fogo morto neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15413,7 +16030,9 @@ Cause 1 de dano a todos os lacaios.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Cause 3 de dano ao herói inimigo para cada Devoto do Fogo morto neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15855,7 +16474,9 @@ Evoque dois Orcs 2/2 com &lt;b&gt;Provocar&lt;/b&gt;. Receba um novo Poder Heroi
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15867,7 +16488,9 @@ Evoque dois Orcs 2/2 com &lt;b&gt;Provocar&lt;/b&gt;. Receba um novo Poder Heroi
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16244,7 +16867,9 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Enquanto estiver na sua mão, receba 1 de dano no início do seu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16256,7 +16881,9 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Enquanto este card estiver na sua mão, receba 3 de dano no início do seu turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16496,7 +17123,9 @@ Coloque um feitiço aleatório da classe do oponente na sua mão.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 6 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16508,7 +17137,9 @@ Coloque um feitiço aleatório da classe do oponente na sua mão.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16520,7 +17151,9 @@ Coloque um feitiço aleatório da classe do oponente na sua mão.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16532,7 +17165,9 @@ Coloque um feitiço aleatório da classe do oponente na sua mão.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Cause $8 de dano a um inimigo aleatório.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16594,7 +17229,9 @@ Ative um Tron aleatório.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16645,7 +17282,9 @@ Ativar Arcanotron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Ambos os jogadores recebem &lt;b&gt;+2 de Dano Mágico&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16739,7 +17378,9 @@ Ativar Eléctron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Todos os feitiços custam (3) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16793,7 +17434,9 @@ Ativar Magmatron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Sempre que um jogador jogar um card, Magmatron causa 2 de dano a ele.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16892,7 +17535,9 @@ Seus lacaios recebem +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17116,7 +17761,9 @@ Evoque dois Constructos Ósseos 4/2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17216,7 +17863,9 @@ Receba 4 de Armadura.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Ataque alterado para 0 neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17259,7 +17908,9 @@ Receba 4 de Armadura.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Custa (3) a menos neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17274,7 +17925,9 @@ Receba 4 de Armadura.</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Dragão na mão, receba +2 pontos de vida.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17312,7 +17965,9 @@ Receba 4 de Armadura.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Cause $2 de dano a todos os lacaios, menos aos Demônios.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17371,7 +18026,9 @@ Receba 4 de Armadura.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 2 de dano a todos os lacaios inimigos ilesos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17387,7 +18044,9 @@ Receba 4 de Armadura.</Text>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocar&lt;/b&gt;
 Custa (1) a menos para cada lacaio morto neste turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17492,7 +18151,9 @@ Desbloqueie Cristais de Mana &lt;b&gt;Sobrecarregados&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Cards jogados por você neste turno não causam &lt;b&gt;Sobrecarga&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17506,7 +18167,9 @@ Desbloqueie Cristais de Mana &lt;b&gt;Sobrecarregados&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba 1-4 de Ataque. &lt;b&gt;Sobrecarga:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17534,7 +18197,9 @@ Desbloqueie Cristais de Mana &lt;b&gt;Sobrecarregados&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Text>Cause $3 de dano.
 Se sua mão estiver vazia, compre um card.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17550,7 +18215,9 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se sua mão estiver vazia, receba +3/+3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17624,7 +18291,9 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; O próximo Dragão que você jogar custa (2) a menos.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17721,7 +18390,9 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se seu adversário tiver 15 ou menos pontos de vida, receba +3/+3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17763,7 +18434,9 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque um lacaio aleatório com 1 de custo para o seu oponente.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17777,7 +18450,9 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Substitua seu herói por Ragnaros, o Senhor do Fogo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17854,7 +18529,9 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se tiver um Dragão na mão, destrua um lacaio &lt;b&gt;Lendário&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17869,7 +18546,9 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione 2 feitiços aleatórios à sua mão &lt;i&gt;(da classe do seu adversário)&lt;/i&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17911,7 +18590,9 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se tiver um Dragão na mão, receba +1/+1. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17938,7 +18619,9 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Se tiver um Dragão na mão, cause 3 de dano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

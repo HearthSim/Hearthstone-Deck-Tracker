@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return string.Empty;
 				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var cardId = GetHero(_opponentController).CardId;
-				return cardId == null ? null : CardIds.HeroIdDict[cardId];
+				return cardId == null ? null : Game.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -703,14 +703,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 			foreach(var kp in Replay)
 			{
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
-				if(entity == null || string.IsNullOrEmpty(entity.CardId))
+				if(entity == null || (string.IsNullOrEmpty(entity.CardId) && kp.Type != KeyPointType.Victory && kp.Type != KeyPointType.Defeat))
 					continue;
 				if(kp.Type == KeyPointType.Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
 					continue;
 				var turn = (kp.Turn + 1) / 2;
 				if(turn == 1)
 				{
-					if(!kp.Data.Any(x => x.IsPlayer && x.GetTag(GAME_TAG.RESOURCES) == 1))
+					if(!kp.Data.Any(x => x.HasTag(GAME_TAG.PLAYER_ID) && x.GetTag(GAME_TAG.RESOURCES) == 1))
 						turn = 0;
 				}
 				if(turn > currentTurn)
@@ -733,13 +733,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 							if(!Config.Instance.ReplayViewerShowDeath)
 								continue;
 							break;
+						case KeyPointType.Mulligan:
 						case KeyPointType.DeckDiscard:
 						case KeyPointType.HandDiscard:
 							if(!Config.Instance.ReplayViewerShowDiscard)
 								continue;
 							break;
 						case KeyPointType.Draw:
-						case KeyPointType.Mulligan:
 						case KeyPointType.Obtain:
 						case KeyPointType.PlayToDeck:
 						case KeyPointType.PlayToHand:

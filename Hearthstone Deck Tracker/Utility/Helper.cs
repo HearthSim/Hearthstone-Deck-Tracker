@@ -376,13 +376,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public static long ToUnixTime(this DateTime time)
 		{
-			var total = (long)(time - new DateTime(1970, 1, 1)).TotalSeconds;
+			var total = (long)(time.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
 			return total < 0 ? 0 : total;
 		}
 
 		public static DateTime FromUnixTime(long unixTime)
 		{
-			return new DateTime(1970, 1, 1).Add(TimeSpan.FromSeconds(unixTime));
+			return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(TimeSpan.FromSeconds(unixTime)).ToLocalTime();
 		}
 
 		public static DateTime FromUnixTime(string unixTime)

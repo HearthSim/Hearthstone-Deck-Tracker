@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerHeroPower(string cardId, int turn);
 		void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);
+		void HandlePlayerGetToDeck(string cardId, int turn);
 
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
@@ -55,7 +56,9 @@ namespace Hearthstone_Deck_Tracker
 		void SetOpponentHero(string hero);
 		void HandleOpponentHeroPower(string cardId, int turn);
 		void HandleOpponentName(string name);
+		void HandleOpponentGetToDeck(int turn);
 
 		#endregion OpponentHandlers
+
 	}
 }

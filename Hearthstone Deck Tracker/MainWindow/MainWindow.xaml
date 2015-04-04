@@ -312,7 +312,7 @@
                         <CheckBox Name="MenuItemCheckBoxAutoDeleteGames" Content="AUTO DELETE GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteGames_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteGames_OnUnchecked"/>
                         <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND*" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
                         <Separator/>
-                        <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="DELETE SELECTED DECK" ToolTip="This will try to delete the selected deck and all matches on HearthStats as well as remove all stored IDs. The local deck will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
+                    <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="DELETE SELECTED DECKS" ToolTip="This will try to delete the selected decks and all matches on HearthStats as well as remove all stored IDs. The local decks will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
                         <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
                         <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
                     </MenuItem>

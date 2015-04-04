@@ -28,7 +28,9 @@ Przywróć 2 pkt. zdrowia.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -167,7 +169,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -214,9 +218,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Daj stronnikowi &lt;b&gt;Prowokację&lt;/b&gt; oraz +2/+2.&lt;i&gt; (+2 do ataku/+2 do zdrowia)&lt;/i&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -259,7 +261,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -334,7 +338,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Twój bohater ma +1 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -365,7 +371,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Ten stronnik został przemieniony w owcę 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -396,7 +404,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $3 pkt. obrażeń dowolnej postaci i ją &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -428,7 +438,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zamroź&lt;/b&gt; wszystkich wrogich stronników.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -444,9 +456,7 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Przyzwij dwóch stronników 0/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -494,7 +504,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zamroź&lt;/b&gt; każdą postać zranioną przez tego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -526,7 +538,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $1 pkt. obrażeń wrogiej postaci i ją &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -542,9 +556,7 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Daj stronnikowi &lt;b&gt;Furię wichru&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -560,9 +572,7 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Przywróć stronnika do pełni zdrowia i daj mu &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -576,7 +586,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Prowokacja</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -591,7 +603,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -621,7 +635,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Ta postać ma +3 do ataku podczas tej tury.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -650,7 +666,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -697,7 +715,9 @@ Przyzwij losowy Totem.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -713,7 +733,9 @@ Przyzwij losowy Totem.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -822,7 +844,9 @@ Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń WSZYSTKIM pozostałym postaciom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -839,7 +863,9 @@ Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -990,7 +1016,9 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1064,7 +1092,9 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 6 pkt. zdrowia twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1234,9 +1264,7 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Daj przyjaznemu stronnikowi +2 do ataku i &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1279,7 +1307,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1396,7 +1426,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1410,7 +1442,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Twoi pozostali stronnicy otrzymują +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1437,7 +1471,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1453,7 +1489,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1469,7 +1507,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1484,7 +1524,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1499,7 +1541,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1514,7 +1558,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1529,7 +1575,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1544,7 +1592,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1559,7 +1609,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1574,7 +1626,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1605,7 +1659,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1636,7 +1692,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1651,7 +1709,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1694,7 +1754,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1709,7 +1771,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1724,7 +1788,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Dzika 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1739,7 +1805,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1781,7 +1849,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1796,7 +1866,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Twoi pozostali stronnicy otrzymują +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1823,7 +1895,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 za każdego innego przyjaznego stronnika na polu bitwy.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1851,7 +1925,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1881,7 +1957,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Za każdym razem gdy stronnik zostanie uleczony, dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1955,7 +2033,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1999,7 +2079,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 2 pkt. zdrowia wszystkim przyjaznym postaciom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2016,7 +2098,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznej Bestii +2/+2 oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2047,7 +2129,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Twoje pozostałe Bestie otrzymują +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2077,9 +2161,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Twoje Bestie otrzymują &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2171,7 +2253,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 2 pkt. zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2186,7 +2270,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2201,7 +2287,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2229,7 +2317,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Mechanicznego smokora 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2258,7 +2348,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz broń przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2274,9 +2366,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Za każdym razem gdy przyzywasz stronnika z atakiem 3 lub mniejszym, daj mu &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2383,9 +2473,7 @@ Dobierz kartę.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Przemień stronnika w żabę 0/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2399,7 +2487,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Ten stronnik został przemieniony!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2414,7 +2504,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $3 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi wrogami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2463,7 +2555,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Odrzuć losową kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2525,9 +2619,7 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Daj stronnikowi &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2586,7 +2678,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Murloka zwiadowcę 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2616,7 +2710,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>WSZYSTKIE pozostałe Murloki otrzymują +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2661,7 +2757,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>Sąsiedni stronnicy otrzymują +2 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2705,7 +2804,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2722,7 +2823,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi &lt;b&gt;Furię wichru&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2738,7 +2839,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń wrogiemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3008,7 +3111,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3067,7 +3172,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3098,7 +3205,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3141,7 +3250,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3169,7 +3280,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3214,7 +3327,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $2 pkt. obrażeń wszystkim wrogim stronnikom i ich &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3230,7 +3345,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zamroź&lt;/b&gt; postać. Jeśli jest już &lt;b&gt;Zamrożona&lt;/b&gt;, zadaj zamiast tego $4 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3246,9 +3363,7 @@ Dobierz kartę.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Daj stronnikowi zdolność „&lt;b&gt;Agonia:&lt;/b&gt; Przywróć tego stronnika na pole bitwy”.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3308,7 +3423,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;. Na koniec twojej tury daj innemu losowemu przyjaznemu stronnikowi +1 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3337,7 +3454,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Daj stronnikowi +2 do ataku. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego daj +4 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3406,7 +3525,9 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 3 pkt. zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3422,9 +3543,7 @@ Dobierz kartę.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Posiada &lt;b&gt;Szarżę&lt;/b&gt;, gdy masz broń na wyposażeniu.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3439,7 +3558,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Giermka 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3467,7 +3588,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3483,7 +3606,9 @@ Dobierz kartę.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3498,7 +3623,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaje SOBIE 4 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3525,7 +3652,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj stronnikowi +2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3538,7 +3667,9 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ten stronnik ma +2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3554,7 +3685,7 @@ Dobierz kartę.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; &lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3570,7 +3701,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Szał:&lt;/b&gt; Twoja broń ma +2 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3597,7 +3730,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>Twoi stronnicy kosztują (3) więcej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3627,7 +3762,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Zniszcz twoją broń i zadaj obrażenia od niej wszystkim wrogom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3774,7 +3911,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz wrogiego stronnika posiadającego &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3815,7 +3952,9 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz stronnika z atakiem 7 lub większym.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3859,7 +3998,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3874,7 +4015,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szał:&lt;/b&gt; +5 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3889,7 +4032,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3904,7 +4049,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;. &lt;b&gt;Agonia:&lt;/b&gt; Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3919,7 +4067,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przeciwnikowi 2 banany.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3957,7 +4107,9 @@ Dobierz kartę.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przejmij kontrolę nad losowym wrogim stronnikiem.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3973,7 +4125,9 @@ Dobierz kartę.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3988,7 +4142,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4003,7 +4159,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4018,7 +4176,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4034,7 +4194,9 @@ Dobierz kartę.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4049,7 +4211,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4064,7 +4228,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4079,7 +4246,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4095,7 +4264,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do zdrowia za każdą kartę w ręce.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4164,7 +4335,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj stronnikowi +2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4177,7 +4350,9 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4192,7 +4367,7 @@ Dobierz kartę.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; &lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4208,7 +4383,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika na twoją rękę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4224,7 +4401,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Każdy gracz dobiera 2 karty.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4252,7 +4431,9 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Manoholiczka ma zwiększony atak.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4266,7 +4447,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika na twoją rękę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4282,7 +4465,7 @@ Dobierz kartę.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj sąsiednim stronnikom &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4298,7 +4481,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zamień atak i zdrowie wybranego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4325,7 +4510,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. &lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4340,7 +4528,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Pierwszy stronnik zagrany przez ciebie w każdej turze kosztuje (1) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4355,9 +4545,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Otrzymuje +1/+1 za każdym razem, gdy zagrany zostaje &lt;b&gt;Sekret&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4384,7 +4572,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi innymi postaciami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4399,7 +4589,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przemień innego losowego stronnika w diabłozaura 5/5 lub wiewiórkę 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4414,7 +4606,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeżeli przeciwnik ma przynajmniej 4 stronników, przejmij losowo kontrolę nad jednym z nich.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4429,7 +4623,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twojemu przeciwnikowi kryształ many.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4445,7 +4642,9 @@ Dobierz kartę.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przejmij kontrolę nad wrogim stronnikiem z atakiem 2 lub mniejszym.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4461,7 +4660,7 @@ Dobierz kartę.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj sąsiednim stronnikom +1/+1 oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4504,7 +4703,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4519,7 +4720,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Agonia:&lt;/b&gt; Zadaj $2 pkt. obrażeń WSZYSTKIM postaciom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4566,7 +4770,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj WSZYSTKIM pozostałym Murlokom +2 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4608,7 +4814,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Baina Krwawe Kopyto 4/5.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4635,7 +4843,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij dwa Pisklęta 1/1 twojemu przeciwnikowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4663,7 +4874,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $2 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj $4 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4695,9 +4908,7 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Daj swoim stronnikom &lt;b&gt;Ukrycie&lt;/b&gt; do twojej następnej tury.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4726,7 +4937,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg zaatakuje, przyzwij Obrońcę 2/1 jako nowy cel ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4756,7 +4969,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Przyzwij Bandytę Nieskornych 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4785,7 +5000,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój bohater otrzyma obrażenia, zadaj tyle samo obrażeń wrogiemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4801,7 +5018,10 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj 2 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4817,7 +5037,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Zadaj 2 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4833,7 +5055,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy jeden z twoich stronników zginie, przywróć go do życia z 1 pkt. zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4849,7 +5073,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $2 pkt. obrażeń wrogiemu bohaterowi. &lt;b&gt;Kombinacja:&lt;/b&gt; W następnej turze cofnij tę kartę na rękę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4895,7 +5121,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Następne zaklęcie, jakie rzucisz w tej turze, kosztuje (3) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4954,9 +5182,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj stronnikowi +4 do ataku; lub daj +4 do zdrowia oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5026,9 +5252,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Daj swoim stronnikom zdolność „&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Drzewca 2/2”.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5157,7 +5381,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Sąsiedni stronnicy otrzymują +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5229,10 +5456,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; &lt;b&gt;Szarża&lt;/b&gt;; lub +2 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5278,7 +5502,9 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5293,7 +5519,9 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5308,9 +5536,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Zadaj 2 pkt. obrażeń; lub &lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5339,7 +5565,9 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5354,7 +5582,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Zniszcz każdego stronnika zranionego przez tego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5371,9 +5601,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; 
 +5 do ataku; lub +5 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5476,7 +5704,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;.
 &lt;b&gt;Przeciążenie:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5492,7 +5722,9 @@ Dobierz kartę.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wycisz&lt;/b&gt; stronnika, a następnie zadaj mu $1 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5524,9 +5756,7 @@ Dobierz kartę.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Przyzwij dwa Duchowe wilki 2/3 z &lt;b&gt;Prowokacją&lt;/b&gt;. &lt;b&gt;Przeciążenie:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5558,7 +5788,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;.
 &lt;b&gt;Przeciążenie:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5634,9 +5866,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Otrzymuje +2/+2, jeśli pod koniec twojej tury kontrolujesz &lt;b&gt;Sekret&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5665,7 +5895,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Zamroź&lt;/b&gt; stronnika oraz stronników obok niego i zadaj im wszystkim $1 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5696,7 +5928,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; &lt;b&gt;Zamroź&lt;/b&gt; postać.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5712,7 +5947,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5728,7 +5966,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy przeciwnik rzuci zaklęcie, &lt;b&gt;Kontrujesz&lt;/b&gt; je.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5744,7 +5984,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój bohater zostanie zaatakowany, otrzymujesz 8 pkt. pancerza.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5760,7 +6002,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, przyzwij jego kopię.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5776,7 +6020,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój bohater otrzyma zabójcze obrażenia, zapobiegasz im oraz zyskujesz w tej turze &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5790,7 +6036,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Twój bohater ma w tej turze &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5821,7 +6069,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz jeden ze swoich kryształów many.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5837,7 +6088,9 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Zniszcz przyjaznego stronnika i zadaj obrażenia o wartości jego ataku wszystkim wrogim stronnikom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5853,7 +6106,9 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz sąsiadujących z nim stronników, a zyska ich atak oraz zdrowie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5899,7 +6154,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Odrzuć dwie losowe karty.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5932,7 +6190,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 5 pkt. obrażeń twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5948,7 +6208,9 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Twoi stronnicy kosztują (2) mniej, ale nie mniej niż (1).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6026,7 +6288,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6058,7 +6322,9 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz twojego bohatera i zastąp go Lordem Jaraxxusem.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6101,7 +6367,9 @@ Dobierz kartę.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6301,7 +6569,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6404,7 +6672,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zmniejsz jego zdrowie do 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6433,7 +6703,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zmień atak wrogiego stronnika na 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6462,7 +6734,11 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;. &lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Agonia:&lt;/b&gt; Wyposaż bohatera w Spopielacz 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6491,7 +6767,9 @@ Dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj $8 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi wrogami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6506,7 +6784,10 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Szał:&lt;/b&gt; +3 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6553,7 +6834,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szał:&lt;/b&gt; +3 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6568,7 +6851,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6584,7 +6869,9 @@ Dobierz kartę.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wyposaż bohatera w broń 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6627,7 +6914,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6716,7 +7005,9 @@ Dobierz kartę.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj 1 pkt. obrażeń stronnikowi za każdy posiadany punkt pancerza.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6774,7 +7065,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szał:&lt;/b&gt; &lt;b&gt;Furia wichru&lt;/b&gt; oraz +1 do ataku.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6792,7 +7083,10 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;
 &lt;b&gt;Szał:&lt;/b&gt; +6 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6808,7 +7102,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>WSZYSTKIE pozostałe Murloki otrzymują +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6864,7 +7160,10 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;. Zniszcz każdego stronnika zranionego przez tego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6909,7 +7208,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy jakaś postać zaatakuje twojego bohatera, zamiast tego zaatakuje inną losową postać.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6925,7 +7226,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij dwie Hieny 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6955,9 +7258,7 @@ Dobierz kartę.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Za każdym razem gdy ujawniony zostaje przyjazny &lt;b&gt;Sekret&lt;/b&gt;, zyskuje 1 pkt. wytrzymałości.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -7001,9 +7302,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Przyzwij Ogara 1/1 z &lt;b&gt;Szarżą&lt;/b&gt; za każdego wrogiego stronnika.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7018,7 +7317,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7034,7 +7335,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7050,10 +7353,7 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Wszyscy stronnicy tracą &lt;b&gt;Ukrycie&lt;/b&gt;. Zniszcz wszystkie wrogie &lt;b&gt;Sekrety&lt;/b&gt;. Dobierz kartę.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7083,7 +7383,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 do ataku oraz &lt;b&gt;Niewrażliwość&lt;/b&gt; w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7098,7 +7400,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy jeden z twoich stronników zostanie zaatakowany, przyzwij trzy Węże 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7129,7 +7433,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Uszkodzonego golema 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7159,7 +7465,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz broń przeciwnika i dobierz tyle kart, ile wynosiła jej wytrzymałość.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7207,7 +7515,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ustaw pozostałe zdrowie bohatera na 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7235,7 +7545,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Pisklęta 1/1, aż zapełnią twoje pole bitwy.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7251,7 +7563,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Obrażenia zaklęć +5&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7266,7 +7580,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wybierz stronnika, a stanie się jego kopią.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7282,7 +7598,9 @@ Dobierz kartę.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furia wichru. Przeciążenie:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7311,7 +7629,9 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7326,9 +7646,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Przyzwij trzy Drzewce 2/2 z &lt;b&gt;Szarżą&lt;/b&gt;, które zginą na koniec tury.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7360,9 +7678,7 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj wszystkim swoim pozostałym stronnikom +2/+2; lub przyzwij dwa Drzewce 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7418,7 +7734,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7450,7 +7768,9 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Finkosza Rogoźnika 3/3 twojemu przeciwnikowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7466,7 +7786,9 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Zadaj stronnikowi obrażenia równe atakowi twojego bohatera.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7481,7 +7803,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 4 pkt. zdrowia twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7497,7 +7821,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj sąsiednim stronnikom &lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7541,7 +7865,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wszyscy stronnicy tracą &lt;b&gt;Boską tarczę&lt;/b&gt;. Otrzymuje +3/+3 za każdą straconą tarczę.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7571,7 +7895,9 @@ Dobierz kartę.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Twoje karty i moce zamiast przywracać zdrowie, zadają teraz obrażenia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7587,7 +7913,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Zniszcz stronnika, który zaatakuje twojego bohatera.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7678,7 +8006,9 @@ Dobierz kartę.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń stronnikowi i daj mu +2 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7765,7 +8095,9 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Twoje zaklęcia kosztują (1) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7781,7 +8113,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zadaj mu $4 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7797,7 +8131,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój bohater zostanie zaatakowany, zadaj $2 pkt. obrażeń wszystkim wrogom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7813,7 +8149,9 @@ Dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wrogi stronnik zaatakuje, cofnij go na rękę właściciela i zwiększ jego koszt o (2).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7843,7 +8181,7 @@ Dobierz kartę.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Następny &lt;b&gt;Sekret&lt;/b&gt;, który zagrasz w tej turze, kosztuje (0).</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7858,7 +8196,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Twój następny Sekret kosztuje (0).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7873,7 +8213,9 @@ Dobierz kartę.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Otrzymuje +2/+2 za każdą kartę zagraną wcześniej w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7928,7 +8270,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>WSZYSCY stronnicy kosztują (1) więcej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8017,7 +8361,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi +3 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8103,7 +8449,9 @@ Zadaj 3 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Wycisz&lt;/b&gt; wszystkich wrogich stronników. Dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8132,7 +8480,9 @@ Zadaj 3 pkt. obrażeń.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8174,7 +8524,9 @@ Zadaj 3 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8219,7 +8571,9 @@ Przyzwij Infernala 6/6.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. Na koniec tury zniszcz tego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8233,7 +8587,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Cofnij stronnika na rękę właściciela.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8330,7 +8686,12 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Furia wichru. Szarża. Boska tarcza. Prowokacja.&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8374,7 +8735,7 @@ Przyzwij Infernala 6/6.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi &lt;b&gt;Ukrycie&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8390,7 +8751,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz Murloka, a krab otrzyma +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8417,7 +8780,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku za każdy punkt ataku twojej broni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8486,7 +8851,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Prowokacja.&lt;/b&gt; Kosztuje (1) mniej za każdy punkt ataku twojej broni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8516,7 +8883,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twojej broni +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8543,7 +8912,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zmniejsz wytrzymałość broni przeciwnika o 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8595,7 +8966,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Twoi pozostali Piraci otrzymują +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8621,7 +8994,9 @@ Przyzwij Infernala 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; W następnej turze zaklęcia przeciwnika kosztują (0).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8649,7 +9024,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz wszystkich pozostałych stronników i odrzuć całą rękę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8678,7 +9055,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>W tej turze nie może zejść poniżej 1 pkt. zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8691,7 +9070,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>W tej turze twoi stronnicy nie mogą zejść poniżej 1 pkt. zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8756,9 +9137,7 @@ Przyzwij Infernala 6/6.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>Na koniec twojej tury przyzwij Gnola 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8771,7 +9150,9 @@ Przyzwij Infernala 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8785,7 +9166,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz losowego wrogiego stronnika z atakiem 2 lub mniejszym.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8842,7 +9225,9 @@ Przyzwij Infernala 6/6.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg rzuci zaklęcie na stronnika, przyzwij stronnika 1/3 jako nowy cel.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9093,7 +9478,9 @@ Przyzwij Infernala 6/6.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;. Otrzymuje +1 do ataku za każdego innego Murloka na polu bitwy.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9108,7 +9495,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Umieść w ręce losowego Pirata z twojej talii.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9236,7 +9625,9 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>Czy w tej beczce coś jest?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9328,7 +9719,9 @@ Przyzwij Infernala 6/6.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Król Mukla ma +8 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9565,7 +9958,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Rzuć bananami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9578,7 +9973,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9591,7 +9988,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9669,7 +10068,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9837,7 +10238,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10287,7 +10690,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10373,7 +10778,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij NIESAMOWITY wynalazek.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10458,7 +10865,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Ten stronnik został zamieniony w kurczaka!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10484,7 +10893,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj obu graczom moc metalu! (oraz kartę „Odjazdowy riff”)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10546,7 +10957,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przywróć 5 pkt. zdrowia wrogiemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10561,7 +10974,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij dwa Widmowe pająki 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10586,7 +11001,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij dokładną kopię tego stronnika na koniec tej tury.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10601,7 +11018,7 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Umieść losowy &lt;b&gt;Sekret&lt;/b&gt; z twojej talii na polu bitwy.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10616,7 +11033,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ukrycie.&lt;/b&gt; Otrzymuje +1/+1 na początku twojej tury.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10641,7 +11060,10 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Szarża. Agonia:&lt;/b&gt; Zadaj 3 pkt. obrażeń twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10654,7 +11076,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Nerubianina 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10696,6 +11120,7 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Agonia:&lt;/b&gt; Twój przeciwnik umieszcza losowego stronnika ze swojej talii na polu bitwy.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10711,7 +11136,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Zniszcz każdego stronnika zranionego przez tego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10727,7 +11154,9 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Dodaj losową kartę Bestii do twojej ręki.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10742,7 +11171,10 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja.
 Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10755,7 +11187,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10782,7 +11216,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Jeśli podczas tej partii zginął także Feugen, przyzwij Thadiusa.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10808,7 +11244,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Jeśli podczas tej partii zginął także Stalag, przyzwij Thadiusa.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10823,7 +11261,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy: Wycisz&lt;/b&gt; swoich pozostałych stronników.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10839,7 +11277,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>Stronnicy z &lt;b&gt;Okrzykiem bojowym&lt;/b&gt; kosztują (2) więcej.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10855,7 +11293,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy zginie przyjazny stronnik, umieść 2 kopie jego karty w twojej ręce.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10897,7 +11337,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy jeden z twoich stronników zginie, daj losowemu przyjaznemu stronnikowi +3/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10925,7 +11367,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 1 pkt. obrażeń wszystkim stronnikom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10941,7 +11385,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Umieść losowego Demona z ręki na polu bitwy.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10956,7 +11402,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj losowemu przyjaznemu stronnikowi +3 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10983,7 +11431,10 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Agonia:&lt;/b&gt; Zadaj 1 pkt. obrażeń wszystkim stronnikom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11014,7 +11465,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Cofnij losowego przyjaznego stronnika na twoją rękę.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11043,9 +11494,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Otrzymuje +1 do ataku za każdym razem, gdy przyzywasz stronnika z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11071,7 +11520,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Twój przeciwnik dobiera kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11085,7 +11536,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; W następnej turze zaklęcia przeciwnika kosztują (5) więcej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11112,7 +11565,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>Twoi stronnicy aktywują swoją &lt;b&gt;Agonię&lt;/b&gt; dwukrotnie.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11148,7 +11601,9 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Weź tę broń do ręki.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11161,7 +11616,10 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;
 &lt;b&gt;Agonia:&lt;/b&gt; Weź tę broń do ręki.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11258,9 +11716,7 @@ Zadaj 2 pkt. obrażeń wszystkim wrogom. Jeśli któryś zginie, przyzwij śluz.
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Daj stronnikowi +4/+4 oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11272,9 +11728,7 @@ Zadaj 2 pkt. obrażeń wszystkim wrogom. Jeśli któryś zginie, przyzwij śluz.
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11394,7 +11848,9 @@ Zmień zdrowie wrogich stronników na 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11536,7 +11992,9 @@ Zniszcz wszystkich wrogich stronników, którzy nie są &lt;b&gt;Zamrożeni&lt;/
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Wiecznie zamrożony. Sąsiedni stronnicy posiadają Niewrażliwość na „Mrożące zionięcie”.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11548,7 +12006,9 @@ Zniszcz wszystkich wrogich stronników, którzy nie są &lt;b&gt;Zamrożeni&lt;/
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Zadaj $8 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11605,7 +12065,9 @@ Zniszcz wszystkich wrogich stronników, którzy nie są &lt;b&gt;Zamrożeni&lt;/
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Zadaj 2 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11618,7 +12080,9 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Tex
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Zadaj 3 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11630,7 +12094,9 @@ Zadaj 3 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Tex
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11642,7 +12108,9 @@ Zadaj 3 pkt. obrażeń wrogiemu bohaterowi i go &lt;b&gt;Zamroź&lt;/b&gt;.</Tex
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11811,7 +12279,9 @@ Przyzwij Nerubianina 3/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11824,7 +12294,9 @@ Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11836,7 +12308,9 @@ Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>W twojej turze twój bohater ma +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11848,7 +12322,9 @@ Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>W twojej turze twój bohater ma +3 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12126,7 +12602,9 @@ Zadaj 3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj wszystkim wrogim stronnikom +8 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12184,7 +12662,9 @@ Zadaj 3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12306,7 +12786,9 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego giermka dla przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12330,7 +12812,9 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego wojownika dla przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12354,7 +12838,9 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego jeźdźca dla przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12533,7 +13019,9 @@ Dobierz 2 karty.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zniszcz także sąsiadujących stronników.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12545,7 +13033,9 @@ Dobierz 2 karty.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zniszcz broń przeciwnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12607,7 +13097,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli kontrolujesz Mecha, zadaj 4 punkty obrażeń losowo rozdzielone pomiędzy wszystkimi wrogami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12637,7 +13129,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Twoje Mechy kosztują (1) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12668,7 +13162,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Każdemu stronnikowi zadaj obrażenia równe jego atakowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12683,7 +13179,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń każdemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12698,9 +13196,7 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Daj stronnikowi +2/+4 oraz &lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12727,7 +13223,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj stronnikowi -2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12740,7 +13238,9 @@ Dobierz 2 karty.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12768,7 +13268,9 @@ Dobierz 2 karty.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Ma +2 do ataku, gdy kontrolujesz Mecha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12783,7 +13285,9 @@ Dobierz 2 karty.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zamień punkty zdrowia z innym stronnikiem.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12919,7 +13423,9 @@ Jeśli jest to Bestia, kosztuje (4) mniej.</Text>
     <Race>Demon</Race>
     <Text>Twoje pozostałe Demony otrzymują +2/+2.
 Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12947,7 +13453,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>Daj twojej broni +3 do ataku. &lt;b&gt;Kombinacja:&lt;/b&gt; Daj losowemu przyjaznemu stronnikowi +3 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12987,7 +13495,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy&lt;/b&gt;: Daj twojej broni +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13014,7 +13524,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Ma +2 do ataku, gdy kontrolujesz Mecha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13030,9 +13542,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Otrzymuje &lt;b&gt;Ukrycie&lt;/b&gt; za każdym razem, gdy przyzwiesz Pirata.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13047,9 +13557,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Aktywuj &lt;b&gt;Agonię&lt;/b&gt; u wszystkich twoich stronników.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13139,7 +13647,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;.
 &lt;b&gt;Wybierz jedno:&lt;/b&gt; 
 +1 do ataku; lub +1 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13294,7 +13804,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Wtasuj tego stronnika do twojej talii.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13309,7 +13821,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj losowemu przyjaznemu Mechowi +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13338,7 +13852,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13401,9 +13917,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Przyzwij 5 Ogników; lub daj stronnikowi +5/+5 oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13457,7 +13971,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 4 losowe Murloki do twojej ręki. &lt;b&gt;Przeciążenie:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13472,7 +13988,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj losowemu przyjaznemu stronnikowi +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13543,7 +14061,10 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku za każdą Bestię, którą kontrolujesz.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13589,7 +14110,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twoim innym Mechom +2 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13662,7 +14185,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Szał:&lt;/b&gt; +1 do ataku.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13692,7 +14217,9 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymujesz 5 pkt. pancerza.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13724,7 +14251,9 @@ wroga.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu Mechowi +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13753,7 +14282,9 @@ wroga.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wtasuj Minę do talii przeciwnika. Jeśli zostanie dobrana, eksploduje, zadając 10 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13767,7 +14298,9 @@ wroga.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Kiedy dobierasz tę kartę, eksploduje. Otrzymujesz 10 pkt. obrażeń i dobierasz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13782,7 +14315,9 @@ wroga.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Przywróć #4 pkt. zdrowia twojemu bohaterowi i zyskaj +2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13795,7 +14330,9 @@ wroga.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 do ataku w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13810,7 +14347,9 @@ wroga.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13826,8 +14365,7 @@ wroga.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj losowemu przyjaznemu stronnikowi &lt;b&gt;Boską tarczę&lt;/b&gt; oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13843,7 +14381,9 @@ wroga.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twoim Rekrutom Srebrnej Dłoni +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13887,9 +14427,7 @@ wroga.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Otrzymuje &lt;b&gt;Boską tarczę&lt;/b&gt; za każdym razem, gdy przyzywasz Mecha.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13962,7 +14500,9 @@ wroga.</Text>
     <Text>&lt;b&gt;Furia wichru,
 Przeciążenie:&lt;/b&gt; (1)
 50% szans na zaatakowanie niewłaściwego wroga.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13989,7 +14529,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Zwiększony atak.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -14015,7 +14557,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Zwiększony atak.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14029,7 +14573,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 8 pkt. zdrowia twojemu bohaterowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14116,7 +14662,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przejmij kontrolę nad losowym &lt;b&gt;Sekretem&lt;/b&gt; przeciwnika.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14146,7 +14692,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 2 pkt. obrażeń wszystkim stronnikom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14189,7 +14737,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj każdemu z graczy po karcie &lt;b&gt;Części zamiennej&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14204,7 +14754,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14219,7 +14771,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli kontrolujesz Bestię, przemień tego stronnika w 7/7.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14247,7 +14801,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14262,7 +14818,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Dodaj kartę &lt;b&gt;Części zamiennej&lt;/b&gt; do twojej ręki.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14278,7 +14836,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu Mechowi +4 do zdrowia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14293,7 +14853,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14309,7 +14871,10 @@ Przeciążenie:&lt;/b&gt; (1)
     <Race>Mech</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;
 &lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14369,7 +14934,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;
 50% szans na zaatakowanie niewłaściwego wroga.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14383,9 +14950,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Jeśli na koniec twojej tury kontrolujesz &lt;b&gt;Sekret&lt;/b&gt;, przywróć 4 pkt. zdrowia twojemu bohaterowi.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14399,7 +14964,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi innymi postaciami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14415,7 +14982,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Race>Mech</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;
 Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14429,7 +14998,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę. Jeśli to stronnik, zamieni się w Kurczaka.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14456,7 +15027,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14485,7 +15058,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Ma +4 do ataku, kiedy twój przeciwnik ma w ręce 6 lub więcej kart.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14500,7 +15075,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij losowego stronnika o koszcie 2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14516,7 +15093,8 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;
  &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 za każdego wrogiego stronnika z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14532,7 +15110,10 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;
 &lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14546,7 +15127,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 4 pkt. obrażeń losowemu wrogiemu stronnikowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14591,7 +15174,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń wszystkim stronnikom z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14619,7 +15202,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 oraz dodajesz kartę &lt;b&gt;Części zamiennej&lt;/b&gt; do twojej ręki, jeśli kontrolujesz Mecha.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14687,7 +15272,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij losowego stronnika o koszcie 4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14731,9 +15318,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Twoi pozostali stronnicy otrzymują &lt;b&gt;Furię wichru&lt;/b&gt;, &lt;b&gt;Prowokację&lt;/b&gt; lub &lt;b&gt;Boską tarczę&lt;/b&gt;.
 &lt;i&gt;(losowo)&lt;/i&gt;</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14748,7 +15333,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przemień przyjaznego stronnika w losowego stronnika o takim samym koszcie.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14763,7 +15350,10 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Ukrycie&lt;/b&gt;
 &lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14777,7 +15367,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij dwa Hukoboty 1/1. &lt;i&gt;UWAGA: Hukoboty mogą huknąć.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14791,7 +15383,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 1-4 pkt. obrażeń losowemu wrogowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14821,7 +15415,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;
 &lt;b&gt;Mega furia wichru&lt;/b&gt; &lt;i&gt;(Może atakować cztery razy w ciągu tury).&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14865,7 +15461,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij losowego legendarnego stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14879,7 +15477,10 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy oraz Agonia:&lt;/b&gt; Dodaj kartę &lt;b&gt;Części zamiennej&lt;/b&gt; do twojej ręki.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14937,7 +15538,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wyposaż każdego z graczy w losową broń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14951,7 +15554,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz Bestię.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14981,7 +15586,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Sąsiedni stronnicy nie mogą zostać wybrani jako cel zaklęć lub mocy specjalnych.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -15013,7 +15620,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Obrażenia zaklęć +2</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15063,9 +15672,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Daj stronnikowi &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15078,9 +15685,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Daj przyjaznemu stronnikowi &lt;b&gt;Ukrycie&lt;/b&gt; do twojej następnej tury.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15105,7 +15710,9 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Zamroź&lt;/b&gt; stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15240,7 +15847,9 @@ Umieść na polu bitwy dwóch stronników z twojej talii i jednego z talii przec
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15300,7 +15909,9 @@ Przyzwij Kibica 1/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15347,7 +15958,9 @@ Zadaj 30 pkt. obrażeń.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Moc specjalna Thaurissana nie może zostać użyta. Moira nie atakuje stronników bez &lt;b&gt;Prowokacji&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15359,7 +15972,9 @@ Zadaj 30 pkt. obrażeń.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Moc specjalna Thaurissana nie może zostać użyta. Moira nie atakuje stronników bez &lt;b&gt;Prowokacji&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15406,7 +16021,9 @@ Zadaj 1 pkt. obrażeń wszystkim stronnikom.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 1 pkt. obrażeń wrogiemu bohaterowi za każdego Sługę Ognia, który zginął w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15418,7 +16035,9 @@ Zadaj 1 pkt. obrażeń wszystkim stronnikom.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 3 pkt. obrażeń wrogiemu bohaterowi za każdego Sługę Ognia, który zginął w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15860,7 +16479,9 @@ Przyzwij dwa Orki 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;. Otrzymujesz nową moc sp
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15872,7 +16493,9 @@ Przyzwij dwa Orki 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;. Otrzymujesz nową moc sp
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16249,7 +16872,9 @@ Na koniec twojej tury dodaj kartę Piętna do ręki przeciwnika.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Gdy masz tę kartę w ręce, otrzymujesz 1 pkt. obrażeń na początku twojej tury.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16261,7 +16886,9 @@ Na koniec twojej tury dodaj kartę Piętna do ręki przeciwnika.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Gdy masz tę kartę w ręce, otrzymujesz 3 pkt. obrażeń na początku twojej tury.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16501,7 +17128,9 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16513,7 +17142,9 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16525,7 +17156,9 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16537,7 +17170,9 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Zadaj $8 pkt. obrażeń losowemu wrogowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16599,7 +17234,9 @@ Aktywuj losowego trona.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16650,7 +17287,9 @@ Aktywuj Arkanotrona!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Obaj gracze mają &lt;b&gt;Obrażenia zaklęć +2&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16744,7 +17383,9 @@ Aktywuj Elektrona!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Wszystkie zaklęcia kosztują (3) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16798,7 +17439,9 @@ Aktywuj Magmatrona!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Za każdym razem gdy gracz zagra kartę, Magmatron zada mu 2 pkt. obrażeń.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16897,7 +17540,9 @@ Twoi stronnicy mają +2/+2.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17121,7 +17766,9 @@ Przyzwij dwa Kościane konstrukty 4/2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17221,7 +17868,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Atak zmieniony na 0 w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17264,7 +17913,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Kosztuje (3) mniej w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17279,7 +17930,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +2 do zdrowia, jeśli masz w ręku Smoka.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17317,7 +17970,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Zadaj $2 pkt. obrażeń wszystkim stronnikom nie będącym Demonami.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17376,7 +18031,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń wszystkim niezranionym wrogim stronnikom.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17392,7 +18049,9 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Prowokacja.&lt;/b&gt;
 Kosztuje (1) mniej za każdego stronnika, który zginął w tej turze.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17497,7 +18156,9 @@ Odblokuj twoje &lt;b&gt;Przeciążone&lt;/b&gt; kryształy many.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Karty zagrane w tej turze nie powodują &lt;b&gt;Przeciążenia&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17511,7 +18172,9 @@ Odblokuj twoje &lt;b&gt;Przeciążone&lt;/b&gt; kryształy many.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje 1-4 do ataku. &lt;b&gt;Przeciążenie:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17539,7 +18202,9 @@ Odblokuj twoje &lt;b&gt;Przeciążone&lt;/b&gt; kryształy many.</Text>
     <Class>Hunter</Class>
     <Text>Zadaj $3 pkt. obrażeń.
 Jeśli masz pustą rękę, dobierz kartę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17555,7 +18220,9 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +3/+3, jeśli masz pustą rękę.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17629,7 +18296,9 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Następny Smok, którego zagrasz, kosztuje (2) mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17726,7 +18395,9 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +3/+3, jeśli twój przeciwnik ma 15 zdrowia lub mniej.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17768,7 +18439,9 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij losowego stronnika o koszcie 1 twojemu przeciwnikowi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17782,7 +18455,9 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Agonia:&lt;/b&gt; Zastąp twojego bohatera Ragnarosem, Władcą Ognia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17859,7 +18534,9 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli masz w ręku Smoka, zniszcz &lt;b&gt;legendarnego&lt;/b&gt; stronnika.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17874,7 +18551,9 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 2 losowe zaklęcia do twojej ręki &lt;i&gt;(z klasy przeciwnika)&lt;/i&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17916,7 +18595,9 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1, jeśli masz w ręku Smoka.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17943,7 +18624,9 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń, jeśli masz w ręku Smoka.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

@@ -10,7 +10,9 @@
                       Deactivated="MetroWindow_Deactivated">
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
-            <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)" TextAlignment="Center"/>
+            <Viewbox Name="ViewboxWinRateAgainst" StretchDirection="DownOnly">
+                <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"/>
+            </Viewbox>
             <local:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"

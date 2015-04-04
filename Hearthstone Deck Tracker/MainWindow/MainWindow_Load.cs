@@ -495,6 +495,7 @@ namespace Hearthstone_Deck_Tracker
 			//Options.CheckboxTimerTopmostHsForeground.IsEnabled = Config.Instance.TimerWindowTopmost;
 			//Options.CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
+            setContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
 			//Options.CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
 			//Options.CheckboxWinTopmostHsForeground.IsEnabled = Config.Instance.WindowsTopmost;
 			//Options.CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
@@ -613,15 +614,14 @@ namespace Hearthstone_Deck_Tracker
 			//Options.CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
 
 			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
+            setContextMenuProperty("classCardsFirst", "Checked", (bool)CheckboxClassCardsFirst.IsChecked);
+
 
 			DeckStatsFlyout.LoadConfig();
 			GameDetailsFlyout.LoadConfig();
 			StatsWindow.StatsControl.LoadConfig();
 			StatsWindow.GameDetailsFlyout.LoadConfig();
-
-			MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
-			MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
-
+			
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
 			MenuItemCheckBoxAutoUploadGames.IsChecked = Config.Instance.HearthStatsAutoUploadNewGames;

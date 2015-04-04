@@ -28,7 +28,9 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Donato Giancola</Artist>
   </Card>
   <Card>
@@ -166,7 +168,9 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_007</CardId>
@@ -213,9 +217,7 @@ Rigenera 2 Salute.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>+2/+2 e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
   <Card>
@@ -258,7 +260,9 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_012</CardId>
@@ -332,7 +336,9 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>+1 Attacco al tuo eroe per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_022</CardId>
@@ -363,7 +369,9 @@ Rigenera 2 Salute.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Trasformato in una Pecora 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_023</CardId>
@@ -394,7 +402,9 @@ Rigenera 2 Salute.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $3 danni e &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -426,7 +436,9 @@ Rigenera 2 Salute.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; tutti i servitori nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Josh Tallman</Artist>
   </Card>
   <Card>
@@ -442,9 +454,7 @@ Rigenera 2 Salute.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Evoca due servitori 0/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -492,7 +502,9 @@ Rigenera 2 Salute.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; i personaggi che danneggia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>John Avon</Artist>
   </Card>
   <Card>
@@ -524,7 +536,9 @@ Infligge 1 danno.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $1 |4(danno,danni) a un personaggio nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -540,9 +554,7 @@ Infligge 1 danno.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Fornisce &lt;b&gt;Furia del Vento&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Windfury</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -558,9 +570,7 @@ Infligge 1 danno.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Rigenera la Salute di un servitore al massimo e gli fornisce &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -574,7 +584,9 @@ Infligge 1 danno.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_042</CardId>
@@ -589,7 +601,9 @@ Infligge 1 danno.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -619,7 +633,9 @@ Infligge 1 danno.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_046</CardId>
@@ -648,7 +664,9 @@ Infligge 1 danno.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>+3 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_049</CardId>
@@ -695,7 +713,9 @@ Evoca un totem casuale.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_052</CardId>
@@ -711,7 +731,9 @@ Evoca un totem casuale.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_056</CardId>
@@ -820,7 +842,9 @@ Pesca una carta e subisce 2 danni.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno a TUTTI gli altri personaggi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -837,7 +861,9 @@ Pesca una carta e subisce 2 danni.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -988,7 +1014,9 @@ Equipaggia un Pugnale 1/2.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+1 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_084</CardId>
@@ -1062,7 +1090,9 @@ Equipaggia un Pugnale 1/2.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 6 Salute al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1231,9 +1261,7 @@ Ottiene 2 Armatura.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>+2 Attacco e &lt;b&gt;Carica&lt;/b&gt; a un tuo servitore.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -1276,7 +1304,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>+4 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_106</CardId>
@@ -1393,7 +1423,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Richie Marella</Artist>
   </Card>
   <Card>
@@ -1407,7 +1439,9 @@ Ottiene 2 Armatura.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Gli altri tuoi servitori hanno +1 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phill Gonzales</Artist>
   </Card>
   <Card>
@@ -1434,7 +1468,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -1450,7 +1486,9 @@ Ottiene 2 Armatura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -1466,7 +1504,9 @@ Ottiene 2 Armatura.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -1481,7 +1521,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Ladronn</Artist>
   </Card>
   <Card>
@@ -1496,7 +1538,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tooth</Artist>
   </Card>
   <Card>
@@ -1511,7 +1555,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -1526,7 +1572,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Court Jones</Artist>
   </Card>
   <Card>
@@ -1541,7 +1589,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Kev Walker</Artist>
   </Card>
   <Card>
@@ -1556,7 +1606,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Steve Ellis</Artist>
   </Card>
   <Card>
@@ -1571,7 +1623,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>E.M. Gist</Artist>
   </Card>
   <Card>
@@ -1602,7 +1656,9 @@ Ottiene 2 Armatura.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -1633,7 +1689,9 @@ Ottiene 2 Armatura.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
   <Card>
@@ -1648,7 +1706,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -1691,7 +1751,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
   <Card>
@@ -1706,7 +1768,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -1721,7 +1785,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un Cinghiale 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -1736,7 +1802,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1778,7 +1846,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -1793,7 +1863,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Gli altri tuoi servitori hanno +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -1820,7 +1892,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1/+1 per ogni altro tuo servitore sul campo di battaglia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -1848,7 +1922,9 @@ Ottiene 2 Armatura.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -1878,7 +1954,9 @@ Ottiene 2 Armatura.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Quando un servitore danneggiato viene curato, pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>HealTarget</string>
+    </Mechanics>
     <Artist>Terese Nielsen</Artist>
   </Card>
   <Card>
@@ -1952,7 +2030,9 @@ Ottiene 2 Armatura.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_tk1</CardId>
@@ -1996,7 +2076,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 2 Salute a tutti i tuoi personaggi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -2013,7 +2095,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2/+2 e &lt;b&gt;Provocazione&lt;/b&gt; a una tua Bestia.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -2044,7 +2126,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Le altre tue Bestie hanno +1 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Malcolm Davis</Artist>
   </Card>
   <Card>
@@ -2074,9 +2158,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Le tue Bestie hanno &lt;b&gt;Carica&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -2168,7 +2250,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 2 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2183,7 +2267,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Karl Richardson</Artist>
   </Card>
   <Card>
@@ -2198,7 +2284,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 a un altro tuo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -2226,7 +2314,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un Minidrago Meccanico 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2255,7 +2345,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'arma dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Rahn</Artist>
   </Card>
   <Card>
@@ -2271,9 +2363,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Quando evochi un servitore con Attacco pari a 3 o inferiore, gli fornisce &lt;b&gt;Carica&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2379,9 +2469,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Trasforma un servitore in una Rana 0/1 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -2395,7 +2483,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Trasformato.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_277</CardId>
@@ -2410,7 +2500,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $3 danni suddivisi casualmente tra tutti i nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Warren Mahy</Artist>
   </Card>
   <Card>
@@ -2459,7 +2551,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; scarta una carta casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -2521,9 +2615,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Fornisce &lt;b&gt;Scudo Divino&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -2582,7 +2674,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un Murloc Esploratore 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -2612,7 +2706,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TUTTI gli altri Murloc hanno +1 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2657,7 +2753,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Totem</Race>
     <Text>I servitori adiacenti hanno +2 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>Jonathan Ryder</Artist>
   </Card>
   <Card>
@@ -2701,7 +2800,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -2718,7 +2819,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;Furia del Vento&lt;/b&gt; a un altro tuo servitore.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2734,7 +2835,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni all'eroe nemico.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3003,7 +3106,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_003</CardId>
@@ -3062,7 +3167,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3093,7 +3200,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_033</CardId>
@@ -3136,7 +3245,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>skele11</CardId>
@@ -3164,7 +3275,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Monica Langlois</Artist>
   </Card>
   <Card>
@@ -3209,7 +3322,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $2 danni a tutti i servitori nemici e li &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3225,7 +3340,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Congela&lt;/b&gt; un personaggio. Se è già &lt;b&gt;Congelato&lt;/b&gt;, infligge $4 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3241,9 +3358,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Fornisce "&lt;b&gt;Rantolo di Morte:&lt;/b&gt; rievoca questo servitore" a un tuo servitore.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3303,7 +3418,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;. Alla fine del tuo turno, +1 Salute a un altro tuo servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -3332,7 +3449,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>+2 Attacco a un servitore. &lt;b&gt;Combo:&lt;/b&gt; +4 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3401,7 +3520,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 3 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3417,9 +3538,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
     <Text>Ha &lt;b&gt;Carica&lt;/b&gt; fintanto che hai un'arma equipaggiata.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -3434,7 +3553,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca uno Scudiero 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Starbuck</Artist>
   </Card>
   <Card>
@@ -3462,7 +3583,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -3478,7 +3601,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Greg Hildebrandt</Artist>
   </Card>
   <Card>
@@ -3493,7 +3618,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 4 danni a SE STESSO.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -3520,7 +3647,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Attacco a un altro servitore per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -3533,7 +3662,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>CS2_203</CardId>
@@ -3549,7 +3680,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; &lt;b&gt;Silenzia&lt;/b&gt; un altro servitore.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -3565,7 +3696,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Rabbia:&lt;/b&gt; la tua arma ha +2 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Justin Sweet</Artist>
   </Card>
   <Card>
@@ -3592,7 +3725,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>I tuoi servitori costano (3) Mana in più.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -3622,7 +3757,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Distrugge la tua arma e infligge danni pari al suo attacco a tutti i nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -3769,7 +3906,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge un servitore nemico con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -3810,7 +3947,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge un servitore con Attacco pari a 7 o superiore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -3854,7 +3993,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -3869,7 +4010,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rabbia:&lt;/b&gt; +5 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -3884,7 +4027,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -3899,7 +4044,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -3914,7 +4062,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce 2 Banane all'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sunny Gho</Artist>
   </Card>
   <Card>
@@ -3952,7 +4102,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; prendi il controllo di un servitore nemico casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -3968,7 +4120,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -3983,7 +4137,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -3998,7 +4154,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -4013,7 +4171,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -4029,7 +4189,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Alliance</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4044,7 +4206,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 2 danni all'eroe nemico.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -4059,7 +4223,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Scudo Divino&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Andrea Uderzo</Artist>
   </Card>
   <Card>
@@ -4074,7 +4241,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Luke Mancini</Artist>
   </Card>
   <Card>
@@ -4090,7 +4259,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1 Salute per ogni carta che hai in mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -4159,7 +4330,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Attacco a un altro servitore per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Scott Hampton</Artist>
   </Card>
   <Card>
@@ -4172,7 +4345,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_048</CardId>
@@ -4187,7 +4362,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Horde</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; &lt;b&gt;Silenzia&lt;/b&gt; un altro servitore.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -4203,7 +4378,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fa tornare un altro tuo servitore nella tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -4219,7 +4396,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ogni giocatore pesca 2 carte.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Steve Prescott</Artist>
   </Card>
   <Card>
@@ -4247,7 +4426,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Attacco aumentato.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_057</CardId>
@@ -4261,7 +4442,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fa tornare un altro tuo servitore nella tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -4277,7 +4460,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;Provocazione&lt;/b&gt; ai servitori adiacenti.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -4293,7 +4476,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; scambia Attacco e Salute di un altro servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Fleming</Artist>
   </Card>
   <Card>
@@ -4320,7 +4505,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Scudo Divino&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4335,7 +4523,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Il primo servitore che giochi ogni turno costa (1) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ron Spears</Artist>
   </Card>
   <Card>
@@ -4350,9 +4540,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>Ottiene +1/+1 quando viene giocato un &lt;b&gt;Segreto&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -4379,7 +4567,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni suddivisi casualmente tra TUTTI gli altri personaggi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Mike Sass</Artist>
   </Card>
   <Card>
@@ -4394,7 +4584,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; trasforma un altro servitore casuale in un Gigantosauro 5/5 o in uno Scoiattolo 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Tom Baxa</Artist>
   </Card>
   <Card>
@@ -4409,7 +4601,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se l'avversario ha 4 o più servitori, prendi il controllo di un servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -4424,7 +4618,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce 1 Cristallo di Mana all'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Sedhayu Ardian</Artist>
   </Card>
   <Card>
@@ -4440,7 +4637,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; prendi il controllo di un servitore nemico con Attacco pari a 2 o inferiore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -4456,7 +4655,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 e &lt;b&gt;Provocazione&lt;/b&gt; ai servitori adiacenti.</Text>
     <Mechanics>
-      <string>Taunt</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -4499,7 +4698,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -4514,7 +4715,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 2 danni a TUTTI i personaggi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -4561,7 +4765,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Salute a TUTTI gli altri Murloc.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Arthur Gimaldinov</Artist>
   </Card>
   <Card>
@@ -4603,7 +4809,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca Baine 4/5.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -4630,7 +4838,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca due Draghetti 1/1 sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
   <Card>
@@ -4658,7 +4869,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $2 danni. &lt;b&gt;Combo:&lt;/b&gt; infligge $4 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Ariel Olivetti</Artist>
   </Card>
   <Card>
@@ -4690,9 +4903,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Fornisce &lt;b&gt;Furtività&lt;/b&gt; ai tuoi servitori fino al tuo turno successivo.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
   <Card>
@@ -4721,7 +4932,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un nemico attacca, evoca un Difensore 2/1 come bersaglio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -4751,7 +4964,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; evoca un Bandito dei Defias 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -4780,7 +4995,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe subisce danni, infligge gli stessi danni all'eroe nemico.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
   <Card>
@@ -4796,7 +5013,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno. &lt;b&gt;Combo:&lt;/b&gt; infligge 2 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -4812,7 +5032,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; infligge 2 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Chris Moeller</Artist>
   </Card>
   <Card>
@@ -4828,7 +5050,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, ritorna in vita con 1 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Ittoku</Artist>
   </Card>
   <Card>
@@ -4844,7 +5068,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $2 danni all'eroe nemico. &lt;b&gt;Combo:&lt;/b&gt; torna nella tua mano alla fine del turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>James Zhang</Artist>
   </Card>
   <Card>
@@ -4890,7 +5116,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>La prossima Magia che lanci in questo turno costa (3) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_154</CardId>
@@ -4949,9 +5177,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; +4 Attacco a un servitore &lt;b&gt;o&lt;/b&gt; +4 Salute e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5021,9 +5247,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Fornisce "&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Treant 2/2" ai tuoi servitori.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
   <Card>
@@ -5152,7 +5376,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>I servitori adiacenti hanno +1 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+      <string>AdjacentBuff</string>
+    </Mechanics>
     <Artist>John Dickenson</Artist>
   </Card>
   <Card>
@@ -5224,10 +5451,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; ottiene &lt;b&gt;Carica&lt;/b&gt; &lt;b&gt;o&lt;/b&gt; +2 Salute e &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -5273,7 +5497,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_165t2</CardId>
@@ -5288,7 +5514,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_166</CardId>
@@ -5303,9 +5531,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; infligge 2 danni &lt;b&gt;o&lt;/b&gt; &lt;b&gt;Silenzia&lt;/b&gt; un servitore.</Text>
-    <Mechanics>
-      <string>Silence</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -5334,7 +5560,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silenzia&lt;/b&gt; un servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_170</CardId>
@@ -5349,7 +5577,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>Distrugge qualsiasi servitore danneggiato da questo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Lars Grant-West</Artist>
   </Card>
   <Card>
@@ -5365,9 +5595,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; ottiene +5 Salute e &lt;b&gt;Provocazione&lt;/b&gt; &lt;b&gt;o&lt;/b&gt; +5 Attacco.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
   <Card>
@@ -5469,7 +5697,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -5485,7 +5715,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silenzia&lt;/b&gt; un servitore e gli infligge $1 |4(danno,danni).</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Kevin Chin</Artist>
   </Card>
   <Card>
@@ -5517,9 +5749,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>Evoca due Lupi Spirituali 2/3 con &lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
   <Card>
@@ -5550,7 +5780,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Sovraccarico:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5626,9 +5858,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Ottiene +2/+2 se controlli un &lt;b&gt;Segreto&lt;/b&gt; alla fine del tuo turno.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -5657,7 +5887,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $1 |4(danno,danni) a un servitore e a quelli adiacenti e li &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Leo Che</Artist>
   </Card>
   <Card>
@@ -5688,7 +5920,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; &lt;b&gt;Congela&lt;/b&gt; un altro personaggio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -5704,7 +5939,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+1 Danni Magici&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Zhang</Artist>
   </Card>
   <Card>
@@ -5720,7 +5958,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando l'avversario usa una Magia, questa subisce &lt;b&gt;Contrasto&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -5736,7 +5976,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe viene attaccato, ottiene 8 Armatura.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -5752,7 +5994,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando l'avversario gioca un servitore, ne evoca una copia sotto il tuo controllo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raven Mimura</Artist>
   </Card>
   <Card>
@@ -5768,7 +6012,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe subisce danni fatali, li previene e diventa &lt;b&gt;Immune&lt;/b&gt; per quel turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Carl Frank</Artist>
   </Card>
   <Card>
@@ -5782,7 +6028,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Il tuo eroe è &lt;b&gt;Immune&lt;/b&gt; per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_298</CardId>
@@ -5813,7 +6061,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge uno dei tuoi Cristalli di Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -5829,7 +6080,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>Distrugge un tuo servitore e infligge danni pari al suo Attacco a tutti i servitori nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Kendall</Artist>
   </Card>
   <Card>
@@ -5845,7 +6098,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge i servitori adiacenti e ne ottiene l'Attacco e la Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alexander Alexandrov</Artist>
   </Card>
   <Card>
@@ -5891,7 +6146,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; scarta due carte casuali.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Lucas Graciano</Artist>
   </Card>
   <Card>
@@ -5924,7 +6182,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 5 danni al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -5940,7 +6200,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>I tuoi servitori costano (2) Mana in meno, ma non meno di (1) Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -6018,7 +6280,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6050,7 +6314,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge il tuo eroe e lo sostituisce con Sire Jaraxxus.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -6093,7 +6359,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Silenzia&lt;/b&gt; un servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -6293,7 +6561,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;Scudo Divino&lt;/b&gt; a un altro tuo servitore.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
@@ -6396,7 +6664,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando l'avversario gioca un servitore, riduce la sua Salute a 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -6425,7 +6695,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; l'Attacco di un servitore nemico diventa pari a 1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -6454,7 +6726,11 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;. &lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; equipaggia una Brandicenere 5/3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Brom</Artist>
   </Card>
   <Card>
@@ -6483,7 +6759,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge $8 danni suddivisi casualmente tra tutti i nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -6498,7 +6776,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rabbia:&lt;/b&gt; +3 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Paul Warzecha</Artist>
   </Card>
   <Card>
@@ -6545,7 +6826,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Rabbia:&lt;/b&gt; +3 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Chippy</Artist>
   </Card>
   <Card>
@@ -6560,7 +6843,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Cole Eastburn</Artist>
   </Card>
   <Card>
@@ -6576,7 +6861,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; equipaggia un'arma 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -6619,7 +6906,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Carl Critchlow</Artist>
   </Card>
   <Card>
@@ -6708,7 +6997,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge 1 danno a un servitore per ogni punto Armatura del tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -6766,7 +7057,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Rabbia:&lt;/b&gt; &lt;b&gt;Furia del Vento&lt;/b&gt; e +1 Attacco.</Text>
     <Mechanics>
-      <string>Windfury</string>
+      <string>Enrage</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -6783,7 +7074,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Rabbia:&lt;/b&gt; +6 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -6799,7 +7093,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TUTTI gli altri Murloc hanno +2/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Tim McBurnie</Artist>
   </Card>
   <Card>
@@ -6855,7 +7151,10 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;. Distrugge qualsiasi servitore danneggiato da questo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -6900,7 +7199,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un personaggio attacca il tuo eroe, attacca invece un altro personaggio casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -6916,7 +7217,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca due Iene 2/2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Milivoj Ceran</Artist>
   </Card>
   <Card>
@@ -6946,9 +7249,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>Ottiene +1 Integrità quando viene rivelato un tuo &lt;b&gt;Segreto&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
   <Card>
@@ -6992,9 +7293,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Evoca un Segugio 1/1 con &lt;b&gt;Carica&lt;/b&gt; per ogni servitore nemico sul campo di battaglia.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
   <Card>
@@ -7009,7 +7308,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_543</CardId>
@@ -7025,7 +7326,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7041,10 +7344,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>Tutti i servitori perdono &lt;b&gt;Furtività&lt;/b&gt;. Distrugge tutti i &lt;b&gt;Segreti&lt;/b&gt; nemici. Pesca una carta.</Text>
-    <Mechanics>
-      <string>Secret</string>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -7074,7 +7374,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>+2 Attacco e &lt;b&gt;Immune&lt;/b&gt; per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_554</CardId>
@@ -7089,7 +7391,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore viene attaccato, evoca tre Serpi 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -7120,7 +7424,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Golem Danneggiato 2/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Brian Despain</Artist>
   </Card>
   <Card>
@@ -7150,7 +7456,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'arma dell'avversario e pesca un numero di carte pari alla sua Integrità.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -7198,7 +7506,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; la Salute restante di un eroe diventa pari a 15.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7226,7 +7536,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca Draghetti 1/1 fino a riempire il tuo lato del campo di battaglia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -7242,7 +7554,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;+5 Danni Magici&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Michael Komarck</Artist>
   </Card>
   <Card>
@@ -7257,7 +7571,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; scegli un altro servitore, il Senzavolto Mutante diventa una sua copia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7273,7 +7589,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -7302,7 +7620,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_571</CardId>
@@ -7317,9 +7637,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Evoca tre Treant 2/2 con &lt;b&gt;Carica&lt;/b&gt; che muoiono alla fine del tuo turno.</Text>
-    <Mechanics>
-      <string>Charge</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
   <Card>
@@ -7351,9 +7669,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; +2/+2 a tutti gli altri tuoi servitori &lt;b&gt;o&lt;/b&gt; evoca due Treant 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7409,7 +7725,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_575</CardId>
@@ -7441,7 +7759,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca Finkle Cascorotto 3/3 sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -7457,7 +7777,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>Infligge danni pari all'Attacco del tuo eroe a un servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Dave Rapoza</Artist>
   </Card>
   <Card>
@@ -7472,7 +7794,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 4 Salute al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -7488,7 +7812,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;+1 Danni Magici&lt;/b&gt; ai servitori adiacenti.</Text>
     <Mechanics>
-      <string>Spellpower</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -7532,7 +7856,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; TUTTI i servitori perdono &lt;b&gt;Scudo Divino&lt;/b&gt;. Ottiene +3/+3 per ogni Scudo Divino dissolto.</Text>
     <Mechanics>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -7562,7 +7886,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>Le tue carte e i tuoi poteri che rigenerano Salute ora infliggono danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Doug Alexander</Artist>
   </Card>
   <Card>
@@ -7578,7 +7904,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un servitore attacca il tuo eroe, viene distrutto.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -7669,7 +7997,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno a un altro servitore ma gli fornisce +2 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -7756,7 +8086,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>Le tue Magie costano (1) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -7772,7 +8104,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando l'avversario gioca un servitore, questo subisce $4 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Lorenzo Minaca</Artist>
   </Card>
   <Card>
@@ -7788,7 +8122,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe viene attaccato, infligge $2 danni a tutti i nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -7804,7 +8140,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un servitore nemico attacca, ritorna nella mano di chi lo controlla e costa (2) Mana in più.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Matt Gaser</Artist>
   </Card>
   <Card>
@@ -7834,7 +8172,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo &lt;b&gt;Segreto&lt;/b&gt; che giochi in questo turno costa (0) Mana.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Popo Wei</Artist>
   </Card>
@@ -7849,7 +8187,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Il tuo prossimo Segreto costa (0) Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_613</CardId>
@@ -7864,7 +8204,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; ottiene +2/+2 per ogni carta giocata precedentemente in questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
@@ -7919,7 +8261,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>TUTTI i servitori costano (1) Mana in più.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -8008,7 +8352,9 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +3 Salute a un altro tuo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8094,7 +8440,9 @@ Infligge 3 danni.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Silenzia&lt;/b&gt; tutti i servitori nemici. Pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Silence</string>
+    </Mechanics>
     <Artist>Sean O'Daniels</Artist>
   </Card>
   <Card>
@@ -8123,7 +8471,9 @@ Infligge 3 danni.</Text>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk28</CardId>
@@ -8165,7 +8515,9 @@ Infligge 3 danni.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Mechanics />
+    <Mechanics>
+      <string>Summoned</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_tk33</CardId>
@@ -8210,7 +8562,9 @@ Evoca un Infernale 6/6.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. Alla fine del turno, distruggi questo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_005</CardId>
@@ -8224,7 +8578,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Combo:&lt;/b&gt; fa tornare un servitore nella mano di chi lo controlla.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Dave Allsop</Artist>
   </Card>
   <Card>
@@ -8321,7 +8677,12 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;. &lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Scudo Divino&lt;/b&gt;. &lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Taunt</string>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -8365,7 +8726,7 @@ Evoca un Infernale 6/6.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;Furtività&lt;/b&gt; a un altro tuo servitore.</Text>
     <Mechanics>
-      <string>Stealth</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
   </Card>
@@ -8381,7 +8742,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge un Murloc e ottiene +2/+2.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jaemin Kim</Artist>
   </Card>
   <Card>
@@ -8408,7 +8771,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene un incremento all'Attacco pari all'Attacco della tua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8477,7 +8842,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni punto Attacco della tua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -8507,7 +8874,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 alla tua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -8534,7 +8903,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rimuove 1 Integrità dall'arma dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Randy Gallegos</Artist>
   </Card>
   <Card>
@@ -8586,7 +8957,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Pirate</Race>
     <Text>Gli altri tuoi Pirati hanno +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Ken Steacy</Artist>
   </Card>
   <Card>
@@ -8612,7 +8985,9 @@ Evoca un Infernale 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo le Magie del nemico costano (0) Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -8640,7 +9015,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge TUTTI gli altri servitori e scarta le carte che hai in mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Bernie Kang</Artist>
   </Card>
   <Card>
@@ -8669,7 +9046,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Non può essere portato al di sotto di 1 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_036e2</CardId>
@@ -8682,7 +9061,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Per questo turno, i tuoi servitori non possono essere portati al di sotto di 1 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_037</CardId>
@@ -8747,9 +9128,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>Alla fine del tuo turno, evoca uno Gnoll 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
   <Card>
@@ -8762,7 +9141,9 @@ Evoca un Infernale 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NEW1_041</CardId>
@@ -8776,7 +9157,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge un servitore nemico casuale con Attacco pari a 2 o inferiore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -8833,7 +9216,9 @@ Evoca un Infernale 6/6.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un nemico lancia una Magia su un servitore, evoca un Difensore 1/3 come bersaglio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
   <Card>
@@ -9083,7 +9468,9 @@ Evoca un Infernale 6/6.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. Ha +1 Attacco per ogni altro Murloc sul campo di battaglia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -9098,7 +9485,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca un Pirata casuale dal tuo mazzo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Daren Bader</Artist>
   </Card>
   <Card>
@@ -9226,7 +9615,9 @@ Evoca un Infernale 6/6.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>C'è qualcosa in questo barile?</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4c_004</CardId>
@@ -9318,7 +9709,9 @@ Evoca un Infernale 6/6.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+8 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>TU4d_001</CardId>
@@ -9555,7 +9948,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; lancia una Banana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_001</CardId>
@@ -9568,7 +9963,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_002</CardId>
@@ -9581,7 +9978,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_003</CardId>
@@ -9659,7 +10058,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_009</CardId>
@@ -9827,7 +10228,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_021</CardId>
@@ -10277,7 +10680,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text />
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>XXX_094</CardId>
@@ -10363,7 +10768,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca una MERAVIGLIOSA invenzione.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ludo Lullabi</Artist>
   </Card>
   <Card>
@@ -10448,7 +10855,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Trasformato in una Gallina.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Morph</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>Mekka4t</CardId>
@@ -10474,7 +10883,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce il potere del ROCK a ogni giocatore!</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise Didier</Artist>
   </Card>
   <Card>
@@ -10536,7 +10947,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; rigenera 5 Salute all'eroe nemico.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>E. M. Gist</Artist>
   </Card>
   <Card>
@@ -10551,7 +10964,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca due Ragni Spettrali 1/1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jeremy Cranford</Artist>
   </Card>
   <Card>
@@ -10576,7 +10991,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; alla fine del turno, evoca una copia esatta di questo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Browning</Artist>
   </Card>
   <Card>
@@ -10591,7 +11008,7 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette in gioco un &lt;b&gt;Segreto&lt;/b&gt; dal tuo mazzo.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>James Ryman</Artist>
   </Card>
@@ -10606,7 +11023,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;. All'inizio del tuo turno, ottiene +1/+1.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Ittoku Seta</Artist>
   </Card>
   <Card>
@@ -10631,7 +11050,10 @@ Evoca due servitori 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 3 danni al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_007</CardId>
@@ -10644,7 +11066,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Nerubiano 4/4.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Justin Thavirat</Artist>
   </Card>
   <Card>
@@ -10686,6 +11110,7 @@ Evoca due servitori 2/1.</Text>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; l'avversario mette sul campo di battaglia un servitore casuale dal suo mazzo.</Text>
     <Mechanics>
       <string>Deathrattle</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
@@ -10701,7 +11126,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Race>Beast</Race>
     <Text>Distrugge qualsiasi servitore danneggiato da questo servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
     <Artist>Howard Lyon</Artist>
   </Card>
   <Card>
@@ -10717,7 +11144,9 @@ Evoca due servitori 2/1.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una Bestia casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Brereton</Artist>
   </Card>
   <Card>
@@ -10731,7 +11160,10 @@ Evoca due servitori 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca una Melma 1/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
   <Card>
@@ -10744,7 +11176,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>FP1_013</CardId>
@@ -10771,7 +11205,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; se anche Feugen è morto in questa partita, evoca Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10797,7 +11233,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; se anche Stalagg è morto in questa partita, evoca Thaddius.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
   <Card>
@@ -10812,7 +11250,7 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia: Silenzia&lt;/b&gt; tutti gli altri tuoi servitori.</Text>
     <Mechanics>
-      <string>Silence</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -10828,7 +11266,7 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Text>I servitori con &lt;b&gt;Grido di Battaglia&lt;/b&gt; costano (2) Mana in più.</Text>
     <Mechanics>
-      <string>Battlecry</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -10844,7 +11282,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, ne ottieni 2 copie in mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -10886,7 +11326,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, fornisce +3/+2 a un altro tuo servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -10914,7 +11356,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>2</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 1 danno a TUTTI i servitori.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -10930,7 +11374,9 @@ Evoca due servitori 2/1.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette sul campo di battaglia un Demone casuale dalla tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Robb Shoberg</Artist>
   </Card>
   <Card>
@@ -10945,7 +11391,9 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +3 Salute a un altro tuo servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -10972,7 +11420,10 @@ Evoca due servitori 2/1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 1 danno a TUTTI i servitori.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Mike Nicholson</Artist>
   </Card>
   <Card>
@@ -11003,7 +11454,7 @@ Evoca due servitori 2/1.</Text>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; fa tornare un altro tuo servitore casuale nella tua mano.</Text>
     <Mechanics>
-      <string>Poisonous</string>
+      <string>Deathrattle</string>
     </Mechanics>
     <Artist>Nate Bowden</Artist>
   </Card>
@@ -11032,9 +11483,7 @@ Evoca due servitori 2/1.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Ottiene +1 Attacco quando evochi un servitore con &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -11060,7 +11509,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; l'avversario pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Jon McConnell</Artist>
   </Card>
   <Card>
@@ -11074,7 +11525,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo le Magie del nemico costano (5) Mana in più.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -11101,7 +11554,7 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Text>I tuoi servitori attivano due volte il proprio &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Aura</string>
     </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -11137,7 +11590,9 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; torna nella tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_02H</CardId>
@@ -11149,7 +11604,10 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; torna nella tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX10_03</CardId>
@@ -11246,9 +11704,7 @@ Infligge 2 danni a tutti i nemici ed evoca una Fanghiglia per ogni servitore mor
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX11_04e</CardId>
@@ -11260,9 +11716,7 @@ Infligge 2 danni a tutti i nemici ed evoca una Fanghiglia per ogni servitore mor
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+4/+4 e &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NAX12_01</CardId>
@@ -11382,7 +11836,9 @@ La Salute di tutti i servitori nemici diventa pari a 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+6 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX13_01</CardId>
@@ -11524,7 +11980,9 @@ Distrugge tutti i servitori nemici non &lt;b&gt;Congelati&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Permanentemente &lt;b&gt;Congelato&lt;/b&gt;. I servitori adiacenti sono &lt;b&gt;Immuni&lt;/b&gt; a Soffio di Ghiaccio.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX14_04</CardId>
@@ -11536,7 +11994,9 @@ Distrugge tutti i servitori nemici non &lt;b&gt;Congelati&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>Infligge $8 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_01</CardId>
@@ -11593,7 +12053,9 @@ Distrugge tutti i servitori nemici non &lt;b&gt;Congelati&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
 Infligge 2 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_02H</CardId>
@@ -11606,7 +12068,9 @@ Infligge 2 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
 Infligge 3 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03n</CardId>
@@ -11618,7 +12082,9 @@ Infligge 3 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_03t</CardId>
@@ -11630,7 +12096,9 @@ Infligge 3 danni all'eroe nemico e lo &lt;b&gt;Congela&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX15_04</CardId>
@@ -11799,7 +12267,9 @@ Evoca un Nerubiano 3/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
 Infligge 1 danno a un nemico casuale per ogni carta nella mano dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_03H</CardId>
@@ -11812,7 +12282,9 @@ Infligge 1 danno a un nemico casuale per ogni carta nella mano dell'avversario.<
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
 Infligge 1 danno a un nemico casuale per ogni carta nella mano dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05</CardId>
@@ -11824,7 +12296,9 @@ Infligge 1 danno a un nemico casuale per ogni carta nella mano dell'avversario.<
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>+1 Attacco al tuo eroe durante il tuo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX2_05H</CardId>
@@ -11836,7 +12310,9 @@ Infligge 1 danno a un nemico casuale per ogni carta nella mano dell'avversario.<
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>+3 Attacco al tuo eroe durante il tuo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX3_01</CardId>
@@ -12114,7 +12590,9 @@ Infligge 3 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +8 Attacco a tutti i servitori nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX6_03te</CardId>
@@ -12172,7 +12650,9 @@ Infligge 3 danni all'eroe nemico.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX7_03</CardId>
@@ -12294,7 +12774,9 @@ Pesca una carta e ottiene 1 Cristallo di Mana.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Allievo Spettrale sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_03t</CardId>
@@ -12318,7 +12800,9 @@ Pesca una carta e ottiene 1 Cristallo di Mana.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Guerriero Spettrale sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_04t</CardId>
@@ -12342,7 +12826,9 @@ Pesca una carta e ottiene 1 Cristallo di Mana.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un Cavaliere Spettrale sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAX8_05t</CardId>
@@ -12521,7 +13007,9 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; distrugge i servitori adiacenti.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>NAXM_002</CardId>
@@ -12533,7 +13021,9 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; distrugge l'arma dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_001</CardId>
@@ -12595,7 +13085,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se controlli un Robot, infligge 4 danni suddivisi casualmente tra tutti i nemici.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Glenn Rane</Artist>
   </Card>
   <Card>
@@ -12625,7 +13117,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>I tuoi Robot costano (1) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -12656,7 +13150,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Infligge danni a TUTTI i servitori pari al loro attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -12671,7 +13167,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni a entrambi gli eroi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -12686,9 +13184,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Fornisce +2/+4 e &lt;b&gt;+1 Danni Magici&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Spellpower</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -12715,7 +13211,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; -2 Attacco a un altro servitore per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -12728,7 +13226,9 @@ Pesca 2 carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>-2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_012</CardId>
@@ -12756,7 +13256,9 @@ Pesca 2 carte.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Ha +2 Attacco fintanto che controlli un Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -12771,7 +13273,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; scambia la sua Salute con quella di un altro servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -12905,7 +13409,9 @@ Pesca 2 carte.</Text>
     <Class>Warlock</Class>
     <Race>Demon</Race>
     <Text>Gli altri tuoi Demoni hanno +2/+2. Il tuo eroe è &lt;b&gt;Immune&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wayne Reynolds</Artist>
   </Card>
   <Card>
@@ -12933,7 +13439,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>+3 Attacco alla tua arma. &lt;b&gt;Combo:&lt;/b&gt; inoltre, +3 Attacco a un tuo servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
     <Artist>Den</Artist>
   </Card>
   <Card>
@@ -12973,7 +13481,9 @@ Pesca 2 carte.</Text>
     <Class>Rogue</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1 Attacco alla tua arma.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Zolton Boros</Artist>
   </Card>
   <Card>
@@ -13000,7 +13510,9 @@ Pesca 2 carte.</Text>
     <Durability>3</Durability>
     <Class>Rogue</Class>
     <Text>Ha +2 Attacco fintanto che controlli un Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Richard Wright</Artist>
   </Card>
   <Card>
@@ -13016,9 +13528,7 @@ Pesca 2 carte.</Text>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
     <Text>Ottiene &lt;b&gt;Furtività&lt;/b&gt; quando giochi un Pirata.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
   <Card>
@@ -13033,9 +13543,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Tutti i tuoi servitori attivano il proprio &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
-    <Mechanics>
-      <string>Deathrattle</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -13123,7 +13631,9 @@ Pesca 2 carte.</Text>
     <Class>Druid</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Scegli:&lt;/b&gt; +1 Attacco &lt;b&gt;o&lt;/b&gt; +1 Salute.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Eva Widermann</Artist>
   </Card>
   <Card>
@@ -13278,7 +13788,9 @@ Pesca 2 carte.</Text>
     <Class>Druid</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; torna nel tuo mazzo.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Oliver Chipping</Artist>
   </Card>
   <Card>
@@ -13293,7 +13805,9 @@ Pesca 2 carte.</Text>
     <Durability>2</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +2/+2 a un tuo Robot casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan and Gabor</Artist>
   </Card>
   <Card>
@@ -13322,7 +13836,9 @@ Pesca 2 carte.</Text>
     <Class>Shaman</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13384,9 +13900,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Scegli:&lt;/b&gt; evoca 5 Fuochi Fatui &lt;b&gt;o&lt;/b&gt; +5/+5 e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -13440,7 +13954,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano 4 Murloc casuali. &lt;b&gt;Sovraccarico:&lt;/b&gt; (3)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -13455,7 +13971,9 @@ Pesca 2 carte.</Text>
     <Durability>2</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1 Attacco a un tuo servitore casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gino Whitehall</Artist>
   </Card>
   <Card>
@@ -13526,7 +14044,10 @@ Pesca 2 carte.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1 Attacco per ogni altra Bestia che controlli.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -13572,7 +14093,9 @@ Pesca 2 carte.</Text>
     <Class>Hunter</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Attacco a tutti gli altri tuoi Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Hideaki Takamura</Artist>
   </Card>
   <Card>
@@ -13645,7 +14168,9 @@ Pesca 2 carte.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rabbia:&lt;/b&gt; +1 Attacco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Enrage</string>
+    </Mechanics>
     <Artist>Tyler Walpole</Artist>
   </Card>
   <Card>
@@ -13675,7 +14200,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce 5 Armatura.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -13706,7 +14233,9 @@ Pesca 2 carte.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2/+2 a un altro tuo Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -13735,7 +14264,9 @@ Pesca 2 carte.</Text>
     <Class>Warrior</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette una mina nel mazzo dell'avversario. Quando viene pescata, infligge 10 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13749,7 +14280,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Text>Quando viene pescata questa carta, infligge 10 danni al tuo eroe. Pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -13764,7 +14297,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>Rigenera #4 Salute al tuo eroe e gli fornisce +2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
     <Artist>Jason Chan</Artist>
   </Card>
   <Card>
@@ -13777,7 +14312,9 @@ Pesca 2 carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2 Attacco per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_058</CardId>
@@ -13792,7 +14329,9 @@ Pesca 2 carte.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -13808,8 +14347,7 @@ Pesca 2 carte.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;Scudo Divino&lt;/b&gt; e &lt;b&gt;Provocazione&lt;/b&gt; a un tuo servitore casuale.</Text>
     <Mechanics>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Dany Orizio</Artist>
   </Card>
@@ -13825,7 +14363,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce +2/+2 alle tue Reclute Mano d'Argento.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Phroilan Gardner</Artist>
   </Card>
   <Card>
@@ -13869,9 +14409,7 @@ Pesca 2 carte.</Text>
     <Class>Paladin</Class>
     <Race>Mech</Race>
     <Text>Ottiene &lt;b&gt;Scudo Divino&lt;/b&gt; quando giochi un Robot.</Text>
-    <Mechanics>
-      <string>Divine Shield</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -13941,7 +14479,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;. Probabilità del 50% di attaccare il nemico sbagliato. &lt;b&gt;Sovraccarico:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>José Ladrönn</Artist>
   </Card>
   <Card>
@@ -13968,7 +14508,9 @@ Pesca 2 carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Attacco aumentato.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_068</CardId>
@@ -13994,7 +14536,9 @@ Pesca 2 carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Attacco aumentato.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_069</CardId>
@@ -14008,7 +14552,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 8 Salute al tuo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14095,7 +14641,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; prendi il controllo di un &lt;b&gt;Segreto&lt;/b&gt; casuale dell'avversario.</Text>
     <Mechanics>
-      <string>Secret</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Jakub Kasper</Artist>
   </Card>
@@ -14125,7 +14671,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 2 danni a TUTTI i servitori.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14168,7 +14716,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; ogni giocatore ottiene una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14183,7 +14733,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14198,7 +14750,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; si trasforma in un servitore 7/7 se controlli una Bestia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Brandon Kitkouski</Artist>
   </Card>
   <Card>
@@ -14226,7 +14780,9 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Seamus Gallagher</Artist>
   </Card>
   <Card>
@@ -14241,7 +14797,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14257,7 +14815,9 @@ Pesca 2 carte.</Text>
     <Class>Priest</Class>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +4 Salute a un altro tuo Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -14272,7 +14832,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14287,7 +14849,10 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Scudo Divino&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Divine Shield</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14346,7 +14911,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;. Probabilità del 50% di attaccare il nemico sbagliato.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
     <Artist>Samwise</Artist>
   </Card>
   <Card>
@@ -14360,9 +14927,7 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Se controlli un &lt;b&gt;Segreto&lt;/b&gt; alla fine del tuo turno, rigenera 4 Salute al tuo eroe.</Text>
-    <Mechanics>
-      <string>Secret</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
   <Card>
@@ -14376,7 +14941,9 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 6 danni suddivisi casualmente tra TUTTI gli altri personaggi.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -14391,7 +14958,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Non può essere il bersaglio di Magie o Poteri Eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Zero Yue</Artist>
   </Card>
   <Card>
@@ -14405,7 +14974,9 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca una carta. Se è un servitore, lo trasforma in una Gallina.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14432,7 +15003,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -14461,7 +15034,9 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Ha +4 Attacco fintanto che l'avversario ha 6 o più carte in mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -14476,7 +15051,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un servitore casuale da 2 Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Dan Scott</Artist>
   </Card>
   <Card>
@@ -14491,7 +15068,8 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1/+1 per ogni servitore nemico con &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
+      <string>Taunt</string>
     </Mechanics>
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -14506,7 +15084,10 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14520,7 +15101,9 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 4 danni a un servitore nemico casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Luca Zontini</Artist>
   </Card>
   <Card>
@@ -14565,7 +15148,7 @@ Pesca 2 carte.</Text>
     <Class>Paladin</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni a TUTTI i servitori con &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Deathrattle</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Anton Zemskov</Artist>
   </Card>
@@ -14593,7 +15176,9 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1/+1 e mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt; se controlli un Robot.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Gabor Szikszai</Artist>
   </Card>
   <Card>
@@ -14661,7 +15246,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un servitore casuale da 4 Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Michael Phillippi</Artist>
   </Card>
   <Card>
@@ -14704,9 +15291,7 @@ Pesca 2 carte.</Text>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce casualmente agli altri tuoi servitori &lt;b&gt;Furia del Vento&lt;/b&gt;, &lt;b&gt;Provocazione&lt;/b&gt; o &lt;b&gt;Scudo Divino&lt;/b&gt;.</Text>
     <Mechanics>
-      <string>Windfury</string>
-      <string>Taunt</string>
-      <string>Divine Shield</string>
+      <string>Battlecry</string>
     </Mechanics>
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -14721,7 +15306,9 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; trasforma un tuo servitore in un altro servitore casuale con lo stesso costo in Mana.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14735,7 +15322,10 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furtività&lt;/b&gt;. &lt;b&gt;+1 Danni Magici&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Spellpower</string>
+    </Mechanics>
     <Artist>Ben Olson</Artist>
   </Card>
   <Card>
@@ -14749,7 +15339,9 @@ Pesca 2 carte.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca due Robobombe 1/1. &lt;i&gt;ATTENZIONE: le Robobombe possono esplodere.&lt;/i&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Garner</Artist>
   </Card>
   <Card>
@@ -14763,7 +15355,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge da 1 a 4 danni a un nemico casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>GVG_111</CardId>
@@ -14792,7 +15386,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Super Furia del Vento&lt;/b&gt; &lt;i&gt;(può attaccare quattro volte in un turno)&lt;/i&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
     <Artist>Chris Seaman</Artist>
   </Card>
   <Card>
@@ -14836,7 +15432,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un servitore leggendario casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Christopher Moeller</Artist>
   </Card>
   <Card>
@@ -14850,7 +15448,10 @@ Pesca 2 carte.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia&lt;/b&gt; e &lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
   <Card>
@@ -14908,7 +15509,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ogni giocatore equipaggia un'arma casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -14922,7 +15525,9 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge una Bestia.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ralph Horsley</Artist>
   </Card>
   <Card>
@@ -14952,7 +15557,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>I servitori adiacenti non possono essere il bersaglio di Magie o Poteri Eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -14984,7 +15591,9 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;+2 Danni Magici&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>PART_001</CardId>
@@ -15034,9 +15643,7 @@ Pesca 2 carte.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Fornisce &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
-    <Mechanics>
-      <string>Taunt</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15049,9 +15656,7 @@ Pesca 2 carte.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Fornisce &lt;b&gt;Furtività&lt;/b&gt; a un tuo servitore fino al tuo turno successivo.</Text>
-    <Mechanics>
-      <string>Stealth</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Nutchapol Thitinunthakorn</Artist>
   </Card>
   <Card>
@@ -15076,7 +15681,9 @@ Pesca 2 carte.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Congela&lt;/b&gt; un servitore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Freeze</string>
+    </Mechanics>
     <Artist>Peerasak Senalai</Artist>
   </Card>
   <Card>
@@ -15211,7 +15818,9 @@ Mette in gioco due servitori dal tuo mazzo e uno da quello dell'avversario.</Tex
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA02_1</CardId>
@@ -15271,7 +15880,9 @@ Evoca uno Spettatore 1/1 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_1</CardId>
@@ -15319,7 +15930,9 @@ Infligge 30 danni.</Text>
     <Durability>0</Durability>
     <Text>Impedisce l'uso del Potere Eroe di Thaurissan.
 Attacca solo i servitori con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA03_3H</CardId>
@@ -15332,7 +15945,9 @@ Attacca solo i servitori con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>Impedisce l'uso del Potere Eroe di Thaurissan.
 Attacca solo i servitori con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_1</CardId>
@@ -15379,7 +15994,9 @@ Infligge 1 danno a TUTTI i servitori.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 1 danno all'eroe nemico per ogni Fedele del Fuoco morto in questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_3H</CardId>
@@ -15391,7 +16008,9 @@ Infligge 1 danno a TUTTI i servitori.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 3 danni all'eroe nemico per ogni Fedele del Fuoco morto in questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA04_4</CardId>
@@ -15833,7 +16452,9 @@ Evoca due Orchi 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;. Ottiene un nuovo Potere
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_3t</CardId>
@@ -15845,7 +16466,9 @@ Evoca due Orchi 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;. Ottiene un nuovo Potere
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA09_4</CardId>
@@ -16222,7 +16845,9 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>Fintanto che è nella tua mano, subisci 1 danno all'inizio del tuo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_3H</CardId>
@@ -16234,7 +16859,9 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Fintanto che è nella tua mano, subisci 3 danni all'inizio del tuo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA12_4</CardId>
@@ -16474,7 +17101,9 @@ Mette nella tua mano una Magia casuale della classe dell'avversario.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 6 danni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_6</CardId>
@@ -16486,7 +17115,9 @@ Mette nella tua mano una Magia casuale della classe dell'avversario.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_7</CardId>
@@ -16498,7 +17129,9 @@ Mette nella tua mano una Magia casuale della classe dell'avversario.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA13_8</CardId>
@@ -16510,7 +17143,9 @@ Mette nella tua mano una Magia casuale della classe dell'avversario.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Infligge $8 danni a un nemico casuale.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1</CardId>
@@ -16572,7 +17207,9 @@ Attiva un Tron casuale.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_1H</CardId>
@@ -16623,7 +17260,9 @@ Attiva Arcanotron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Fornisce &lt;b&gt;+2 Danni Magici&lt;/b&gt; a ogni giocatore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_4</CardId>
@@ -16717,7 +17356,9 @@ Attiva Electron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Tutte le Magie costano (3) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_7H</CardId>
@@ -16771,7 +17412,9 @@ Attiva Magmatron!</Text>
     <Durability>0</Durability>
     <Race>Mech</Race>
     <Text>Quando un giocatore gioca una carta, Magmatron infligge 2 danni al suo eroe.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA14_9H</CardId>
@@ -16870,7 +17513,9 @@ Scambia Attacco e Salute dei servitori.
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Carica&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA16_1</CardId>
@@ -17094,7 +17739,9 @@ Evoca due Costrutti d'Ossa 4/2.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRMA17_8</CardId>
@@ -17193,7 +17840,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>Attacco pari a 0 per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_002</CardId>
@@ -17236,7 +17885,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>Costa (3) Mana in meno per questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_004</CardId>
@@ -17251,7 +17902,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Class>Priest</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Salute se c'è un Drago nella tua mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
@@ -17289,7 +17942,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Text>Infligge $2 danni a tutti i servitori non Demoni.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17348,7 +18003,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni a tutti i servitori nemici non danneggiati.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Eric Braddock</Artist>
   </Card>
   <Card>
@@ -17363,7 +18020,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni servitore morto in questo turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
     <Artist>Trent Kaniuga</Artist>
   </Card>
   <Card>
@@ -17467,7 +18126,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>Le carte giocate in questo turno non causano &lt;b&gt;Sovraccarico&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>BRM_012</CardId>
@@ -17481,7 +18142,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene da 1 a 4 Attacco. &lt;b&gt;Sovraccarico:&lt;/b&gt; (1)</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Paul Mafayon</Artist>
   </Card>
   <Card>
@@ -17508,7 +18171,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>Infligge $3 danni. Se la tua mano è vuota, pesca una carta.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
     <Artist>Jonboy Meyers</Artist>
   </Card>
   <Card>
@@ -17524,7 +18189,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Class>Hunter</Class>
     <Race>Beast</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se la tua mano è vuota, ottiene +3/+3.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Jomaro Kindred</Artist>
   </Card>
   <Card>
@@ -17598,7 +18265,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo Drago che giochi costa (2) Mana in meno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Raymond Swanland</Artist>
   </Card>
   <Card>
@@ -17695,7 +18364,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +3/+3 se l'eroe avversario ha Salute pari a 15 o inferiore.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Slawomir Maniak</Artist>
   </Card>
   <Card>
@@ -17737,7 +18408,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un servitore casuale da 1 Mana sotto il controllo dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>John Polidora</Artist>
   </Card>
   <Card>
@@ -17751,7 +18424,9 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; sostituisce il tuo eroe con Ragnaros, il Signore del Fuoco.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
   <Card>
@@ -17828,7 +18503,9 @@ Infligge 8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se hai un Drago in mano, distrugge un servitore &lt;b&gt;Leggendario&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Alex Horley</Artist>
   </Card>
   <Card>
@@ -17843,7 +18520,9 @@ Infligge 8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano 2 Magie casuali della classe dell'avversario.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Ruan Jia</Artist>
   </Card>
   <Card>
@@ -17885,7 +18564,9 @@ Infligge 8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 se hai un Drago in mano. </Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Matt Dixon</Artist>
   </Card>
   <Card>
@@ -17912,7 +18593,9 @@ Infligge 8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 3 danni se hai un Drago in mano.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
     <Artist>Greg Staples</Artist>
   </Card>
   <Card>

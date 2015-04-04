@@ -26,20 +26,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private const int DefaultCoinPosition = 4;
 		private const int MaxHandSize = 10;
-		public static bool HighlightCardsInHand;
-		public static bool HighlightDiscarded;
+		public static bool HighlightCardsInHand { get; set; }
+		public static bool HighlightDiscarded { get; set; }
 
 		private static Dictionary<string, Card> _cardDb;
 
-		public static ObservableCollection<Card> OpponentCards;
-		public static int OpponentHandCount;
-		public static int OpponentFatigueCount;
-		public static bool IsInMenu;
-		public static bool IsUsingPremade;
-		public static int OpponentDeckCount;
-		public static bool OpponentHasCoin;
-		public static int OpponentSecretCount;
-		public static bool IsRunning;
+		public static ObservableCollection<Card> OpponentCards { get; set; }
+		public static int OpponentHandCount { get; set; }
+		public static int OpponentFatigueCount { get; set; }
+		public static bool IsInMenu { get; set; }
+		public static bool IsUsingPremade { get; set; }
+		public static int OpponentDeckCount { get; set; }
+		public static bool OpponentHasCoin { get; set; }
+		public static int OpponentSecretCount { get; set; }
+		public static bool IsRunning { get; set; }
 		public static Region CurrentRegion { get; set; }
 
 		private static GameMode _currentGameMode;
@@ -54,22 +54,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static GameStats CurrentGameStats;
+		public static GameStats CurrentGameStats { get; set; }
 
 
-		public static ObservableCollection<Card> PlayerDeck;
-		public static ObservableCollection<Card> PlayerDrawn;
-		public static int PlayerHandCount;
-		public static int PlayerFatigueCount;
-		public static string PlayingAgainst;
-		public static string PlayingAs;
-		public static string PlayerName;
-		public static string OpponentName;
+		public static ObservableCollection<Card> PlayerDeck { get; set; }
+		public static ObservableCollection<Card> PlayerDrawn { get; set; }
+		public static int PlayerHandCount { get; set; }
+		public static int PlayerFatigueCount { get; set; }
+		public static string PlayingAgainst { get; set; }
+		public static string PlayingAs { get; set; }
+		public static string PlayerName { get; set; }
+		public static string OpponentName { get; set; }
 
-		public static List<string> SetAsideCards;
-		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck;
+		public static List<string> SetAsideCards { get; set; }
+		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck { get; set; }
 
-		public static OpponentSecrets OpponentSecrets;
+		public static OpponentSecrets OpponentSecrets { get; set; }
 
 		private static readonly List<string> ValidCardSets = new List<string>
 		{
@@ -82,20 +82,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Blackrock Mountain"
 		};
 
-		public static List<Card> DrawnLastGame;
+		public static List<Card> DrawnLastGame { get; set; }
 
 		public static int[] OpponentHandAge { get; private set; }
 		public static CardMark[] OpponentHandMarks { get; private set; }
 		public static Card[] OpponentStolenCardsInformation { get; private set; }
 		public static List<Card> PossibleArenaCards { get; set; }
 		public static List<Card> PossibleConstructedCards { get; set; }
-		public static int? SecondToLastUsedId;
+		public static int? SecondToLastUsedId { get; set; }
 
 		//public static List<Entity> Entities;
-		public static Dictionary<int, Entity> Entities;
-		public static int PlayerId;
-		public static int OpponentId;
-		public static bool SavedReplay;
+		public static Dictionary<int, Entity> Entities { get; set; }
+		public static int PlayerId { get; set; }
+		public static int OpponentId { get; set; }
+		public static bool SavedReplay { get; set; }
 		private static List<string> hsLogLines = new List<string>();
 		//public static Dictionary<string, int> PlayerIds; 
 
@@ -146,6 +146,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return hsLogLines; }
 		}
 
+		public static int PlayerDeckSize { get; set; }
+		public static bool NoMatchingDeck { get; set; }
+
 		public static void Reset(bool resetStats = true)
 		{
 			Logger.WriteLine(">>>>>>>>>>> Reset <<<<<<<<<<<", "Game");
@@ -163,11 +166,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentHandCount = 0;
 			OpponentFatigueCount = 0;
 			OpponentDeckCount = 30;
+			PlayerDeckSize = 30;
 			SecondToLastUsedId = null;
 			OpponentHandAge = new int[MaxHandSize];
 			OpponentHandMarks = new CardMark[MaxHandSize];
 			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets.ClearSecrets();
+			NoMatchingDeck = false;
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{
@@ -450,9 +455,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+
+		public static void PlayerGetToDeck(string cardId, int turn)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+
+			PlayerDeckSize++;
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.IsStolen);
+			if(deckCard != null)
+			{
+				deckCard.Count++;
+				LogDeckChange(false, deckCard, false);
+			}
+			else
+			{
+				deckCard = GetCardFromId(cardId);
+				deckCard.IsStolen = true;
+				PlayerDeck.Add(deckCard);
+				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
+			}
+		}
+
 		#endregion
 
 		#region Opponent
+
+		public static void OpponentGetToDeck(int turn)
+		{
+			OpponentDeckCount++;
+		}
 
 		public static void OpponentDraw(int turn)
 		{
@@ -775,6 +807,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			        select card).ToList();
 		}
 
+		public static string GetHeroNameFromId(string id)
+		{
+			string name;
+			if(CardIds.HeroIdDict.TryGetValue(id, out name))
+				return name;
+			var card = GetCardFromId(id);
+			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN")
+				return id;
+			return card.Name;
+		}
+
 		#endregion
 
 		public static void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
@@ -796,13 +839,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void ResetArenaCards()
 		{
 			PossibleArenaCards.Clear();
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 
 		public static void ResetConstructedCards()
 		{
 			PossibleConstructedCards.Clear();
-			Helper.MainWindow.MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
 		}
 
 		public static void AddHSLogLine(string logLine)
