@@ -710,7 +710,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var turn = (kp.Turn + 1) / 2;
 				if(turn == 1)
 				{
-					if(!kp.Data.Any(x => x.IsPlayer && x.GetTag(GAME_TAG.RESOURCES) == 1))
+					if(!kp.Data.Any(x => x.HasTag(GAME_TAG.PLAYER_ID) && x.GetTag(GAME_TAG.RESOURCES) == 1))
 						turn = 0;
 				}
 				if(turn > currentTurn)
