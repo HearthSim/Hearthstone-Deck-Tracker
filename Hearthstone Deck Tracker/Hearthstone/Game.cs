@@ -839,13 +839,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static void ResetArenaCards()
 		{
 			PossibleArenaCards.Clear();
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = Config.Instance.ShowArenaImportMessage;
 		}
 
 		public static void ResetConstructedCards()
 		{
 			PossibleConstructedCards.Clear();
-			Helper.MainWindow.MenuItemImportConstructed.IsEnabled = Config.Instance.ShowConstructedImportMessage;
 		}
 
 		public static void AddHSLogLine(string logLine)

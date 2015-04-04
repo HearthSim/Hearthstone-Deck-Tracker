@@ -620,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_doneImportingConstructed)
 				return;
 			var card = Game.GetCardFromId(id);
-			if(card == null)
+			if(!Game.IsActualCard(card))
 				return;
 			if(canBeDoneImporting)
 			{
@@ -636,7 +636,6 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 				_lastManaCost = card.Cost;
-				Helper.MainWindow.MenuItemImportConstructed.IsEnabled = true;
 			}
 			else
 			{
@@ -659,11 +658,10 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePossibleArenaCard(string id)
 		{
 			var card = Game.GetCardFromId(id);
-			if(card == null)
+			if(!Game.IsActualCard(card))
 				return;
 			if(!Game.PossibleArenaCards.Contains(card))
 				Game.PossibleArenaCards.Add(card);
-			Helper.MainWindow.MenuItemImportArena.IsEnabled = true;
 		}
 
 		public static void HandleWin()
