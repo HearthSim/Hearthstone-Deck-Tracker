@@ -7,6 +7,34 @@
              mc:Ignorable="d"
              d:DesignHeight="300" Width="235"
              Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+    <DockPanel>
+        <ListView Name="ListViewStatType" DockPanel.Dock="Top" SelectionChanged="ListViewStatType_OnSelectionChanged" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" SelectionMode="Single" Height="25" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListViewItem Name="ListViewItemMana"  Grid.Column="0">
+                <TextBlock Text="MANA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+            </ListViewItem>
+            <ListViewItem Name="ListViewItemHealth" Grid.Column="1">
+                <TextBlock Text="HEALTH" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+            </ListViewItem>
+            <ListViewItem Name="ListViewItemAttack" Grid.Column="2">
+                <TextBlock Text="ATTACK" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold"/>
+            </ListViewItem>
+        </ListView>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -61,5 +89,6 @@
         <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="7" Grid.Row="1" />
         <local:HearthstoneTextBlock Text="7" Margin="7,0,11,0" FontSize="22" Grid.Column="7" Grid.Row="1" />
         <local:HearthstoneTextBlock Text="+" Margin="14,5,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" />
-    </Grid>
+        </Grid>
+    </DockPanel>
 </UserControl>

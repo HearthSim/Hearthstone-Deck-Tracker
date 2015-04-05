@@ -606,6 +606,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//Options.CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
+			ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 
 			//Options.CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			//Options.CheckboxWindowCardToolTips.IsChecked = Config.Instance.WindowCardToolTips;

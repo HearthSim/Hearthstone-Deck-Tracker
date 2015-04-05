@@ -303,6 +303,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0)]
 		public int LogLevel = 0;
 
+		[DefaultValue(StatType.Mana)]
+		public StatType ManaCurveFilter = StatType.Mana;
+
 		[DefaultValue(true)]
 		public bool ManaCurveMyDecks = true;
 
