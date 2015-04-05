@@ -28,7 +28,8 @@ namespace Hearthstone_Deck_Tracker.API
 
 		internal void Execute(T arg)
 		{
-			foreach(var action in _actions)
+			var remove = new List<Tuple<object, Action<T>>>();
+            foreach(var action in _actions)
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
@@ -46,9 +47,13 @@ namespace Hearthstone_Deck_Tracker.API
 				{
 					Logger.WriteLine(string.Format("Invoking action{0} took {1} ms. Removed action.", GetInfo(plugin), sw.ElapsedMilliseconds),
 					                 "ActionListExecution");
-					//TODO: ACTUALLY REMOVE
+#if(!DEBUG)
+					remove.Add(action);
+#endif
 				}
 			}
+			foreach(var action in remove)
+				_actions.Remove(action);
 		}
 
 		private string GetInfo(PluginWrapper p)
