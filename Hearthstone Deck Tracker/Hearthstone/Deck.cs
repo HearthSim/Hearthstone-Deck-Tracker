@@ -450,7 +450,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string GetDeckInfo()
 		{
-			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name, Class, Cards.Sum(x => x.Count));
+			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name.Replace("{", "").Replace("}", ""), Class, Cards.Sum(x => x.Count));
 		}
 
 		/// returns the number of cards in the deck with mechanics matching the newmechanic.

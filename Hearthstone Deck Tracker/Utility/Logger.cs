@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace Hearthstone_Deck_Tracker
 {
 	[DebuggerStepThrough]
-	internal static class Logger
+	public static class Logger
 	{
 		/// <summary>
 		/// Writes line to trace

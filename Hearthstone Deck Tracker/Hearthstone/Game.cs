@@ -666,6 +666,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(SecondToLastUsedId.HasValue)
 				{
 					var cardId = Entities[id].CardId;
+					if(cardId == "GVG_007" && Entities[id].HasTag(GAME_TAG.DISPLAYED_CREATOR))
+						//Bug with created Flame Leviathan's: #863
+						return;
 					if(string.IsNullOrEmpty(cardId) && Entities[id].HasTag(GAME_TAG.LAST_AFFECTED_BY))
 						cardId = Entities[Entities[id].GetTag(GAME_TAG.LAST_AFFECTED_BY)].CardId;
 					if(string.IsNullOrEmpty(cardId))

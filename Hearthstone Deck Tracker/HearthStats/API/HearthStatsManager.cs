@@ -499,10 +499,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						await Task.Run(() => { Parallel.ForEach(newLocalDecks, deck =>
 						{
 							UploadDeck(deck, false);
-							Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+
+							if(controller != null)
 							{
-								controller.SetProgress(1.0 * (++uploaded) / total);
-							}));
+								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
+							}
 						}); });
 						DeckList.Save(); //save new ids
 						background = false;
@@ -541,10 +543,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						{
 							await Task.Delay(RetryDelay);
 							await UploadVersionAsync(v.version, v.hearthStatsId, false);
-							Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+
+							if(controller != null)
 							{
-								controller.SetProgress(1.0 * (++uploaded) / total);
-							}));
+								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
+							}
 						}
 					}
 					DeckList.Save();
@@ -611,10 +615,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 								deck = match.deck;
 
 							UploadMatch(match.game, deck, false);
-							Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+							if(controller != null)
 							{
-								controller.SetProgress(1.0*(++uploaded) / total);
-							}));
+								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
+								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
+							}
 						});
 					});
 					DeckStatsList.Save();

@@ -622,10 +622,13 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var drawn = new Deck() {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
 				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
-				var count = diff.Count > 3 ? 3 : diff.Count;
-				LblWarningCards.Text = diff.Take(count).Select(c => c.LocalizedName).Aggregate((c, n) => c + ", " + n);
-				if(diff.Count > 3)
-					LblWarningCards.Text += ", ...";
+				if(diff.Count > 0)
+				{
+					var count = diff.Count > 3 ? 3 : diff.Count;
+					LblWarningCards.Text = diff.Take(count).Select(c => c.LocalizedName).Aggregate((c, n) => c + ", " + n);
+					if(diff.Count > 3)
+						LblWarningCards.Text += ", ...";
+				}
 			}
 
 			if(Game.IsInMenu)
