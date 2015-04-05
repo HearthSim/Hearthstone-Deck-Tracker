@@ -614,9 +614,9 @@ namespace Hearthstone_Deck_Tracker
 							if(!from.Contains("PLAY"))
 							{
 								if(to.Contains("FRIENDLY"))
-									_gameHandler.SetPlayerHero(Game.GetHeroNameFromId(id));
+									_gameHandler.SetPlayerHero(Game.GetHeroNameFromId(id, false));
 								else if(to.Contains("OPPOSING"))
-									_gameHandler.SetOpponentHero(Game.GetHeroNameFromId(id));
+									_gameHandler.SetOpponentHero(Game.GetHeroNameFromId(id, false));
 							}
 							continue;
 						}

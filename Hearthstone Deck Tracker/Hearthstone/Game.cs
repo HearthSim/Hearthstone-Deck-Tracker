@@ -810,14 +810,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			        select card).ToList();
 		}
 
-		public static string GetHeroNameFromId(string id)
+		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 		{
 			string name;
 			if(CardIds.HeroIdDict.TryGetValue(id, out name))
 				return name;
 			var card = GetCardFromId(id);
-			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN")
-				return id;
+			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")
+				return returnIdIfNotFound ? id : null;
 			return card.Name;
 		}
 

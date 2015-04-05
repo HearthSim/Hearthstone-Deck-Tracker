@@ -337,6 +337,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void SetOpponentHero(string hero)
 		{
+			if(string.IsNullOrEmpty(hero))
+				return;
 			Game.PlayingAgainst = hero;
 
 			if(Game.CurrentGameStats != null)
@@ -352,13 +354,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				Game.PlayingAs = hero;
-				if(Game.CurrentGameStats != null)
-					Game.CurrentGameStats.PlayerHero = hero;
-				var selectedDeck = DeckList.Instance.ActiveDeckVersion;
-
 				if(!string.IsNullOrEmpty(hero))
 				{
+					Game.PlayingAs = hero;
+					if(Game.CurrentGameStats != null)
+						Game.CurrentGameStats.PlayerHero = hero;
+					var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 					if(!Game.IsUsingPremade || !Config.Instance.AutoDeckDetection)
 						return;
 
