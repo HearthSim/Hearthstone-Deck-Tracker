@@ -14,6 +14,9 @@ namespace Hearthstone_Deck_Tracker
         private readonly ManaCostBar[] _manaCostBars;
         private Deck _deck;
         private string _filter;
+        System.Windows.Media.Brush ActiveBrush;
+        System.Windows.Media.Brush NotActiveBrush;
+
 
         public ManaCurve()
         {
@@ -30,6 +33,20 @@ namespace Hearthstone_Deck_Tracker
 				ManaCostBar6,
 				ManaCostBar7
 			};
+            NotActiveBrush = System.Windows.Media.Brushes.Black;
+            ActiveBrush = System.Windows.Media.Brushes.BlueViolet;
+            switch (Config.Instance.curveFilter)
+            {
+                case "Attack":
+                    MenuItemAttack.Foreground = ActiveBrush;
+                    break;
+                case "Health":
+                    MenuItemLife.Foreground = ActiveBrush;
+                    break;
+                case "Cost":
+                    MenuItemMana.Foreground = ActiveBrush;
+                    break;
+            }
 
         }
 
@@ -66,7 +83,7 @@ namespace Hearthstone_Deck_Tracker
             var minions = new int[8];
             foreach (var card in _deck.GetSelectedDeckVersion().Cards)
             {
-                int value=(int)card.GetType().GetProperty(_filter).GetValue(card, null);
+                int value = (int)card.GetType().GetProperty(_filter).GetValue(card, null);
                 if (value >= 7)
                 {
                     switch (card.Type)
@@ -86,7 +103,7 @@ namespace Hearthstone_Deck_Tracker
                 }
                 else
                 {
-                    if (!((_filter == "Health" || _filter == "Attack") && value==0))
+                    if (!((_filter == "Health" || _filter == "Attack") && value == 0))
                     {
                         switch (card.Type)
                         {
@@ -126,6 +143,39 @@ namespace Hearthstone_Deck_Tracker
                     _manaCostBars[i].SetTooltipValues(weapons[i], spells[i], minions[i]);
                 }
             }
+        }
+
+        private void BtnCurveMana(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Config.Instance.curveFilter = "Cost";
+            Config.Save();
+            MenuItemAttack.Foreground = NotActiveBrush;
+            MenuItemLife.Foreground = NotActiveBrush;
+            MenuItemMana.Foreground = ActiveBrush;
+            this.UpdateValues();
+
+        }
+
+        private void BtnCurveHealth(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Config.Instance.curveFilter = "Health";
+            Config.Save();
+            MenuItemAttack.Foreground = NotActiveBrush;
+            MenuItemLife.Foreground = ActiveBrush;
+            MenuItemMana.Foreground = NotActiveBrush;
+            this.UpdateValues();
+
+        }
+
+        private void BtnCurveAttack(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Config.Instance.curveFilter = "Attack";
+            Config.Save();
+            MenuItemAttack.Foreground = ActiveBrush;
+            MenuItemLife.Foreground = NotActiveBrush;
+            MenuItemMana.Foreground = NotActiveBrush;
+            this.UpdateValues();
+
         }
     }
 }

@@ -1643,28 +1643,5 @@ namespace Hearthstone_Deck_Tracker
             object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
             return target.GetType().GetProperty(property).GetValue(target, null);
         }
-
-        private void BtnCurveMana(object sender, RoutedEventArgs e)
-        {
-            Config.Instance.curveFilter = "Cost";
-            Config.Save();
-            ManaCurveMyDecks.UpdateValues();
-        }
-
-        private void BtnCurveHealth(object sender, RoutedEventArgs e)
-        {
-            Config.Instance.curveFilter = "Health";
-            Config.Save();
-            ManaCurveMyDecks.UpdateValues();
-
-        }
-
-        private void BtnCurveAttack(object sender, RoutedEventArgs e)
-        {
-            Config.Instance.curveFilter = "Attack";
-            Config.Save();
-            ManaCurveMyDecks.UpdateValues();
-
-        }
 	}
 }

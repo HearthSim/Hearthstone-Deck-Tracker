@@ -142,6 +142,60 @@
                     <Separator />
                     <MenuItem Header="E_XIT" Click="MenuItemExit_OnClick"/>
                 </MenuItem>
+                <MenuItem Header="NEW _DECK" Click="BtnEditDeck_Click" >
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_layer_add}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
+                        <MenuItem.Icon>
+                            <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="_DECK" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
@@ -150,53 +204,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="NEW _DECK" Click="BtnEditDeck_Click" >
-                        <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
-                            <MenuItem.Icon>
-                                <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </MenuItem>
+
                     <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
                     <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
                     <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
@@ -309,11 +317,6 @@
                         <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
                         <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="_Curve" Name="MenuItemCurve">
-                    <MenuItem Header="Mana" Name="MenuItemMana" Click="BtnCurveMana"/>
-                    <MenuItem Header="Life" Name="MenuItemLife" Click="BtnCurveHealth"/>
-                    <MenuItem Header="Attack" Name="MenuItemAttack" Click="BtnCurveAttack"/>
                 </MenuItem>
             </Menu>
             <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
