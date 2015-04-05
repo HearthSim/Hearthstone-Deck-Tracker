@@ -11,12 +11,7 @@
         <GroupBox Header="Plugins">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Left" Margin="5,0,0,0" Width="120">
-                    <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom">
-                                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker#plugins"
-                                            RequestNavigate="Hyperlink_RequestNavigate">
-                                            Available plugins
-                                        </Hyperlink>
-                    </TextBlock>
+                    <Button DockPanel.Dock="Bottom" Click="ButtonAvailablePlugins_OnClick" Content="Available Plugins" Margin="0,5,0,0"/>
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single">
                             <ListBox.ItemTemplate>

@@ -53,5 +53,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			Process.Start(e.Uri.AbsoluteUri);
 		}
+
+		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
+		}
 	}
 }
