@@ -8,58 +8,70 @@
              d:DesignHeight="300" Width="235"
              Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="0" Margin="0,0,0,3" FontSize="22" Grid.Column="0" Grid.Row="1" />
+        <Menu Grid.Row="0" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" BorderBrush="Black">
+            <MenuItem Header="MANA" Name="MenuItemMana" Click="BtnCurveMana" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" FontSize="12" FontWeight="Bold"/>
+            <MenuItem Header="HEALTH" Name="MenuItemLife" Click="BtnCurveHealth" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" FontSize="12" FontWeight="Bold"/>
+            <MenuItem Header="ATTACK" Name="MenuItemAttack" Click="BtnCurveAttack" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" FontSize="12" FontWeight="Bold"/>
+        </Menu>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+            <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="0" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="0" Margin="0,0,0,3" FontSize="22" Grid.Column="0" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="1" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="1" Margin="0,0,0,3" FontSize="22" Grid.Column="1" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="1" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="1" Margin="0,0,0,3" FontSize="22" Grid.Column="1" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="2" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="2" Margin="0,0,0,3" FontSize="22" Grid.Column="2" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="2" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="2" Margin="0,0,0,3" FontSize="22" Grid.Column="2" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="3" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="3" Margin="0,0,0,3" FontSize="22" Grid.Column="3" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="3" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="3" Margin="0,0,0,3" FontSize="22" Grid.Column="3" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="4" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="4" Margin="0,0,0,3" FontSize="22" Grid.Column="4" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="4" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="4" Margin="0,0,0,3" FontSize="22" Grid.Column="4" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="5" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="5" Margin="0,0,0,3" FontSize="22" Grid.Column="5" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="5" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="5" Margin="0,0,0,3" FontSize="22" Grid.Column="5" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="6" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="6" Margin="0,0,0,3" FontSize="22" Grid.Column="6" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="6" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="6" Margin="0,0,0,3" FontSize="22" Grid.Column="6" Grid.Row="1" />
 
-        <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
+            <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
                            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-        <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="7" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="7" Margin="7,0,11,0" FontSize="22" Grid.Column="7" Grid.Row="1" />
-        <local:HearthstoneTextBlock Text="+" Margin="14,5,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" />
+            <Image Source="..\Resources\mana.png" Width="30" Height="30" Margin="0,0,0,0" Grid.Column="7" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="7" Margin="7,0,11,0" FontSize="22" Grid.Column="7" Grid.Row="1" />
+            <local:HearthstoneTextBlock Text="+" Margin="14,5,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" />
+        </Grid>
     </Grid>
 </UserControl>

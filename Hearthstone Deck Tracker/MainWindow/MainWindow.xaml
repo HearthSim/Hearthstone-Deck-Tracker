@@ -142,7 +142,7 @@
                     <Separator />
                     <MenuItem Header="E_XIT" Click="MenuItemExit_OnClick"/>
                 </MenuItem>
-                <MenuItem Header="_NEW">
+                <MenuItem Header="NEW _DECK" Click="BtnEditDeck_Click" >
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -204,6 +204,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
+
                     <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
                     <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
                     <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />

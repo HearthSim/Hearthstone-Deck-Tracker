@@ -26,6 +26,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string AccentName = "";
 
+        [DefaultValue("Cost")]
+        public string curveFilter = "Cost";
+
 		[DefaultValue("00000000-0000-0000-0000-000000000000")]
 		public string ActiveDeckIdString = Guid.Empty.ToString();
 
