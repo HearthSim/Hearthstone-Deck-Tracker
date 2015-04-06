@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
+			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
 			_initialized = true;
 		}
 
@@ -219,6 +220,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TimerAlert = false;
 			TextboxTimerAlert.IsEnabled = false;
+			Config.Save();
+		}
+
+		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardFrames = true;
+			Config.Save();
+		}
+
+		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardFrames = false;
 			Config.Save();
 		}
 	}

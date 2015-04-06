@@ -406,6 +406,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool PrioritizeGolden = true;
 
 		[DefaultValue(true)]
+		public bool RarityCardFrames = true;
+
+		[DefaultValue(true)]
 		public bool RecordArena = true;
 
 		[DefaultValue(true)]

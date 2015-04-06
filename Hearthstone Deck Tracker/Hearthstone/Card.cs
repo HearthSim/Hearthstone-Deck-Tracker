@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _name;
 		private string _text;
 		private bool _wasDiscarded;
+		private bool _coloredFrame;
 
 		public Card()
 		{
@@ -252,9 +253,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount)
+				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames)
 					return _cachedBackground;
 				_lastCount = Count;
+				_coloredFrame = Config.Instance.RarityCardFrames;
 				if(Id == null || Name == null)
 					return new ImageBrush();
 				try
@@ -273,7 +275,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 					//frame
-					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
+					var frame = "Images/frame.png";
+					if(Config.Instance.RarityCardFrames)
+					{
+						switch(Rarity)
+						{
+							case "Common":
+								frame = "Images/frame_rarity_common.png";
+								break;
+							case "Rare":
+								frame = "Images/frame_rarity_rare.png";
+								break;
+							case "Epic":
+								frame = "Images/frame_rarity_epic.png";
+								break;
+							case "Legendary":
+								frame = "Images/frame_rarity_legendary.png";
+								break;
+						}
+					}
+					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
 
 					//extra info?
 					if(Math.Abs(Count) > 1 || Rarity == "Legendary")

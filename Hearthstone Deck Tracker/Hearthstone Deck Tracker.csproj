@@ -1497,6 +1497,18 @@
     <Content Include="Images\frame_neg1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\frame_rarity_common.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\frame_rarity_epic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\frame_rarity_legendary.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\frame_rarity_rare.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\freezing-trap.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
