@@ -470,8 +470,10 @@ namespace Hearthstone_Deck_Tracker
 			var opponent = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
 			if(player.Value != null)
 				Game.CurrentGameStats.PlayerName = player.Value.Name;
-			if(opponent.Value != null)
+			if(opponent.Value != null && CardIds.HeroIdDict.ContainsKey(Game.CurrentGameStats.OpponentHero))
 				Game.CurrentGameStats.OpponentName = opponent.Value.Name;
+			else
+				Game.CurrentGameStats.OpponentName = Game.CurrentGameStats.OpponentHero;
 
 			Game.CurrentGameStats.Turns = HsLogReader.Instance.GetTurnNumber();
 			if(Config.Instance.DiscardZeroTurnGame && Game.CurrentGameStats.Turns < 1)
