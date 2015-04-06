@@ -49,10 +49,24 @@ namespace Hearthstone_Deck_Tracker.Replay
 					                  && x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
 				var opponentHero =
 					Points.Last()
-					      .Data.First(
+					      .Data.FirstOrDefault(
 					                  x =>
 					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
 					                  && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+				if(opponentHero == null)
+				{
+					//adventure bosses
+					opponentHero =
+						Points.Last()
+						      .Data.First(
+						                  x =>
+						                  !string.IsNullOrEmpty(x.CardId)
+						                  && ((x.CardId.StartsWith("NAX") && x.CardId.Contains("_01")) || x.CardId.StartsWith("BRMA"))
+						                  && Game.GetHeroNameFromId(x.CardId) != null);
+
+					ResolveOpponentName(Game.GetHeroNameFromId(opponentHero.CardId));
+
+				}
 
 				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Game.GetHeroNameFromId(playerHero.CardId), opponent.Name,
 											  Game.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
@@ -93,6 +107,18 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				Logger.WriteLine(e.ToString(), "ReplayMaker");
 				return null;
+			}
+		}
+
+		private static void ResolveOpponentName(string opponentName)
+		{
+			if(opponentName == null)
+				return;
+			foreach(var kp in Points)
+			{
+				var opponent = kp.Data.FirstOrDefault(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
+				if(opponent != null)
+					opponent.Name = opponentName;
 			}
 		}
 
