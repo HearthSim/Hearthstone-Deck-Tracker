@@ -264,7 +264,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			drawnCard.JustDrawn();
 
 
-			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
 			if(deckCard == null)
 				return false;
 
@@ -356,7 +356,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(card != null)
 			{
 				card.InHandCount--;
-				if(CanRemoveCard(card))
+				if(Config.Instance.HighlightCardsInHand && CanRemoveCard(card))
 					PlayerDeck.Remove(card);
 			}
 
@@ -424,7 +424,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				drawnCard.Count++;
 
-			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId);
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
 			if(deckCard == null)
 				return false;
 
