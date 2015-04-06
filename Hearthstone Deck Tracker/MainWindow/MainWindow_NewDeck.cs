@@ -551,6 +551,7 @@ namespace Hearthstone_Deck_Tracker
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
+			SelectLastUsedDeck();
 		}
 
 		private async Task SaveDeckWithOverwriteCheck()
