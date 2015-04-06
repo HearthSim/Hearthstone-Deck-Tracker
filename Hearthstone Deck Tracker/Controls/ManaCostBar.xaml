@@ -45,8 +45,8 @@
                 </Rectangle.Fill>
             </Rectangle>
         </StackPanel>
-        <Label Name="LabelCount" FontWeight="Bold" Content="0" Height="26" Foreground="Black"
-               VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,0" />
+        <TextBlock Name="TextBlockCount" FontWeight="SemiBold" Text= "0" Height="26" Foreground="Black"
+               VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="12"/>
 
     </Grid>
 </UserControl>

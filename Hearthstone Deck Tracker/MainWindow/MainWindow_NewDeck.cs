@@ -308,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 		private void UpdateCardCount()
 		{
 			var count = _newDeck == null ? 0 : _newDeck.Cards.Sum(c => c.Count);
-			LabelCardCount.Content = count + " / 30";
+			TextBlockCardCount.Text = count + " / 30";
 			CardCountWarning.Visibility = count > 30 ? Visibility.Visible : Visibility.Collapsed;
 		}
 

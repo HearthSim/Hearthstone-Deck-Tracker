@@ -11,7 +11,7 @@
         <Border Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}" BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
             <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="Search..." controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown"/>
         </Border>
-        <Border Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" Width="25" Height="25" DockPanel.Dock="Right" Margin="2,-2,0,0" BorderBrush="{DynamicResource TextBrush}">
+        <Border Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" Width="28" Height="28" DockPanel.Dock="Right" Margin="2,-2,0,0" BorderBrush="{DynamicResource TextBrush}">
             <Grid>
                 <Grid.Style>
                     <Style>
@@ -34,7 +34,7 @@
                 </Rectangle>
             </Grid>
         </Border>
-        <ListView Name="ListViewDeckType" SelectionChanged="ListViewDeckType_OnSelectionChanged" SelectionMode="Single" Height="25" Margin="0,0,0,2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <ListView Name="ListViewDeckType" SelectionChanged="ListViewDeckType_OnSelectionChanged" SelectionMode="Single" Height="28" Margin="0,0,0,2" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
