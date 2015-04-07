@@ -1205,5 +1205,16 @@ namespace Hearthstone_Deck_Tracker
 			_mouseInput = null;
 			Logger.WriteLine("Disabled mouse hook", "Overlay");
 		}
+
+		private void OverlayWindow_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			//in addition to setting this in mainwindow_load: (in case of minimized)
+			var presentationsource = PresentationSource.FromVisual(this);
+			if(presentationsource != null)   // make sure it's connected
+			{
+				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
+				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
+			}
+		}
 	}
 }
