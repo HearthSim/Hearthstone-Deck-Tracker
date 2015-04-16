@@ -556,7 +556,8 @@ namespace Hearthstone_Deck_Tracker
 						else
 							_gameHandler.HandlePossibleConstructedCard(id, false);
 					}
-					else if(_goldProgressRegex.IsMatch(logLine) && (DateTime.Now - _lastGameStart) > TimeSpan.FromSeconds(10))
+					else if(_goldProgressRegex.IsMatch(logLine) && (DateTime.Now - _lastGameStart) > TimeSpan.FromSeconds(10)
+						&& Game.CurrentGameMode != GameMode.Spectator)
 					{
 						int wins;
 						var rawWins = _goldProgressRegex.Match(logLine).Groups["wins"].Value;
