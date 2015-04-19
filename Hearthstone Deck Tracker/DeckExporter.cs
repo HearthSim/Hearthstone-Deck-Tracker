@@ -279,7 +279,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			const int width = 55;
 			const int height = 30;
-			const double maxBrightness = 5 / 11;
+			const double maxBrightness = 5.0 / 11.0;
 
 			var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, wndHandle);
 			if(capture == null)
