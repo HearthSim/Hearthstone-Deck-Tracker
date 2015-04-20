@@ -647,7 +647,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_doneImportingConstructed)
 				return;
 			var card = Game.GetCardFromId(id);
-			if(!Game.IsActualCard(card))
+			if(card == null || !Game.IsActualCard(card))
 				return;
 			if(canBeDoneImporting)
 			{
