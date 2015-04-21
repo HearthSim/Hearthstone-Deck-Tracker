@@ -14,12 +14,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		public DeckObject deck;
 		public DeckVersion[] versions;
 		public DateTime updated_at;
+		public string[] tags;
 
 		public Deck ToDeck()
 		{
 			if(deck == null)
 				return null;
-			return deck.ToDeck(cards, versions, current_version);
+			return deck.ToDeck(cards, tags, versions, current_version);
 		}
 	}
 }

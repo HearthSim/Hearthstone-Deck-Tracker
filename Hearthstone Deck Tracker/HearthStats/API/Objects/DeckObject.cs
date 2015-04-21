@@ -19,10 +19,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		public int klass_id;
 		public string name;
 		public string notes;
-		public string[] tags;
 		public DateTime updated_at;
 
-		public Deck ToDeck(CardObject[] cards, DeckVersion[] versions, string version)
+		public Deck ToDeck(CardObject[] cards, string[] rawTags, DeckVersion[] versions, string version)
 		{
 			try
 			{
@@ -46,13 +45,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 
 				notes = notes.Trim();
 
-				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
+				//tags are returned all lowercase, find matching tag
+				var tags =
+					rawTags.Select(
+					            tag =>
+					            DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
+					            ?? tag);
+                var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
 				                    cards == null
 					                    ? new List<Card>()
 					                    : cards.Where(x => x != null && x.count != null && x.id != null)
 					                           .Select(x => x.ToCard())
 					                           .Where(x => x != null)
-					                           .ToList(), tags ?? new string[0], notes ?? "", url, DateTime.Now, archived, new List<Card>(),
+					                           .ToList(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
 				                    SerializableVersion.ParseOrDefault(version), new List<Deck>(), true, id.ToString(), Guid.NewGuid(),
 				                    deck_version_id.ToString());
 				deck.LastEdited = updated_at.ToLocalTime();
