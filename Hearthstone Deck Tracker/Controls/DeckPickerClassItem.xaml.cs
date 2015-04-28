@@ -13,8 +13,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class DeckPickerClassItem
 	{
-		private const int Small = 36;
-		private const int Big = 48;
+		public const int Small = 36;
+		public const int Big = 48;
 
 		public DeckPickerClassItem()
 		{

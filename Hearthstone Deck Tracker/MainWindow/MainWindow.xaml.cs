@@ -87,6 +87,11 @@ namespace Hearthstone_Deck_Tracker
 		private bool _update;
 		private Version _updatedVersion;
 
+		private double _heightChangeDueToSearchBox;
+		private const int SearchBoxHeight = 30;
+		private const int StatusBarNewsHeight = 20;
+		private const int ArchivedClassHeight = DeckPickerClassItem.Big;
+
 		public bool ShowToolTip
 		{
 			get { return Config.Instance.TrackerCardToolTips; }
@@ -323,6 +328,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			//DeckPickerList.SortDecks();
+			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
 			DeckPickerList.UpdateDecks();
 			DeckPickerList.UpdateArchivedClassVisibility();
 
@@ -342,7 +348,33 @@ namespace Hearthstone_Deck_Tracker
 			PluginManager.Instance.StartUpdateAsync();
 		}
 
+		void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if(e.PropertyName == "ArchivedClassVisible")
+				MinHeight += DeckPickerList.ArchivedClassVisible ? ArchivedClassHeight : -ArchivedClassHeight;
 
+			if(e.PropertyName == "VisibilitySearchBar")
+			{
+				if(DeckPickerList.SearchBarVisibile)
+				{
+					var oldHeight = Height;
+					MinHeight += SearchBoxHeight;
+					_heightChangeDueToSearchBox = Height - oldHeight;
+				}
+				else
+				{
+					MinHeight -= SearchBoxHeight;
+					Height -= _heightChangeDueToSearchBox;
+				}
+			}
+		}
+
+		private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			if(e.HeightChanged)
+				_heightChangeDueToSearchBox = 0;
+		}
+		
 		public Thickness TitleBarMargin
 		{
 			get { return new Thickness(0, TitlebarHeight, 0, 0); }
@@ -421,6 +453,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							TopRow.Height = new GridLength(20);
 							StatusBarNews.Visibility = Visibility.Visible;
+							MinHeight += StatusBarNewsHeight;
 							UpdateNews(0);
 						}
 					}
@@ -582,7 +615,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 
 				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visibility.Visible ? GridNewDeck.ActualWidth : 0));
-				Config.Instance.WindowHeight = (int)Height;
+				Config.Instance.WindowHeight = (int)(Height - _heightChangeDueToSearchBox);
 				Config.Instance.TrackerWindowTop = (int)Top;
 				Config.Instance.TrackerWindowLeft = (int)(Left + (_movedLeft.HasValue ? _movedLeft.Value : 0));
 
@@ -1498,6 +1531,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.IgnoreNewsId = _currentNewsId;
 			Config.Save();
 			StatusBarNews.Visibility = Visibility.Collapsed;
+			MinHeight -= StatusBarNewsHeight;
 			TopRow.Height = new GridLength(0);
 		}
 

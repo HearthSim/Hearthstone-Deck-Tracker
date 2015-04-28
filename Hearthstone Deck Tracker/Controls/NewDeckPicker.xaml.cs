@@ -34,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
 		public bool ChangedSelection;
-		private bool _anyArchived;
 		private bool _clearingClasses;
 		private bool _ignoreSelectionChange;
 		private bool _refillingList;
@@ -48,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				new ObservableCollection<DeckPickerClassItem>(
 					Enum.GetValues(typeof(HeroClassAll)).OfType<HeroClassAll>().Select(x => new DeckPickerClassItem {DataContext = x}));
 			_archivedClassItem = _classItems.ElementAt((int)HeroClassAll.Archived);
+			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new ObservableCollection<NewDeckPickerItem>();
@@ -61,10 +61,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; private set; }
 
-		public double MinWindowHeight
-		{
-			get { return _anyArchived ? 649 : 603; }
-		}
+		public bool ArchivedClassVisible { get; set; }
 
 		public bool SearchBarVisibile { get; set; }
 
@@ -320,24 +317,28 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void UpdateArchivedClassVisibility()
 		{
-			_anyArchived = DeckList.Instance.Decks.Any(d => d.Archived);
-
-			if(_anyArchived)
+			if(DeckList.Instance.Decks.Any(d => d.Archived))
 			{
 				if(!_classItems.Contains(_archivedClassItem))
 				{
 					_classItems.Add(_archivedClassItem);
+					ArchivedClassVisible = true;
 
 					if(PropertyChanged != null)
-						PropertyChanged(this, new PropertyChangedEventArgs("MinWindowHeight"));
+						PropertyChanged(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
 				}
 			}
 			else
 			{
 				var removed = _classItems.Remove(_archivedClassItem);
+				
+				if(removed)
+				{
+					ArchivedClassVisible = false;
 
-				if(removed && PropertyChanged != null)
-					PropertyChanged(this, new PropertyChangedEventArgs("MinWindowHeight"));
+					if(PropertyChanged != null)
+						PropertyChanged(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
+				}
 
 				SelectedClasses.Remove(HeroClassAll.Archived);
 				if(SelectedClasses.Count == 0)
