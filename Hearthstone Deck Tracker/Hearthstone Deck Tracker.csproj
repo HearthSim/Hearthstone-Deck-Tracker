@@ -3073,6 +3073,7 @@
     mkdir "..\Hearthstone Deck Tracker"
     mkdir "..\Hearthstone Deck Tracker/Images"
     mkdir "..\Hearthstone Deck Tracker/Files"
+    mkdir "..\Hearthstone Deck Tracker/Plugins"
     xcopy /E /Y "Images\*.*" "..\Hearthstone Deck Tracker\Images"
     xcopy /E /Y "Files\*.*" "..\Hearthstone Deck Tracker\Files"
     xcopy /Y "Hearthstone Deck Tracker.exe" "..\Hearthstone Deck Tracker"
