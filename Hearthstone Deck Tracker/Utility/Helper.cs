@@ -408,5 +408,10 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 			SettingUpConstructedImporting = false;
 		}
+
+		public static Rectangle GetHearthstoneRect(bool dpiScaling)
+		{
+			return User32.GetHearthstoneRect(dpiScaling);
+		}
 	}
 }
