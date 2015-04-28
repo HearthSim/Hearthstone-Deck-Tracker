@@ -42,16 +42,23 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public void LoadPlugins()
 		{
-			LoadPlugins(DefaultPath);
+			LoadPlugins(DefaultPath, true);
 		}
 
-		public void LoadPlugins(string pluginPath)
+		public void LoadPlugins(string pluginPath, bool checkSubDirs)
 		{
 			if(!Directory.Exists(pluginPath))
 				return;
 			if(Plugins.Any())
 				UnloadPlugins();
-			var files = Directory.GetFiles(pluginPath);
+			var dirInfo = new DirectoryInfo(pluginPath);
+			
+			var files = dirInfo.GetFiles().Select(f => f.FullName).ToList();
+			if(checkSubDirs)
+			{
+				foreach(var dir in dirInfo.GetDirectories())
+					files.AddRange(dir.GetFiles().Select(f => f.FullName));
+			}
 
 			foreach(var file in files)
 			{
