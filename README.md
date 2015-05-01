@@ -64,6 +64,7 @@ More information on that here:  http://www.reddit.com/r/hearthstone/comments/268
 Is Blizzard okay with this?
 =============
 [Yes](https://twitter.com/bdbrode/status/511151446038179840)
+[It's not against the TOS](https://twitter.com/CM_Zeriyah/status/589171381381672960)
 
 How to start Hearthstone-Deck-Tracker with the launcher?
 =============
