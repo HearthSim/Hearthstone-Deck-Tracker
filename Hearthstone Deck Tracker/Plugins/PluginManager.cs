@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			return plugins;
 		}
 
-		private void UnloadPlugins()
+		internal void UnloadPlugins()
 		{
 			//not really unloading anything but it's the best I can do without multiple assemblies
 			foreach(var plugin in Plugins)
