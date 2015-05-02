@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Newtonsoft.Json;
 
 #endregion
@@ -32,6 +33,52 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int Id { get; set; }
 		public string CardId { get; set; }
 		public bool IsPlayer { get; set; }
+
+		[JsonIgnore]
+		public bool IsOpponent
+		{
+			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
+		}
+
+		[JsonIgnore]
+		public bool IsMinion
+		{
+			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.MINION; }
+		}
+
+		[JsonIgnore]
+		public bool IsWeapon
+		{
+			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.WEAPON; }
+		}
+
+		[JsonIgnore]
+		public bool IsInHand
+		{
+			get { return IsInZone(TAG_ZONE.HAND); }
+		}
+
+		[JsonIgnore]
+		public bool IsInPlay
+		{
+			get { return IsInZone(TAG_ZONE.PLAY); }
+		}
+
+		[JsonIgnore]
+		public bool IsInGraveyard
+		{
+			get { return IsInZone(TAG_ZONE.GRAVEYARD); }
+		}
+
+		public bool IsInZone(TAG_ZONE zone)
+		{
+			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
+		}
+
+		public bool IsControlledBy(int controllerId)
+		{
+			return HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
+		}
 
 		[JsonIgnore]
 		public Card Card

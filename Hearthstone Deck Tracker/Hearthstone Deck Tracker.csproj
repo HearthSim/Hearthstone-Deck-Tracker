@@ -278,7 +278,6 @@
       <DependentUpon>CardEntity.xaml</DependentUpon>
     </Compile>
     <Compile Include="Replay\Enums\KeyPointType.cs" />
-    <Compile Include="Replay\ReplayHelper.cs" />
     <Compile Include="Replay\ReplayKeyPoint.cs" />
     <Compile Include="Replay\ReplayMaker.cs" />
     <Compile Include="Replay\ReplayReader.cs" />
