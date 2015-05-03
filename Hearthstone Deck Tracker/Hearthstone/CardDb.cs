@@ -1,18 +1,17 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-
 	[XmlRoot(ElementName = "CardDb")]
 	public class CardDb
 	{
 		[XmlElement(ElementName = "Card")]
-		public List<CardDbObj> Cards { get; set; } 
+		public List<CardDbObj> Cards { get; set; }
 	}
 
 	public class CardDbObj
@@ -35,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card ToCard()
 		{
-			return new Card()
+			return new Card
 			{
 				Id = CardId,
 				Artist = Artist,
@@ -55,5 +54,4 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			};
 		}
 	}
-
 }

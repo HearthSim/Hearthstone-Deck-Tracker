@@ -57,7 +57,6 @@ namespace Hearthstone_Deck_Tracker
 		public static OptionsMain OptionsMain { get; set; }
 		public static bool SettingUpConstructedImporting { get; set; }
 
-
 		public static async Task<Version> CheckForUpdates()
 		{
 			Logger.WriteLine("Checking for updates...", "Helper");
@@ -332,7 +331,6 @@ namespace Hearthstone_Deck_Tracker
 				CopyFolder(folder, dest);
 			}
 		}
-
 
 		//http://stackoverflow.com/questions/3769457/how-can-i-remove-accents-on-a-string
 		public static string RemoveDiacritics(string src, bool compatNorm)

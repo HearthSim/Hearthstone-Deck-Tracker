@@ -33,12 +33,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private readonly DeckPickerClassItem _archivedClassItem;
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
-		public bool ChangedSelection;
 		private bool _clearingClasses;
 		private bool _ignoreSelectionChange;
 		private bool _refillingList;
 		private bool _reselectingClasses;
 		private bool _reselectingDecks;
+		public bool ChangedSelection;
 
 		public NewDeckPicker()
 		{
@@ -60,11 +60,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; private set; }
-
 		public bool ArchivedClassVisible { get; set; }
-
 		public bool SearchBarVisibile { get; set; }
-
 		public string DeckNameFilter { get; set; }
 
 		public Visibility VisibilitySearchIcon
@@ -78,7 +75,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-
 		public event SelectedDeckHandler OnSelectedDeckChanged;
 		public event DoubleClickHandler OnDoubleClick;
 
@@ -226,7 +222,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 				dpci.OnDelselected();
 		}
 
-
 		private static IEnumerable<HeroClassAll?> PickerClassItemsAsEnum(IEnumerable<DeckPickerClassItem> items)
 		{
 			return items.Select(x => x.DataContext as HeroClassAll?).Where(x => x != null);
@@ -271,7 +266,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-											  (string.IsNullOrEmpty(DeckNameFilter) || d.Name.ToLowerInvariant().Contains(DeckNameFilter.ToLowerInvariant()))
+				                              (string.IsNullOrEmpty(DeckNameFilter)
+				                               || d.Name.ToLowerInvariant().Contains(DeckNameFilter.ToLowerInvariant()))
 				                              && DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
 				                              && (SelectedClasses.Any(
 				                                                      c =>
@@ -331,7 +327,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			else
 			{
 				var removed = _classItems.Remove(_archivedClassItem);
-				
+
 				if(removed)
 				{
 					ArchivedClassVisible = false;
@@ -519,7 +515,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(ignoreSelectionChange)
 				_ignoreSelectionChange = false;
 		}
-		
+
 		private void RectangleSearchIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			SearchBarVisibile = true;
@@ -545,9 +541,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				e.Handled = true;
 			}
 			else if(e.Key == Key.Escape)
-			{
 				CloseSearchField();
-			}
 		}
 
 		private void CloseSearchField()

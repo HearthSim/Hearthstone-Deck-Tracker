@@ -33,7 +33,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			Process.Start(e.Uri.AbsoluteUri);
 		}
 
-
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
 			var email = TextBoxEmail.Text;

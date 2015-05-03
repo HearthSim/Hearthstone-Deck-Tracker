@@ -7,13 +7,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using RadioButton = System.Windows.Controls.RadioButton;
+using TextBox = System.Windows.Controls.TextBox;
 
 #endregion
 
@@ -21,8 +26,8 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		private string editedDeckName;
 		internal double? _movedLeft;
+		private string editedDeckName;
 
 		private void UpdateDbListView()
 		{
@@ -366,7 +371,7 @@ namespace Hearthstone_Deck_Tracker
 			PanelCardCount.Visibility = Visibility.Visible;
 
 			//move window left if opening the edit panel causes it to be outside of a screen
-			foreach(var screen in System.Windows.Forms.Screen.AllScreens)
+			foreach(var screen in Screen.AllScreens)
 			{
 				int windowLeft = (int)Left;
 				int windowRight = (int)(Left + Width);

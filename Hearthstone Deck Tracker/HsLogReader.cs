@@ -20,11 +20,13 @@ namespace Hearthstone_Deck_Tracker
 	{
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
+		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
 
 		private readonly Regex _cardAlreadyInCacheRegex =
 			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
 
 		private readonly Regex _cardIdRegex = new Regex(@"cardId=(?<cardId>(\w+))");
+
 		private readonly Regex _cardMovementRegex =
 			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
@@ -39,7 +41,6 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _fullOutputPath;
 		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 		private readonly Regex _goldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
-		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
 		private readonly bool _ifaceUpdateNeeded = true;
 
 		private readonly Regex _playerEntityRegex =
@@ -62,8 +63,8 @@ namespace Hearthstone_Deck_Tracker
 		private IGameHandler _gameHandler;
 		private bool _gameLoaded;
 		private DateTime _lastAssetUnload;
-		private DateTime _lastGameStart;
 		private long _lastGameEnd;
+		private DateTime _lastGameStart;
 		private int _lastId;
 		private bool _opponentUsedHeroPower;
 		private bool _playerUsedHeroPower;
@@ -445,7 +446,6 @@ namespace Hearthstone_Deck_Tracker
 									for(int i = 0; i < 3; i++)
 										_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
 								}
-
 							}
 							else if(id == "GVG_056") //Iron Juggernaut
 							{
@@ -458,7 +458,6 @@ namespace Hearthstone_Deck_Tracker
 
 							else
 							{
-
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
 								   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
 								{
@@ -477,9 +476,7 @@ namespace Hearthstone_Deck_Tracker
 										}
 									}
 								}
-
 							}
-
 						}
 					}
 				}
@@ -557,7 +554,7 @@ namespace Hearthstone_Deck_Tracker
 							_gameHandler.HandlePossibleConstructedCard(id, false);
 					}
 					else if(_goldProgressRegex.IsMatch(logLine) && (DateTime.Now - _lastGameStart) > TimeSpan.FromSeconds(10)
-						&& Game.CurrentGameMode != GameMode.Spectator)
+					        && Game.CurrentGameMode != GameMode.Spectator)
 					{
 						int wins;
 						var rawWins = _goldProgressRegex.Match(logLine).Groups["wins"].Value;

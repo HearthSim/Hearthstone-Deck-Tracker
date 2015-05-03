@@ -1,7 +1,11 @@
+#region
+
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Replay
 {

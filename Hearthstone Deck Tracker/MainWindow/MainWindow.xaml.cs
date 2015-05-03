@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,8 +19,8 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -44,6 +43,558 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class MainWindow
 	{
+		public void UseDeck(Deck selected)
+		{
+			Game.Reset();
+
+			if(selected != null)
+			{
+				DeckList.Instance.ActiveDeck = selected;
+				Game.SetPremadeDeck((Deck)selected.Clone());
+				UpdateMenuItemVisibility(selected);
+			}
+
+			//needs to be true for automatic deck detection to work
+			HsLogReader.Instance.Reset(true);
+			Overlay.Update(false);
+			Overlay.SortViews();
+		}
+
+		private void UpdateMenuItemVisibility(Deck deck)
+		{
+			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
+			SeparatorDeck1.Visibility = string.IsNullOrEmpty(deck.Url) && !deck.MissingCards.Any() ? Visibility.Collapsed : Visibility.Visible;
+		}
+
+		public void UpdateDeckList(Deck selected)
+		{
+			ListViewDeck.ItemsSource = null;
+			if(selected == null)
+			{
+				Config.Instance.ActiveDeckId = Guid.Empty;
+				Config.Save();
+				return;
+			}
+			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
+			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
+			if(Config.Instance.ActiveDeckId != selected.DeckId)
+			{
+				Config.Instance.ActiveDeckId = selected.DeckId;
+				Config.Save();
+			}
+		}
+
+		private void UpdateDeckHistoryPanel(Deck selected, bool isNewDeck)
+		{
+			DeckHistoryPanel.Children.Clear();
+			DeckCurrentVersion.Text = string.Format("v{0}.{1}", selected.SelectedVersion.Major, selected.SelectedVersion.Minor);
+			if(isNewDeck)
+			{
+				MenuItemSaveVersionCurrent.IsEnabled = false;
+				MenuItemSaveVersionMinor.IsEnabled = false;
+				MenuItemSaveVersionMajor.IsEnabled = false;
+				MenuItemSaveVersionCurrent.Visibility = Visibility.Collapsed;
+				MenuItemSaveVersionMinor.Visibility = Visibility.Collapsed;
+				MenuItemSaveVersionMajor.Visibility = Visibility.Collapsed;
+			}
+			else
+			{
+				MenuItemSaveVersionCurrent.IsEnabled = true;
+				MenuItemSaveVersionMinor.IsEnabled = true;
+				MenuItemSaveVersionMajor.IsEnabled = true;
+				MenuItemSaveVersionCurrent.Visibility = Visibility.Visible;
+				MenuItemSaveVersionMinor.Visibility = Visibility.Visible;
+				MenuItemSaveVersionMajor.Visibility = Visibility.Visible;
+				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
+				MenuItemSaveVersionMinor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major, _newDeck.Version.Minor + 1);
+				MenuItemSaveVersionMajor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major + 1, 0);
+			}
+
+			if(selected.Versions.Count > 0)
+			{
+				var current = selected;
+				foreach(var prevVersion in selected.Versions.OrderByDescending(d => d.Version))
+				{
+					var versionChange = new DeckVersionChange();
+					versionChange.Label.Text = string.Format("{0} -> {1}", prevVersion.Version.ToString("v{M}.{m}"),
+					                                         current.Version.ToString("v{M}.{m}"));
+					versionChange.ListViewDeck.ItemsSource = current - prevVersion;
+					DeckHistoryPanel.Children.Add(versionChange);
+					current = prevVersion;
+				}
+			}
+		}
+
+		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			AutoDeckDetection(true);
+		}
+
+		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			AutoDeckDetection(false);
+		}
+
+		private void AutoDeckDetection(bool enable)
+		{
+			CheckboxDeckDetection.IsChecked = enable;
+			Config.Instance.AutoDeckDetection = enable;
+			Config.Save();
+			SetContextMenuProperty("autoSelectDeck", "Checked", enable);
+			//MenuItem autoSelectMenuItem=(MenuItem)ContextMenu.Items[1];
+		}
+
+		private void AutoDeckDetectionContextMenu()
+		{
+			bool enable = (bool)GetContextMenuProperty("autoSelectDeck", "Checked");
+			AutoDeckDetection(!enable);
+		}
+
+		private void UseNoDeckContextMenu()
+		{
+			bool enable = (bool)GetContextMenuProperty("useNoDeck", "Checked");
+			if(enable)
+				SelectLastUsedDeck();
+			else
+				SelectDeck(null);
+		}
+
+		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			SortClassCardsFirst(true);
+		}
+
+		private void CheckboxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			SortClassCardsFirst(false);
+		}
+
+		private void SortClassCardsFirst(bool classFirst)
+		{
+			CheckboxClassCardsFirst.IsChecked = classFirst;
+			Config.Instance.CardSortingClassFirst = classFirst;
+			Config.Save();
+			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
+			SetContextMenuProperty("classCardsFirst", "Checked", classFirst);
+		}
+
+		private void SortClassCardsFirstContextMenu()
+		{
+			bool enable = (bool)GetContextMenuProperty("classCardsFirst", "Checked");
+			SortClassCardsFirst(!enable);
+		}
+
+		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
+		{
+			var tag = ((TextBlock)sender).Text;
+			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
+			if(actualTag != null)
+			{
+				var tags = new List<string> {actualTag.Name};
+				SortFilterDecksFlyout.SetSelectedTags(tags);
+				Config.Instance.SelectedTags = tags;
+				Config.Save();
+				DeckPickerList.UpdateDecks();
+				StatsWindow.StatsControl.LoadOverallStats();
+				DeckStatsFlyout.LoadOverallStats();
+			}
+		}
+
+		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var newest =
+					Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
+				if(newest != null)
+					ReplayReader.LaunchReplayViewer(newest.FullName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString(), "LastReplay");
+			}
+		}
+
+		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var dialog = new OpenFileDialog
+				{
+					Title = "Select Replay File",
+					DefaultExt = "*.hdtreplay",
+					Filter = "HDT Replay|*.hdtreplay",
+					InitialDirectory = Config.Instance.ReplayDir
+				};
+				var dialogResult = dialog.ShowDialog();
+				if(dialogResult == System.Windows.Forms.DialogResult.OK)
+					ReplayReader.LaunchReplayViewer(dialog.FileName);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine(ex.ToString(), "ReplayFromFile");
+			}
+		}
+
+		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(Config.Instance.StatsInWindow)
+			{
+				StatsWindow.WindowState = WindowState.Normal;
+				StatsWindow.Show();
+				StatsWindow.Activate();
+				StatsWindow.StatsControl.TabControlCurrentOverall.SelectedIndex = 1;
+				StatsWindow.StatsControl.TabControlOverall.SelectedIndex = 1;
+			}
+			else
+			{
+				FlyoutDeckStats.IsOpen = true;
+				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
+				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
+			}
+		}
+
+		private async void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+		}
+
+		private async void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
+		}
+
+		private async void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
+		}
+
+		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized || DeckPickerList.ChangedSelection)
+				return;
+			var deck = DeckList.Instance.ActiveDeck;
+			if(deck == null)
+				return;
+			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
+			if(version != null && deck.SelectedVersion != version)
+			{
+				//DeckPickerList.RemoveDeck(deck);
+				deck.SelectVersion(version);
+				DeckList.Save();
+				//DeckPickerList.AddAndSelectDeck(deck);
+				//DeckPickerList.UpdateList();
+				DeckPickerList.UpdateDecks();
+				UpdateDeckList(DeckList.Instance.ActiveDeck);
+				ManaCurveMyDecks.UpdateValues();
+				UseDeck(deck);
+				Console.WriteLine(version);
+			}
+		}
+
+		private async void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e)
+		{
+			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
+		}
+
+		private void DeckPickerList_OnOnDoubleClick(NewDeckPicker sender, Deck deck)
+		{
+			if(deck == null)
+				return;
+			SetNewDeck(deck, true);
+		}
+
+		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutHearthStatsLogin.IsOpen = true;
+			await Task.Delay(100); //wait for open
+			HearthstatsLoginControl.TextBoxEmail.Focus();
+		}
+
+		private void LoadHearthStats()
+		{
+			var loaded = HearthStatsAPI.LoadCredentials();
+			if(loaded)
+			{
+				MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				MenuItemLogin.Visibility = Visibility.Collapsed;
+				MenuItemLogout.Visibility = Visibility.Visible;
+				SeparatorLogout.Visibility = Visibility.Visible;
+			}
+			EnableHearthStatsMenu(loaded);
+		}
+
+		public void EnableHearthStatsMenu(bool enable)
+		{
+			MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
+			MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
+			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
+			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
+			MenuItemHearthStatsSync.IsEnabled = enable;
+			MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
+			MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
+			MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
+		}
+
+		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			HearthStatsManager.SyncAsync();
+		}
+
+		private void MenuItemCheckBoxSyncOnStart_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxSyncOnStart_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsSyncOnStart = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadDecks_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewDecks = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoUploadGames_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoUploadNewGames = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoSyncInBackground = false;
+			Config.Save();
+		}
+
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
+		{
+			Config.Instance.IgnoreNewsId = _currentNewsId;
+			Config.Save();
+			StatusBarNews.Visibility = Visibility.Collapsed;
+			MinHeight -= StatusBarNewsHeight;
+			TopRow.Height = new GridLength(0);
+		}
+
+		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+				HearthStatsManager.SyncAsync(true);
+		}
+
+		private async void MenuItemLogout_OnClick(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+			if(result == MessageDialogResult.Affirmative)
+			{
+				var deletedFile = HearthStatsAPI.Logout();
+				if(!deletedFile)
+				{
+					await
+						this.ShowMessageAsync("Error deleting stored credentials",
+						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
+						                      + Config.Instance.HearthStatsFilePath);
+				}
+				MenuItemLogin.Visibility = Visibility.Visible;
+				MenuItemLogout.Visibility = Visibility.Collapsed;
+				SeparatorLogout.Visibility = Visibility.Collapsed;
+				EnableHearthStatsMenu(false);
+			}
+		}
+
+		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
+		{
+			var decks = DeckPickerList.SelectedDecks;
+			if(!decks.Any(d => d.HasHearthStatsId))
+			{
+				await this.ShowMessageAsync("None synced", "None of the selected decks have HearthStats ids.");
+				return;
+			}
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
+				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+
+			if(dialogResult == MessageDialogResult.Affirmative)
+			{
+				var controller = await this.ShowProgressAsync("Deleting decks...", "");
+				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(decks);
+				await controller.CloseAsync();
+				if(!deleteSuccessful)
+				{
+					await
+						this.ShowMessageAsync("Problem deleting decks",
+						                      "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
+				}
+				foreach(var deck in decks)
+				{
+					deck.ResetHearthstatsIds();
+					deck.DeckStats.HearthStatsDeckId = null;
+					deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+					deck.Versions.ForEach(v =>
+					{
+						v.DeckStats.HearthStatsDeckId = null;
+						v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
+						v.ResetHearthstatsIds();
+					});
+				}
+				DeckList.Save();
+			}
+		}
+
+		public async Task<bool> CheckHearthStatsDeckDeletion()
+		{
+			if(Config.Instance.HearthStatsAutoDeleteDecks.HasValue)
+				return Config.Instance.HearthStatsAutoDeleteDecks.Value;
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
+			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
+			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
+			Config.Save();
+			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
+		}
+
+		public async Task<bool> CheckHearthStatsMatchDeletion()
+		{
+			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
+				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
+			var dialogResult =
+				await
+				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
+				                      MessageDialogStyle.AffirmativeAndNegative,
+				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
+			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
+			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
+			Config.Save();
+			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
+		}
+
+		private void MenuItemCheckBoxAutoDeleteDecks_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteDecks = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteDecks_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteDecks = false;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteGames_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteMatches = true;
+			Config.Save();
+		}
+
+		private void MenuItemCheckBoxAutoDeleteGames_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HearthStatsAutoDeleteMatches = false;
+			Config.Save();
+		}
+
+		private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		private void MetroWindow_LocationChanged(object sender, EventArgs e)
+		{
+			_movedLeft = null;
+		}
+
+		private int IndexOfKeyContextMenuItem(string key)
+		{
+			return _notifyIcon.ContextMenu.MenuItems.IndexOfKey(key);
+		}
+
+		private void SetContextMenuProperty(string key, string property, object value)
+		{
+			int menuItemInd = IndexOfKeyContextMenuItem(key);
+			object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
+			target.GetType().GetProperty(property).SetValue(target, value);
+		}
+
+		private object GetContextMenuProperty(string key, string property)
+		{
+			int menuItemInd = IndexOfKeyContextMenuItem(key);
+			object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
+			return target.GetType().GetProperty(property).GetValue(target, null);
+		}
+
 		#region Properties
 
 		private const int NewsCheckInterval = 300;
@@ -245,16 +796,16 @@ namespace Hearthstone_Deck_Tracker
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
 
-            MenuItem useNoDeckMenuItem = new MenuItem("Use no deck",(sender,args)=> UseNoDeckContextMenu());
-            useNoDeckMenuItem.Name = "useNoDeck";
+			MenuItem useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu());
+			useNoDeckMenuItem.Name = "useNoDeck";
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
 
-            MenuItem autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu());
-            autoSelectDeckMenuItem.Name = "autoSelectDeck";
-            _notifyIcon.ContextMenu.MenuItems.Add(autoSelectDeckMenuItem);
+			MenuItem autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu());
+			autoSelectDeckMenuItem.Name = "autoSelectDeck";
+			_notifyIcon.ContextMenu.MenuItems.Add(autoSelectDeckMenuItem);
 
-            MenuItem classCardsFirstMenuItem = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu());
-            classCardsFirstMenuItem.Name = "classCardsFirst";
+			MenuItem classCardsFirstMenuItem = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu());
+			classCardsFirstMenuItem.Name = "classCardsFirst";
 			_notifyIcon.ContextMenu.MenuItems.Add(classCardsFirstMenuItem);
 
 			_notifyIcon.ContextMenu.MenuItems.Add("Show", (sender, args) => ActivateWindow());
@@ -350,7 +901,7 @@ namespace Hearthstone_Deck_Tracker
 			PluginManager.Instance.StartUpdateAsync();
 		}
 
-		void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if(e.PropertyName == "ArchivedClassVisible")
 				MinHeight += DeckPickerList.ArchivedClassVisible ? ArchivedClassHeight : -ArchivedClassHeight;
@@ -376,7 +927,7 @@ namespace Hearthstone_Deck_Tracker
 			if(e.HeightChanged)
 				_heightChangeDueToSearchBox = 0;
 		}
-		
+
 		public Thickness TitleBarMargin
 		{
 			get { return new Thickness(0, TitlebarHeight, 0, 0); }
@@ -422,8 +973,8 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		/// <summary>
-	    /// v0.10.0 caused opponent names to be saved as the hero, rather than the name.
-	    /// </summary>
+		/// v0.10.0 caused opponent names to be saved as the hero, rather than the name.
+		/// </summary>
 		private async void ResolveOpponentNames()
 		{
 			var games =
@@ -432,7 +983,11 @@ namespace Hearthstone_Deck_Tracker
 				             .ToList();
 			if(!games.Any())
 				return;
-			var controller = await this.ShowProgressAsync("Fixing opponent names in recorded games...", "v0.10.0 caused opponent names to be set to their hero, rather than the actual name.\n\nThis may take a moment.\n\nYou can cancel to continue this at a later time (or not at all).", true);
+			var controller =
+				await
+				this.ShowProgressAsync("Fixing opponent names in recorded games...",
+				                       "v0.10.0 caused opponent names to be set to their hero, rather than the actual name.\n\nThis may take a moment.\n\nYou can cancel to continue this at a later time (or not at all).",
+				                       true);
 			var count = 0;
 			var lockMe = new object();
 			await Task.Run(() =>
@@ -464,13 +1019,12 @@ namespace Hearthstone_Deck_Tracker
 				var fix =
 					await
 					this.ShowMessageAsync("Cancelled", "Fix remaining names on next start?", MessageDialogStyle.AffirmativeAndNegative,
-					                      new MetroDialogSettings() {AffirmativeButtonText = "next time", NegativeButtonText = "don\'t fix"});
+					                      new MetroDialogSettings {AffirmativeButtonText = "next time", NegativeButtonText = "don\'t fix"});
 				if(fix == MessageDialogResult.Negative)
 				{
 					Config.Instance.ResolvedOpponentNames = true;
 					Config.Save();
 				}
-
 			}
 			else
 			{
@@ -718,8 +1272,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Save();
 				DeckStatsList.Save();
 				PluginManager.SavePluginsSettings();
-                PluginManager.Instance.UnloadPlugins();
-            }
+				PluginManager.Instance.UnloadPlugins();
+			}
 			catch(Exception)
 			{
 				//doesnt matter
@@ -1147,8 +1701,8 @@ namespace Hearthstone_Deck_Tracker
 
 				Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
 
-                int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
-                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
+				int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+				_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 			}
 			else
 			{
@@ -1165,8 +1719,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckPickerList.DeselectDeck();
 
 				Logger.WriteLine("Deselected deck", "Tracker");
-                int useNoDeckMenuItem=_notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
-                _notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
+				int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+				_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
 
 			//set up stats
@@ -1209,558 +1763,5 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
-		public void UseDeck(Deck selected)
-		{
-			Game.Reset();
-
-			if(selected != null)
-			{
-				DeckList.Instance.ActiveDeck = selected;
-				Game.SetPremadeDeck((Deck)selected.Clone());
-				UpdateMenuItemVisibility(selected);
-			}
-
-			//needs to be true for automatic deck detection to work
-			HsLogReader.Instance.Reset(true);
-			Overlay.Update(false);
-			Overlay.SortViews();
-		}
-
-		private void UpdateMenuItemVisibility(Deck deck)
-		{
-			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			SeparatorDeck1.Visibility = string.IsNullOrEmpty(deck.Url) && !deck.MissingCards.Any() ? Visibility.Collapsed : Visibility.Visible;
-		}
-
-		public void UpdateDeckList(Deck selected)
-		{
-			ListViewDeck.ItemsSource = null;
-			if(selected == null)
-			{
-				Config.Instance.ActiveDeckId = Guid.Empty;
-				Config.Save();
-				return;
-			}
-			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
-			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			if(Config.Instance.ActiveDeckId != selected.DeckId)
-			{
-				Config.Instance.ActiveDeckId = selected.DeckId;
-				Config.Save();
-			}
-		}
-
-		private void UpdateDeckHistoryPanel(Deck selected, bool isNewDeck)
-		{
-			DeckHistoryPanel.Children.Clear();
-			DeckCurrentVersion.Text = string.Format("v{0}.{1}", selected.SelectedVersion.Major, selected.SelectedVersion.Minor);
-			if(isNewDeck)
-			{
-				MenuItemSaveVersionCurrent.IsEnabled = false;
-				MenuItemSaveVersionMinor.IsEnabled = false;
-				MenuItemSaveVersionMajor.IsEnabled = false;
-				MenuItemSaveVersionCurrent.Visibility = Visibility.Collapsed;
-				MenuItemSaveVersionMinor.Visibility = Visibility.Collapsed;
-				MenuItemSaveVersionMajor.Visibility = Visibility.Collapsed;
-			}
-			else
-			{
-				MenuItemSaveVersionCurrent.IsEnabled = true;
-				MenuItemSaveVersionMinor.IsEnabled = true;
-				MenuItemSaveVersionMajor.IsEnabled = true;
-				MenuItemSaveVersionCurrent.Visibility = Visibility.Visible;
-				MenuItemSaveVersionMinor.Visibility = Visibility.Visible;
-				MenuItemSaveVersionMajor.Visibility = Visibility.Visible;
-				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
-				MenuItemSaveVersionMinor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major, _newDeck.Version.Minor + 1);
-				MenuItemSaveVersionMajor.Header = string.Format("v{0}.{1}", _newDeck.Version.Major + 1, 0);
-			}
-
-			if(selected.Versions.Count > 0)
-			{
-				var current = selected;
-				foreach(var prevVersion in selected.Versions.OrderByDescending(d => d.Version))
-				{
-					var versionChange = new DeckVersionChange();
-					versionChange.Label.Text = string.Format("{0} -> {1}", prevVersion.Version.ToString("v{M}.{m}"),
-					                                         current.Version.ToString("v{M}.{m}"));
-					versionChange.ListViewDeck.ItemsSource = current - prevVersion;
-					DeckHistoryPanel.Children.Add(versionChange);
-					current = prevVersion;
-				}
-			}
-		}
-
-
-		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-            AutoDeckDetection(true);
-		}
-
-		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-            AutoDeckDetection(false);
-		}
-
-		private void AutoDeckDetection(bool enable)
-		{
-			CheckboxDeckDetection.IsChecked = enable;
-			Config.Instance.AutoDeckDetection = enable;
-			Config.Save();
-            SetContextMenuProperty("autoSelectDeck", "Checked", enable);
-            //MenuItem autoSelectMenuItem=(MenuItem)ContextMenu.Items[1];
-		}
-        private void AutoDeckDetectionContextMenu()
-        {
-            bool enable = (bool)GetContextMenuProperty("autoSelectDeck", "Checked");
-            AutoDeckDetection(!enable);
-        }
-
-		private void UseNoDeckContextMenu()
-		{
-			bool enable = (bool)GetContextMenuProperty("useNoDeck", "Checked");
-			if(enable)
-				SelectLastUsedDeck();
-			else
-				SelectDeck(null);
-		}
-
-		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			SortClassCardsFirst(true);
-		}
-
-		private void CheckboxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			SortClassCardsFirst(false);
-		}
-
-		private void SortClassCardsFirst(bool classFirst)
-		{
-			CheckboxClassCardsFirst.IsChecked = classFirst;
-			Config.Instance.CardSortingClassFirst = classFirst;
-			Config.Save();
-			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, classFirst);
-            SetContextMenuProperty("classCardsFirst", "Checked", classFirst);
-
-		}
-        private void SortClassCardsFirstContextMenu()
-        {
-            bool enable = (bool)GetContextMenuProperty("classCardsFirst", "Checked");
-            SortClassCardsFirst(!enable);
-        }
-
-		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
-		{
-			var tag = ((TextBlock)sender).Text;
-			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
-			if(actualTag != null)
-			{
-				var tags = new List<string> {actualTag.Name};
-				SortFilterDecksFlyout.SetSelectedTags(tags);
-				Config.Instance.SelectedTags = tags;
-				Config.Save();
-				DeckPickerList.UpdateDecks();
-				StatsWindow.StatsControl.LoadOverallStats();
-				DeckStatsFlyout.LoadOverallStats();
-			}
-		}
-
-		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				var newest =
-					Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
-				if(newest != null)
-					ReplayReader.LaunchReplayViewer(newest.FullName);
-			}
-			catch(Exception ex)
-			{
-				Logger.WriteLine(ex.ToString(), "LastReplay");
-			}
-		}
-
-		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				var dialog = new OpenFileDialog
-				{
-					Title = "Select Replay File",
-					DefaultExt = "*.hdtreplay",
-					Filter = "HDT Replay|*.hdtreplay",
-					InitialDirectory = Config.Instance.ReplayDir
-				};
-				var dialogResult = dialog.ShowDialog();
-				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					ReplayReader.LaunchReplayViewer(dialog.FileName);
-			}
-			catch(Exception ex)
-			{
-				Logger.WriteLine(ex.ToString(), "ReplayFromFile");
-			}
-		}
-
-		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e)
-		{
-			if(Config.Instance.StatsInWindow)
-			{
-				StatsWindow.WindowState = WindowState.Normal;
-				StatsWindow.Show();
-				StatsWindow.Activate();
-				StatsWindow.StatsControl.TabControlCurrentOverall.SelectedIndex = 1;
-				StatsWindow.StatsControl.TabControlOverall.SelectedIndex = 1;
-			}
-			else
-			{
-				FlyoutDeckStats.IsOpen = true;
-				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
-				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
-			}
-		}
-
-		private async void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e)
-		{
-			await SaveDeckWithOverwriteCheck(_newDeck.Version);
-		}
-
-		private async void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e)
-		{
-			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
-		}
-
-		private async void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e)
-		{
-			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
-		}
-
-		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized || DeckPickerList.ChangedSelection)
-				return;
-			var deck = DeckList.Instance.ActiveDeck;
-			if(deck == null)
-				return;
-			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
-			if(version != null && deck.SelectedVersion != version)
-			{
-				//DeckPickerList.RemoveDeck(deck);
-				deck.SelectVersion(version);
-				DeckList.Save();
-				//DeckPickerList.AddAndSelectDeck(deck);
-				//DeckPickerList.UpdateList();
-				DeckPickerList.UpdateDecks();
-				UpdateDeckList(DeckList.Instance.ActiveDeck);
-				ManaCurveMyDecks.UpdateValues();
-				UseDeck(deck);
-				Console.WriteLine(version);
-			}
-		}
-
-		private async void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e)
-		{
-			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
-		}
-
-		private void DeckPickerList_OnOnDoubleClick(NewDeckPicker sender, Deck deck)
-		{
-			if(deck == null)
-				return;
-			SetNewDeck(deck, true);
-		}
-
-		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
-		{
-			FlyoutHearthStatsLogin.IsOpen = true;
-			await Task.Delay(100); //wait for open
-			HearthstatsLoginControl.TextBoxEmail.Focus();
-		}
-
-		private void LoadHearthStats()
-		{
-			var loaded = HearthStatsAPI.LoadCredentials();
-			if(loaded)
-			{
-				MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
-				MenuItemLogin.Visibility = Visibility.Collapsed;
-				MenuItemLogout.Visibility = Visibility.Visible;
-				SeparatorLogout.Visibility = Visibility.Visible;
-			}
-			EnableHearthStatsMenu(loaded);
-		}
-
-		public void EnableHearthStatsMenu(bool enable)
-		{
-			MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
-			MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
-			MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
-			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
-			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
-			MenuItemHearthStatsSync.IsEnabled = enable;
-			MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
-			MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
-			MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
-		}
-
-		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e)
-		{
-			HearthStatsManager.SyncAsync();
-		}
-
-
-		private void MenuItemCheckBoxSyncOnStart_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsSyncOnStart = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxSyncOnStart_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsSyncOnStart = false;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoUploadDecks_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoUploadNewDecks = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoUploadDecks_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoUploadNewDecks = false;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoUploadGames_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoUploadNewGames = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoUploadGames_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoUploadNewGames = false;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoSyncInBackground = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoSyncInBackground = false;
-			Config.Save();
-		}
-
-		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
-		{
-			Config.Instance.IgnoreNewsId = _currentNewsId;
-			Config.Save();
-			StatusBarNews.Visibility = Visibility.Collapsed;
-			MinHeight -= StatusBarNewsHeight;
-			TopRow.Height = new GridLength(0);
-		}
-
-		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
-		{
-			var result =
-				await
-				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
-			if(result == MessageDialogResult.Affirmative)
-				HearthStatsManager.SyncAsync(true);
-		}
-
-		private async void MenuItemLogout_OnClick(object sender, RoutedEventArgs e)
-		{
-			var result =
-				await
-				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
-			if(result == MessageDialogResult.Affirmative)
-			{
-				var deletedFile = HearthStatsAPI.Logout();
-				if(!deletedFile)
-				{
-					await
-						this.ShowMessageAsync("Error deleting stored credentials",
-						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
-						                      + Config.Instance.HearthStatsFilePath);
-				}
-				MenuItemLogin.Visibility = Visibility.Visible;
-				MenuItemLogout.Visibility = Visibility.Collapsed;
-				SeparatorLogout.Visibility = Visibility.Collapsed;
-				EnableHearthStatsMenu(false);
-			}
-		}
-
-
-		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
-		{
-			var decks = DeckPickerList.SelectedDecks;
-			if(!decks.Any(d => d.HasHearthStatsId))
-			{
-				await
-					this.ShowMessageAsync("None synced",
-										  "None of the selected decks have HearthStats ids.");
-				return;
-			}
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
-				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
-
-			if(dialogResult == MessageDialogResult.Affirmative)
-			{
-				var controller = await this.ShowProgressAsync("Deleting decks...", "");
-				var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(decks);
-				await controller.CloseAsync();
-				if(!deleteSuccessful)
-				{
-					await
-						this.ShowMessageAsync("Problem deleting decks",
-						                      "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
-				}
-				foreach(var deck in decks)
-				{
-					deck.ResetHearthstatsIds();
-					deck.DeckStats.HearthStatsDeckId = null;
-					deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-					deck.Versions.ForEach(v =>
-					{
-						v.DeckStats.HearthStatsDeckId = null;
-						v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-						v.ResetHearthstatsIds();
-					});
-				}
-				DeckList.Save();
-			}
-		}
-
-		public async Task<bool> CheckHearthStatsDeckDeletion()
-		{
-			if(Config.Instance.HearthStatsAutoDeleteDecks.HasValue)
-				return Config.Instance.HearthStatsAutoDeleteDecks.Value;
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
-			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
-			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
-			Config.Save();
-			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
-		}
-
-		public async Task<bool> CheckHearthStatsMatchDeletion()
-		{
-			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
-				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
-			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
-			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
-			Config.Save();
-			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
-		}
-
-		private void MenuItemCheckBoxAutoDeleteDecks_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoDeleteDecks = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoDeleteDecks_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoDeleteDecks = false;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoDeleteGames_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoDeleteMatches = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoDeleteGames_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoDeleteMatches = false;
-			Config.Save();
-		}
-
-		private void MenuItemExit_OnClick(object sender, RoutedEventArgs e)
-		{
-			Close();
-		}
-
-		private void MetroWindow_LocationChanged(object sender, EventArgs e)
-		{
-			_movedLeft = null;
-		}
-        private int IndexOfKeyContextMenuItem(string key)
-        {
-            return _notifyIcon.ContextMenu.MenuItems.IndexOfKey(key);
-        }
-        private void SetContextMenuProperty(string key, string property, object value)
-        {
-            int menuItemInd = IndexOfKeyContextMenuItem(key);
-            object target=_notifyIcon.ContextMenu.MenuItems[menuItemInd];
-            target.GetType().GetProperty(property).SetValue(target, value);
-        }
-        private object GetContextMenuProperty(string key, string property)
-        {
-            int menuItemInd = IndexOfKeyContextMenuItem(key);
-            object target = _notifyIcon.ContextMenu.MenuItems[menuItemInd];
-            return target.GetType().GetProperty(property).GetValue(target, null);
-        }
 	}
 }

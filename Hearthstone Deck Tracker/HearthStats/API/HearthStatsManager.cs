@@ -197,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async Task<bool> DeleteDeckAsync(IEnumerable<Deck> decks, bool saveFilesAfter = true, bool background = false)
 		{
 			var deckNames = decks.Select(d => d.Name).Aggregate((c, n) => c + ", " + n);
-            Logger.WriteLine("trying to delete decks: " + deckNames , "HearthStatsManager");
+			Logger.WriteLine("trying to delete decks: " + deckNames, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("error: not logged in", "HearthStatsManager");
@@ -406,10 +406,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						remoteDecks.Where(
 						                  r =>
 						                  localDecks.Any(
-						                                  l =>
-						                                  l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId && r.LastEdited > l.LastEdited 
-						                                  && (l.Name != r.Name || !(new HashSet<string>(l.Tags).SetEquals(r.Tags)) || l.Note != r.Note
-						                                      || (l - r).Count > 0))).ToList();
+						                                 l =>
+						                                 l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId && r.LastEdited > l.LastEdited
+						                                 && (l.Name != r.Name || !(new HashSet<string>(l.Tags).SetEquals(r.Tags)) || l.Note != r.Note
+						                                     || (l - r).Count > 0))).ToList();
 					if(editedDecks.Any())
 					{
 						foreach(var deck in editedDecks)
@@ -465,12 +465,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						}
 						var deckVersion =
 							deck.VersionsIncludingSelf.Select(deck.GetVersion)
-								.FirstOrDefault(v => v.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
+							    .FirstOrDefault(v => v.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
 						if(deckVersion == null)
 							continue;
 						Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
 						                 "HearthStatsManager");
-                        game.PlayerDeckVersion = deckVersion.Version;
+						game.PlayerDeckVersion = deckVersion.Version;
 						deck.DeckStats.AddGameResult(game);
 					}
 					DeckStatsList.Save();
@@ -496,16 +496,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					{
 						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Uploading " + newLocalDecks.Count + " new decks...");
 						Logger.WriteLine("Uploading " + newLocalDecks.Count + " new decks...", "HearthStatsManager");
-						await Task.Run(() => { Parallel.ForEach(newLocalDecks, deck =>
+						await Task.Run(() =>
 						{
-							UploadDeck(deck, false);
-
-							if(controller != null)
+							Parallel.ForEach(newLocalDecks, deck =>
 							{
-								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
-								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
-							}
-						}); });
+								UploadDeck(deck, false);
+
+								if(controller != null)
+									Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
+							});
+						});
 						DeckList.Save(); //save new ids
 						background = false;
 					}
@@ -545,10 +545,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							await UploadVersionAsync(v.version, v.hearthStatsId, false);
 
 							if(controller != null)
-							{
-								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
-								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
-							}
+								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
 						}
 					}
 					DeckList.Save();
@@ -558,22 +555,20 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				Logger.WriteLine("Checking for edited local decks...", "HearthStatsManager");
 
 				var editedLocalDecks =
-						localDecks.Where(
-										  l =>
-										  remoteDecks.Any(
-														  r =>
-														  r.HasHearthStatsId && r.HearthStatsId == l.HearthStatsId && l.LastEdited > r.LastEdited
-														  && (r.Name != l.Name || !(new HashSet<string>(r.Tags).SetEquals(l.Tags)) || r.Note != l.Note
-															  || (r - l).Count > 0))).ToList();
+					localDecks.Where(
+					                 l =>
+					                 remoteDecks.Any(
+					                                 r =>
+					                                 r.HasHearthStatsId && r.HearthStatsId == l.HearthStatsId && l.LastEdited > r.LastEdited
+					                                 && (r.Name != l.Name || !(new HashSet<string>(r.Tags).SetEquals(l.Tags)) || r.Note != l.Note
+					                                     || (r - l).Count > 0))).ToList();
 				if(editedLocalDecks.Any())
 				{
 					if(!background)
 						controller.SetMessage("Updating " + editedLocalDecks.Count + " decks...");
 					Logger.WriteLine("Updating " + editedLocalDecks.Count + " decks...", "HearthStatsManager");
 					foreach(var deck in editedLocalDecks)
-					{
 						await UpdateDeckAsync(deck);
-					}
 					Logger.WriteLine("updated " + editedLocalDecks.Count + " decks", "HearthStatsManager");
 				}
 
@@ -589,7 +584,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				{
 					var uploaded = 0;
 					var total = newMatches.Count;
-                    if(!background)
+					if(!background)
 						controller.SetMessage("Uploading " + newMatches.Count + " new matches...");
 					Logger.WriteLine("Uploading " + newMatches.Count + " new matches...", "HearthStatsManager");
 					await Task.Run(() =>
@@ -616,10 +611,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 							UploadMatch(match.game, deck, false);
 							if(controller != null)
-							{
-								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() =>
-								{ controller.SetProgress(1.0 * (++uploaded) / total); }));
-							}
+								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
 						});
 					});
 					DeckStatsList.Save();

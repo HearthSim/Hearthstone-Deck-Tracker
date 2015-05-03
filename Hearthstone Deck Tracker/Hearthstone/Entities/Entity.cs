@@ -70,16 +70,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get { return IsInZone(TAG_ZONE.GRAVEYARD); }
 		}
 
-		public bool IsInZone(TAG_ZONE zone)
-		{
-			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
-		}
-
-		public bool IsControlledBy(int controllerId)
-		{
-			return HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
-		}
-
 		[JsonIgnore]
 		public Card Card
 		{
@@ -198,6 +188,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public Visibility EffectsVisibility
 		{
 			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public bool IsInZone(TAG_ZONE zone)
+		{
+			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
+		}
+
+		public bool IsControlledBy(int controllerId)
+		{
+			return HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
 		}
 
 		public bool HasTag(GAME_TAG tag)

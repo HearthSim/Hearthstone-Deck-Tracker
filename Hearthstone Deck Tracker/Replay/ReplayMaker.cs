@@ -50,9 +50,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var opponentHero =
 					Points.Last()
 					      .Data.FirstOrDefault(
-					                  x =>
-					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
-					                  && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+					                           x =>
+					                           !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
+					                           && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
 				if(opponentHero == null)
 				{
 					//adventure bosses
@@ -65,11 +65,10 @@ namespace Hearthstone_Deck_Tracker.Replay
 						                  && Game.GetHeroNameFromId(x.CardId) != null);
 
 					ResolveOpponentName(Game.GetHeroNameFromId(opponentHero.CardId));
-
 				}
 
 				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Game.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-											  Game.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				                             Game.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))

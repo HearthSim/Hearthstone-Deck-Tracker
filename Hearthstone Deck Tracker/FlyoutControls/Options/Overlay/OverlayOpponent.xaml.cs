@@ -97,7 +97,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-
 		private void SaveConfig(bool updateOverlay)
 		{
 			Config.Save();

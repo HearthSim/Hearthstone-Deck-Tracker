@@ -22,7 +22,6 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 			get { return DataContext == null ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
-
 		private void BoardEntity_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			var binding = GetBindingExpression(VisibilityProperty);

@@ -27,7 +27,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			_initialized = true;
 		}
 
-
 		private void ToggleSwitchExtraFeatures_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)

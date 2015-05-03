@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 #endregion
 
@@ -52,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			if(Plugins.Any())
 				UnloadPlugins();
 			var dirInfo = new DirectoryInfo(pluginPath);
-			
+
 			var files = dirInfo.GetFiles().Select(f => f.FullName).ToList();
 			if(checkSubDirs)
 			{

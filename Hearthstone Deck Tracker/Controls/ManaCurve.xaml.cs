@@ -1,4 +1,5 @@
 ﻿#region
+
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -148,7 +149,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewStatType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-
 			if(e.AddedItems.Count == 0)
 			{
 				if(e.RemovedItems.Count > 0)

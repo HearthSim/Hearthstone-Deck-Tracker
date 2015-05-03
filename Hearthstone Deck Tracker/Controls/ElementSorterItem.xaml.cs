@@ -13,10 +13,10 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class ElementSorterItem
 	{
-		public readonly string ItemName;
 		private readonly bool _initialized;
 		private readonly bool _isPlayerList;
 		private readonly Action<bool> _setConfigValue;
+		public readonly string ItemName;
 
 		public ElementSorterItem(string name, bool isChecked, Action<bool> setConfigValue, bool isPlayerList)
 		{

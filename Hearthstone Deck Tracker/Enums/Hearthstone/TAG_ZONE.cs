@@ -10,6 +10,6 @@
 		GRAVEYARD = 4,
 		REMOVEDFROMGAME = 5,
 		SETASIDE = 6,
-		SECRET = 7,
+		SECRET = 7
 	}
 }

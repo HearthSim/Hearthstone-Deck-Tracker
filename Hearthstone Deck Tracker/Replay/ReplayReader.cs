@@ -31,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 			const string jsonFile = "replay.json";
 			string json;
 
-			using (var fs = new FileStream(path, FileMode.Open))
-			using (var archive = new ZipArchive(fs, ZipArchiveMode.Read))
-			using (var sr = new StreamReader(archive.GetEntry(jsonFile).Open()))
+			using(var fs = new FileStream(path, FileMode.Open))
+			using(var archive = new ZipArchive(fs, ZipArchiveMode.Read))
+			using(var sr = new StreamReader(archive.GetEntry(jsonFile).Open()))
 				json = sr.ReadToEnd();
 
 			return (List<ReplayKeyPoint>)JsonConvert.DeserializeObject(json, typeof(List<ReplayKeyPoint>));

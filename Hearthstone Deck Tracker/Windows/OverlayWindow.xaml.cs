@@ -106,7 +106,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool ForceHidden { get; set; }
 		public static double Scaling { get; set; }
 		public static double OpponentScaling { get; set; }
-
 		public Visibility WarningVisibility { get; set; }
 
 		private void MouseInputOnLmbUp(object sender, EventArgs eventArgs)
@@ -617,10 +616,10 @@ namespace Hearthstone_Deck_Tracker
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
 			var showWarning = !Game.IsInMenu && Game.NoMatchingDeck;
-			StackPanelWarning.Visibility =  showWarning ? Visibility.Visible : Visibility.Collapsed;
+			StackPanelWarning.Visibility = showWarning ? Visibility.Visible : Visibility.Collapsed;
 			if(showWarning)
 			{
-				var drawn = new Deck() {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
+				var drawn = new Deck {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
 				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
 				if(diff.Count > 0)
 				{
@@ -1210,7 +1209,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			//in addition to setting this in mainwindow_load: (in case of minimized)
 			var presentationsource = PresentationSource.FromVisual(this);
-			if(presentationsource != null)   // make sure it's connected
+			if(presentationsource != null) // make sure it's connected
 			{
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;

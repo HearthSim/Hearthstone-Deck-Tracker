@@ -18,12 +18,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null)
 				return;
-            string Current_Clipboard = "";
+			string Current_Clipboard = "";
 
 			try
 			{
-                if (Config.Instance.ExportPasteClipboard && Clipboard.ContainsText())
-                    Current_Clipboard = Clipboard.GetText();
+				if(Config.Instance.ExportPasteClipboard && Clipboard.ContainsText())
+					Current_Clipboard = Clipboard.GetText();
 				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo()), "DeckExporter");
 				var hsHandle = User32.GetHearthstoneWindow();
 
@@ -104,8 +104,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Helper.MainWindow.Overlay.ForceHidden = false;
 				Helper.MainWindow.Overlay.UpdatePosition();
-                if (Config.Instance.ExportPasteClipboard && Current_Clipboard != "")
-                    Clipboard.SetText(Current_Clipboard);
+				if(Config.Instance.ExportPasteClipboard && Current_Clipboard != "")
+					Clipboard.SetText(Current_Clipboard);
 			}
 		}
 

@@ -37,7 +37,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_initialized = true;
 		}
 
-
 		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -204,7 +203,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-
 		private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -225,7 +223,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
 		{
-
 			if(!_initialized)
 				return;
 			Config.Instance.RarityCardFrames = true;
@@ -234,7 +231,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-
 			if(!_initialized)
 				return;
 			Config.Instance.RarityCardFrames = false;

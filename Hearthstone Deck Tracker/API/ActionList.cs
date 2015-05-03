@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.API
 		internal void Execute(T arg)
 		{
 			var remove = new List<Tuple<object, Action<T>>>();
-            foreach(var action in _actions)
+			foreach(var action in _actions)
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;

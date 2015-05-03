@@ -87,7 +87,6 @@ namespace Hearthstone_Deck_Tracker
 			return new Point(p.X, p.Y);
 		}
 
-
 		public static IntPtr GetHearthstoneWindow()
 		{
 			if(!Game.IsRunning && DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
@@ -114,7 +113,6 @@ namespace Hearthstone_Deck_Tracker
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
 		}
-
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling)
 		{
@@ -159,7 +157,6 @@ namespace Hearthstone_Deck_Tracker
 			FlashWindow(hsHandle, false);
 		}
 
-
 		//http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/
 
 
@@ -170,7 +167,6 @@ namespace Hearthstone_Deck_Tracker
 			private const Int32 WM_LBUTTONUP = 0x0202;
 			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
 			private readonly IntPtr _mouseHandle;
-
 			private bool _disposed;
 
 			public MouseInput()
@@ -255,7 +251,6 @@ namespace Hearthstone_Deck_Tracker
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr UnhookWindowsHookEx(IntPtr hHook);
-
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr SetWindowsHookEx(Int32 idHook, HookDelegate lpfn, IntPtr hmod, Int32 dwThreadId);

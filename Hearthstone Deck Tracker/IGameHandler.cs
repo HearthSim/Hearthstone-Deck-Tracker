@@ -21,7 +21,6 @@ namespace Hearthstone_Deck_Tracker
 		void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);
 		void HandlePlayerGetToDeck(string cardId, int turn);
-
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart();
 		void HandleGameEnd();
@@ -29,7 +28,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleWin();
 		void HandleTied();
 		void PlayerSetAside(string id);
-
 		void ResetConstructedImporting();
 		void HandlePossibleConstructedCard(string id, bool canBeDoneImporting);
 		void HandlePossibleArenaCard(string id);
@@ -38,7 +36,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleConcede();
 		void HandlePlayerFatigue(int currentDamage);
 		void HandleOpponentFatigue(int currentDamage);
-
 		void SetRank(int rank);
 
 		#region OpponentHandlers
@@ -59,6 +56,5 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGetToDeck(int turn);
 
 		#endregion OpponentHandlers
-
 	}
 }

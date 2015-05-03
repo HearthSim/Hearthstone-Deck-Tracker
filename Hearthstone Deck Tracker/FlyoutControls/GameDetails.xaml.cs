@@ -30,7 +30,6 @@ namespace Hearthstone_Deck_Tracker
 			ReloadGameStats();
 		}
 
-
 		private void ReloadGameStats()
 		{
 			if(_gameStats != null)

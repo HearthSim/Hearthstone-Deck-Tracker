@@ -10,8 +10,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.HearthStats.API.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HearthStats.API.Objects;
 using Hearthstone_Deck_Tracker.Stats;
 using Newtonsoft.Json;
 
@@ -526,7 +526,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var url = BaseUrl + "/api/v2/decks/hdt_edit?auth_token=" + _authToken;
 			var cards = editedDeck.Cards.Select(x => new CardObject(x));
 			var data =
-				JsonConvert.SerializeObject(new {deck_id = editedDeck.HearthStatsId, name = editedDeck.Name, notes = AddSpecialTagsToNote(editedDeck), tags = editedDeck.Tags, cards,});
+				JsonConvert.SerializeObject(
+				                            new
+				                            {
+					                            deck_id = editedDeck.HearthStatsId,
+					                            name = editedDeck.Name,
+					                            notes = AddSpecialTagsToNote(editedDeck),
+					                            tags = editedDeck.Tags,
+					                            cards
+				                            });
 			try
 			{
 				var response = await PostAsync(url, data);

@@ -18,12 +18,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 	public class GameStats
 	{
 		private readonly string[] _hsClasses = {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
-
-		public Guid GameId;
-		public string HearthStatsId;
 		private Guid? _deckId;
 		private string _deckName;
 		private List<TurnStats> _turnStats;
+		public Guid GameId;
+		public string HearthStatsId;
 
 		public GameStats()
 		{
@@ -173,7 +172,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]
 		[XmlArrayItem(ElementName = "Turn")]
@@ -270,7 +268,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			return GameId.GetHashCode();
 		}
-
 
 		private void ResolveSecrets(IEnumerable<TurnStats> newturnstats)
 		{

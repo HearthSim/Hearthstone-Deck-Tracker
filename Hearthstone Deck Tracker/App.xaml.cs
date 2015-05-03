@@ -1,10 +1,14 @@
 ﻿#region
 
+#region
+
 // ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Threading;
+
+#endregion
 
 #endregion
 

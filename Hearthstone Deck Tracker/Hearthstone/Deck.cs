@@ -20,6 +20,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
+		private Guid _deckId;
+		private string _hearthStatsIdClone;
+		private bool? _isArenaDeck;
+		private bool _isSelectedInGui;
+		private List<string> _tags;
 		public bool Archived;
 
 		[XmlArray(ElementName = "Cards")]
@@ -30,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string HearthStatsArenaId;
 		public string HearthStatsDeckVersionId;
 		public string HearthStatsId;
-
 		public DateTime LastEdited;
 
 		[XmlArray(ElementName = "MissingCards")]
@@ -39,21 +43,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Note;
 		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
-
 		public string Url;
-
 		public SerializableVersion Version = new SerializableVersion(1, 0);
 
 		[XmlArray(ElementName = "DeckHistory")]
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
-
-		private Guid _deckId;
-		private string _hearthStatsIdClone;
-		private bool? _isArenaDeck;
-		private bool _isSelectedInGui;
-		private List<string> _tags;
-
 
 		public Deck()
 		{
@@ -70,7 +65,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Versions = new List<Deck>();
 			DeckId = Guid.NewGuid();
 		}
-
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
@@ -125,7 +119,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
 			set { _isArenaDeck = value; }
 		}
-
 
 		public Guid DeckId
 		{
@@ -344,12 +337,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)).ToList();
 					break;
 				case DisplayedTimeFrame.ThisWeek:
-					filtered =
-						filtered.Where(
-						               g =>
-						               g.StartTime
-						               > DateTime.Today.AddDays(- ((int)g.StartTime.DayOfWeek + 1)))
-						        .ToList();
+					filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1))).ToList();
 					break;
 				case DisplayedTimeFrame.Today:
 					filtered = filtered.Where(g => g.StartTime > DateTime.Today).ToList();
@@ -424,7 +412,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, "",
 			                Guid.NewGuid(), HearthStatsDeckVersionId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
 		}
-
 
 		public void ResetVersions()
 		{

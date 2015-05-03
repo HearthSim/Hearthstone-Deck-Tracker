@@ -158,7 +158,8 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck
 				{
-					Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='content']/div[contains(@class, 'deck')]/h1").InnerText).Trim()
+					Name =
+						HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='content']/div[contains(@class, 'deck')]/h1").InnerText).Trim()
 				};
 
 				var nodes = doc.DocumentNode.SelectNodes("//a[@real_id]");
@@ -541,12 +542,12 @@ namespace Hearthstone_Deck_Tracker
 				deck.Name = deckName;
 
 
-                var cardNodes = doc.DocumentNode.SelectNodes("//ul[contains(@class,'deck-class')]/li");
+				var cardNodes = doc.DocumentNode.SelectNodes("//ul[contains(@class,'deck-class')]/li");
 
 				foreach(var cardNode in cardNodes)
 				{
-                    var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-name']").InnerText);
-                    var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-count']").InnerText).ToString());
+					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-name']").InnerText);
+					var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-count']").InnerText));
 
 					var card = Game.GetCardFromName(name);
 					card.Count = count;

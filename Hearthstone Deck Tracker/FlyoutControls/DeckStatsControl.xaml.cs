@@ -309,7 +309,8 @@ namespace Hearthstone_Deck_Tracker
 				            g =>
 				            (g.GameMode == selectedGameMode || selectedGameMode == GameMode.All) && g.StartTime >= startTime
 				            && g.StartTime <= endTime
-				            && (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.ToLowerInvariant().Contains(noteFilter.ToLowerInvariant())));
+				            && (g.Note == null && noteFilter == string.Empty
+				                || g.Note != null && g.Note.ToLowerInvariant().Contains(noteFilter.ToLowerInvariant())));
 		}
 
 		public void Refresh()
@@ -796,6 +797,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 		}
+
 		private void ImportOpponentDeck(GameStats stats)
 		{
 			var ignoreCards = new List<Card>();

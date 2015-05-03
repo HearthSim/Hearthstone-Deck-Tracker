@@ -154,7 +154,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			SaveConfig(false);
 		}
 
-
 		private void CheckboxStartMinimized_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)

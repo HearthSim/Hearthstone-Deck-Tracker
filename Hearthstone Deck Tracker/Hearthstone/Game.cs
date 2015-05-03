@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
@@ -11,8 +10,6 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 #endregion
 
@@ -20,87 +17,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public static class Game
 	{
-		//public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
-
-		#region Properties
-
-		private const int DefaultCoinPosition = 4;
-		private const int MaxHandSize = 10;
-		public static bool HighlightCardsInHand { get; set; }
-		public static bool HighlightDiscarded { get; set; }
-
-		private static Dictionary<string, Card> _cardDb;
-
-		public static ObservableCollection<Card> OpponentCards { get; set; }
-		public static int OpponentHandCount { get; set; }
-		public static int OpponentFatigueCount { get; set; }
-		public static bool IsInMenu { get; set; }
-		public static bool IsUsingPremade { get; set; }
-		public static int OpponentDeckCount { get; set; }
-		public static bool OpponentHasCoin { get; set; }
-		public static int OpponentSecretCount { get; set; }
-		public static bool IsRunning { get; set; }
-		public static Region CurrentRegion { get; set; }
-
-		private static GameMode _currentGameMode;
-
-		public static GameMode CurrentGameMode
-		{
-			get { return _currentGameMode; }
-			set
-			{
-				_currentGameMode = value;
-				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
-			}
-		}
-
-		public static GameStats CurrentGameStats { get; set; }
-
-
-		public static ObservableCollection<Card> PlayerDeck { get; set; }
-		public static ObservableCollection<Card> PlayerDrawn { get; set; }
-		public static int PlayerHandCount { get; set; }
-		public static int PlayerFatigueCount { get; set; }
-		public static string PlayingAgainst { get; set; }
-		public static string PlayingAs { get; set; }
-		public static string PlayerName { get; set; }
-		public static string OpponentName { get; set; }
-
-		public static List<string> SetAsideCards { get; set; }
-		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck { get; set; }
-
-		public static OpponentSecrets OpponentSecrets { get; set; }
-
-		private static readonly List<string> ValidCardSets = new List<string>
-		{
-			"Basic",
-			"Reward",
-			"Classic",
-			"Promotion",
-			"Curse of Naxxramas",
-			"Goblins vs Gnomes",
-			"Blackrock Mountain"
-		};
-
-		public static List<Card> DrawnLastGame { get; set; }
-
-		public static int[] OpponentHandAge { get; private set; }
-		public static CardMark[] OpponentHandMarks { get; private set; }
-		public static Card[] OpponentStolenCardsInformation { get; private set; }
-		public static List<Card> PossibleArenaCards { get; set; }
-		public static List<Card> PossibleConstructedCards { get; set; }
-		public static int? SecondToLastUsedId { get; set; }
-
-		//public static List<Entity> Entities;
-		public static Dictionary<int, Entity> Entities { get; set; }
-		public static int PlayerId { get; set; }
-		public static int OpponentId { get; set; }
-		public static bool SavedReplay { get; set; }
-		private static List<string> hsLogLines = new List<string>();
-		//public static Dictionary<string, int> PlayerIds; 
-
-		#endregion
-
 		static Game()
 		{
 			Entities = new Dictionary<int, Entity>();
@@ -126,7 +42,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage) ? Config.Instance.SelectedLanguage : "enUS");
 		}
-
 
 		public static bool IsMulliganDone
 		{
@@ -242,6 +157,118 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Logger.WriteLine("Opponent Hand after draw: " + string.Join(",", zipped), "Hearthstone");
 		}
 
+		public static void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
+		{
+			if(CurrentGameStats == null)
+				return;
+			CurrentGameStats.AddPlay(play, turn, cardId);
+		}
+
+		public static bool IsActualCard(Card card)
+		{
+			if(card == null)
+				return false;
+			return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
+			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+			       && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
+		}
+
+		public static void ResetArenaCards()
+		{
+			PossibleArenaCards.Clear();
+		}
+
+		public static void ResetConstructedCards()
+		{
+			PossibleConstructedCards.Clear();
+		}
+
+		public static void AddHSLogLine(string logLine)
+		{
+			HSLogLines.Add(logLine);
+		}
+
+		//public static readonly string[] Classes = new[] { "Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior" };
+
+		#region Properties
+
+		private const int DefaultCoinPosition = 4;
+		private const int MaxHandSize = 10;
+		public static bool HighlightCardsInHand { get; set; }
+		public static bool HighlightDiscarded { get; set; }
+
+		private static Dictionary<string, Card> _cardDb;
+
+		public static ObservableCollection<Card> OpponentCards { get; set; }
+		public static int OpponentHandCount { get; set; }
+		public static int OpponentFatigueCount { get; set; }
+		public static bool IsInMenu { get; set; }
+		public static bool IsUsingPremade { get; set; }
+		public static int OpponentDeckCount { get; set; }
+		public static bool OpponentHasCoin { get; set; }
+		public static int OpponentSecretCount { get; set; }
+		public static bool IsRunning { get; set; }
+		public static Region CurrentRegion { get; set; }
+
+		private static GameMode _currentGameMode;
+
+		public static GameMode CurrentGameMode
+		{
+			get { return _currentGameMode; }
+			set
+			{
+				_currentGameMode = value;
+				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
+			}
+		}
+
+		public static GameStats CurrentGameStats { get; set; }
+
+
+		public static ObservableCollection<Card> PlayerDeck { get; set; }
+		public static ObservableCollection<Card> PlayerDrawn { get; set; }
+		public static int PlayerHandCount { get; set; }
+		public static int PlayerFatigueCount { get; set; }
+		public static string PlayingAgainst { get; set; }
+		public static string PlayingAs { get; set; }
+		public static string PlayerName { get; set; }
+		public static string OpponentName { get; set; }
+
+		public static List<string> SetAsideCards { get; set; }
+		public static List<KeyValuePair<string, int>> OpponentReturnedToDeck { get; set; }
+
+		public static OpponentSecrets OpponentSecrets { get; set; }
+
+		private static readonly List<string> ValidCardSets = new List<string>
+		{
+			"Basic",
+			"Reward",
+			"Classic",
+			"Promotion",
+			"Curse of Naxxramas",
+			"Goblins vs Gnomes",
+			"Blackrock Mountain"
+		};
+
+		public static List<Card> DrawnLastGame { get; set; }
+
+		public static int[] OpponentHandAge { get; private set; }
+		public static CardMark[] OpponentHandMarks { get; private set; }
+		public static Card[] OpponentStolenCardsInformation { get; private set; }
+		public static List<Card> PossibleArenaCards { get; set; }
+		public static List<Card> PossibleConstructedCards { get; set; }
+		public static int? SecondToLastUsedId { get; set; }
+
+		//public static List<Entity> Entities;
+		public static Dictionary<int, Entity> Entities { get; set; }
+		public static int PlayerId { get; set; }
+		public static int OpponentId { get; set; }
+		public static bool SavedReplay { get; set; }
+		private static List<string> hsLogLines = new List<string>();
+		//public static Dictionary<string, int> PlayerIds; 
+
+		#endregion
+
 		#region Player
 
 #pragma warning disable 4014
@@ -264,7 +291,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			drawnCard.JustDrawn();
 
 
-			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0 && c.IsStolen) ?? PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0 && c.IsStolen)
+			               ?? PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
 			if(deckCard == null)
 				return false;
 
@@ -424,7 +452,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				drawnCard.Count++;
 
-			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0 && c.IsStolen) ?? PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
+			var deckCard = PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0 && c.IsStolen)
+			               ?? PlayerDeck.FirstOrDefault(c => c.Id == cardId && c.Count > 0);
 			if(deckCard == null)
 				return false;
 
@@ -769,7 +798,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 				}
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine("Error loading db: \n" + e, "Game");
 			}
@@ -822,36 +851,5 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		#endregion
-
-		public static void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
-		{
-			if(CurrentGameStats == null)
-				return;
-			CurrentGameStats.AddPlay(play, turn, cardId);
-		}
-
-		public static bool IsActualCard(Card card)
-		{
-			if(card == null)
-				return false;
-			return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
-			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-			       && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
-		}
-
-		public static void ResetArenaCards()
-		{
-			PossibleArenaCards.Clear();
-		}
-
-		public static void ResetConstructedCards()
-		{
-			PossibleConstructedCards.Clear();
-		}
-
-		public static void AddHSLogLine(string logLine)
-		{
-			HSLogLines.Add(logLine);
-		}
 	}
 }

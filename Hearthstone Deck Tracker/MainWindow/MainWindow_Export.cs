@@ -30,8 +30,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var message =
 					string.Format(
-								  "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
-								  deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
+					              "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
+					              deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
 
 				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				{
@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 				}
 
-				var settings = new MetroDialogSettings { AffirmativeButtonText = "export" };
+				var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
 				var result =
 					await
 					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
@@ -57,7 +57,6 @@ namespace Hearthstone_Deck_Tracker
 					this.ShowMissingCardsMessage(deck);
 			}
 		}
-
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{

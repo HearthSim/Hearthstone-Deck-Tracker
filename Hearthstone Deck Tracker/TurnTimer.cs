@@ -29,11 +29,11 @@ namespace Hearthstone_Deck_Tracker
 
 	internal class TurnTimer
 	{
-		public ActivePlayer CurrentActivePlayer;
 		private bool _opponentMulliganed;
 		private bool _playerMulliganed;
 		private Timer _timer;
 		private int _turnTime;
+		public ActivePlayer CurrentActivePlayer;
 
 		private TurnTimer()
 		{
@@ -42,8 +42,6 @@ namespace Hearthstone_Deck_Tracker
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
-
-
 		public static TurnTimer Instance { get; private set; }
 
 		/// <summary>
@@ -112,7 +110,6 @@ namespace Hearthstone_Deck_Tracker
 			else if(activePlayer.Equals(ActivePlayer.Opponent))
 				_opponentMulliganed = true;
 		}
-
 
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{

@@ -19,7 +19,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 	{
 		private const int Small = 36;
 		private const int Big = 48;
-		private FontWeight _fontWeight;
 
 		public NewDeckPickerItem()
 		{
@@ -35,69 +34,20 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public Deck Deck { get; set; }
-
-		public FontWeight SelectedFontWeight
-		{
-			get { return _fontWeight; }
-		}
-
-		#region sorting properties
-
-		public string Class
-		{
-			get { return Deck.GetClass; }
-		}
-
-		public DateTime LastEdited
-		{
-			get { return Deck.LastEdited; }
-		}
-
-		public double WinPercent
-		{
-			get { return Deck.WinPercent; }
-		}
-
-		public string DeckName
-		{
-			get { return Deck.Name; }
-		}
-
-		public string TagList
-		{
-			get { return Deck.TagList; }
-		}
-
-		public Visibility NoteVisibility
-		{
-			get { return string.IsNullOrEmpty(Deck.Note) ? Visibility.Collapsed : Visibility.Visible; }
-		}
-
-		public Visibility ArchivedVisibility
-		{
-			get { return Deck.Archived ? Visibility.Visible : Visibility.Collapsed; }
-		}
-
-		public string Note
-		{
-			get { return Deck.Note; }
-		}
-
-		#endregion
-
+		public FontWeight SelectedFontWeight { get; private set; }
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void OnSelected()
 		{
 			//BorderItem.Height = Big;
-			_fontWeight = FontWeights.Bold;
+			SelectedFontWeight = FontWeights.Bold;
 			OnPropertyChanged("SelectedFontWeight");
 		}
 
 		public void OnDelselected()
 		{
 			//BorderItem.Height = Small;
-			_fontWeight = FontWeights.Regular;
+			SelectedFontWeight = FontWeights.Regular;
 			OnPropertyChanged("SelectedFontWeight");
 		}
 
@@ -197,5 +147,49 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			Helper.MainWindow.BtnName_Click(sender, e);
 		}
+
+		#region sorting properties
+
+		public string Class
+		{
+			get { return Deck.GetClass; }
+		}
+
+		public DateTime LastEdited
+		{
+			get { return Deck.LastEdited; }
+		}
+
+		public double WinPercent
+		{
+			get { return Deck.WinPercent; }
+		}
+
+		public string DeckName
+		{
+			get { return Deck.Name; }
+		}
+
+		public string TagList
+		{
+			get { return Deck.TagList; }
+		}
+
+		public Visibility NoteVisibility
+		{
+			get { return string.IsNullOrEmpty(Deck.Note) ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public Visibility ArchivedVisibility
+		{
+			get { return Deck.Archived ? Visibility.Visible : Visibility.Collapsed; }
+		}
+
+		public string Note
+		{
+			get { return Deck.Note; }
+		}
+
+		#endregion
 	}
 }

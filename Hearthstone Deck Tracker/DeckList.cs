@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker
 	public class DeckList
 	{
 		private static DeckList _instance;
+		private Deck _activeDeck;
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -25,8 +26,6 @@ namespace Hearthstone_Deck_Tracker
 		public ObservableCollection<Deck> Decks;
 
 		public List<DeckInfo> LastDeckClass;
-
-		private Deck _activeDeck;
 
 		public DeckList()
 		{

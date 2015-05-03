@@ -25,9 +25,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public TrackerGeneral OptionsTrackerGeneral;
 		public TrackerImporting OptionsTrackerImporting;
 		public TrackerLogging OptionsTrackerLogging;
+		public TrackerPlugins OptionsTrackerPlugins;
 		public TrackerSettings OptionsTrackerSettings;
 		public TrackerStats OptionsTrackerStats;
-		public TrackerPlugins OptionsTrackerPlugins;
 
 		public OptionsMain()
 		{

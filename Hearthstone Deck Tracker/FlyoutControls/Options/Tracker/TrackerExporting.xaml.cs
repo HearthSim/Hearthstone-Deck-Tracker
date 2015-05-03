@@ -68,7 +68,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-
 		private void ComboboxExportSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)

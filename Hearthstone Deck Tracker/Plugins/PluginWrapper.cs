@@ -1,20 +1,31 @@
+#region
+
 using System;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting;
 using System.Windows.Controls;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginWrapper
 	{
+		private bool _isEnabled;
+		private bool _loaded;
+
 		public PluginWrapper()
 		{
 			_loaded = true;
 		}
+
+		public PluginWrapper(string fileName, IPlugin plugin)
+		{
+			FileName = fileName;
+			Plugin = plugin;
+		}
+
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
-		private bool _loaded;
 		private MenuItem MenuItem { get; set; }
 
 		public string Name
@@ -27,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			get { return Name + " " + (Plugin != null ? Plugin.Version.ToString() : ""); }
 		}
 
-		private bool _isEnabled;
 		public bool IsEnabled
 		{
 			get { return _isEnabled; }
@@ -50,13 +60,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 				}
 				_isEnabled = value;
-			} 
-		}
-
-		public PluginWrapper(string fileName, IPlugin plugin)
-		{
-			FileName = fileName;
-			Plugin = plugin;
+			}
 		}
 
 		public void Load()
@@ -87,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				Plugin.OnUpdate();
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Logger.WriteLine("Error updating " + Name + ":\n" + ex, "PluginWrapper");
 			}
@@ -125,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				if(MenuItem != null)
 					Helper.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Logger.WriteLine("Error unloading " + Name + ":\n" + ex, "PluginWrapper");
 			}

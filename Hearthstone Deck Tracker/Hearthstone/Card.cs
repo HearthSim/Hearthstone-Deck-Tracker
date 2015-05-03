@@ -17,6 +17,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	[Serializable]
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
+		private ImageBrush _cachedBackground;
+		private bool _coloredFrame;
+		private int _count;
+		private int _inHandCount;
+		private bool _isStolen;
+		private bool _justDrawn;
+		private int _lastCount;
+		private bool _loaded;
+		private string _localizedName;
+		private string _name;
+		private string _text;
+		private bool _wasDiscarded;
 		public string Id;
 
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
@@ -28,20 +40,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public string Rarity;
-
-		private ImageBrush _cachedBackground;
-
-		private int _count;
-		private int _inHandCount;
-		private bool _isStolen;
-		private bool _justDrawn;
-		private int _lastCount;
-		private bool _loaded;
-		private string _localizedName;
-		private string _name;
-		private string _text;
-		private bool _wasDiscarded;
-		private bool _coloredFrame;
 
 		public Card()
 		{
@@ -218,7 +216,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return (int)(OpponentWindow.Scaling * 35); }
 		}
 
-
 		public string GetPlayerClass
 		{
 			get { return PlayerClass ?? "Neutral"; }
@@ -243,7 +240,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-
 		public SolidColorBrush ColorOpponent
 		{
 			get { return new SolidColorBrush(Colors.White); }
@@ -261,8 +257,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new ImageBrush();
 				try
 				{
-					var cardFileName = Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",","")
-					                   + ".png";
+					var cardFileName =
+						Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "")
+						+ ".png";
 
 
 					//card graphic
