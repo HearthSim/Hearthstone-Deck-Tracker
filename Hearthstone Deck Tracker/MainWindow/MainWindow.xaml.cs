@@ -657,6 +657,7 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Save();
 				DeckStatsList.Save();
 				PluginManager.SavePluginsSettings();
+                PluginManager.Instance.UnloadPlugins();
             }
 			catch(Exception)
 			{
