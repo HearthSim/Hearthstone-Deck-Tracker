@@ -926,7 +926,14 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			else if(tag == GAME_TAG.CURRENT_PLAYER && value == 1)
-				_gameHandler.TurnStart(Game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent, GetTurnNumber());
+			{
+				var activePlayer = Game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent;
+				_gameHandler.TurnStart(activePlayer, GetTurnNumber());
+				if(activePlayer == ActivePlayer.Player)
+					_playerUsedHeroPower = false;
+				else
+					_opponentUsedHeroPower = false;
+			}
 			else if(tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
 			{
 				if(controller == Game.PlayerId)
