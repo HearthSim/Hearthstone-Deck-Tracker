@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +19,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -417,6 +419,65 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			Config.Instance.ResolvedDeckStatsIssue = true;
 			Config.Save();
+		}
+
+		/// <summary>
+	    /// v0.10.0 caused opponent names to be saved as the hero, rather than the name.
+	    /// </summary>
+		private async void ResolveOpponentNames()
+		{
+			var games =
+				DeckStatsList.Instance.DeckStats.SelectMany(ds => ds.Games)
+				             .Where(g => g.HasReplayFile && Enum.GetNames(typeof(HeroClass)).Any(x => x == g.OpponentName))
+				             .ToList();
+			if(!games.Any())
+				return;
+			var controller = await this.ShowProgressAsync("Fixing opponent names in recorded games...", "v0.10.0 caused opponent names to be set to their hero, rather than the actual name.\n\nThis may take a moment.\n\nYou can cancel to continue this at a later time (or not at all).", true);
+			var count = 0;
+			var lockMe = new object();
+			await Task.Run(() =>
+			{
+				Parallel.ForEach(games, (game, loopState) =>
+				{
+					if(controller.IsCanceled)
+						loopState.Stop();
+					List<ReplayKeyPoint> replay = ReplayReader.LoadReplay(game.ReplayFile);
+					if(replay == null)
+						return;
+					var last = replay.LastOrDefault();
+					if(last == null)
+						return;
+					var opponent = last.Data.FirstOrDefault(x => x.IsOpponent);
+					if(opponent == null)
+						return;
+					game.OpponentName = opponent.Name;
+					lock(lockMe)
+					{
+						controller.SetProgress(1.0 * ++count / games.Count);
+					}
+				});
+			});
+
+			await controller.CloseAsync();
+			if(controller.IsCanceled)
+			{
+				var fix =
+					await
+					this.ShowMessageAsync("Cancelled", "Fix remaining names on next start?", MessageDialogStyle.AffirmativeAndNegative,
+					                      new MetroDialogSettings() {AffirmativeButtonText = "next time", NegativeButtonText = "don\'t fix"});
+				if(fix == MessageDialogResult.Negative)
+				{
+					Config.Instance.ResolvedOpponentNames = true;
+					Config.Save();
+				}
+
+			}
+			else
+			{
+				Config.Instance.ResolvedOpponentNames = true;
+				Config.Save();
+			}
+			DeckStatsList.Save();
 		}
 
 		private async void UpdateAsync()
@@ -1327,7 +1388,7 @@ namespace Hearthstone_Deck_Tracker
 				var newest =
 					Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
 				if(newest != null)
-					ReplayReader.Read(newest.FullName);
+					ReplayReader.LaunchReplayViewer(newest.FullName);
 			}
 			catch(Exception ex)
 			{
@@ -1348,7 +1409,7 @@ namespace Hearthstone_Deck_Tracker
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					ReplayReader.Read(dialog.FileName);
+					ReplayReader.LaunchReplayViewer(dialog.FileName);
 			}
 			catch(Exception ex)
 			{

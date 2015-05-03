@@ -671,6 +671,8 @@ namespace Hearthstone_Deck_Tracker
 					                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Heartstone once, for the tracker to work properly.");
 			}
 
+			if(!Config.Instance.ResolvedOpponentNames)
+				ResolveOpponentNames();
 			if(!Config.Instance.ResolvedDeckStatsIds)
 			{
 				if(ResolveDeckStatsIds())

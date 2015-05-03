@@ -483,6 +483,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ResolvedDeckStatsIssue = false;
 
+		[DefaultValue(false)]
+		public bool ResolvedOpponentNames = false;
+
 		//updating from <= 0.5.1: 
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
 		//=> Need to be null to avoid creating new config in appdata if config is stored locally.
