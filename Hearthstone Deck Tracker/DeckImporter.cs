@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck
 				{
-					Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='content']/div[3]/h3").InnerText).Trim()
+					Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='content']/div[contains(@class, 'deck')]/h1").InnerText).Trim()
 				};
 
 				var nodes = doc.DocumentNode.SelectNodes("//a[@real_id]");
