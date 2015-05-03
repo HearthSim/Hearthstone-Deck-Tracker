@@ -14,7 +14,7 @@
                         <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="1,-3,0,0" Width="32" Height="25"
                                                  VerticalAlignment="Center" HorizontalAlignment="Center"
                                                  Text="{Binding Cost}"
-                                                 FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"
+                                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
                                                  TextAlignment="Center" FontSize="20" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
@@ -24,7 +24,7 @@
                     <DataTemplate>
                         <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-2,0,0,0" Height="16"
                                                  VerticalAlignment="Center" Text="{Binding LocalizedName}"
-                                                 FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"
+                                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
                                                  TextAlignment="Left" FontSize="13" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>

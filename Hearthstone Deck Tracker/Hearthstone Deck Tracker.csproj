@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hearthstone_Deck_Tracker</RootNamespace>
-    <AssemblyName>Hearthstone Deck Tracker</AssemblyName>
+    <AssemblyName>HearthstoneDeckTracker</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -3075,7 +3075,10 @@
     mkdir "..\Hearthstone Deck Tracker/Plugins"
     xcopy /E /Y "Images\*.*" "..\Hearthstone Deck Tracker\Images"
     xcopy /E /Y "Files\*.*" "..\Hearthstone Deck Tracker\Files"
-    xcopy /Y "Hearthstone Deck Tracker.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HearthstoneDeckTracker.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
+    ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
+    ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe.config" "Hearthstone Deck Tracker.exe.config"
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"

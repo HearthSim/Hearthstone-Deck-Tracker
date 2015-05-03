@@ -14,11 +14,11 @@
         <Rectangle Fill="{Binding Background}" Height="35" Width="215" Grid.ColumnSpan="2"/>
         <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
                                  Text="{Binding Cost}" Fill="{Binding ColorPlayer}"
-                                 FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"
+                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
                                  TextAlignment="Center" FontSize="20" Grid.Column="0" />
         <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}"
                                  Fill="{Binding ColorPlayer}"
-                                 FontFamily="/Hearthstone Deck Tracker;component/Resources/#Belwe Bd BT"
+                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
                                  TextAlignment="Left" FontSize="13" Grid.Column="1" />
     </Grid>
 </UserControl>

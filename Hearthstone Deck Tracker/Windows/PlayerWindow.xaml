@@ -6,7 +6,7 @@
                       Title="Player" Height="440" Width="226" MinWidth="226" MaxWidth="226"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
-                      Icon="/Hearthstone Deck Tracker;component/Images/HearthstoneDeckTracker.ico"
+                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
                       Deactivated="MetroWindow_Deactivated">
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain">
