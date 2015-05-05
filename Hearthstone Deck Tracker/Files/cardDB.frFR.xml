@@ -14567,7 +14567,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Text>Chaque fois que votre adversaire lance un sort, gagne +2 ATQ.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17842,28 +17842,6 @@ Nefarian fait pleuvoir le feu depuis les cieux !</Text>
     <Durability>0</Durability>
     <Text>Vous piochez 2 cartes.
 Vous confère 4 points d’armure.</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>Ragnaros, seigneur du feu</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>Nefarian</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

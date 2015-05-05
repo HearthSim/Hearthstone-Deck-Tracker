@@ -14538,7 +14538,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>Sempre que seu oponente lançar um feitiço, receba +2 de Ataque.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17813,28 +17813,6 @@ Nefarian faz chover fogo dos céus!</Text>
     <Durability>0</Durability>
     <Text>Compre 2 cards.
 Receba 4 de Armadura.</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>Ragnaros, o Senhor do Fogo</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>Nefarian</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

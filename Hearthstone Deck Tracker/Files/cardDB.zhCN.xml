@@ -6253,7 +6253,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>从你的牌库中随机将2张恶魔牌置入你的手牌。</Text>
+    <Text>从你的牌库中随机将两张恶魔牌置入你的手牌。</Text>
     <Mechanics />
     <Artist>Raven Mimura</Artist>
   </Card>
@@ -14535,7 +14535,7 @@
     <Durability>0</Durability>
     <Text>每当你的对手施放一个法术，获得+2攻击力。</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -15793,7 +15793,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄技能&lt;/b&gt;
-从你的牌库中将两个随从置入战场；从对手的牌库中将一个随从置入战场。</Text>
+从你的牌库中将两个随从置入战场；对手将一个随从置入战场。</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17806,28 +17806,6 @@
     <Mechanics />
   </Card>
   <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>炎魔之王拉格纳罗斯</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>奈法利安</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
     <CardId>BRM_001</CardId>
     <Name>严正警戒</Name>
     <CardSet>Blackrock Mountain</CardSet>
@@ -17868,7 +17846,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>每当你使用一个法术，便造成2点伤害，随机分配到所有敌人身上。</Text>
+    <Text>每当你施放一个法术，便造成2点伤害，随机分配到所有敌人身上。</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -18000,7 +17978,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>选择一个随从。将该随从的3个复制洗入你的牌库。</Text>
+    <Text>选择一个随从。将该随从的三个复制洗入你的牌库。</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -18324,7 +18302,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>每当你以该随从为目标使用一个法术时，便获得+1/+1。</Text>
+    <Text>每当你以该随从为目标施放一个法术时，便获得+1/+1。</Text>
     <Mechanics />
     <Artist>Edouard Guiton &amp; Stuido HIVE</Artist>
   </Card>
@@ -18471,7 +18449,7 @@
   </Card>
   <Card>
     <CardId>BRM_027pH</CardId>
-    <Name>死吧，你们这些卑鄙的家伙！</Name>
+    <Name>死吧，卑鄙的家伙！</Name>
     <CardSet>Blackrock Mountain</CardSet>
     <Type>Hero Power</Type>
     <Attack>0</Attack>

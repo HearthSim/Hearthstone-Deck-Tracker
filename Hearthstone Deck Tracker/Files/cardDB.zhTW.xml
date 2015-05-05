@@ -2365,7 +2365,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>每當你打出攻擊力在3點以下的手下，賦予該手下&lt;b&gt;衝鋒&lt;/b&gt;</Text>
+    <Text>每當你召喚攻擊力在3點以下的手下，賦予該手下&lt;b&gt;衝鋒&lt;/b&gt;</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -14537,7 +14537,7 @@
     <Durability>0</Durability>
     <Text>每當你的對手施放法術，獲得+2攻擊力</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17810,28 +17810,6 @@
     <Durability>0</Durability>
     <Text>抽2張牌。
 獲得4點護甲值</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>『炎魔』拉格納羅斯</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>奈法利安</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

@@ -10560,14 +10560,14 @@ Summon two 2/1 minions.</Text>
   </Card>
   <Card>
     <CardId>XXX_053</CardId>
-    <Name>Armor</Name>
+    <Name>Armor 100</Name>
     <CardSet>Debug</CardSet>
     <Type>Spell</Type>
     <Attack>0</Attack>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Give your Hero +100 Armor</Text>
+    <Text>Give target Hero +100 Armor</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10630,7 +10630,7 @@ Summon two 2/1 minions.</Text>
   </Card>
   <Card>
     <CardId>XXX_057</CardId>
-    <Name>Destroy Secrets</Name>
+    <Name>Destroy Target Secrets</Name>
     <CardSet>Debug</CardSet>
     <Type>Spell</Type>
     <Attack>0</Attack>
@@ -14537,7 +14537,7 @@ Your hero is &lt;b&gt;Immune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Text>Whenever your opponent casts a spell, gain +2 Attack.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17812,28 +17812,6 @@ Nefarian rains fire from above!</Text>
     <Durability>0</Durability>
     <Text>Draw 2 cards.
 Gain 4 Armor.</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>Ragnaros the Firelord</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>Nefarian</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

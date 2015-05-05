@@ -14544,7 +14544,7 @@
     <Durability>0</Durability>
     <Text>상대편이 주문을 시전할 때마다, 공격력을 +2 얻습니다.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17821,28 +17821,6 @@
     <Mechanics />
   </Card>
   <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>불의 군주 라그나로스</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>네파리안</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
     <CardId>BRM_001</CardId>
     <Name>엄숙한 애도</Name>
     <CardSet>Blackrock Mountain</CardSet>
@@ -18015,7 +17993,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>하수인을 선택하고, 내 덱에 그 하수인을 3마리 섞어 넣습니다.</Text>
+    <Text>하수인을 선택하고, 내 덱에 그 하수인을 셋 섞어 넣습니다.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>

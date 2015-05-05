@@ -14545,7 +14545,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Text>Otrzymuje +2 do ataku za każdym razem, gdy przeciwnik rzuci zaklęcie.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17818,28 +17818,6 @@ Nefarian zsyła ognisty deszcz!</Text>
     <Durability>0</Durability>
     <Text>Dobierz 2 karty.
 Otrzymujesz 4 pkt. pancerza.</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>Ragnaros Władca Ognia</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>Nefarian</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

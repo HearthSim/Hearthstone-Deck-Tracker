@@ -7636,7 +7636,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Evoca tre Treant 2/2 con &lt;b&gt;Carica&lt;/b&gt; che muoiono alla fine del tuo turno.</Text>
+    <Text>Evoca tre Treant 2/2 con &lt;b&gt;Carica&lt;/b&gt; che muoiono alla fine del turno.</Text>
     <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -14524,7 +14524,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Text>Ottiene +2 Attacco quando l'avversario lancia una Magia.</Text>
     <Mechanics />
-    <Artist>Chris Rahn</Artist>
+    <Artist>Aleksi Briclot</Artist>
   </Card>
   <Card>
     <CardId>GVG_068a</CardId>
@@ -17790,28 +17790,6 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>Pesca 2 carte. Fornisce 4 Armatura.</Text>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_01</CardId>
-    <Name>Ragnaros</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
-    <Mechanics />
-  </Card>
-  <Card>
-    <CardId>BRMC_02</CardId>
-    <Name>Nefarian</Name>
-    <CardSet>Blackrock Mountain</CardSet>
-    <Type>Hero</Type>
-    <Attack>0</Attack>
-    <Health>30</Health>
-    <Cost>0</Cost>
-    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
