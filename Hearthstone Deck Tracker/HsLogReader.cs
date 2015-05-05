@@ -1066,6 +1066,8 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Error cleared log file: " + e, "LogReader");
 				}
 			}
+			else
+				Logger.WriteLine("Logfile was not cleared! (ClearLogFileAfterGame = false)", "LogReader");
 			_gameLoaded = false;
 		}
 

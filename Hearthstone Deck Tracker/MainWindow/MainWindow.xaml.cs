@@ -1437,6 +1437,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game was closed
 						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
+						Game.CurrentRegion = Region.UNKNOWN;
+						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
 						HsLogReader.Instance.ClearLog();
 						Game.Reset();
 						if(DeckList.Instance.ActiveDeck != null)
