@@ -695,7 +695,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var selectedKeypoint = DataGridKeyPoints.SelectedItem as TurnViewItem;
 			DataGridKeyPoints.Items.Clear();
 			Replay = replay;
-			_currentGameState = Replay[0];
+			_currentGameState = Replay.FirstOrDefault(r => r.Data.Any(x => x.HasTag(GAME_TAG.PLAYER_ID)));
+			if(_currentGameState == null)
+			{
+				Logger.WriteLine("Error loading replay. No player entity found.");
+				return;
+			}
 			_playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
 			_opponentController = OpponentEntity.GetTag(GAME_TAG.CONTROLLER);
 			var currentTurn = -1;
