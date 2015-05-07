@@ -328,7 +328,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<GameStats> GetRelevantGames()
 		{
 			var filtered = Config.Instance.DisplayedMode == GameMode.All
-				               ? DeckStats.Games : DeckStats.Games.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList();
+				               ? DeckStats.Games
+				               : (IsArenaDeck
+					                  ? DeckStats.Games.Where(g => g.GameMode == GameMode.Arena).ToList()
+					                  : DeckStats.Games.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList());
 			switch(Config.Instance.DisplayedTimeFrame)
 			{
 				case DisplayedTimeFrame.AllTime:
