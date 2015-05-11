@@ -376,6 +376,13 @@ namespace Hearthstone_Deck_Tracker
 			{
 				deck.Name = newName;
 				deck.Edited();
+				if(deck.DeckStats.Games.Any())
+				{
+					foreach(var game in deck.DeckStats.Games)
+						game.DeckName = newName;
+					DeckStatsList.Save();
+				}
+
 				DeckList.Save();
 				DeckPickerList.UpdateDecks();
 				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)

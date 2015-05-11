@@ -198,6 +198,8 @@ namespace Hearthstone_Deck_Tracker
 						{
 							statsEntry.Name = deckName;
 							Logger.WriteLine("Deck has new name, updated deckstats", "SaveDeck");
+							foreach(var game in statsEntry.Games)
+								game.DeckName = deckName;
 						}
 						else
 						{
