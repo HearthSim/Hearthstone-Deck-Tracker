@@ -569,6 +569,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowWinRateAgainst = false;
 
+		[DefaultValue(true)]
+		public bool SortDecksByClass = true;
+
 		[DefaultValue(false)]
 		public bool StartMinimized = false;
 

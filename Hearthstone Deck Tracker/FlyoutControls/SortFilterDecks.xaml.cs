@@ -399,5 +399,23 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void CheckBoxSortByClass_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = true;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClass_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = false;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
 	}
 }
