@@ -67,7 +67,14 @@ namespace Hearthstone_Deck_Tracker
 				var deck = new Deck {Name = wrapper.deck_name};
 				foreach(var cardObj in wrapper.deck_cards)
 				{
-					var card = Game.GetCardFromName(cardObj.name);
+					var cardName = cardObj.name;
+					if(cardName.EndsWith(" Naxx"))
+						cardName = cardName.Replace(" Naxx", "");
+					if(cardName.EndsWith(" GvG"))
+						cardName = cardName.Replace(" GvG", "");
+					if(cardName.EndsWith(" BrM"))
+						cardName = cardName.Replace(" BrM", "");
+					var card = Game.GetCardFromName(cardName);
 					card.Count = cardObj.quantity;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
