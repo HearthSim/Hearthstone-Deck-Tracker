@@ -371,5 +371,42 @@ namespace Hearthstone_Deck_Tracker.Stats
 			HearthStatsDeckVersionId = null;
 			HearthStatsId = null;
 		}
+
+		public Deck GetOpponentDeck()
+		{
+			var ignoreCards = new List<Card>();
+			var deck = new Deck { Class = OpponentHero };
+			foreach(var turn in TurnStats)
+			{
+				foreach(var play in turn.Plays)
+				{
+					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
+					   || play.Type == PlayType.OpponentSecretTriggered)
+					{
+						var card = Game.GetCardFromId(play.CardId);
+						if(Game.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
+						{
+							if(ignoreCards.Contains(card))
+							{
+								ignoreCards.Remove(card);
+								continue;
+							}
+							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
+							if(deckCard != null)
+								deckCard.Count++;
+							else
+								deck.Cards.Add(card);
+						}
+					}
+					else if(play.Type == PlayType.OpponentBackToHand)
+					{
+						var card = Game.GetCardFromId(play.CardId);
+						if(Game.IsActualCard(card))
+							ignoreCards.Add(card);
+					}
+				}
+			}
+			return deck;
+		}
 	}
 }

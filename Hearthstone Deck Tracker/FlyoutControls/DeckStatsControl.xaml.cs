@@ -800,39 +800,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ImportOpponentDeck(GameStats stats)
 		{
-			var ignoreCards = new List<Card>();
-			var deck = new Deck {Class = stats.OpponentHero};
-			foreach(var turn in stats.TurnStats)
-			{
-				foreach(var play in turn.Plays)
-				{
-					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
-					   || play.Type == PlayType.OpponentSecretTriggered)
-					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
-						{
-							if(ignoreCards.Contains(card))
-							{
-								ignoreCards.Remove(card);
-								continue;
-							}
-							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
-							if(deckCard != null)
-								deckCard.Count++;
-							else
-								deck.Cards.Add(card);
-						}
-					}
-					else if(play.Type == PlayType.OpponentBackToHand)
-					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
-							ignoreCards.Add(card);
-					}
-				}
-			}
-			Helper.MainWindow.OpponentDeckFlyout.SetDeck(deck);
+			if(stats == null)
+				return;
+			Helper.MainWindow.OpponentDeckFlyout.SetDeck(stats.GetOpponentDeck());
 			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = true;
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextHide;

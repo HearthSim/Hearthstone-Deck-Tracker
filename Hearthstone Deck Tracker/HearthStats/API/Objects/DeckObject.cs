@@ -41,9 +41,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 						archived = true;
 						notes = notes.Replace(noteArchived, "");
 					}
+					notes = notes.Trim();
 				}
 
-				notes = notes.Trim();
 
 				//tags are returned all lowercase, find matching tag
 				var tags =

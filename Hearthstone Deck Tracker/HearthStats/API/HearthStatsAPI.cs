@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 				var obj = JsonConvert.DeserializeObject<ResponseWrapper<DeckObjectWrapper[]>>(response);
 				if(obj.status == "success")
-					return obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).ToList();
+					return obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
 				return new List<Deck>();
 			}
 			catch(Exception e)
@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var notes = masterDeck == null ? AddSpecialTagsToNote(deck) : AddSpecialTagsToNote(masterDeck);
 
 			var url = BaseUrl + "/api/v2/decks/hdt_create?auth_token=" + _authToken;
-			var cards = deck.Cards.Select(x => new CardObject(x));
+			var cards = deck.Cards.Where(Game.IsActualCard).Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {name, notes, tags, @class = deck.Class, cards});
 			try
 			{
@@ -258,7 +258,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var version = deck.Version.ToString("{M}.{m}");
 			Logger.WriteLine("uploading version " + version + " of " + deck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/create_version?auth_token=" + _authToken;
-			var cards = deck.Cards.Select(x => new CardObject(x));
+			var cards = deck.Cards.Where(Game.IsActualCard).Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {deck_id = hearthStatsId, version, cards});
 			try
 			{
@@ -297,8 +297,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			Logger.WriteLine("uploading match: " + game, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/matches/hdt_new?auth_token=" + _authToken;
-
-
+			
 			dynamic gameObj = new ExpandoObject();
 			gameObj.mode = game.GameMode.ToString();
 			gameObj.@class = string.IsNullOrEmpty(game.PlayerHero) ? deck.Class : game.PlayerHero;
@@ -316,7 +315,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObj.notes = game.Note;
 			if(game.GameMode == GameMode.Ranked && game.HasRank)
 				gameObj.ranklvl = game.Rank.ToString();
-			gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
+			var opponentCards = game.GetOpponentDeck().Cards;
+			if(opponentCards.Where(Game.IsActualCard).Any())
+				gameObj.oppcards = opponentCards.Where(Game.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
+            gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
 
 			var data = JsonConvert.SerializeObject(gameObj);
 
@@ -374,7 +376,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 			var ids = filtered.Select(d => long.Parse(d.HearthStatsId)).ToArray();
 
-			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken; // TODO 
+			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken; 
 			var data = JsonConvert.SerializeObject(new {deck_id = ids});
 			try
 			{
@@ -524,7 +526,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			Logger.WriteLine("editing deck: " + editedDeck, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/decks/hdt_edit?auth_token=" + _authToken;
-			var cards = editedDeck.Cards.Select(x => new CardObject(x));
+			var cards = editedDeck.Cards.Where(Game.IsActualCard).Select(x => new CardObject(x));
 			var data =
 				JsonConvert.SerializeObject(
 				                            new
@@ -595,7 +597,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			Logger.WriteLine("creating new arena run: " + deck, "HearthStatsAPI");
 
 			var url = BaseUrl + "/api/v2/arena_runs/new?auth_token=" + _authToken;
-			var cards = deck.Cards.Select(x => new CardObject(x));
+			var cards = deck.Cards.Where(Game.IsActualCard).Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {@class = deck.Class, cards});
 			try
 			{
