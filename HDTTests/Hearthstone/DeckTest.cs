@@ -4,7 +4,7 @@ using System.Linq;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HDTTests.Heartstone
+namespace HDTTests.Hearthstone
 {
     [TestClass]
     public class DeckTest

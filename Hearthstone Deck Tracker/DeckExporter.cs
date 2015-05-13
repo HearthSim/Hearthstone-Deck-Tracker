@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				if(!User32.IsHearthstoneInForeground())
 				{
-					MessageBox.Show("Can't find Heartstone window.");
+					MessageBox.Show("Can't find Hearthstone window.");
 					Logger.WriteLine("Can't find Hearthstone window.", "DeckExporter");
 					return;
 				}
