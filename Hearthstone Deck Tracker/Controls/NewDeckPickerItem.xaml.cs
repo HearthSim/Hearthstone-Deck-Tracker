@@ -160,6 +160,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return Deck.LastEdited; }
 		}
 
+		public DateTime LastPlayed
+		{
+			get { return Deck.LastPlayed; }
+		}
+
 		public double WinPercent
 		{
 			get { return Deck.WinPercent; }
