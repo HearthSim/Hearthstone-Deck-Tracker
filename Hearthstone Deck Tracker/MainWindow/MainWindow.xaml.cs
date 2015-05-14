@@ -982,7 +982,11 @@ namespace Hearthstone_Deck_Tracker
 				             .Where(g => g.HasReplayFile && Enum.GetNames(typeof(HeroClass)).Any(x => x == g.OpponentName))
 				             .ToList();
 			if(!games.Any())
+			{
+				Config.Instance.ResolvedOpponentNames = true;
+				Config.Save();
 				return;
+			}
 			var controller =
 				await
 				this.ShowProgressAsync("Fixing opponent names in recorded games...",
