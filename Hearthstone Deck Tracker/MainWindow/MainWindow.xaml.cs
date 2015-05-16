@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,8 +17,10 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -41,8 +44,10 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	///     Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow
+	public partial class MainWindow : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public void UseDeck(Deck selected)
 		{
 			Game.Reset();
@@ -595,6 +600,14 @@ namespace Hearthstone_Deck_Tracker
 			return target.GetType().GetProperty(property).GetValue(target, null);
 		}
 
+		[NotifyPropertyChangedInvocator]
+		internal virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
 		#region Properties
 
 		private const int NewsCheckInterval = 300;
@@ -723,7 +736,6 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
-
 			HsLogReader.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
@@ -1766,6 +1778,37 @@ namespace Hearthstone_Deck_Tracker
 			ComboBoxDeckVersion.ItemsSource = deck != null ? deck.VersionsIncludingSelf : null;
 			ComboBoxDeckVersion.SelectedItem = deck != null ? deck.SelectedVersion : null;
 			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		#endregion
+
+		#region Errors
+
+		public ObservableCollection<Error> Errors
+		{
+			get { return ErrorManager.Errors; }
+		}
+
+		public Visibility ErrorIconVisibility
+		{
+			get { return ErrorManager.ErrorIconVisibility; }
+		}
+
+		public string ErrorCount
+		{
+			get { return ErrorManager.Errors.Count > 1 ? string.Format("({0})", ErrorManager.Errors.Count) : ""; }
+		}
+
+		private void BtnErrors_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutErrors.IsOpen = !FlyoutErrors.IsOpen;
+		}
+
+		public void ErrorsPropertyChanged()
+		{
+			OnPropertyChanged("Errors");
+			OnPropertyChanged("ErrorIconVisibility");
+			OnPropertyChanged("ErrorCount");
 		}
 
 		#endregion

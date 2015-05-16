@@ -123,6 +123,14 @@
     <Compile Include="Controls\ElementSorterItem.xaml.cs">
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Errors\ErrorItem.xaml.cs">
+      <DependentUpon>ErrorItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Errors\ErrorList.xaml.cs">
+      <DependentUpon>ErrorList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Errors\Error.cs" />
+    <Compile Include="Errors\ErrorManager.cs" />
     <Compile Include="Controls\ManaCostBarToolTip.xaml.cs">
       <DependentUpon>ManaCostBarToolTip.xaml</DependentUpon>
     </Compile>
@@ -367,6 +375,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ElementSorterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Errors\ErrorItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Errors\ErrorList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,6 +7,7 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
+                      xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
                       Title="Hearthstone Deck Tracker" Height="603" Width="640"
                       MinHeight="584" MinWidth="640"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
@@ -23,6 +24,16 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" ToolTip="syncing with HearthStats..."/>
+            <Button Click="BtnErrors_OnClick" Visibility="{Binding ErrorIconVisibility, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_warning_circle}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{Binding ErrorCount, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" />
+                </StackPanel>
+            </Button>
             <Button Click="BtnOptions_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
@@ -95,6 +106,9 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
                 <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="Errors">
+                <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>

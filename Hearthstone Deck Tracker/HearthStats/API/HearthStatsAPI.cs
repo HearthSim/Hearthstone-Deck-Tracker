@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API.Objects;
@@ -115,18 +116,26 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		private static async Task<string> PostAsync(string url, byte[] data)
 		{
-			var request = CreateRequest(url, "POST");
-			using(var stream = await request.GetRequestStreamAsync())
-				stream.Write(data, 0, data.Length);
-			var webResponse = await request.GetResponseAsync();
-			using(var responseStream = webResponse.GetResponseStream())
-			using(var reader = new StreamReader(responseStream))
+			try
 			{
-				var response = reader.ReadToEnd();
+				var request = CreateRequest(url, "POST");
+				using(var stream = await request.GetRequestStreamAsync())
+					stream.Write(data, 0, data.Length);
+				var webResponse = await request.GetResponseAsync();
+				using(var responseStream = webResponse.GetResponseStream())
+				using(var reader = new StreamReader(responseStream))
+				{
+					var response = reader.ReadToEnd();
 #if DEBUG
-				Logger.WriteLine("< " + response, "HearthStatsAPI");
+					Logger.WriteLine("< " + response, "HearthStatsAPI");
 #endif
-				return response;
+					return response;
+				}
+			}
+			catch(WebException e)
+			{
+				ErrorManager.AddError(new Error("HearthStats", e.Message));
+				throw;
 			}
 		}
 
@@ -163,7 +172,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 				var obj = JsonConvert.DeserializeObject<ResponseWrapper<DeckObjectWrapper[]>>(response);
 				if(obj.status == "success")
-					return obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
+				{
+					return
+						obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
+				}
 				return new List<Deck>();
 			}
 			catch(Exception e)
@@ -297,7 +309,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			Logger.WriteLine("uploading match: " + game, "HearthStatsAPI");
 			var url = BaseUrl + "/api/v2/matches/hdt_new?auth_token=" + _authToken;
-			
+
 			dynamic gameObj = new ExpandoObject();
 			gameObj.mode = game.GameMode.ToString();
 			gameObj.@class = string.IsNullOrEmpty(game.PlayerHero) ? deck.Class : game.PlayerHero;
@@ -318,7 +330,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var opponentCards = game.GetOpponentDeck().Cards;
 			if(opponentCards.Where(Game.IsActualCard).Any())
 				gameObj.oppcards = opponentCards.Where(Game.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
-            gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
+			gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
 
 			var data = JsonConvert.SerializeObject(gameObj);
 
@@ -376,7 +388,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 			var ids = filtered.Select(d => long.Parse(d.HearthStatsId)).ToArray();
 
-			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken; 
+			var url = BaseUrl + "/api/v2/decks/delete?auth_token=" + _authToken;
 			var data = JsonConvert.SerializeObject(new {deck_id = ids});
 			try
 			{
