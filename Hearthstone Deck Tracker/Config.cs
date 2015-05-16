@@ -59,8 +59,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
 
-		[DefaultValue("ARENA {Date dd-MM mm:hh}")]
-		public string ArenaDeckNameTemplate = "ARENA {Date dd-MM mm:hh}";
+		[DefaultValue("ARENA {Date dd-MM hh:mm}")]
+		public string ArenaDeckNameTemplate = "ARENA {Date dd-MM hh:mm}";
 
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;

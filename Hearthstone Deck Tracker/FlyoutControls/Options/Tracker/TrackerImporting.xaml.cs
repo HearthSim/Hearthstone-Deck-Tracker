@@ -121,8 +121,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
 		{
-			bool valid;
-			TextBlockNamePreview.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, out valid);
+			TextBlockNamePreview.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text);
 		}
 	}
 }
