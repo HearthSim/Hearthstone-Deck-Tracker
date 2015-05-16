@@ -317,7 +317,7 @@ namespace Hearthstone_Deck_Tracker
 					return;
 			}
 
-			var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
+			var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
 			foreach(var card in Game.PossibleArenaCards)
 			{
 				deck.Cards.Add(card);

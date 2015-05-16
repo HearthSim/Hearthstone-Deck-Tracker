@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -31,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
 			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
+			TextBoxArenaTemplate.Text = Config.Instance.ArenaDeckNameTemplate;
 			_initialized = true;
 		}
 
@@ -99,6 +101,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ButtonSetUpConstructed_OnClick(object sender, RoutedEventArgs e)
 		{
 			Helper.SetupConstructedImporting();
+		}
+
+		private void BtnEditTemplate_Click(object sender, RoutedEventArgs e)
+		{
+			if(TextBoxArenaTemplate.IsEnabled)
+			{
+				BtnEditTemplate.Content = "EDIT";
+				Config.Instance.ArenaDeckNameTemplate = TextBoxArenaTemplate.Text;
+				Config.Save();
+				TextBoxArenaTemplate.IsEnabled = false;
+			}
+			else
+			{
+				BtnEditTemplate.Content = "SAVE";
+				TextBoxArenaTemplate.IsEnabled = true;
+			}
+		}
+
+		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			bool valid;
+			TextBlockNamePreview.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, out valid);
 		}
 	}
 }

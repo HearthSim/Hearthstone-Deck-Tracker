@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var doc = await GetHtmlDoc(url);
-				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
+				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
 
 				var cardNodes = doc.DocumentNode.SelectSingleNode(".//ul[@class='deckList']");
 				var nameNodes = cardNodes.SelectNodes(".//span[@class='name']");
@@ -197,7 +197,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var deck = new Deck {Name = "Arena " + DateTime.Now.ToString("dd-MM HH:mm"), IsArenaDeck = true};
+				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
 
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();

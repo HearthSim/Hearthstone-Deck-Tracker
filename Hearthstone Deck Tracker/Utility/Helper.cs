@@ -411,5 +411,33 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return User32.GetHearthstoneRect(dpiScaling);
 		}
+
+		public static string ParseDeckNameTemplate(string template)
+		{
+			bool valid;
+			return ParseDeckNameTemplate(template, out valid);
+		}
+
+		public static string ParseDeckNameTemplate(string template, out bool valid)
+		{
+			try
+			{
+				var result = template;
+				const string dateRegex = "{Date (?<date>(.*?))}";
+				var match = Regex.Match(template, dateRegex);
+				if(match.Success)
+				{
+					var date = DateTime.Now.ToString(match.Groups["date"].Value);
+					result = Regex.Replace(result, dateRegex, date);
+				}
+				valid = true;
+				return result;
+			}
+			catch
+			{
+				valid = false;
+				return template;
+			}
+		}
 	}
 }
