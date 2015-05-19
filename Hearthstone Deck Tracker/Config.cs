@@ -59,8 +59,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
 
-		[DefaultValue("ARENA {Date dd-MM hh:mm}")]
-		public string ArenaDeckNameTemplate = "ARENA {Date dd-MM hh:mm}";
+		[DefaultValue("Arena {Date dd-MM hh:mm}")]
+		public string ArenaDeckNameTemplate = "Arena {Date dd-MM hh:mm}";
 
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;
@@ -519,6 +519,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Name")]
 		public string SelectedDeckSorting = "Name";
 
+		[DefaultValue("Name")]
+		public string SelectedDeckSortingArena = "Name";
+
 		[DefaultValue(DeckType.All)]
 		public DeckType SelectedDeckType = DeckType.All;
 
@@ -574,6 +577,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
+
+		[DefaultValue(false)]
+		public bool SortDecksByClassArena = false;
 
 		[DefaultValue(false)]
 		public bool StartMinimized = false;

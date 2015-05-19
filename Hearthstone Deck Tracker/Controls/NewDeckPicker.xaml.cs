@@ -354,10 +354,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			var view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDecks.ItemsSource);
 			view.SortDescriptions.Clear();
-			if(Config.Instance.SortDecksByClass)
+			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckType != DeckType.Arena
+				|| Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckType == DeckType.Arena)
 				view.SortDescriptions.Add(new SortDescription("Class", ListSortDirection.Ascending));
 
-			switch(Config.Instance.SelectedDeckSorting)
+			var deckSorting = Config.Instance.SelectedDeckType == DeckType.Arena
+				                  ? Config.Instance.SelectedDeckSortingArena : Config.Instance.SelectedDeckSorting;
+			switch(deckSorting)
 			{
 				case "Name":
 					view.SortDescriptions.Add(new SortDescription("DeckName", ListSortDirection.Ascending));

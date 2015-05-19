@@ -499,6 +499,8 @@ namespace Hearthstone_Deck_Tracker
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 			SortFilterDecksFlyout.CheckBoxSortByClass.IsChecked = Config.Instance.SortDecksByClass;
+			SortFilterDecksFlyout.ComboboxDeckSortingArena.SelectedItem = Config.Instance.SelectedDeckSortingArena;
+			SortFilterDecksFlyout.CheckBoxSortByClassArena.IsChecked = Config.Instance.SortDecksByClassArena;
 
 			if(!EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";

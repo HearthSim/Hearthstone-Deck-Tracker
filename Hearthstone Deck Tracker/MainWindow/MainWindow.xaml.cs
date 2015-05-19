@@ -870,7 +870,8 @@ namespace Hearthstone_Deck_Tracker
 
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			TagControlEdit.OperationSwitch.Visibility = Visibility.Collapsed;
-			TagControlEdit.GroupBoxSorting.Visibility = Visibility.Collapsed;
+			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Visibility.Collapsed;
+			TagControlEdit.GroupBoxSortingArena.Visibility = Visibility.Collapsed;
 
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
 

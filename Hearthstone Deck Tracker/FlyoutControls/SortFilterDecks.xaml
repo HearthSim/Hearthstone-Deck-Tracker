@@ -9,12 +9,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <DockPanel Margin="6,0,6,6">
-            <GroupBox Name="GroupBoxSorting" Header="Deck sorting" DockPanel.Dock="Top">
+            <GroupBox Name="GroupBoxSortingAllConstructed" Header="Deck sorting: All/Constructed" DockPanel.Dock="Top">
                 <StackPanel>
                     <CheckBox Name="CheckBoxSortByClass" Content="Sort by class"
-                              Checked="CheckBoxSortByClass_OnChecked" Unchecked="CheckBoxSortByClass_OnUnchecked" />
+                        Checked="CheckBoxSortByClass_OnChecked" Unchecked="CheckBoxSortByClass_OnUnchecked" />
                     <ComboBox Name="ComboboxDeckSorting" SelectionChanged="Selector_OnSelectionChanged"
-                              Margin="0,5,0,0">
+                        Margin="0,5,0,0">
                         <system:String>Name</system:String>
                         <system:String>Last Played</system:String>
                         <system:String>Last Edited</system:String>
@@ -22,6 +22,20 @@
                         <system:String>Win Rate</system:String>
                     </ComboBox>
                 </StackPanel>
+            </GroupBox>
+            <GroupBox Name="GroupBoxSortingArena" Header="Deck sorting: Arena" DockPanel.Dock="Top">
+                <StackPanel>
+                    <CheckBox Name="CheckBoxSortByClassArena" Content="Sort by class"
+                            Checked="CheckBoxSortByClassArena_OnChecked" Unchecked="CheckBoxSortByClassArena_OnUnchecked" />
+                        <ComboBox Name="ComboboxDeckSortingArena" SelectionChanged="SelectorArena_OnSelectionChanged"
+                            Margin="0,5,0,0">
+                            <system:String>Name</system:String>
+                            <system:String>Last Played</system:String>
+                            <system:String>Last Edited</system:String>
+                            <system:String>Tag</system:String>
+                            <system:String>Win Rate</system:String>
+                        </ComboBox>
+                    </StackPanel>
             </GroupBox>
             <GroupBox Header="Filter">
                 <DockPanel>

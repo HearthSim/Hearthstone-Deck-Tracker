@@ -174,6 +174,61 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
+		private void CheckBoxSortByClass_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = true;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClass_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = false;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClassArena_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClassArena = true;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClassArena_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClassArena = false;
+			Config.Save();
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void SelectorArena_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized || !Helper.MainWindow.IsLoaded)
+				return;
+
+			var selectedValue = ComboboxDeckSortingArena.SelectedValue as string;
+			if(selectedValue == null)
+				return;
+
+
+			if(Config.Instance.SelectedDeckSortingArena != selectedValue)
+			{
+				Config.Instance.SelectedDeckSortingArena = selectedValue;
+				Config.Save();
+			}
+
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
 		#region Tag
 
 		public new class Tag
@@ -207,13 +262,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HideStuffToCreateNewTag()
 		{
-			TextboxNewTag.Visibility = Visibility.Hidden;
-			BtnAddTag.Visibility = Visibility.Hidden;
-			BtnDeleteTag.Visibility = Visibility.Hidden;
-			BtnUp.Visibility = Visibility.Hidden;
-			BtnDown.Visibility = Visibility.Hidden;
-			BtnTop.Visibility = Visibility.Hidden;
-			BtnBottom.Visibility = Visibility.Hidden;
+			TextboxNewTag.Visibility = Visibility.Collapsed;
+			BtnAddTag.Visibility = Visibility.Collapsed;
+			BtnDeleteTag.Visibility = Visibility.Collapsed;
+			BtnUp.Visibility = Visibility.Collapsed;
+			BtnDown.Visibility = Visibility.Collapsed;
+			BtnTop.Visibility = Visibility.Collapsed;
+			BtnBottom.Visibility = Visibility.Collapsed;
 		}
 
 		public void LoadTags(List<string> tags)
@@ -399,23 +454,5 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
-
-		private void CheckBoxSortByClass_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SortDecksByClass = true;
-			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-		}
-
-		private void CheckBoxSortByClass_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SortDecksByClass = false;
-			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-		}
 	}
 }
