@@ -147,6 +147,7 @@ namespace Hearthstone_Deck_Tracker
 			_doUpdate = true;
 			_gameEnded = false;
 			_gameHandler = new GameEventHandler();
+			_gameHandler.ResetConstructedImporting();
 			_lastGameStart = DateTime.Now;
 			ReadFileAsync();
 		}
