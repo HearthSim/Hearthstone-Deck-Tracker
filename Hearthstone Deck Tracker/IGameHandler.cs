@@ -56,5 +56,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGetToDeck(int turn);
 
 		#endregion OpponentHandlers
+
+		void HandleDustReward(int amount);
+		void HandleGoldReward(int amount);
 	}
 }

@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
 		private static bool _showedNoteDialog;
 		private bool _doneImportingConstructed;
 		private List<string> _ignoreCachedIds;
+		private DateTime _lastArenaReward = DateTime.MinValue;
 		private int _lastCachedManaCost;
 		private int _lastManaCost;
 		private bool _startImportingCached;
@@ -714,6 +715,44 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("OpponentGetToDeck", turn: turn);
 			Game.OpponentGetToDeck(turn);
 			Game.AddPlayToCurrentGame(PlayType.OpponentGetToDeck, turn, string.Empty);
+		}
+
+		public void HandleDustReward(int amount)
+		{
+			if(DeckList.Instance.ActiveDeck.IsArenaDeck)
+			{
+				if(!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
+				{
+					DeckList.Instance.ActiveDeck.GoldReward = amount;
+					_lastArenaReward = DateTime.Now;
+				}
+				//All rewards are logged as soon as the run is over.
+				//This makes sure no "old" data is added (in case hdt is restarted after an arena run)
+				else if((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
+				{
+					DeckList.Instance.ActiveDeck.GoldReward += amount;
+					_lastArenaReward = DateTime.Now;
+				}
+			}
+		}
+
+		public void HandleGoldReward(int amount)
+		{
+			if(DeckList.Instance.ActiveDeck.IsArenaDeck)
+			{
+				if(!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
+				{
+					DeckList.Instance.ActiveDeck.GoldReward = amount;
+					_lastArenaReward = DateTime.Now;
+				}
+				//All rewards are logged as soon as the run is over.
+				//This makes sure no "old" data is added (in case hdt is restarted after an arena run)
+				else if((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
+				{
+					DeckList.Instance.ActiveDeck.DustReward += amount;
+					_lastArenaReward = DateTime.Now;
+				}
+			}
 		}
 
 		public void SetRank(int rank)

@@ -51,6 +51,10 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly int _updateDelay;
 		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
+
+		private readonly Regex _goldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
+		private readonly Regex _dustRewardRegex = new Regex(@"ArcaneDustRewardData: Amount=(?<amount>(\d+))");
+
 		private int _addToTurn;
 		private bool _awaitingRankedDetection;
 		private bool _currentEntityHasCardId;
@@ -589,6 +593,18 @@ namespace Hearthstone_Deck_Tracker
 								Config.Save();
 							}
 						}
+					}
+					else if(_dustRewardRegex.IsMatch(logLine))
+					{
+						int amount;
+						if(int.TryParse(_dustRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
+							_gameHandler.HandleDustReward(amount);
+					}
+					else if(_goldRewardRegex.IsMatch(logLine))
+					{
+						int amount;
+						if(int.TryParse(_goldRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
+							_gameHandler.HandleGoldReward(amount);
 					}
 				}
 					#endregion
