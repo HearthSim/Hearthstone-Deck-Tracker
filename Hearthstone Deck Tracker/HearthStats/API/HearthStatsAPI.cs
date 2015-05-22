@@ -74,12 +74,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			return false;
 		}
 
-		public static async Task<LoginResult> LoginAsync(string email, string pwd)
+		public static async Task<LoginResult> LoginAsync(string email, string password)
 		{
 			try
 			{
 				const string url = BaseUrl + "/api/v2/users/sign_in";
-				var data = JsonConvert.SerializeObject(new {user_login = new {email, password = pwd}});
+				var data = JsonConvert.SerializeObject(new {user_login = new {email, password}});
 				var json = await PostAsync(url, Encoding.UTF8.GetBytes(data));
 				dynamic response = JsonConvert.DeserializeObject(json);
 				if((bool)response.success)
@@ -96,6 +96,27 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return new LoginResult(false, response.ToString());
 			}
 			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				return new LoginResult(false, e.Message);
+			}
+		}
+
+
+		public static async Task<LoginResult> RegisterAsync(string email, string password)
+		{
+			try
+			{
+				const string url = BaseUrl + "/api/v2/users";
+				var data = JsonConvert.SerializeObject(new { user = new { email, password } });
+				var json = await PostAsync(url, Encoding.UTF8.GetBytes(data));
+				dynamic response = JsonConvert.DeserializeObject(json);
+				if((string)response.email == email
+					&& (int)response.id > 0)
+					return new LoginResult(true);
+				return new LoginResult(false, response.ToString());
+			}
+			catch (Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
 				return new LoginResult(false, e.Message);
@@ -134,7 +155,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(WebException e)
 			{
-				ErrorManager.AddError(new Error("HearthStats", e.Message));
+				if(Helper.MainWindow != null)
+					ErrorManager.AddError(new Error("HearthStats", e.Message));
 				throw;
 			}
 		}

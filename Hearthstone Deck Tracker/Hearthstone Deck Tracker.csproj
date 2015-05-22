@@ -207,6 +207,9 @@
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
@@ -454,6 +457,10 @@
     <Page Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddGameDialog.xaml">
       <SubType>Designer</SubType>
@@ -3062,7 +3069,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

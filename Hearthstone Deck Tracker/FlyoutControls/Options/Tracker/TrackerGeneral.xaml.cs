@@ -71,24 +71,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private async void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
 		{
 			//this is probably somehow possible without restarting
 			if(!_initialized)
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
 		{
 			//this is probably somehow possible without restarting
 			if(!_initialized)
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)

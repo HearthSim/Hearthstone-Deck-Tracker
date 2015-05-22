@@ -25,28 +25,20 @@ namespace Hearthstone_Deck_Tracker
 		public SortFilterDecks()
 		{
 			InitializeComponent();
-
 			ListboxTags.ItemsSource = Tags;
-
-			//TagControlOnNewTag += TagControlOnNewTag;
-			//SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			//DeleteTag += TagControlOnDeleteTag;
 		}
 
-		//public MainWindow Window;
-
-		private void TagControlOnNewTag(SortFilterDecks sender, string tag)
+		private void NewTag(string tag)
 		{
 			if(!DeckList.Instance.AllTags.Contains(tag))
 			{
 				DeckList.Instance.AllTags.Add(tag);
 				DeckList.Save();
-				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All" && t != "None").ToList());
+				Helper.MainWindow.ReloadTags();
 			}
 		}
 
-		private void TagControlOnDeleteTag(SortFilterDecks sender, string tag)
+		private void DeleteTag(string tag)
 		{
 			if(DeckList.Instance.AllTags.Contains(tag))
 			{
@@ -55,20 +47,14 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var deck in DeckList.Instance.Decks.Where(deck => deck.Tags.Contains(tag)))
 					deck.Tags.Remove(tag);
 
-				//if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
-				//	Helper.MainWindow.NewDeck.Tags.Remove(tag);
-
 				DeckList.Save();
-				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All" && t != "None").ToList());
-				//Helper.MainWindow.DeckPickerList.UpdateList();
+				Helper.MainWindow.ReloadTags();
 				Helper.MainWindow.DeckPickerList.UpdateDecks();
 			}
 		}
 
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			//Helper.MainWindow.DeckPickerList.SortDecks();
 			if(!_initialized || !Helper.MainWindow.IsLoaded)
 				return;
 
@@ -86,21 +72,12 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
-		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)
-		{
-			Config.Instance.TagOperation = operation;
-			//Helper.MainWindow.DeckPickerList.SetTagOperation(operation);
-			//Helper.MainWindow.DeckPickerList.UpdateList();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-		}
-
 		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
 		{
 			//only set tags if tags were changed in "My Decks"
 			if(Name == "SortFilterDecksFlyout")
 			{
 				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
-				//Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
 				Helper.MainWindow.DeckPickerList.UpdateDecks();
@@ -111,7 +88,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
 				var ignore = Tags.Where(tag => tag.Selected == null).Select(tag => tag.Name).ToList();
-				//DeckList.Instance.ActiveDeck.Tags = new List<string>(tags);
 				foreach(var deck in Helper.MainWindow.DeckPickerList.SelectedDecks)
 				{
 					var keep = deck.Tags.Intersect(ignore);
@@ -339,12 +315,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			Tags.First(t => t.Name == tag).Selected = true;
-
-			//if (SelectedTagsChanged != null)
-			//{
-			//var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
-			//}
 		}
 
 		#endregion
@@ -377,11 +348,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				ListboxTags.Items.Refresh();
-				//if (SelectedTagsChanged != null)
-				//{
-				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				SortFilterDecksFlyoutOnSelectedTagsChanged();
-				//}
 			}
 		}
 
@@ -399,12 +366,7 @@ namespace Hearthstone_Deck_Tracker
 					var selectedValue = checkBox.Content.ToString();
 					Tags.First(t => t.Name == selectedValue).Selected = false;
 				}
-
-				//if (SelectedTagsChanged != null)
-				//{
-				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				SortFilterDecksFlyoutOnSelectedTagsChanged();
-				//}
 			}
 		}
 
@@ -416,8 +378,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Tags.Add(new Tag(tag));
 
-			//if (TagControlOnNewTag != null)
-			TagControlOnNewTag(this, tag);
+			NewTag(tag);
 			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
@@ -436,21 +397,20 @@ namespace Hearthstone_Deck_Tracker
 
 			Tags.Remove(Tags.First(t => t.Equals(tag)));
 
-			//if (DeleteTag != null)
-			TagControlOnDeleteTag(this, tag.Name);
+			DeleteTag(tag.Name);
 			Helper.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
-			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.And);
+			Config.Instance.TagOperation = TagFilerOperation.And;
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.Or);
+			Config.Instance.TagOperation = TagFilerOperation.Or;
+			Helper.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		#endregion

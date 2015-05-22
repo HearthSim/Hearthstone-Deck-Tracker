@@ -323,24 +323,21 @@ namespace Hearthstone_Deck_Tracker
 			SetNewDeck(deck, true);
 		}
 
-		private async void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
+		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
 		{
-			FlyoutHearthStatsLogin.IsOpen = true;
-			await Task.Delay(100); //wait for open
-			HearthstatsLoginControl.TextBoxEmail.Focus();
+			Restart();
 		}
 
 		private void LoadHearthStats()
 		{
-			var loaded = HearthStatsAPI.LoadCredentials();
-			if(loaded)
+			if(HearthStatsAPI.IsLoggedIn)
 			{
 				MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
 				MenuItemLogin.Visibility = Visibility.Collapsed;
 				MenuItemLogout.Visibility = Visibility.Visible;
 				SeparatorLogout.Visibility = Visibility.Visible;
 			}
-			EnableHearthStatsMenu(loaded);
+			EnableHearthStatsMenu(HearthStatsAPI.IsLoggedIn);
 		}
 
 		public void EnableHearthStatsMenu(bool enable)
@@ -460,10 +457,7 @@ namespace Hearthstone_Deck_Tracker
 						                      "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
 						                      + Config.Instance.HearthStatsFilePath);
 				}
-				MenuItemLogin.Visibility = Visibility.Visible;
-				MenuItemLogout.Visibility = Visibility.Collapsed;
-				SeparatorLogout.Visibility = Visibility.Collapsed;
-				EnableHearthStatsMenu(false);
+				Restart();
 			}
 		}
 
@@ -673,10 +667,13 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			InitializeComponent();
-			Trace.AutoFlush = true;
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
 
+
+			Helper.MainWindow = this;
+			//Config.Load();
 			EnableMenuItems(false);
+
 
 			try
 			{
@@ -702,40 +699,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Error deleting Updater.exe\n" + e);
 			}
 
-			Helper.MainWindow = this;
 
-			Config.Load();
-
-
-			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
-			var logFile = Path.Combine(logDir, "hdt_log.txt");
-			if(!Directory.Exists(logDir))
-				Directory.CreateDirectory(logDir);
-			else
-			{
-				try
-				{
-					using(var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
-					{
-						//can access log file => no other instance of same installation running
-					}
-				}
-				catch(Exception)
-				{
-					try
-					{
-						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
-						using(var writer = new StreamWriter(errLogFile, true))
-							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
-					}
-					catch(Exception)
-					{
-					}
-					Application.Current.Shutdown();
-					return;
-				}
-			}
-			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
 			HsLogReader.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
@@ -768,7 +732,6 @@ namespace Hearthstone_Deck_Tracker
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset("DataDirPath");
 
-			//_decksPath = Config.Instance.DataDir + "PlayerDecks.xml";
 			SetupDeckListFile();
 			DeckList.Load();
 
@@ -777,21 +740,6 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Instance.ActiveDeck = null;
 
 			UpdateDeckList(DeckList.Instance.ActiveDeck);
-
-			//try
-			//{
-			//	DeckList = XmlManager<DeckList>.Load(_decksPath);
-			//}
-			//catch(Exception e)
-			//{
-			//	MessageBox.Show(
-			//	                e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete " + _decksPath
-			//	                + " (this will cause you to lose your decks).", "Error loading PlayerDecks.xml");
-			//	Application.Current.Shutdown();
-			//}
-
-			//foreach(var deck in DeckList.Instance.Decks)
-			//	DeckPickerList.AddDeck(deck);
 
 			SetupDefaultDeckStatsFile();
 			DefaultDeckStats.Load();
@@ -860,12 +808,7 @@ namespace Hearthstone_Deck_Tracker
 				RemoveNoteUrls();
 			if(!Config.Instance.ResolvedDeckStatsIssue)
 				ResolveDeckStatsIssue();
-
-			//this has to happen before reader starts
-			//var lastDeck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.LastDeckId);
-
-			//DeckPickerList.SelectDeck(lastDeck);
-
+			
 			TurnTimer.Create(90);
 
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
@@ -880,20 +823,12 @@ namespace Hearthstone_Deck_Tracker
 
 			_doUpdate = _foundHsDirectory;
 
-			//DeckPickerList.UpdateList();
-			//if(lastDeck != null)
-			//{
-			//DeckPickerList.SelectDeck(lastDeck);
-			//UpdateDeckList(lastDeck);
-			//UseDeck(lastDeck);
-			//}
 			SelectDeck(DeckList.Instance.ActiveDeck);
 
 			if(_foundHsDirectory)
 				HsLogReader.Instance.Start();
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			//DeckPickerList.SortDecks();
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
 			DeckPickerList.UpdateDecks();
 			DeckPickerList.UpdateArchivedClassVisibility();
@@ -1550,8 +1485,9 @@ namespace Hearthstone_Deck_Tracker
 								if(reloadTags)
 								{
 									DeckList.Save();
-									Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-									Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
+									Helper.MainWindow.ReloadTags();
+									//Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
+									//Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
 								}
 							}
 
@@ -1634,9 +1570,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public async Task Restart()
+		public void Restart()
 		{
-			await this.ShowMessageAsync("Restarting tracker", "");
 			Close();
 			Process.Start(Application.ResourceAssembly.Location);
 			Application.Current.Shutdown();
@@ -1811,7 +1746,6 @@ namespace Hearthstone_Deck_Tracker
 			OnPropertyChanged("ErrorIconVisibility");
 			OnPropertyChanged("ErrorCount");
 		}
-
 		#endregion
 	}
 }

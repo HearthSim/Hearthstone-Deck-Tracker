@@ -544,6 +544,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 		}
 
 		private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -572,7 +573,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.ResolvedDeckStatsIds)
 			{
 				if(ResolveDeckStatsIds())
-					await Restart();
+					Restart();
 			}
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.SyncAsync(background: true);

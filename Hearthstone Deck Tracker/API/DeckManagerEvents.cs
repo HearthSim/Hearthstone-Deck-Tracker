@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.API
 {
-	internal class DeckManagerEvents
+	public class DeckManagerEvents
 	{
 		public static readonly ActionList<Deck> OnDeckUpdated = new ActionList<Deck>();
 		public static readonly ActionList<Deck> OnDeckCreated = new ActionList<Deck>();

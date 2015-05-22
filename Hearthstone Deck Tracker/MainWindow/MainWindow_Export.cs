@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -174,6 +175,15 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 				return;
 			this.ShowMissingCardsMessage(deck);
+		}
+
+		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
+		{
+
+			var deck = DeckList.Instance.ActiveDeck;
+			if(deck == null || !deck.HasHearthStatsId)
+				return;
+			Process.Start(deck.HearthStatsUrl);
 		}
 	}
 }
