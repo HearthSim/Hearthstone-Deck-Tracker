@@ -120,6 +120,33 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isArenaDeck = value; }
 		}
 
+		private int? _goldReward;
+
+		public int? GoldReward
+		{
+			get { return IsArenaDeck ? _goldReward : null; }
+			set
+			{
+				if(IsArenaDeck)
+					_goldReward = value;
+			}
+		}
+
+		private int? _dustReward;
+
+		public int? DustReward
+		{
+			get { return IsArenaDeck ? _dustReward : null; }
+			set
+			{
+				if(IsArenaDeck)
+					_dustReward = value;
+			}
+		}
+
+		public bool? IsArenaRunCompleted { get { return IsArenaDeck ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12 || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null; } }
+
+
 		public Guid DeckId
 		{
 			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
