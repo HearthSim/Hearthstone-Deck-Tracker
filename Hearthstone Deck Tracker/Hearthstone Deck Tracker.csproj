@@ -2364,6 +2364,7 @@
     </Content>
     <EmbeddedResource Include="Languages\Strings.de-DE.resx" />
     <EmbeddedResource Include="Languages\Strings.resx" />
+    <EmbeddedResource Include="Languages\Strings.ru-RU.resx" />
     <EmbeddedResource Include="Languages\Strings.zh-CN.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
