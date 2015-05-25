@@ -55,6 +55,11 @@ How to use:
 
 [Video guide / feature overview by TheAdipose](https://www.youtube.com/watch?v=gNVlF83w-wY) (v0.5.6)
 
+FAQ:
+=============
+- **It's not picking up the cards I / my opponent play.**
+   - Copy the `log.config` from `Hearthstone Deck Tracker/Files` to `%LocalAppData%/Blizzard/Hearthstone`. Overwrite the existing one, restart HDT and Hearthstone.
+   - (if it's still not working) Make sure the Hearthstone path is set correctly. `options > tracker > settings > set hearthstone path` (There were user reports of this not working, manual: edit `%AppData%/HearthstoneDeckTracker/config.xml` with any texteditor, look for `<HearthstoneDirectory>...</HearthstoneDirectory>`.
 
 How it works:
 =============
