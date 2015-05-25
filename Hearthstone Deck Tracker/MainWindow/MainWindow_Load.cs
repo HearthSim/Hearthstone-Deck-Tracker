@@ -316,30 +316,42 @@ namespace Hearthstone_Deck_Tracker
 			//check for log config and create if not existing
 			try
 			{
-				//always overwrite is true by default. 
-				if(!File.Exists(_logConfigPath))
+				var requiredLogs = new[] {"Zone", "Bob", "Power", "Asset", "Rachelle"};
+
+				string[] actualLogs = {};
+				if(File.Exists(_logConfigPath))
 				{
+					using(var sr = new StreamReader(_logConfigPath))
+					{
+						var content = sr.ReadToEnd();
+						actualLogs =
+							content.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries)
+							       .Where(x => x.StartsWith("["))
+							       .Select(x => x.Substring(1, x.Length - 2))
+							       .ToArray();
+					}
+				}
+
+				var missing = requiredLogs.Where(x => !actualLogs.Contains(x)).ToList();
+				if(missing.Any())
+				{
+					using(var sw = new StreamWriter(_logConfigPath, true))
+					{
+						foreach(var log in missing)
+						{
+							sw.WriteLine("[{0}]", log);
+							sw.WriteLine("LogLevel=1");
+							sw.WriteLine("FilePrinting=false");
+							sw.WriteLine("ConsolePrinting=true");
+							sw.WriteLine("ScreenPrinting=false");
+							Logger.WriteLine("Added " + log + " to log.config.", "UpdateLogConfig");
+						}
+					}
 					updated = true;
-					File.Copy("Files/log.config", _logConfigPath, true);
-					Logger.WriteLine(string.Format("Copied log.config to {0} (did not exist)", _logConfigPath), "Load");
 				}
-				else
-				{
-					//update log.config if newer
-					var localFile = new FileInfo(_logConfigPath);
-					var file = new FileInfo("Files/log.config");
-					if(file.LastWriteTime > localFile.LastWriteTime)
-					{
-						updated = true;
-						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (file newer)", _logConfigPath), "Load");
-					}
-					else if(Config.Instance.AlwaysOverwriteLogConfig)
-					{
-						File.Copy("Files/log.config", _logConfigPath, true);
-						Logger.WriteLine(string.Format("Copied log.config to {0} (AlwaysOverwriteLogConfig)", _logConfigPath), "Load");
-					}
-				}
+				var additional = actualLogs.Where(x => !requiredLogs.Contains(x)).ToList();
+				foreach(var log in additional)
+					Logger.WriteLine("log.config contains additional log: " + log + ".", "UpdateLogConfig");
 			}
 			catch(Exception e)
 			{
