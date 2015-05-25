@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -28,6 +21,10 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class LoginWindow : INotifyPropertyChanged
 	{
+		private readonly bool _initialized;
+		private ProgressDialogController _controller;
+		private Visibility _loginRegisterVisibility;
+
 		public LoginWindow()
 		{
 			InitializeComponent();
@@ -39,8 +36,28 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
-		private ProgressDialogController _controller;
-		private readonly bool _initialized;
+		public double TabWidth
+		{
+			get { return ActualWidth / 2; }
+		}
+
+		public Visibility LoginRegisterVisibility
+		{
+			get { return _loginRegisterVisibility; }
+			set
+			{
+				_loginRegisterVisibility = value;
+				OnPropertyChanged();
+				OnPropertyChanged("ContinueAsGuestVisibility");
+			}
+		}
+
+		public Visibility ContinueAsGuestVisibility
+		{
+			get { return LoginRegisterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
 		{
@@ -107,31 +124,11 @@ namespace Hearthstone_Deck_Tracker
 				if(File.Exists(Config.Instance.HearthStatsFilePath))
 					File.Delete(Config.Instance.HearthStatsFilePath);
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
 			}
 		}
-
-		public double TabWidth
-		{
-			get { return ActualWidth / 2; }
-		}
-
-		private Visibility _loginRegisterVisibility ;
-
-		public Visibility LoginRegisterVisibility
-		{
-			get { return _loginRegisterVisibility; }
-			set
-			{
-				_loginRegisterVisibility = value;
-				OnPropertyChanged();
-				OnPropertyChanged("ContinueAsGuestVisibility");
-			}
-		}
-
-		public Visibility ContinueAsGuestVisibility { get { return LoginRegisterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; } }
 
 		private async void BtnRegister_Click(object sender, RoutedEventArgs e)
 		{
@@ -213,8 +210,6 @@ namespace Hearthstone_Deck_Tracker
 			StartMainApp();
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
@@ -222,6 +217,5 @@ namespace Hearthstone_Deck_Tracker
 			if(handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
-
 	}
 }

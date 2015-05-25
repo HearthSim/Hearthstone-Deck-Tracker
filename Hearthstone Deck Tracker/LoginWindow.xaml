@@ -77,7 +77,7 @@
                             <TextBlock>
                             <Run>I agree to the </Run>
                             <Hyperlink
-                                NavigateUri="http://www.hearthstats.net/users/sign_in"
+                                NavigateUri="http://www.hearthstats.net/privacy"
                                 RequestNavigate="Hyperlink_RequestNavigate">
                                 Privacy Policy
                             </Hyperlink>
