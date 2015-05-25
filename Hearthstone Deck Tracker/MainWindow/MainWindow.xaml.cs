@@ -808,7 +808,7 @@ namespace Hearthstone_Deck_Tracker
 				RemoveNoteUrls();
 			if(!Config.Instance.ResolvedDeckStatsIssue)
 				ResolveDeckStatsIssue();
-			
+
 			TurnTimer.Create(90);
 
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
@@ -1415,9 +1415,15 @@ namespace Hearthstone_Deck_Tracker
 		private async void UpdateCheck()
 		{
 			_lastUpdateCheck = DateTime.Now;
-			var newVersion = await Helper.CheckForUpdates();
+			var newVersion = await Helper.CheckForUpdates(false);
 			if(newVersion != null)
-				ShowNewUpdateMessage(newVersion);
+				ShowNewUpdateMessage(newVersion, false);
+			else if(Config.Instance.CheckForBetaUpdates)
+			{
+				newVersion = await Helper.CheckForUpdates(true);
+				if(newVersion != null)
+					ShowNewUpdateMessage(newVersion, true);
+			}
 		}
 
 		private async Task<bool> CheckClipboardForNetDeckImport()
@@ -1513,11 +1519,12 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		private async void ShowNewUpdateMessage(Version newVersion)
+		private async void ShowNewUpdateMessage(Version newVersion, bool beta)
 		{
 			if(_showingUpdateMessage)
 				return;
 			_showingUpdateMessage = true;
+
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
 			if(newVersion == null)
@@ -1532,9 +1539,10 @@ namespace Hearthstone_Deck_Tracker
 				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
 					await Task.Delay(100);
 				var newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
+				var betaString = beta ? " BETA" : "";
 				var result =
 					await
-					this.ShowMessageAsync("New Update available!", "Press \"Download\" to automatically download.",
+					this.ShowMessageAsync("New" + betaString + " Update available!", "Press \"Download\" to automatically download.",
 					                      MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
@@ -1542,7 +1550,7 @@ namespace Hearthstone_Deck_Tracker
 					//recheck, in case there was no immediate response to the dialog
 					if((DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
 					{
-						newVersion = await Helper.CheckForUpdates();
+						newVersion = await Helper.CheckForUpdates(beta);
 						if(newVersion != null)
 							newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
 					}
@@ -1746,6 +1754,7 @@ namespace Hearthstone_Deck_Tracker
 			OnPropertyChanged("ErrorIconVisibility");
 			OnPropertyChanged("ErrorCount");
 		}
+
 		#endregion
 	}
 }
