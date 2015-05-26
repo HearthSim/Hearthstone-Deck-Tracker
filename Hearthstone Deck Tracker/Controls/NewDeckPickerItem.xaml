@@ -44,6 +44,22 @@
                         <GradientStop Color="#FFE5E5E5" Offset="1.5" />
                     </LinearGradientBrush>
                 </DockPanel.Background>
+                
+                <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" DockPanel.Dock="Left" Margin="-1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.618*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding TotalWinPercentString}" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" FontWeight="Medium" Foreground="Black"/>
+                        <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" Margin="-1" Grid.Row="1" >
+                            <Viewbox Stretch="Uniform" StretchDirection="DownOnly" Margin="2,0">
+                                <TextBlock Text="{Binding TotalWinLossString}" VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="12" FontWeight="Medium" Foreground="Black"/>
+                            </Viewbox>
+                        </Border>
+                    </Grid>
+                </Border>
+                
                 <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" DockPanel.Dock="Right" Margin="-1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -63,7 +79,7 @@
             <Label Content="{Binding TagList}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,23,48,0" Foreground="Black" />
             <Ellipse Width="17" Height="17" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" HorizontalAlignment="Right" Margin="0,4,52,0" VerticalAlignment="Top" Visibility="{Binding NoteVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"/>
             <Label Content="N" FontWeight="Medium" HorizontalAlignment="Right" Margin="0,-1,51,0" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Visibility="{Binding NoteVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" ToolTip="{Binding Note, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"/>
-            <Image Source="../Resources/archived_marker.png" Width="16" Height="16" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding ArchivedVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" ToolTip="Archived"/>
+            <Image Source="../Resources/archived_marker.png" Width="16" Height="16" Margin="54,4,228,0" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding ArchivedVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" ToolTip="Archived"/>
         </Grid>
     </Border>
     

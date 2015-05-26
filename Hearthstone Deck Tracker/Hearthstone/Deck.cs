@@ -186,29 +186,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string WinLossString
+		public String WinLossString
 		{
-			get
-			{
-				var relevantGames = GetRelevantGames();
-				if(relevantGames.Count == 0)
-					return "0-0";
-				return string.Format("{0}-{1}", relevantGames.Count(g => g.Result == GameResult.Win),
-				                     relevantGames.Count(g => g.Result == GameResult.Loss));
-			}
+			get { return this.GetWinLossString(true); }
 		}
 
 		[XmlIgnore]
-		public string WinPercentString
+        public String WinPercentString
 		{
-			get
-			{
-				var relevantGames = GetRelevantGames();
-				if(relevantGames.Count == 0)
-					return "-";
-				return Math.Round(100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count, 0) + "%";
-			}
+			get { return this.GetWinPercentString(true); }
 		}
+
+        [XmlIgnore]
+        public String TotalWinLossString
+        {
+            get { return this.GetWinLossString(false); }
+        }
+
+        [XmlIgnore]
+        public String TotalWinPercentString
+        {
+            get { return this.GetWinPercentString(false); }
+        }
 
 		[XmlIgnore]
 		public double WinPercent
@@ -362,7 +361,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public List<GameStats> GetRelevantGames()
+		public List<GameStats> GetRelevantGames(Boolean isFilterByVersion = true)
 		{
 			var filtered = Config.Instance.DisplayedMode == GameMode.All
 				               ? DeckStats.Games
@@ -387,30 +386,35 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						filtered = filtered.Where(g => g.StartTime > Config.Instance.CustomDisplayedTimeFrame.Value).ToList();
 					break;
 			}
-			switch(Config.Instance.DisplayedStats)
-			{
-				case DisplayedStats.All:
-					break;
-				case DisplayedStats.Latest:
-					filtered = filtered.Where(g => g.BelongsToDeckVerion(this)).ToList();
-					break;
-				case DisplayedStats.Selected:
-					filtered = filtered.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
-					break;
-				case DisplayedStats.LatestMajor:
-					filtered =
-						filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
-						        .ToList();
-					break;
-				case DisplayedStats.SelectedMajor:
-					filtered =
-						filtered.Where(
-						               g =>
-						               VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
-						        .ToList();
-					break;
-			}
-			return filtered;
+
+            if (isFilterByVersion)
+            {
+                switch (Config.Instance.DisplayedStats)
+                {
+                    case DisplayedStats.All:
+                        break;
+                    case DisplayedStats.Latest:
+                        filtered = filtered.Where(g => g.BelongsToDeckVerion(this)).ToList();
+                        break;
+                    case DisplayedStats.Selected:
+                        filtered = filtered.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+                        break;
+                    case DisplayedStats.LatestMajor:
+                        filtered =
+                            filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
+                                    .ToList();
+                        break;
+                    case DisplayedStats.SelectedMajor:
+                        filtered =
+                            filtered.Where(
+                                           g =>
+                                           VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
+                                    .ToList();
+                        break;
+                }
+            }
+
+            return filtered;
 		}
 
 		public void ResetHearthstatsIds()
@@ -636,5 +640,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			LastEdited = DateTime.Now;
 		}
+
+        private String GetWinPercentString(Boolean isFilterByVersion)
+        {
+            var relevantGames = this.GetRelevantGames(isFilterByVersion);
+
+            if (relevantGames.Count == 0)
+            {
+                return "-";
+            }
+
+            Int32 wins = relevantGames.Count(g => g.Result == GameResult.Win);
+
+            return String.Concat(Math.Round(100.0 * wins / relevantGames.Count, 0), "%");
+        }
+
+        private String GetWinLossString(Boolean isFilterByVersion)
+        {
+            var relevantGames = this.GetRelevantGames(isFilterByVersion);
+
+            if (relevantGames.Count == 0)
+            {
+                return "0-0";
+            }
+
+            Int32 wins = relevantGames.Count(g => g.Result == GameResult.Win);
+            Int32 looses = relevantGames.Count(g => g.Result == GameResult.Loss);
+
+            return String.Format("{0}-{1}", wins, looses);
+        }
 	}
 }
