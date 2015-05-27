@@ -1,15 +1,20 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using HDTHelper;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -589,6 +594,25 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.SyncAsync(background: true);
+
+			SetupProtocol();
+		}
+
+		private async void SetupProtocol()
+		{
+			if(!HDTProtocol.Verify())
+			{
+				var result = await this.ShowMessageAsync("HDT protocol", "[todo] (just click ok)", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Affirmative)
+				{
+					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol");
+					procInfo.Verb = "runas";
+					procInfo.UseShellExecute = true;
+					var proc = Process.Start(procInfo);
+					await Task.Run(() => proc.WaitForExit());
+				}
+			}
+			PipeServer.StartAll();
 		}
 	}
 }

@@ -56,6 +56,7 @@
   <PropertyGroup>
     <ApplicationIcon>Images\HearthstoneDeckTracker.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="HtmlAgilityPack">
@@ -206,11 +207,15 @@
     <Compile Include="Plugins\PluginSettings.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Protocol\JsonCard.cs" />
+    <Compile Include="Protocol\JsonDeck.cs" />
+    <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\BackupManager.cs" />
+    <Compile Include="Protocol\PipeServer.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -640,6 +645,9 @@
     </Content>
     <Content Include="Files\cardDB.zhTW.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HDTHelper.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="HDTUninstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -3090,7 +3098,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HDTHelper\HDTHelper.csproj">
+      <Project>{a2a7984f-d059-4259-bcb7-b63828f03c50}</Project>
+      <Name>HDTHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
@@ -3105,6 +3118,7 @@
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe.config" "Hearthstone Deck Tracker.exe.config"
+    xcopy /Y "HDTHelper.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
