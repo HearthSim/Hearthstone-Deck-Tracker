@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HearthStats\ApiTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
