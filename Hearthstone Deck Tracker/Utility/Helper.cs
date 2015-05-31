@@ -224,13 +224,13 @@ namespace Hearthstone_Deck_Tracker
 			return deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 		}
 
-		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))
+		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr), bool requireInForeground = true)
 		{
 			if(wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if(!User32.IsHearthstoneInForeground())
+			if(requireInForeground && !User32.IsHearthstoneInForeground())
 				return null;
 
 			try

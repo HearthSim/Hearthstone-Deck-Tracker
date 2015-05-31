@@ -27,7 +27,7 @@ namespace HDTHelper
 					case "deleteProtocol":
 						HDTProtocol.Delete();
 						break;
-					case "hdt:startHdt":
+					case "hdt:start":
 						StartHdt();
 						break;
 					case "hdt:sync":
@@ -73,10 +73,10 @@ namespace HDTHelper
 
 		private static void StartHdt()
 		{
-			if(!Process.GetProcessesByName("HearthstoneDeckTracker").Any())
+			if(!Process.GetProcessesByName("Hearthstone Deck Tracker").Any())
 			{
 				Console.Write("Starting HDT...");
-				var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "HearthstoneDeckTracker.exe");
+				var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hearthstone Deck Tracker.exe");
 				Process.Start(path);
 			}
 		}
