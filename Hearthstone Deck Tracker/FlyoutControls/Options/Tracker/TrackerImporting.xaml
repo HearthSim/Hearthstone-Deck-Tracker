@@ -34,7 +34,7 @@
                     <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick"/>
                     <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW CONSTRUCTED IMPORTING HOW-TO" Click="ButtonConstructedHowTo_OnClick"/>
                     <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SET UP CONSTRUCTED IMPORTING" Click="ButtonSetUpConstructed_OnClick"/>
-
+                    <Button Margin="10,10,10,0" HorizontalAlignment="Stretch" Content="ACTIVATE HDT PROTOCOL" Click="ButtonActivateHdtProtocol_OnClick"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

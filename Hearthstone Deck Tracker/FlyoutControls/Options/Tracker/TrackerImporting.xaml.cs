@@ -123,5 +123,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			TextBlockNamePreview.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text);
 		}
+
+		private void ButtonActivateHdtProtocol_OnClick(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.SetupProtocol();
+		}
 	}
 }

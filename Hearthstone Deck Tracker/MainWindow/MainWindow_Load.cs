@@ -595,14 +595,18 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.SyncAsync(background: true);
 
-			SetupProtocol();
+			//SetupProtocol(); turn on later
 		}
 
-		private async void SetupProtocol()
+		internal async Task<bool> SetupProtocol()
 		{
 			if(!HDTProtocol.Verify())
 			{
-				var result = await this.ShowMessageAsync("HDT protocol", "[todo] (just click ok)", MessageDialogStyle.AffirmativeAndNegative);
+				var result =
+					await
+					this.ShowMessageAsync("Enable \"hdt\" protocol?",
+					                      "The \"hdt\" protocol allows other processes and websites to directly communicate with HDT.",
+					                      MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol");
@@ -612,7 +616,17 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Run(() => proc.WaitForExit());
 				}
 			}
-			PipeServer.StartAll();
+			else
+			{
+				this.ShowMessage("Protocol already active",
+				                 "The \"hdt\" protocol allows other processes and websites to directly communicate with HDT.");
+			}
+			if(HDTProtocol.Verify())
+			{
+				PipeServer.StartAll();
+				return true;
+			}
+			return false;
 		}
 	}
 }
