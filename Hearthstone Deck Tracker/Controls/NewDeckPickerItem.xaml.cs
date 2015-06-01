@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
 			SeparatorDeck1.Visibility = string.IsNullOrEmpty(activeDeck.Url) && !activeDeck.MissingCards.Any()
 				                            ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemOpenHearthStats.Visibility = activeDeck.HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -196,5 +197,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		#endregion
+
+		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.BtnOpenHearthStats_Click(sender, e);
+		}
 	}
 }

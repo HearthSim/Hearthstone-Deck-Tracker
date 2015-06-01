@@ -177,9 +177,8 @@ namespace Hearthstone_Deck_Tracker
 			this.ShowMissingCardsMessage(deck);
 		}
 
-		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
+		public void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
 		{
-
 			var deck = DeckList.Instance.ActiveDeck;
 			if(deck == null || !deck.HasHearthStatsId)
 				return;

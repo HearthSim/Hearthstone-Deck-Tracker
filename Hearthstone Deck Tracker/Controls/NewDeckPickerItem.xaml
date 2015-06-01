@@ -25,6 +25,7 @@
             <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
             <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
             <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
+            <MenuItem Name="MenuItemOpenHearthStats" Header="OPEN _HEARTHSTATS" Click="BtnOpenHearthStats_Click" />
             <Separator />
             <MenuItem Name="MenuItemArchive" Header="_ARCHIVE" Click="BtnArchiveDeck_Click" />
             <MenuItem Name="MenuItemUnarchive" Header="UN_ARCHIVE" Click="BtnUnarchiveDeck_Click" />
