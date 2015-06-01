@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static bool Logout()
 		{
+			Logger.WriteLine("Logged out.", "HearthStatsAPI");
 			_authToken = "";
 			try
 			{
@@ -74,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				try
 				{
+					Logger.WriteLine("Loading stored credentials...", "HearthStatsAPI");
 					using(var reader = new StreamReader(Config.Instance.HearthStatsFilePath))
 					{
 						dynamic content = JsonConvert.DeserializeObject(reader.ReadToEnd());
@@ -95,12 +97,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			try
 			{
+				Logger.WriteLine("Logging in...", "HearthStatsAPI");
 				var url = BaseUrl + "/users/sign_in";
 				var data = JsonConvert.SerializeObject(new {user_login = new {email, password}});
 				var json = await PostAsync(url, Encoding.UTF8.GetBytes(data));
 				dynamic response = JsonConvert.DeserializeObject(json);
 				if((bool)response.success)
 				{
+					Logger.WriteLine("Successfully logged in.", "HearthStatsAPI");
 					_authToken = response.auth_token;
 					LoggedInAs = response.email;
 					if(Config.Instance.RememberHearthStatsLogin)
@@ -110,6 +114,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 					return new LoginResult(true);
 				}
+				Logger.WriteLine("Error logging in...", "HearthStatsAPI");
 				return new LoginResult(false, response.ToString());
 			}
 			catch(Exception e)

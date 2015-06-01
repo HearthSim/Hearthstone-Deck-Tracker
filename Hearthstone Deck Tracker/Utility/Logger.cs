@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 #endregion
@@ -12,6 +13,9 @@ namespace Hearthstone_Deck_Tracker
 	[DebuggerStepThrough]
 	public static class Logger
 	{
+		private const int MaxLogFileAge = 2;
+		private const int KeepOldLogs = 25;
+
 		internal static void Initialzie()
 		{
 			Trace.AutoFlush = true;
@@ -23,20 +27,42 @@ namespace Hearthstone_Deck_Tracker
 			{
 				try
 				{
-					using (var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
+					var fileInfo = new FileInfo(logFile);
+					if(fileInfo.Exists)
 					{
-						//can access log file => no other instance of same installation running
+						using(var fs = new FileStream(logFile, FileMode.Open, FileAccess.Read, FileShare.None))
+						{
+							//can access log file => no other instance of same installation running
+						}
+						File.Move(logFile, logFile.Replace(".txt", "_" + DateTime.Now.ToUnixTime() + ".txt"));
+						//keep logs from the last 2 days plus 25 before that
+						foreach(var file in
+							new DirectoryInfo(logDir).GetFiles("hdt_log*")
+							                         .Where(x => x.CreationTime < DateTime.Now.AddDays(-MaxLogFileAge))
+							                         .OrderByDescending(x => x.CreationTime)
+							                         .Skip(KeepOldLogs))
+						{
+							try
+							{
+								File.Delete(file.FullName);
+							}
+							catch
+							{
+							}
+						}
 					}
+					else
+						File.Create(logFile).Dispose();
 				}
-				catch (Exception)
+				catch(Exception)
 				{
 					try
 					{
 						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
-						using (var writer = new StreamWriter(errLogFile, true))
+						using(var writer = new StreamWriter(errLogFile, true))
 							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
 					}
-					catch (Exception)
+					catch(Exception)
 					{
 					}
 					Application.Current.Shutdown();
@@ -45,6 +71,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
 		}
+
 		/// <summary>
 		/// Writes line to trace
 		/// </summary>
