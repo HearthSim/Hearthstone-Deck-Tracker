@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 
 #endregion
@@ -74,7 +75,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				_loaded = true;
 				MenuItem = Plugin.MenuItem;
 				if(MenuItem != null)
+				{
 					Helper.MainWindow.MenuItemPlugins.Items.Add(MenuItem);
+					Helper.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Collapsed;
+				}
 			}
 			catch(Exception ex)
 			{
@@ -125,13 +129,17 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			try
 			{
 				Plugin.OnUnload();
-				_loaded = false;
-				if(MenuItem != null)
-					Helper.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
 			}
 			catch(Exception ex)
 			{
 				Logger.WriteLine("Error unloading " + Name + ":\n" + ex, "PluginWrapper");
+			}
+			_loaded = false;
+			if(MenuItem != null)
+			{
+				Helper.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
+				if(Helper.MainWindow.MenuItemPlugins.Items.Count == 1)
+					Helper.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Visible;
 			}
 		}
 	}

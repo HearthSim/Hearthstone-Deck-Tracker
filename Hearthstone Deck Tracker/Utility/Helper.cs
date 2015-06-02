@@ -57,11 +57,14 @@ namespace Hearthstone_Deck_Tracker
 		public static OptionsMain OptionsMain { get; set; }
 		public static bool SettingUpConstructedImporting { get; set; }
 
-		public static async Task<Version> CheckForUpdates()
+		public static async Task<Version> CheckForUpdates(bool beta)
 		{
-			Logger.WriteLine("Checking for updates...", "Helper");
+			var betaString = beta ? "BETA" : "LIVE";
+			Logger.WriteLine("Checking for " + betaString + " updates...", "Helper");
 
-			const string versionXmlUrl = @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
+			var versionXmlUrl = beta
+				                    ? @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/beta-version"
+				                    : @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
 
@@ -75,14 +78,14 @@ namespace Hearthstone_Deck_Tracker
 						xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
 					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
-					Logger.WriteLine("Latest version: " + newVersion, "Helper");
+					Logger.WriteLine("Latest " + betaString + " version: " + newVersion, "Helper");
 
 					if(newVersion > currentVersion)
 						return newVersion;
 				}
 				catch(Exception e)
 				{
-					MessageBox.Show("Error checking for new version.\n\n" + e.Message + "\n\n" + e.InnerException);
+					MessageBox.Show("Error checking for new " + betaString + " version.\n\n" + e.Message + "\n\n" + e.InnerException);
 				}
 			}
 			return null;
@@ -221,13 +224,13 @@ namespace Hearthstone_Deck_Tracker
 			return deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 		}
 
-		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr))
+		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr), bool requireInForeground = true)
 		{
 			if(wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
 
 			User32.ClientToScreen(wndHandle, ref point);
-			if(!User32.IsHearthstoneInForeground())
+			if(requireInForeground && !User32.IsHearthstoneInForeground())
 				return null;
 
 			try

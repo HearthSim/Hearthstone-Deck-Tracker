@@ -162,6 +162,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone); }
 		}
 
+		private const string baseHearthStatsUrl = @"http://hss.io/d/";
+		[XmlIgnore]
+		public string HearthStatsUrl
+		{
+			get
+			{
+				return HasHearthStatsId
+					       ? baseHearthStatsUrl + HearthStatsId : (HasHearthStatsArenaId ? baseHearthStatsUrl + HearthStatsArenaId : "");
+			}
+		}
+
 		[XmlIgnore]
 		public bool HasHearthStatsDeckVersionId
 		{

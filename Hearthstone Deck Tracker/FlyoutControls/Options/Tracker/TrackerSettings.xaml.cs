@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
+			CheckboxCheckForBetaUpdates.IsChecked = Config.Instance.CheckForBetaUpdates;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
@@ -118,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
-		private async void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -135,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 
 
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
 		private void ComboboxKeyPressGameStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,42 +203,42 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private async void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = true;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = false;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
-		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Helper.MainWindow.Restart();
 		}
 
 		private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
@@ -276,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private async void ButtonGamePath_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonGamePath_OnClick(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
 			{
@@ -290,11 +291,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
 				Config.Save();
-				await Helper.MainWindow.Restart();
+				Helper.MainWindow.Restart();
 			}
 		}
 
-		private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
+		private void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new FolderBrowserDialog();
 			var dialogResult = dialog.ShowDialog();
@@ -317,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.DataDirPath = dialog.SelectedPath;
 				Config.Save();
 				if(!saveInAppData)
-					await Helper.MainWindow.Restart();
+					Helper.MainWindow.Restart();
 			}
 		}
 
@@ -345,6 +346,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(regKey != null)
 				regKey.DeleteValue("Hearthstone Deck Tracker", false);
 			Config.Instance.StartWithWindows = false;
+			Config.Save();
+		}
+
+		private void CheckboxCheckForBetaUpdates_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.CheckForBetaUpdates = true;
+			Config.Save();
+		}
+
+		private void CheckboxCheckForBetaUpdates_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.CheckForBetaUpdates = false;
 			Config.Save();
 		}
 	}

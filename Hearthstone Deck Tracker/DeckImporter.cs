@@ -427,8 +427,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						DeckList.Instance.AllTags.Add(decktype);
 						DeckList.Save();
-						Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-						Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
+						Helper.MainWindow.ReloadTags();
 					}
 					deck.Tags.Add(decktype);
 				}

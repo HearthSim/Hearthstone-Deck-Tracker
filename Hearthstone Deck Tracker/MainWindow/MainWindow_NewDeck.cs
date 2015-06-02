@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void SaveDeck(bool overwrite, SerializableVersion newVersion)
+		private async Task SaveDeck(bool overwrite, SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 

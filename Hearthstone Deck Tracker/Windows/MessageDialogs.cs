@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
 					Config.Save();
-					await Helper.MainWindow.Restart();
+					Helper.MainWindow.Restart();
 				}
 			}
 		}
