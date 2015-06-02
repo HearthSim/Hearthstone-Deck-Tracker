@@ -719,7 +719,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleDustReward(int amount)
 		{
-			if(DeckList.Instance.ActiveDeck.IsArenaDeck)
+			if(DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
 			{
 				if(!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
 				{
@@ -738,7 +738,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleGoldReward(int amount)
 		{
-			if(DeckList.Instance.ActiveDeck.IsArenaDeck)
+			if(DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
 			{
 				if(!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
 				{
