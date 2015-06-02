@@ -737,7 +737,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "200")
 				{
 					deck.HearthStatsArenaId = json.data.id;
-					Logger.WriteLine("assigned arena id to deck: " + deck.HearthStatsId, "HearthStatsAPI");
+					Logger.WriteLine("assigned arena id to deck: " + deck.HearthStatsArenaId, "HearthStatsAPI");
 					return PostResult.WasSuccess;
 				}
 				return PostResult.Failed;
@@ -796,7 +796,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		#region misc
 
-		private static readonly List<GameMode> ValidGameModes = new List<GameMode> {GameMode.Casual, GameMode.Ranked};
+		private static readonly List<GameMode> ValidGameModes = new List<GameMode> {GameMode.Casual, GameMode.Ranked, GameMode.Friendly};
 
 		public static bool IsValidGame(GameStats game)
 		{

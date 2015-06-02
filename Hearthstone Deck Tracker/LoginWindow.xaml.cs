@@ -218,17 +218,5 @@ namespace Hearthstone_Deck_Tracker
 			if(handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-		private void LoginWindow_OnLoaded(object sender, RoutedEventArgs e)
-		{
-			var presentationsource = PresentationSource.FromVisual(this);
-			if(presentationsource != null) // make sure it's connected
-			{
-				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
-				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
-			}
-			Width *= Helper.DpiScalingX;
-			Height *= Helper.DpiScalingY;
-		}
 	}
 }
