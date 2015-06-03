@@ -566,6 +566,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowInTaskbar = false;
 
+		[DefaultValue(true)]
+		public bool ShowLoginDialog = true;
+
 		[DefaultValue(false)]
 		public bool ShowLogTab = false;
 

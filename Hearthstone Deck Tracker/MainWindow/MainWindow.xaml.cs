@@ -326,6 +326,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
 		{
+			Config.Instance.ShowLoginDialog = true;
+			Config.Save();
 			Restart();
 		}
 

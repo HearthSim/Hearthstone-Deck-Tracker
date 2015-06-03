@@ -78,6 +78,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
                                               Unchecked="CheckboxStartWithWindows_Unchecked" />
+                    <CheckBox x:Name="CheckBoxShowLoginDialog" Content="Show login dialog"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
+                                              Unchecked="CheckboxShowLoginDialog_Unchecked" />
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
                                               Content="Close with Hearthstone" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"

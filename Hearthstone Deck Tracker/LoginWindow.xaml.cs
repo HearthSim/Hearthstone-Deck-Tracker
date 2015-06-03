@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 			Logger.Initialzie();
 			Config.Load();
-			if(HearthStatsAPI.LoadCredentials())
+			if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)
 				StartMainApp();
 			CheckBoxRememberLogin.IsChecked = Config.Instance.RememberHearthStatsLogin;
 			_initialized = true;

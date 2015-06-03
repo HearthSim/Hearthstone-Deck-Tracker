@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
+			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
@@ -362,6 +363,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.CheckForBetaUpdates = false;
+			Config.Save();
+		}
+
+		private void CheckboxShowLoginDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowLoginDialog = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowLoginDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowLoginDialog = false;
 			Config.Save();
 		}
 	}
