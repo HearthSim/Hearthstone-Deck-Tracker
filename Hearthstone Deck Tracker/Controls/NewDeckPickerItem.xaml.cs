@@ -41,13 +41,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			//BorderItem.Height = Big;
 			SelectedFontWeight = FontWeights.Bold;
+            UsrCtrl.Opacity = 1;
 			OnPropertyChanged("SelectedFontWeight");
 		}
 
 		public void OnDelselected()
 		{
 			//BorderItem.Height = Small;
-			SelectedFontWeight = FontWeights.Regular;
+            SelectedFontWeight = FontWeights.Regular;
+            UsrCtrl.Opacity = 0.5;
 			OnPropertyChanged("SelectedFontWeight");
 		}
 

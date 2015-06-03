@@ -10,8 +10,11 @@
           >
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="{Binding ClassColor}" Offset="0" />
-                <GradientStop Color="#FFE5E5E5" Offset="1" />
+                <GradientStop Color="{Binding ClassColor}" Offset="0.01" />
+                <GradientStop Color="{Binding ClassDarkColor}" Offset="0.1" />
+                <GradientStop Color="{Binding ClassDarkColor}" Offset="0.105" />
+                <GradientStop Color="{Binding ClassColor}" Offset="0.5" />
+                <GradientStop Color="{Binding ClassColor}" Offset="1" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>

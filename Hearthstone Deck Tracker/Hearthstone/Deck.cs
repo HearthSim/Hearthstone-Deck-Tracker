@@ -285,40 +285,75 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return new SolidColorBrush(ClassColor); }
 		}
 
-		[XmlIgnore]
-		public Color ClassColor
-		{
-			get
-			{
-				switch(Class)
-				{
-					case "Druid":
-						return (Color)ColorConverter.ConvertFromString("#FF7D0A");
-					case "Death Knight":
-						return (Color)ColorConverter.ConvertFromString("#C41F3B");
-					case "Hunter":
-						return (Color)ColorConverter.ConvertFromString("#ABD473");
-					case "Mage":
-						return (Color)ColorConverter.ConvertFromString("#69CCF0");
-					case "Monk":
-						return (Color)ColorConverter.ConvertFromString("#00FF96");
-					case "Paladin":
-						return (Color)ColorConverter.ConvertFromString("#F58CBA");
-					case "Priest":
-						return (Color)ColorConverter.ConvertFromString("#FFFFFF");
-					case "Rogue":
-						return (Color)ColorConverter.ConvertFromString("#FFF569");
-					case "Shaman":
-						return (Color)ColorConverter.ConvertFromString("#0070DE");
-					case "Warlock":
-						return (Color)ColorConverter.ConvertFromString("#9482C9");
-					case "Warrior":
-						return (Color)ColorConverter.ConvertFromString("#C79C6E");
-					default:
-						return Colors.Gray;
-				}
-			}
-		}
+
+        [XmlIgnore]
+        public Color ClassColor
+        {
+            get
+            {
+                switch (Class)
+                {
+                    case "Druid":
+                        return (Color)ColorConverter.ConvertFromString("#CCFF7D0A");
+                    case "Death Knight":
+                        return (Color)ColorConverter.ConvertFromString("#CCC41F3B");
+                    case "Hunter":
+                        return (Color)ColorConverter.ConvertFromString("#CCABD473");
+                    case "Mage":
+                        return (Color)ColorConverter.ConvertFromString("#CC69CCF0");
+                    case "Monk":
+                        return (Color)ColorConverter.ConvertFromString("#CC00FF96");
+                    case "Paladin":
+                        return (Color)ColorConverter.ConvertFromString("#CCF58CBA");
+                    case "Priest":
+                        return (Color)ColorConverter.ConvertFromString("#CCFFFFFF");
+                    case "Rogue":
+                        return (Color)ColorConverter.ConvertFromString("#CCFFF569");
+                    case "Shaman":
+                        return (Color)ColorConverter.ConvertFromString("#CC0070DE");
+                    case "Warlock":
+                        return (Color)ColorConverter.ConvertFromString("#CC9482C9");
+                    case "Warrior":
+                        return (Color)ColorConverter.ConvertFromString("#CCC79C6E");
+                    default:
+                        return Colors.Gray;
+                }
+            }
+        }
+        [XmlIgnore]
+        public Color ClassDarkColor
+        {
+            get
+            {
+                switch (Class)
+                {
+                    case "Druid":
+                        return (Color)ColorConverter.ConvertFromString("#CC3F2712");
+                    case "Death Knight":
+                        return (Color)ColorConverter.ConvertFromString("#CC450E17");
+                    case "Hunter":
+                        return (Color)ColorConverter.ConvertFromString("#CC1E2910");
+                    case "Mage":
+                        return (Color)ColorConverter.ConvertFromString("#CC19404E");
+                    case "Monk":
+                        return (Color)ColorConverter.ConvertFromString("#CC0A4C31");
+                    case "Paladin":
+                        return (Color)ColorConverter.ConvertFromString("#CC311C25");
+                    case "Priest":
+                        return (Color)ColorConverter.ConvertFromString("#CC5C5A5B");
+                    case "Rogue":
+                        return (Color)ColorConverter.ConvertFromString("#CC5A5726");
+                    case "Shaman":
+                        return (Color)ColorConverter.ConvertFromString("#CC012B55");
+                    case "Warlock":
+                        return (Color)ColorConverter.ConvertFromString("#CC332D45");
+                    case "Warrior":
+                        return (Color)ColorConverter.ConvertFromString("#CC4D3822");
+                    default:
+                        return Colors.Gray;
+                }
+            }
+        }
 
 		[XmlIgnore]
 		public BitmapImage HeroImage
