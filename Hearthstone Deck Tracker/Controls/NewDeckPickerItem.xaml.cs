@@ -2,9 +2,9 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -17,9 +17,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class NewDeckPickerItem : INotifyPropertyChanged
 	{
-		private const int Small = 36;
-		private const int Big = 48;
-
 		public NewDeckPickerItem()
 		{
 			InitializeComponent();
@@ -34,21 +31,18 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public Deck Deck { get; set; }
-		public FontWeight SelectedFontWeight { get; private set; }
-		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void OnSelected()
+		public FontWeight SelectedFontWeight
 		{
-			//BorderItem.Height = Big;
-			SelectedFontWeight = FontWeights.Bold;
-			OnPropertyChanged("SelectedFontWeight");
+			get { return Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular; }
 		}
 
-		public void OnDelselected()
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void RefreshProperties()
 		{
-			//BorderItem.Height = Small;
-			SelectedFontWeight = FontWeights.Regular;
 			OnPropertyChanged("SelectedFontWeight");
+			OnPropertyChanged("TextUseButton");
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -59,94 +53,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
+		private void UseButton_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
-			var activeDeck = DeckList.Instance.ActiveDeck;
-			var selectedDecks = Helper.MainWindow.DeckPickerList.SelectedDecks;
-			if(activeDeck == null || !selectedDecks.Any())
-				return;
-			Helper.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
-			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
-			MenuItemMoveDecktoArena.Visibility = activeDeck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = activeDeck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemMissingCards.Visibility = activeDeck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			SeparatorDeck1.Visibility = string.IsNullOrEmpty(activeDeck.Url) && !activeDeck.MissingCards.Any()
-				                            ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenHearthStats.Visibility = activeDeck.HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
-		}
-
-		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnEditDeck_Click(sender, e);
-		}
-
-		private void BtnNotes_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnNotes_Click(sender, e);
-		}
-
-		private void BtnTags_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnTags_Click(sender, e);
-		}
-
-		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnMoveDeckToArena_Click(sender, e);
-		}
-
-		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnMoveDeckToConstructed_Click(sender, e);
-		}
-
-		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.MenuItemMissingDust_OnClick(sender, e);
-		}
-
-		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnUpdateDeck_Click(sender, e);
-		}
-
-		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnOpenDeckUrl_Click(sender, e);
-		}
-
-		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnArchiveDeck_Click(sender, e);
-		}
-
-		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnUnarchiveDeck_Click(sender, e);
-		}
-
-		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnDeleteDeck_Click(sender, e);
-		}
-
-		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnCloneDeck_Click(sender, e);
-		}
-
-		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
-		}
-
-		private void BtnName_Click(object sender, RoutedEventArgs e)
-		{
-			Helper.MainWindow.BtnName_Click(sender, e);
+			if(!Deck.Equals(DeckList.Instance.ActiveDeck))
+			{
+				Helper.MainWindow.SelectDeck(Deck, true);
+				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+			}
 		}
 
 		#region sorting properties
@@ -196,11 +109,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return Deck.Note; }
 		}
 
-		#endregion
-
-		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
+		public string TextUseButton
 		{
-			Helper.MainWindow.BtnOpenHearthStats_Click(sender, e);
+			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
 		}
+
+		#endregion
 	}
 }

@@ -10,7 +10,7 @@
                       xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
                       Title="Hearthstone Deck Tracker" Height="603" Width="650"
                       MinHeight="584" MinWidth="650"
-                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Closing="Window_Closing"
+                      Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
@@ -166,47 +166,47 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/druid_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/hunter_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/mage_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/priest_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/paladin_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/rogue_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/shaman_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/warlock_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
-                            <Image Source="../Resources/warrior_small.png" Width="24" Height="24" Margin="3,0,0,0" />
+                            <Image Source="../Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -334,19 +334,19 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="10,6,10,-4" Grid.Row="0" Visibility="Collapsed">
+                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="0" Visibility="Collapsed">
                     <DockPanel>
                         <TextBlock Text="SELECTED VERSION:" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding ShortVersionString}"/>
+                                    <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </DockPanel>
                 </Border>
-                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Margin="10,6,10,-4" Grid.Row="0"  Visibility="Collapsed">
+                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="0"  Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="CARDS:" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
                         <TextBlock Name="TextBlockCardCount" VerticalAlignment="Center" Text="0 / 30" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
@@ -357,8 +357,7 @@
                         </Rectangle>
                     </StackPanel>
                 </Border>
-                <ListView x:Name="ListViewDeck" Grid.Row="1"
-                                    Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                <ListView x:Name="ListViewDeck" Grid.Row="1" Background="#696969"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -484,28 +483,31 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
                             Width="235" Grid.ColumnSpan="2">
-                    <TextBox controls:TextBoxHelper.Watermark="Deckname" x:Name="TextBoxDeckName" Width="107"
-                             VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
-                             TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
-                             TextChanged="TextBoxDeckName_TextChanged" DockPanel.Dock="Left" />
+                    <Border Width="107"
+            BorderThickness="1" DockPanel.Dock="Top" BorderBrush="{DynamicResource TextBrush}">
+                        <TextBox controls:TextBoxHelper.Watermark="Name..." TextWrapping="NoWrap"
+                             TextChanged="TextBoxDeckName_TextChanged" Name="TextBoxDeckName" 
+                     controls:TextBoxHelper.IsWaitingForData="True"/>
+                    </Border>
 
                     <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="Name already exists" Visibility="Collapsed" Margin="3,0,0,0">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox controls:TextBoxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
-                             VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="26"
-                             Margin="3,0,0,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top"
-                             TextChanged="TextBoxDBFilter_TextChanged"
+                    <Border Width="125"
+            BorderThickness="1" DockPanel.Dock="Top" Margin="3,0,0,0" BorderBrush="{DynamicResource TextBrush}">
+                        <TextBox  controls:TextBoxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
+                             TextChanged="TextBoxDBFilter_TextChanged" TextWrapping="NoWrap" 
                              PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"
-                             DockPanel.Dock="Left" Width="125" />
+                     controls:TextBoxHelper.IsWaitingForData="True" />
+                    </Border>
                 </StackPanel>
-                <ListView x:Name="ListViewDB" Background="DimGray" Foreground="White"
+                <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"
                                     FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,2,0,6"
                                     HorizontalAlignment="Left"
                                     Width="235" KeyDown="ListViewDB_KeyDown"
                                     MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1" Grid.Column="0">
@@ -542,14 +544,15 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <DockPanel Name="PanelDeckHistory" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
-                    <DockPanel Margin="0,6,0,0" DockPanel.Dock="Top" Height="26">
-                        <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontSize="12" DockPanel.Dock="Left"/>
-                        <TextBlock x:Name="DeckCurrentVersion" Margin="6,0,0,0" FontSize="12" Text="v1.0" VerticalAlignment="Center"/>
-                    </DockPanel>
-                    <ScrollViewer Margin="0,6,6,6" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1">
+                    <Border Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,6,6,-4" DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="DeckCurrentVersionHeader" Text="DECK HISTORY:" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
+                            <TextBlock x:Name="DeckCurrentVersion" Text="v1.0" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <ScrollViewer Margin="0,6,6,6" BorderThickness="1" Background="#696969">
                         <StackPanel x:Name="DeckHistoryPanel" 
                                     Orientation="Vertical"
-                                    
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.CanContentScroll="True"

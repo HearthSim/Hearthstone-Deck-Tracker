@@ -36,15 +36,21 @@ namespace Hearthstone_Deck_Tracker
 		[XmlIgnore]
 		public Deck ActiveDeck
 		{
-			get { return _activeDeck ?? (_activeDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId)); }
+			get { return _activeDeck; }
 			set
 			{
-				if(_activeDeck == value)
+				if(Equals(_activeDeck, value))
 					return;
 				_activeDeck = value;
+				Logger.WriteLine("Set active deck to: " + value, "DeckList");
 				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
 				Config.Save();
 			}
+		}
+
+		public void LoadActiveDeck()
+		{
+			ActiveDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		public Deck ActiveDeckVersion
@@ -134,6 +140,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(save)
 				Save();
+
+			Instance.LoadActiveDeck();
 			//Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 

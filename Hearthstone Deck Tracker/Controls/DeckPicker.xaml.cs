@@ -299,7 +299,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			if(Equals(deck, SelectedDeck))
 			{
-				Helper.MainWindow.SelectDeck(null);
+				Helper.MainWindow.SelectDeck(null, false);
 				e.Handled = true;
 			}
 		}

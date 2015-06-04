@@ -920,7 +920,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(!Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
 						return new BitmapImage();
-					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
+					var uri = new Uri(string.Format("../Resources/ClassIcons/Round/{0}.png", _playerHero.ToLower()), UriKind.Relative);
 					return new BitmapImage(uri);
 				}
 			}

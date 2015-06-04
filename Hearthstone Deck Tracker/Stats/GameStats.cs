@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				if(!_hsClasses.Contains(OpponentHero))
 					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", OpponentHero.ToLower()), UriKind.Relative);
+				var uri = new Uri(string.Format("../Resources/ClassIcons/Round/{0}.png", OpponentHero.ToLower()), UriKind.Relative);
 				return new BitmapImage(uri);
 			}
 		}
@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				if(!_hsClasses.Contains(PlayerHero))
 					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", PlayerHero.ToLower()), UriKind.Relative);
+				var uri = new Uri(string.Format("../Resources/ClassIcons/Round/{0}.png", PlayerHero.ToLower()), UriKind.Relative);
 				return new BitmapImage(uri);
 			}
 		}

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             Width="48" Height="48">
-    <Image Name="ImageIcon" Source="{Binding ClassImage, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48"/>
+             Width="38" Height="38">
+    <Image Name="ImageIcon" Source="{Binding ClassImage, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="36" Height="36" RenderOptions.BitmapScalingMode="Fant" Margin="1"/>
 
 </UserControl>

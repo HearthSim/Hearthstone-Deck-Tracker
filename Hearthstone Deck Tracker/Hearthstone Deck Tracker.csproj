@@ -110,6 +110,9 @@
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CardToolTipControl.xaml.cs">
+      <DependentUpon>CardToolTipControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,7 @@
     <Compile Include="Controls\ElementSorterItem.xaml.cs">
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MarginConverter.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>
     </Compile>
@@ -216,6 +220,7 @@
     </Compile>
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Protocol\PipeServer.cs" />
+    <Compile Include="Utility\ImageCache.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -360,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CardToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CardToolTipControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -3056,6 +3065,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="Resources\ClassIcons\Round\deathknight.png" />
+    <Resource Include="Resources\ClassIcons\Round\druid.png" />
+    <Resource Include="Resources\ClassIcons\Round\hunter.png" />
+    <Resource Include="Resources\ClassIcons\Round\mage.png" />
+    <Resource Include="Resources\ClassIcons\Round\paladin.png" />
+    <Resource Include="Resources\ClassIcons\Round\priest.png" />
+    <Resource Include="Resources\ClassIcons\Round\rogue.png" />
+    <Resource Include="Resources\ClassIcons\Round\shaman.png" />
+    <Resource Include="Resources\ClassIcons\Round\warlock.png" />
+    <Resource Include="Resources\ClassIcons\Round\warrior.png" />
+    <Resource Include="Resources\ClassIcons\Round\all.png" />
+    <Resource Include="Resources\ClassIcons\Round\archived.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

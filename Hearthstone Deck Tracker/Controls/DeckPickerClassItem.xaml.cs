@@ -1,8 +1,8 @@
 ﻿#region
 
-using System;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -13,12 +13,19 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class DeckPickerClassItem
 	{
-		public const int Small = 36;
-		public const int Big = 48;
-
 		public DeckPickerClassItem()
 		{
 			InitializeComponent();
+		}
+
+		public static int Small
+		{
+			get { return 24; }
+		}
+
+		public static int Big
+		{
+			get { return 36; }
 		}
 
 		public BitmapImage ClassImage
@@ -28,22 +35,16 @@ namespace Hearthstone_Deck_Tracker.Controls
 				var heroClass = DataContext as HeroClassAll?;
 				if(heroClass == null)
 					return new BitmapImage();
-				var uri = new Uri(string.Format("../../Resources/ClassIcons/{0}.png", ((HeroClassAll)DataContext).ToString().ToLower()),
-				                  UriKind.Relative);
-				return new BitmapImage(uri);
+				return ImageCache.GetImage(string.Format("ClassIcons/Round/{0}.png", heroClass.Value.ToString().ToLower()));
 			}
 		}
 
 		public void OnSelected()
 		{
-			ImageIcon.Width = Small;
-			ImageIcon.Height = Small;
 		}
 
 		public void OnDelselected()
 		{
-			ImageIcon.Width = Big;
-			ImageIcon.Height = Big;
 		}
 	}
 }

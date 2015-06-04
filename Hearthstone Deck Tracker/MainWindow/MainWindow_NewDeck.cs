@@ -324,7 +324,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck != null)
 			{
 				ClearNewDeckSection();
-				SelectDeck(null);
+				SelectDeck(null, false); //TODO: needs to be true?
 				EditingDeck = editing;
 				if(editing)
 				{
@@ -516,7 +516,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
-			SelectDeck(null);
+			SelectDeck(null, false); //TODO: needs to be true?
 			ExpandNewDeck();
 			ListViewDeck.ItemsSource = _newDeck.Cards;
 			UpdateDeckHistoryPanel(_newDeck, true);

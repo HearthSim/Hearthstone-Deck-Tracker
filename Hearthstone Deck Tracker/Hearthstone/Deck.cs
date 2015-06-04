@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -234,6 +235,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public string StatsString
+		{
+			get { return GetRelevantGames().Any() ? string.Format("{0} | {1}", WinPercentString, WinLossString) : "NO STATS"; }
+		}
+
+		[XmlIgnore]
 		public DateTime LastPlayed
 		{
 			get
@@ -276,7 +283,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string TagList
 		{
-			get { return Tags.Count > 0 ? "[" + Tags.Aggregate((t, n) => t + ", " + n) + "]" : ""; }
+			get { return Tags.Count > 0 ? Tags.Select(x => x.ToUpperInvariant()).Aggregate((t, n) => t + " | " + n) : ""; }
 		}
 
 		[XmlIgnore]
@@ -320,15 +327,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+
+			
 		[XmlIgnore]
-		public BitmapImage HeroImage
+		public BitmapImage ClassImage
 		{
 			get
 			{
 				if(!Enum.GetNames(typeof(HeroClass)).Contains(Class))
 					return new BitmapImage();
-				var uri = new Uri(string.Format("../../Resources/{0}_small.png", Class.ToLower()), UriKind.Relative);
-				return new BitmapImage(uri);
+				return ImageCache.GetImage(string.Format("ClassIcons/Round/{0}.png", Class.ToLower()));
+			}
+		}
+
+		[XmlIgnore]
+		public BitmapImage HeroImage
+		{
+			get
+			{
+				return ClassImage;
 			}
 		}
 
@@ -365,6 +382,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _hearthStatsIdClone = value; }
 		}
 
+		public Visibility VisibilityStats { get { return GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed; } }
+
+		public Visibility VisibilityNoStats
+		{
+			get { return VisibilityStats == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
@@ -373,8 +397,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+
+		private DateTime _lastCacheUpdate = DateTime.MinValue;
+		private List<GameStats> _cachedGames;
+
+		private TimeSpan ValidCacheDuration
+		{
+			get { return new TimeSpan(0, 0, 1); }
+		}
+		private bool CacheIsValid
+		{
+			get { return _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration; }
+		}
+
 		public List<GameStats> GetRelevantGames()
 		{
+			if(CacheIsValid)
+				return _cachedGames;
 			var filtered = Config.Instance.DisplayedMode == GameMode.All
 				               ? DeckStats.Games
 				               : (IsArenaDeck
@@ -421,6 +460,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						        .ToList();
 					break;
 			}
+			_cachedGames = filtered;
+			_lastCacheUpdate = DateTime.Now;
 			return filtered;
 		}
 

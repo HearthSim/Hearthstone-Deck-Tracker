@@ -37,14 +37,14 @@ namespace Hearthstone_Deck_Tracker
 				if(pickerItem == null)
 					continue;
 				DeckList.Instance.ActiveDeck = pickerItem.DataContext as Deck;
-				pickerItem.OnSelected();
+				pickerItem.RefreshProperties();
 			}
 			foreach(var item in e.RemovedItems)
 			{
 				var pickerItem = item as NewDeckPickerItem;
 				if(pickerItem == null)
 					continue;
-				pickerItem.OnDelselected();
+				pickerItem.RefreshProperties();
 			}
 			var dpi = ListViewDecks.SelectedItem as NewDeckPickerItem;
 			if(dpi != null)
