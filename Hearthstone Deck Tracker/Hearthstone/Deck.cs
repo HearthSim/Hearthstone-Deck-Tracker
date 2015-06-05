@@ -26,7 +26,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
 		private List<string> _tags;
-		public bool Archived;
+		private bool _archived;
+		public bool Archived { get { return _archived; } set { _archived = value; OnPropertyChanged(); OnPropertyChanged("ArchivedVisibility"); } }
 
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -42,8 +43,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public List<Card> MissingCards;
 
-		public string Note;
-		public SerializableVersion SelectedVersion = new SerializableVersion(1, 0);
+		private string _note;
+
+		public string Note
+		{
+			get { return _note; }
+			set
+			{
+				_note = value;
+				OnPropertyChanged();
+				OnPropertyChanged("NoteVisibility");
+			}
+		}
+
+		private SerializableVersion _selectedVersion = new SerializableVersion(1, 0);
+		public SerializableVersion SelectedVersion
+		{
+			get { return _selectedVersion; }
+			set
+			{
+				_selectedVersion = value;
+				OnPropertyChanged();
+				OnPropertyChanged("NameAndVersion");
+			}
+		}
 		public string Url;
 		public SerializableVersion Version = new SerializableVersion(1, 0);
 
@@ -154,7 +177,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _deckId = value; }
 		}
 
-		public string Name { get; set; }
+		private string _name;
+		public string Name { get { return _name; }
+			set
+			{
+				_name = value;
+				OnPropertyChanged();
+				OnPropertyChanged("NameAndVersion");
+			}
+		}
 		public bool? SyncWithHearthStats { get; set; }
 
 		[XmlIgnore]
@@ -254,12 +285,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string GetClass
 		{
 			get { return string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")"; }
-		}
-
-		[XmlIgnore]
-		public string GetName
-		{
-			get { return Name; }
 		}
 
 		[XmlIgnore]
@@ -387,6 +412,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility VisibilityNoStats
 		{
 			get { return VisibilityStats == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public Visibility NoteVisibility
+		{
+			get { return string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible; }
+		}
+
+		public Visibility ArchivedVisibility
+		{
+			get { return Archived ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		public object Clone()
@@ -687,6 +722,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Edited()
 		{
 			LastEdited = DateTime.Now;
+		}
+
+		public void StatsUpdated()
+		{
+			OnPropertyChanged("StatsString");
+			OnPropertyChanged("WinLossString");
+			OnPropertyChanged("WinPercent");
+			OnPropertyChanged("WinPercentString");
 		}
 	}
 }

@@ -33,7 +33,7 @@
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.ArchivedMarker}" Width="16"
                            Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
-                           Visibility="{Binding ArchivedVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"
+                           Visibility="{Binding ArchivedVisibility}"
                            ToolTip="Archived" />
                     <DockPanel>
                         <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
@@ -43,8 +43,8 @@
                         <TextBlock DockPanel.Dock="Left" Text="N" Width="15" TextAlignment="Center"
                                    Foreground="{DynamicResource TextBrush}" Margin="-15,2,0,0" FontSize="10"
                                    FontWeight="Bold"
-                                   Visibility="{Binding NoteVisibility, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}"
-                                   ToolTip="{Binding Note, RelativeSource={RelativeSource AncestorType=controls:NewDeckPickerItem}}" />
+                                   Visibility="{Binding NoteVisibility}"
+                                   ToolTip="{Binding Note}" />
                         <Grid DockPanel.Dock="Right" />
                     </DockPanel>
                 </DockPanel>

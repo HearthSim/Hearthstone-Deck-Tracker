@@ -116,9 +116,6 @@
     <Compile Include="Controls\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckPickerItem.xaml.cs">
-      <DependentUpon>DeckPickerItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DeckVersionChange.xaml.cs">
       <DependentUpon>DeckVersionChange.xaml</DependentUpon>
     </Compile>
@@ -265,9 +262,6 @@
     <Compile Include="FlyoutControls\DeckNotes.xaml.cs">
       <DependentUpon>DeckNotes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckPicker.xaml.cs">
-      <DependentUpon>DeckPicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\HearthstoneTextBlock.xaml.cs">
       <DependentUpon>HearthstoneTextBlock.xaml</DependentUpon>
     </Compile>
@@ -380,10 +374,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeckPickerItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\DeckVersionChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -481,10 +471,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\DeckNotes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\DeckPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

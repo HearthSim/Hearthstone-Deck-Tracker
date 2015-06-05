@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker
 				if(Equals(_activeDeck, value))
 					return;
 				_activeDeck = value;
+				Helper.MainWindow.DeckPickerList.ActiveDeckChanged();
+				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 				Logger.WriteLine("Set active deck to: " + value, "DeckList");
 				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
 				Config.Save();

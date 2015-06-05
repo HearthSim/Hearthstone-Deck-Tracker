@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
 			DeckPickerList.SelectDeckAndAppropriateView(DeckList.Instance.ActiveDeck);
-			UpdateMenuItemVisibility(DeckList.Instance.ActiveDeck);
+			UpdateMenuItemVisibility();
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 					{
 						DeckPickerList.SelectDeckAndAppropriateView(deck);
-						UpdateMenuItemVisibility(deck);
+						UpdateMenuItemVisibility();
 					}
 
 					DeckPickerList.UpdateArchivedClassVisibility();

@@ -94,26 +94,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return Deck.TagList; }
 		}
 
-		public Visibility NoteVisibility
-		{
-			get { return string.IsNullOrEmpty(Deck.Note) ? Visibility.Collapsed : Visibility.Visible; }
-		}
-
-		public Visibility ArchivedVisibility
-		{
-			get { return Deck.Archived ? Visibility.Visible : Visibility.Collapsed; }
-		}
-
-		public string Note
-		{
-			get { return Deck.Note; }
-		}
+		#endregion
 
 		public string TextUseButton
 		{
 			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
 		}
-
-		#endregion
 	}
 }

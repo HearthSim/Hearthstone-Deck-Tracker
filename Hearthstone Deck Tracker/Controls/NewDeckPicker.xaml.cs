@@ -322,6 +322,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
 			_reselectingDecks = false;
+			if(ActiveDeck != null)
+				ActiveDeck.StatsUpdated();
 		}
 
 		private NewDeckPickerItem GetDeckPickerItemFromCache(Deck deck)
@@ -411,6 +413,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void SelectDeckAndAppropriateView(Deck deck)
 		{
+			if(deck == null)
+				return;
 			if(Config.Instance.SelectedDeckType != DeckType.All)
 			{
 				if(deck.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Arena)
@@ -464,19 +468,19 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 			ListViewDecks.SelectedItem = dpi;
 			ChangedSelection = false;
+			deck.StatsUpdated();
 		}
 
 		public void DeselectDeck()
 		{
 			ListViewDecks.SelectedItem = null;
-			OnPropertyChanged("ActiveDeck");
 			RefreshDisplayedDecks();
 		}
 
 		public void RefreshDisplayedDecks()
 		{
-			foreach(var deck in _displayedDecks)
-				deck.RefreshProperties();
+			foreach(var deckPickerItem in _displayedDecks)
+				deckPickerItem.RefreshProperties();
 		}
 
 		private bool DeckMatchesSelectedTags(Deck deck)
@@ -581,22 +585,21 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
 		{
-			var activeDeck = DeckList.Instance.ActiveDeck;
 			var selectedDecks = Helper.MainWindow.DeckPickerList.SelectedDecks;
-			if(activeDeck == null || !selectedDecks.Any())
+			if(!selectedDecks.Any())
 				return;
 			Helper.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
 			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
-			MenuItemMoveDecktoArena.Visibility = activeDeck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = activeDeck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemMissingCards.Visibility = activeDeck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(activeDeck.Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDecktoArena.Visibility = selectedDecks.First().IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemMoveDeckToConstructed.Visibility = selectedDecks.First().IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMissingCards.Visibility = selectedDecks.First().MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) ? Visibility.Collapsed : Visibility.Visible;
+			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			SeparatorDeck1.Visibility = string.IsNullOrEmpty(activeDeck.Url) && !activeDeck.MissingCards.Any()
+			SeparatorDeck1.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) && !selectedDecks.First().MissingCards.Any()
 				                            ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenHearthStats.Visibility = activeDeck.HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemOpenHearthStats.Visibility = selectedDecks.First().HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)

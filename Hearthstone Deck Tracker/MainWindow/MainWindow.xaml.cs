@@ -56,17 +56,19 @@ namespace Hearthstone_Deck_Tracker
 			{
 				DeckList.Instance.ActiveDeck = selected;
 				Game.SetPremadeDeck((Deck)selected.Clone());
-				UpdateMenuItemVisibility(selected);
+				UpdateMenuItemVisibility();
 			}
-			DeckPickerList.ActiveDeckChanged();
 			//needs to be true for automatic deck detection to work
 			HsLogReader.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
 		}
 
-		private void UpdateMenuItemVisibility(Deck deck)
+		private void UpdateMenuItemVisibility()
 		{
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			if(deck == null)
+				return;
 			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
@@ -1675,25 +1677,26 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
-				PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
-				Logger.WriteLine("set player item source to PlayerDrawn", "Tracker");
-
 				Game.IsUsingPremade = false;
 
 				if(DeckList.Instance.ActiveDeck != null)
 					DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
 
 				DeckList.Instance.ActiveDeck = null;
-				DeckPickerList.DeselectDeck();
+				if(setActive)
+				{
+					DeckPickerList.DeselectDeck();
+					Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+					Logger.WriteLine("set player item source to PlayerDrawn", "Tracker");
+				}
 
-				Logger.WriteLine("Deselected deck", "Tracker");
 				int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
 				_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
 
 			//set up stats
-			var statsTitle = String.Format("Stats{0}", deck == null ? "" : ": " + deck.Name);
+			var statsTitle = string.Format("Stats{0}", deck == null ? "" : ": " + deck.Name);
 			StatsWindow.Title = statsTitle;
 			FlyoutDeckStats.Header = statsTitle;
 			StatsWindow.StatsControl.SetDeck(deck);
@@ -1709,7 +1712,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Overlay.ListViewPlayer.Items.Refresh();
 				PlayerWindow.ListViewPlayer.Items.Refresh();
-				DeckPickerList.ActiveDeckChanged();
 			}
 			DeckManagerEvents.OnDeckSelected.Execute(deck);
 		}
