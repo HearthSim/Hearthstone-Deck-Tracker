@@ -101,7 +101,7 @@
                            Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterRight}}"
                            FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                            DockPanel.Dock="Left" />
-                <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
+                <TextBlock Name="TextBlockStats" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush2}" 
                            Text="{Binding ActiveDeck.StatsString, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
                            Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
                 <Grid />
