@@ -822,6 +822,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void Load()
 		{
 			var foundConfig = false;
+			Environment.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			try
 			{
 				if(File.Exists("config.xml"))
