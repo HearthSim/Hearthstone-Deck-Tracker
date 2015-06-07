@@ -132,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public SerializableVersion SelectedVersion
 		{
-			get { return _selectedVersion; }
+			get { return VersionsIncludingSelf.Contains(_selectedVersion) ? _selectedVersion : Version; }
 			set
 			{
 				_selectedVersion = value;
