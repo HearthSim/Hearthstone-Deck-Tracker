@@ -32,7 +32,7 @@
             </Border>
             <StackPanel Margin="0,5">
                 <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.ArchivedMarker}" Width="16"
+                    <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.Archived}" Width="16"
                            Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
                            Visibility="{Binding ArchivedVisibility}"
                            ToolTip="Archived" />
@@ -40,7 +40,7 @@
                         <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
                                    FontSize="17" TextTrimming="CharacterEllipsis"
                                    Foreground="{DynamicResource TextBrush}"
-                                   FontWeight="{Binding SelectedFontWeight, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
+                                   FontWeight="{Binding FontWeightActiveDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
                         <Rectangle Width="10" Height="13" Visibility="{Binding NoteVisibility}" Margin="-10,0,0,0"
                                    ToolTip="{Binding Note}">
                             <Rectangle.Fill>

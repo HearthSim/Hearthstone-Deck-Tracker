@@ -332,8 +332,22 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			DeckPickerItem dpi;
 			if(_cachedDeckPickerItems.TryGetValue(deck, out dpi))
 				return dpi;
-			var layout = Config.Instance.DeckPickerItemLayout == DeckLayout.Layout1
-				             ? typeof(DeckPickerItemLayout1) : typeof(DeckPickerItemLayout2);
+			Type layout;
+			switch(Config.Instance.DeckPickerItemLayout)
+			{
+				case DeckLayout.Layout1:
+					layout = typeof(DeckPickerItemLayout1);
+					break;
+				case DeckLayout.Layout2:
+					layout = typeof(DeckPickerItemLayout2);
+					break;
+				case DeckLayout.Legacy:
+					layout = typeof(DeckPickerItemLayoutLegacy);
+					break;
+				default:
+					layout = typeof(DeckPickerItemLayout1);
+					break;
+			}
 			dpi = new DeckPickerItem(deck, layout);
 			_cachedDeckPickerItems.Add(deck, dpi);
 			return dpi;
@@ -410,6 +424,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			if(Config.Instance.DeckPickerItemLayout == DeckLayout.Legacy)
+			{
+				foreach(var deck in e.AddedItems.Cast<DeckPickerItem>())
+					deck.RefreshProperties();
+				foreach(var deck in e.RemovedItems.Cast<DeckPickerItem>())
+					deck.RefreshProperties();
+			}
 			if(e.AddedItems.Count > 0 && !_reselectingDecks && OnSelectedDeckChanged != null)
 				OnSelectedDeckChanged(this, SelectedDecks.FirstOrDefault());
 		}

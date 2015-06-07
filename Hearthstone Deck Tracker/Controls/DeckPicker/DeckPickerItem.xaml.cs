@@ -38,9 +38,19 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Deck Deck { get; set; }
 
-		public FontWeight SelectedFontWeight
+		public FontWeight FontWeightActiveDeck
 		{
 			get { return Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular; }
+		}
+
+		public FontWeight FontWeightSelected
+		{
+			get
+			{
+				return Equals(Deck, DeckList.Instance.ActiveDeck)
+					       ? FontWeights.Bold
+					       : (Helper.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
+			}
 		}
 
 		public string TextUseButton
@@ -57,7 +67,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void RefreshProperties()
 		{
-			OnPropertyChanged("SelectedFontWeight");
+			OnPropertyChanged("FontWeightSelected");
+			OnPropertyChanged("FontWeightActiveDeck");
 			OnPropertyChanged("TextUseButton");
 		}
 

@@ -14,9 +14,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		private static readonly Dictionary<string, BitmapImage> ImageCacheDict = new Dictionary<string, BitmapImage>();
 
-		public static BitmapImage ArchivedMarker
+		public static BitmapImage Archived
 		{
 			get { return GetClassIcon(HeroClassAll.Archived); }
+		}
+
+		public static BitmapImage ArchivedBlack
+		{
+			get { return GetImage("ClassIcons/General/BaseLight/archived.png"); }
 		}
 
 		public static BitmapImage Druid

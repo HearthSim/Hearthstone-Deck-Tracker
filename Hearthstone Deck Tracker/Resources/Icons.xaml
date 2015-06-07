@@ -90,4 +90,7 @@
     <Canvas x:Key="appbar_page_bold" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="36" Height="42" Canvas.Left="20" Canvas.Top="17" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 20,17L 42.25,17L 56,30.75L 56,59L 20,59L 20,17 Z M 25,22L 25,54L 51,54L 51,37L 36,37L 36,22L 25,22 Z M 41,22.25L 41,32L 50.75,32L 41,22.25 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_page_bold_black" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="36" Height="42" Canvas.Left="20" Canvas.Top="17" Stretch="Fill" Fill="Black" Data="F1 M 20,17L 42.25,17L 56,30.75L 56,59L 20,59L 20,17 Z M 25,22L 25,54L 51,54L 51,37L 36,37L 36,22L 25,22 Z M 41,22.25L 41,32L 50.75,32L 41,22.25 Z "/>
+    </Canvas>
 </ResourceDictionary>

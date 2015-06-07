@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(50)]
 		public int DeckExportDelay = 60;
 
-		[DefaultValue(DeckLayout.Layout2)]
+		[DefaultValue(DeckLayout.Layout1)]
 		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
 		[DefaultValue(false)]
