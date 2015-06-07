@@ -20,6 +20,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -320,7 +321,7 @@ namespace Hearthstone_Deck_Tracker
 			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
 		}
 
-		private void DeckPickerList_OnOnDoubleClick(NewDeckPicker sender, Deck deck)
+		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
 		{
 			if(deck == null)
 				return;
@@ -1631,7 +1632,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void DeckPickerList_OnSelectedDeckChanged(NewDeckPicker sender, Deck deck)
+		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
 			SelectDeck(deck, false);
 		}
@@ -1665,7 +1666,7 @@ namespace Hearthstone_Deck_Tracker
 						else
 							break;
 					}
-					DeckList.Instance.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name, Id = deck.DeckId });
+					DeckList.Instance.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
 					DeckList.Save();
 
 					Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
@@ -1673,7 +1674,6 @@ namespace Hearthstone_Deck_Tracker
 					int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
 					_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 				}
-
 			}
 			else
 			{

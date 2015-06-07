@@ -1,16 +1,15 @@
-﻿<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.NewDeckPicker"
+﻿<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPicker"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-           xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+           xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
            xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
-           xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
            mc:Ignorable="d"
            d:DesignHeight="500" d:DesignWidth="300">
     <DockPanel DockPanel.Dock="Top">
         <Border
-            Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
+            Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
             BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
             <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="Search..."
                      controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
@@ -29,14 +28,14 @@
                     </Style>
                 </Grid.Style>
                 <Rectangle Name="RectangleSearchIcon" Margin="2"
-                           Visibility="{Binding VisibilitySearchIcon, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
+                           Visibility="{Binding VisibilitySearchIcon, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                            PreviewMouseLeftButtonUp="RectangleSearchIcon_OnPreviewMouseLeftButtonUp">
                     <Rectangle.Fill>
                         <VisualBrush Visual="{DynamicResource appbar_magnify}" />
                     </Rectangle.Fill>
                 </Rectangle>
                 <Rectangle Name="RectangleCloseIcon" Margin="2"
-                           Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
+                           Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                            PreviewMouseLeftButtonUp="RectangleCloseIcon_OnPreviewMouseLeftButtonUp">
                     <Rectangle.Fill>
                         <VisualBrush Visual="{DynamicResource appbar_close}" />
@@ -48,7 +47,7 @@
                   Height="28" Margin="0,0,0,2" BorderThickness="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                  ItemsSource="{Binding DeckTypeItems, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}">
+                  ItemsSource="{Binding DeckTypeItems, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -86,29 +85,33 @@
             PreviewMouseDown="ActiveDeckPanel_OnPreviewMouseDown" Height="26">
         <DockPanel>
             <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
-                       VerticalAlignment="Center"
-                       Margin="5,0,0,0" DockPanel.Dock="Left" />
+                       VerticalAlignment="Center" Margin="5,0,0,0" DockPanel.Dock="Left" />
             <Image
-                Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
+                Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
-            <DockPanel Margin="0,0,5,0">
-                <DockPanel.Resources>
-                    <controls:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
-                    <controls:MarginConverterRight x:Key="MarginConverterRight" />
-                </DockPanel.Resources>
-                <TextBlock Name="TextBlockName"
-                           Text="{Binding ActiveDeck.NameAndVersion, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
-                           Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterRight}}"
-                           FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                           DockPanel.Dock="Left" />
-                <TextBlock Name="TextBlockStats" VerticalAlignment="Center" Foreground="{DynamicResource GrayBrush2}" 
-                           Text="{Binding ActiveDeck.StatsString, RelativeSource={RelativeSource AncestorType=controls:NewDeckPicker}}"
-                           Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
-                <Grid />
-            </DockPanel>
+            <Grid Margin="0,0,5,0">
+                <TextBlock Text="NONE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                           HorizontalAlignment="Left" />
+                <DockPanel>
+                    <DockPanel.Resources>
+                        <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
+                        <deckPicker:MarginConverterRight x:Key="MarginConverterRight" />
+                    </DockPanel.Resources>
+                    <TextBlock Name="TextBlockName" Background="{DynamicResource ControlBackgroundBrush}"
+                               Text="{Binding ActiveDeck.NameAndVersion, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                               Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterRight}}"
+                               FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                               DockPanel.Dock="Left" />
+                    <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
+                               Foreground="{DynamicResource GrayBrush2}"
+                               Text="{Binding ActiveDeck.StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                               Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
+                    <Grid />
+                </DockPanel>
+            </Grid>
         </DockPanel>
     </Border>
-    <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="False"
+    <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
         <ListView.ContextMenu>

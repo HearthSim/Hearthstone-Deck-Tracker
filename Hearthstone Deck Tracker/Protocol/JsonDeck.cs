@@ -1,34 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿#region
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Protocol
 {
 	[JsonObject]
 	public class JsonDeck
 	{
-		[JsonProperty("name")]
-		public string Name = "";
-
 		[JsonProperty("cards")]
 		public JsonCard[] Cards = {};
-
-		[JsonProperty("tags")]
-		public string[] Tags = {};
-
-		[JsonProperty("url")]
-		public string Url = "";
 
 		[JsonProperty("arena")]
 		public bool IsArena;
 
 		[JsonProperty("nonenglish")]
 		public bool LocalizedNames;
+
+		[JsonProperty("name")]
+		public string Name = "";
+
+		[JsonProperty("tags")]
+		public string[] Tags = {};
+
+		[JsonProperty("url")]
+		public string Url = "";
 
 		public Deck ToDeck()
 		{

@@ -87,4 +87,7 @@
     <Canvas x:Key="appbar_puzzle_round" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="41.1667" Height="41.1667" Canvas.Left="20.5833" Canvas.Top="15.8334" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 37.2083,15.8334C 46.7083,19 35.625,20.5833 41.1667,25.3333L 52.25,25.3334L 52.25,36.4167C 57,41.9584 58.5833,30.875 61.75,40.375C 58.5833,49.875 57,38.7917 52.25,44.3334L 52.25,57L 41.1667,57C 35.625,52.25 46.7083,50.6667 37.2083,47.5C 27.7083,50.6667 38.7917,52.25 33.25,57L 20.5833,57L 20.5833,44.3333C 25.3333,38.7917 26.9167,49.875 30.0833,40.375C 26.9167,30.875 25.3333,41.9583 20.5833,36.4167L 20.5833,25.3333L 33.25,25.3333C 38.7916,20.5833 27.7083,19 37.2083,15.8334 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_page_bold" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="36" Height="42" Canvas.Left="20" Canvas.Top="17" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 20,17L 42.25,17L 56,30.75L 56,59L 20,59L 20,17 Z M 25,22L 25,54L 51,54L 51,37L 36,37L 36,22L 25,22 Z M 41,22.25L 41,32L 50.75,32L 41,22.25 Z "/>
+    </Canvas>
 </ResourceDictionary>

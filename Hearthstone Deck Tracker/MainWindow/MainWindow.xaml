@@ -8,8 +8,9 @@
                       xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
                       xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
-                      Title="Hearthstone Deck Tracker" Height="603" Width="650"
-                      MinHeight="584" MinWidth="650"
+                      xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="700"
+                      MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
@@ -399,7 +400,7 @@
                 </ListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
             </Grid>
-                <controls1:NewDeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
+                <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2"
                               Height="auto" Width="auto"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"

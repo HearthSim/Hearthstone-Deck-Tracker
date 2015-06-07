@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -20,21 +21,21 @@ using ListView = System.Windows.Controls.ListView;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.Controls
+namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	/// <summary>
-	/// Interaction logic for NewDeckPicker.xaml
+	/// Interaction logic for DeckPicker.xaml
 	/// </summary>
-	public partial class NewDeckPicker : INotifyPropertyChanged
+	public partial class DeckPicker : INotifyPropertyChanged
 	{
-		public delegate void DoubleClickHandler(NewDeckPicker sender, Deck deck);
+		public delegate void DoubleClickHandler(DeckPicker sender, Deck deck);
 
-		public delegate void SelectedDeckHandler(NewDeckPicker sender, Deck deck);
+		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
 
 		private readonly DeckPickerClassItem _archivedClassItem;
-		private readonly Dictionary<Deck, NewDeckPickerItem> _cachedDeckPickerItems = new Dictionary<Deck, NewDeckPickerItem>();
+		private readonly Dictionary<Deck, DeckPickerItem> _cachedDeckPickerItems = new Dictionary<Deck, DeckPickerItem>();
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
-		private readonly ObservableCollection<NewDeckPickerItem> _displayedDecks;
+		private readonly ObservableCollection<DeckPickerItem> _displayedDecks;
 		private bool _clearingClasses;
 		private ObservableCollection<string> _deckTypeItems;
 		private bool _ignoreSelectionChange;
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private bool _reselectingDecks;
 		public bool ChangedSelection;
 
-		public NewDeckPicker()
+		public DeckPicker()
 		{
 			InitializeComponent();
 			_classItems =
@@ -54,14 +55,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
-			_displayedDecks = new ObservableCollection<NewDeckPickerItem>();
+			_displayedDecks = new ObservableCollection<DeckPickerItem>();
 			ListViewDecks.ItemsSource = _displayedDecks;
 			DeckTypeItems = new ObservableCollection<string> {"ALL", "ARENA", "CONSTRUCTED"};
 		}
 
 		public List<Deck> SelectedDecks
 		{
-			get { return ListViewDecks.SelectedItems.Cast<NewDeckPickerItem>().Select(x => x.Deck).ToList(); }
+			get { return ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList(); }
 		}
 
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; private set; }
@@ -326,12 +327,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 				ActiveDeck.StatsUpdated();
 		}
 
-		private NewDeckPickerItem GetDeckPickerItemFromCache(Deck deck)
+		private DeckPickerItem GetDeckPickerItemFromCache(Deck deck)
 		{
-			NewDeckPickerItem dpi;
+			DeckPickerItem dpi;
 			if(_cachedDeckPickerItems.TryGetValue(deck, out dpi))
 				return dpi;
-			dpi = new NewDeckPickerItem(deck);
+			var layout = Config.Instance.DeckPickerItemLayout == DeckLayout.Layout1
+				             ? typeof(DeckPickerItemLayout1) : typeof(DeckPickerItemLayout2);
+			dpi = new DeckPickerItem(deck, layout);
 			_cachedDeckPickerItems.Add(deck, dpi);
 			return dpi;
 		}

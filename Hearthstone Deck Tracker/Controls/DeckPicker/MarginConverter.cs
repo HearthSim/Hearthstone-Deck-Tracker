@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Hearthstone_Deck_Tracker.Controls
+#endregion
+
+namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	public class MarginConverterNegativeLeft : IValueConverter
 	{
@@ -21,11 +21,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 			return null;
 		}
 	}
+
 	public class MarginConverterRight : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return new Thickness(0, 0, System.Convert.ToDouble(value)+8, 0);
+			return new Thickness(0, 0, System.Convert.ToDouble(value) + 8, 0);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

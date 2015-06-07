@@ -37,6 +37,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerFatigue(int currentDamage);
 		void HandleOpponentFatigue(int currentDamage);
 		void SetRank(int rank);
+		void HandleDustReward(int amount);
+		void HandleGoldReward(int amount);
 
 		#region OpponentHandlers
 
@@ -56,8 +58,5 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGetToDeck(int turn);
 
 		#endregion OpponentHandlers
-
-		void HandleDustReward(int amount);
-		void HandleGoldReward(int amount);
 	}
 }

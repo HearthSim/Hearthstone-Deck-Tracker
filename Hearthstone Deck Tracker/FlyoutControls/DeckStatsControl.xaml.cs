@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -918,10 +919,10 @@ namespace Hearthstone_Deck_Tracker
 			{
 				get
 				{
-					if(!Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
-						return new BitmapImage();
-					var uri = new Uri(string.Format("../Resources/ClassIcons/Round/{0}.png", _playerHero.ToLower()), UriKind.Relative);
-					return new BitmapImage(uri);
+					HeroClassAll playerHero;
+					if(Enum.TryParse(_playerHero, out playerHero))
+						return ImageCache.GetClassIcon(playerHero);
+					return new BitmapImage();
 				}
 			}
 

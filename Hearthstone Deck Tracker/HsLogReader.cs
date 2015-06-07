@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private readonly Regex _creationRegex = new Regex(@"FULL_ENTITY\ -\ Creating\ ID=(?<id>(\d+))\ CardID=(?<cardId>(\w*))");
 		private readonly Regex _creationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
+		private readonly Regex _dustRewardRegex = new Regex(@"ArcaneDustRewardData: Amount=(?<amount>(\d+))");
 		private readonly Regex _entityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
 
 		private readonly Regex _entityRegex =
@@ -41,6 +42,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly string _fullOutputPath;
 		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 		private readonly Regex _goldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
+		private readonly Regex _goldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
 		private readonly bool _ifaceUpdateNeeded = true;
 
 		private readonly Regex _playerEntityRegex =
@@ -51,10 +53,6 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		private readonly int _updateDelay;
 		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
-
-		private readonly Regex _goldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
-		private readonly Regex _dustRewardRegex = new Regex(@"ArcaneDustRewardData: Amount=(?<amount>(\d+))");
-
 		private int _addToTurn;
 		private bool _awaitingRankedDetection;
 		private bool _currentEntityHasCardId;

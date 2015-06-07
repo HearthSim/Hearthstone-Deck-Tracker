@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -26,14 +27,14 @@ namespace Hearthstone_Deck_Tracker
 			WindowStartupLocation = WindowStartupLocation.CenterOwner;
 			ListViewDecks.Items.Clear();
 			foreach(var deck in decks.OrderByDescending(d => d.Name))
-				ListViewDecks.Items.Add(new NewDeckPickerItem(deck));
+				ListViewDecks.Items.Add(new DeckPickerItem(deck, typeof(DeckPickerItemLayout1)));
 		}
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			foreach(var item in e.AddedItems)
 			{
-				var pickerItem = item as NewDeckPickerItem;
+				var pickerItem = item as DeckPickerItem;
 				if(pickerItem == null)
 					continue;
 				DeckList.Instance.ActiveDeck = pickerItem.DataContext as Deck;
@@ -41,12 +42,12 @@ namespace Hearthstone_Deck_Tracker
 			}
 			foreach(var item in e.RemovedItems)
 			{
-				var pickerItem = item as NewDeckPickerItem;
+				var pickerItem = item as DeckPickerItem;
 				if(pickerItem == null)
 					continue;
 				pickerItem.RefreshProperties();
 			}
-			var dpi = ListViewDecks.SelectedItem as NewDeckPickerItem;
+			var dpi = ListViewDecks.SelectedItem as DeckPickerItem;
 			if(dpi != null)
 			{
 				SelectedDeck = dpi.Deck;

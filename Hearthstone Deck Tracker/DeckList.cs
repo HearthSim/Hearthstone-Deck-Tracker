@@ -50,11 +50,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void LoadActiveDeck()
-		{
-			ActiveDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
-		}
-
 		public Deck ActiveDeckVersion
 		{
 			get { return ActiveDeck == null ? null : ActiveDeck.GetSelectedDeckVersion(); }
@@ -63,6 +58,11 @@ namespace Hearthstone_Deck_Tracker
 		public static DeckList Instance
 		{
 			get { return _instance ?? (_instance = new DeckList()); }
+		}
+
+		public void LoadActiveDeck()
+		{
+			ActiveDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		//public Guid ActiveDeckId { get; set; }

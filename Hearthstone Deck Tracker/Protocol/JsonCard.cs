@@ -10,18 +10,18 @@ namespace Hearthstone_Deck_Tracker.Protocol
 	[JsonObject]
 	public class JsonCard
 	{
+		[JsonProperty("count")]
+		public int Count = 1;
+
 		[JsonProperty("id")]
 		public string Id = "";
 
 		[JsonProperty("name")]
 		public string Name = "";
 
-		[JsonProperty("count")]
-		public int Count = 1;
-
 		public Card ToCard(bool localizedName)
 		{
-			Card card = null; 
+			Card card = null;
 			if(!string.IsNullOrEmpty(Id))
 				card = Game.GetCardFromId(Id);
 			else if(!string.IsNullOrEmpty(Name))

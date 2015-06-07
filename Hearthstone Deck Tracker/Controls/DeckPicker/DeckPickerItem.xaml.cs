@@ -6,28 +6,34 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.Controls
+namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	/// <summary>
-	/// Interaction logic for NewDeckPickerItem.xaml
+	/// Interaction logic for DeckPickerItem.xaml
 	/// </summary>
-	public partial class NewDeckPickerItem : INotifyPropertyChanged
+	public partial class DeckPickerItem : INotifyPropertyChanged
 	{
-		public NewDeckPickerItem()
+		private static Type _deckPickerItem = typeof(DeckPickerItemLayout1);
+
+		public DeckPickerItem()
 		{
 			InitializeComponent();
 			Deck = DataContext as Deck;
+			SetLayout();
 		}
 
-		public NewDeckPickerItem(Deck deck)
+		public DeckPickerItem(Deck deck, Type deckPickerItemLayout)
 		{
 			InitializeComponent();
 			DataContext = deck;
 			Deck = deck;
+			_deckPickerItem = deckPickerItemLayout;
+			SetLayout();
 		}
 
 		public Deck Deck { get; set; }
@@ -37,7 +43,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular; }
 		}
 
+		public string TextUseButton
+		{
+			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void SetLayout()
+		{
+			Content = Activator.CreateInstance(_deckPickerItem);
+		}
 
 		public void RefreshProperties()
 		{
@@ -51,15 +67,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var handler = PropertyChanged;
 			if(handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		private void UseButton_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-		{
-			if(!Deck.Equals(DeckList.Instance.ActiveDeck))
-			{
-				Helper.MainWindow.SelectDeck(Deck, true);
-				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
-			}
 		}
 
 		#region sorting properties
@@ -95,10 +102,27 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		#endregion
+	}
 
-		public string TextUseButton
+	public class Command : ICommand
+	{
+		private readonly Action _action;
+
+		public Command(Action action)
 		{
-			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
+			_action = action;
 		}
+
+		public bool CanExecute(object parameter)
+		{
+			return _action != null;
+		}
+
+		public void Execute(object parameter)
+		{
+			_action.Invoke();
+		}
+
+		public event EventHandler CanExecuteChanged;
 	}
 }

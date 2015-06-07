@@ -6,7 +6,7 @@ using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.Controls
+namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	/// <summary>
 	/// Interaction logic for DeckPickerClassItem.xaml
@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				var heroClass = DataContext as HeroClassAll?;
 				if(heroClass == null)
 					return new BitmapImage();
-				return ImageCache.GetImage(string.Format("ClassIcons/Round/{0}.png", heroClass.Value.ToString().ToLower()));
+				return ImageCache.GetClassIcon(heroClass.Value);
 			}
 		}
 

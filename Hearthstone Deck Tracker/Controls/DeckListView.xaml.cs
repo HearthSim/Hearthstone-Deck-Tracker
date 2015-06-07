@@ -1,4 +1,4 @@
-﻿namespace Hearthstone_Deck_Tracker
+﻿namespace Hearthstone_Deck_Tracker.Controls
 {
 	/// <summary>
 	/// Interaction logic for DeckListView.xaml

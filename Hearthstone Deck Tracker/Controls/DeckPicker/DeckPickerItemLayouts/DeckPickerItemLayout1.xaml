@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts.DeckPickerItemLayout1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300" Height="52" Margin="0,-1,0,0">
+    <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,1,0,1">
+        <DockPanel>
+            <Grid Width="46" Height="46" Margin="5,1,10,0">
+                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}"
+                       RenderOptions.BitmapScalingMode="Fant" />
+            </Grid>
+            <Border DockPanel.Dock="Right" PreviewMouseDown="UseButton_OnPreviewMouseDown" Background="#01000000"
+                    Width="65">
+                <Border.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                <Setter Property="TextBlock.FontWeight" Value="Bold" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock
+                    Text="{Binding TextUseButton, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
+                    FontSize="13" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,10,0"
+                    Foreground="{DynamicResource GrayBrush2}" />
+            </Border>
+            <StackPanel Margin="0,5">
+                <DockPanel>
+                    <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.ArchivedMarker}" Width="16"
+                           Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                           Visibility="{Binding ArchivedVisibility}"
+                           ToolTip="Archived" />
+                    <DockPanel>
+                        <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
+                                   FontSize="17" TextTrimming="CharacterEllipsis"
+                                   Foreground="{DynamicResource TextBrush}"
+                                   FontWeight="{Binding SelectedFontWeight, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
+                        <Rectangle Width="10" Height="13" Visibility="{Binding NoteVisibility}" Margin="-10,-8,0,0"
+                                   ToolTip="{Binding Note}">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_page_bold}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Grid DockPanel.Dock="Right" />
+                    </DockPanel>
+                </DockPanel>
+                <DockPanel Margin="0,-2,0,0" Height="19">
+                    <Viewbox DockPanel.Dock="Left" Width="70" StretchDirection="DownOnly" Stretch="Fill"
+                             HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
+                                   Foreground="{DynamicResource GrayBrush2}" FontSize="14" />
+                    </Viewbox>
+                    <Viewbox Margin="10,0,0,0" StretchDirection="DownOnly" Stretch="Fill" DockPanel.Dock="Left">
+                        <ItemsControl ItemsSource="{Binding Tags}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <DockPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border DockPanel.Dock="Right" BorderBrush="{DynamicResource GrayBrush2}"
+                                            BorderThickness="1" Margin="2,0,0,0">
+                                        <TextBlock Text="{Binding}" FontSize="10"
+                                                   Foreground="{DynamicResource GrayBrush2}" VerticalAlignment="Center"
+                                                   TextAlignment="Center" TextTrimming="CharacterEllipsis" Margin="4,0" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Viewbox>
+                    <Grid />
+                </DockPanel>
+            </StackPanel>
+        </DockPanel>
+    </Border>
+</UserControl>

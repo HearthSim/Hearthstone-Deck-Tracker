@@ -245,16 +245,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return new SolidColorBrush(Colors.White); }
 		}
 
-		public string CardFileName { get
+		public string CardFileName
 		{
-			return Name.ToLowerInvariant()
-			           .Replace(' ', '-')
-			           .Replace(":", "")
-			           .Replace("'", "-")
-			           .Replace(".", "")
-			           .Replace("!", "")
-			           .Replace(",", "");
-		} }
+			get
+			{
+				return Name.ToLowerInvariant()
+				           .Replace(' ', '-')
+				           .Replace(":", "")
+				           .Replace("'", "-")
+				           .Replace(".", "")
+				           .Replace("!", "")
+				           .Replace(",", "");
+			}
+		}
+
 		public ImageBrush Background
 		{
 			get

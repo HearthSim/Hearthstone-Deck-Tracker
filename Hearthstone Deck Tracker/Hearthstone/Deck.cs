@@ -21,13 +21,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
+		private const string baseHearthStatsUrl = @"http://hss.io/d/";
+		private bool _archived;
+		private List<GameStats> _cachedGames;
 		private Guid _deckId;
+		private int? _dustReward;
+		private int? _goldReward;
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
+		private DateTime _lastCacheUpdate = DateTime.MinValue;
+		private string _name;
+		private string _note;
+		private SerializableVersion _selectedVersion = new SerializableVersion(1, 0);
 		private List<string> _tags;
-		private bool _archived;
-		public bool Archived { get { return _archived; } set { _archived = value; OnPropertyChanged(); OnPropertyChanged("ArchivedVisibility"); } }
 
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -43,30 +50,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Card")]
 		public List<Card> MissingCards;
 
-		private string _note;
-
-		public string Note
-		{
-			get { return _note; }
-			set
-			{
-				_note = value;
-				OnPropertyChanged();
-				OnPropertyChanged("NoteVisibility");
-			}
-		}
-
-		private SerializableVersion _selectedVersion = new SerializableVersion(1, 0);
-		public SerializableVersion SelectedVersion
-		{
-			get { return _selectedVersion; }
-			set
-			{
-				_selectedVersion = value;
-				OnPropertyChanged();
-				OnPropertyChanged("NameAndVersion");
-			}
-		}
 		public string Url;
 		public SerializableVersion Version = new SerializableVersion(1, 0);
 
@@ -125,6 +108,39 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public bool Archived
+		{
+			get { return _archived; }
+			set
+			{
+				_archived = value;
+				OnPropertyChanged();
+				OnPropertyChanged("ArchivedVisibility");
+			}
+		}
+
+		public string Note
+		{
+			get { return _note; }
+			set
+			{
+				_note = value;
+				OnPropertyChanged();
+				OnPropertyChanged("NoteVisibility");
+			}
+		}
+
+		public SerializableVersion SelectedVersion
+		{
+			get { return _selectedVersion; }
+			set
+			{
+				_selectedVersion = value;
+				OnPropertyChanged();
+				OnPropertyChanged("NameAndVersion");
+			}
+		}
+
 		public bool HearthStatsIdsAlreadyReset { get; set; }
 
 		[XmlIgnore]
@@ -144,8 +160,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isArenaDeck = value; }
 		}
 
-		private int? _goldReward;
-
 		public int? GoldReward
 		{
 			get { return IsArenaDeck ? _goldReward : null; }
@@ -155,8 +169,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					_goldReward = value;
 			}
 		}
-
-		private int? _dustReward;
 
 		public int? DustReward
 		{
@@ -168,8 +180,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public bool? IsArenaRunCompleted { get { return IsArenaDeck ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12 || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null; } }
-
+		public bool? IsArenaRunCompleted
+		{
+			get
+			{
+				return IsArenaDeck
+					       ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
+					          || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
+			}
+		}
 
 		public Guid DeckId
 		{
@@ -177,8 +196,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _deckId = value; }
 		}
 
-		private string _name;
-		public string Name { get { return _name; }
+		public string Name
+		{
+			get { return _name; }
 			set
 			{
 				_name = value;
@@ -186,6 +206,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OnPropertyChanged("NameAndVersion");
 			}
 		}
+
 		public bool? SyncWithHearthStats { get; set; }
 
 		[XmlIgnore]
@@ -194,7 +215,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone); }
 		}
 
-		private const string baseHearthStatsUrl = @"http://hss.io/d/";
 		[XmlIgnore]
 		public string HearthStatsUrl
 		{
@@ -301,6 +321,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_tags = value;
+				OnPropertyChanged();
 				OnPropertyChanged("TagList");
 			}
 		}
@@ -352,26 +373,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-
-			
 		[XmlIgnore]
 		public BitmapImage ClassImage
 		{
 			get
 			{
-				if(!Enum.GetNames(typeof(HeroClass)).Contains(Class))
-					return new BitmapImage();
-				return ImageCache.GetImage(string.Format("ClassIcons/Round/{0}.png", Class.ToLower()));
+				HeroClassAll heroClass;
+				if(Enum.TryParse(Class, out heroClass))
+					return ImageCache.GetClassIcon(heroClass);
+				return new BitmapImage();
 			}
 		}
 
 		[XmlIgnore]
 		public BitmapImage HeroImage
 		{
-			get
-			{
-				return ClassImage;
-			}
+			get { return ClassImage; }
 		}
 
 		public DeckStats DeckStats
@@ -407,7 +424,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _hearthStatsIdClone = value; }
 		}
 
-		public Visibility VisibilityStats { get { return GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed; } }
+		public Visibility VisibilityStats
+		{
+			get { return GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed; }
+		}
 
 		public Visibility VisibilityNoStats
 		{
@@ -424,6 +444,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return Archived ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
+		private TimeSpan ValidCacheDuration
+		{
+			get { return new TimeSpan(0, 0, 1); }
+		}
+
+		private bool CacheIsValid
+		{
+			get { return _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration; }
+		}
+
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
@@ -431,19 +461,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
-
-
-		private DateTime _lastCacheUpdate = DateTime.MinValue;
-		private List<GameStats> _cachedGames;
-
-		private TimeSpan ValidCacheDuration
-		{
-			get { return new TimeSpan(0, 0, 1); }
-		}
-		private bool CacheIsValid
-		{
-			get { return _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration; }
-		}
 
 		public List<GameStats> GetRelevantGames()
 		{

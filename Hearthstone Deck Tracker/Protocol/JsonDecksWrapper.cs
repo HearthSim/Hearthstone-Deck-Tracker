@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using MahApps.Metro.Controls.Dialogs;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Protocol
 {
 	[JsonObject]
 	public class JsonDecksWrapper
 	{
-		[JsonProperty("decks")]
-		public JsonDeck[] Decks = { };
-
 		[JsonProperty("autosave")]
 		public bool AutoSave = false;
+
+		[JsonProperty("decks")]
+		public JsonDeck[] Decks = {};
 
 		public async void SaveDecks()
 		{
 			var tags = Decks.Where(d => d.Tags != null).SelectMany(x => x.Tags).ToList();
 			if(tags.Any())
-                            {
+			{
 				var reloadTags = false;
 				foreach(var tag in tags)
 				{
@@ -69,9 +70,7 @@ namespace Hearthstone_Deck_Tracker.Protocol
 				await controller.CloseAsync();
 			}
 			else if(decks.Count == 1)
-			{
 				Helper.MainWindow.SetNewDeck(decks[0]);
-			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,6 +8,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
@@ -35,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 			ComboboxKeyPressGameStart.ItemsSource = Helper.MainWindow.EventKeys;
 			ComboboxKeyPressGameEnd.ItemsSource = Helper.MainWindow.EventKeys;
+			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
+			ComboBoxIconSet.ItemsSource = Enum.GetValues(typeof(IconStyle));
 
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
@@ -65,6 +70,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
 			ComboboxTheme.SelectedItem = theme;
 			ComboboxAccent.SelectedItem = accent;
+
+			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
+			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
 
 			_initialized = true;
 		}
@@ -380,6 +388,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ShowLoginDialog = false;
 			Config.Save();
+		}
+
+		private void ComboboxIconSet_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.");
+		}
+
+		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
+			Config.Save();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.");
+		}
+
+		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.Restart();
 		}
 	}
 }
