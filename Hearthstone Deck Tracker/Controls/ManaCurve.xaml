@@ -5,43 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
-             d:DesignHeight="300" Width="235" >
+             d:DesignHeight="300" Width="235">
     <DockPanel>
-            <ListView Name="ListViewStatType" DockPanel.Dock="Top"
-                      SelectionChanged="ListViewStatType_OnSelectionChanged"
-                      SelectionMode="Single" Height="28"
-                      Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" BorderThickness="1"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                </ListView.Resources>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListViewItem Name="ListViewItemMana" Grid.Column="0">
-                    <TextBlock Text="MANA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                               FontWeight="SemiBold" />
-                </ListViewItem>
-                <ListViewItem Name="ListViewItemHealth" Grid.Column="1">
-                    <TextBlock Text="HEALTH" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                               FontWeight="SemiBold" />
-                </ListViewItem>
-                <ListViewItem Name="ListViewItemAttack" Grid.Column="2">
-                    <TextBlock Text="ATTACK" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                               FontWeight="SemiBold" />
-                </ListViewItem>
-            </ListView>
+        <ListView Name="ListViewStatType" DockPanel.Dock="Top"
+                  SelectionChanged="ListViewStatType_OnSelectionChanged"
+                  SelectionMode="Single" Height="28" BorderThickness="1"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListViewItem Name="ListViewItemMana" Grid.Column="0">
+                <TextBlock Text="MANA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold" />
+            </ListViewItem>
+            <ListViewItem Name="ListViewItemHealth" Grid.Column="1">
+                <TextBlock Text="HEALTH" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold" />
+            </ListViewItem>
+            <ListViewItem Name="ListViewItemAttack" Grid.Column="2">
+                <TextBlock Text="ATTACK" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold" />
+            </ListViewItem>
+        </ListView>
 
         <Border BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,2,0,0">
             <Grid Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
@@ -62,46 +61,46 @@
                 <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.Row="1"
                            Grid.ColumnSpan="8" Margin="1" />
                 <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
-                <TextBlock Text="0" FontSize="14" Grid.Column="0" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="0" FontSize="14" Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
 
-                <TextBlock Text="1" FontSize="14" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="1" FontSize="14" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="2" FontSize="14" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="2" FontSize="14" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="3" FontSize="14" Grid.Column="3" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="3" FontSize="14" Grid.Column="3" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="4" FontSize="14" Grid.Column="4" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="4" FontSize="14" Grid.Column="4" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="5" FontSize="14" Grid.Column="5" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="5" FontSize="14" Grid.Column="5" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="6" FontSize="14" Grid.Column="6" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="6" FontSize="14" Grid.Column="6" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                 <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold"
+                <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
-                <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" />
+                <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" Foreground="Black" />
             </Grid>
-         </Border>
-        </DockPanel>
+        </Border>
+    </DockPanel>
 </UserControl>

@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -153,10 +154,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if(!_hsClasses.Contains(OpponentHero))
-					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", OpponentHero.ToLower()), UriKind.Relative);
-				return new BitmapImage(uri);
+				HeroClassAll oppHero;
+				if(Enum.TryParse(OpponentHero, out oppHero))
+					return ImageCache.GetClassIcon(oppHero);
+				return new BitmapImage();
 			}
 		}
 
@@ -165,10 +166,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if(!_hsClasses.Contains(PlayerHero))
-					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", PlayerHero.ToLower()), UriKind.Relative);
-				return new BitmapImage(uri);
+				HeroClassAll playerHero;
+				if(Enum.TryParse(PlayerHero, out playerHero))
+					return ImageCache.GetClassIcon(playerHero);
+				return new BitmapImage();
 			}
 		}
 
@@ -375,7 +376,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public Deck GetOpponentDeck()
 		{
 			var ignoreCards = new List<Card>();
-			var deck = new Deck { Class = OpponentHero };
+			var deck = new Deck {Class = OpponentHero};
 			foreach(var turn in TurnStats)
 			{
 				foreach(var play in turn.Plays)

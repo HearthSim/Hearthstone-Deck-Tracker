@@ -245,6 +245,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return new SolidColorBrush(Colors.White); }
 		}
 
+		public string CardFileName
+		{
+			get
+			{
+				return Name.ToLowerInvariant()
+				           .Replace(' ', '-')
+				           .Replace(":", "")
+				           .Replace("'", "-")
+				           .Replace(".", "")
+				           .Replace("!", "")
+				           .Replace(",", "");
+			}
+		}
+
 		public ImageBrush Background
 		{
 			get
@@ -257,9 +271,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new ImageBrush();
 				try
 				{
-					var cardFileName =
-						Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "")
-						+ ".png";
+					var cardFileName = CardFileName + ".png";
 
 
 					//card graphic

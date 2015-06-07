@@ -5,8 +5,7 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Select target deck" Height="450" Width="280" Topmost="True" WindowStyle="ToolWindow"
                       WindowStartupLocation="CenterScreen"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
-                      Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <DockPanel>
         <Button DockPanel.Dock="Bottom" Margin="5,0,5,5" Content="MOVE TO SELECTED" Click="ButtonMoveToSelected_OnClick"/>
         <DockPanel DockPanel.Dock="Bottom" >
@@ -19,7 +18,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
-        <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+        <ListView Name="ListViewDecks"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="1,0,0,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">

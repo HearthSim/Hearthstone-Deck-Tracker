@@ -67,7 +67,15 @@ namespace Hearthstone_Deck_Tracker
 		private void StartMainApp()
 		{
 			IsEnabled = false;
-			new MainWindow().Show();
+			var mainWindow = new MainWindow();
+			try
+			{
+				mainWindow.Show();
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error showing main window: " + ex, "LoginWindow");
+			}
 			Close();
 		}
 

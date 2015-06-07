@@ -186,6 +186,7 @@ namespace Hearthstone_Deck_Tracker
 						else if(classDecks.Count == 1)
 						{
 							Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
+							Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 							Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
 						}
 						else if(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == Game.PlayingAs))
@@ -209,6 +210,7 @@ namespace Hearthstone_Deck_Tracker
 								Helper.MainWindow.DeckPickerList.SelectDeck(deck);
 								Helper.MainWindow.UpdateDeckList(deck);
 								Helper.MainWindow.UseDeck(deck);
+								Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 							}
 						}
 					}
@@ -355,6 +357,7 @@ namespace Hearthstone_Deck_Tracker
 
 				_lastGame = Game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
+				selectedDeck.StatsUpdated();
 				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;

@@ -38,6 +38,20 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
+                        <Label Content="Icon set:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxIconSet_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Deck layout:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
                         <Label Content="Language:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                         <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
@@ -106,6 +120,7 @@
                     <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
                     <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
                     <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path" Click="SelectSaveDataPath_Click"/>
+                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt" Click="ButtonRestart_OnClick"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

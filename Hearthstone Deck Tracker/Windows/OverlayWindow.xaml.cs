@@ -893,7 +893,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Canvas.GetLeft(stackpanel) < Width / 2)
 				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
 			else
-				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) - ToolTipCard.Width);
+				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) - ToolTipCard.ActualWidth);
 		}
 
 		public async void UpdatePosition()

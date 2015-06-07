@@ -52,8 +52,8 @@ namespace Hearthstone_Deck_Tracker
 				return await ImportEliteDecks(url);
 			if(url.Contains("icy-veins"))
 				return await ImportIcyVeins(url);
-            if (url.Contains("hearthbuilder"))
-                return await ImportHearthBuilder(url);
+			if(url.Contains("hearthbuilder"))
+				return await ImportHearthBuilder(url);
 			Logger.WriteLine("invalid url", "DeckImporter");
 			return null;
 		}
@@ -609,43 +609,44 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-        private static async Task<Deck> ImportHearthBuilder(string url)
-        {
-            try
-            {
-                var doc = await GetHtmlDoc(url);
-                var deck = new Deck();
+		private static async Task<Deck> ImportHearthBuilder(string url)
+		{
+			try
+			{
+				var doc = await GetHtmlDoc(url);
+				var deck = new Deck();
 
-                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'single-deck-title-wrap')]/h2").InnerText);
-                deck.Name = deckName;
+				var deckName =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'single-deck-title-wrap')]/h2").InnerText);
+				deck.Name = deckName;
 
-                var cardNodes = doc.DocumentNode.SelectNodes("//div[@data-card-load]");
+				var cardNodes = doc.DocumentNode.SelectNodes("//div[@data-card-load]");
 
-                foreach (var cardNode in cardNodes)
-                {
-                    var nameString = HttpUtility.HtmlDecode(cardNode.InnerText);
-                    var match = Regex.Match(nameString, @"^\s*(.*)\s*(x 2)?\s*$");
+				foreach(var cardNode in cardNodes)
+				{
+					var nameString = HttpUtility.HtmlDecode(cardNode.InnerText);
+					var match = Regex.Match(nameString, @"^\s*(.*)\s*(x 2)?\s*$");
 
-                    if (match.Success)
-                    {
-                        var name = match.Groups[1].Value;
-                        var count = match.Groups[2].Value;
+					if(match.Success)
+					{
+						var name = match.Groups[1].Value;
+						var count = match.Groups[2].Value;
 
-                        var card = Game.GetCardFromName(name);
-                        card.Count = String.IsNullOrEmpty(count) ? 1 : 2;
-                        deck.Cards.Add(card);
-                        if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-                            deck.Class = card.PlayerClass;
-                    }
-                }
-                return deck;
-            }
-            catch (Exception e)
-            {
-                Logger.WriteLine(e.ToString(), "DeckImporter");
-                return null;
-            }
-        }
+						var card = Game.GetCardFromName(name);
+						card.Count = String.IsNullOrEmpty(count) ? 1 : 2;
+						deck.Cards.Add(card);
+						if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+							deck.Class = card.PlayerClass;
+					}
+				}
+				return deck;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine(e.ToString(), "DeckImporter");
+				return null;
+			}
+		}
 
 		public static async Task<HtmlDocument> GetHtmlDoc(string url)
 		{

@@ -74,6 +74,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool CheckForUpdates = true;
 
+		[DefaultValue(IconStyle.Round)]
+		public IconStyle ClassIconStyle = IconStyle.Round;
+
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
 
@@ -104,6 +107,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(50)]
 		public int DeckExportDelay = 60;
+
+		[DefaultValue(DeckLayout.Layout2)]
+		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
 		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
@@ -822,6 +828,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void Load()
 		{
 			var foundConfig = false;
+			Environment.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 			try
 			{
 				if(File.Exists("config.xml"))

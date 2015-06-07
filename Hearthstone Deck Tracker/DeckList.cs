@@ -36,12 +36,15 @@ namespace Hearthstone_Deck_Tracker
 		[XmlIgnore]
 		public Deck ActiveDeck
 		{
-			get { return _activeDeck ?? (_activeDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId)); }
+			get { return _activeDeck; }
 			set
 			{
-				if(_activeDeck == value)
+				if(Equals(_activeDeck, value))
 					return;
 				_activeDeck = value;
+				Helper.MainWindow.DeckPickerList.ActiveDeckChanged();
+				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+				Logger.WriteLine("Set active deck to: " + value, "DeckList");
 				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
 				Config.Save();
 			}
@@ -55,6 +58,11 @@ namespace Hearthstone_Deck_Tracker
 		public static DeckList Instance
 		{
 			get { return _instance ?? (_instance = new DeckList()); }
+		}
+
+		public void LoadActiveDeck()
+		{
+			ActiveDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		//public Guid ActiveDeckId { get; set; }
@@ -134,6 +142,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(save)
 				Save();
+
+			Instance.LoadActiveDeck();
 			//Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 

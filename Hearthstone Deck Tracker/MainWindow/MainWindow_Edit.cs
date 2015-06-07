@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		internal void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckList.Instance.ActiveDeck == null)
+			if(DeckPickerList.SelectedDecks.FirstOrDefault() == null)
 				return;
 			FlyoutNotes.IsOpen = !FlyoutNotes.IsOpen;
 		}
@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				return;
 			DeckManagerEvents.OnDeckDeleted.Execute(decks);
-			SelectDeck(null);
+			SelectDeck(null, true);
 			foreach(var deck in decks)
 				DeleteDeck(deck, false);
 			DeckStatsList.Save();
@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
-			SelectDeck(null);
+			SelectDeck(null, true);
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
 			DeckPickerList.SelectDeckAndAppropriateView(DeckList.Instance.ActiveDeck);
-			UpdateMenuItemVisibility(DeckList.Instance.ActiveDeck);
+			UpdateMenuItemVisibility();
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
@@ -142,11 +142,11 @@ namespace Hearthstone_Deck_Tracker
 					DeckPickerList.UpdateDecks();
 
 					if(archive)
-						SelectDeck(null);
+						SelectDeck(null, true);
 					else
 					{
 						DeckPickerList.SelectDeckAndAppropriateView(deck);
-						UpdateMenuItemVisibility(deck);
+						UpdateMenuItemVisibility();
 					}
 
 					DeckPickerList.UpdateArchivedClassVisibility();
@@ -178,28 +178,15 @@ namespace Hearthstone_Deck_Tracker
 					                       AffirmativeButtonText = "clone history",
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 
-			var clone = (Deck)DeckList.Instance.ActiveDeck.CloneWithNewId(false);
-			var originalStats = DeckList.Instance.ActiveDeck.DeckStats;
+			var clone = (Deck)deck.CloneWithNewId(false);
+			var originalStats = deck.DeckStats;
 			clone.ResetHearthstatsIds();
 			clone.Versions.ForEach(v => v.ResetHearthstatsIds());
 			clone.Archived = false;
 
-			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
-			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
-				var name =
-					await
-					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
-
-				if(string.IsNullOrEmpty(name))
-					return;
-
-				clone.Name = name;
-			}*/
-
 			DeckList.Instance.Decks.Add(clone);
-			//DeckPickerList.AddAndSelectDeck(clone);
 			DeckList.Save();
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
@@ -209,7 +196,6 @@ namespace Hearthstone_Deck_Tracker
 				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
 			}
 
-			//clone game stats
 			if(cloneStats)
 			{
 				foreach(var game in originalStats.Games)
@@ -226,7 +212,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			var cloneStats =
@@ -294,7 +280,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void BtnEditDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var selectedDeck = DeckList.Instance.ActiveDeck;
+			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null)
 				return;
 			SetNewDeck(selectedDeck, true);
@@ -302,7 +288,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var selectedDeck = DeckList.Instance.ActiveDeck;
+			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
 				return;
 			var deck = await DeckImporter.Import(selectedDeck.Url);
@@ -352,22 +338,22 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckList.Instance.ActiveDeck != null)
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			if(deck == null || string.IsNullOrEmpty(deck.Url))
+				return;
+			try
 			{
-				try
-				{
-					Process.Start(DeckList.Instance.ActiveDeck.Url);
-				}
-				catch(Exception ex)
-				{
-					Logger.WriteLine("Error opening deck website " + ex);
-				}
+				Process.Start(deck.Url);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error opening deck website " + ex);
 			}
 		}
 
 		internal async void BtnName_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "set", NegativeButtonText = "cancel", DefaultText = deck.Name};

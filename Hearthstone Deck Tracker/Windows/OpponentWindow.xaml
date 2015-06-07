@@ -3,6 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+                      xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
@@ -13,7 +15,7 @@
             <Viewbox Name="ViewboxWinRateAgainst" StretchDirection="DownOnly">
                 <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"/>
             </Viewbox>
-            <local:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0"
+            <controls1:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                 ScrollViewer.CanContentScroll="False" FontFamily="Arial">
@@ -46,7 +48,7 @@
                         </Style.Triggers>
                     </Style>
                 </ListView.Resources>
-            </local:DeckListView>
+            </controls1:DeckListView>
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
             <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">

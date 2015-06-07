@@ -5,13 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
 
     <Grid>
         <GroupBox Header="Plugins">
             <DockPanel>
-                <DockPanel DockPanel.Dock="Left" Margin="5,0,0,0" Width="120">
-                    <Button DockPanel.Dock="Bottom" Click="ButtonAvailablePlugins_OnClick" Content="Available Plugins" Margin="0,5,0,0"/>
+                <DockPanel DockPanel.Dock="Top" Height="150">
+                    <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">
+                        <Button Click="ButtonAvailablePlugins_OnClick" Content="Available Plugins"/>
+                        <Button Click="ButtonOpenPluginsFolder_OnClick" Content="Plugins Folder" Margin="0,5,0,0"/>
+                    </StackPanel>
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged" SelectionMode="Single">
                             <ListBox.ItemTemplate>
@@ -32,7 +35,7 @@
                         </ListBox>
                     </Border>
                 </DockPanel>
-                <GroupBox Name="GroupBoxDetails"  Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <GroupBox Name="GroupBoxDetails" Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}" Margin="0,10,0,0">
                     <DockPanel>
                         <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="Enabled" OffLabel="Disabled" IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
                         <Separator DockPanel.Dock="Top" Margin="0,0,0,5"/>
@@ -41,8 +44,9 @@
                             <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}" TextWrapping="Wrap" Margin="2,0,0,0"/>
                         </StackPanel>
                         <Button Name="ButtonSettings" Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}" IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2"/>
-                        <TextBlock Name="TextBlockDescription" Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}" DockPanel.Dock="Top" TextWrapping="Wrap"/>
-
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock Name="TextBlockDescription" Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}" TextWrapping="Wrap"/>
+                        </ScrollViewer>
                     </DockPanel>
                 </GroupBox>
             </DockPanel>

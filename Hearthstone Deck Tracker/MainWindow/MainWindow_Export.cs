@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			this.ShowMissingCardsMessage(deck);
@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null || !deck.HasHearthStatsId)
 				return;
 			Process.Start(deck.HearthStatsUrl);

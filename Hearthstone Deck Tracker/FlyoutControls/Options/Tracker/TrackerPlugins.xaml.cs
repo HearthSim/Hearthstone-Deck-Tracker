@@ -1,6 +1,8 @@
 ﻿#region
 
+using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -49,6 +51,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e)
 		{
 			Process.Start(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
+		}
+
+		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
+		{
+			Process.Start(Path.Combine(Environment.CurrentDirectory, "Plugins"));
 		}
 	}
 }
