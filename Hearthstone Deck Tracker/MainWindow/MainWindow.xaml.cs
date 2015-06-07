@@ -1650,6 +1650,8 @@ namespace Hearthstone_Deck_Tracker
 				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				MenuItemQuickSetTag.Items.Refresh();
+				DeckPickerList.MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
+				DeckPickerList.MenuItemQuickSetTag.Items.Refresh();
 
 
 				//set and save last used deck for class
