@@ -23,8 +23,8 @@ namespace Hearthstone_Deck_Tracker
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                     + @"\HearthstoneDeckTracker";
 
-		[DefaultValue("")]
-		public string AccentName = "";
+		[DefaultValue("Blue")]
+		public string AccentName = "Blue";
 
 		[DefaultValue("00000000-0000-0000-0000-000000000000")]
 		public string ActiveDeckIdString = Guid.Empty.ToString();
@@ -638,8 +638,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(TagFilerOperation.Or)]
 		public TagFilerOperation TagOperation = TagFilerOperation.Or;
 
-		[DefaultValue("")]
-		public string ThemeName = "";
+		[DefaultValue("BaseLight")]
+		public string ThemeName = "BaseLight";
 
 		[DefaultValue(false)]
 		public bool TimerAlert = false;
