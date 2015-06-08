@@ -866,10 +866,13 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
 			{
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
-				if(game.GameMode == GameMode.Arena)
-					HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
-				else
-					HearthStatsManager.UpdateMatchAsync(game, _deck.GetVersion(game.PlayerDeckVersion), true, true);
+				if(deck != null)
+				{
+					if(game.GameMode == GameMode.Arena)
+						HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
+					else
+						HearthStatsManager.UpdateMatchAsync(game, deck.GetVersion(game.PlayerDeckVersion), true, true);
+				}
 			}
 			DeckStatsList.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
