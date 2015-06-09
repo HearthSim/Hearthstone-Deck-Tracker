@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
@@ -123,7 +124,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
 				Config.Instance.ThemeName = theme.Name;
-				//if(ComboboxWindowBackground.SelectedItem.ToString() != "Default")
+				Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
+																		   ? new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor1"])
+																		   : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
 				Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 				SaveConfig(false);
 			}

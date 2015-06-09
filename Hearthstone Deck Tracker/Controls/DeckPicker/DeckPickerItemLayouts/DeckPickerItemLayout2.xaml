@@ -17,7 +17,7 @@
             <Viewbox DockPanel.Dock="Right" Width="70" StretchDirection="DownOnly" Stretch="Fill"
                      HorizontalAlignment="Right" Margin="0,0,2,0">
                 <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
-                           Foreground="{DynamicResource GrayBrush2}" FontSize="14" />
+                           Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
             </Viewbox>
             <StackPanel Margin="0,5">
                 <DockPanel>
@@ -55,7 +55,7 @@
                         <TextBlock
                             Text="{Binding TextUseButton, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
                             FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Center"
-                            Foreground="{DynamicResource GrayBrush2}" />
+                            Foreground="{DynamicResource GrayTextColorBrush}" />
                     </Border>
                     <Viewbox Margin="10,0,10,0" StretchDirection="DownOnly" Stretch="Fill" DockPanel.Dock="Left">
                         <ItemsControl ItemsSource="{Binding Tags}">
@@ -66,10 +66,10 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border DockPanel.Dock="Right" BorderBrush="{DynamicResource GrayBrush2}"
+                                    <Border DockPanel.Dock="Right" BorderBrush="{DynamicResource GrayTextColorBrush}"
                                             BorderThickness="1" Margin="2,0,0,0">
                                         <TextBlock Text="{Binding}" FontSize="10"
-                                                   Foreground="{DynamicResource GrayBrush2}" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource GrayTextColorBrush}" VerticalAlignment="Center"
                                                    TextAlignment="Center" TextTrimming="CharacterEllipsis" Margin="4,0" />
                                     </Border>
                                 </DataTemplate>
