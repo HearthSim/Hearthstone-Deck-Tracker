@@ -472,27 +472,31 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				return;
 			ChangedSelection = true;
 			var dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
-			if(ListViewDecks.SelectedItem == dpi)
-				return;
-			if(dpi == null)
+			if(ListViewDecks.SelectedItem != dpi)
 			{
-				if(deck.Archived)
-					SelectClass(HeroClassAll.Archived);
-				else
-				{
-					HeroClassAll heroClass;
-					if(Enum.TryParse(deck.Class, out heroClass))
-						SelectClass(heroClass);
-				}
-
-				UpdateDecks();
-				dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 				if(dpi == null)
-					return;
+				{
+					if(deck.Archived)
+						SelectClass(HeroClassAll.Archived);
+					else
+					{
+						HeroClassAll heroClass;
+						if(Enum.TryParse(deck.Class, out heroClass))
+							SelectClass(heroClass);
+					}
+
+					UpdateDecks();
+					dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
+					if(dpi == null)
+					{
+						ChangedSelection = false;
+						return;
+					}
+				}
+				ListViewDecks.SelectedItem = dpi;
+				deck.StatsUpdated();
 			}
-			ListViewDecks.SelectedItem = dpi;
 			ChangedSelection = false;
-			deck.StatsUpdated();
 		}
 
 		public void DeselectDeck()
