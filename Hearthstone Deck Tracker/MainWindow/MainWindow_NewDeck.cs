@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -261,6 +262,7 @@ namespace Hearthstone_Deck_Tracker
 			EditingDeck = false;
 			_newDeckUnsavedChanges = false;
 			UpdateCardCount();
+			UpdateExpansionIcons();
 		}
 
 		private void RemoveCardFromDeck(Card card)
@@ -283,6 +285,7 @@ namespace Hearthstone_Deck_Tracker
 			catch
 			{
 			}
+			UpdateExpansionIcons();
 		}
 
 		private void AddCardToDeck(Card card)
@@ -310,6 +313,21 @@ namespace Hearthstone_Deck_Tracker
 			catch
 			{
 			}
+			UpdateExpansionIcons();
+		}
+
+		private void UpdateExpansionIcons()
+		{
+			if(_newDeck == null || !_newDeck.Cards.Any())
+			{
+				TextBlockIconBrm.Visibility = Visibility.Collapsed;
+				TextBlockIconGvg.Visibility = Visibility.Collapsed;
+				TextBlockIconNaxx.Visibility = Visibility.Collapsed;
+				return;
+			}
+			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain") ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes") ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconNaxx.Visibility = _newDeck.Cards.Any(card => card.Set == "Curse of Naxxramas") ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void UpdateCardCount()
@@ -337,6 +355,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var card in deck.GetSelectedDeckVersion().Cards)
 					_newDeck.Cards.Add(card.Clone() as Card);
 				_newDeck.SelectedVersion = _newDeck.Version;
+				UpdateExpansionIcons();
 
 				ListViewDeck.ItemsSource = _newDeck.Cards;
 				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
