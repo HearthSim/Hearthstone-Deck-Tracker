@@ -52,6 +52,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
+            CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
@@ -412,5 +413,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			Helper.MainWindow.Restart();
 		}
+
+        private void CheckboxDeckPickerCaps_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            Config.Instance.DeckPickerCaps = true;
+            Config.Save();
+            Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+        }
+
+        private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            Config.Instance.DeckPickerCaps = false;
+            Config.Save();
+            Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+        }
 	}
 }

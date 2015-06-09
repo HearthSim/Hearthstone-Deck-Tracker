@@ -242,9 +242,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				return Versions.Count == 0
-					       ? Name.ToUpperInvariant()
-					       : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+                if (Config.Instance.DeckPickerCaps)
+				    return Versions.Count == 0
+					           ? Name.ToUpperInvariant()
+					           : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+                else
+                    return Versions.Count == 0
+                               ? Name
+                               : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor);
 			}
 		}
 
