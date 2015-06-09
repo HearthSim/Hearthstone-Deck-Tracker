@@ -148,41 +148,45 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
+		private async void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = true;
 			XmlManager<Config>.Save(path, Config.Instance);
+			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Helper.MainWindow.Restart();
 		}
 
-		private void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = false;
 			XmlManager<Config>.Save(path, Config.Instance);
+			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Helper.MainWindow.Restart();
 		}
 
-		private void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
+		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
+			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Helper.MainWindow.Restart();
 		}
 
-		private void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
+		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
+			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Helper.MainWindow.Restart();
 		}
 
@@ -236,11 +240,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
 				Config.Save();
-				Helper.MainWindow.Restart();
+				Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 			}
 		}
 
-		private void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
+		private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new FolderBrowserDialog();
 			var dialogResult = dialog.ShowDialog();
@@ -263,7 +267,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.DataDirPath = dialog.SelectedPath;
 				Config.Save();
 				if(!saveInAppData)
+				{
+					await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 					Helper.MainWindow.Restart();
+				}
 			}
 		}
 

@@ -97,8 +97,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SelectedLanguage = selectedLanguage;
 			Config.Save();
 
-
-			Helper.MainWindow.Restart();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void ComboboxIconSet_SelectionChanged(object sender, SelectionChangedEventArgs e)

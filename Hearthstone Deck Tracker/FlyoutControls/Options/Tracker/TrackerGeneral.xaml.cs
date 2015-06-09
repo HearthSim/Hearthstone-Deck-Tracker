@@ -3,6 +3,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -78,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			Helper.MainWindow.Restart();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
@@ -88,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			Helper.MainWindow.Restart();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
