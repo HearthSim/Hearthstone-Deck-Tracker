@@ -61,10 +61,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckList.Instance.ActiveDeck == null)
+			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
+            if(selectedDeck == null)
 				return;
-			Logger.WriteLine("Creating screenshot of " + DeckList.Instance.ActiveDeckVersion.GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(Config.Instance, DeckList.Instance.ActiveDeckVersion.Cards, true);
+			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
+			var screenShotWindow = new PlayerWindow(Config.Instance, selectedDeck.GetSelectedDeckVersion().Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;

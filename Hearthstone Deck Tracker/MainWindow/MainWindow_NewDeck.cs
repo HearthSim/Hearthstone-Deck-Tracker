@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task SaveDeck(bool overwrite, SerializableVersion newVersion)
+		private async void SaveDeck(bool overwrite, SerializableVersion newVersion)
 		{
 			var deckName = TextBoxDeckName.Text;
 
@@ -122,26 +122,12 @@ namespace Hearthstone_Deck_Tracker
 
 				var name = await this.ShowInputAsync("No name set", "Please set a name for the deck", settings);
 
-				if(String.IsNullOrEmpty(name))
+				if(string.IsNullOrEmpty(name))
 					return;
 
 				deckName = name;
 				TextBoxDeckName.Text = name;
 			}
-
-			/*while(DeckList.DecksList.Any(d => d.Name == deckName) && (!EditingDeck || !overwrite))
-			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = deckName};
-				var name =
-					await
-					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
-
-				if(String.IsNullOrEmpty(name))
-					return;
-
-				deckName = name;
-				TextBoxDeckName.Text = name;
-			}*/
 
 			if(_newDeck.Cards.Sum(c => c.Count) != 30)
 			{
@@ -163,14 +149,10 @@ namespace Hearthstone_Deck_Tracker
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
 				_newDeck.HearthStatsDeckVersionId = "";
-				//UpdateDeckHistoryPanel(_newDeck, false);
 			}
 
 			if(EditingDeck && overwrite)
-			{
 				DeckList.Instance.Decks.Remove(_newDeck);
-				//DeckPickerList.RemoveDeck(_newDeck);
-			}
 
 			var oldDeckName = _newDeck.Name;
 
@@ -248,6 +230,7 @@ namespace Hearthstone_Deck_Tracker
 				SortFilterDecksFlyout.AddSelectedTag(tag);
 
 			DeckPickerList.SelectDeckAndAppropriateView(newDeckClone);
+			DeckPickerList.UpdateDecks(forceUpdate: new[] {newDeckClone});
 			CloseNewDeck();
 			ClearNewDeckSection();
 		}
@@ -342,7 +325,7 @@ namespace Hearthstone_Deck_Tracker
 			if(deck != null)
 			{
 				ClearNewDeckSection();
-				SelectDeck(null, false); //TODO: needs to be true?
+				SelectDeck(null, false);
 				EditingDeck = editing;
 				if(editing)
 				{
@@ -426,7 +409,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CloseNewDeck()
 		{
-			if(DeckList.Instance.ActiveDeck != null)
+			if(DeckPickerList.SelectedDecks.Any())
 				EnableMenuItems(true);
 			if(GridNewDeck.Visibility != Visibility.Collapsed)
 			{
@@ -439,7 +422,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			ClearNewDeckSection();
 			DeckPickerListCover.Visibility = Visibility.Hidden;
-			PanelVersionComboBox.Visibility = DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.HasVersions
+			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
+            PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions
 				                                  ? Visibility.Visible : Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Collapsed;
 
@@ -468,7 +452,7 @@ namespace Hearthstone_Deck_Tracker
 			   || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
 			{
 				MenuItemSave.IsSubmenuOpen = false;
-				await SaveDeckWithOverwriteCheck();
+				SaveDeckWithOverwriteCheck();
 			}
 		}
 
@@ -535,7 +519,7 @@ namespace Hearthstone_Deck_Tracker
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
-			SelectDeck(null, false); //TODO: needs to be true?
+			SelectDeck(null, false);
 			ExpandNewDeck();
 			ListViewDeck.ItemsSource = _newDeck.Cards;
 			UpdateDeckHistoryPanel(_newDeck, true);
@@ -580,14 +564,13 @@ namespace Hearthstone_Deck_Tracker
 			SelectLastUsedDeck();
 		}
 
-		private async Task SaveDeckWithOverwriteCheck()
+		private void SaveDeckWithOverwriteCheck()
 		{
-			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-		private async Task SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+		private void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
-			var deckName = TextBoxDeckName.Text;
 			if(saveAsNew)
 			{
 				EditingDeck = false;
@@ -596,28 +579,6 @@ namespace Hearthstone_Deck_Tracker
 				_newDeck.DeckId = Guid.NewGuid();
 				_newDeck.Archived = false;
 			}
-			/*else if(!EditingDeck && DeckList.DecksList.Any(d => d.Name == deckName))
-			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Overwrite", NegativeButtonText = "Set new name"};
-
-				var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
-					                    ? "The stats will be moved to the default-deck (can be changed in options)"
-					                    : "The stats will be deleted (can be changed in options)";
-				var result =
-					await
-					this.ShowMessageAsync("A deck with that name already exists", "Overwriting the deck can not be undone!\n" + keepStatsInfo,
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					Deck oldDeck;
-					while((oldDeck = DeckList.DecksList.FirstOrDefault(d => d.Name == deckName)) != null)
-						DeleteDeck(oldDeck);
-
-					SaveDeck(true, newVersion);
-				}
-				else if(result == MessageDialogResult.Negative)
-					SaveDeck(false, newVersion);
-			}*/
 
 			SaveDeck(EditingDeck, newVersion);
 			DeckPickerList.UpdateArchivedClassVisibility();

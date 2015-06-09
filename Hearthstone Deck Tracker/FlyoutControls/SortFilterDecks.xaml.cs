@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker
 					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewDecks)
 						HearthStatsManager.UpdateDeckAsync(deck);
 				}
-				Helper.MainWindow.DeckPickerList.UpdateDecks(false, false);
+				Helper.MainWindow.DeckPickerList.UpdateDecks(false);
 				DeckList.Save();
 				Helper.MainWindow.UpdateQuickFilterItemSource();
 			}

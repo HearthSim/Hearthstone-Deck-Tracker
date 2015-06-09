@@ -134,7 +134,6 @@ namespace Hearthstone_Deck_Tracker
 				Save();
 
 			Instance.LoadActiveDeck();
-			//Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		public static void Save()

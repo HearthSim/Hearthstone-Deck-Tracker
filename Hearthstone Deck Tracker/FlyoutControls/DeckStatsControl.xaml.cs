@@ -514,7 +514,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			//todo: probably not the best performance
 			Refresh();
 		}
 

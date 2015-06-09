@@ -10,15 +10,13 @@ using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
-//using System.ComponentModel;
-
 namespace Hearthstone_Deck_Tracker
 {
 	public class Config
 	{
 		#region Settings
 
-		private static Config _config; //= new Config();
+		private static Config _config;
 
 		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                     + @"\HearthstoneDeckTracker";
@@ -305,9 +303,6 @@ namespace Hearthstone_Deck_Tracker
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
-
-		//[DefaultValue("00000000-0000-0000-0000-000000000000")]
-		//public string LastDeckIdString = Guid.Empty.ToString();
 
 		[DefaultValue(0L)]
 		public long LastHearthStatsDecksSync = 0L;
@@ -892,25 +887,10 @@ namespace Hearthstone_Deck_Tracker
 				if(attr != null)
 					field.SetValue(this, attr.Value);
 			}
-
-			/*
-			foreach(System.ComponentModel.PropertyDescriptor prop in System.ComponentModel.TypeDescriptor.GetProperties(this))
-			{
-				var attr = (DefaultValueAttribute)prop.Attributes[typeof(DefaultValueAttribute)];
-				if(attr != null)
-				{
-					prop.SetValue(this, attr.Value);
-				}
-			}
-			*/
 		}
 
 		public void Reset(string name)
 		{
-			//TODO: Upgrade to use LINQ and not the property's name!!
-			//var proper = System.ComponentModel.TypeDescriptor.GetProperties(this).OfType<System.ComponentModel.PropertyDescriptor>().First(x => x.Name == PropertyName);
-			//var attr = (DefaultValueAttribute)proper.Attributes[typeof(DefaultValueAttribute)];
-
 			var proper = GetType().GetFields().First(x => x.Name == name);
 			var attr = (DefaultValueAttribute)proper.GetCustomAttributes(typeof(DefaultValueAttribute), false).First();
 			proper.SetValue(this, attr.Value);

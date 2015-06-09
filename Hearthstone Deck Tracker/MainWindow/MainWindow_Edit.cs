@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
-			DeckPickerList.SelectDeckAndAppropriateView(DeckList.Instance.ActiveDeck);
+			DeckPickerList.SelectDeckAndAppropriateView(DeckPickerList.SelectedDecks.FirstOrDefault());
 			UpdateMenuItemVisibility();
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}

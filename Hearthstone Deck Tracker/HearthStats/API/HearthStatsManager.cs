@@ -271,8 +271,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<PostResult> UploadDeckAsync(Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
-			//await Task.Delay(1000);
-			//return true;
 			Logger.WriteLine("trying to upload deck " + deck, "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
@@ -288,6 +286,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				first.HearthStatsId = first.HearthStatsIdForUploading;
 				await HearthStatsAPI.DeleteDeckAsync(first);
 				await Task.Delay(1000);
+
 				//reset everything
 				foreach(var version in deck.VersionsIncludingSelf.Select(deck.GetVersion))
 				{
@@ -379,7 +378,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						foreach(var deck in newDecks)
 						{
 							DeckList.Instance.Decks.Add(deck);
-							//Helper.MainWindow.DeckPickerList.AddDeck(deck);
 							Logger.WriteLine("saved new deck " + deck, "HearthStatsManager");
 						}
 						DeckList.Save();
@@ -402,7 +400,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						                                 localDeck =>
 						                                 localDeck.HasHearthStatsId && deck.HearthStatsId == localDeck.HearthStatsId
 						                                 && localDeck.GetMaxVerion() != deck.GetMaxVerion())).ToList();
-					if(decksWithNewVersions.Any()) // TODO: TEST
+					if(decksWithNewVersions.Any())
 					{
 						foreach(var deck in decksWithNewVersions)
 						{
@@ -426,8 +424,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 									currentDeck.HearthStatsDeckVersionId = newVersion.HearthStatsDeckVersionId;
 									currentDeck.Versions.Add(clone);
 								}
-								//Helper.MainWindow.DeckPickerList.RemoveDeck(originalDeck);
-								//Helper.MainWindow.DeckPickerList.AddDeck(currentDeck);
 								Logger.WriteLine(
 								                 string.Format("saved {0} new versions ({1}) to {2}", versions.Count,
 								                               versions.Select(v => v.Version.ToString()).Aggregate((c, n) => c + ", " + n), deck),
