@@ -20,8 +20,9 @@
                     <TreeViewItem Name="TreeViewItemTrackerStats" Header="Stats" Selected="TreeViewItemTrackerStats_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerExporting" Header="Exporting" Selected="TreeViewItemTrackerExporting_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerImporting" Header="Importing" Selected="TreeViewItemTrackerImporting_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="Plugins" Selected="TreeViewItemTrackerPlugins_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="Appearance" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
+                    <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerLogging" Header="Logging" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
                 </TreeViewItem>
             </TreeView>
