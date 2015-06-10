@@ -45,10 +45,10 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Invoking action{0} took {1} ms. Removed action.", GetInfo(plugin), sw.ElapsedMilliseconds),
+					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
 					                 "ActionListExecution");
 #if(!DEBUG)
-					remove.Add(action);
+					//remove.Add(action);
 #endif
 				}
 			}
@@ -97,10 +97,10 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Invoking action{0} took {1} ms. Removed action.", GetInfo(plugin), sw.ElapsedMilliseconds),
+					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
 					                 "ActionListExecution");
 #if(!DEBUG)
-					remove.Add(action);
+					//remove.Add(action);
 #endif
 				}
 			}
