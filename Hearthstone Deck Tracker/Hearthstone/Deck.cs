@@ -701,11 +701,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static List<Card> operator -(Deck first, Deck second)
 		{
-			var result = new Deck();
-
+			if(first == null || second == null)
+				return new List<Card>();
 			var diff = new List<Card>();
 			//removed
-			//diff.AddRange(prevVersion.Cards.Where(c => !selected.Cards.Contains(c)));
 			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
 			{
 				var cd = c.Clone() as Card;
