@@ -495,6 +495,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							                                        .Any(v => game.HearthStatsDeckVersionId == v.HearthStatsDeckVersionId));
 						if(deck == null)
 						{
+							//deck_version_id seems to be null for older matches
+							deck = DeckList.Instance.Decks.FirstOrDefault(d => d.HasHearthStatsId && game.HearthStatsDeckId == d.HearthStatsId);
+							if(deck != null)
+								game.HearthStatsDeckVersionId = deck.HearthStatsDeckVersionId;
+						}
+						if(deck == null)
+						{
 							Logger.WriteLine(string.Format("no deck found for match {0}", game), "HearthStatsManager");
 							continue;
 						}
