@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeck;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			ExportDeck(deck.GetSelectedDeckVersion());
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 
@@ -106,25 +106,25 @@ namespace Hearthstone_Deck_Tracker
 
 			if(fileName != null)
 			{
-				XmlManager<Deck>.Save(fileName, deck);
+				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
 				await this.ShowSavedFileMessage(fileName);
-				Logger.WriteLine("Saved " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+				Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
 			}
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-			Clipboard.SetText(Helper.DeckToIdString(deck));
+			Clipboard.SetText(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
 			this.ShowMessage("", "copied ids to clipboard");
-			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " to clipboard", "Export");
+			Logger.WriteLine("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard", "Export");
 		}
 
 		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			var english = true;
