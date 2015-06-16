@@ -133,11 +133,29 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 
-		[DefaultValue(0.06)]
-		public double ExportAllButtonX = 0.06;
+		[DefaultValue(0.118)]
+		public double ExportAllButtonX = 0.118;
 
-		[DefaultValue(0.915)]
-		public double ExportAllButtonY = 0.915;
+		[DefaultValue(0.917)]
+		public double ExportAllButtonY = 0.917;
+
+		[DefaultValue(0.108)]
+		public double ExportAllSquareX = 0.108;
+
+		[DefaultValue(0.907)]
+		public double ExportAllSquareY = 0.907;
+
+		[DefaultValue(0.049)]
+		public double ExportSetsButtonX = 0.049;
+
+		[DefaultValue(0.917)]
+		public double ExportSetsButtonY = 0.917;
+
+		[DefaultValue(0.067)]
+		public double ExportAllSetsButtonX = 0.067;
+
+		[DefaultValue(0.639)]
+		public double ExportAllSetsButtonY = 0.639;
 
 		[DefaultValue(0.04)]
 		public double ExportCard1X = 0.04;
