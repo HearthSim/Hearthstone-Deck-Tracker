@@ -413,14 +413,14 @@ namespace Hearthstone_Deck_Tracker
 				var doc = await GetHtmlDoc(url);
 				var deck = new Deck();
 
-				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header/h2[contains(@class,'t-deck-title')]").InnerText);
+                var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//section[contains(@class,'deck-info')]/h2[contains(@class,'deck-title')]").InnerText);
 				deck.Name = deckName;
 
 				var cardNameNodes =
 					doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
 				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
-				//<span class="t-deck-type-label">Midrange</span>
-				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'t-deck-type-label')]").InnerText;
+				//<span class="deck-type">Midrange</span>
+				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'deck-type')]").InnerText;
 				if(decktype != "None" && Config.Instance.TagDecksOnImport)
 				{
 					if(!DeckList.Instance.AllTags.Contains(decktype))
