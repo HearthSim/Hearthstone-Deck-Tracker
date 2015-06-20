@@ -111,12 +111,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
-			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
+			await ClearZeroCrystal(ratio, width, height, hsHandle);
+		}
+
+		private static async Task ClearZeroCrystal(double ratio, int width, int height, IntPtr hsHandle)
+		{
+			Logger.WriteLine("Clearing \"Zero\" crystal...", "DeckExporter");
 
 			// First, ensure mana filters are cleared
 
-			var crystalPoint = new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
-				(int)(Config.Instance.ExportAllButtonY * height));
+			var crystalPoint = new Point((int)GetXPos(Config.Instance.ExportZeroButtonX, width, ratio),
+				(int)(Config.Instance.ExportZeroButtonY * height));
 
 			if (IsZeroCrystalSelected(hsHandle, ratio, width, height))
 			{
@@ -152,8 +157,8 @@ namespace Hearthstone_Deck_Tracker
 			const int cHeight = 22;
 			const double minBrightness = 0.55;
 
-			int posX = (int)GetXPos(Config.Instance.ExportAllSquareX, width, ratio);
-			int posY = (int)(Config.Instance.ExportAllSquareY * height);
+			int posX = (int)GetXPos(Config.Instance.ExportZeroSquareX, width, ratio);
+			int posY = (int)(Config.Instance.ExportZeroSquareY * height);
 
 			var capture = Helper.CaptureHearthstone(new Point(posX, posY), cWidth, cHeight, wndHandle);
 
