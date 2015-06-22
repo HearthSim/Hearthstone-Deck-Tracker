@@ -111,11 +111,66 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
-			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
-			await
-				ClickOnPoint(hsHandle,
-				             new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
-				                       (int)(Config.Instance.ExportAllButtonY * height)));
+			await ClearZeroCrystal(ratio, width, height, hsHandle);
+		}
+
+		private static async Task ClearZeroCrystal(double ratio, int width, int height, IntPtr hsHandle)
+		{
+			Logger.WriteLine("Clearing \"Zero\" crystal...", "DeckExporter");
+
+			// First, ensure mana filters are cleared
+
+			var crystalPoint = new Point((int)GetXPos(Config.Instance.ExportZeroButtonX, width, ratio),
+				(int)(Config.Instance.ExportZeroButtonY * height));
+
+			if (IsZeroCrystalSelected(hsHandle, ratio, width, height))
+			{
+				// deselect it
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+			}
+			else
+			{
+				// select it and then unselect it (in case other crystals are on)
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+			}
+
+			// Then ensure "All Sets" is selected
+
+			var setsPoint = new Point((int)GetXPos(Config.Instance.ExportSetsButtonX, width, ratio),
+				(int)(Config.Instance.ExportSetsButtonY * height));
+
+			// open sets menu
+			await ClickOnKnownPoint(hsHandle, setsPoint);
+			// select "All Sets"
+			await ClickOnPoint(hsHandle,
+				new Point((int)GetXPos(Config.Instance.ExportAllSetsButtonX, width, ratio), 
+					(int)(Config.Instance.ExportAllSetsButtonY * height)));
+			// close sets menu
+			await ClickOnKnownPoint(hsHandle, setsPoint);
+		}
+
+		// checks the zero crystal, to see if it is selected
+		private static bool IsZeroCrystalSelected(IntPtr wndHandle, double ratio, int width, int height)
+		{
+			const int cWidth = 22;
+			const int cHeight = 22;
+			const double minBrightness = 0.55;
+
+			int posX = (int)GetXPos(Config.Instance.ExportZeroSquareX, width, ratio);
+			int posY = (int)(Config.Instance.ExportZeroSquareY * height);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), cWidth, cHeight, wndHandle);
+
+			if(capture == null)
+				return false;
+
+			return GetAverageHueAndBrightness(capture).Brightness > minBrightness;
+		}
+
+		private static async Task ClickOnKnownPoint(IntPtr wndHandle, Point p)
+		{
+			await ClickOnPoint(wndHandle, p);
 		}
 
 		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
