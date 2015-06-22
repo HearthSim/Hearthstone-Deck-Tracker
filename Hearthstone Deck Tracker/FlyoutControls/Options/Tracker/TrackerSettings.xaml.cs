@@ -228,17 +228,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonGamePath_OnClick(object sender, RoutedEventArgs e)
 		{
-			var dialog = new OpenFileDialog
+			var dialog = new FolderBrowserDialog()
 			{
-				Title = "Select Hearthstone.exe",
-				DefaultExt = "Hearthstone.exe",
-				Filter = "Hearthstone.exe|Hearthstone.exe"
+				Description = "Select your Hearthstone Directory",
+				ShowNewFolderButton = false
 			};
 			var dialogResult = dialog.ShowDialog();
 
 			if(dialogResult == DialogResult.OK)
 			{
-				Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
+				Config.Instance.HearthstoneDirectory = dialog.SelectedPath;
 				Config.Save();
 				Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 			}
