@@ -1626,6 +1626,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SelectDeck(Deck deck, bool setActive)
 		{
+			if(DeckList.Instance.ActiveDeck != null)
+				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
 			if(deck != null)
 			{
 				//set up notes
