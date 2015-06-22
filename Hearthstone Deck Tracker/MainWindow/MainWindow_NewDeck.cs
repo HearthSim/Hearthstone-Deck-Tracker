@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void SaveDeck(bool overwrite, SerializableVersion newVersion)
+		public async void SaveDeck(bool overwrite, SerializableVersion newVersion, bool workInProgressDeck = false)
 		{
 			var deckName = TextBoxDeckName.Text;
 
@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker
 				TextBoxDeckName.Text = name;
 			}
 
-			if(_newDeck.Cards.Sum(c => c.Count) != 30)
+			if(_newDeck.Cards.Sum(c => c.Count) != 30 && workInProgressDeck == false)
 			{
 				var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 
