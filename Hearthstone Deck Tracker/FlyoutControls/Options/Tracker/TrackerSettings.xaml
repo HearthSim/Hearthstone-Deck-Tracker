@@ -11,54 +11,6 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Theme:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxTheme_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Accent:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxAccent_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Icon set:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxIconSet_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Deck layout:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Language:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
-                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxLanguages_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
                         <Label Content="Key on game start:" HorizontalAlignment="Right"
                                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"

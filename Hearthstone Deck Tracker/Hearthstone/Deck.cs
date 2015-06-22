@@ -242,9 +242,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				return Versions.Count == 0
-					       ? Name.ToUpperInvariant()
-					       : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+                if (Config.Instance.DeckPickerCaps)
+				    return Versions.Count == 0
+					           ? Name.ToUpperInvariant()
+					           : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+                else
+                    return Versions.Count == 0
+                               ? Name
+                               : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor);
 			}
 		}
 
@@ -696,11 +701,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static List<Card> operator -(Deck first, Deck second)
 		{
-			var result = new Deck();
-
+			if(first == null || second == null)
+				return new List<Card>();
 			var diff = new List<Card>();
 			//removed
-			//diff.AddRange(prevVersion.Cards.Where(c => !selected.Cards.Contains(c)));
 			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
 			{
 				var cd = c.Clone() as Card;

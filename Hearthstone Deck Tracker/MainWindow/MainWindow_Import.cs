@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 				SetNewDeck(deck, reimport);
 				TagControlEdit.SetSelectedTags(deck.Tags);
 				if(Config.Instance.AutoSaveOnImport)
-					await SaveDeckWithOverwriteCheck();
+					SaveDeckWithOverwriteCheck();
 			}
 			else
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				SetNewDeck(deck);
 				if(Config.Instance.AutoSaveOnImport)
-					await SaveDeckWithOverwriteCheck();
+					SaveDeckWithOverwriteCheck();
 			}
 			catch(Exception ex)
 			{
@@ -165,11 +165,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void BtnClipboardText_Click(object sender, RoutedEventArgs e)
+		private void BtnClipboardText_Click(object sender, RoutedEventArgs e)
 		{
 			try
 			{
-				if(await CheckClipboardForNetDeckImport())
+				if(CheckClipboardForNetDeckImport())
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{
@@ -186,7 +186,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						SetNewDeck(deck);
 						if(Config.Instance.AutoSaveOnImport)
-							await SaveDeckWithOverwriteCheck();
+							SaveDeckWithOverwriteCheck();
 					}
 				}
 			}
@@ -248,7 +248,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void BtnFile_Click(object sender, RoutedEventArgs e)
+		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
 			var dialogResult = dialog.ShowDialog();
@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					SetNewDeck(deck);
 					if(Config.Instance.AutoSaveOnImport)
-						await SaveDeckWithOverwriteCheck();
+						SaveDeckWithOverwriteCheck();
 				}
 				catch(Exception ex)
 				{
@@ -325,8 +325,6 @@ namespace Hearthstone_Deck_Tracker
 				if(deck.Class == null && card.GetPlayerClass != "Neutral")
 					deck.Class = card.GetPlayerClass;
 			}
-			if(DeckList.Instance.AllTags.Contains("Arena") && Config.Instance.TagDecksOnImport)
-				deck.Tags.Add("Arena");
 			SetNewDeck(deck);
 		}
 

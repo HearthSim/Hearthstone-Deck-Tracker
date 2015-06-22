@@ -673,7 +673,6 @@ namespace Hearthstone_Deck_Tracker
 			LogEvent("PlayerDeckDiscard", cardId);
 			var correctDeck = Game.PlayerDeckDiscard(cardId);
 
-			//don't think this will ever detect an incorrect deck but who knows...
 			if(!correctDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage
 			   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && Game.IsUsingPremade && Game.CurrentGameMode != GameMode.Spectator)
 			{
@@ -682,8 +681,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
 
-			//temp fix for deck not being updated here
-			//todo: figure out why draw is updating but deckdiscard is not
 			Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
 			Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 			GameEvents.OnPlayerDeckDiscard.Execute(Game.GetCardFromId(cardId));

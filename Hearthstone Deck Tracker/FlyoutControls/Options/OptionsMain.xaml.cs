@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public TrackerPlugins OptionsTrackerPlugins;
 		public TrackerSettings OptionsTrackerSettings;
 		public TrackerStats OptionsTrackerStats;
+		public TrackerAppearance OptionsTrackerAppearance;
 
 		public OptionsMain()
 		{
@@ -46,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerSettings = new TrackerSettings();
 			OptionsTrackerGeneral = new TrackerGeneral();
 			OptionsTrackerPlugins = new TrackerPlugins();
+			OptionsTrackerAppearance = new TrackerAppearance();
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
@@ -73,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerStats.Load();
 			OptionsTrackerLogging.Load();
 			OptionsTrackerGeneral.Load();
+			OptionsTrackerAppearance.Load();
 			//OptionsTrackerPlugins.Load(); - load in main after loading plugins
 		}
 
@@ -134,6 +137,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemTrackerPlugins_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsTrackerPlugins;
+		}
+
+		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentControlOptions.Content = OptionsTrackerAppearance;
 		}
 	}
 }

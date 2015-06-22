@@ -404,7 +404,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 		}
 
-		//TODO
 		public static async Task<PostResult> PostMultipleGameResultsAsync(IEnumerable<GameStats> games, Deck deck)
 		{
 			var validGames = games.Where(x => IsValidGame(x) && !x.HasHearthStatsId).ToList();

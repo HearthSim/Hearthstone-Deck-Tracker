@@ -28,11 +28,11 @@
                 <TextBlock
                     Text="{Binding TextUseButton, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
                     FontSize="13" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,10,0"
-                    Foreground="{DynamicResource GrayBrush2}" />
+                    Foreground="{DynamicResource GrayTextColorBrush}" />
             </Border>
             <StackPanel Margin="0,5">
                 <DockPanel>
-                    <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.ArchivedMarker}" Width="16"
+                    <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.Archived}" Width="16"
                            Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
                            Visibility="{Binding ArchivedVisibility}"
                            ToolTip="Archived" />
@@ -40,7 +40,7 @@
                         <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
                                    FontSize="17" TextTrimming="CharacterEllipsis"
                                    Foreground="{DynamicResource TextBrush}"
-                                   FontWeight="{Binding SelectedFontWeight, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
+                                   FontWeight="{Binding FontWeightActiveDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
                         <Rectangle Width="10" Height="13" Visibility="{Binding NoteVisibility}" Margin="-10,0,0,0"
                                    ToolTip="{Binding Note}">
                             <Rectangle.Fill>
@@ -54,7 +54,7 @@
                     <Viewbox DockPanel.Dock="Left" Width="70" StretchDirection="DownOnly" Stretch="Fill"
                              HorizontalAlignment="Left">
                         <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
-                                   Foreground="{DynamicResource GrayBrush2}" FontSize="14" />
+                                   Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
                     </Viewbox>
                     <Viewbox Margin="10,0,0,0" StretchDirection="DownOnly" Stretch="Fill" DockPanel.Dock="Left">
                         <ItemsControl ItemsSource="{Binding Tags}">
@@ -65,10 +65,10 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border DockPanel.Dock="Right" BorderBrush="{DynamicResource GrayBrush2}"
+                                    <Border DockPanel.Dock="Right" BorderBrush="{DynamicResource GrayTextColorBrush}"
                                             BorderThickness="1" Margin="2,0,0,0">
                                         <TextBlock Text="{Binding}" FontSize="10"
-                                                   Foreground="{DynamicResource GrayBrush2}" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource GrayTextColorBrush}" VerticalAlignment="Center"
                                                    TextAlignment="Center" TextTrimming="CharacterEllipsis" Margin="4,0" />
                                     </Border>
                                 </DataTemplate>

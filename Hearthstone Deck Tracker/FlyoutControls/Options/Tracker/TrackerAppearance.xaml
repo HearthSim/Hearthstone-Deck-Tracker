@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerAppearance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="Settings">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Theme:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxTheme_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Accent:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxAccent_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Icon set:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxIconSet_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Deck layout:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Language:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox Name="ComboboxLanguages" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboboxLanguages_SelectionChanged" />
+                    </DockPanel>
+                    
+                    <CheckBox x:Name="CheckboxDeckPickerCaps" Content="Use upper case deck names"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
+                                              Unchecked="CheckboxDeckPickerCaps_Unchecked" ToolTip="Uncheck to use normal case in Deck Picker."/>
+                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt" Click="ButtonRestart_OnClick"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

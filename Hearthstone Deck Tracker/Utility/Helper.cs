@@ -297,8 +297,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateEverything()
 		{
-			//todo: move this somewhere else
-			//reader done analyzing new stuff, update things
 			if(MainWindow.Overlay.IsVisible)
 				MainWindow.Overlay.Update(false);
 

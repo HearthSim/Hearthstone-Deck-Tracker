@@ -101,9 +101,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 			{
-				Logger.WriteLine(string.Format("Updating {0} took {1} ms. Plugin disabled", Name, sw.ElapsedMilliseconds), "PluginWrapper");
+				Logger.WriteLine(string.Format("Warning: Updating {0} took {1} ms.", Name, sw.ElapsedMilliseconds), "PluginWrapper");
 #if(!DEBUG)
-				IsEnabled = false;
+				//IsEnabled = false;
 #endif
 			}
 		}

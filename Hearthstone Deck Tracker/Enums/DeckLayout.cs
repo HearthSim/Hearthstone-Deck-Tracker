@@ -3,6 +3,7 @@
 	public enum DeckLayout
 	{
 		Layout1,
-		Layout2
+		Layout2,
+		Legacy
 	}
 }

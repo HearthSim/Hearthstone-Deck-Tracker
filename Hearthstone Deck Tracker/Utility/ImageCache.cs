@@ -14,9 +14,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		private static readonly Dictionary<string, BitmapImage> ImageCacheDict = new Dictionary<string, BitmapImage>();
 
-		public static BitmapImage ArchivedMarker
+		public static BitmapImage Archived
 		{
 			get { return GetClassIcon(HeroClassAll.Archived); }
+		}
+
+		public static BitmapImage ArchivedBlack
+		{
+			get { return GetImage("ClassIcons/General/BaseLight/archived.png"); }
 		}
 
 		public static BitmapImage Druid
@@ -80,7 +85,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var path = new StringBuilder("ClassIcons");
 			if(@class == HeroClassAll.All || @class == HeroClassAll.Archived)
 			{
-				path.Append("/General/" + Config.Instance.ThemeName);
+				path.Append("/General/");
+				path.Append(string.IsNullOrEmpty(Config.Instance.ThemeName) ? "BaseLight" : Config.Instance.ThemeName);
 				path.Append(@class == HeroClassAll.All ? "/all.png" : "/archived.png");
 			}
 			else

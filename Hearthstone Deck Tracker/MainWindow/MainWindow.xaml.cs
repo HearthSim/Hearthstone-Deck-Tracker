@@ -277,19 +277,19 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e)
+		private void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e)
 		{
-			await SaveDeckWithOverwriteCheck(_newDeck.Version);
+			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-		private async void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e)
+		private void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e)
 		{
-			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
+			SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
 		}
 
-		private async void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e)
+		private void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e)
 		{
-			await SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
+			SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
 		}
 
 		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -316,9 +316,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e)
+		private void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e)
 		{
-			await SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
+			SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
 		}
 
 		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
@@ -1295,11 +1295,7 @@ namespace Hearthstone_Deck_Tracker
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
 				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
-
-				//todo: System.Windows.Data Error: 2 : Cannot find governing FrameworkElement or FrameworkContentElement for target element. BindingExpression:Path=ClassColor; DataItem=null; target element is 'GradientStop' (HashCode=7260326); target property is 'Color' (type 'Color')
-				//when opened for seconds time. why?
 				dsDialog.ShowDialog();
-
 
 				var selectedDeck = dsDialog.SelectedDeck;
 
@@ -1411,7 +1407,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
 				   && !User32.IsHearthstoneInForeground())
-					await CheckClipboardForNetDeckImport();
+					CheckClipboardForNetDeckImport();
 
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
@@ -1432,7 +1428,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task<bool> CheckClipboardForNetDeckImport()
+		private bool CheckClipboardForNetDeckImport()
 		{
 			try
 			{
@@ -1498,8 +1494,6 @@ namespace Hearthstone_Deck_Tracker
 								{
 									DeckList.Save();
 									Helper.MainWindow.ReloadTags();
-									//Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-									//Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All").ToList());
 								}
 							}
 
@@ -1509,7 +1503,7 @@ namespace Hearthstone_Deck_Tracker
 							deck.Name = deckName;
 							SetNewDeck(deck);
 							if(Config.Instance.AutoSaveOnImport)
-								await SaveDeckWithOverwriteCheck();
+								SaveDeckWithOverwriteCheck();
 							ActivateWindow();
 						}
 						Clipboard.Clear();
@@ -1650,6 +1644,8 @@ namespace Hearthstone_Deck_Tracker
 				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
 				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				MenuItemQuickSetTag.Items.Refresh();
+				DeckPickerList.MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
+				DeckPickerList.MenuItemQuickSetTag.Items.Refresh();
 
 
 				//set and save last used deck for class

@@ -125,16 +125,6 @@ namespace Hearthstone_Deck_Tracker
 					Instance.AllTags.Add("Favorite");
 				save = true;
 			}
-			if(!Instance.AllTags.Contains("Arena"))
-			{
-				Instance.AllTags.Add("Arena");
-				save = true;
-			}
-			if(!Instance.AllTags.Contains("Constructed"))
-			{
-				Instance.AllTags.Add("Constructed");
-				save = true;
-			}
 			if(!Instance.AllTags.Contains("None"))
 			{
 				Instance.AllTags.Add("None");
@@ -144,7 +134,6 @@ namespace Hearthstone_Deck_Tracker
 				Save();
 
 			Instance.LoadActiveDeck();
-			//Instance.ActiveDeck = Instance.Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
 		}
 
 		public static void Save()

@@ -6,6 +6,11 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Color x:Key="GrayTextColor1">#FF7F7F7F</Color>
+                    <Color x:Key="GrayTextColor2">#FFAAAAAA</Color>
+                    <SolidColorBrush x:Key="GrayTextColorBrush" Color="#FF7F7F7F"/>
+                </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
