@@ -126,8 +126,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"HERO_07", "Warlock"},
 			{"HERO_08", "Mage"},
 			{"HERO_09", "Priest"},
-			{"EX1_323h", "Jaraxxus"},
-			{"BRM_027h", "Ragnaros the Firelord"}
+			{"EX1_323", "Jaraxxus"},
+			{"BRM_027", "Ragnaros the Firelord"}
 		};
 	}
 }
