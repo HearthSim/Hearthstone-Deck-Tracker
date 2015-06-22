@@ -84,18 +84,11 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdateDeckList(Deck selected)
 		{
 			ListViewDeck.ItemsSource = null;
-			if(selected == null)
+
+			if(selected != null)
 			{
-				Config.Instance.ActiveDeckId = Guid.Empty;
-				Config.Save();
-				return;
-			}
-			ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
-			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
-			if(Config.Instance.ActiveDeckId != selected.DeckId)
-			{
-				Config.Instance.ActiveDeckId = selected.DeckId;
-				Config.Save();
+				ListViewDeck.ItemsSource = selected.GetSelectedDeckVersion().Cards;
+				Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			}
 		}
 
