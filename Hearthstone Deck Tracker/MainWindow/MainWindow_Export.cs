@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 			ExportDeck(deck.GetSelectedDeckVersion());
