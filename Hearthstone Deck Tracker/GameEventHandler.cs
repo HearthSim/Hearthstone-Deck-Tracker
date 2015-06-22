@@ -721,16 +721,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
 			{
-				if(!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
+				if(!DeckList.Instance.ActiveDeck.DustReward.HasValue)
 				{
-					DeckList.Instance.ActiveDeck.GoldReward = amount;
+					DeckList.Instance.ActiveDeck.DustReward = amount;
 					_lastArenaReward = DateTime.Now;
 				}
 				//All rewards are logged as soon as the run is over.
 				//This makes sure no "old" data is added (in case hdt is restarted after an arena run)
 				else if((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
 				{
-					DeckList.Instance.ActiveDeck.GoldReward += amount;
+					DeckList.Instance.ActiveDeck.DustReward += amount;
 					_lastArenaReward = DateTime.Now;
 				}
 			}
@@ -749,7 +749,7 @@ namespace Hearthstone_Deck_Tracker
 				//This makes sure no "old" data is added (in case hdt is restarted after an arena run)
 				else if((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
 				{
-					DeckList.Instance.ActiveDeck.DustReward += amount;
+					DeckList.Instance.ActiveDeck.GoldReward += amount;
 					_lastArenaReward = DateTime.Now;
 				}
 			}
