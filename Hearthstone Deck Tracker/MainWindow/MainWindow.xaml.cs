@@ -295,12 +295,9 @@ namespace Hearthstone_Deck_Tracker
 			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
 			if(version != null && deck.SelectedVersion != version)
 			{
-				//DeckPickerList.RemoveDeck(deck);
 				deck.SelectVersion(version);
 				DeckList.Save();
-				//DeckPickerList.AddAndSelectDeck(deck);
-				//DeckPickerList.UpdateList();
-				DeckPickerList.UpdateDecks();
+				DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
 				UpdateDeckList(deck);
 				ManaCurveMyDecks.UpdateValues();
 				if(deck.Equals(DeckList.Instance.ActiveDeck))
