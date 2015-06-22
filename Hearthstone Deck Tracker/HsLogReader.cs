@@ -361,6 +361,17 @@ namespace Hearthstone_Deck_Tracker
 							else
 								TagChange(match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value);
 						}
+						
+						if(_entityNameRegex.IsMatch(logLine))
+						{
+							match = _entityNameRegex.Match(logLine);
+							var name = match.Groups["name"].Value;
+							var player = int.Parse(match.Groups["value"].Value);
+							if(player == 1)
+								_gameHandler.HandlePlayerName(name);
+							else if(player == 2)
+								_gameHandler.HandleOpponentName(name);
+						}
 					}
 					else if(_creationRegex.IsMatch(logLine))
 					{
@@ -404,16 +415,6 @@ namespace Hearthstone_Deck_Tracker
 					{
 						_gameHandler.SetGameMode(GameMode.Spectator);
 						_gameHandler.HandleGameEnd();
-					}
-					else if(_entityNameRegex.IsMatch(logLine))
-					{
-						var match = _entityNameRegex.Match(logLine);
-						var name = match.Groups["name"].Value;
-						var player = int.Parse(match.Groups["value"].Value);
-						if(player == 1)
-							_gameHandler.HandlePlayerName(name);
-						else if(player == 2)
-							_gameHandler.HandleOpponentName(name);
 					}
 					else if(_actionStartRegex.IsMatch(logLine))
 					{
