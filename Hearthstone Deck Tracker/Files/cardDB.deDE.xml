@@ -3217,7 +3217,7 @@ Fügt dem feindlichen Helden 2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Andere befreundete Diener haben +1 Angriff.</Text>
+    <Text>Eure anderen Diener haben +1 Angriff.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9457,6 +9457,927 @@ Beschwört eine Höllenbestie (6/6).</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CRED_18</CardId>
+    <Name>Becca Abel</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Vergoldet jede Karte, die Ihr zieht.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>Beomki Hong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Spott&lt;/b&gt;. Schützt befreundete Diener vor dem &lt;b&gt;Einfrieren&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>Brian Birmingham</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Stellt das volle Leben eines Mechs wieder her; oder verleiht einem Designer &lt;b&gt;Windzorn&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>Bryan Chang</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Leckermaul:&lt;/b&gt; Macht alle Diener essbar.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>Cameron Chrisman</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Goldene Karten kosten (1) weniger, solange Ihr diese Karte auf der Hand habt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>Christopher Yim</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Eure Emotes werden jetzt von einem Radiomoderator ausgesprochen.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>Dean Ayala</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>Ihr könnt keine Sterne verlieren, solange diese Karte in Eurem Deck ist.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>Elizabeth Cho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhaltet Echo von Medivh und Echoschlamm auf die Hand.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>Eric Del Priore</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Spott&lt;/b&gt;, wenn es drei Uhr morgens ist.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>Henry Ho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Schaut in die Hand des Gegners.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>He-Rim Woo</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Boxt den Gegner in den Arm; bietet ihm Süßigkeiten an; oder umarmt ihn.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>Jason MacAllister</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;Mit ihm kann man Pferde stehlen.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>JC Park</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Unterstützt Hearthstone auf einer weiteren Plattform.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>Jeremy Cranford</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Diese Karte positioniert sich zu Beginn des Spiels ganz oben im Deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>Jerry Mascho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Verursacht zu Beginn Eures Zuges 1 Schaden. Verursacht stattdessen am Ende Eures Zuges 1 Schaden, wenn diese Karte golden ist. DIES IST EIN HAN-SOLO-WITZ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>Jomaro Kindred</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Nehmt dem Gegner alle Handkarten, die er nicht will.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>Max Ma</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Kann nur auf Mobilgeräten ausgespielt werden.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>Max McCall</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Eure Emotes haben keine Abklingzeit und können nicht ausgeblendet werden.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>Mike Donais</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ersetzt alle Diener auf dem Schlachtfeld, auf der Hand beider Spieler und in beiden Decks durch zufällige Diener.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>Ricardo Robaina</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft drei Chinchillas (1/1) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>Robin Fredericksen</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Benennt diese Karte in „Eric“ um, wenn Ihr noch keinen Eric auf dem Schlachtfeld habt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>Ryan Chew</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wählt aus:&lt;/b&gt; Singt Karaoke; oder geht pünktlich und erzählt allen davon.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>Ryan Masterson</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Setzt Kopien von Meucheln, Kaltblütigkeit und Ausweiden ein. &lt;i&gt;(Zufällige Ziele)&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>Seyil Yoon</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhaltet drei Kopien von Sprinten und einen Marathon auf die Hand.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>Tim Erskine</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Zieht jedes Mal eine Karte, wenn dieser Diener einen anderen Diener vernichtet.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>Jon Bankard</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Chance von 50%, 100% Recht zu haben.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>Walter Kong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Fügt zwei strategischen Zielen je 1 Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>Jonas Laster</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Erhält jedes Mal +1/+1, wenn ein Diener stirbt, der zum &lt;b&gt;Schweigen&lt;/b&gt; gebracht wurde.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>Keith Landes</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Verliert zu Beginn Eures Zuges 2 Leben, weil er Hunger hat.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>Feuerschlag</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Verursacht 1 Schaden.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>Verstärkung</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft einen Rekruten der Silbernen Hand (1/1) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>Aufrüsten!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Erhaltet 2 Rüstung.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>Zuverlässiger Schuss</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Fügt dem feindlichen Helden 2 Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>Magni Bronzebart</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>Alleria Windläufer</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>Medivh</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>Lebende Bombe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Wählt einen feindlichen Diener. Wenn dieser zu Beginn Eures nächsten Zuges noch lebt, fügt er allen Feinden 5 Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>Lebende Bombe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fügt allen befreundeten Dienern 5 Schaden zu, wenn Ragnaros am Zug ist.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>Öffnet das Tor!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft Welplinge (2/2) herbei, bis Eure Seite des Schlachtfelds voll ist.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>Drachkinzauberwirker</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Ruft zwei Welplinge (2/2) herbei.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>Lucifron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Wirkt Verderbnis auf alle anderen Diener.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>Atramedes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Erhält jedes Mal +2 Angriff, wenn Euer Gegner eine Karte ausspielt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>Ich höre Euch ...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Erhöhter Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>Moira Bronzebart</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Imperator Thaurissan herbei.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>Drakonidenschlächter</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Fügt auch den benachbarten Dienern seines Ziels Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>Wirbelnde Asche</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Windzorn&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>Lebendige Lava</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>Sohn der Flamme</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Kampfschrei:&lt;/b&gt; Verursacht 6 Schaden.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>Coren Düsterbräu</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Gewinnt in Scharmützeln immer.
+&lt;b&gt;Kampfschrei:&lt;/b&gt; Erhaltet ein Scharmützel auf die Hand.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>Omnotron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft einen zufälligen Tron herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>Sulfuras</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Eure Heldenfähigkeit wird zu „Fügt einem zufälligen Feind 8 Schaden zu“. </Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>Golemagg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>Kostet (1) weniger für jeden Schadenspunkt, den Euer Held erlitten hat.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>Kernhundwelpen</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft zwei Kernhundwelpen (2/4) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>Kernhundwelpe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>Ruft am Ende jedes Zuges alle Kernhundwelpen herbei, die in diesem Zug gestorben sind.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>Oberrichter Grimmstein</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft zu Beginn Eures Zuges einen &lt;b&gt;legendären&lt;/b&gt; Diener herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>Vaelastrasz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Eure Karten kosten (3) weniger.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>Brennendes Adrenalin</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Kostet (2) weniger.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>Feuerkralle</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Verleiht Euren Dienern zu Beginn Eures Zuges +3 Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>Drachenkampflust</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>Garr</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft jedes Mal einen Elementar (2/3) mit &lt;b&gt;Spott&lt;/b&gt; herbei, wenn dieser Diener Schaden erleidet.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>Felselementar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Spott&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>Ragnaros der Feuerfürst</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>Nefarian</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>Wilde Magie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Erhaltet einen zufälligen Zauber von einer zufälligen Klasse auf die Hand. Er kostet (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>Geschmolzener Zorn</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft einen Magmawüter (5/1) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>Riesenbanane</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Verleiht einem Diener +2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>Riesenbanane</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>Tauschbanane</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Vertauscht Angriff und Leben eines Dieners.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>Tauschschalter</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Angriff und Leben von der Tauschbanane vertauscht.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>Verfaulte Banane</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Verursacht $1 Schaden.</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Trübauge der Alte</Name>
     <CardSet>Reward</CardSet>
@@ -10686,6 +11607,42 @@ Beschwört zwei Diener (2/1).</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10908,7 +11865,7 @@ Beschwört zwei Diener (2/1).</Text>
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -11206,7 +12163,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Health>4</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Feugen in diesem Duell bereits gestorben ist.</Text>
+    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Feugen in diesem Duell ebenfalls gestorben ist.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -11234,7 +12191,7 @@ Todesröcheln:&lt;/b&gt; Ruft einen Schleim (1/2) mit &lt;b&gt;Spott&lt;/b&gt; h
     <Health>7</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Stalagg in diesem Duell bereits gestorben ist.</Text>
+    <Text>&lt;b&gt;Todesröcheln:&lt;/b&gt; Ruft Thaddius herbei, wenn Stalagg in diesem Duell ebenfalls gestorben ist.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -11670,7 +12627,7 @@ Vernichtet einen Diener.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Fügt allen Dienern 1 Schaden zu. Ruft einen Schleim herbei, wenn dabei ein Diener stirbt.</Text>
+Fügt allen Dienern 1 Schaden zu. Ruft für jeden Diener, der dabei stirbt, einen Schleim herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11683,7 +12640,7 @@ Fügt allen Dienern 1 Schaden zu. Ruft einen Schleim herbei, wenn dabei ein Dien
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Fügt allen Feinden 2 Schaden zu. Ruft einen Schleim herbei, wenn dabei ein Feind stirbt.</Text>
+Fügt allen Dienern 2 Schaden zu. Ruft für jeden Diener, der dabei stirbt, einen Schleim herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13705,7 +14662,7 @@ Euer Held ist &lt;b&gt;immun&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Text>Mischt einen feindlichen Diener in das Deck Eures Gegners.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -16683,6 +17640,7 @@ Gewährt allen Verderbten Eiern +1 Leben und ruft ein Ei herbei.</Text>
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16694,6 +17652,7 @@ Gewährt allen Verderbten Eiern +1 Leben und ruft ein Ei herbei.</Text>
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -17174,7 +18133,7 @@ Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Te
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Aktiviert eine zufällige Tron-Einheit.</Text>
+Aktiviert einen zufälligen Tron.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17187,7 +18146,7 @@ Aktiviert eine zufällige Tron-Einheit.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Aktiviert eine zufällige Tron-Einheit.</Text>
+Aktiviert einen zufälligen Tron.</Text>
     <Mechanics />
   </Card>
   <Card>

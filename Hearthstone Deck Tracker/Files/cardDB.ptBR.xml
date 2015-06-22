@@ -3221,7 +3221,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Outros lacaios aliados têm +1 de Ataque.</Text>
+    <Text>Seus outros lacaios têm +1 de Ataque.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3829,7 +3829,7 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Dream</Class>
-    <Text>Conceda +5/+5 a um lacaio. No início do próximo turno, destrua-o.</Text>
+    <Text>Conceda +5/+5 a um lacaio. No início do seu próximo turno, destrua-o.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4227,7 +4227,8 @@ Compre um card.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Provocar&lt;/b&gt;. &lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
     <Mechanics>
       <string>Taunt</string>
       <string>Divine Shield</string>
@@ -9463,6 +9464,927 @@ Evoque um Infernal 6/6.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CRED_18</CardId>
+    <Name>Becca Abel</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que comprar um card, torne-o Dourado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>Beomki Hong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar.&lt;/b&gt; Lacaios aliados não podem ser &lt;b&gt;Congelados.&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>Brian Birmingham</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Escolha Um&lt;/b&gt; - Restaure toda a vida de um Mecanoide; ou conceda a um designer &lt;b&gt;Fúria dos Ventos&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>Bryan Chang</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Gourmetizar:&lt;/b&gt; Transforma todos os lacaios em quitutes gourmetizados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>Cameron Chrisman</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Enquanto estiver na sua mão, cards Dourados custam (1) a menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>Christopher Yim</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Suas expressões agora são ditas com "voz de rádio".</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>Dean Ayala</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>Você não perde estrelas enquanto este card estiver no seu deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>Elizabeth Cho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione Eco de Medivh e Gosma Ecoante à sua mão. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>Eric Del Priore</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Tem &lt;b&gt;Provocar&lt;/b&gt; se forem 3 da matina.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>Henry Ho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Assista à mão do seu adversário.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>He-Rim Woo</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Escolha Um&lt;/b&gt; - Socar um braço; Oferecer balinha; ou Dar um abração.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>Jason MacAllister</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;Um cara que realmente não se abala.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>JC Park</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione uma nova plataforma a Hearthstone.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>Jeremy Cranford</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Quando o jogo começa, este card escala para o topo do seu deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>Jerry Mascho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>No início do seu turno, cause 1 de dano. Se este card for dourado, em vez disso, cause 1 de dano no fim do seu turno. ISSO FOI UMA PIADA DO HAN SOLO.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>Jomaro Kindred</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; PEGUE todos os cards que seu adversário não quiser da mão dele.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>Max Ma</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Só pode ser jogado em um dispositivo móvel.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>Max McCall</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Suas expressões não têm recarga e não podem ser reprimidas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>Mike Donais</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Substitua todos os lacaios no campo de batalha, nas mãos de ambos e em ambos os decks por lacaios aleatórios.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>Ricardo Robaina</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque três Chinchilas 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>Robin Fredericksen</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se não tiver nenhum outro Eric no campo de batalha, renomeie este card como "Eric".</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>Ryan Chew</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Chewscolha Um&lt;/b&gt; - Cante num karaokê; ou Saia na hora certa e conte para todo mundo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>Ryan Masterson</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Lança cópias de Punhalada pelas Costas, Sangue Frio e Eviscerar. &lt;i&gt;(alvos escolhidos aleatoriamente).&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>Seyil Yoon</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione 3 Disparadas e uma Maratona à sua mão.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>Tim Erskine</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que este lacaio destruir outro lacaio, compre um card.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>Jon Bankard</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>50% de chance de estar 100% certo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>Walter Kong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano a cada um de 2 alvos estratégicos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>Jonas Laster</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que um lacaio &lt;b&gt;Silenciado&lt;/b&gt; morrer, receba +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>Keith Landes</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>No início do seu turno, receba -2 de Vida por estar faminto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>Impacto Ígneo</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause 1 de dano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>Reforçar</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Evoque um Recruta do Punho de Prata 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>Aumentar Armadura!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Receba 2 de Armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>Tiro Firme</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause 2 de dano ao herói inimigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>Magni Barbabronze</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>Alleria Correventos</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>Medivh</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>Bomba Viva</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Escolha um lacaio inimigo. Se ele viver até seu próximo turno, cause 5 de dano a todos os inimigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>Bomba Viva</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>No turno de Ragnaros, cause 5 de dano a este lado do tabuleiro.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>Abra os Portões</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Encha seu tabuleiro com Dragonetes 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>Feiticeiro Draconiano</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoque dois Dragonetes 2/2.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>Lúcifron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Use Corrupção em todos os outros lacaios.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>Atramedes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Sempre que o oponente jogar um card, receba +2 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>Estou Te Ouvindo...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>Moira Barbabronze</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque o Imperador Thaurissan.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>Matador Draconídeo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Também causa dano aos lacaios adjacentes ao alvo atacado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>Cinzas Rodopiantes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>Lava Viva</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>Filho do Fogo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 6 de dano.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>Coren Cervatroz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre vence as Brigas.
+&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione uma Briga à sua mão.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>Sistema de Defesa Omnitron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Evoque um Tron aleatório.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>Sulfuras</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Seu Poder Heroico torna-se "Cause 8 de dano a um inimigo aleatório".</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>Golemagg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>Custa (1) a menos para cada ponto de dano recebido pelo seu herói.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>Cãezinhos-magma</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Evoque dois Cãezinhos-magma 2/4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>Cãozinho-magma</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>No final de cada turno, evoque todos os Cãezinhos-magma que morreram neste turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>Supremo Juiz Durólito</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>No início do seu turno, evoque um lacaio &lt;b&gt;Lendário&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>Vaelastrasz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Seus cards custam (3) a menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>Adrenalina Ardente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Custa (2) a menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>Violâminus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>No início do seu turno, conceda +3 de Ataque aos seus lacaios.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>Febre Dragônica</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>Garr</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que este lacaio receber dano, evoque um Elemental 2/3 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>Elemental da Rocha</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>Ragnaros, o Senhor do Fogo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>Nefarian</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>Magia Selvagem</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Adicione um feitiço aleatório de qualquer classe à sua mão. Ele custa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>Raiva Incandescente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Evoque um Furiante de Magma 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>Bananona</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Conceda +2/+2 a um lacaio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>Bananona</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Está com +2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>Banana Desviada</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Troque o Ataque pela Vida de um lacaio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>Troca Desviada</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque e Vida foram invertidos pela Banana Desviada.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>Banana Podre</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Cause $1 de dano.</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Velho Olho-turvo</Name>
     <CardSet>Reward</CardSet>
@@ -10692,6 +11614,42 @@ Evoque dois lacaios 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10914,7 +11872,7 @@ Evoque dois lacaios 2/1.</Text>
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -13714,7 +14672,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Text>Coloque um lacaio inimigo no deck do seu oponente.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -16699,6 +17657,7 @@ Conceda +1 de Vida a todos os Ovos Corrompidos, depois evoque um.</Text>
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16710,6 +17669,7 @@ Conceda +1 de Vida a todos os Ovos Corrompidos, depois evoque um.</Text>
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>

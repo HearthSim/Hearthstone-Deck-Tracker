@@ -3221,7 +3221,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Los otros esbirros aliados tienen +1 de Ataque.</Text>
+    <Text>Tus otros esbirros tienen +1 de Ataque.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4227,7 +4227,8 @@ Roba una carta.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Provocación&lt;/b&gt;. &lt;b&gt;Escudo divino&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;Provocación&lt;/b&gt;
+&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
     <Mechanics>
       <string>Taunt</string>
       <string>Divine Shield</string>
@@ -9463,6 +9464,927 @@ Invoca un Infernal 6/6.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CRED_18</CardId>
+    <Name>Becca Abel</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Cada vez que robas una carta, la vuelve dorada.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>Beomki Hong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocación.&lt;/b&gt; Los esbirros aliados no pueden quedar &lt;b&gt;congelados&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>Brian Birmingham</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Elige una opción:&lt;/b&gt; Restaura toda la Salud a un Meca o le otorga &lt;b&gt;Viento furioso&lt;/b&gt; a un desarrollador del juego.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>Bryan Chang</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Sibarita:&lt;/b&gt; todos los esbirros son comestibles.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>Cameron Chrisman</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Mientras está en tu mano, las cartas doradas cuestan (1) menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>Christopher Yim</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; ahora todas tus emociones tienen voz de locutor.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>Dean Ayala</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>Mientras esta carta está en tu mazo, no puedes perder estrellas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>Elizabeth Cho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; cuando entra al campo de batalla, invoca a su primo, el eremita Cho. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>Eric Del Priore</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Tiene &lt;b&gt;Provocación&lt;/b&gt; si son las 3 de la mañana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>Henry Ho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; observa la mano de tu adversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>He-Rim Woo</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Elige una opción:&lt;/b&gt; Golpea un brazo, regala un dulce o da un gran abrazo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>Jason MacAllister</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;En el arte de los monólogos, no hay nadie como él.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>JC Park</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; agrega una nueva plataforma para Hearthstone.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>Jeremy Cranford</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando comienza la partida, esta carta trepa hasta la cima del mazo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>Jerry Mascho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Al principio de tu turno, inflige 1 de daño. Si la carta es dorada, inflige 1 de daño al final de tu turno. ESTA ES UNA BROMA DE HAN SOLO.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>Jomaro Kindred</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; TOMA todas las cartas que tu adversario tenga en la mano y no quiera.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>Max Ma</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Solo se puede jugar en dispositivos móviles.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>Max McCall</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Tus emociones no tienen tiempo de reutilización y no se pueden suprimir.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>Mike Donais</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza por esbirros aleatorios a todos los esbirros que haya en el campo de batalla, en las manos de ambos jugadores y en los dos mazos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>Ricardo Robaina</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; invoca tres chinchillas 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>Robin Fredericksen</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; si no tienes otros Erics en el campo de batalla, esta carta pasa a llamarse "Eric".</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>Ryan Chew</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Elige una opción:&lt;/b&gt; canta karaoke o se va a tiempo y se lo cuenta a todo el mundo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>Ryan Masterson</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Lanza copias de Puñalada, Sangre fría y Eviscerar. &lt;i&gt;(Los objetivos se eligen al azar).&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>Seyil Yoon</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; agrega 3 Carreras y una Maratón a tu mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>Tim Erskine</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Cada vez que este esbirro destruye a otro, roba una carta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>Jon Bankard</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>50% de probabilidades de estar 100% en lo cierto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>Walter Kong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 de daño a 2 objetivos estratégicos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>Jonas Laster</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando un esbirro &lt;b&gt;silenciado&lt;/b&gt; muere, obtiene +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>Keith Landes</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Al comienzo de tu turno, obtienes -2 de Salud por inanición.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>Explosión de fuego</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Inflige 1 de daño.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>Refuerzo</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca un Recluta de la Mano de Plata 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>¡Más armadura!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Obtiene 2 de Armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>Disparo firme</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Inflige 2 de daño al héroe enemigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>Magni Barbabronce</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>Alleria Brisaveloz</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>Medivh</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>Bomba viviente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Elige un esbirro enemigo. Si en tu próximo turno sigue vivo, inflige 5 de daño a todos los enemigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>Bomba viviente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>En el turno de Ragnaros, inflige 5 de daño a este lado del tablero.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>Abran las puertas</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Llena tu tablero con Crías 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>Taumaturgo dragonante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; invoca dos Crías 2/2.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>Lucifron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Lanza Corrupción sobre todos los otros esbirros.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>Atramedes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Cada vez que tu adversario juega una carta, obtiene +2 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>Te oigo...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>Moira Barbabronce</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Estertor:&lt;/b&gt; invoca al Emperador Thaurissan.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>Asesino dracónido</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>También daña a los esbirros adyacentes al objetivo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>Remolino de cenizas</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Viento furioso&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>Lava viviente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocación&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>Hijo del fuego</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; inflige 6 de daño.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>Coren Cerveza Temible</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Gana todas las Peleas.
+ &lt;b&gt;Grito de batalla:&lt;/b&gt; agrega una Pelea a tu mano.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>Sistema de Defensa de Omnitrón</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Invoca un Tron aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>Sulfuras</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;Estertor:&lt;/b&gt; tu poder de héroe se convierte en "Inflige 8 de daño a un enemigo aleatorio".</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>Golemagg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>Cuesta (1) menos por cada punto de daño que haya recibido tu héroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>Cachorros de can del Núcleo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Invoca dos Cachorros de can del Núcleo 2/4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>Cachorro de can del Núcleo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>Al final de cada turno, invoca a todos los Cachorros de can del Núcleo que murieron en este turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>Alto justiciero Pedrasiniestra</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Al comienzo de tu turno, invoca un esbirro &lt;b&gt;Legendario&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>Vaelastrasz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Tus cartas cuestan (3) menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>Adrenalina ardiente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cuesta (2) menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>Sangrevaja</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Al comienzo de tu turno, otorga +3 de Ataque a tus esbirros.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>Ansia dragontina</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>Garr</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Cada vez que este esbirro recibe daño, invoca un Elemental 2/3 con &lt;b&gt;Provocación&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>Elemental de roca</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocación&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>Ragnaros el Señor del Fuego</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>Nefarian</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>Magia salvaje</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Agrega un hechizo aleatorio de cualquier clase a tu mano. Cuesta (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>Furia magmática</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca un Furibundo de magma 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>Bananón</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +2/+2 a un esbirro.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>Bananón</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Tiene +2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>Banana bipolar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Intercambia el Ataque y la Salud de un esbirro.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>Intercambio bipolar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>La Banana bipolar ha intercambiado el Ataque y la Salud.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>Banana podrida</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $1 de daño.</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Viejo Ojosombrío</Name>
     <CardSet>Reward</CardSet>
@@ -10692,6 +11614,42 @@ Invoca dos esbirros 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10914,7 +11872,7 @@ Invoca dos esbirros 2/1.</Text>
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -13713,7 +14671,7 @@ Tu héroe es &lt;b&gt;Inmune&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Text>Coloca un esbirro enemigo en el mazo de tu oponente.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -15814,7 +16772,7 @@ Coloca dos esbirros de tu mazo y uno del de tu adversario en el campo de batalla
     <Health>8</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>Gana todas las grescas.</Text>
+    <Text>Gana todas las Peleas.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16290,7 +17248,7 @@ Destruye un esbirro enemigo dañado aleatorio.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
-Destruye un esbirro enemigo dañado aleatorio.</Text>
+Destruye un esbirro enemigo aleatorio.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16698,6 +17656,7 @@ Otorga +1 de Salud a todos los Huevos corrompidos y luego invoca uno.</Text>
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16709,6 +17668,7 @@ Otorga +1 de Salud a todos los Huevos corrompidos y luego invoca uno.</Text>
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>

@@ -3221,7 +3221,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Pozostali przyjaźni stronnicy otrzymują +1 do ataku.</Text>
+    <Text>Twoi pozostali stronnicy otrzymują +1 do ataku.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4227,7 +4227,8 @@ Dobierz kartę.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;
+&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
     <Mechanics>
       <string>Taunt</string>
       <string>Divine Shield</string>
@@ -9266,7 +9267,7 @@ Przyzwij Infernala 6/6.</Text>
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Pirata 2/2 i zniszcz wszystkich Nindżów.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij Pirata 2/2 i zniszcz wszystkich ninjów.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9464,6 +9465,928 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Text>Nie możesz rozpocząć gry bez tego stronnika w talii.</Text>
     <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_18</CardId>
+    <Name>Becca Abel</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Za każdym razem gdy dobierasz kartę, sprawia że staje się złota.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>Beomki Hong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt; Przyjaźni sojusznicy nie mogą być &lt;b&gt;Zamrożeni.&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>Brian Birmingham</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Przywróć Mecha do pełni zdrowia; lub daj &lt;b&gt;Furię wichru&lt;/b&gt; projektantowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>Bryan Chang</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Jedzonko:&lt;/b&gt; Wszyscy stronnicy stają się jadalni.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>Cameron Chrisman</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Gdy masz tę kartę w ręce, złote karty kosztują (1) mniej.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>Christopher Yim</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Twoje emotki są teraz wypowiadane radiowym głosem.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>Dean Ayala</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>Gdy masz tę kartę w talii, nie możesz tracić gwiazdek.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>Elizabeth Cho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj Echo Medivha oraz Replikujący szlam do twojej ręki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>Eric Del Priore</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Ma &lt;b&gt;Prowokację&lt;/b&gt;, jeśli jest 3 rano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>Henry Ho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Obejrzyj rękę przeciwnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>He-Rim Woo</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Poklep po ramieniu; zaproponuj przekąskę; lub przytul przeciwnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>Jason MacAllister</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;To prawdziwy twardziel.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>JC Park</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wydaj Hearthstone na nowej platformie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>Jeremy Cranford</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Kiedy gra się zaczyna, ta karta dostaje się na górę talii.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>Jerry Mascho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Na początku tury zadaj 1 pkt. obrażeń. Jeśli ta karta jest złota, zamiast tego zadaj 1 pkt. obrażeń na końcu tury. Jak Han Solo!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>Jomaro Kindred</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; WEŹ wszystkie niepotrzebne przeciwnikowi karty z jego ręki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>Max Ma</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Tę kartę można zagrać jedynie na urządzeniu przenośnym.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>Max McCall</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Twoje emotki mogą być odtwarzane bez przerwy i nie można ich wyciszyć.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>Mike Donais</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wymień wszystkich stronników na polu bitwy i w rękach graczy na losowych stronników.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>Ricardo Robaina</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij trzy Szynszyle 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>Robin Fredericksen</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli nie masz innych Ericów na polu bitwy, zmień nazwę tej karty na „Eric”.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>Ryan Chew</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Śpiewaj karaoke; lub wyjdź na czas i wszystkim o tym powiedz.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>Ryan Masterson</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Rzuć kopie zaklęć „Cios w plecy”, „Zimna krew” oraz „Wypatroszenie”. &lt;i&gt;(cele wybrane losowo).&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>Seyil Yoon</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 3 Sprinty oraz Maraton do swojej ręki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>Tim Erskine</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Dobierz kartę za każdym razem, gdy ten stronnik zniszczy innego stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>Jon Bankard</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>50% szans na 100% racji.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>Walter Kong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń każdemu z 2 strategicznych celów.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>Jonas Laster</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Otrzymuje +1/+1 za każdym razem, gdy zginie &lt;b&gt;Wyciszony&lt;/b&gt; stronnik.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>Keith Landes</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Na początku twojej tury traci -2 zdrowia z powodu głodu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>Ognisty pocisk</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj 1 pkt. obrażeń.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>Wsparcie</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij Rekruta Srebrnej Dłoni 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>Pancerz!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Otrzymujesz 2 pkt. pancerza.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>Pewny strzał</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>Magni Miedziobrody</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>Alleria Bieżywiatr</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>Medivh</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>Żywa bomba</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Wybierz wrogiego stronnika. Jeśli przeżyje do twojej następnej tury, zadaj 5 pkt. obrażeń wszystkim wrogom.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>Żywa bomba</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>W turze Ragnarosa zadaj 5 pkt. obrażeń tej stronie planszy.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>Otwarcie wrót</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Zapełnij swoją planszę Pisklętami 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>Drakanin czaromiot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij dwa Pisklęta 2/2.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>Lucyfron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Rzuć Splugawienie na wszystkich pozostałych stronników.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>Atramedes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Otrzymuje +2 do ataku za każdym razem, gdy przeciwnik zagra kartę.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>Słyszę cię...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>Moira Miedziobroda</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Imperatora Thaurissana.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>Drakonid pogromca</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Zadaj również obrażenia stronnikom znajdującym się obok celu ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>Wirujący popiół</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furia wichru&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>Żywa lawa</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>Syn Płomienia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>Coren Bimberhaust</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Zawsze wygrywa bójki.
+ &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj kartę „Bójka” do twojej ręki.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>System Obronny Omnotron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Przyzwij losowego trona.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>Sulfuras</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Moc specjalna twojego bohatera zmienia się na „Zadaj 8 pkt. obrażeń losowemu wrogowi”.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>Golemagg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>Kosztuje (1) mniej za każdy punkt obrażeń otrzymany przez twojego bohatera.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>Ogniste szczenięta</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Przyzwij dwa Ogniste szczenięta 2/4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>Ogniste szczenię</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>Na koniec każdej tury przyzwij wszystkie Ogniste szczenięta, które w niej zginęły.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>Najwyższy Sędzia Groźnoskały</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Na początku twojej tury przyzwij &lt;b&gt;Legendarnego&lt;/b&gt; stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>Vaelastraz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Twoje karty kosztują (3) mniej.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>Płonąca adrenalina</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Kosztuje (2) mniej.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>Brzytworóg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Na początku twojej tury daj swoim stronnikom
++3 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>Smocza żądza</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>Garr</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Za każdym razem gdy ten stronnik zostanie zraniony, przyzwij Żywiołaka 2/3 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>Skalny żywiołak</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>Ragnaros Władca Ognia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>Nefarian</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>Dzika magia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Umieść losowe zaklęcie z dowolnej klasy w twojej ręce. Kosztuje (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>Ognisty szał</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij Wulkanicznego furiata 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>Wielki banan</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Daj stronnikowi +2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>Wielki banan</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ma +2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>Wygięty banan</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Zamień atak i zdrowie stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>Bananowa zamiana</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Atak i zdrowie zostały zamienione przez Wygięty banan.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>Zgniły banan</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Zadaj $1 pkt. obrażeń.</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -10695,6 +11618,42 @@ Przyzwij dwóch stronników 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10917,7 +11876,7 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -13405,7 +14364,7 @@ Jeśli jest to Bestia, kosztuje (4) mniej.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Mech</Race>
-    <Text>Na koniec twojej tury zadaj 2 pkt. obrażeń losowemu stronnikowi niebędącemu Mechem.</Text>
+    <Text>Na koniec twojej tury zadaj 2 pkt. obrażeń losowemu stronnikowi nie będącemu Mechem.</Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -13717,7 +14676,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Class>Druid</Class>
     <Text>Wtasuj wrogiego stronnika do talii przeciwnika.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -16704,6 +17663,7 @@ Daj wszystkim Splugawionym jajom +1 do zdrowia i przyzwij kolejne jajo.</Text>
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16715,6 +17675,7 @@ Daj wszystkim Splugawionym jajom +1 do zdrowia i przyzwij kolejne jajo.</Text>
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>

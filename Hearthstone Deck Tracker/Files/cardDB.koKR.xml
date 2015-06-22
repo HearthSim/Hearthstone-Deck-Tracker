@@ -3221,7 +3221,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>다른 아군 하수인들이 공격력을 +1 얻습니다.</Text>
+    <Text>내 다른 하수인들이 공격력을 +1 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4227,7 +4227,8 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;도발&lt;/b&gt;. &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;도발&lt;/b&gt;
+&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
     <Mechanics>
       <string>Taunt</string>
       <string>Divine Shield</string>
@@ -9169,7 +9170,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 공격력 2 이하의 하수인 하나를 처치합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 공격력 2 이하의 적 하수인 하나를 처치합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -9200,7 +9201,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>하수인이 죽을 때마다 공격력을 +1 얻습니다.</Text>
+    <Text>하수인 하나가 죽을 때마다 공격력을 +1 얻습니다.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -9468,6 +9469,927 @@
     <Durability>0</Durability>
     <Text>덱에 이 하수인이 없으면 게임을 시작할 수 없습니다.</Text>
     <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_18</CardId>
+    <Name>베카 아벨</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>내가 카드를 뽑을 때마다 그 카드를 황금 카드로 만듭니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>홍범기</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발.&lt;/b&gt; 아군 하수인들이 &lt;b&gt;빙결&lt;/b&gt; 상태에 면역이 됩니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>브라이언 버밍험</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;선택&lt;/b&gt; - 기계 하수인 하나의 생명력을 모두 회복시킵니다. 또는 개발자 1명에게 &lt;b&gt;질풍&lt;/b&gt;을 부여합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>브라이언 챙</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;먹방:&lt;/b&gt; 모든 하수인을 먹을 수 있습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>카메론 크리스먼</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>내 손에 이 카드가 있으면, 황금 카드의 비용이 (1) 감소합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>크리스토퍼 임</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 감정 표현이 "라디오 음성"으로 출력됩니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>딘 아얄라</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>덱에 이 하수인이 있으면 등급전에서 별을 잃지 않습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>엘리자베스 조</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 메디브의 메아리 카드와 고동치는 수액괴물 카드를 내 손으로 1장씩 가져옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>에릭 델 프리오레</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>새벽 3시가 되면 &lt;b&gt;도발&lt;/b&gt; 능력을 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>헨리 호</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 손에 있는 모든 카드를 훔쳐봅니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>우혜림</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;선택&lt;/b&gt; - 팔을 툭 칩니다. 또는 맛있는 음식을 줍니다. 또는 꼬옥 안아줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>제이슨 매컬리스터</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;하스스톤 팀 제일의 진국남입니다.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>박종천</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하스스톤에 새로운 플랫폼을 추가합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>제레미 크랜포드</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>게임이 시작되면 이 카드는 덱의 맨 위로 올라옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>제리 마스쵸</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 시작될 때 피해를 1 줍니다. 이 카드가 황금 카드면 내 턴이 끝날 때 피해를 1 줍니다. 조삼모사 맞습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>조마로 킨드레드</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편 손에 있는 카드 중 상대편이 원하지 않는 카드를 모두 가져옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>맥스 마</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>모바일 기기에서만 사용할 수 있습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>맥스 맥콜</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>감정 표현을 재사용 대기시간 없이 사용할 수 있고 상대편이 내 감정 표현을 차단할 수 없습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>마이크 도내이스</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장, &lt;b&gt;모든&lt;/b&gt; 플레이어의 손, &lt;b&gt;모든&lt;/b&gt; 덱에 있는 &lt;b&gt;모든&lt;/b&gt; 하수인을 무작위로 선택된 하수인으로 교체합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>리카르도 로바이나</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 1/1 털실쥐 3마리를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>로빈 프레드릭슨</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 에릭이 없으면 이 카드의 이름을 "에릭"으로 바꿉니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>라이언 츄</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;선택&lt;/b&gt; - 노래방에서 신나게 노래를 부릅니다. 또는 정시 퇴근하며 모두에게 그 사실을 알립니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>라이언 마스터슨</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 기습, 냉혈, 절개를 시전합니다. &lt;i&gt;(대상은 무작위로 선택됨)&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>윤세일</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전력 질주 카드 3장과 마라톤 완주 카드 1장을 내 손으로 가져옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>팀 얼스카인</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>이 하수인이 다른 하수인을 처치하면 카드를 1장 뽑습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>존 뱅커드</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>50%의 확률로 100% 옳습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>월터 콩</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전술적 목표 둘에게 피해를 1 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>조나스 래스터</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;침묵&lt;/b&gt;당한 하수인이 죽으면 +1/+1을 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>키이스 란데스</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 시작될 때, 굶주림으로 생명력이 2 감소합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>화염 작렬</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+피해를 1 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>병력 충원</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+1/1 은빛 성기사단 신병을 1명 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>방어도 증가!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+방어도를 +2 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>고정 사격</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+적 영웅에게 피해를 2 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>마그니 브론즈비어드</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>알레리아 윈드러너</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>메디브</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>살아있는 폭탄</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 5 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>살아있는 폭탄</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>라그나로스의 턴에 &lt;b&gt;모든&lt;/b&gt; 아군에게 피해를 5 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>문을 열어라!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>내 하수인을 소환할 공간이 다 찰 때까지 2/2 새끼용을 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>용혈족 주문술사</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 2/2 새끼용을 2마리 소환합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>루시프론</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 &lt;b&gt;모든&lt;/b&gt; 하수인에게 부패를 시전합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>아트라메데스</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>상대편이 카드를 낼 때마다, 공격력을 +2 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>네 소리가 들린다...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>모이라 브론즈비어드</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 제왕 타우릿산을 소환합니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>용혈족 학살자</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>공격하는 대상 양옆의 하수인들에게도 피해를 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>소용돌이치는 잿불덩이</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;질풍&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>살아있는 용암</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>화염의 피조물</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 6 줍니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>코렌 다이어브루</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>난투에서 무조건 승리합니다.
+ &lt;b&gt;전투의 함성:&lt;/b&gt; 난투 카드 1장을 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>만능골렘 방어 시스템</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>무작위로 선택된 골렘 하나를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>설퍼라스</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 영웅 능력이 '무작위로 선택된 적 하나에게 피해를 8 줍니다.'로 바뀝니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>골레마그</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>내 영웅이 입은 피해 1당 비용이 (1)씩 감소합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>심장부 사냥개를 풀어라</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>2/4 새끼 심장부 사냥개를 2마리 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>새끼 심장부 사냥개</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>각 턴이 끝날 때, 이번 턴에 죽은 모든 새끼 심장부 사냥개를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>대법관 그림스톤</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 시작될 때, &lt;b&gt;전설&lt;/b&gt; 하수인 하나를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>밸라스트라즈</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>내 카드의 비용이 (3) 감소합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>불타는 아드레날린</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>비용 (2) 감소</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>서슬송곳니</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>내 턴이 시작될 때, 내 하수인들에게 공격력을 +3 부여합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>용의 분노</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 +3</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>가르</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>이 하수인은 피해를 입을 때마다 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 2/3 정령을 하나 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>바위 정령</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>불의 군주 라그나로스</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>네파리안</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>마법 폭주</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+모든 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다. 그 주문의 비용이 (0)이 됩니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>용암의 분노</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+5/1 용암 광전사를 하나 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>큰 바나나</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>하수인 하나에게 +2/+2를 부여합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>큰 바나나</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>기묘한 바나나</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>하수인 하나의 공격력과 생명력을 바꿉니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>기묘한 전환</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>돌연변이 바나나가 공격력과 생명력 바꿈</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>썩은 바나나</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>피해를 $1 줍니다.</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -10699,6 +11621,42 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10911,7 +11869,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>3마리, 4마리, 또는 5마리 1/1 멀록을 소환합니다.</Text>
+    <Text>1/1 멀록을 3마리, 4마리, 또는 5마리 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10921,7 +11879,7 @@
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -11803,7 +12761,7 @@
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>5</Durability>
-    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 하수인이 죽을 때마다 공격력을 +2 얻습니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 하수인 하나가 죽을 때마다 공격력을 +2 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11827,7 +12785,7 @@
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>5</Durability>
-    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 하수인이 죽을 때마다 공격력을 +2 얻습니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt; 능력을 가진 하수인 하나가 죽을 때마다 공격력을 +2 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13720,7 +14678,7 @@
     <Class>Druid</Class>
     <Text>적 하수인 하나를 상대편 덱에 섞어 넣습니다.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -16120,7 +17078,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>적 하수인을 하나 선택합니다. 그 하수인이 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $5 줍니다.</Text>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $5 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16144,7 +17102,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>적 하수인을 하나 선택합니다. 그 하수인이 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $10 줍니다.</Text>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $10 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16704,6 +17662,7 @@
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16715,6 +17674,7 @@
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -17102,7 +18062,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 상대편 직업의 주문 카드 1장을 내 손으로 가져옵니다.</Text>
+상대편 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17115,7 +18075,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 상대편 직업의 주문 카드 1장을 내 손으로 가져옵니다.</Text>
+상대편 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17993,7 +18953,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>하수인을 선택하고, 내 덱에 그 하수인을 셋 섞어 넣습니다.</Text>
+    <Text>하수인을 하나 선택하고, 내 덱에 그 하수인을 셋 섞어 넣습니다.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -18242,7 +19202,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>이 하수인이 피해를 입을 때마다, 적 영웅에게 피해를 2 줍니다.</Text>
+    <Text>이 하수인은 피해를 입을 때마다, 적 영웅에게 피해를 2 줍니다.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
   </Card>
@@ -18528,7 +19488,7 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 &lt;i&gt;상대편 직업&lt;/i&gt;의 주문 카드 2장을 내 손으로 가져옵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt;&lt;i&gt;상대편 직업&lt;/i&gt;의 주문 카드 중 무작위로 선택된 2장을 내 손으로 가져옵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>

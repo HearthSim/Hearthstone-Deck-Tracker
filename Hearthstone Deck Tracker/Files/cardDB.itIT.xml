@@ -45,7 +45,7 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $2 danni a tutti i nemici. Rigenera #2 Salute a tutti i tuoi personaggi.</Text>
+    <Text>Infligge $2 danni ai nemici. Rigenera #2 Salute ai tuoi personaggi.</Text>
     <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
@@ -276,7 +276,7 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $4 danni a un nemico e $1 |4(danno,danni) a tutti gli altri nemici.</Text>
+    <Text>Infligge $4 danni a un nemico e $1 |4(danno,danni) agli altri nemici.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -419,7 +419,7 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $1 |4(danno,danni) a tutti i servitori nemici.</Text>
+    <Text>Infligge $1 |4(danno,danni) ai servitori nemici.</Text>
     <Mechanics />
     <Artist>Howard Lyon</Artist>
   </Card>
@@ -435,7 +435,7 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Congela&lt;/b&gt; tutti i servitori nemici.</Text>
+    <Text>&lt;b&gt;Congela&lt;/b&gt; i servitori nemici.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -485,7 +485,7 @@ Rigenera 2 Salute.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $4 danni a tutti i servitori nemici.</Text>
+    <Text>Infligge $4 danni ai servitori nemici.</Text>
     <Mechanics />
     <Artist>Romain De Santi</Artist>
   </Card>
@@ -1167,7 +1167,7 @@ Equipaggia un Pugnale 1/2.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $2 danni a tutti i nemici.</Text>
+    <Text>Infligge $2 danni ai nemici.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -2075,7 +2075,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 2 Salute a tutti i tuoi personaggi.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rigenera 2 Salute ai tuoi personaggi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2391,7 +2391,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $1 |4(danno,danni) a tutti i servitori nemici. Pesca una carta.</Text>
+    <Text>Infligge $1 |4(danno,danni) ai servitori nemici. Pesca una carta.</Text>
     <Mechanics />
     <Artist>Andrew Robinson</Artist>
   </Card>
@@ -2499,7 +2499,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $3 danni suddivisi casualmente tra tutti i nemici.</Text>
+    <Text>Infligge $3 danni suddivisi casualmente tra i nemici.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -2533,7 +2533,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $1 |4(danno,danni) a un servitore. Se il bersaglio muore, pesca una carta.</Text>
+    <Text>Infligge $1 |4(danno,danni) a un servitore. Se muore, pesca una carta.</Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -3152,7 +3152,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Race>Totem</Race>
-    <Text>Alla fine del tuo turno, rigenera 1 Salute a tutti i tuoi servitori.</Text>
+    <Text>Alla fine del tuo turno, rigenera 1 Salute ai tuoi servitori.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3321,7 +3321,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $2 danni a tutti i servitori nemici e li &lt;b&gt;Congela&lt;/b&gt;.</Text>
+    <Text>Infligge $2 danni ai servitori nemici e li &lt;b&gt;Congela&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -3357,7 +3357,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Fornisce "&lt;b&gt;Rantolo di Morte:&lt;/b&gt; rievoca questo servitore" a un tuo servitore.</Text>
+    <Text>Fornisce "&lt;b&gt;Rantolo di Morte:&lt;/b&gt; rievoca questo servitore" a un servitore.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -3756,7 +3756,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Distrugge la tua arma e infligge danni pari al suo attacco a tutti i nemici.</Text>
+    <Text>Distrugge la tua arma e infligge danni pari al suo attacco ai nemici.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -4061,7 +4061,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce 2 Banane all'avversario.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce due Banane all'avversario.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4600,7 +4600,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se l'avversario ha 4 o più servitori, prendi il controllo di un servitore casuale.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se l'avversario ha quattro o più servitori, prendi il controllo di un servitore casuale.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -5317,7 +5317,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>+1/+1 a tutti i tuoi servitori.</Text>
+    <Text>+1/+1 ai tuoi servitori.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -5842,7 +5842,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge da $2 a $3 danni a tutti i servitori nemici. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
+    <Text>Infligge da $2 a $3 danni ai servitori nemici. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
     <Mechanics />
     <Artist>Christopher Moeller</Artist>
   </Card>
@@ -6079,7 +6079,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Distrugge un tuo servitore e infligge danni pari al suo Attacco a tutti i servitori nemici.</Text>
+    <Text>Distrugge un tuo servitore e infligge danni pari al suo Attacco ai servitori nemici.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -6145,7 +6145,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; scarta due carte casuali.</Text>
+    <Text>&lt;b&gt;Carica&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; scarta 2 carte casuali.</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Charge</string>
@@ -6247,7 +6247,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Pesca 2 Demoni casuali dal tuo mazzo.</Text>
+    <Text>Pesca due Demoni casuali dal tuo mazzo.</Text>
     <Mechanics />
     <Artist>Raven Mimura</Artist>
   </Card>
@@ -6376,7 +6376,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Prendi il controllo di un servitore nemico con Attacco pari a 3 o inferiore fino alla fine del turno.</Text>
+    <Text>Ottieni il controllo di un servitore nemico con Attacco pari a 3 o inferiore fino alla fine del turno.</Text>
     <Mechanics />
     <Artist>Mark Gibbons</Artist>
   </Card>
@@ -6758,7 +6758,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $8 danni suddivisi casualmente tra tutti i nemici.</Text>
+    <Text>Infligge $8 danni suddivisi casualmente tra i nemici.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -7343,7 +7343,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>Tutti i servitori perdono &lt;b&gt;Furtività&lt;/b&gt;. Distrugge tutti i &lt;b&gt;Segreti&lt;/b&gt; nemici. Pesca una carta.</Text>
+    <Text>TUTTI i servitori perdono &lt;b&gt;Furtività&lt;/b&gt;. Distrugge i &lt;b&gt;Segreti&lt;/b&gt; nemici. Pesca una carta.</Text>
     <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
@@ -7668,7 +7668,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Scegli:&lt;/b&gt; +2/+2 a tutti gli altri tuoi servitori &lt;b&gt;o&lt;/b&gt; evoca due Treant 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; +2/+2 agli altri tuoi servitori &lt;b&gt;o&lt;/b&gt; evoca due Treant 2/2 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -7683,7 +7683,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>+2/+2 a tutti gli altri tuoi servitori.</Text>
+    <Text>+2/+2 agli altri tuoi servitori.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -7936,7 +7936,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Infligge $2 danni a un servitore. Se il bersaglio è un tuo Demone, gli fornisce invece +2/+2.</Text>
+    <Text>Infligge $2 danni a un servitore. Se è un tuo Demone, gli fornisce invece +2/+2.</Text>
     <Mechanics />
     <Artist>Ben Wootten</Artist>
   </Card>
@@ -8121,7 +8121,7 @@ Infligge 2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe viene attaccato, infligge $2 danni a tutti i nemici.</Text>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando il tuo eroe viene attaccato, infligge $2 danni ai nemici.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8439,7 +8439,7 @@ Infligge 3 danni.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;Silenzia&lt;/b&gt; tutti i servitori nemici. Pesca una carta.</Text>
+    <Text>&lt;b&gt;Silenzia&lt;/b&gt; i servitori nemici. Pesca una carta.</Text>
     <Mechanics>
       <string>Silence</string>
     </Mechanics>
@@ -8594,7 +8594,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>&lt;b&gt;Scegli:&lt;/b&gt; infligge $5 danni a un servitore &lt;b&gt;o&lt;/b&gt; $2 danni a tutti i servitori nemici.</Text>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; infligge $5 danni a un servitore &lt;b&gt;o&lt;/b&gt; $2 danni ai servitori nemici.</Text>
     <Mechanics />
     <Artist>Richard Wright</Artist>
   </Card>
@@ -8608,7 +8608,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Infligge $2 danni a tutti i servitori nemici.</Text>
+    <Text>Infligge $2 danni ai servitori nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9257,7 +9257,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un Pirata 2/2 e distrugge tutti i Ninja.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca un Pirata 2/2 e distrugge TUTTI i Ninja.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9456,6 +9456,926 @@ Evoca un Infernale 6/6.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CRED_18</CardId>
+    <Name>Becca Abel</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Quando peschi una carta, diventa Dorata.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_19</CardId>
+    <Name>Beomki Hong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. I tuoi servitori non possono essere &lt;b&gt;Congelati&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_20</CardId>
+    <Name>Brian Birmingham</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; rigenera la Salute di un Robot al massimo &lt;b&gt;o&lt;/b&gt; fornisce &lt;b&gt;Furia del Vento&lt;/b&gt; a un progettista.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_21</CardId>
+    <Name>Bryan Chang</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rende TUTTI i servitori commestibili.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_22</CardId>
+    <Name>Cameron Chrisman</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Fintanto che è nella tua mano, le carte Dorate costano (1) Mana in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_23</CardId>
+    <Name>Christopher Yim</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; le tue emote vengono emesse con effetto radio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_24</CardId>
+    <Name>Dean Ayala</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>Non puoi perdere Stelle fintanto che è nel tuo mazzo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_25</CardId>
+    <Name>Elizabeth Cho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano le carte Eco di Medivh e Melma Echeggiante.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_26</CardId>
+    <Name>Eric Del Priore</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Ha &lt;b&gt;Provocazione&lt;/b&gt; se sono le 3 del mattino.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_27</CardId>
+    <Name>Henry Ho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; osserva la mano dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_28</CardId>
+    <Name>He-Rim Woo</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; tira un pugno &lt;b&gt;o&lt;/b&gt; dai un grande abbraccio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_29</CardId>
+    <Name>Jason MacAllister</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;i&gt;Una persona tutta d'un pezzo.&lt;/i&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_30</CardId>
+    <Name>JC Park</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fa funzionare Hearthstone su una nuova piattaforma.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_31</CardId>
+    <Name>Jeremy Cranford</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Quando inizia una partita, questa carta si sposta in cima al mazzo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_32</CardId>
+    <Name>Jerry Mascho</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>All'inizio del tuo turno, infligge 1 danno. Se questa carta è Dorata, infligge invece 1 danno alla fine del tuo turno. BATTUTA SU HAN SOLO.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_33</CardId>
+    <Name>Jomaro Kindred</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; prendi qualsiasi carta non voluta dalla mano dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_34</CardId>
+    <Name>Max Ma</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Può essere giocata solo su un dispositivo mobile.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_35</CardId>
+    <Name>Max McCall</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Le tue emote non hanno tempo di recupero e non possono essere silenziate.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_36</CardId>
+    <Name>Mike Donais</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; sostituisce TUTTI i servitori sul campo di battaglia, nelle mani e nei mazzi con servitori casuali.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_37</CardId>
+    <Name>Ricardo Robaina</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca tre Cincillà 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_38</CardId>
+    <Name>Robin Fredericksen</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se non possiedi un Eric sul campo di battaglia, rinomina questa carta "Eric".</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_39</CardId>
+    <Name>Ryan Chew</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; canta al karaoke &lt;b&gt;o&lt;/b&gt; lascia l'ufficio in orario e fallo sapere a tutti.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_40</CardId>
+    <Name>Ryan Masterson</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; lancia Pugnalata alle Spalle, Sangue Freddo e Sventramento su bersagli casuali.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_41</CardId>
+    <Name>Seyil Yoon</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>9</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano tre Scatto e una Maratona.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_42</CardId>
+    <Name>Tim Erskine</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Quando distrugge un altro servitore, pesca una carta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_43</CardId>
+    <Name>Jon Bankard</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Probabilità del 50% di avere ragione al 100%.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_44</CardId>
+    <Name>Walter Kong</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno a due bersagli strategici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_45</CardId>
+    <Name>Jonas Laster</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Ottiene +1/+1 quando muore un servitore &lt;b&gt;Silenziato&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CRED_46</CardId>
+    <Name>Keith Landes</Name>
+    <CardSet>Credits</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>All'inizio del tuo turno, subisce 2 danni per la fame.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1</CardId>
+    <Name>Detonazione di Fuoco</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Infligge 1 danno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_101_H1</CardId>
+    <Name>Rinforzo</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca una Recluta Mano d'Argento 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_102_H1</CardId>
+    <Name>Potenziamento Armatura</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Ottiene 2 Armatura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1</CardId>
+    <Name>Tiro Stabilizzato</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Infligge 2 danni all'eroe nemico.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_01a</CardId>
+    <Name>Magni Barbabronzea</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_05a</CardId>
+    <Name>Alleria Ventolesto</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>HERO_08a</CardId>
+    <Name>Medivh</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100</CardId>
+    <Name>Bomba Vivente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge 5 danni ai nemici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_100e</CardId>
+    <Name>Bomba Vivente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Nel turno di Ragnaros, infligge 5 danni agli alleati.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_83</CardId>
+    <Name>Apertura dei Cancelli</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Riempie il tuo lato del campo di battaglia con Draghetti 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_84</CardId>
+    <Name>Lanciamagie Dragoide</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca due Draghetti 2/2.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_85</CardId>
+    <Name>Lucifron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; lancia Corruzione su TUTTI gli altri servitori.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_86</CardId>
+    <Name>Atramedes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Ottiene +2 Attacco quando l'avversario gioca una carta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_86e</CardId>
+    <Name>Ti ho sentito...</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attacco aumentato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_87</CardId>
+    <Name>Moira Barbabronzea</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca Thaurissan.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_88</CardId>
+    <Name>Sicario Draconide</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Danneggia anche i servitori adiacenti a quello attaccato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_89</CardId>
+    <Name>Turbine di Cenere</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Windfury</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_90</CardId>
+    <Name>Lava Vivente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_91</CardId>
+    <Name>Figlio della Fiamma</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 6 danni.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_92</CardId>
+    <Name>Coren Birranera</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano una carta Rissa. Vince sempre ogni Rissa.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_93</CardId>
+    <Name>Difesa Omnotron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Evoca un Tron casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_94</CardId>
+    <Name>Sulfuras</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>6</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; il tuo Potere Eroe diventa "Infligge 8 danni a un nemico casuale".</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>BRMC_95</CardId>
+    <Name>Golemagg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>20</Attack>
+    <Health>20</Health>
+    <Cost>50</Cost>
+    <Durability>0</Durability>
+    <Text>Costa (1) Mana in meno per ogni danno subito dal tuo eroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95h</CardId>
+    <Name>Cuccioli del Nucleo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Evoca due Cuccioli del Nucleo 2/4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_95he</CardId>
+    <Name>Cucciolo del Nucleo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>Alla fine di ogni turno, evoca TUTTI i Cuccioli del Nucleo morti durante quel turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_96</CardId>
+    <Name>Tetrapietra</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>All'inizio del tuo turno, evoca un servitore &lt;b&gt;Leggendario&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97</CardId>
+    <Name>Vaelastrasz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>Le tue carte costano (3) Mana in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_97e</CardId>
+    <Name>Adrenalina Ardente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Costa (2) Mana in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98</CardId>
+    <Name>Alafurion</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>12</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>All'inizio del tuo turno, +3 Attacco ai tuoi servitori.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_98e</CardId>
+    <Name>Brama Draconica</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 Attacco.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99</CardId>
+    <Name>Garr</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>8</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Quando subisce danni, evoca un Elementale 2/3 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMC_99e</CardId>
+    <Name>Elementale della Roccia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBA01_1</CardId>
+    <Name>Ragnaros</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>60</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_4</CardId>
+    <Name>Nefarian</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_5</CardId>
+    <Name>Magia Selvaggia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette nella tua mano una Magia casuale di qualsiasi classe. Costa (0) Mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBA01_6</CardId>
+    <Name>Furia Magmatica</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca una Furia di Magma 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006</CardId>
+    <Name>Banana Gigante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2 a un servitore.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_006e</CardId>
+    <Name>Banana Gigante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007</CardId>
+    <Name>Banana Mutante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Scambia Attacco e Salute di un servitore.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_007e</CardId>
+    <Name>Mutazione Bananica</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attacco e Salute scambiati dalla Banana Mutante.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_008</CardId>
+    <Name>Banana Marcia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge $1 |4(danno,danni).</Text>
+    <Mechanics>
+      <string>AffectedBySpellPower</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Vecchio Occhiobuio</Name>
     <CardSet>Reward</CardSet>
@@ -9630,7 +10550,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Infligge 2 danni a tutti i nemici.</Text>
+    <Text>Infligge 2 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10685,6 +11605,42 @@ Evoca due servitori 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>XXX_061</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_062</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_063</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -10907,7 +11863,7 @@ Evoca due servitori 2/1.</Text>
     <Type>Minion</Type>
     <Attack>1</Attack>
     <Health>1</Health>
-    <Cost>1</Cost>
+    <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Murloc</Race>
     <Mechanics />
@@ -11190,7 +12146,7 @@ Evoca due servitori 2/1.</Text>
     <Health>8</Health>
     <Cost>8</Cost>
     <Durability>0</Durability>
-    <Text>Alla fine di ogni turno, evoca tutti i tuoi servitori morti durante quel turno.</Text>
+    <Text>Alla fine di ogni turno, evoca i tuoi servitori morti durante quel turno.</Text>
     <Mechanics />
     <Artist>Chris Robinson</Artist>
   </Card>
@@ -11248,7 +12204,7 @@ Evoca due servitori 2/1.</Text>
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia: Silenzia&lt;/b&gt; tutti gli altri tuoi servitori.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia: Silenzia&lt;/b&gt; gli altri tuoi servitori.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -11281,7 +12237,7 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, ne ottieni 2 copie in mano.</Text>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, ne ottieni due copie in mano.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -11680,7 +12636,7 @@ Infligge 1 danno a TUTTI i servitori ed evoca una Fanghiglia per ogni servitore 
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Infligge 2 danni a tutti i nemici ed evoca una Fanghiglia per ogni servitore morto.</Text>
+Infligge 2 danni ai nemici ed evoca una Fanghiglia per ogni servitore morto.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11775,7 +12731,7 @@ La Salute di TUTTI i servitori diventa pari a 1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-La Salute di tutti i servitori nemici diventa pari a 1.</Text>
+La Salute dei servitori nemici diventa pari a 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11967,7 +12923,7 @@ Scambia Attacco e Salute di TUTTI i servitori.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Distrugge tutti i servitori nemici non &lt;b&gt;Congelati&lt;/b&gt;.</Text>
+Distrugge i servitori nemici non &lt;b&gt;Congelati&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12231,7 +13187,7 @@ Evoca un Nerubiano 3/1.</Text>
     <Health>0</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>Infligge $3 danni a tutti i servitori nemici. Rigenera #3 Salute al tuo eroe.</Text>
+    <Text>Infligge $3 danni ai servitori nemici. Rigenera #3 Salute al tuo eroe.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12589,7 +13545,7 @@ Infligge 3 danni all'eroe nemico.</Text>
     <Health>1</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +8 Attacco a tutti i servitori nemici.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +8 Attacco ai servitori nemici.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12615,7 +13571,7 @@ Infligge 3 danni all'eroe nemico.</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Infligge $1 |4(danno,danni) a tutti i servitori nemici. Evoca una Spora.</Text>
+    <Text>Infligge $1 |4(danno,danni) ai servitori nemici. Evoca una Spora.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13084,7 +14040,7 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se controlli un Robot, infligge 4 danni suddivisi casualmente tra tutti i nemici.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se controlli un Robot, infligge 4 danni suddivisi casualmente tra i nemici.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -13363,7 +14319,7 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Infligge $5 danni a un servitore. Se il bersaglio è un tuo Demone, gli fornisce invece +5/+5.</Text>
+    <Text>Infligge $5 danni a un servitore. Se è un tuo Demone, gli fornisce invece +5/+5.</Text>
     <Mechanics />
     <Artist>Kerem Beyit</Artist>
   </Card>
@@ -13542,7 +14498,7 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Tutti i tuoi servitori attivano il proprio &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
+    <Text>I tuoi servitori attivano il proprio &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
@@ -13701,7 +14657,7 @@ Pesca 2 carte.</Text>
     <Class>Druid</Class>
     <Text>Fa tornare un servitore nemico nel mazzo dell'avversario.</Text>
     <Mechanics />
-    <Artist>Brandon Kitkouski</Artist>
+    <Artist>Efrem Palacios</Artist>
   </Card>
   <Card>
     <CardId>GVG_032</CardId>
@@ -13755,7 +14711,7 @@ Pesca 2 carte.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Rigenera la salute di TUTTI i personaggi al massimo.</Text>
+    <Text>Rigenera la Salute di TUTTI i personaggi al massimo.</Text>
     <Mechanics />
     <Artist>Steve Prescott</Artist>
   </Card>
@@ -13899,7 +14855,7 @@ Pesca 2 carte.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>&lt;b&gt;Scegli:&lt;/b&gt; evoca 5 Fuochi Fatui &lt;b&gt;o&lt;/b&gt; +5/+5 e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
+    <Text>&lt;b&gt;Scegli:&lt;/b&gt; evoca cinque Fuochi Fatui &lt;b&gt;o&lt;/b&gt; +5/+5 e &lt;b&gt;Provocazione&lt;/b&gt; a un servitore.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -13926,7 +14882,7 @@ Pesca 2 carte.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Evoca 5 Fuochi Fatui.</Text>
+    <Text>Evoca cinque Fuochi Fatui.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13953,7 +14909,7 @@ Pesca 2 carte.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano 4 Murloc casuali. &lt;b&gt;Sovraccarico:&lt;/b&gt; (3)</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano quattro Murloc casuali. &lt;b&gt;Sovraccarico:&lt;/b&gt; (3)</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14092,7 +15048,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Attacco a tutti gli altri tuoi Robot.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +2 Attacco agli altri tuoi Robot.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15033,7 +15989,7 @@ Pesca 2 carte.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Ha +4 Attacco fintanto che l'avversario ha 6 o più carte in mano.</Text>
+    <Text>Ha +4 Attacco fintanto che l'avversario ha sei o più carte in mano.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -16021,7 +16977,7 @@ Infligge 1 danno a TUTTI i servitori.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Evoca 3 Fedeli del Fuoco. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
+    <Text>Evoca tre Fedeli del Fuoco. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16033,7 +16989,7 @@ Infligge 1 danno a TUTTI i servitori.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Evoca 3 Fedeli del Fuoco. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
+    <Text>Evoca tre Fedeli del Fuoco. &lt;b&gt;Sovraccarico:&lt;/b&gt; (2)</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16093,7 +17049,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $5 danni a tutti i nemici.</Text>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $5 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16105,7 +17061,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Nel turno di Geddon, infligge 5 danni a tutti i personaggi alleati.</Text>
+    <Text>Nel turno di Geddon, infligge 5 danni agli alleati.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16117,7 +17073,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $10 danni a tutti i suoi alleati.</Text>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $10 danni agli alleati.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16129,7 +17085,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Nel turno di Geddon, infligge 10 danni a tutti i personaggi alleati.</Text>
+    <Text>Nel turno di Geddon, infligge 10 danni agli alleati.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -16677,6 +17633,7 @@ Evoca Gyth. Ottiene un nuovo Potere Eroe.</Text>
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -16688,6 +17645,7 @@ Evoca Gyth. Ottiene un nuovo Potere Eroe.</Text>
     <Health>7</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
+    <Race>Dragon</Race>
     <Mechanics />
   </Card>
   <Card>
@@ -17500,7 +18458,7 @@ Scambia Attacco e Salute dei servitori.
     <Health>0</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Evoca 3 Aberrazioni.</Text>
+    <Text>Evoca tre Aberrazioni.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17833,7 +18791,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Dopo che hai lanciato una Magia, infligge 2 danni suddivisi casualmente tra tutti i nemici.</Text>
+    <Text>Dopo che hai lanciato una Magia, infligge 2 danni suddivisi casualmente tra i nemici.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -17919,7 +18877,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Infligge $2 danni a tutti i servitori non Demoni.</Text>
+    <Text>Infligge $2 danni a TUTTI i servitori non Demoni.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -17965,7 +18923,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Seleziona un servitore e mettine 3 copie nel tuo mazzo.</Text>
+    <Text>Seleziona un servitore e mettine tre copie nel tuo mazzo.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -17980,7 +18938,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni a tutti i servitori nemici non danneggiati.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni ai servitori nemici non danneggiati.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -18196,7 +19154,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Infligge $1 |4(danno,danni) a TUTTI i servitori. Se il tuo eroe ha Salute pari a 12 o inferiore, infligge $3 danni.</Text>
+    <Text>Infligge $1 |4(danno,danni) a TUTTI i servitori. Se il tuo eroe ha Salute pari a 12 o inferiore, i danni inflitti sono $3.</Text>
     <Mechanics />
     <Artist>Ben Olson</Artist>
   </Card>
