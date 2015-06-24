@@ -97,26 +97,53 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var doc = await GetHtmlDoc(url);
 
+				//<div id="leftbar"><div class="headbar"><div style="float:left">ViaGame House Cup #3</div>
+				var tournament = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//div[@id='leftbar']/div[contains(@class, 'headbar')]/div").InnerText);
+
+				// <div class="headbar"><div style="float:left">#5 - Hunter Face -<a href="search.php?q=ThijsNL&filter=current">ThijsNL</a>
+				var deckName = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//div[@id='center']/div[@class='headbar']/div").InnerText.Trim());
+
 				var deck = new Deck();
-				var deckName =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//*[@id='center']/div[1]/div[1]").InnerText).Split('-')[1].Trim();
+				deck.Name = tournament + " - " + deckName;
 
-				deck.Name = deckName;
+				//<div class="cardname" ... <span class="basic">2 Abusive Sergeant</span>
+				var cards = doc.DocumentNode.SelectNodes("//div[contains(@class, 'cardname')]/span");
 
-
-				var cardNodes = doc.DocumentNode.SelectNodes("//*[@class='cardname']");
-
-				foreach(var cardNode in cardNodes)
+				//<span class="midlarge"><span class="hunter">Hunter</span>-<span class="aggro">Aggro</span></span>
+				var deckInfo = doc.DocumentNode.SelectSingleNode("//div[@id='contentfr']/div[@id='infos']").SelectNodes("//span[contains(@class, 'midlarge')]/span");
+				if (deckInfo.Count == 2)
 				{
-					var text = HttpUtility.HtmlDecode(cardNode.InnerText).Split(' ');
-					var count = int.Parse(text[0].Trim());
-					var name = string.Join(" ", text.Skip(1)).Trim();
+					deck.Class = HttpUtility.HtmlDecode(deckInfo[0].InnerText).Trim();
 
-					var card = Game.GetCardFromName(name);
-					card.Count = count;
-					deck.Cards.Add(card);
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
+					var decktype = HttpUtility.HtmlDecode(deckInfo[1].InnerText).Trim();
+					if(!String.IsNullOrEmpty(decktype) && decktype != "None" && Config.Instance.TagDecksOnImport)
+					{
+						if(!DeckList.Instance.AllTags.Contains(decktype))
+						{
+							DeckList.Instance.AllTags.Add(decktype);
+							DeckList.Save();
+							Helper.MainWindow.ReloadTags();
+						}
+						deck.Tags.Add(decktype);
+					}
+				}
+
+				foreach(var cardNode in cards)
+				{
+					var nameString = HttpUtility.HtmlDecode(cardNode.InnerText);
+					var match = Regex.Match(nameString, @"^\s*(\d+)\s+(.*)\s*$");
+
+					if(match.Success)
+					{
+						var count = match.Groups[1].Value;
+						var name = match.Groups[2].Value;
+
+						var card = Game.GetCardFromName(name);
+						card.Count = count.Equals("2") ? 2 : 1;
+						deck.Cards.Add(card);
+						if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+							deck.Class = card.PlayerClass;
+					}
 				}
 
 				return deck;
