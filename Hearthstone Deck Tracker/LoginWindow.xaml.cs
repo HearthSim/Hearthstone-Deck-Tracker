@@ -109,8 +109,14 @@ namespace Hearthstone_Deck_Tracker
 			TextBlockErrorMessage.Text = error;
 			TextBlockErrorMessage.Visibility = Visibility.Visible;
 			IsEnabled = true;
-			if(_controller != null)
-				await _controller.CloseAsync();
+            if (_controller != null)
+            {
+                if (_controller.IsOpen)
+                {
+                    await _controller.CloseAsync();
+                }
+            }
+				
 		}
 
 		private void CheckBoxRememberLogin_Checked(object sender, RoutedEventArgs e)
