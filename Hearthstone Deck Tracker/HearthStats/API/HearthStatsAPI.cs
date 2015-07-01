@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
 	public class HearthStatsAPI
 	{
-		private static string _baseUrl = "http://hearthstats.net/api/v3";
+		private static string _baseUrl = "http://api.hearthstats.net/api/v3";
 #if DEBUG
 		static HearthStatsAPI()
 		{
