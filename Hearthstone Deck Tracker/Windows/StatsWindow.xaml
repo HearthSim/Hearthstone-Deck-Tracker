@@ -5,6 +5,15 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       Title="Stats" Height="500" Width="600"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
     <Grid>
         <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="1">
             <local:GameDetails x:Name="GameDetailsFlyout" />

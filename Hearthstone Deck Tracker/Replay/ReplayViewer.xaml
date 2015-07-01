@@ -15,6 +15,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <controls1:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls1:MetroWindow.IconTemplate>
     <controls1:MetroWindow.LeftWindowCommands>
         <controls1:WindowCommands>
             <Button Click="ButtonFilter_OnClick">

@@ -6,6 +6,15 @@
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
         Title="DISCARD GAME?" Height="146" Width="400">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
     <StackPanel VerticalAlignment="Center">
         <Label Name="LblGameInfo" Content="[GAMEINFO]" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="cards played do not match the selected deck" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14"
