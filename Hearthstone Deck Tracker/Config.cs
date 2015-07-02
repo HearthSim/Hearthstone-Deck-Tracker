@@ -592,6 +592,12 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowExportingDialog = true;
 
 		[DefaultValue(false)]
+		public bool DeckScreenshotToImgur = false;
+
+		[DefaultValue("7e1ab33fda207c2")]
+		public string ImgurClientId = "7e1ab33fda207c2";
+
+		[DefaultValue(false)]
 		public bool ShowInTaskbar = false;
 
 		[DefaultValue(true)]

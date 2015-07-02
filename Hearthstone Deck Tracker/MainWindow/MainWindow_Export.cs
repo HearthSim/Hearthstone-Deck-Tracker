@@ -87,10 +87,25 @@ namespace Hearthstone_Deck_Tracker
 
 				if(fileName != null)
 				{
-					using(var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-						pngEncoder.Save(stream);
+					string imgurUrl = null;
+					using(var ms = new MemoryStream())
+					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+					{
+						pngEncoder.Save(ms);
+						ms.CopyTo(fs);
+						if (Config.Instance.DeckScreenshotToImgur)
+							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, deck.Name);
+					}
 
-					await this.ShowSavedFileMessage(fileName);
+					if(imgurUrl != null)
+					{
+						await this.ShowSavedAndUploadedFileMessage(fileName, imgurUrl);
+						Logger.WriteLine("Uploaded screenshot to " + imgurUrl, "Export");
+					}
+					else
+					{
+						await this.ShowSavedFileMessage(fileName);
+					}
 					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
 				}
 			}

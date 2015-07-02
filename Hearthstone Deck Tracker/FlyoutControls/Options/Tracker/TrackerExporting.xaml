@@ -61,6 +61,11 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxShowDialog_OnChecked"
                                               Unchecked="CheckboxShowDialog_OnUnchecked" />
+                    <Separator Margin="0,5,0,0"/>
+                    <CheckBox x:Name="CheckboxUploadScreenshot" Content="Upload deck screenshots to Imgur"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxUploadScreenshot_OnChecked"
+                                              Unchecked="CheckboxUploadScreenshot_OnUnchecked" />
 
                 </StackPanel>
             </ScrollViewer>

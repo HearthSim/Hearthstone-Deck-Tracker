@@ -235,6 +235,7 @@
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Protocol\PipeServer.cs" />
     <Compile Include="Utility\ImageCache.cs" />
+    <Compile Include="Utility\Imgur.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
