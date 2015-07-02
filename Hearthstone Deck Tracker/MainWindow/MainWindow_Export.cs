@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = selectedDeck.GetSelectedDeckVersion();
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
 			screenShotWindow.Shutdown();
 
