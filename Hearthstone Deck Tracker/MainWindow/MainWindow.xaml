@@ -22,6 +22,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" ToolTip="syncing with HearthStats..."/>
