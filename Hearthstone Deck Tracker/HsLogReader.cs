@@ -848,9 +848,11 @@ namespace Hearthstone_Deck_Tracker
 									_gameHandler.HandlePlayerPlayToDeck(cardId, GetTurnNumber());
 									ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Player);
 								}
-								else if(controller == Game.OpponentId)
+								else if (controller == Game.OpponentId)
+								{
 									_gameHandler.HandleOpponentPlayToDeck(cardId, GetTurnNumber());
-								ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
+									ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
+								}
 								break;
 							case TAG_ZONE.GRAVEYARD:
 								if(Game.Entities[id].HasTag(GAME_TAG.HEALTH))
