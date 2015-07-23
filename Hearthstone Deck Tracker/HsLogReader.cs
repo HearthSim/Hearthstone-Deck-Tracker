@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Regex _tagChangeRegex = new Regex(@"TAG_CHANGE\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 		private readonly Regex _unloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
+		private readonly Regex _unloadBrawlAsset = new Regex(@"unloading name=Tavern_Brawl\ ");
 		private readonly int _updateDelay;
 		private readonly Regex _updatingEntityRegex = new Regex(@"SHOW_ENTITY\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 		private int _addToTurn;
@@ -516,6 +517,10 @@ namespace Hearthstone_Deck_Tracker
 							_gameHandler.HandlePossibleArenaCard(id);
 						else
 							_gameHandler.HandlePossibleConstructedCard(id, true);
+					}
+					else if(_unloadBrawlAsset.IsMatch(logLine))
+					{
+						_gameHandler.SetGameMode(GameMode.Brawl);
 					}
 				}
 					#endregion

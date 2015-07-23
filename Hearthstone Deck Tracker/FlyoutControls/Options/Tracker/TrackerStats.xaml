@@ -23,6 +23,10 @@
                                               HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
                                               Unchecked="CheckboxRecordArena_Unchecked" />
+                            <CheckBox x:Name="CheckboxRecordBrawl" Content="Brawl"
+                                              HorizontalAlignment="Left" Margin="0,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxRecordBrawl_Checked"
+                                              Unchecked="CheckboxRecordBrawl_Unchecked" />
                             <CheckBox x:Name="CheckboxRecordCasual" Content="Casual"
                                               HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"

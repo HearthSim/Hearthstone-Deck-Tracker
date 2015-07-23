@@ -24,7 +24,8 @@ namespace Hearthstone_Deck_Tracker
 			get
 			{
 				return (Config.Instance.AutoGrayoutSecrets
-				        && (Game.CurrentGameMode == GameMode.Casual || Game.CurrentGameMode == GameMode.Ranked
+				        && (Game.CurrentGameMode == GameMode.Casual
+				            || Game.CurrentGameMode == GameMode.Ranked || Game.CurrentGameMode == GameMode.Brawl
 				            || Game.CurrentGameMode == GameMode.Friendly || Game.CurrentGameMode == GameMode.Practice)
 				        && Game.OpponentCards.Any(x => !x.IsStolen && x.Id == CardId & x.Count >= 2)) ? 0 : Count;
 			}
