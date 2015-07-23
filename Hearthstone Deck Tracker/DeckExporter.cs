@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.AutoClearDeck)
 					await ClearDeck(hsRect.Width, hsRect.Height, hsHandle, ratio);
 
-				if(Config.Instance.ExportSetDeckName)
+				if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
 					await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
