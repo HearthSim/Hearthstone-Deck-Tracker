@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="HearthStats\ApiTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
+    <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
