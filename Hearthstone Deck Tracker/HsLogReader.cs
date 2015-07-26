@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
-		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
+		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
 
 		private readonly Regex _cardAlreadyInCacheRegex =
 			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
@@ -424,10 +424,15 @@ namespace Hearthstone_Deck_Tracker
 							Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == Game.OpponentId);
 
 						var match = _actionStartRegex.Match(logLine);
-						var id = match.Groups["Id"].Value.Trim();
-						if(!string.IsNullOrEmpty(id))
+						var actionStartingCardId = match.Groups["cardId"].Value.Trim();
+						var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
+						if (string.IsNullOrEmpty(actionStartingCardId))
 						{
-							if(id == "BRM_007") //Gang Up
+							actionStartingCardId = Game.Entities[actionStartingEntityId].CardId;
+						}
+						if (!string.IsNullOrEmpty(actionStartingCardId))
+						{
+							if (actionStartingCardId == "BRM_007") //Gang Up
 							{
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 								{
@@ -437,9 +442,9 @@ namespace Hearthstone_Deck_Tracker
 										var cardIdMatch = _cardIdRegex.Match(target);
 										if(cardIdMatch.Success)
 										{
-											var cardId = cardIdMatch.Groups["cardId"].Value.Trim();
+											var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
 											for(int i = 0; i < 3; i++)
-												_gameHandler.HandlePlayerGetToDeck(cardId, GetTurnNumber());
+												_gameHandler.HandlePlayerGetToDeck(targetCardId, GetTurnNumber());
 										}
 									}
 								}
@@ -451,12 +456,20 @@ namespace Hearthstone_Deck_Tracker
 										_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
 								}
 							}
-							else if(id == "GVG_056") //Iron Juggernaut
+							else if (actionStartingCardId == "GVG_056") //Iron Juggernaut
 							{
-								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+								// burrowing mine will be the entity created next
+								int id = Game.Entities.Count + 1;
+								if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
 									_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+								}
 								else
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
 									_gameHandler.HandlePlayerGetToDeck("GVG_056t", GetTurnNumber());
+								}
 							}
 
 
