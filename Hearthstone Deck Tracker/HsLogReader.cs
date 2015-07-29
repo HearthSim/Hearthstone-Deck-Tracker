@@ -478,17 +478,17 @@ namespace Hearthstone_Deck_Tracker
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
 								   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
 								{
-									var card = Game.GetCardFromId(id);
+									var card = Game.GetCardFromId(actionStartingCardId);
 									if(card.Type == "Hero Power")
 									{
 										if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 										{
-											_gameHandler.HandlePlayerHeroPower(id, GetTurnNumber());
+											_gameHandler.HandlePlayerHeroPower(actionStartingCardId, GetTurnNumber());
 											_playerUsedHeroPower = true;
 										}
 										else if(opponentEntity.Value != null)
 										{
-											_gameHandler.HandleOpponentHeroPower(id, GetTurnNumber());
+											_gameHandler.HandleOpponentHeroPower(actionStartingCardId, GetTurnNumber());
 											_opponentUsedHeroPower = true;
 										}
 									}
