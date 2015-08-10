@@ -93,6 +93,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			get { return DeckList.Instance.ActiveDeck; }
 		}
 
+		public Visibility VisibilityNoDeck	
+		{
+			get { return DeckList.Instance.ActiveDeck == null ? Visibility.Visible : Visibility.Collapsed; }
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
@@ -106,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public void ActiveDeckChanged()
 		{
 			OnPropertyChanged("ActiveDeck");
+			OnPropertyChanged("VisibilityNoDeck");
 		}
 
 		public event SelectedDeckHandler OnSelectedDeckChanged;
