@@ -463,7 +463,7 @@ namespace Hearthstone_Deck_Tracker
 							else
 							{
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_playerUsedHeroPower
-								   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && _opponentUsedHeroPower)
+								   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !_opponentUsedHeroPower)
 								{
 									var card = Game.GetCardFromId(id);
 									if(card.Type == "Hero Power")
@@ -848,9 +848,11 @@ namespace Hearthstone_Deck_Tracker
 									_gameHandler.HandlePlayerPlayToDeck(cardId, GetTurnNumber());
 									ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Player);
 								}
-								else if(controller == Game.OpponentId)
+								else if (controller == Game.OpponentId)
+								{
 									_gameHandler.HandleOpponentPlayToDeck(cardId, GetTurnNumber());
-								ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
+									ProposeKeyPoint(KeyPointType.PlayToDeck, id, ActivePlayer.Opponent);
+								}
 								break;
 							case TAG_ZONE.GRAVEYARD:
 								if(Game.Entities[id].HasTag(GAME_TAG.HEALTH))
