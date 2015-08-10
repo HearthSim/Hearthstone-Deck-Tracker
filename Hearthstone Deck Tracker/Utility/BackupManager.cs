@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class BackupManager
 	{
 		private const int MaxBackups = 7;
-		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml"};
+		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml"};
 
 		public static void Run()
 		{
