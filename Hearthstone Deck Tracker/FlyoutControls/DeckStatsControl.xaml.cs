@@ -831,7 +831,7 @@ namespace Hearthstone_Deck_Tracker
 				Refresh();
 			}
 			DeckStatsList.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Helper.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {_deck});
 		}
 
 		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
