@@ -455,6 +455,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool RecordOther = false;
 
 		[DefaultValue(false)]
+		public bool RecordBrawl = false;
+
+		[DefaultValue(false)]
 		public bool RecordPractice = false;
 
 		[DefaultValue(true)]

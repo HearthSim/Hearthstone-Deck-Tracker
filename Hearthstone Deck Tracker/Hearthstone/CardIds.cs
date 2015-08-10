@@ -32,7 +32,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"NAX",
 			"FP1_006",
 			"PART",
-			"BRMA"
+			"BRMA",
+			"BRMC",
+			"TBA",
+			"TB_"
 		};
 
 		public static readonly List<string> SecretIdsHunter = new List<string>

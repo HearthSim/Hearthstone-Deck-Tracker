@@ -37,6 +37,7 @@
                 <enums:GameMode>Ranked</enums:GameMode>
                 <enums:GameMode>Casual</enums:GameMode>
                 <enums:GameMode>Arena</enums:GameMode>
+                <enums:GameMode>Brawl</enums:GameMode>
                 <enums:GameMode>Friendly</enums:GameMode>
                 <enums:GameMode>Practice</enums:GameMode>
             </ComboBox>

@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker
 				return Game.CurrentGameMode == GameMode.None && Config.Instance.RecordOther
 				       || Game.CurrentGameMode == GameMode.Practice && Config.Instance.RecordPractice
 				       || Game.CurrentGameMode == GameMode.Arena && Config.Instance.RecordArena
+				       || Game.CurrentGameMode == GameMode.Brawl && Config.Instance.RecordBrawl
 				       || Game.CurrentGameMode == GameMode.Ranked && Config.Instance.RecordRanked
 				       || Game.CurrentGameMode == GameMode.Friendly && Config.Instance.RecordFriendly
 				       || Game.CurrentGameMode == GameMode.Casual && Config.Instance.RecordCasual
@@ -384,6 +385,8 @@ namespace Hearthstone_Deck_Tracker
 					await GameModeSaved(15);
 					if(Game.CurrentGameMode == GameMode.Arena)
 						HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+					if(Game.CurrentGameMode == GameMode.Brawl)
+						{ /* do nothing */ }
 					else
 						HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
 				}

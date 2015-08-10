@@ -240,15 +240,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static OpponentSecrets OpponentSecrets { get; set; }
 
-		private static readonly List<string> ValidCardSets = new List<string>
+		private static readonly List<string> InValidCardSets = new List<string>
 		{
-			"Basic",
-			"Reward",
-			"Classic",
-			"Promotion",
-			"Curse of Naxxramas",
-			"Goblins vs Gnomes",
-			"Blackrock Mountain"
+			"Credits",
+			"Missions",
+			"Debug",
+			"System"
 		};
 
 		public static List<Card> DrawnLastGame { get; set; }
@@ -784,7 +781,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			try
 			{
 				var db = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", "enUS"));
-				_cardDb = db.Cards.Where(x => ValidCardSets.Any(set => x.CardSet == set)).ToDictionary(x => x.CardId, x => x.ToCard());
+				_cardDb = db.Cards.Where(x => InValidCardSets.All(set => x.CardSet != set)).ToDictionary(x => x.CardId, x => x.ToCard());
 				if(languageTag != "enUS")
 				{
 					var localized = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", languageTag));
