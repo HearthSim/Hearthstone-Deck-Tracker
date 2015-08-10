@@ -140,6 +140,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				case KeyPointType.Obtain:
 				case KeyPointType.PlayToDeck:
 				case KeyPointType.PlayToHand:
+				case KeyPointType.CreateToDeck:
 					return "action_draw";
 				case KeyPointType.HeroPower:
 					return "action_play";
