@@ -1253,13 +1253,27 @@ namespace Hearthstone_Deck_Tracker
 
 		#region GENERAL METHODS
 
-		public void ShowIncorrectDeckMessage()
+		public async void ShowIncorrectDeckMessage()
 		{
 			if(Game.PlayerDrawn.Count == 0)
 			{
 				IsShowingIncorrectDeckMessage = false;
 				return;
 			}
+
+			//wait for player hero to be detected
+			for(var i = 0; i < 50; i++)
+			{
+				if(Game.PlayingAs != null)
+					break;
+				await Task.Delay(100);
+			}
+			if(Game.PlayingAs == null)
+			{
+				IsShowingIncorrectDeckMessage = false;
+				return;
+			}
+
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
