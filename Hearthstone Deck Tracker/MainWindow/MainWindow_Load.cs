@@ -533,7 +533,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.KeyPressOnGameEnd = "None";
 
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
-			ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
+			//ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 
 			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			SetContextMenuProperty("classCardsFirst", "Checked", (bool)CheckboxClassCardsFirst.IsChecked);

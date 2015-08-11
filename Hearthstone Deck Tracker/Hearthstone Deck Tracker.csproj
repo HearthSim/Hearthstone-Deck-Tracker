@@ -222,6 +222,7 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\Mechanic.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />

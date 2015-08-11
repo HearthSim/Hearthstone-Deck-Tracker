@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -28,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _localizedName;
 		private string _name;
 		private string _text;
+		private string _englishText;
 		private bool _wasDiscarded;
 		public string Id;
 
@@ -47,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
-		            int count, string text, int attack, int health, string race, string[] mechanics, int? durability, string artist,
+		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
 		            string set)
 		{
 			Id = id;
@@ -60,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			InHandCount = inHandCount;
 			Count = count;
 			Text = text;
+			EnglishText = englishText;
 			Attack = attack;
 			Health = health;
 			Race = race;
@@ -92,13 +95,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_text = value != null
-					        ? value.Replace("<b>", "")
-					               .Replace("</b>", "")
-					               .Replace("<i>", "")
-					               .Replace("</i>", "")
-					               .Replace("$", "")
-					               .Replace("#", "")
-					               .Replace("\\n", "\n") : null;
+							? value.Replace("<b>", "")
+								   .Replace("</b>", "")
+								   .Replace("<i>", "")
+								   .Replace("</i>", "")
+								   .Replace("$", "")
+								   .Replace("#", "")
+								   .Replace("\\n", "\n") : null;
+			}
+		}
+
+		[XmlIgnore]
+		public string EnglishText
+		{
+			get { return string.IsNullOrEmpty(_englishText) ? Text : _englishText; }
+			set
+			{
+				_englishText = value != null
+							? value.Replace("<b>", "")
+								   .Replace("</b>", "")
+								   .Replace("<i>", "")
+								   .Replace("</i>", "")
+								   .Replace("$", "")
+								   .Replace("#", "")
+								   .Replace("\\n", "\n") : null;
 			}
 		}
 
@@ -146,6 +166,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public int Cost { get; set; }
+
+		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
+		private int? _overload;
+		[XmlIgnore]
+		public int Overload
+		{
+			get
+			{
+				if(_overload.HasValue)
+					return _overload.Value;
+				var match = _overloadRegex.Match(EnglishText);
+				var overload = -1;
+				if(match.Success)
+					int.TryParse(match.Groups["value"].Value, out overload);
+				_overload = overload;
+				return overload;
+			}
+		}
 
 		[XmlIgnore]
 		public string Artist { get; set; }
@@ -342,7 +380,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone()
 		{
-			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, Attack, Health, Race,
+			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack, Health, Race,
 			                       Mechanics, Durability, Artist, Set);
 			return newcard;
 		}
@@ -386,6 +424,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LocalizedName = stats.LocalizedName;
 			InHandCount = stats.InHandCount;
 			Text = stats.Text;
+			EnglishText = stats.EnglishText;
 			Attack = stats.Attack;
 			Health = stats.Health;
 			Race = stats.Race;
