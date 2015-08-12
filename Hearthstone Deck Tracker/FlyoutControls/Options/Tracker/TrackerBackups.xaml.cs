@@ -28,8 +28,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
-			foreach(var file in dirInfo.GetFiles("Backup*.zip").OrderBy(x => x.CreationTime))
-				ListBoxBackups.Items.Add(new BackupFile {FileInfo = file});
+			if(dirInfo.Exists)
+			{
+				foreach(var file in dirInfo.GetFiles("Backup*.zip").OrderBy(x => x.CreationTime))
+					ListBoxBackups.Items.Add(new BackupFile { FileInfo = file });
+			}
 		}
 
 		private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
@@ -113,6 +116,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				get { return FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)"); }
 			}
+		}
+
+		private void TrackerBackups_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			ListBoxBackups.Items.Clear();
+			Load();
 		}
 	}
 }
