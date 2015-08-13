@@ -60,6 +60,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Process.Start(Path.GetDirectoryName(fileName));
 		}
 
+		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
+		{
+			var settings = new MetroDialogSettings { NegativeButtonText = "Open Link" };
+			var result =
+				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"\nUploaded to\n" + url, MessageDialogStyle.AffirmativeAndNegative, settings);
+			if(result == MessageDialogResult.Negative)
+				Process.Start(url);
+		}
+
 		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
 		{
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
