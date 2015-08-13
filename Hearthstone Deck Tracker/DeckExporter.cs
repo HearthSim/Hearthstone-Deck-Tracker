@@ -150,17 +150,17 @@ namespace Hearthstone_Deck_Tracker
 			await ClickOnKnownPoint(hsHandle, setsPoint);
 		}
 
-		// checks the zero crystal, to see if it is selected
 		private static bool IsZeroCrystalSelected(IntPtr wndHandle, double ratio, int width, int height)
 		{
-			const int cWidth = 22;
-			const int cHeight = 22;
+			const double scale = 0.020; // 22px @ height = 1080
 			const double minBrightness = 0.55;
+
+			int size = (int)Math.Round(height * scale);
 
 			int posX = (int)GetXPos(Config.Instance.ExportZeroSquareX, width, ratio);
 			int posY = (int)(Config.Instance.ExportZeroSquareY * height);
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), cWidth, cHeight, wndHandle);
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
 
 			if(capture == null)
 				return false;
@@ -228,7 +228,7 @@ namespace Hearthstone_Deck_Tracker
 				return 0;
 
 			//Check if Card exist in collection
-			if(CardExists(hsHandle, (int)cardPosX, (int)cardPosY))
+			if(CardExists(hsHandle, (int)cardPosX, (int)cardPosY, width, height))
 			{
 				//move mouse over card if card is new  TODO: currently does nothing
 				/*var newCard = new Point((int)cardPosX, (int)cardPosY);
@@ -237,7 +237,7 @@ namespace Hearthstone_Deck_Tracker
 					Cursor.Position = new Point(newCard.X + i + 50, newCard.Y - i + 50);*/
 
 				//Check if a golden exist
-				if(Config.Instance.PrioritizeGolden && CardExists(hsHandle, (int)card2PosX, (int)cardPosY))
+				if(Config.Instance.PrioritizeGolden && CardExists(hsHandle, (int)card2PosX, (int)cardPosY, width, height))
 				{
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
 
@@ -255,7 +255,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//Check if two card are not available 
 						await Task.Delay(200 - Config.Instance.DeckExportDelay);
-						if(CardHasLock(hsHandle, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287)))
+						if(CardHasLock(hsHandle, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287), width, height))
 						{
 							Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter", 1);
 							return 1;
@@ -326,26 +326,31 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(Config.Instance.DeckExportDelay);
 		}
 
-		private static bool CardExists(IntPtr wndHandle, int posX, int posY)
+		private static bool CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
-			const int width = 40;
-			const int height = 40;
+			const double scale = 0.037; // 40px @ height = 1080
 			const double minHue = 90;
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, wndHandle);
+			int size = (int)Math.Round(height * scale);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
 			if(capture == null)
 				return false;
 
 			return GetAverageHueAndBrightness(capture).Hue > minHue;
 		}
 
-		private static bool CardHasLock(IntPtr wndHandle, int posX, int posY)
+		private static bool CardHasLock(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
-			const int width = 55;
-			const int height = 30;
+			// setting this as a "width" value relative to height, maybe not best solution?
+			const double xScale = 0.051; // 55px @ height = 1080
+			const double yScale = 0.0278; // 30px @ height = 1080
 			const double maxBrightness = 5.0 / 11.0;
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, wndHandle);
+			int lockWidth = (int)Math.Round(height * xScale);
+			int lockHeight = (int)Math.Round(height * yScale);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
 			if(capture == null)
 				return false;
 
