@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			get { return DeckList.Instance.ActiveDeck; }
 		}
 
-		public Visibility VisibilityNoDeck	
+		public Visibility VisibilityNoDeck
 		{
 			get { return DeckList.Instance.ActiveDeck == null ? Visibility.Visible : Visibility.Collapsed; }
 		}
@@ -464,6 +464,31 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					if(!SelectedClasses.Contains(deckClass))
 						SelectClass(deckClass);
 				}
+			}
+
+			if(!DeckMatchesSelectedTags(deck))
+			{
+				if(Config.Instance.TagOperation == TagFilerOperation.Or)
+				{
+					var missingTags = deck.Tags.Where(tag => !Config.Instance.SelectedTags.Contains(tag)).ToList();
+					if(missingTags.Any())
+					{
+						Config.Instance.SelectedTags.AddRange(missingTags);
+						Logger.WriteLine("Added missing tags so the deck shows up: " + missingTags.Aggregate((c, n) => c + ", " + n));
+					}
+					else
+					{
+						Config.Instance.SelectedTags.Add("None");
+						Logger.WriteLine("Added missing tags so the deck shows up: None");
+					}
+				}
+				else
+				{
+					Config.Instance.SelectedTags = new List<string> {"All"};
+					Logger.WriteLine("Set tags to ALL so the deck shows up");
+				}
+				Config.Save();
+				Helper.MainWindow.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			}
 
 			UpdateDecks(false);
