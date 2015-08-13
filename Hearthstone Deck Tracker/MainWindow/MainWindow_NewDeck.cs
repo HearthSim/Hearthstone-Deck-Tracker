@@ -231,6 +231,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckPickerList.SelectDeckAndAppropriateView(newDeckClone);
 			DeckPickerList.UpdateDecks(forceUpdate: new[] {newDeckClone});
+			SelectDeck(newDeckClone, true);
 			CloseNewDeck();
 			ClearNewDeckSection();
 		}
