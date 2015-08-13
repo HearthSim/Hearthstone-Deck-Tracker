@@ -1586,7 +1586,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Close();
 			Process.Start(Application.ResourceAssembly.Location);
-			Application.Current.Shutdown();
+			if(Application.Current != null)
+				Application.Current.Shutdown();
 		}
 
 		public void ActivateWindow()
