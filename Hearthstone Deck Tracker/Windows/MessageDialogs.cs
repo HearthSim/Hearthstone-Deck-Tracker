@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
@@ -62,11 +63,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
 		{
-			var settings = new MetroDialogSettings { NegativeButtonText = "Open Link" };
-			var result =
-				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"\nUploaded to\n" + url, MessageDialogStyle.AffirmativeAndNegative, settings);
+			var settings = new MetroDialogSettings {NegativeButtonText = "Open Link"};
+			var sb = new StringBuilder();
+			if(fileName != null)
+				sb.AppendLine("Saved to\n\"" + fileName + "\"");
+			sb.AppendLine("Uploaded to\n" + url);
+			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 				Process.Start(url);
+		}
+
+		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
+		{
+			var settings = new MetroDialogSettings
+			{
+				AffirmativeButtonText = "save only",
+				NegativeButtonText = "save & upload",
+				FirstAuxiliaryButtonText = "upload only"
+			};
+			var result =
+				await window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+			return new SaveScreenshotOperation
+			{
+				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
+				Upload = result != MessageDialogResult.Affirmative
+			};
 		}
 
 		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
@@ -149,5 +170,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});
 		}
+	}
+
+	public class SaveScreenshotOperation
+	{
+		public bool SaveLocal { get; set; }
+		public bool Upload { get; set; }
 	}
 }

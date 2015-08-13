@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-            if(selectedDeck == null)
+			if(selectedDeck == null)
 				return;
 			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
 			var screenShotWindow = new PlayerWindow(Config.Instance, selectedDeck.GetSelectedDeckVersion().Cards, true);
@@ -83,8 +83,10 @@ namespace Hearthstone_Deck_Tracker
 
 			if(pngEncoder != null)
 			{
-				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png");
-
+				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
+				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
+				var fileName = saveOperation.SaveLocal
+					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
 					string imgurUrl = null;
@@ -93,20 +95,33 @@ namespace Hearthstone_Deck_Tracker
 					{
 						pngEncoder.Save(ms);
 						ms.CopyTo(fs);
-						if (Config.Instance.DeckScreenshotToImgur)
+						if(saveOperation.Upload)
+						{
+							var controller = await this.ShowProgressAsync("Uploading...", "");
 							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, deck.Name);
+							await controller.CloseAsync();
+						}
 					}
 
 					if(imgurUrl != null)
 					{
-						await this.ShowSavedAndUploadedFileMessage(fileName, imgurUrl);
+						await this.ShowSavedAndUploadedFileMessage(saveOperation.SaveLocal ? fileName : null, imgurUrl);
 						Logger.WriteLine("Uploaded screenshot to " + imgurUrl, "Export");
 					}
 					else
-					{
 						await this.ShowSavedFileMessage(fileName);
-					}
 					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+				}
+				if(tmpFile.Exists)
+				{
+					try
+					{
+						tmpFile.Delete();
+					}
+					catch(Exception ex)
+					{
+						Logger.WriteLine(ex.ToString(), "ExportScreenshot");
+					}
 				}
 			}
 		}

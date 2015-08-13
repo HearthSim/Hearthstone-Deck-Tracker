@@ -206,21 +206,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.ShowExportingDialog = false;
 			Config.Save();
 		}
-
-		private void CheckboxUploadScreenshot_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DeckScreenshotToImgur = true;
-			Config.Save();
-		}
-
-		private void CheckboxUploadScreenshot_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DeckScreenshotToImgur = false;
-			Config.Save();
-		}
 	}
 }
