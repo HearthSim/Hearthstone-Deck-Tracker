@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls;
@@ -63,14 +64,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
 		{
-			var settings = new MetroDialogSettings {NegativeButtonText = "Open Link"};
+			var settings = new MetroDialogSettings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"};
 			var sb = new StringBuilder();
 			if(fileName != null)
 				sb.AppendLine("Saved to\n\"" + fileName + "\"");
 			sb.AppendLine("Uploaded to\n" + url);
-			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegative, settings);
+			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 			if(result == MessageDialogResult.Negative)
-				Process.Start(url);
+			{
+				try
+				{
+					Process.Start(url);
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error starting browser: " + ex, "ScreenshotMessageDialog");
+				}
+			}
+			else if(result == MessageDialogResult.FirstAuxiliary)
+			{
+				try
+				{
+					Clipboard.SetText(url);
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error copying url to clipboard: " + ex, "ScreenshotMessageDialog");
+				}
+			}
 		}
 
 		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
@@ -82,7 +103,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FirstAuxiliaryButtonText = "upload only"
 			};
 			var result =
-				await window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+				await
+				window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
+				                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 			return new SaveScreenshotOperation
 			{
 				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
