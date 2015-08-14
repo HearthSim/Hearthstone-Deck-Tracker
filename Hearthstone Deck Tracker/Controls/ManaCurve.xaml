@@ -41,14 +41,6 @@
         
         <Border BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,2,0,0">
             <Grid>
-                <ItemsControl Name="ItemsControlMechanics" Visibility="Collapsed">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DisplayValue}" FontSize="14"
-                           FontWeight="SemiBold" Margin="2,0,0,0"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
                 <Grid Name="GridManaCurve" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -107,6 +99,23 @@
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" Foreground="Black" />
             </Grid>
+
+                <Border Name="BorderMechanics" Margin="10" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{DynamicResource TextBrush}" BorderThickness="1" Visibility="Collapsed">
+                    <Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource WindowBackgroundBrush}">
+                            <ItemsControl Name="ItemsControlMechanics">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayValue}" FontSize="14"
+                           FontWeight="SemiBold" Margin="2,0,0,0"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <TextBlock Name="TextBlockNoMechanics" Text="None"  Background="{DynamicResource WindowBackgroundBrush}" FontSize="14"
+                           FontWeight="SemiBold" Margin="2,0,0,0"/>
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
     </DockPanel>

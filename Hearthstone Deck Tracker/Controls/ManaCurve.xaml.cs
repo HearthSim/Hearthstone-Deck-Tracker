@@ -45,12 +45,14 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 			{
 				ClearDeck();
+				TextBlockNoMechanics.Visibility = Visibility.Visible;
 				return;
 			}
 			_deck = deck;
 			deck.GetSelectedDeckVersion().Cards.CollectionChanged += (sender, args) => UpdateValues();
 			UpdateValues();
 			ItemsControlMechanics.ItemsSource = deck.Mechanics;
+			TextBlockNoMechanics.Visibility = deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		public void ClearDeck()
@@ -171,30 +173,27 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ManaCurveMechanics_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			if(TextBlockManaCurveMechanics.Text == "MECHANICS")
+			if(BorderMechanics.Visibility != Visibility.Visible)
 			{
-				ComboBoxStatType.IsEnabled = false;
-				ItemsControlMechanics.Visibility = Visibility.Visible;
-				GridManaCurve.Visibility = Visibility.Collapsed;
-				TextBlockManaCurveMechanics.Text = "MANACURVE";
+				BorderMechanics.Visibility = Visibility.Visible;
+				TextBlockManaCurveMechanics.Text = "HIDE";
 			}
 			else
 			{
-				ComboBoxStatType.IsEnabled = true;
-				ItemsControlMechanics.Visibility = Visibility.Collapsed;
-				GridManaCurve.Visibility = Visibility.Visible;
+				BorderMechanics.Visibility = Visibility.Collapsed;
 				TextBlockManaCurveMechanics.Text = "MECHANICS";
 			}
+			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
 		}
+	}
 
-		public class StatTypeWrapper
+	public class StatTypeWrapper
+	{
+		public StatType StatType { get; set; }
+
+		public string DisplayName
 		{
-			public StatType StatType { get; set; }
-
-			public string DisplayName
-			{
-				get { return StatType.ToString().ToUpper(); }
-			}
+			get { return StatType.ToString().ToUpper(); }
 		}
 	}
 }
