@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 					{
 						pngEncoder.Save(ms);
-						ms.CopyTo(fs);
+						ms.WriteTo(fs);
 						if(saveOperation.Upload)
 						{
 							var controller = await this.ShowProgressAsync("Uploading...", "");
