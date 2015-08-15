@@ -1005,7 +1005,7 @@
     <Content Include="Images\bluegill-warrior.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\bluff-valiant.png">
+    <Content Include="Images\thunder-bluff-valiant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\boar.png">
