@@ -176,11 +176,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(_overload.HasValue)
 					return _overload.Value;
-				var match = _overloadRegex.Match(EnglishText);
 				var overload = -1;
-				if(match.Success)
-					int.TryParse(match.Groups["value"].Value, out overload);
-				_overload = overload;
+				if(!string.IsNullOrEmpty(EnglishText))
+				{
+					var match = _overloadRegex.Match(EnglishText);
+					if(match.Success)
+						int.TryParse(match.Groups["value"].Value, out overload);
+					_overload = overload;
+				}
 				return overload;
 			}
 		}
