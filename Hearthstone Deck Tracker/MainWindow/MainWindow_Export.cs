@@ -155,8 +155,9 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null)
+			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
 				return;
+
 			var english = true;
 			if(Config.Instance.SelectedLanguage != "enUS")
 			{
@@ -177,13 +178,21 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine(ex.ToString());
 				}
 			}
-			var names =
-				deck.GetSelectedDeckVersion()
-				    .Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-				    .Aggregate((c, n) => c + Environment.NewLine + n);
-			Clipboard.SetText(names);
-			this.ShowMessage("", "copied names to clipboard");
-			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
+			try
+			{
+				var names =
+					deck.GetSelectedDeckVersion()
+						.Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+						.Aggregate((c, n) => c + Environment.NewLine + n);
+				Clipboard.SetText(names);
+				this.ShowMessage("", "copied names to clipboard");
+				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error copying card names to clipboard: " + ex);
+				this.ShowMessage("", "Error copying card names to clipboard.");
+			}
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
