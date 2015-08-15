@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -35,6 +35,15 @@ namespace HDTTests.Hearthstone
 
 			var Moira = Game.GetCardFromId("BRMC_87");
 			Assert.AreEqual("Moira Bronzebeard", Moira.Name);
+		}
+
+		[TestMethod]
+		public void TestCardImages()
+		{
+			foreach(var card in Game.GetActualCards())
+			{
+				Assert.IsTrue(File.Exists("Images/" + card.CardFileName + ".png"), card.Name);
+			}
 		}
 	}
 }
