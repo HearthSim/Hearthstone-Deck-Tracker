@@ -1495,6 +1495,7 @@
     <Content Include="Images\frame.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\frame_card_counter.png" />
     <Content Include="Images\frame_neg2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
