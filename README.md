@@ -9,7 +9,7 @@ The ingame overlay:
 
 The app: 
 
-![Tracker](http://i.imgur.com/0b9lYaG.png "The tracker")
+![Tracker](http://i.imgur.com/FE7Xwxl.png "The tracker")
 
 
 Features:
@@ -57,9 +57,7 @@ How to use:
 
 FAQ:
 =============
-- **It's not picking up the cards I / my opponent play.**
-   - Copy the `log.config` from `Hearthstone Deck Tracker/Files` to `%LocalAppData%/Blizzard/Hearthstone`. Overwrite the existing one, restart HDT and Hearthstone.
-   - (if it's still not working) Make sure the Hearthstone path is set correctly. `options > tracker > settings > set hearthstone path` (There were user reports of this not working, manual: edit `%AppData%/HearthstoneDeckTracker/config.xml` with any texteditor, look for `<HearthstoneDirectory>...</HearthstoneDirectory>`.
+[Go to FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
 
 How it works:
 =============
