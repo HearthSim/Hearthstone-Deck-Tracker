@@ -12,7 +12,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
-	internal class User32
+	public class User32
 	{
 		[Flags]
 		public enum MouseEventFlags : uint
