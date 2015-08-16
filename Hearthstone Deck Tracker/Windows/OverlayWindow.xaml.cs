@@ -346,8 +346,8 @@ namespace Hearthstone_Deck_Tracker
 				Helper.SortCardCollection(ListViewOpponent.ItemsSource, Config.Instance.CardSortingClassFirst);
 			_opponentCardCount = cardCount;
 
-			LblOpponentCardCount.Text = "Hand: " + cardCount;
-			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
+			LblOpponentCardCount.Text = cardCount.ToString();
+			LblOpponentDeckCount.Text = cardsLeftInDeck.ToString();
 
 			if(cardsLeftInDeck <= 0)
 			{
@@ -377,8 +377,8 @@ namespace Hearthstone_Deck_Tracker
 				Helper.SortCardCollection(ListViewPlayer.ItemsSource, Config.Instance.CardSortingClassFirst);
 			_cardCount = cardCount;
 
-			LblCardCount.Text = "Hand: " + cardCount;
-			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
+			LblCardCount.Text = cardCount.ToString();
+			LblDeckCount.Text = cardsLeftInDeck.ToString();
 
 			if(cardsLeftInDeck <= 0)
 			{

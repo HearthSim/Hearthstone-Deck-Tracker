@@ -45,17 +45,21 @@
                         </Style>
                     </ListView.Resources>
                 </controls:DeckListView>
+                <StackPanel Name="StackPanelPlayerCount" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="35" Width="218" Margin="0,5">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
+                    </StackPanel.Background>
+                    <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="18" Text="3" VerticalAlignment="Center" TextAlignment="Center" Width="48" HorizontalAlignment="Left" Margin="50,0,0,0" />
+                    <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="18" Text="27" TextAlignment="Center" Width="48" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" />
+                </StackPanel>
                 <StackPanel Name="StackPanelPlayerDraw" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" />
                     <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Margin="4,0,0,0" />
                 </StackPanel>
-                <StackPanel Name="StackPanelPlayerCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="14" Text="Hand: 0" />
-                    <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
-                </StackPanel>
                 <StackPanel Name="StackPanelPlayerFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
                 </StackPanel>
+                
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218">
                 <Viewbox StretchDirection="DownOnly" Name="ViewBoxWinRateAgainst">
@@ -79,18 +83,21 @@
                         </Style>
                     </ListView.Resources>
                 </controls:DeckListView>
+                <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="35" Width="218" Margin="0,5">
+                    <StackPanel.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
+                    </StackPanel.Background>
+                    <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="18" Text="3" VerticalAlignment="Center" TextAlignment="Center" Width="48" HorizontalAlignment="Left" Margin="50,0,0,0" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="18" Text="27" TextAlignment="Center" Width="48" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" />
+                </StackPanel>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
-                <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
-                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
-                </StackPanel>
                 <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
                 </StackPanel>
             </StackPanel>
 
-			<StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
+            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
             <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73"
                          Canvas.Top="105">
