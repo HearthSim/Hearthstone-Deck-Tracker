@@ -116,6 +116,8 @@
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
+                <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
+                <Separator Name="SeparatorUseDeck" />
                 <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
                 <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
                 <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />

@@ -660,6 +660,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			SeparatorDeck1.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) && !selectedDecks.First().MissingCards.Any()
 				                            ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemOpenHearthStats.Visibility = selectedDecks.First().HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemUseDeck.Visibility =
+				SeparatorUseDeck.Visibility = selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
@@ -747,6 +749,17 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 			else
 				_lastActiveDeckPanelClick = DateTime.Now;
+		}
+
+		private void BtnUseDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = SelectedDecks.FirstOrDefault();
+			if(deck != null)
+			{
+				Helper.MainWindow.DeckPickerList.SelectDeck(deck);
+				Helper.MainWindow.SelectDeck(deck, true);
+				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+			}
 		}
 	}
 }
