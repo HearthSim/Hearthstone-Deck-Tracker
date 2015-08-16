@@ -131,8 +131,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetCardCount(int cardCount, int cardsLeftInDeck)
 		{
-			LblCardCount.Text = "Hand: " + cardCount;
-			LblDeckCount.Text = "Deck: " + cardsLeftInDeck;
+			LblCardCount.Text = cardCount.ToString();
+			LblDeckCount.Text = cardsLeftInDeck.ToString();
 
 			if(cardsLeftInDeck <= 0)
 			{

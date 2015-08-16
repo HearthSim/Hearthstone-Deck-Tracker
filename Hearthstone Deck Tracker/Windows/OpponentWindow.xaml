@@ -60,11 +60,12 @@
             </controls1:DeckListView>
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
             <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
-            <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" Text="Hand: 0" FontSize="14"
-                                            VerticalAlignment="Center" />
-                <local:HearthstoneTextBlock Margin="4,0,0,0" x:Name="LblOpponentDeckCount" Text="Deck: 0" FontSize="14"
-                                            VerticalAlignment="Center" />
+            <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="35" Width="218" Margin="0,5">
+                <StackPanel.Background>
+                    <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
+                </StackPanel.Background>
+                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="18" Text="3" VerticalAlignment="Center" TextAlignment="Center" Width="48" HorizontalAlignment="Left" Margin="50,0,0,0" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="18" Text="27" TextAlignment="Center" Width="48" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" />
             </StackPanel>
             <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
                 <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />

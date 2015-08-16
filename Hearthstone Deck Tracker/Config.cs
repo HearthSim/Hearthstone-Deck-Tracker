@@ -406,11 +406,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OwnsGoldenStalagg = false;
 
-		[DefaultValue(new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
-		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
+		[DefaultValue(new[] {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
+		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
 
-		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
-		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
+		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
+		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
 
 		[DefaultValue(65)]
 		public double PlayerDeckHeight = 65;
