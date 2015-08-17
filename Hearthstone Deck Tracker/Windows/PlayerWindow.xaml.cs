@@ -75,8 +75,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblCardCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
-			LblDeckCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			StackPanelCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 			LblWins.Visibility = Config.Instance.ShowDeckWins && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
