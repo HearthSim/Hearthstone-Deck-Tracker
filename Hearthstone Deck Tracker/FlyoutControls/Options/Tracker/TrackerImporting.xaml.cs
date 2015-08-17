@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
+			CheckBoxAutoDetectCardCount.IsChecked = Config.Instance.DeckImportAutoDetectCardCount;
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
 			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
@@ -127,6 +128,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ButtonActivateHdtProtocol_OnClick(object sender, RoutedEventArgs e)
 		{
 			Helper.MainWindow.SetupProtocol();
+		}
+
+		private void CheckBoxAutoDetectCardCount_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DeckImportAutoDetectCardCount = true;
+			Config.Save();
+		}
+
+		private void CheckBoxAutoDetectCardCount_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DeckImportAutoDetectCardCount = false;
+			Config.Save();
 		}
 	}
 }

@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker
 			SendKeys.SendWait("{ENTER}");
 		}
 
-		private static double GetXPos(double left, int width, double ratio)
+		public static double GetXPos(double left, int width, double ratio)
 		{
 			return (width * ratio * left) + (width * (1 - ratio) / 2);
 		}

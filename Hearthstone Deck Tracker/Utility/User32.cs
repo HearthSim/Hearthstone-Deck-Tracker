@@ -20,7 +20,8 @@ namespace Hearthstone_Deck_Tracker
 			LeftDown = 0x00000002,
 			LeftUp = 0x00000004,
 			RightDown = 0x00000008,
-			RightUp = 0x00000010
+			RightUp = 0x00000010,
+			Wheel = 0x00000800
 		}
 
 		private const int WsExTransparent = 0x00000020;
@@ -48,7 +49,7 @@ namespace Hearthstone_Deck_Tracker
 		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll")]
-		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
+		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, int dwData, UIntPtr dwExtraInfo);
 
 		[DllImport("user32.dll")]
 		public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);

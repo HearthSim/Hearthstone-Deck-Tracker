@@ -4,11 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="Importing">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
+                    <CheckBox x:Name="CheckBoxAutoDetectCardCount" Content="[BETA] Auto detect card count for arena"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckBoxAutoDetectCardCount_Checked"
+                                              Unchecked="CheckBoxAutoDetectCardCount_Unchecked" />
+                    <TextBlock Margin="10,5,0,0" Text="[This feature is still a work in progress!]" FontWeight="Bold"></TextBlock>
+                    <TextBlock Margin="10,5,0,15" Text="Currently only for arena. Can currently only detect &quot;more than 1&quot;, which sets it to 2, not the actual number. Yes, both of those things will come." TextWrapping="Wrap"></TextBlock>
                     <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"

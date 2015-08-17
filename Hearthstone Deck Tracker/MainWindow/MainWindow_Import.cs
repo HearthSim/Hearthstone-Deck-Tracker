@@ -319,13 +319,134 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
-			foreach(var card in Game.PossibleArenaCards)
+			foreach(var card in Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
 			{
 				deck.Cards.Add(card);
 				if(deck.Class == null && card.GetPlayerClass != "Neutral")
 					deck.Class = card.GetPlayerClass;
 			}
+			if(Config.Instance.DeckImportAutoDetectCardCount)
+			{
+				await this.ShowMessageAsync("Arena cards found!", "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
+				var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
+				await GetCardCounts(deck);
+				await controller.CloseAsync();
+			}
 			SetNewDeck(deck);
+		}
+
+		public async Task GetCardCounts(Deck deck)
+		{
+			var hsHandle = User32.GetHearthstoneWindow();
+			if(!User32.IsHearthstoneInForeground())
+			{
+				//restore window and bring to foreground
+				User32.ShowWindow(hsHandle, User32.SwRestore);
+				User32.SetForegroundWindow(hsHandle);
+				//wait it to actually be in foreground, else the rect might be wrong
+				await Task.Delay(500);
+			}
+			if(!User32.IsHearthstoneInForeground())
+			{
+				MessageBox.Show("Can't find Hearthstone window.");
+				Logger.WriteLine("Can't find Hearthstone window.", "ArenaImport");
+				return;
+			}
+			await Task.Delay(1000);
+			Overlay.ForceHidden = true;
+			Overlay.UpdatePosition();
+			const double xScale = 0.013; 
+			const double yScale = 0.017;
+			const int targetHue = 53;
+			const int hueMargin = 3;
+			const int numVisibleCards = 21;
+			var hsRect = User32.GetHearthstoneRect(false);
+			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
+			var posX = (int)DeckExporter.GetXPos(0.92, hsRect.Width, ratio);
+			var startY = 71.0/768.0 * hsRect.Height;
+			var strideY = 29.0/768.0 * hsRect.Height;
+			int width = (int)Math.Round(hsRect.Width * xScale);
+			int height = (int)Math.Round(hsRect.Height * yScale);
+
+			for(var i = 0; i < Math.Min(numVisibleCards, deck.Cards.Count); i++)
+			{
+				var posY = (int)(startY + strideY * i);
+				var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+				if(capture != null)
+				{
+					var yellowPixels = 0;
+					for(int x = 0; x < width; x++)
+					{
+						for(int y = 0; y < height; y++)
+						{
+							var pixel = capture.GetPixel(x, y);
+							if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+								yellowPixels++;
+						}
+					}
+					//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
+					//capture.Save("arenadeckimages/" + i + ".png");
+					var yellowPixelRatio = yellowPixels / (double)(width * height);
+					if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+						deck.Cards[i].Count = 2;
+				}
+			}
+
+			if(deck.Cards.Count > numVisibleCards)
+			{
+				const int scrollClicksPerCard = 4;
+				const int scrollDistance = 120;
+				var clientPoint = new System.Drawing.Point(posX, (int)startY);
+				var previousPos = System.Windows.Forms.Cursor.Position;
+				User32.ClientToScreen(hsHandle, ref clientPoint);
+				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - numVisibleCards); j++)
+				{
+					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, -scrollDistance, UIntPtr.Zero);
+					await Task.Delay(30);
+				}
+				System.Windows.Forms.Cursor.Position = previousPos;
+				await Task.Delay(100);
+
+				var remainingCards = deck.Cards.Count - numVisibleCards;
+				startY = 76.0 / 768.0 * hsRect.Height + (numVisibleCards - remainingCards) * strideY;
+                for(int i = 0; i < remainingCards ; i++)
+				{
+					var posY = (int)(startY + strideY * i);
+					var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+					if(capture != null)
+					{
+						var yellowPixels = 0;
+						for(int x = 0; x < width; x++)
+						{
+							for(int y = 0; y < height; y++)
+							{
+								var pixel = capture.GetPixel(x, y);
+								if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+									yellowPixels++;
+							}
+						}
+						//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
+						//capture.Save("arenadeckimages/" + i + 21 + ".png");
+						var yellowPixelRatio = yellowPixels / (double)(width * height);
+                        if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+							deck.Cards[numVisibleCards + i].Count = 2;
+					}
+				}
+
+				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - 21); j++)
+				{
+					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, scrollDistance, UIntPtr.Zero);
+					await Task.Delay(30);
+				}
+				System.Windows.Forms.Cursor.Position = previousPos;
+			}
+
+			Overlay.ForceHidden = false;
+			Overlay.UpdatePosition();
+
+			ActivateWindow();
 		}
 
 		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)

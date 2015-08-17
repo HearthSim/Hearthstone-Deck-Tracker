@@ -116,6 +116,9 @@ namespace Hearthstone_Deck_Tracker
 		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
 		[DefaultValue(false)]
+		public bool DeckImportAutoDetectCardCount = false;
+
+		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
 
 		[DefaultValue(false)]
