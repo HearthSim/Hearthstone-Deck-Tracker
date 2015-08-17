@@ -307,6 +307,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public DateTime LastPlayedNewFirst
+		{
+			get
+			{
+				var games = DeckStats.Games;
+				return !games.Any() ? LastEdited : games.OrderByDescending(g => g.StartTime).First().StartTime;
+			}
+		}
+
+		[XmlIgnore]
 		public string GetClass
 		{
 			get { return string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")"; }

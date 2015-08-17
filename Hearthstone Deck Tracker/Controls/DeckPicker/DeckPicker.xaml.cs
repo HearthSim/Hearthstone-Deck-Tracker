@@ -416,6 +416,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				case "Last Played":
 					view.SortDescriptions.Add(new SortDescription("LastPlayed", ListSortDirection.Descending));
 					break;
+				case "Last Played (new first)":
+					view.SortDescriptions.Add(new SortDescription("LastPlayedNewFirst", ListSortDirection.Descending));
+					break;
 				case "Last Edited":
 					view.SortDescriptions.Add(new SortDescription("LastEdited", ListSortDirection.Descending));
 					break;
