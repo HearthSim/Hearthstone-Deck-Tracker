@@ -429,7 +429,9 @@ namespace Hearthstone_Deck_Tracker
 						var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
 						if (string.IsNullOrEmpty(actionStartingCardId))
 						{
-							actionStartingCardId = Game.Entities[actionStartingEntityId].CardId;
+							Entity tmpEntity;
+							if(Game.Entities.TryGetValue(actionStartingEntityId, out tmpEntity))
+								actionStartingCardId = tmpEntity.CardId;
 						}
 						if (!string.IsNullOrEmpty(actionStartingCardId))
 						{
