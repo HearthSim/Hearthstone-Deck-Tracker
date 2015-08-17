@@ -58,6 +58,7 @@ namespace Hearthstone_Deck_Tracker
 		public static MainWindow MainWindow { get; set; }
 		public static OptionsMain OptionsMain { get; set; }
 		public static bool SettingUpConstructedImporting { get; set; }
+		public static Visibility UseButtonVisiblity {get { return Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible; } }
 
 		public static async Task<Version> CheckForUpdates(bool beta)
 		{

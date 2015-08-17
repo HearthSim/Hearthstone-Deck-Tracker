@@ -1633,7 +1633,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
-			SelectDeck(deck, false);
+			SelectDeck(deck, Config.Instance.AutoUseDeck);
 		}
 
 		public void SelectDeck(Deck deck, bool setActive)

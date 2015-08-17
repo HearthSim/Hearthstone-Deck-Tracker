@@ -54,7 +54,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AutoSaveOnImport = false;
 
-        [DefaultValue(true)]
+		[DefaultValue(false)]
+		public bool AutoUseDeck = false;
+
+		[DefaultValue(true)]
         public bool DeckPickerCaps = true;
 
 		[DefaultValue(true)]
