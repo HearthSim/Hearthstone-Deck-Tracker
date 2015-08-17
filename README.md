@@ -1,6 +1,8 @@
 Hearthstone-Deck-Tracker
 ========================
 
+[![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is an automatic deck tracker for Hearthstone.
 
 The ingame overlay:
