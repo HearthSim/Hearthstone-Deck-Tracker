@@ -199,8 +199,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ExportSetDeckName = true;
 
-		[DefaultValue(0)]
-		public int ExportStartDelay = 0;
+		[DefaultValue(1)]
+		public int ExportStartDelay = 1;
 
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
