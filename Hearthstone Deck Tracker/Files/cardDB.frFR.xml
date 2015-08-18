@@ -13,7 +13,7 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Rend 2 PV.</Text>
+Rend #2 PV.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -522,7 +522,7 @@ Vous piochez une carte.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 1 point de dégâts.</Text>
+Inflige $1 point de dégâts.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -750,7 +750,7 @@ Invoque un totem aléatoire.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Subit 2 points de dégâts. Vous piochez une carte.</Text>
+Subit $2 points de dégâts. Vous piochez une carte.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2065,7 +2065,7 @@ ont +1/+1.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 2 points de dégâts au héros adverse.</Text>
+Inflige $2 points de dégâts au héros adverse.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2712,9 +2712,7 @@ Vous piochez une carte.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TOUS les autres murlocs ont +1 ATQ.</Text>
-    <Mechanics>
-      <string>Aura</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -7135,7 +7133,7 @@ de (1).</Text>
   </Card>
   <Card>
     <CardId>EX1_509</CardId>
-    <Name>Maître des flots murloc</Name>
+    <Name>Mande-flots murloc</Name>
     <CardSet>Classic</CardSet>
     <Rarity>Rare</Rarity>
     <Type>Minion</Type>
@@ -8247,7 +8245,7 @@ donne +2 ATQ.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Les points d’Attaque et de Vie de ce serviteur sont augmentés.</Text>
+    <Text>Caractéristiques augmentées.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8439,7 +8437,7 @@ donne +2 ATQ.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 2 points de dégâts.</Text>
+Inflige $2 points de dégâts.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8453,7 +8451,7 @@ Inflige 2 points de dégâts.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 3 points de dégâts.</Text>
+Inflige $3 points de dégâts.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9874,7 +9872,21 @@ ont +1/+1.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 1 point de dégâts.</Text>
+Inflige $1 point de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1_AT_132</CardId>
+    <Name>Explosion de feu rang 2</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige $2 points de dégâts.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9908,6 +9920,20 @@ Confère 2 points d’armure.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CS2_102_H1_AT_132</CardId>
+    <Name>Défense stoïque</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Gagne 4 points d’armure.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>DS1h_292_H1</CardId>
     <Name>Tir assuré</Name>
     <CardSet>Hero Skins</CardSet>
@@ -9919,7 +9945,21 @@ Confère 2 points d’armure.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 2 points de dégâts au héros adverse.</Text>
+Inflige $2 points de dégâts au héros adverse.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1_AT_132</CardId>
+    <Name>Tir de baliste</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige $3 points de dégâts au héros adverse.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10344,6 +10384,106 @@ Invoque un enragé du magma 5/1.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TBST_001</CardId>
+    <Name>Tank débutant</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_002</CardId>
+    <Name>Mage débutant</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, inflige 1 point de dégâts à un serviteur adverse aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_003</CardId>
+    <Name>Soigneur débutant</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, rend 2 PV aux serviteurs adjacents.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_004</CardId>
+    <Name>Soigneur honnête</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, invoque un serviteur allié aléatoire mort pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_005</CardId>
+    <Name>Voleur JcJ</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Camouflage&lt;/b&gt;
+Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un serviteur.</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_006</CardId>
+    <Name>Forcer une carte commune</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Place une carte commune dans la main du joueur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBUD_1</CardId>
+    <Name>Invocation précoce de serviteur</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Invoque un serviteur gratuit à chaque tour, si vous avez moins de PV que votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_001</CardId>
+    <Name>Échanger les PV des boss</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_006</CardId>
     <Name>Grande banane</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10404,6 +10544,122 @@ Invoque un enragé du magma 5/1.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_009</CardId>
+    <Name>Créer 15 secrets</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010</CardId>
+    <Name>Enchantement de création de deck</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010e</CardId>
+    <Name>Choisir un des trois</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_011</CardId>
+    <Name>Pièce ternie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Confère 1 cristal de mana pendant ce tour uniquement.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_012</CardId>
+    <Name>Choisir une nouvelle carte !</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affiche 3 cartes aléatoires. Choisissez-en une à placer dans votre deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013</CardId>
+    <Name>Enchantement du choix du joueur</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_014</CardId>
+    <Name>Choisir une nouvelle carte !</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affiche 3 cartes aléatoires. Choisissez-en une à placer dans votre main.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_015</CardId>
+    <Name>Pirate</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_EndlessMinions01</CardId>
+    <Name>Enchantement sans fin</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_Pilot1</CardId>
+    <Name>Pilote mystère</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Qui ça peut bien être ?</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -14312,7 +14568,7 @@ Pioche deux cartes.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Chaque fois que votre adversaire joue une carte, vous défausse des 3 cartes sur le dessus de votre deck.</Text>
+    <Text>Chaque fois que votre adversaire joue une carte, retire les 3 cartes du dessus de votre deck.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -19299,7 +19555,7 @@ Vous piochez une carte si votre main est vide.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Gagne +1/+1 chaque fois que vous ciblez ce serviteur avec un sort.</Text>
+    <Text>Gagne +1/+1 chaque fois que &lt;b&gt;vous&lt;/b&gt; ciblez ce serviteur avec un sort.</Text>
     <Mechanics />
     <Artist>Edouard Guiton &amp; Stuido HIVE</Artist>
   </Card>
@@ -19441,7 +19697,7 @@ Vous piochez une carte si votre main est vide.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 8 points de dégâts à un adversaire aléatoire.</Text>
+Inflige $8 points de dégâts à un adversaire aléatoire.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19454,7 +19710,7 @@ Inflige 8 points de dégâts à un adversaire aléatoire.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
+Inflige $8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19588,6 +19844,3105 @@ Inflige 8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_001</CardId>
+    <Name>Lance de flammes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $8 |4(point,points) de dégâts à un serviteur.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_002</CardId>
+    <Name>Effigie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; quand un serviteur allié meurt, invoque un serviteur aléatoire de même coût.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_003</CardId>
+    <Name>Héros défunt</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Votre pouvoir héroïque inflige 1 point de dégâts supplémentaire.</Text>
+    <Mechanics />
+    <Artist>Arthur Bozonnet</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_004</CardId>
+    <Name>Déflagration des Arcanes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $2 |4(point,points) de dégâts à un serviteur. Le bonus aux &lt;b&gt;Dégâts des sorts&lt;/b&gt; est doublé pour ce sort.</Text>
+    <Mechanics />
+    <Artist>Gabor Szikszai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005</CardId>
+    <Name>Métamorphose : sanglier</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Transforme un serviteur en sanglier 4/2 avec &lt;b&gt;Charge&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005t</CardId>
+    <Name>Sanglier</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_006</CardId>
+    <Name>Aspirant de Dalaran</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; vous gagnez &lt;b&gt;+1 aux dégâts des sorts&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_006e</CardId>
+    <Name>Puissance de Dalaran</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Dégâts des sorts augmentés.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_007</CardId>
+    <Name>Jette-sorts</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; ajoute un sort aléatoire dans la main de chaque joueur.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Erik Ko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_008</CardId>
+    <Name>Drake de Frimarra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Race>Dragon</Race>
+    <Text>Vous pouvez utiliser votre pouvoir héroïque autant de fois que vous voulez.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_009</CardId>
+    <Name>Rhonin</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute
+3 copies de Projectiles des Arcanes dans votre main.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_010</CardId>
+    <Name>Dompteur de béliers</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous avez une Bête, invoque une bête aléatoire.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Brandon Kitkouski</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011</CardId>
+    <Name>Championne sacrée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Chaque fois qu’un personnage est soigné, gagne +2 ATQ.</Text>
+    <Mechanics />
+    <Artist>Alex Garner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011e</CardId>
+    <Name>Bénédiction par la Lumière</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_012</CardId>
+    <Name>Rejeton des Ombres</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; inflige 4 points de dégâts à chaque héros.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013</CardId>
+    <Name>Mot de pouvoir : Gloire</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Choisissez un serviteur. Chaque fois qu’il attaque, rend 4 PV à votre héros.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013e</CardId>
+    <Name>Mot de pouvoir : Gloire</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quand il attaque, rend 4 PV au héros du joueur l’ayant amélioré.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_014</CardId>
+    <Name>Ombrefiel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Chaque fois que vous piochez une carte, réduit son coût de
+(1) |4(cristal,cristaux).</Text>
+    <Mechanics />
+    <Artist>Warren Mahy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_014e</CardId>
+    <Name>Effet d’ombrefiel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Coûte (1) |4(cristal,cristaux) de moins.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_015</CardId>
+    <Name>Convertir</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Place une copie d’un serviteur adverse dans votre main.</Text>
+    <Mechanics />
+    <Artist>Dan Dos Santos</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016</CardId>
+    <Name>Confusion</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Échange l’Attaque et la Vie de tous les serviteurs.</Text>
+    <Mechanics />
+    <Artist>Sean O'Danield</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016e</CardId>
+    <Name>Confus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Attaque et Vie échangées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_017</CardId>
+    <Name>Gardien du Crépuscule</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne
++1 ATQ et &lt;b&gt;Provocation&lt;/b&gt; si vous avez un Dragon en main.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_017e</CardId>
+    <Name>Étreinte du Crépuscule</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 ATQ et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_018</CardId>
+    <Name>Confesseur d’argent Paletress</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; invoque un serviteur &lt;b&gt;légendaire&lt;/b&gt; aléatoire.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Chris Rahn</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_019</CardId>
+    <Name>Destrier de l’effroi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un destrier de l’effroi.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_020</CardId>
+    <Name>Garde funeste effroyable</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>8</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021</CardId>
+    <Name>Minuscule chevalier maléfique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Chaque fois que vous vous défaussez d’une carte, gagne +1/+1.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021e</CardId>
+    <Name>Gangrerage</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Caractéristiques augmentées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_022</CardId>
+    <Name>Poing de Jaraxxus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Quand vous jouez ou que vous vous défaussez de cette carte, inflige $4 |4(point,points) de dégâts à un adversaire aléatoire.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_023</CardId>
+    <Name>Écraseur du Vide</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; détruit aléatoirement un serviteur de chaque joueur.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024</CardId>
+    <Name>Fusion démoniaque</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Confère +3/+3 à un démon et un cristal de mana à votre adversaire.</Text>
+    <Mechanics />
+    <Artist>Kevin Chen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024e</CardId>
+    <Name>Sombre fusion</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_025</CardId>
+    <Name>Sombre marché</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Détruit 2 serviteurs adverses aléatoires. Vous vous défaussez de
+2 cartes aléatoires.</Text>
+    <Mechanics />
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_026</CardId>
+    <Name>Garde-courroux</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Chaque fois que ce serviteur subit des dégâts, inflige le même montant de dégâts à votre héros.</Text>
+    <Mechanics />
+    <Artist>Sojin Hwang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027</CardId>
+    <Name>Wilfred Flopboum</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Les cartes que vous piochez avec votre pouvoir héroïque coûtent (0) |4(cristal,cristaux).</Text>
+    <Mechanics />
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027e</CardId>
+    <Name>Maître invocateur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Coûte (0) |4(cristal,cristaux).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_028</CardId>
+    <Name>Chevaucheur pandashan</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Combo :&lt;/b&gt; gagne +3 ATQ.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Ryan Metcaff</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_028e</CardId>
+    <Name>Lance de chi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_029</CardId>
+    <Name>Boucanier</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Pirate</Race>
+    <Text>Chaque fois que vous vous équipez d’une arme, lui confère +1 ATQ.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_029e</CardId>
+    <Name>Lame effilée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_030</CardId>
+    <Name>Vaillant de Fossoyeuse</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Combo :&lt;/b&gt; inflige 1 point de dégâts.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Zoltan Boros </Artist>
+  </Card>
+  <Card>
+    <CardId>AT_031</CardId>
+    <Name>Vide-gousset</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Chaque fois que ce serviteur attaque un héros, ajoute une carte La pièce dans votre main.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032</CardId>
+    <Name>Marchand douteux</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous avez un pirate, gagne +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032e</CardId>
+    <Name>Marché douteux</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_033</CardId>
+    <Name>Larcin</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Ajoute 2 cartes de classe aléatoires dans votre main &lt;i&gt;(de la classe de votre adversaire)&lt;/i&gt;.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034</CardId>
+    <Name>Lame empoisonnée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>3</Durability>
+    <Class>Rogue</Class>
+    <Text>Votre pouvoir héroïque donne à cette arme
++1 ATQ au lieu de la remplacer.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034e</CardId>
+    <Name>Enduit perfide</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_035</CardId>
+    <Name>Embusqué</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Place 3 cartes Embuscade ! dans le deck de votre adversaire. À chaque fois qu’il en pioche une, vous invoquez un nérubien 4/4.</Text>
+    <Mechanics />
+    <Artist>Daren Bader</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_035t</CardId>
+    <Name>Embuscade !</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Quand vous piochez cette carte, invoque un nérubien 4/4 pour votre adversaire. Vous piochez une carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_036</CardId>
+    <Name>Anub’arak</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>4</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; le renvoie dans votre main et invoque un nérubien 4/4.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Eric Braddock</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_036t</CardId>
+    <Name>Nérubien</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037</CardId>
+    <Name>Racines vivantes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; Inflige $2 |4(point,points) de dégâts ou invoque deux arbrisseaux 1/1.</Text>
+    <Mechanics />
+    <Artist>Dan Brereton</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_037a</CardId>
+    <Name>Racines vivantes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $2 |4(point,points) de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037b</CardId>
+    <Name>Racines vivantes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Invoque deux arbrisseaux 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037t</CardId>
+    <Name>Arbrisseau</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_038</CardId>
+    <Name>Aspirante de Darnassus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne un cristal de mana vide.
+&lt;b&gt;Râle d’agonie :&lt;/b&gt; perd un cristal de mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Laurel Austin</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039</CardId>
+    <Name>Combattant sauvage</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; donne +2 ATQ
+à votre héros pendant ce tour.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Alex Pascenko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039e</CardId>
+    <Name>Sauvage</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 ATQ pendant ce tour.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_040</CardId>
+    <Name>Marcheuse sauvage</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne
++3 PV à une Bête alliée.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_040e</CardId>
+    <Name>Âme sœur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+3 PV.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_041</CardId>
+    <Name>Chevalier des étendues sauvages</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Chaque fois que vous invoquez une Bête, réduit le coût de cette carte de (1) |4(cristal,cristaux).</Text>
+    <Mechanics />
+    <Artist>Ralph Horsley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_041e</CardId>
+    <Name>Appel des étendues sauvages</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Coût réduit.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042</CardId>
+    <Name>Druidesse du Sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; se transforme pour obtenir &lt;b&gt;Charge&lt;/b&gt; ou gagne +1/+1 et &lt;b&gt;Camouflage&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Arthur Gimaldinov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_042a</CardId>
+    <Name>Forme de lion</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042b</CardId>
+    <Name>Forme de panthère</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+1/+1 et &lt;b&gt;Camouflage&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042t</CardId>
+    <Name>Lion dent-de-sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Charge&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_042t2</CardId>
+    <Name>Panthère dent-de-sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Camouflage&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_043</CardId>
+    <Name>Communion astrale</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Gagne 10 cristaux de mana. Vous défausse de votre main.</Text>
+    <Mechanics />
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_044</CardId>
+    <Name>Charpie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Détruit un serviteur.
+Ajoute un serviteur aléatoire dans la main de votre adversaire.</Text>
+    <Mechanics />
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045</CardId>
+    <Name>Aviana</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Vos serviteurs coûtent
+(1) |4(cristal,cristaux).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Velvet Engine</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045e</CardId>
+    <Name>Brume surpuissante</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_045ee</CardId>
+    <Name>Ench. de deck de mandebrume</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_046</CardId>
+    <Name>Rohart totémique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; invoque N’IMPORTE QUEL totem aléatoire.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047</CardId>
+    <Name>Grave-totem draeneï</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +1/+1 pour chaque totem allié.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>RK Post</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047e</CardId>
+    <Name>Expérimenté</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Caractéristiques augmentées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_048</CardId>
+    <Name>Vague de soins</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Rend #7 PV. Révèle un serviteur de chaque deck. Si le vôtre coûte plus cher, rend
+#14 PV à la place.</Text>
+    <Mechanics />
+    <Artist>Luca Zontini</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049</CardId>
+    <Name>Vaillant des Pitons-du-Tonnerre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; donne +2 ATQ à vos totems.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049e</CardId>
+    <Name>Puissance des Pitons</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_050</CardId>
+    <Name>Marteau chargé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>4</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; votre pouvoir héroïque devient « Inflige 2 points de dégâts ».</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Peet Cooper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_050t</CardId>
+    <Name>Décharge de foudre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige $2 points de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_051</CardId>
+    <Name>Destruction élémentaire</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Inflige $4 à $5 points
+de dégâts à tous les serviteurs.
+&lt;b&gt;Surcharge :&lt;/b&gt; (5)</Text>
+    <Mechanics />
+    <Artist>Tyler Walpole</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_052</CardId>
+    <Name>Golem totémique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Race>Totem</Race>
+    <Text>&lt;b&gt;Surcharge :&lt;/b&gt; (1)</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_053</CardId>
+    <Name>Savoir ancestral</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Vous piochez 2 cartes. &lt;b&gt;Surcharge :&lt;/b&gt; (2)</Text>
+    <Mechanics />
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_054</CardId>
+    <Name>Le mandebrume</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne
++1/+1 à tous les serviteurs dans votre main et votre deck.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_055</CardId>
+    <Name>Soins rapides</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Rend #5 PV.</Text>
+    <Mechanics />
+    <Artist>Marcelo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_056</CardId>
+    <Name>Tir puissant</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Inflige $2 |4(point,points) de dégâts à un serviteur et aux serviteurs adjacents.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057</CardId>
+    <Name>Maître des écuries</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; une Bête alliée devient &lt;b&gt;Insensible&lt;/b&gt; pendant ce tour.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057o</CardId>
+    <Name>Étrillé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Insensible&lt;/b&gt; pendant ce tour</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_058</CardId>
+    <Name>Elekk du roi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, vous le piochez.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_059</CardId>
+    <Name>Brave archère</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; inflige 2 points de dégâts au héros adverse si votre main est vide.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_060</CardId>
+    <Name>Piège à ours</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; invoque un ours 3/3 avec &lt;b&gt;Provocation&lt;/b&gt; quand votre héros est attaqué.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061</CardId>
+    <Name>Prêt à tirer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Chaque fois que vous lancez un sort pendant ce tour, ajoute une carte chasseur aléatoire dans votre main.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061e</CardId>
+    <Name>Prêt à tirer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_062</CardId>
+    <Name>Boule d’araignées</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Invoque trois
+tisseuses 1/1.</Text>
+    <Mechanics />
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063</CardId>
+    <Name>Gueule-d’acide</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Chaque fois qu’un autre serviteur subit des dégâts, le détruit.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063t</CardId>
+    <Name>Écaille-d’effroi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Inflige 1 point de dégâts à tous les autres serviteurs à la fin de votre tour.</Text>
+    <Mechanics />
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_064</CardId>
+    <Name>Sonner</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Inflige $3 |4(point,points) de dégâts. Confère
+3 points d’armure.</Text>
+    <Mechanics />
+    <Artist>Dany Orizio</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065</CardId>
+    <Name>Défenseur du roi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>3</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>2</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne
++1 Durabilité si vous avez un serviteur avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Michael Franchina</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065e</CardId>
+    <Name>Défenseur du roi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 Durabilité.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_066</CardId>
+    <Name>Aspirant d’Orgrimmar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; confère +1 ATQ à votre arme.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Hideaki Takamura</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_066e</CardId>
+    <Name>Forges d’Orgrimmar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_067</CardId>
+    <Name>Magnataure alpha</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Inflige également des dégâts aux serviteurs adjacents de celui qu’il attaque.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068</CardId>
+    <Name>Renforcement</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Confère +2/+2 à vos serviteurs avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mishi McCaig</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068e</CardId>
+    <Name>Renforcé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_069</CardId>
+    <Name>Partenaire d’entraînement</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+&lt;b&gt;Cri de guerre :&lt;/b&gt; confère &lt;b&gt;Provocation&lt;/b&gt; à un serviteur.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_069e</CardId>
+    <Name>Entraînement terminé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_070</CardId>
+    <Name>Cap’taine céleste Kragg</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Text>&lt;b&gt;Charrrrrge&lt;/b&gt;
+Coûte (1) |4(cristal,cristaux) de moins pour chaque pirate allié.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071</CardId>
+    <Name>Championne d’Alexstrasza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne
++1 ATQ et &lt;b&gt;Charge&lt;/b&gt; si vous avez un Dragon en main.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071e</CardId>
+    <Name>Aubaine d’Alexstrasza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+1 ATQ et &lt;b&gt;Charge&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_072</CardId>
+    <Name>Varian Wrynn</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; vous piochez
+3 cartes. Place tout serviteur pioché directement sur le champ de bataille.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073</CardId>
+    <Name>Esprit combatif</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; donne +1/+1 à vos serviteurs quand votre tour commence.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073e</CardId>
+    <Name>Esprit combatif</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_074</CardId>
+    <Name>Sceau des champions</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Confère +3 ATQ et &lt;b&gt;Bouclier divin&lt;/b&gt; à un serviteur.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_074e2</CardId>
+    <Name>Sceau des champions</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>+3 ATQ et &lt;b&gt;Bouclier divin&lt;/b&gt;. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_075</CardId>
+    <Name>Maître des chevaux de guerre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Vos recrues de la Main d’argent ont +1 ATQ.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_075e</CardId>
+    <Name>Puissance du valet d’écurie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Le maître des chevaux de guerre confère +1 ATQ à ce serviteur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_076</CardId>
+    <Name>Chevalier murloc</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; invoque un murloc aléatoire.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sam Nielsen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077</CardId>
+    <Name>Lance d’Argent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>2</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, gagne +1 Durabilité.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077e</CardId>
+    <Name>Pique supplémentaire</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 Durabilité.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_078</CardId>
+    <Name>Entrée dans le Colisée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Détruit tous les serviteurs excepté le serviteur ayant l’Attaque la plus élévée pour chaque joueur.</Text>
+    <Mechanics />
+    <Artist>Mauricio Herrera</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_079</CardId>
+    <Name>Adversaire mystérieux</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place un &lt;b&gt;Secret&lt;/b&gt; de chaque type de votre deck sur le champ de bataille.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_080</CardId>
+    <Name>Commandant du fief</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Vous pouvez utiliser votre pouvoir héroïque deux fois par tour.</Text>
+    <Mechanics />
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081</CardId>
+    <Name>Eadric le Pur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; l’Attaque de tous les serviteurs adverses passe à 1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist> James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081e</CardId>
+    <Name>Purifié</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>L’Attaque est passée à 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_082</CardId>
+    <Name>Modeste écuyer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; gagne +1 ATQ.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_082e</CardId>
+    <Name>Entraînement</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_083</CardId>
+    <Name>Chevaucheur de faucon-dragon</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; gagne &lt;b&gt;Furie des vents&lt;/b&gt; pendant ce tour.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_083e</CardId>
+    <Name>Volerie de faucons-dragons</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>A &lt;b&gt;Furie des vents&lt;/b&gt; pendant ce tour.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_084</CardId>
+    <Name>Porte-lance</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne
++2 ATQ à un serviteur allié.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_084e</CardId>
+    <Name>Équipé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_085</CardId>
+    <Name>Damoiselle du Lac</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Votre pouvoir héroïque coûte (1) |4(cristal,cristaux).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Froilan Gardner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086</CardId>
+    <Name>Saboteur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; le pouvoir héroïque de votre adversaire coûte (5) cristaux de plus au tour suivant.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086e</CardId>
+    <Name>Vilenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Votre pouvoir héroïque coûte (5) cristaux de plus pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_087</CardId>
+    <Name>Cavalier d’Argent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Charge&lt;/b&gt;
+&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_088</CardId>
+    <Name>Champion de Mogor</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>50% de chance d’attaquer le mauvais adversaire.</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089</CardId>
+    <Name>Lieutenant de la garde d’os</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; gagne +1 PV.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089e</CardId>
+    <Name>Garde d’os</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vie augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_090</CardId>
+    <Name>Champion de Mukla</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; donne +1/+1 à vos autres serviteurs.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_090e</CardId>
+    <Name>Puissance du singe</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_091</CardId>
+    <Name>Médecin du tournoi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; rend 2 PV à votre héros.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_092</CardId>
+    <Name>Enragé de glace</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_093</CardId>
+    <Name>Frigbold algide</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_094</CardId>
+    <Name>Jongleur de flammes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts à un adversaire aléatoire.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_095</CardId>
+    <Name>Chevalier silencieux</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Camouflage&lt;/b&gt;
+&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Esad Ribic</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096</CardId>
+    <Name>Chevalier mécanique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; donne +1/+1 à un Méca allié.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096e</CardId>
+    <Name>Remonté</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_097</CardId>
+    <Name>Spectateur du tournoi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Adam Byrne</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_098</CardId>
+    <Name>Mangesort prodigieuse</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; copie le pouvoir héroïque de votre adversaire.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099</CardId>
+    <Name>Chevaucheuse de kodo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation : &lt;/b&gt; invoque un kodo de guerre 3/5.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Wootten</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099t</CardId>
+    <Name>Kodo de guerre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_100</CardId>
+    <Name>Régente de la Main d’argent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; invoque une recrue de la Main
+d’argent 1/1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_101</CardId>
+    <Name>Combattante de la fosse</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_102</CardId>
+    <Name>Jormungar capturé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+    <Artist>Gonzalo Ordonez</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_103</CardId>
+    <Name>Kraken de la mer Boréale</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>7</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige
+4 points de dégâts.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Seamus Gallagher</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_104</CardId>
+    <Name>Jouteur rohart</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, rend 7 PV à votre héros.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_105</CardId>
+    <Name>Kvaldir blessé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige
+3 points de dégâts à ce serviteur.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_106</CardId>
+    <Name>Champion de la Lumière</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; &lt;b&gt;réduit au silence&lt;/b&gt; un démon.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Andrea Uderzo</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_108</CardId>
+    <Name>Cheval de guerre cuirassé</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, gagne &lt;b&gt;Charge&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Edouard Guiton &amp; Tony Washington</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109</CardId>
+    <Name>Guetteur d’Argent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Ne peut pas attaquer.
+&lt;b&gt;Exaltation :&lt;/b&gt; peut attaquer normalement pendant ce tour.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109e</CardId>
+    <Name>Exalté</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Peut attaquer pendant ce tour.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_110</CardId>
+    <Name>Régisseur du Colisée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; renvoie ce serviteur dans votre main.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_111</CardId>
+    <Name>Vendeur de rafraîchissements</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; rend 4 PV à chaque héros.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_112</CardId>
+    <Name>Maître jouteur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, gagne &lt;b&gt;Provocation&lt;/b&gt; et &lt;b&gt;Bouclier divin&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Penny Arcade</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_113</CardId>
+    <Name>Recruteur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; ajoute un écuyer 2/2 dans votre main.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_114</CardId>
+    <Name>Provocateur maléfique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115</CardId>
+    <Name>Maître d’escrime</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; la prochaine fois que vous utilisez votre pouvoir héroïque, il coûte
+(2) cristaux de moins.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Howard Lyon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115e</CardId>
+    <Name>Entraînement à l’escrime</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Votre pouvoir héroïque coûte (2) cristaux de moins.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_116</CardId>
+    <Name>Agent du Repos du ver</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne
++1 ATQ et &lt;b&gt;Provocation&lt;/b&gt; si vous avez un Dragon en main.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jeff Easley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_116e</CardId>
+    <Name>Venez vous battre !</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>+1 ATQ et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_117</CardId>
+    <Name>Maîtresse de cérémonie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne
++2/+2 si vous avez un serviteur avec &lt;b&gt;Dégâts des sorts&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_117e</CardId>
+    <Name>Cérémonie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_118</CardId>
+    <Name>Grande croisée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; ajoute une carte paladin aléatoire dans votre main.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Todd Lockwood</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119</CardId>
+    <Name>Écumeur kvaldir</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; gagne +2/+2.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119e</CardId>
+    <Name>Exalté</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Caractéristiques augmentées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_120</CardId>
+    <Name>Géant du givre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Coûte (1) |4(cristal,cristaux) de moins chaque fois que vous utilisez votre pouvoir héroïque pendant cette partie.</Text>
+    <Mechanics />
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121</CardId>
+    <Name>Favori de la foule</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que vous jouez une carte avec &lt;b&gt;Cri de guerre&lt;/b&gt;,
+confère +1/+1.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121e</CardId>
+    <Name>Ego énorme</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Caractéristiques augmentées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_122</CardId>
+    <Name>Gormok l’Empaleur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige
+4 points de dégâts si vous avez au moins
+4 autres serviteurs.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_123</CardId>
+    <Name>Frissegueule</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;. &lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 3 points de dégâts à tous les serviteurs si vous avez un Dragon en main.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_124</CardId>
+    <Name>Bolf Bélier-Frondeur</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>9</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que votre héros subit des dégâts, les inflige à ce serviteur à la place.</Text>
+    <Mechanics />
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_125</CardId>
+    <Name>Glace-Hurlante</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Charge&lt;/b&gt;
+Ne peut pas attaquer les héros.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_127</CardId>
+    <Name>Champion du Nexus Saraad</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Exaltation :&lt;/b&gt; ajoute un sort aléatoire dans votre main.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Marcleo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_128</CardId>
+    <Name>Le chevalier squelette</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, renvoie
+le chevalier dans votre main.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_129</CardId>
+    <Name>Fjola Plaie-lumineuse</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que &lt;b&gt;vous&lt;/b&gt; ciblez ce serviteur avec un sort, gagne &lt;b&gt;Bouclier divin&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mark Zug</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_130</CardId>
+    <Name>Saccageur des mers</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Quand vous piochez cette carte, inflige 1 point de dégâts à vos serviteurs.</Text>
+    <Mechanics />
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_131</CardId>
+    <Name>Eydis Plaie-sombre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que &lt;b&gt;vous&lt;/b&gt; ciblez ce serviteur avec un sort, inflige
+3 points de dégâts à un adversaire aléatoire.</Text>
+    <Mechanics />
+    <Artist>Ben Thompson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132</CardId>
+    <Name>Justicière Cœur-Vrai</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; remplace votre pouvoir héroïque de départ en l’améliorant.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jomaro Kindred</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUID</CardId>
+    <Name>Changeforme sinistre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Gagne 2 points d’armure et +2 ATQ pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUIDe</CardId>
+    <Name>Griffes sinistres</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 ATQ pendant ce tour.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_132_HUNTER</CardId>
+    <Name>Tir de baliste</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige $3 points de dégâts au héros adverse.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_MAGE</CardId>
+    <Name>Explosion de feu rang 2</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige $2 points de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PALADIN</CardId>
+    <Name>La Main d’argent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque deux recrues 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PRIEST</CardId>
+    <Name>Soins</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Rend #4 PV.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUE</CardId>
+    <Name>Dagues empoisonnées</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Équipe d’une arme 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUEt</CardId>
+    <Name>Dague empoisonnée</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMAN</CardId>
+    <Name>Heurt totémique</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un totem de votre choix.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANa</CardId>
+    <Name>Totem de soins</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>À la fin de votre tour, rend 1 point de vie à tous vos serviteurs.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANb</CardId>
+    <Name>Totem incendiaire</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANc</CardId>
+    <Name>Totem de griffes de pierre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANd</CardId>
+    <Name>Totem de courroux de l’air</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Dégâts des sorts : +1&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARLOCK</CardId>
+    <Name>Connexion d’âme</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Pioche une carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARRIOR</CardId>
+    <Name>Défense stoïque</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Gagne 4 points d’armure.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_133</CardId>
+    <Name>Jouteuse de Gadgetzan</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; révèle un serviteur de chaque deck. Si le vôtre coûte plus, gagne +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_133e</CardId>
+    <Name>Victoire !</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>PlaceholderCard</CardId>

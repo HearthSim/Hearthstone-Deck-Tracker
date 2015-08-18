@@ -13,7 +13,7 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Восстанавливает 2 ед. здоровья.</Text>
+ Восстанавливает #2 ед. здоровья.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -522,7 +522,7 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 1 ед. урона.</Text>
+ Наносит $1 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -750,7 +750,7 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Вы берете карту и получаете 2 ед. урона.</Text>
+ Вы берете карту и получаете $2 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2064,7 +2064,7 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 2 ед. урона герою противника.</Text>
+ Наносит $2 ед. урона герою противника.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2633,7 +2633,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Когда это существо получает урон, оно получает +3 к атаке.</Text>
+    <Text>Получает +3 к атаке каждый раз, когда получает урон.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -2710,9 +2710,7 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>ВСЕ прочие мурлоки получают +1 к атаке.</Text>
-    <Mechanics>
-      <string>Aura</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -3882,7 +3880,7 @@
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Каждый раз, когда персонаж восстанавливает здоровье, стражница Света получает +2 к атаке.</Text>
+    <Text>Получает +2 к атаке каждый раз, когда персонаж восстанавливает здоровье.</Text>
     <Mechanics />
     <Artist>Erik Ko</Artist>
   </Card>
@@ -4291,7 +4289,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>Каждый раз, когда вы разыгрываете карту, это существо получает +1/+1.</Text>
+    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете карту.</Text>
     <Mechanics />
     <Artist>Attila Adorjany</Artist>
   </Card>
@@ -4416,7 +4414,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>Каждый раз, когда вы разыгрываете карту заклинания, получает +2 к атаке до конца хода.</Text>
+    <Text>Получает +2 к атаке до конца хода каждый раз, когда вы разыгрываете карту заклинания.</Text>
     <Mechanics />
     <Artist>Hideaki Takamura</Artist>
   </Card>
@@ -4508,7 +4506,8 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Рывок&lt;/b&gt;. &lt;b&gt;Божественный щит&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;,
+&lt;b&gt;Божественный щит&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Charge</string>
       <string>Divine Shield</string>
@@ -4543,7 +4542,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>Каждый раз, когда разыгрывается &lt;b&gt;Секрет&lt;/b&gt;, это существо получает +1/+1.</Text>
+    <Text>Получает +1/+1 каждый раз, когда разыгрывается &lt;b&gt;Секрет&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Gonzalo Ordonez</Artist>
   </Card>
@@ -5820,7 +5819,7 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Когда вы разыгрываете карту с &lt;b&gt;Перегрузкой&lt;/b&gt;, это существо получает +1/+1. </Text>
+    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете карту с &lt;b&gt;Перегрузкой&lt;/b&gt;. </Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -5864,7 +5863,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Если в конце хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;, это существо получает +2/+2.</Text>
+    <Text>Получает +2/+2, если в конце хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -7130,7 +7129,7 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
-    <Text>Каждый раз, когда на поле боя призывается мурлок, это существо получает +1 к атаке.</Text>
+    <Text>Получает +1 к атаке каждый раз, когда на поле боя призывается мурлок.</Text>
     <Mechanics />
     <Artist>Jaemin Kim</Artist>
   </Card>
@@ -7177,7 +7176,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Каждый раз, когда ваш зверь умирает, это существо получает +2/+1.</Text>
+    <Text>Получает +2/+1 каждый раз, когда ваш зверь умирает.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -7784,7 +7783,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Наносит существу противника урон, равный силе атаки вашего героя.</Text>
+    <Text>Наносит существу урон, равный силе атаки вашего героя.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -8035,7 +8034,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Когда любое существо получает урон, разъяренный берсерк получает +1 к атаке. </Text>
+    <Text>Получает +1 к атаке каждый раз, когда любое существо получает урон. </Text>
     <Mechanics />
     <Artist>Simon Bisley</Artist>
   </Card>
@@ -8211,7 +8210,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; это существо получает +2/+2 за каждую другую карту, разыгранную ранее на этом ходу.</Text>
+    <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; получает +2/+2 за каждую другую карту, разыгранную ранее на этом ходу.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -8227,7 +8226,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Здоровье и атака этого существа увеличены.</Text>
+    <Text>Характеристики увеличены.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8419,7 +8418,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 2 ед. урона.</Text>
+ Наносит $2 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8433,7 +8432,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 3 ед. урона.</Text>
+ Наносит $3 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8704,7 +8703,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Каждый раз, когда вы разыгрываете карту заклинания, это существо получает +1 к атаке.</Text>
+    <Text>Получает +1 к атаке каждый раз, когда вы разыгрываете карту заклинания.</Text>
     <Mechanics />
     <Artist>Blizzard Cinematics</Artist>
   </Card>
@@ -8938,7 +8937,7 @@
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Каждый раз, когда вы разыгрываете карту заклинания, призывает на поле боя мага-ученика 1/1.</Text>
+    <Text>Призывает на поле боя мага-ученика 1/1 каждый раз, когда вы разыгрываете карту заклинания.</Text>
     <Mechanics />
     <Artist>James Ryman</Artist>
   </Card>
@@ -9195,7 +9194,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Каждый раз, когда умирает существо, плотоядный вурдалак получает +1 к атаке.</Text>
+    <Text>Получает +1 к атаке каждый раз, когда умирает существо.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -9853,7 +9852,21 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 1 ед. урона.</Text>
+ Наносит $1 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1_AT_132</CardId>
+    <Name>Вспышка огня (ранг 2)</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Наносит $2 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9887,6 +9900,20 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CS2_102_H1_AT_132</CardId>
+    <Name>Не пробьешь!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ +4 к броне.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>DS1h_292_H1</CardId>
     <Name>Верный выстрел</Name>
     <CardSet>Hero Skins</CardSet>
@@ -9898,7 +9925,21 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- Наносит 2 ед. урона герою противника.</Text>
+ Наносит $2 ед. урона герою противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1_AT_132</CardId>
+    <Name>Выстрел из баллисты</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Наносит $3 ед. урона герою противника.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10323,6 +10364,106 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TBST_001</CardId>
+    <Name>N3wb Tank</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_002</CardId>
+    <Name>N3wb Mage</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода наносит 1 ед. урона случайному существу противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_003</CardId>
+    <Name>N3wb Healer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода восстанавливает 2 ед. здоровья находящимся рядом существам.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_004</CardId>
+    <Name>Опытный лекарь</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода призывает на поле боя случайное ваше существ, которое умерло на этом ходу.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_005</CardId>
+    <Name>PvP-разбойник</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Маскировка&lt;/b&gt;
+Возвращает способность &lt;b&gt;«Маскировка»&lt;/b&gt;, когда PvP-разбойник убивает существо.</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_006</CardId>
+    <Name>TBST Push Common Card</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>push a common card into player's hand</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBUD_1</CardId>
+    <Name>TBUD Summon Early Minion</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Если в течение каждого хода у вас меньше здоровья, чем у вашего противника, вы можете бесплатно призвать существо на поле боя.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_001</CardId>
+    <Name>Boss HP Swapper</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_006</CardId>
     <Name>Большой банан</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10385,6 +10526,122 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>TB_009</CardId>
+    <Name>Призывает 15 секретов.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010</CardId>
+    <Name>Чары сбора колоды</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010e</CardId>
+    <Name>Выберите один эффект из трех</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_011</CardId>
+    <Name>Потускневшая монетка</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете 1 дополнительный кристалл маны до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_012</CardId>
+    <Name>Выберите новую карту!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Выберите одну из трех случайных карт и замешайте ее в свою колоду.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013</CardId>
+    <Name>Чары выбора</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_014</CardId>
+    <Name>Выберите новую карту!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Выберите одну из трех случайных карт и положите ее в руку.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_015</CardId>
+    <Name>Пират</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_EndlessMinions01</CardId>
+    <Name>Бесконечные чары</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_Pilot1</CardId>
+    <Name>Таинственный пилот</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Кто бы это мог быть?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Старый Мрачноглаз</Name>
     <CardSet>Reward</CardSet>
@@ -10413,7 +10670,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; положите в руку случайного пирата из вашей колоды.</Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете в руку случайного пирата из вашей колоды.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14284,7 +14541,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Когда ваш противник разыгрывает карту, вы сбрасываете три верхние карты вашей колоды.</Text>
+    <Text>Когда ваш противник разыгрывает карту, вы убираете три верхние карты вашей колоды.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -15123,7 +15380,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>В случайном порядке перелетает от одного существа к другому, нанося $1 ед. урона, пока одно из существ не умрет.</Text>
+    <Text>Наносит случайному существу $1 ед. урона. Повторяет это действие, пока одно из существ не умрет.</Text>
     <Mechanics />
     <Artist>Andrew Hou</Artist>
   </Card>
@@ -15235,7 +15492,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; замешивает карту мины в колоду противника. Когда он ее вытаскивает, мина взрывается, нанося ему 10 ед. урона.</Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; замешивает карту мины в колоду противника. Когда он ее берет в руки, мина взрывается, нанося ему 10 ед. урона.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15251,7 +15508,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Когда вы вытаскиваете эту карту из своей колоды, она взрывается. Вы получаете 10 ед. урона и берете карту.</Text>
+    <Text>Когда вы берете эту карту из своей колоды, она взрывается. Вы получаете 10 ед. урона и берете карту.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -15467,7 +15724,7 @@
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Каждый раз, когда ваш противник разыгрывает карту заклинания, это существо получает +1 к атаке.</Text>
+    <Text>Получает +1 к атаке каждый раз, когда ваш противник разыгрывает карту заклинания.</Text>
     <Mechanics />
     <Artist>Peet Cooper</Artist>
   </Card>
@@ -15495,7 +15752,7 @@
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Каждый раз, когда ваш противник разыгрывает карту заклинания, это существо получает +2 к атаке.</Text>
+    <Text>Получает +2 к атаке каждый раз, когда ваш противник разыгрывает карту заклинания.</Text>
     <Mechanics />
     <Artist>Aleksi Briclot</Artist>
   </Card>
@@ -15840,7 +16097,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>Каждый раз, когда вы получаете броню, это существо получает +1 к атаке.</Text>
+    <Text>Получает +1 к атаке каждый раз, когда вы получаете броню.</Text>
     <Mechanics />
     <Artist>Zero Yue</Artist>
   </Card>
@@ -16152,7 +16409,7 @@
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если под вашим контролем есть механизм, &lt;i&gt;Гном-техник&lt;/i&gt; получает +1/+1 и вы кладете в руку карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если под вашим контролем есть механизм, это существо получает +1/+1 и вы кладете в руку карту &lt;b&gt;«Запасная часть»&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16239,7 +16496,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Каждый раз, когда умирает ваш механизм, это существо получает +2/+2.</Text>
+    <Text>Получает +2/+2 каждый раз, когда умирает ваш механизм. </Text>
     <Mechanics />
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -17963,7 +18220,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Каждый раз, когда ваш противник разыгрывает карту заклинания, это существо получает +2/+2.</Text>
+    <Text>Получает +2/+2 каждый раз, когда ваш противник разыгрывает карту заклинания.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19256,7 +19513,7 @@
     <Health>3</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>Призывает на поле боя свою копию каждый раз, когда получает несмертельный урон.</Text>
+    <Text>Призывает это существо на поле боя каждый раз, когда получает несмертельный урон.</Text>
     <Mechanics />
     <Artist>Bobby Chiu</Artist>
   </Card>
@@ -19271,7 +19528,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Получает +1/+1, когда вы выбираете это существо целью заклинания.</Text>
+    <Text>Получает +1/+1, когда &lt;b&gt;вы&lt;/b&gt; выбираете это существо целью заклинания.</Text>
     <Mechanics />
     <Artist>Edouard Guiton &amp; Stuido HIVE</Artist>
   </Card>
@@ -19413,7 +19670,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
-Наносит 8 ед. урона случайному персонажу противника.</Text>
+Наносит $8 ед. урона случайному персонажу противника.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19426,7 +19683,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
-Наносит 8 ед. урона случайному персонажу противника. ДВАЖДЫ.</Text>
+Наносит $8 ед. урона случайному персонажу противника. ДВАЖДЫ.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19560,6 +19817,3078 @@
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_001</CardId>
+    <Name>Огненное копье</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Наносит существу $8 ед. урона.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_002</CardId>
+    <Name>Чучело</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда умирает ваше существо, призывает на поле боя случайное существо за ту же ману.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_003</CardId>
+    <Name>Павший герой</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Сила вашего героя наносит на 1 ед. урона больше.</Text>
+    <Mechanics />
+    <Artist>Arthur Bozonnet</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_004</CardId>
+    <Name>Чародейская вспышка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Наносит $2 ед. урона выбранному существу.  Это заклинание получает удвоенный бонус от &lt;b&gt;силы заклинаний&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Gabor Szikszai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005</CardId>
+    <Name>Превращение в вепря</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Превращает выбранное существо в вепря 4/2 со способностью &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005t</CardId>
+    <Name>Вепрь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_006</CardId>
+    <Name>Боец из Даларана</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; получает &lt;b&gt;урон от заклинаний +1&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_006e</CardId>
+    <Name>Мощь Даларана</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Урон от заклинаний увеличен.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_007</CardId>
+    <Name>Чаромет</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок кладет в руку случайное заклинание.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Erik Ko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_008</CardId>
+    <Name>Дракон Хладарры</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Race>Dragon</Race>
+    <Text>Вы можете использовать силу героя сколько угодно раз.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_009</CardId>
+    <Name>Ронин</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку три копии карты «Чародейские стрелы».</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_010</CardId>
+    <Name>Пастух</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает случайного зверя на поле боя, если под вашим контролем есть зверь.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Brandon Kitkouski</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011</CardId>
+    <Name>Святая защитница</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Получает +2 к атаке каждый раз, когда персонаж восстанавливает здоровье.</Text>
+    <Mechanics />
+    <Artist>Alex Garner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011e</CardId>
+    <Name>Благословение Света</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Атака увеличена.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_012</CardId>
+    <Name>Исчадие теней</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; наносит 4 ед. урона каждому герою.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013</CardId>
+    <Name>Слово силы: Слава</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Выберите существо. Восстанавливает 4 ед. здоровья вашему герою каждый раз, когда выбранное существо атакует.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013e</CardId>
+    <Name>Слово силы: Слава</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Атакуя, восстанавливает 4 ед. здоровья герою, наложившему данный эффект.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_014</CardId>
+    <Name>Исчадие Тьмы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Каждый раз, когда вы берете карту, она стоит на (1) ману меньше.</Text>
+    <Mechanics />
+    <Artist>Warren Mahy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_014e</CardId>
+    <Name>Одержимость Тьмой</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Стоит на (1) ману меньше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_015</CardId>
+    <Name>Обращение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Вы кладете в руку копию выбранного существа противника.</Text>
+    <Mechanics />
+    <Artist>Dan Dos Santos</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016</CardId>
+    <Name>Замешательство</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Меняет местами атаку и здоровье всех существ.</Text>
+    <Mechanics />
+    <Artist>Sean O'Danield</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016e</CardId>
+    <Name>В замешательстве</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Здоровье и атака этого существа поменялись местами.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_017</CardId>
+    <Name>Сумеречный страж</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1 к атаке и способность &lt;b&gt;«Провокация»&lt;/b&gt;, если у вас в руке есть дракон.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_017e</CardId>
+    <Name>Объятия сумрака</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 к атаке и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_018</CardId>
+    <Name>Исповедница Пейлтресс</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; призывает на поле боя случайное &lt;b&gt;легендарное&lt;/b&gt; существо.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Chris Rahn</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_019</CardId>
+    <Name>Конь погибели</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя коня погибели.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_020</CardId>
+    <Name>Грозный демон</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>8</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021</CardId>
+    <Name>Малый рыцарь зла</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Получает +1/+1 каждый раз, когда вы сбрасываете карту.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021e</CardId>
+    <Name>Бесовская ярость</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Характеристики увеличены.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_022</CardId>
+    <Name>Кулак Джараксуса</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Наносит $4 ед. урона случайному персонажу противника каждый раз, когда вы разыгрываете или сбрасываете эту карту.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_023</CardId>
+    <Name>Крушитель из Бездны</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; уничтожает по случайному существу обоих игроков.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024</CardId>
+    <Name>Демоническая сила</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Выбранный демон получает +3/+3. Ваш противник получает кристалл маны.</Text>
+    <Mechanics />
+    <Artist>Kevin Chen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024e</CardId>
+    <Name>Сила тьмы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_025</CardId>
+    <Name>Темная сделка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Уничтожает 2 случайных существа противника. Вы сбрасываете 2 случайных карты. </Text>
+    <Mechanics />
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_026</CardId>
+    <Name>Страж гнева</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Когда это существо получает урон, оно наносит такой же урон вашему герою.</Text>
+    <Mechanics />
+    <Artist>Sojin Hwang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027</CardId>
+    <Name>Вилфред Непопамс</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Карты, которые вы берете с помощью вашей силы героя, стоят (0) маны.</Text>
+    <Mechanics />
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027e</CardId>
+    <Name>Главный призыватель</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_028</CardId>
+    <Name>Всадник Шадо-Пан</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; получает +3 к атаке.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Ryan Metcaff</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_028e</CardId>
+    <Name>Копье ци</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_029</CardId>
+    <Name>Буканьер</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Pirate</Race>
+    <Text>Каждый раз, когда вы снаряжаете героя оружием, оно получает +1 к атаке.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_029e</CardId>
+    <Name>Особая заточка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_030</CardId>
+    <Name>Рыцарь Подгорода</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Серия приемов:&lt;/b&gt; наносит 1 ед. урона.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Zoltan Boros </Artist>
+  </Card>
+  <Card>
+    <CardId>AT_031</CardId>
+    <Name>Карманник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Каждый раз, когда это существо атакует героя, вы кладете в руку монетку.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032</CardId>
+    <Name>Сомнительный делец</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1/+1, если под вашим контролем есть пират.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032e</CardId>
+    <Name>Сомнительная сделка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_033</CardId>
+    <Name>Воришка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Вы кладете в руку два случайных заклинания &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034</CardId>
+    <Name>Отравленное лезвие</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>3</Durability>
+    <Class>Rogue</Class>
+    <Text>Ваша сила героя не заменяет оружие, а добавляет ему +1 к атаке.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034e</CardId>
+    <Name>Отрава</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_035</CardId>
+    <Name>Из-под земли</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Замешивает три карты «Засада!» в колоду противника. Если противник берет в руки одну из этих карт, вы призываете на поле боя неруба 4/4 .</Text>
+    <Mechanics />
+    <Artist>Daren Bader</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_035t</CardId>
+    <Name>Засада!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Когда вы берете эту карту из колоды, ваш противник призывает на поле боя неруба 4/4. Вы берете еще одну карту.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_036</CardId>
+    <Name>Ануб'арак</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>4</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; возвращает это существо в вашу руку и призывает на поле боя неруба 4/4.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Eric Braddock</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_036t</CardId>
+    <Name>Неруб</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037</CardId>
+    <Name>Живые корни</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; наносит $2 ед. урона; или призывает на поле боя два саженца 1/1.</Text>
+    <Mechanics />
+    <Artist>Dan Brereton</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_037a</CardId>
+    <Name>Живые корни</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Нанести $2 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037b</CardId>
+    <Name>Живые корни</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Призвать два саженца 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037t</CardId>
+    <Name>Саженец</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_038</CardId>
+    <Name>Боец из Дарнаса</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете пустой кристалл маны. 
+&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы теряете кристалл маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Laurel Austin</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039</CardId>
+    <Name>Яростный воин</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; ваш герой получает +2 к атаке до конца хода.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Alex Pascenko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039e</CardId>
+    <Name>Ярость</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 к атаке до конца хода.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_040</CardId>
+    <Name>Дикая странница</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш выбранный зверь получает +3 к здоровью.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_040e</CardId>
+    <Name>Добрый дух</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+3 к здоровью.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_041</CardId>
+    <Name>Рыцарь чащи</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Каждый раз, когда вы призываете на поле боя зверя, стоимость этой карты уменьшается на (1) ману.</Text>
+    <Mechanics />
+    <Artist>Ralph Horsley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_041e</CardId>
+    <Name>Зов чащи</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Стоимость уменьшена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042</CardId>
+    <Name>Друид-саблезуб</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt; превращается и получает способность &lt;b&gt;«Рывок»&lt;/b&gt;; или получает +1/+1 и способность &lt;b&gt;«Маскировка»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Arthur Gimaldinov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_042a</CardId>
+    <Name>Облик льва</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042b</CardId>
+    <Name>Облик пантеры</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+1/+1 и способность &lt;b&gt;«Маскировка»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042t</CardId>
+    <Name>Саблезубый лев</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_042t2</CardId>
+    <Name>Саблезубая пантера</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Маскировка&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_043</CardId>
+    <Name>Астральное единение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Вы получаете 10 кристаллов маны и сбрасываете все карты из своей руки.</Text>
+    <Mechanics />
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_044</CardId>
+    <Name>Мульчирование</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Уничтожает выбранное существо.
+Ваш противник кладет в руку случайное существо. </Text>
+    <Mechanics />
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045</CardId>
+    <Name>Авиана</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Все ваши существа стоят (1) ману.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Velvet Engine</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045e</CardId>
+    <Name>Укрепляющий туман</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_045ee</CardId>
+    <Name>Заклятие тумана</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_046</CardId>
+    <Name>Клыкарр-шаман</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; призывает случайный тотем на поле боя.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047</CardId>
+    <Name>Резчица тотемов</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1/+1 за каждый ваш тотем.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>RK Post</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047e</CardId>
+    <Name>Боевой опыт</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Характеристики увеличены.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_048</CardId>
+    <Name>Волна исцеления</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Восстанавливает #7 ед. здоровья. Каждый игрок показывает случайное существо из своей колоды. Восстанавливает #14 ед. здоровья, если ваше существо стоит больше маны.</Text>
+    <Mechanics />
+    <Artist>Luca Zontini</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049</CardId>
+    <Name>Рыцарь Громового Утеса</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; ваши тотемы получают +2 к атаке.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049e</CardId>
+    <Name>Сила Утеса</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_050</CardId>
+    <Name>Магический молот</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>4</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; Сила вашего героя меняется на «Наносит 2 ед. урона».</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Peet Cooper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_050t</CardId>
+    <Name>Удар молнии</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Наносит $2 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_051</CardId>
+    <Name>Разрушительные стихии</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Наносит $4-$5 ед. урона всем существам. &lt;b&gt;Перегрузка:&lt;/b&gt; (5)</Text>
+    <Mechanics />
+    <Artist>Tyler Walpole</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_052</CardId>
+    <Name>Тотемный голем</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Race>Totem</Race>
+    <Text>&lt;b&gt;Перегрузка:&lt;/b&gt; (1)</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_053</CardId>
+    <Name>Древнее знание</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Вы берете 2 карты. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
+    <Mechanics />
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_054</CardId>
+    <Name>Призыватель туманов</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; Все ваши существа в руке и в колоде получают +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_055</CardId>
+    <Name>Быстрое исцеление</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Восстанавливает #5 ед. здоровья.</Text>
+    <Mechanics />
+    <Artist>Marcelo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_056</CardId>
+    <Name>Мощный выстрел</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Наносит $2 ед. урона выбранному существу и находящимся рядом с ним существам.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057</CardId>
+    <Name>Главный конюх</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш выбранный зверь получает &lt;b&gt;неуязвимость&lt;/b&gt; до конца хода.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057o</CardId>
+    <Name>Холеный зверь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Неуязвимость&lt;/b&gt; до конца хода.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_058</CardId>
+    <Name>Королевский элекк</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Если ваше существо стоит больше маны, вы кладете его в свою руку.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_059</CardId>
+    <Name>Храбрая лучница</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; наносит 2 ед. урона герою противника, если у вас в руке нет карт.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_060</CardId>
+    <Name>Медвежья ловушка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Секрет:&lt;/b&gt; если ваш герой был атакован, призывает на поле боя медведя 3/3 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061</CardId>
+    <Name>На изготовку!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Вы кладете в руку случайную карту охотника за каждое заклинание, разыгранное вами на этом ходу.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061e</CardId>
+    <Name>На изготовку!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_062</CardId>
+    <Name>Паучий клубок</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Призывает на поле боя трех тенетников 1/1.</Text>
+    <Mechanics />
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063</CardId>
+    <Name>Кислотная Утроба</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Уничтожает любое другое существо, получившее урон.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063t</CardId>
+    <Name>Жуткая Чешуя</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>В конце вашего хода наносит 1 ед. урона всем прочим существам.</Text>
+    <Mechanics />
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_064</CardId>
+    <Name>Оглушить</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Наносит $3 ед. урона.
+Ваш герой получает +3 к броне.</Text>
+    <Mechanics />
+    <Artist>Dany Orizio</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065</CardId>
+    <Name>Королевский поборник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>3</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>2</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1 к прочности, если у вас есть существо со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Michael Franchina</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065e</CardId>
+    <Name>Королевский поборник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 к прочности.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_066</CardId>
+    <Name>Боец из Оргриммара</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; ваше оружие получает +1 к атаке.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Hideaki Takamura</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_066e</CardId>
+    <Name>Горны Оргриммара</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_067</CardId>
+    <Name>Вожак магнатавров</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует. </Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068</CardId>
+    <Name>Усиление</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Ваши существа со способностью &lt;b&gt;«Провокация»&lt;/b&gt; получают +2/+2.</Text>
+    <Mechanics />
+    <Artist>Mishi McCaig</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068e</CardId>
+    <Name>Усиление</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_069</CardId>
+    <Name>Спарринг-партнер</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Провокация.&lt;/b&gt;
+&lt;b&gt;Боевой клич:&lt;/b&gt; выбранное существо получает способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_069e</CardId>
+    <Name>Обучение завершено</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_070</CardId>
+    <Name>Крагг Поднебесный</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Text>&lt;b&gt;Рррррывок&lt;/b&gt;.
+Стоит на (1) ману меньше за каждого пирата под вашим контролем.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071</CardId>
+    <Name>Защитница Алекстразы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1 к атаке и способность &lt;b&gt;Рывок&lt;/b&gt;, если у вас в руке есть дракон.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071e</CardId>
+    <Name>Дар Алекстразы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+1 к атаке и способность &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_072</CardId>
+    <Name>Вариан Ринн</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете 3 карты и кладете на поле боя всех существ, полученных таким образом. </Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073</CardId>
+    <Name>Боевой настрой</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Секрет:&lt;/b&gt; в начале вашего хода все ваши существа получают +1/+1.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073e</CardId>
+    <Name>Боевой настрой</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_074</CardId>
+    <Name>Печать чемпионов</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Выбранное существо получает +3 к атаке и &lt;b&gt;«Божественный щит»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_074e2</CardId>
+    <Name>Печать чемпионов</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>+3 к атаке и &lt;b&gt;«Божественный щит»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_075</CardId>
+    <Name>Боевой берейтор</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Ваши паладины-рекруты получают +1 к атаке.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_075e</CardId>
+    <Name>Лошадиная сила</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>+1 к атаке от &lt;i&gt;Боевого берейтора&lt;/i&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_076</CardId>
+    <Name>Мурлок-рыцарь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; призывает на поле боя случайного мурлока.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sam Nielsen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077</CardId>
+    <Name>Серебряное копье</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>2</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Получает +1 к прочности, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077e</CardId>
+    <Name>Еще удар</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 к прочности.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_078</CardId>
+    <Name>Вход в Колизей</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Уничтожает всех существ, кроме существа с наибольшей атакой под контролем каждого игрока.</Text>
+    <Mechanics />
+    <Artist>Mauricio Herrera</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_079</CardId>
+    <Name>Загадочный претендент</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете на поле боя по каждому &lt;b&gt;секрету&lt;/b&gt; из вашей колоды.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_080</CardId>
+    <Name>Командир гарнизона</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Вы можете использовать силу героя дважды в течение хода.</Text>
+    <Mechanics />
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081</CardId>
+    <Name>Эдрик Чистый</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; атака всех существ противника становится равна 1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist> James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081e</CardId>
+    <Name>Очищение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Атака стала равна 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_082</CardId>
+    <Name>Скромный оруженосец</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; получает +1 к атаке.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_082e</CardId>
+    <Name>Тренировка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_083</CardId>
+    <Name>Всадник на дракондоре</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; получает способность &lt;b&gt;«Неистовство ветра»&lt;/b&gt; до конца хода.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_083e</CardId>
+    <Name>Укрощенный дракондор</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Неистовство ветра&lt;/b&gt; до конца хода.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_084</CardId>
+    <Name>Копьеносец</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше выбранное существо получает +2 к атаке.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_084e</CardId>
+    <Name>Экипировка</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_085</CardId>
+    <Name>Озерная дева</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Ваша сила героя стоит (1) ману.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Froilan Gardner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086</CardId>
+    <Name>Саботажник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; увеличивает стоимость использования силы героя противника на (5) маны до конца его следующего хода.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086e</CardId>
+    <Name>Злодейство</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ваша сила героя стоит на (5) ман больше до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_087</CardId>
+    <Name>Серебряный всадник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;
+&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_088</CardId>
+    <Name>Защитник Могора</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>С 50% вероятностью атакует не того персонажа противника.</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089</CardId>
+    <Name>Костяной лейтенант</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; получает +1 к здоровью.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089e</CardId>
+    <Name>Костяной страж</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Здоровье увеличено.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_090</CardId>
+    <Name>Защитник Муклы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; другие ваши существа получают +1/+1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_090e</CardId>
+    <Name>Мощь гориллы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_091</CardId>
+    <Name>Лекарь турнира</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; восстанавливает 2 ед. здоровья вашему герою.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_092</CardId>
+    <Name>Ледяной яростень</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_093</CardId>
+    <Name>Морозный снобольд</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_094</CardId>
+    <Name>Жонглер пламенем</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона случайному персонажу противника.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_095</CardId>
+    <Name>Молчаливый рыцарь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Маскировка&lt;/b&gt;
+&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Esad Ribic</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096</CardId>
+    <Name>Заводной рыцарь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваш выбранный механизм получает +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096e</CardId>
+    <Name>На взводе</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_097</CardId>
+    <Name>Зритель турнира</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Adam Byrne</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_098</CardId>
+    <Name>Глотательница чар</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; копирует силу героя вашего противника.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099</CardId>
+    <Name>Всадница на кодо</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; призывает на поле боя боевого кодо 3/5.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Wootten</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099t</CardId>
+    <Name>Боевой кодо</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_100</CardId>
+    <Name>Паладин-регент</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; призывает на поле боя паладина-рекрута 1/1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_101</CardId>
+    <Name>Боец арены</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_102</CardId>
+    <Name>Пленный йормунгар</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+    <Artist>Gonzalo Ordonez</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_103</CardId>
+    <Name>Кракен Северного моря</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>7</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Seamus Gallagher</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_104</CardId>
+    <Name>Бретер-клыкарр</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Восстанавливает 7 ед. здоровья вашему герою, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_105</CardId>
+    <Name>Раненый квалдир</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 3 ед. урона этому существу.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_106</CardId>
+    <Name>Защитник Света</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; накладывает эффект &lt;b&gt;немоты&lt;/b&gt; на выбранного демона.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Andrea Uderzo</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_108</CardId>
+    <Name>Бронированный скакун</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Получает способность &lt;b&gt;«Рывок»&lt;/b&gt;, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Edouard Guiton &amp; Tony Washington</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109</CardId>
+    <Name>Серебряный дозорный</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Не может атаковать. 
+&lt;b&gt;Воодушевление:&lt;/b&gt; может атаковать до конца этого хода.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109e</CardId>
+    <Name>Вдохновение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Может атаковать на этом ходу.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_110</CardId>
+    <Name>Распорядитель Колизея</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; возвращает это существо к вам в руку.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_111</CardId>
+    <Name>Продавец закусок</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; восстанавливает 4 ед. здоровья каждому герою.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_112</CardId>
+    <Name>Великий бретер</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Получает способность &lt;b&gt;«Провокация»&lt;/b&gt; и &lt;b&gt;«Божественный щит»&lt;/b&gt;, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Penny Arcade</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_113</CardId>
+    <Name>Вербовщик</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; вы кладете в руку карту оруженосца 2/2.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_114</CardId>
+    <Name>Злобный насмешник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115</CardId>
+    <Name>Учитель фехтования</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уменьшает стоимость следующего использования силы вашего героя на (2) маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Howard Lyon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115e</CardId>
+    <Name>Урок фехтования</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ваша сила героя стоит на (2) маны меньше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_116</CardId>
+    <Name>Драконий посланник</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +1 к атаке и способность &lt;b&gt;Провокация&lt;/b&gt;, если у вас в руке есть дракон.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jeff Easley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_116e</CardId>
+    <Name>Ну давай, я жду! </Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>+1 к атаке и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_117</CardId>
+    <Name>Церемониймейстер</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +2/+2, если под вашим контролем есть существо со способностью &lt;b&gt;«Урон от заклинаний»&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_117e</CardId>
+    <Name>Церемония</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_118</CardId>
+    <Name>Великий рыцарь</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете в руку случайную классовую карту паладина.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Todd Lockwood</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119</CardId>
+    <Name>Квалдир-налетчик</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; получает +2/+2.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119e</CardId>
+    <Name>Вдохновение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Характеристики увеличены.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_120</CardId>
+    <Name>Ледяной великан</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Стоит на (1) ману меньше за каждое использование вашей силы героя в течение этого матча.</Text>
+    <Mechanics />
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121</CardId>
+    <Name>Кумир толпы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете существо со способностью &lt;b&gt;«Боевой клич»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121e</CardId>
+    <Name>Мега-эго</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Характеристики увеличены.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_122</CardId>
+    <Name>Гормок</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона, если под вашим контролем есть не менее 4 других существ.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_123</CardId>
+    <Name>Ледяная Пасть</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Провокация:&lt;/b&gt;
+&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 3 ед. урона всем существам, если у вас в руке есть дракон.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_124</CardId>
+    <Name>Болф Таранный Щит</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>9</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Если ваш герой должен получить урон, вместо него урон получает это существо.</Text>
+    <Mechanics />
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_125</CardId>
+    <Name>Ледяной Рев</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Рывок&lt;/b&gt;.
+Не может атаковать героев.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_127</CardId>
+    <Name>Сараад, рыцарь Нексуса</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Воодушевление:&lt;/b&gt; вы кладете в руку случайное заклинание.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Marcleo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_128</CardId>
+    <Name>Рыцарь-скелет</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Возвращает это существо в вашу руку, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_129</CardId>
+    <Name>Фьола Погибель Света</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt; каждый раз, когда &lt;b&gt;вы&lt;/b&gt; выбираете это существо целью заклинания.</Text>
+    <Mechanics />
+    <Artist>Mark Zug</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_130</CardId>
+    <Name>Гроза морей</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Наносит 1 ед. урона всем вашим существам, когда вы берете эту карту из колоды.</Text>
+    <Mechanics />
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_131</CardId>
+    <Name>Эйдис Погибель Тьмы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит 3 ед. урона случайному персонажу противника каждый раз, когда &lt;b&gt;вы&lt;/b&gt; выбираете это существо целью заклинания.</Text>
+    <Mechanics />
+    <Artist>Ben Thompson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132</CardId>
+    <Name>Мариэль Чистосердечная</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; заменяет обычную силу вашего героя на улучшенную.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jomaro Kindred</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUID</CardId>
+    <Name>Чудесное преображение</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ +2 к атаке до конца хода и +2 к броне. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUIDe</CardId>
+    <Name>Лютые когти</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 к атаке до конца хода.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_132_HUNTER</CardId>
+    <Name>Выстрел из баллисты</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Наносит $3 ед. урона герою противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_MAGE</CardId>
+    <Name>Вспышка огня (ранг 2)</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Наносит $2 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PALADIN</CardId>
+    <Name>Серебряная длань</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя двух паладинов-рекрутов 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PRIEST</CardId>
+    <Name>Исцеление</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Восстанавливает #4 ед. здоровья.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUE</CardId>
+    <Name>Отравленные кинжалы</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Снаряжает оружием 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUEt</CardId>
+    <Name>Отравленный кинжал</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMAN</CardId>
+    <Name>Тотемный удар</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя выбранный тотем.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANa</CardId>
+    <Name>Тотем исцеления</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>В конце вашего хода восстанавливает 1 ед. здоровья всем вашим существам.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANb</CardId>
+    <Name>Опаляющий тотем</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANc</CardId>
+    <Name>Тотем каменного когтя</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANd</CardId>
+    <Name>Тотем гнева воздуха</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Урон от заклинаний +1&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARLOCK</CardId>
+    <Name>Высасывание души</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Вы берете карту.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARRIOR</CardId>
+    <Name>Не пробьешь!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ +4 к броне.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_133</CardId>
+    <Name>Бретер из Прибамбасска</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; каждый игрок показывает случайное существо из своей колоды. Получает +1/+1, если ваше существо стоит больше маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_133e</CardId>
+    <Name>Победа!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>PlaceholderCard</CardId>

@@ -13,7 +13,7 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Restaure 2 de Vida.</Text>
+Restaure #2 de Vida.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -522,7 +522,7 @@ Compre um card.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 1 de dano.</Text>
+Cause $1 de dano.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -750,7 +750,7 @@ Evoque um Totem aleatório.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Compre um card e receba 2 de dano.</Text>
+Compre um card e receba $2 de dano.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -1202,7 +1202,7 @@ Compre um card.</Text>
     <Durability>2</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Quando seu herói atacar, restaure 2 de Vida dele.</Text>
+    <Text>Sempre que seu herói atacar, restaure 2 de Vida dele.</Text>
     <Mechanics />
     <Artist>Ryan Sook</Artist>
   </Card>
@@ -2064,7 +2064,7 @@ Receba 2 Armadura.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 2 de dano ao herói inimigo.</Text>
+Cause $2 de dano ao herói inimigo.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2365,7 +2365,7 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Toda vez que evocar um lacaio com 3 ou menos de Ataque, conceda &lt;b&gt;Investida&lt;/b&gt; a ele.</Text>
+    <Text>Sempre que você evocar um lacaio com 3 ou menos de Ataque, conceda &lt;b&gt;Investida&lt;/b&gt; a ele.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -2710,9 +2710,7 @@ Compre um card.</Text>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>TODOS os outros Murlocs têm +1 de Ataque.</Text>
-    <Mechanics>
-      <string>Aura</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -3157,7 +3155,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Race>Totem</Race>
-    <Text>No fim do seu turno, restaure 1 de Vida de todos os lacaios aliados.</Text>
+    <Text>No final do seu turno, restaure 1 de Vida de todos os lacaios aliados.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3925,7 +3923,7 @@ Compre um card.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>No fim do seu turno, conceda +1 de Vida a outro lacaio aliado aleatório.</Text>
+    <Text>No final do seu turno, conceda +1 de Vida a outro lacaio aliado aleatório.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -3968,7 +3966,7 @@ Compre um card.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>No início do turno, troque este lacaio por um lacaio aleatório da sua mão.</Text>
+    <Text>No início do seu turno, troque este lacaio por um lacaio aleatório da sua mão.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -4510,7 +4508,8 @@ Compre um card.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Investida&lt;/b&gt;, &lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;
+&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
     <Mechanics>
       <string>Charge</string>
       <string>Divine Shield</string>
@@ -4688,7 +4687,7 @@ Compre um card.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Ao lançar um feitiço, compre um card.</Text>
+    <Text>Sempre que lançar um feitiço, compre um card.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -4738,7 +4737,7 @@ Compre um card.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Quando um jogador lançar um feitiço, coloque uma cópia dele na mão do outro jogador.</Text>
+    <Text>Sempre que um jogador lançar um feitiço, coloque uma cópia dele na mão do outro jogador.</Text>
     <Mechanics />
     <Artist>Mark Zug</Artist>
   </Card>
@@ -4908,7 +4907,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Conceda &lt;b&gt;Furtividade&lt;/b&gt; aos seus lacaios até o próximo turno.</Text>
+    <Text>Conceda &lt;b&gt;Furtividade&lt;/b&gt; aos seus lacaios até o seu próximo turno.</Text>
     <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
@@ -6224,7 +6223,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Conceda +4/+4 a um lacaio aliado até o fim do turno. Depois, ele morre. Uma morte horrível.</Text>
+    <Text>Conceda +4/+4 a um lacaio aliado até o final do turno. Depois, ele morre. Uma morte horrível.</Text>
     <Mechanics />
     <Artist>Tom Baxa</Artist>
   </Card>
@@ -6239,7 +6238,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Este lacaio tem +4/+4, mas morrerá de forma horrível no fim do turno.</Text>
+    <Text>Este lacaio tem +4/+4, mas morrerá de forma horrível no final do turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -6641,7 +6640,7 @@ Compre um card.</Text>
     <Durability>5</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Toda vez que você evocar um lacaio, conceda-lhe +1/+1, e este item perderá 1 de Durabilidade.</Text>
+    <Text>Sempre que você evocar um lacaio, conceda-lhe +1/+1, e este item perderá 1 de Durabilidade.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
   </Card>
@@ -7644,7 +7643,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Evoque três Arvorosos 2/2 com &lt;b&gt;Investida&lt;/b&gt;, que morrerão no fim do turno.</Text>
+    <Text>Evoque três Arvorosos 2/2 com &lt;b&gt;Investida&lt;/b&gt;, que morrerão no final do turno.</Text>
     <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -7660,7 +7659,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
-    <Text>No fim do seu turno, adicione um Card de Sonho à sua mão.</Text>
+    <Text>No final do seu turno, adicione um Card de Sonho à sua mão.</Text>
     <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
@@ -7928,7 +7927,7 @@ Compre um card.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Quando um de seus outros lacaios morrer, compre um card.</Text>
+    <Text>Sempre que um de seus outros lacaios morrer, compre um card.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -8227,7 +8226,7 @@ Compre um card.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Este lacaio tem a Vida e o Ataque aumentados.</Text>
+    <Text>Atributos aumentados.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8419,7 +8418,7 @@ Compre um card.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 2 de dano.</Text>
+Cause $2 de dano.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8433,7 +8432,7 @@ Cause 2 de dano.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 3 de dano.</Text>
+Cause $3 de dano.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9083,7 +9082,7 @@ Evoque um Infernal 6/6.</Text>
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>No fim do seu turno, conceda +1 de Ataque a outro lacaio aliado aleatório.</Text>
+    <Text>No final do seu turno, conceda +1 de Ataque a outro lacaio aliado aleatório.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -9538,7 +9537,7 @@ Evoque um Infernal 6/6.</Text>
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Suas expressões agora são ditas com "voz de rádio".</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Suas expressões agora são faladas em "Voz de Rádio".</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9590,7 +9589,7 @@ Evoque um Infernal 6/6.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Assista à mão do seu adversário.</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Assista à mão do seu oponente.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9655,7 +9654,7 @@ Evoque um Infernal 6/6.</Text>
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>No início do seu turno, cause 1 de dano. Se este card for dourado, em vez disso, cause 1 de dano no fim do seu turno. ISSO FOI UMA PIADA DO HAN SOLO.</Text>
+    <Text>No início do seu turno, cause 1 de dano. Se este card for dourado, em vez disso, cause 1 de dano no final do seu turno. ISSO FOI UMA PIADA DO HAN SOLO.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9668,7 +9667,7 @@ Evoque um Infernal 6/6.</Text>
     <Health>6</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; PEGUE todos os cards que seu adversário não quiser da mão dele.</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; PEGUE todos os cards que seu oponente não quiser da mão dele.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9853,7 +9852,21 @@ Evoque um Infernal 6/6.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 1 de dano.</Text>
+Cause $1 de dano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1_AT_132</CardId>
+    <Name>Impacto Ígneo Grau 2</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause $2 de dano.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9887,6 +9900,20 @@ Receba 2 de Armadura.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CS2_102_H1_AT_132</CardId>
+    <Name>Blindar!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Receba 4 de Armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>DS1h_292_H1</CardId>
     <Name>Tiro Firme</Name>
     <CardSet>Hero Skins</CardSet>
@@ -9898,7 +9925,21 @@ Receba 2 de Armadura.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 2 de dano ao herói inimigo.</Text>
+Cause $2 de dano ao herói inimigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1_AT_132</CardId>
+    <Name>Disparo de Balista</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause $3 de dano ao herói inimigo.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10306,7 +10347,7 @@ Cause 2 de dano ao herói inimigo.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Adicione um feitiço aleatório de qualquer classe à sua mão. Ele custa (0).</Text>
+Adiciona um feitiço aleatório de qualquer classe à sua mão. Ele custa (0).</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10320,6 +10361,106 @@ Adicione um feitiço aleatório de qualquer classe à sua mão. Ele custa (0).</
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
 Evoque um Furiante de Magma 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_001</CardId>
+    <Name>OLDTanque N00b</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_002</CardId>
+    <Name>OLDMago N00b</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>No final do seu turno, cause 1 de dano a um lacaio inimigo aleatório.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_003</CardId>
+    <Name>OLDCurandeiro N00b</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>No final do seu turno, cure 2 de dano dos lacaios adjacentes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_004</CardId>
+    <Name>OLDCurandeiro Verdadeiro</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>No final do seu turno, evoque um lacaio aliado aleatório que tenha morrido neste turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_005</CardId>
+    <Name>OLDLadino JxJ</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furtividade&lt;/b&gt;
+Recupere &lt;b&gt;Furtividade&lt;/b&gt; quando Ladino JxJ abater um lacaio.</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_006</CardId>
+    <Name>OLDTBST Empurrar Card Comum</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Empurra um card comum para a mão de outro jogador</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBUD_1</CardId>
+    <Name>TBUD Evocar Lacaio Cedo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>A cada turno, se você tiver menos vida do que seu oponente, evoque um lacaio de graça</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_001</CardId>
+    <Name>Troca de PV do Chefe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -10383,6 +10524,122 @@ Evoque um Furiante de Magma 5/1.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_009</CardId>
+    <Name>Criar 15 Segredos</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010</CardId>
+    <Name>Encanto de Construção de Deck</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010e</CardId>
+    <Name>Escolher Um de Três</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_011</CardId>
+    <Name>Moeda Desgastada</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Receba 1 Cristal de Mana somente neste turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_012</CardId>
+    <Name>Escolher Um Novo Card!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Olhe 3 cards aleatórios. Escolha um e embaralhe-o no seu deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013</CardId>
+    <Name>Encanto de Escolha do Jogador</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_014</CardId>
+    <Name>Escolher Um Novo Card!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Olhe 3 cards aleatórios. Escolha um e coloque-o na sua mão.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_015</CardId>
+    <Name>Pirata</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_EndlessMinions01</CardId>
+    <Name>Encantamento Infinito</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_Pilot1</CardId>
+    <Name>Piloto Misterioso</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quem será que é?</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -11765,7 +12022,7 @@ Evoque dois lacaios 2/1.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Mech</Race>
-    <Text>No fim do seu turno, restaure 6 de Vida de um personagem ferido.</Text>
+    <Text>No final do seu turno, restaure 6 de Vida de um personagem ferido.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12448,7 +12705,7 @@ Evoque dois lacaios 2/1.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Toda vez que evocar um lacaio com &lt;b&gt;Último Suspiro&lt;/b&gt;, receba +1 de ataque.</Text>
+    <Text>Sempre que você evocar um lacaio com &lt;b&gt;Último Suspiro&lt;/b&gt;, receba +1 de ataque.</Text>
     <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
@@ -13397,7 +13654,7 @@ Devolva dois lacaios inimigos aleatórios à mão do seu oponente.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico Passivo&lt;/b&gt;
-Toda vez que um inimigo morrer, levante um Esqueleto 1/1.</Text>
+Sempre que um inimigo morrer, levante um Esqueleto 1/1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13410,7 +13667,7 @@ Toda vez que um inimigo morrer, levante um Esqueleto 1/1.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico Passivo&lt;/b&gt;
-Toda vez que um inimigo morrer, levante um Esqueleto 5/5.</Text>
+Sempre que um inimigo morrer, levante um Esqueleto 5/5.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14285,7 +14542,7 @@ Compre 2 cards.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Sempre que seu oponente jogar um card, descarte os três cards do topo do seu deck.</Text>
+    <Text>Sempre que seu oponente jogar um card, remova os três cards do topo do seu deck.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -14528,7 +14785,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Mech</Race>
-    <Text>No fim do seu turno, conceda +2/+2 a outro Mecanoide aliado.</Text>
+    <Text>No final do seu turno, conceda +2/+2 a outro Mecanoide aliado.</Text>
     <Mechanics />
     <Artist>Brian Despain</Artist>
   </Card>
@@ -14839,7 +15096,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Race>Totem</Race>
-    <Text>No final do seu turno, recupere 4 de Vida do seu herói.</Text>
+    <Text>No final do seu turno, restaure 4 de Vida do seu herói.</Text>
     <Mechanics />
     <Artist>Guangjian Huang</Artist>
   </Card>
@@ -15178,7 +15435,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
   </Card>
   <Card>
     <CardId>GVG_054</CardId>
-    <Name>Ogro Guerramalho</Name>
+    <Name>Guerramalho Ôgrico</Name>
     <CardSet>Goblins vs Gnomes</CardSet>
     <Rarity>Common</Rarity>
     <Type>Weapon</Type>
@@ -15523,7 +15780,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Recupere 8 de Vida do seu herói.</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 8 de Vida do seu herói.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15672,7 +15929,7 @@ Seu herói fica &lt;b&gt;Imune&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Mech</Race>
-    <Text>No final do turno, destrua este lacaio se ele for o seu único.</Text>
+    <Text>No final de cada turno, destrua este lacaio se ele for o seu único.</Text>
     <Mechanics />
     <Artist>Josh Harris</Artist>
   </Card>
@@ -16473,7 +16730,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
     <Health>6</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>Quando seu oponente lançar um feitiço, evoque um Trogg Pedraqueixo Parrudo.</Text>
+    <Text>Sempre que o seu oponente lançar um feitiço, evoque um Trogg Pedraqueixo Parrudo.</Text>
     <Mechanics />
     <Artist>Mike Sass</Artist>
   </Card>
@@ -16761,7 +17018,7 @@ Coloque um lacaio de cada deck no campo de batalha.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Coloque dois lacaios do seu deck e um do deck adversário no campo de batalha.</Text>
+Coloque dois lacaios do seu deck e um do deck oponente no campo de batalha.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17109,7 +17366,7 @@ Cause 10 de dano ao herói inimigo se ele tiver Mana.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>No turno de Geddon, cause 10 de dano a tudo seu.</Text>
+    <Text>No turno de Geddon, cause 10 de dano a tudo que é seu.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17801,7 +18058,7 @@ Descarte um card aleatório.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu adversário.</Text>
+No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu oponente.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17814,7 +18071,7 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu adversário.</Text>
+No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu oponente.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17854,7 +18111,7 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Enquanto estiver na sua mão, recupere 2 pontos de vida do adversário no início do seu turno.</Text>
+    <Text>Enquanto estiver na sua mão, restaure 2 de vida do oponente no início do seu turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17866,7 +18123,7 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Enquanto este card estiver na sua mão, recupere 6 pontos de vida do adversário no início do seu turno.</Text>
+    <Text>Enquanto este card estiver na sua mão, restaure 6 de vida do oponente no início do seu turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17963,7 +18220,7 @@ No fim do seu turno, adicione um card de Suplício da Linhagem à mão do seu ad
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Sempre que o adversário lançar um feitiço, receba +2/+2.</Text>
+    <Text>Sempre que o oponente lançar um feitiço, receba +2/+2.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19272,7 +19529,7 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Sempre que você alvejar este lacaio com um feitiço, receba +1/+1.</Text>
+    <Text>Sempre que &lt;b&gt;você&lt;/b&gt; alvejar este lacaio com um feitiço, receba +1/+1.</Text>
     <Mechanics />
     <Artist>Edouard Guiton &amp; Stuido HIVE</Artist>
   </Card>
@@ -19327,7 +19584,7 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se seu adversário tiver 15 ou menos pontos de vida, receba +3/+3.</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se seu oponente tiver 15 ou menos pontos de vida, receba +3/+3.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19414,7 +19671,7 @@ Se sua mão estiver vazia, compre um card.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Cause 8 de dano a um inimigo aleatório.</Text>
+Cause $8 de dano a um inimigo aleatório.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19427,7 +19684,7 @@ Cause 8 de dano a um inimigo aleatório.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
-Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
+Causa $8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19440,7 +19697,7 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>No fim do seu turno, reduza em (1) o custo dos cards na sua mão.</Text>
+    <Text>No final do seu turno, reduza em (1) o custo dos cards na sua mão.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -19483,7 +19740,7 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione 2 feitiços aleatórios à sua mão &lt;i&gt;(da classe do seu adversário)&lt;/i&gt;.</Text>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione 2 feitiços aleatórios à sua mão &lt;i&gt;(da classe do seu oponente)&lt;/i&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19561,6 +19818,3087 @@ Causa 8 de dano a um inimigo aleatório. DUAS VEZES.</Text>
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_001</CardId>
+    <Name>Lança de Fogo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Cause $8 de dano a um lacaio.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_002</CardId>
+    <Name>Efígie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando um lacaio aliado morrer, evoque outro lacaio aleatório com o mesmo Custo.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_003</CardId>
+    <Name>Herói Caído</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Seu Poder Heroico causa 1 de dano extra.</Text>
+    <Mechanics />
+    <Artist>Arthur Bozonnet</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_004</CardId>
+    <Name>Impacto Arcano</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Cause $2 de dano a um lacaio. Este feitiço recebe bônus duplo de &lt;b&gt;Dano Mágico&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Gabor Szikszai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005</CardId>
+    <Name>Polimorfia: Javali</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Transforme um lacaio em um Javali 4/2 com &lt;b&gt;Investida&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005t</CardId>
+    <Name>Javali</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_006</CardId>
+    <Name>Aspirante de Dalaran</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Receba &lt;b&gt;+1 de Dano Mágico&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_006e</CardId>
+    <Name>Poder de Dalaran</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Dano Mágico aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_007</CardId>
+    <Name>Lança-feitiços</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione um feitiço aleatório na mão de cada jogador.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Erik Ko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_008</CardId>
+    <Name>Draco de Gelarra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Race>Dragon</Race>
+    <Text>Você pode usar o seu Poder Heroico quantas vezes quiser.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_009</CardId>
+    <Name>Rhonin</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Adicione 3 cópias de Mísseis Arcanos à sua mão.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_010</CardId>
+    <Name>Tratador de Carneiros</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver uma Fera, evoque uma
+Fera aleatória.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Brandon Kitkouski</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011</CardId>
+    <Name>Campeã Sagrada</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Sempre que um personagem for curado, receba +2 de Ataque.</Text>
+    <Mechanics />
+    <Artist>Alex Garner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011e</CardId>
+    <Name>Bênção da Luz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_012</CardId>
+    <Name>Cria das Sombras</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Cause 4 de dano a cada herói.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013</CardId>
+    <Name>Palavra de Poder: Glória</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Escolha um lacaio. Sempre que ele atacar, restaure 4 de Vida do
+seu herói.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013e</CardId>
+    <Name>Palavra de Poder: Glória</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quando este card atacar, restaure 4 de Vida do herói do jogador que deu o bônus.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_014</CardId>
+    <Name>Demônio das Sombras</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Sempre que comprar um card, reduza seu custo em (1).</Text>
+    <Mechanics />
+    <Artist>Warren Mahy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_014e</CardId>
+    <Name>Endemoniado sombriamente</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Custa (1) a menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_015</CardId>
+    <Name>Converter</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Coloque uma cópia de um lacaio inimigo na sua mão.</Text>
+    <Mechanics />
+    <Artist>Dan Dos Santos</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016</CardId>
+    <Name>Confundir</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Troque o Ataque pela Vida de todos os lacaios.</Text>
+    <Mechanics />
+    <Artist>Sean O'Danield</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016e</CardId>
+    <Name>Confuso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Ataque e Vida trocados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_017</CardId>
+    <Name>Guardião do Crepúsculo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Dragão na mão, receba +1 de Ataque e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_017e</CardId>
+    <Name>Enlace do Crepúsculo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 de Ataque e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_018</CardId>
+    <Name>Confessora Albamecha</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Evoque um lacaio &lt;b&gt;Lendário&lt;/b&gt; aleatório.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Chris Rahn</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_019</CardId>
+    <Name>Corcel Medonho</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Evoque um Corcel Medonho.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_020</CardId>
+    <Name>Demonarca Temível</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>8</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021</CardId>
+    <Name>Cavaleirinho do Mal</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Sempre que você descartar um card, receba +1/+1.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021e</CardId>
+    <Name>Iravil</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Atributos aumentados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_022</CardId>
+    <Name>Punho de Jaraxxus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Ao jogar ou descartar este card, cause $4 de dano a um inimigo aleatório.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_023</CardId>
+    <Name>Esmagador do Caos</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Destrua um lacaio aleatório para cada jogador.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024</CardId>
+    <Name>Fusão Demoníaca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Conceda +3/+3 a um Demônio. Conceda um Cristal de Mana ao seu oponente.</Text>
+    <Mechanics />
+    <Artist>Kevin Chen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024e</CardId>
+    <Name>Fusão Negra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_025</CardId>
+    <Name>Barganha Negra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Destrua 2 lacaios inimigos aleatórios. Descarte 2 cards aleatórios.</Text>
+    <Mechanics />
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_026</CardId>
+    <Name>Guardião Colérico</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Sempre que este lacaio receber dano, cause a mesma quantidade de dano ao seu herói.</Text>
+    <Mechanics />
+    <Artist>Sojin Hwang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027</CardId>
+    <Name>Walfrido Crepistala</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Os cards que você compra com o seu Poder Heroico custam (0).</Text>
+    <Mechanics />
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027e</CardId>
+    <Name>Mestre-evocador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Custa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_028</CardId>
+    <Name>Cavalgante Shado-Pan</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Combo:&lt;/b&gt; Receba +3 de Ataque.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Ryan Metcaff</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_028e</CardId>
+    <Name>Lança de Chi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_029</CardId>
+    <Name>Bucaneiro</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Pirate</Race>
+    <Text>Sempre que você equipar uma arma, conceda +1 Ataque a ela.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_029e</CardId>
+    <Name>Extra Pontudo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_030</CardId>
+    <Name>Valente da Cidade Baixa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Combo:&lt;/b&gt; Cause 1 de dano.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Zoltan Boros </Artist>
+  </Card>
+  <Card>
+    <CardId>AT_031</CardId>
+    <Name>Punguista</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Sempre que este lacaio atacar um herói, coloque a Moeda na sua mão.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032</CardId>
+    <Name>Negociante Escuso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Pirata, receba +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032e</CardId>
+    <Name>Negócios Escusos</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_033</CardId>
+    <Name>Roubar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Adicione 2 cards de classe aleatórios à sua mão &lt;i&gt;(da classe do seu oponente)&lt;/i&gt;.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034</CardId>
+    <Name>Lâmina Envenenada</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>3</Durability>
+    <Class>Rogue</Class>
+    <Text>Seu Poder Heroico concede a esta arma +1 de Ataque em vez de substituí-la.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034e</CardId>
+    <Name>Envenenada</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_035</CardId>
+    <Name>Debaixo da Terra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Embaralhe 3 Emboscadas no deck do seu oponente. Quando ele comprar, você evoca um Nerubiano 4/4.</Text>
+    <Mechanics />
+    <Artist>Daren Bader</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_035t</CardId>
+    <Name>Emboscada!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Ao comprar este card, evoque um Nerubiano 4/4 para o seu oponente. Compre um card.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_036</CardId>
+    <Name>Anub'arak</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>4</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Devolva este card à sua mão e evoque um Nerubiano 4/4.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Eric Braddock</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_036t</CardId>
+    <Name>Nerubiano</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037</CardId>
+    <Name>Raízes Vivas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Escolha um&lt;/b&gt; - Causar $2 de dano ou evocar dois Brotos 1/1.</Text>
+    <Mechanics />
+    <Artist>Dan Brereton</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_037a</CardId>
+    <Name>Raízes Vivas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cause $2 de dano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037b</CardId>
+    <Name>Raízes Vivas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Evoque dois Brotos 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037t</CardId>
+    <Name>Broto</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_038</CardId>
+    <Name>Aspirante de Darnassus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba um Cristal de Mana vazio.
+&lt;b&gt;Último Suspiro:&lt;/b&gt; Perca um Cristal de Mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Laurel Austin</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039</CardId>
+    <Name>Combatente Selvagem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Conceda
++2 de Ataque ao seu herói neste turno.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Alex Pascenko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039e</CardId>
+    <Name>Selvagem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 de Ataque neste turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_040</CardId>
+    <Name>Andarilha da Selva</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +3 de Vida a uma Fera aliada.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_040e</CardId>
+    <Name>Espírito Familiar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+3 de Vida.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_041</CardId>
+    <Name>Cavaleiro da Campina</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Sempre que você evocar uma Fera, reduza em (1) o Custo deste card.</Text>
+    <Mechanics />
+    <Artist>Ralph Horsley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_041e</CardId>
+    <Name>Chamado da Selva</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Custo reduzido.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042</CardId>
+    <Name>Druida do Sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Escolha um -&lt;/b&gt; Transformar-se para receber &lt;b&gt;Investida&lt;/b&gt; ou +1/+1 e &lt;b&gt;Furtividade&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Arthur Gimaldinov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_042a</CardId>
+    <Name>Forma de Leão</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042b</CardId>
+    <Name>Forma de Pantera</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+1/+1 e &lt;b&gt;Furtividade&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042t</CardId>
+    <Name>Leão Dente-de-sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_042t2</CardId>
+    <Name>Pantera Dente-de-sabre</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Furtividade&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_043</CardId>
+    <Name>Comunhão Astral</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Receba 10 Cristais de Mana. Descarte a sua mão.</Text>
+    <Mechanics />
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_044</CardId>
+    <Name>Húmus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Destrua um lacaio.
+Adicione um lacaio aleatório à mão do seu oponente.</Text>
+    <Mechanics />
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045</CardId>
+    <Name>Aviana</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Seus lacaios custam (1).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Velvet Engine</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045e</CardId>
+    <Name>Bruma Energizante</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_045ee</CardId>
+    <Name>Encantamento de deck de Chamabruma</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_046</CardId>
+    <Name>Morsano Totêmico</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Evoca QUALQUER totem aleatório.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047</CardId>
+    <Name>Entalhadora de Totens</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Receba +1/+1 para cada Totem aliado.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>RK Post</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047e</CardId>
+    <Name>Experiente</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Atributos aumentados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_048</CardId>
+    <Name>Onda Curativa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Restaure #7 de Vida. Revele um lacaio em cada deck. Se o seu custar mais, em vez disso, restaure #14.</Text>
+    <Mechanics />
+    <Artist>Luca Zontini</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049</CardId>
+    <Name>Valente do Penhasco do Trovão</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Conceda +2 de Ataque aos seus Totens.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049e</CardId>
+    <Name>Poder do Penhasco</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_050</CardId>
+    <Name>Martelo Carregado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>4</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Seu Poder Heroico torna-se "Cause 2 de dano".</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Peet Cooper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_050t</CardId>
+    <Name>Raio Eletrocutor</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause $2 de dano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_051</CardId>
+    <Name>Destruição Elemental</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Cause $4-$5 de dano a todos os lacaios. &lt;b&gt;Sobrecarga: (5)&lt;/b&gt;</Text>
+    <Mechanics />
+    <Artist>Tyler Walpole</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_052</CardId>
+    <Name>Golem Totêmico</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Race>Totem</Race>
+    <Text>&lt;b&gt;Sobrecarga: (1)&lt;/b&gt;</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_053</CardId>
+    <Name>Conhecimento Ancestral</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Compre 2 cards. &lt;b&gt;Sobrecarga: (2)&lt;/b&gt;</Text>
+    <Mechanics />
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_054</CardId>
+    <Name>O Chamabruma</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1/+1 a todos os lacaios na sua mão e no seu deck.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_055</CardId>
+    <Name>Cura Célere</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Restaure #5 de Vida.</Text>
+    <Mechanics />
+    <Artist>Marcelo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_056</CardId>
+    <Name>Tirambaço</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Cause $2 de dano a um lacaio e aos lacaios adjacentes.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057</CardId>
+    <Name>Mestre de Estábulo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Imunidade&lt;/b&gt; a uma Fera aliada neste turno.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057o</CardId>
+    <Name>Preparado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Imune&lt;/b&gt; neste turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_058</CardId>
+    <Name>Elekk do Rei</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, compre-o.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_059</CardId>
+    <Name>Arqueira Valente</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Se a sua mão estiver vazia, cause 2 de dano ao herói inimigo.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_060</CardId>
+    <Name>Armadilha de Urso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Segredo:&lt;/b&gt; Depois que o seu herói for atacado, evoque um Urso 3/3 com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061</CardId>
+    <Name>Largar o Dedo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Cada vez que você lançar um feitiço neste turno, adicione um card de Caçador aleatório à sua mão.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061e</CardId>
+    <Name>Largar o Dedo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_062</CardId>
+    <Name>Bola de Aranhas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Evoque três Teceteias 1/1.</Text>
+    <Mechanics />
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063</CardId>
+    <Name>Muriácida</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Sempre que outro lacaio receber dano, destrua-o.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063t</CardId>
+    <Name>Escamedo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>No final do seu turno, cause 1 de dano a todos os outros lacaios.</Text>
+    <Mechanics />
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_064</CardId>
+    <Name>Trombar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Cause $3 de dano.
+Receba 3 de Armadura.</Text>
+    <Mechanics />
+    <Artist>Dany Orizio</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065</CardId>
+    <Name>Defensora do Rei</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>3</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>2</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Grito de Guerra&lt;/b&gt;: Se você tiver um lacaio com &lt;b&gt;Provocar&lt;/b&gt;, receba +1 de Durabilidade.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Michael Franchina</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065e</CardId>
+    <Name>Defensora do Rei</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 de Durabilidade.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_066</CardId>
+    <Name>Aspirante de Orgrimmar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Conceda +1 de Ataque à sua arma.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Hideaki Takamura</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_066e</CardId>
+    <Name>Forjas de Orgrimmar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_067</CardId>
+    <Name>Magnatauro Alfa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Também causa dano aos lacaios adjacentes ao alvo
+atacado.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068</CardId>
+    <Name>Fortalecer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Concede +2/+2 aos seus lacaios com &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mishi McCaig</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068e</CardId>
+    <Name>Fortalecido</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_069</CardId>
+    <Name>Parceiro de Pugilato</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda &lt;b&gt;Provocar&lt;/b&gt; a
+ um lacaio.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_069e</CardId>
+    <Name>Treinamento Concluído</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_070</CardId>
+    <Name>Capitão Celeste Kragg</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;
+ Custa (1) a menos para cada Pirata aliado.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071</CardId>
+    <Name>Campeã de Alexstrasza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Dragão na mão, receba +1 de Ataque e &lt;b&gt;Investida&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071e</CardId>
+    <Name>Dádiva de Alexstrasza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+1 de Ataque e &lt;b&gt;Investida&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_072</CardId>
+    <Name>Varian Wrynn</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Compre 3 cards.
+Coloque os lacaios que você comprou diretamente no campo de batalha.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073</CardId>
+    <Name>Espírito Competitivo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Segredo:&lt;/b&gt; Quando seu turno começar, conceda +1/+1 aos seus lacaios.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073e</CardId>
+    <Name>Espírito Competitivo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_074</CardId>
+    <Name>Selo dos Campeões</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Conceda 
++3 de Ataque e &lt;b&gt;Escudo Divino&lt;/b&gt; a um lacaio.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_074e2</CardId>
+    <Name>Selo dos Campeões</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>+3 de Ataque e &lt;b&gt;Escudo Divino&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_075</CardId>
+    <Name>Treinador de Cavalos</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Seus Recrutas do Punho de Prata têm +1 de Ataque.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_075e</CardId>
+    <Name>Poder do Cavalariço</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Treinador de Cavalos está concedendo +1 de Ataque a este lacaio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_076</CardId>
+    <Name>Cavaleiro Murloc</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Evoque um Murloc aleatório.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sam Nielsen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077</CardId>
+    <Name>Lança Argêntea</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>2</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, +1 de Durabilidade.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077e</CardId>
+    <Name>Ponta Extra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 de Durabilidade.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_078</CardId>
+    <Name>Entrada no Coliseu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Destrua todos os lacaios, menos o lacaio com maior Ataque de cada jogador.</Text>
+    <Mechanics />
+    <Artist>Mauricio Herrera</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_079</CardId>
+    <Name>Desafiante Misterioso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Coloque um &lt;b&gt;Segredo&lt;/b&gt; de cada do seu deck no campo de batalha.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_080</CardId>
+    <Name>Comandante da Guarnição</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Você pode usar o Poder Heroico duas vezes por turno.</Text>
+    <Mechanics />
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081</CardId>
+    <Name>Eadric, o Puro</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Mude o Ataque de todos os lacaios inimigos
+para 1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist> James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081e</CardId>
+    <Name>Purificado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Ataque alterado para 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_082</CardId>
+    <Name>Escudeiro Humilde</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Receba +1 de Ataque.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_082e</CardId>
+    <Name>Treinamento</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_083</CardId>
+    <Name>Cavalgante de Falcodrago</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Receba &lt;b&gt;Fúria dos Ventos&lt;/b&gt;
+neste turno.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_083e</CardId>
+    <Name>Falcodragoaria</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Fúria dos Ventos&lt;/b&gt; neste turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_084</CardId>
+    <Name>Carregador de Lança</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +2 de Ataque a um lacaio aliado.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_084e</CardId>
+    <Name>Equipado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_085</CardId>
+    <Name>Dama do Lago</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Seu Poder Heroico custa (1).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Froilan Gardner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086</CardId>
+    <Name>Sabotador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; O Poder Heroico do seu oponente custa (5) a mais no próximo turno.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086e</CardId>
+    <Name>Vilania</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Seu Poder Heroico custa (5) a mais neste turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_087</CardId>
+    <Name>Cavalgante Argênteo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;
+&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_088</CardId>
+    <Name>Campeão de Mogor</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>50% de chance de atacar o inimigo errado.</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089</CardId>
+    <Name>Tenente da Ossaguarda</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Receba +1 de Vida.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089e</CardId>
+    <Name>Proteção Óssea</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vida aumentada.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_090</CardId>
+    <Name>Campeão de Mukla</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Conceda +1/+1 aos seus outros lacaios.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_090e</CardId>
+    <Name>Poder do Macaco</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_091</CardId>
+    <Name>Socorrista de Torneio</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Restaure 2 de Vida do seu herói.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_092</CardId>
+    <Name>Raiva de Gelo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_093</CardId>
+    <Name>Nevold Gelado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_094</CardId>
+    <Name>Malabarista de Chamas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 1 de dano a um inimigo aleatório.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_095</CardId>
+    <Name>Cavaleiro Silencioso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furtividade&lt;/b&gt;
+&lt;b&gt;Escudo Divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Esad Ribic</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096</CardId>
+    <Name>Cavaleiro de Corda</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Conceda +1/+1 a um Mecanoide aliado.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096e</CardId>
+    <Name>Com a Corda Toda</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_097</CardId>
+    <Name>Participante do Torneio</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Adam Byrne</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_098</CardId>
+    <Name>Engolidora de Feitiços</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Copie o Poder Heroico do seu oponente.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099</CardId>
+    <Name>Cavalga-kodo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Evoque um Kodo de Guerra 3/5.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Wootten</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099t</CardId>
+    <Name>Kodo de Guerra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_100</CardId>
+    <Name>Regente do Punho de Prata</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Evoque um Recruta do Punho de Prata 1/1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_101</CardId>
+    <Name>Lutadora do Fosso</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_102</CardId>
+    <Name>Yormungar Capturado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+    <Artist>Gonzalo Ordonez</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_103</CardId>
+    <Name>Kraken do Mar do Norte</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>7</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 4 de dano.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Seamus Gallagher</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_104</CardId>
+    <Name>Morsano Justador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, restaure 7 de Vida do seu herói.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_105</CardId>
+    <Name>Kvaldir Ferido</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Cause 3 de dano a este lacaio.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_106</CardId>
+    <Name>Campeão da Luz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; &lt;b&gt;Silencie&lt;/b&gt; um Demônio.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Andrea Uderzo</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_108</CardId>
+    <Name>Cavalo de Guerra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, ganhe &lt;b&gt;Investida&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Edouard Guiton &amp; Tony Washington</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109</CardId>
+    <Name>Vigia Argênteo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Não pode atacar.
+&lt;b&gt;Inspirar:&lt;/b&gt; Pode atacar normalmente neste turno.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109e</CardId>
+    <Name>Inspirado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Pode atacar neste turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_110</CardId>
+    <Name>Gerente do Coliseu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Devolva este lacaio à sua mão.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_111</CardId>
+    <Name>Vendedor de Salgadinho</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Restaure 4 de Vida de todos os heróis.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_112</CardId>
+    <Name>Mestre Justador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, receba &lt;b&gt;Provocar&lt;/b&gt; e &lt;b&gt;Escudo Divino&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Penny Arcade</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_113</CardId>
+    <Name>Recrutador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Adicione um Escudeiro 2/2 à sua mão.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_114</CardId>
+    <Name>Gaiato Maligno</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115</CardId>
+    <Name>Treinador de Esgrima</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Na próxima vez que você usar seu Poder Heroico, ele custará (2) a menos.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Howard Lyon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115e</CardId>
+    <Name>Treino de Esgrima</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Seu Poder Heroico custa (2) a menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_116</CardId>
+    <Name>Agente do Repouso das Serpes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um Dragão na mão, receba +1 de Ataque e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jeff Easley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_116e</CardId>
+    <Name>Pode Vir!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>+1 de Ataque e &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_117</CardId>
+    <Name>Mestre de Cerimônias</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você tiver um lacaio com &lt;b&gt;Dano Mágico&lt;/b&gt;, ganhe +2/+2.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_117e</CardId>
+    <Name>Cerimônia</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_118</CardId>
+    <Name>Grã-Cruzada</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Adicione um card de Paladino aleatório à sua mão.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Todd Lockwood</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119</CardId>
+    <Name>Saqueador Kvaldir</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Receba +2/+2.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119e</CardId>
+    <Name>Inspirado</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Atributos aumentados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_120</CardId>
+    <Name>Gigante de Gelo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Custa (1) a menos para cada vez que você usou seu Poder Heroico neste jogo.</Text>
+    <Mechanics />
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121</CardId>
+    <Name>Queridinho do Público</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que você jogar um card com &lt;b&gt;Grito de Guerra&lt;/b&gt;, receba +1/+1.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121e</CardId>
+    <Name>Ego Enorme</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Atributos aumentados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_122</CardId>
+    <Name>Gormok, o Empalador</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Se você possuir pelo menos outros 4 lacaios, cause 4 de dano.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_123</CardId>
+    <Name>Gargagelo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Último Suspiro:&lt;/b&gt; Se tiver um Dragão na mão, cause 3 de dano a todos os lacaios.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_124</CardId>
+    <Name>Bolf Marrabroquel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>9</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que seu herói receber dano, este lacaio recebe no lugar dele.</Text>
+    <Mechanics />
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_125</CardId>
+    <Name>Uivagelo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Investida&lt;/b&gt;
+Não pode atacar heróis.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_127</CardId>
+    <Name>Campeão do Nexus Saraad</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspirar:&lt;/b&gt; Adicione um feitiço aleatório à sua mão.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Marcleo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_128</CardId>
+    <Name>O Cavaleiro Esqueleto</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último Suspiro:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, devolva este card à sua mão.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_129</CardId>
+    <Name>Fiola Ruinaluz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que &lt;b&gt;você&lt;/b&gt; alvejar este lacaio com um feitiço, ganhe &lt;b&gt;Escudo Divino.&lt;/b&gt;</Text>
+    <Mechanics />
+    <Artist>Mark Zug</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_130</CardId>
+    <Name>Aniquilador do Mar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Ao comprar este card, cause 1 de dano aos seus lacaios.</Text>
+    <Mechanics />
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_131</CardId>
+    <Name>Eydis Ruinatreva</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Sempre que &lt;b&gt;você&lt;/b&gt; alvejar este lacaio com um feitiço, cause 3 de dano a um inimigo aleatório.</Text>
+    <Mechanics />
+    <Artist>Ben Thompson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132</CardId>
+    <Name>Justicar Veras</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Substitui seu Poder Heroico inicial por um melhor.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jomaro Kindred</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUID</CardId>
+    <Name>Metamorfose Atroz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Receba 2 Armadura e +2 de Ataque neste turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUIDe</CardId>
+    <Name>Garras Atrozes</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 de Ataque neste turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_132_HUNTER</CardId>
+    <Name>Disparo de Balista</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause $3 de dano ao herói inimigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_MAGE</CardId>
+    <Name>Impacto Ígneo Grau 2</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Cause $2 de dano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PALADIN</CardId>
+    <Name>O Punho de Prata</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Evoque dois Recrutas 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PRIEST</CardId>
+    <Name>Cura</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Restaure #4 de Vida.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUE</CardId>
+    <Name>Adagas Envenenadas</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Equipe uma Arma 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUEt</CardId>
+    <Name>Adaga Envenenada</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMAN</CardId>
+    <Name>Batida Totêmica</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Evoque um Totem à sua escolha.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANa</CardId>
+    <Name>Totem de Cura</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>No final do seu turno, restaure 1 de Vida de todos os lacaios aliados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANb</CardId>
+    <Name>Totem Calcinante</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANc</CardId>
+    <Name>Totem da Garra de Pedra</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANd</CardId>
+    <Name>Totem de Cólera dos Ares</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;+1 de Dano Mágico&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARLOCK</CardId>
+    <Name>Transfusão de Alma</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Compre um card.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARRIOR</CardId>
+    <Name>Blindar!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Poder Heroico&lt;/b&gt;
+Receba 4 de Armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_133</CardId>
+    <Name>Justadora de Geringontzan</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de Guerra:&lt;/b&gt; Revele um lacaio em cada deck. Se o seu custar mais, ganhe +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_133e</CardId>
+    <Name>Vitória!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>PlaceholderCard</CardId>
