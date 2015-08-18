@@ -247,7 +247,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(line.Contains("End Spectator"))
 						offset = tempOffset;
-					else if(line.Contains("CREATE_GAME"))
+					else if(line.Contains("CREATE_GAME") && line.Contains("GameState."))
 					{
 						if(foundSpectatorStart)
 						{
