@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
-		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
+		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*BlockType=POWER.*Target=(?<target>(.+))");
 
 		private readonly Regex _cardAlreadyInCacheRegex =
 			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
