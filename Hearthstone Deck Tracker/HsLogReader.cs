@@ -285,7 +285,7 @@ namespace Hearthstone_Deck_Tracker
 
 				#region [Power]
 
-				if(logLine.StartsWith("[Power]"))
+				if(logLine.StartsWith("[Power] GameState."))
 				{
 					if(logLine.Contains("CREATE_GAME"))
 					{
