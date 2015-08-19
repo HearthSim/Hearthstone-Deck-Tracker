@@ -41,31 +41,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly List<string> SecretIdsHunter = new List<string>
 		{
+			"AT_060",  //bear trap
 			"EX1_610", //explosive trap
 			"EX1_611", //freezing trap
 			"EX1_533", //misdirection
 			"EX1_609", //snipe
-			"EX1_554" //snake trap
+			"EX1_554"  //snake trap
 		};
 
 		public static readonly List<string> SecretIdsMage = new List<string>
 		{
 			"EX1_287", //counterspell
 			"FP1_018", //duplicate
-			"EX1_289", //ice barrier
+			"AT_002",  //effigy
+            "EX1_289", //ice barrier
 			"EX1_295", //ice block
 			"EX1_294", //mirror entity
-			"tt_010", //spellbender
-			"EX1_594" //vaporize
+			"tt_010",  //spellbender
+			"EX1_594"  //vaporize
 		};
 
 		public static readonly List<string> SecretIdsPaladin = new List<string>
 		{
 			"FP1_020", //avenge
-			"EX1_132", //eye for an eye
+			"AT_073",  //competitive spirit
+            "EX1_132", //eye for an eye
 			"EX1_130", //noble sacrifice
 			"EX1_136", //redemption
-			"EX1_379" //repentance
+			"EX1_379"  //repentance
 		};
 
 		public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
