@@ -49,7 +49,7 @@ Features:
 
 How to use: 
 ===========
-1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
+1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (Hearthstone.Deck.Tracker-vx.xx.xx.zip)  
 2) Extract file  
 3) Run "Hearthstone Deck Tracker.exe"  
 4) Create your decks under "New" (or import from any of the supported websites), click save.  
