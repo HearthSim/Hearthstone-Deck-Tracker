@@ -1002,6 +1002,8 @@
     <Content Include="Images\bluegill-warrior.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\opponent-chance-frame.png" />
+    <Resource Include="Images\player-chance-frame.png" />
     <Content Include="Images\thunder-bluff-valiant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
