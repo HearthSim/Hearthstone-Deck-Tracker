@@ -13,7 +13,7 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-생명력을 2 회복시킵니다.</Text>
+생명력을 #2 회복시킵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -108,7 +108,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>상대편 손에 있는 카드 중 무작위로 선택된 카드 1장을 복사하여 내 손으로 가져옵니다.</Text>
+    <Text>상대편 손에 있는 카드 1장을 무작위로 복사하여 내 손으로 가져옵니다.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -522,7 +522,7 @@
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 1 줍니다.</Text>
+피해를 $1 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -683,7 +683,7 @@
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 토템 하나를 소환합니다.</Text>
+무작위 토템 하나를 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -750,7 +750,7 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 2 입는 대신 카드를 1장 뽑습니다.</Text>
+피해를 $2 입는 대신 카드를 1장 뽑습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -1091,7 +1091,7 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 6 회복합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅의 생명력을 6 회복시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1369,7 +1369,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>무작위로 선택된 적 하수인 둘에게 피해를 $2 줍니다.</Text>
+    <Text>무작위 적 하수인 둘에게 피해를 $2 줍니다.</Text>
     <Mechanics />
     <Artist>Phroilan Gardner</Artist>
   </Card>
@@ -2064,7 +2064,7 @@
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 피해를 2 줍니다.</Text>
+적 영웅에게 피해를 $2 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2189,7 +2189,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>무작위로 선택된 적 하수인 둘에게 피해를 $3 줍니다.</Text>
+    <Text>무작위 적 하수인 둘에게 피해를 $3 줍니다.</Text>
     <Mechanics />
     <Artist>Benjamin Zhang</Artist>
   </Card>
@@ -2365,7 +2365,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>공격력이 3 이하인 하수인을 소환할 때마다 그 하수인에게 &lt;b&gt;돌진&lt;/b&gt;을 부여합니다.</Text>
+    <Text>내가 공격력이 3 이하인 하수인을 소환할 때마다 그 하수인에게 &lt;b&gt;돌진&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -2537,7 +2537,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>하수인 하나에게 피해를 $1 줍니다. 이때 그 하수인이 죽으면 카드를 1장 뽑습니다.</Text>
+    <Text>하수인 하나에게 피해를 $1 줍니다. 이때 그 하수인이 죽으면, 카드를 1장 뽑습니다.</Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -2554,7 +2554,7 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 카드 1장을 버립니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 카드를 1장 버립니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2572,7 +2572,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>피해를 $4 줍니다. 무작위로 선택된 카드 1장을 버립니다.</Text>
+    <Text>피해를 $4 줍니다. 무작위로 카드를 1장 버립니다.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -2710,9 +2710,7 @@
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
     <Text>다른 &lt;b&gt;모든&lt;/b&gt; 멀록이 공격력을 +1 얻습니다.</Text>
-    <Mechanics>
-      <string>Aura</string>
-    </Mechanics>
+    <Mechanics />
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2739,7 +2737,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>피해를 $3 줍니다. 전장에 내 야수가 있다면 피해를 $5 줍니다.</Text>
+    <Text>피해를 $3 줍니다. 내 전장에 야수가 있으면, 피해를 $5 줍니다.</Text>
     <Mechanics />
     <Artist>Gabe from Penny Arcade</Artist>
   </Card>
@@ -3141,7 +3139,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>모든 하수인을 주인의 손으로 돌려보냅니다.</Text>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인을 주인의 손으로 돌려보냅니다.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -3188,7 +3186,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>무작위로 선택된 동료 야수 1마리를 소환합니다.</Text>
+    <Text>무작위 동료 야수 1마리를 소환합니다.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -3344,7 +3342,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>캐릭터 하나를 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다. 이미 &lt;b&gt;빙결&lt;/b&gt; 상태라면 피해를 $4 줍니다.</Text>
+    <Text>캐릭터 하나를 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다. 이미 &lt;b&gt;빙결&lt;/b&gt; 상태라면, 피해를 $4 줍니다.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -3422,7 +3420,7 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;은신&lt;/b&gt;. 내 턴이 끝날 때, 무작위로 선택된 다른 아군 하수인 하나에게 생명력을 +1 부여합니다.</Text>
+    <Text>&lt;b&gt;은신&lt;/b&gt;. 내 턴이 끝날 때, 다른 무작위 아군 하수인 하나에게 생명력을 +1 부여합니다.</Text>
     <Mechanics>
       <string>Stealth</string>
     </Mechanics>
@@ -3453,7 +3451,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>하수인 하나에게 공격력을 +2 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 공격력을 +4 부여합니다.</Text>
+    <Text>하수인 하나에게 공격력을 +2 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 대신 공격력을 +4 부여합니다.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -3542,7 +3540,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
-    <Text>내 영웅이 무기를 장착하고 있으면 &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
+    <Text>내 영웅이 무기를 장착하고 있으면, &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
     <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -3683,7 +3681,7 @@
     <Durability>0</Durability>
     <Faction>Horde</Faction>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인을 하나 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -3790,7 +3788,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Dream</Class>
-    <Text>이세라를 제외한 모든 캐릭터에게 피해를 $5 줍니다.</Text>
+    <Text>이세라를 제외한 &lt;b&gt;모든&lt;/b&gt; 캐릭터에게 피해를 $5 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3925,7 +3923,7 @@
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>내 턴이 끝날 때, 무작위로 선택된 다른 아군 하수인 하나에게 생명력을 +1 부여합니다.</Text>
+    <Text>내 턴이 끝날 때, 다른 무작위 아군 하수인 하나에게 생명력을 +1 부여합니다.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -3968,7 +3966,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>내 턴이 시작될 때, 이 하수인을 무작위로 선택된 내 손의 다른 하수인 하나와 교체합니다.</Text>
+    <Text>내 턴이 시작될 때, 이 하수인이 내 손에 있는 무작위 하수인 하나와 교체됩니다.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -4106,7 +4104,7 @@
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 적 하수인 하나를 내 편으로 만듭니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 적 하수인 하나를 내 편으로 만듭니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -4510,7 +4508,8 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;돌진&lt;/b&gt;, &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;
+&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
     <Mechanics>
       <string>Charge</string>
       <string>Divine Shield</string>
@@ -4572,7 +4571,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 모든 캐릭터에게 3의 피해를 무작위로 나누어 입힙니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 &lt;b&gt;모든&lt;/b&gt; 캐릭터에게 3의 피해를 무작위로 나누어 입힙니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4589,7 +4588,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 다른 하수인 하나를 5/5 데빌사우루스 또는 1/1 다람쥐로 변신시킵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다른 무작위 하수인 하나를 5/5 데빌사우루스 또는 1/1 다람쥐로 변신시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4606,7 +4605,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 상대편 하수인이 넷 이상 있으면, 무작위로 선택된 적 하수인 하나를 내 편으로 만듭니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 상대편 하수인이 넷 이상 있으면, 무작위 적 하수인 하나를 내 편으로 만듭니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4688,7 +4687,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>내가 주문을 시전할 때마다, 카드를 1장 뽑습니다.</Text>
+    <Text>내가 주문을 시전할 때마다 카드를 1장 뽑습니다.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -4755,7 +4754,7 @@
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Mech</Race>
-    <Text>내 턴이 시작될 때, 무작위로 선택된 적 하나에게 피해를 2 줍니다.</Text>
+    <Text>내 턴이 시작될 때, 무작위 적 하나에게 피해를 2 줍니다.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -4875,7 +4874,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>피해를 $2 줍니다. &lt;b&gt;연계:&lt;/b&gt; 피해를 $4 줍니다.</Text>
+    <Text>피해를 $2 줍니다. &lt;b&gt;연계:&lt;/b&gt; 대신 피해를 $4 줍니다.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -5019,7 +5018,7 @@
     <Durability>2</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 1 줍니다. &lt;b&gt;연계:&lt;/b&gt; 피해를 2 줍니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 1 줍니다. &lt;b&gt;연계:&lt;/b&gt; 대신 피해를 2 줍니다.</Text>
     <Mechanics>
       <string>Combo</string>
       <string>Battlecry</string>
@@ -5807,7 +5806,7 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>무작위로 선택된 적 하수인 둘에게 피해를 $2 줍니다. &lt;b&gt;과부하:&lt;/b&gt; (2)</Text>
+    <Text>무작위 적 하수인 둘에게 피해를 $2 줍니다. &lt;b&gt;과부하:&lt;/b&gt; (2)</Text>
     <Mechanics />
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -5867,7 +5866,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면 +2/+2를 얻습니다.</Text>
+    <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면, +2/+2를 얻습니다.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -5967,7 +5966,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 주문을 시전하면 &lt;b&gt;차단&lt;/b&gt;합니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 주문을 시전하면, &lt;b&gt;차단&lt;/b&gt;합니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -5985,7 +5984,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면 방어도를 +8 얻습니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면, 방어도를 +8 얻습니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -6053,7 +6052,7 @@
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>이 하수인은 적을 공격할 수 없습니다. 내 턴이 끝날 때 무작위로 선택된 적 하나에게 피해를 8 줍니다.</Text>
+    <Text>이 하수인은 적을 공격할 수 없습니다. 내 턴이 끝날 때, 무작위 적 하나에게 피해를 8 줍니다.</Text>
     <Mechanics />
     <Artist>Greg Staples</Artist>
   </Card>
@@ -6156,7 +6155,7 @@
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;돌진&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 카드 2장을 버립니다.</Text>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;. &lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 카드를 2장 버립니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Charge</string>
@@ -6175,7 +6174,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>모든 하수인을 처치합니다.</Text>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인을 처치합니다.</Text>
     <Mechanics />
     <Artist>Dave Allsop</Artist>
   </Card>
@@ -6258,7 +6257,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>내 덱에서 무작위로 선택된 악마 카드 2장을 내 손으로 가져옵니다.</Text>
+    <Text>내 덱에서 무작위 악마 둘을 내 손으로 가져옵니다.</Text>
     <Mechanics />
     <Artist>Raven Mimura</Artist>
   </Card>
@@ -6308,7 +6307,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>캐릭터 하나에게 피해를 $2 줍니다. 그 캐릭터가 죽으면 무작위로 선택된 악마 하나를 소환합니다.</Text>
+    <Text>캐릭터 하나에게 피해를 $2 줍니다. 그 캐릭터가 죽으면, 무작위 악마 하나를 소환합니다.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -6464,7 +6463,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>상대편 덱에서 무작위로 선택된 하수인 하나를 복사하여 내 전장에 놓습니다.</Text>
+    <Text>상대편 덱에서 무작위 하수인 하나를 복사하여 내 전장에 놓습니다.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -6645,7 +6644,7 @@
     <Durability>5</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>전장에 내 하수인이 소환될 때마다 그 하수인에게 +1/+1을 부여하고 내구도를 1 잃습니다.</Text>
+    <Text>내가 하수인을 소환할 때마다 그 하수인에게 +1/+1을 부여하고 내구도를 1 잃습니다.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
   </Card>
@@ -6934,7 +6933,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>무작위로 선택된 하수인 하나를 제외한 모든 하수인을 처치합니다.</Text>
+    <Text>무작위 하수인 하나를 제외한 &lt;b&gt;모든&lt;/b&gt; 하수인을 처치합니다.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -6950,7 +6949,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>피해를 $4 줍니다. 내 생명력이 12 이하라면 피해를 $6 줍니다.</Text>
+    <Text>피해를 $4 줍니다. 내 생명력이 12 이하라면, 피해를 $6 줍니다.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -6966,7 +6965,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>내가 무기를 장착하고 있으면 +1/+1을 부여합니다. 무기가 없다면 1/3 무기를 장착합니다.</Text>
+    <Text>내가 무기를 장착하고 있으면, +1/+1을 부여합니다. 무기가 없다면 1/3 무기를 장착합니다.</Text>
     <Mechanics />
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -7210,7 +7209,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅을 공격하는 캐릭터가 무작위로 선택된 다른 캐릭터 하나를 공격하게 됩니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅을 공격하는 캐릭터가 다른 무작위 캐릭터 하나를 공격하게 됩니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -7355,7 +7354,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>모든 하수인이 &lt;b&gt;은신&lt;/b&gt; 상태에서 벗어납니다. 적의 모든 &lt;b&gt;비밀&lt;/b&gt;을 없앱니다. 카드를 1장 뽑습니다.</Text>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인이 &lt;b&gt;은신&lt;/b&gt; 상태에서 벗어납니다. 적의 모든 &lt;b&gt;비밀&lt;/b&gt;을 없앱니다. 카드를 1장 뽑습니다.</Text>
     <Mechanics />
     <Artist>Tyler Walpole</Artist>
   </Card>
@@ -7402,7 +7401,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인이 공격받으면 1/1 뱀을 셋 소환합니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인이 공격받으면, 1/1 뱀을 셋 소환합니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -7696,7 +7695,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>내 다른 아군 하수인들에게 +2/+2를 부여합니다.</Text>
+    <Text>내 다른 하수인들에게 +2/+2를 부여합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -7806,7 +7805,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 4 회복합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅의 생명력을 4 회복시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7867,7 +7866,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; &lt;b&gt;모든&lt;/b&gt; 하수인의 &lt;b&gt;천상의 보호막&lt;/b&gt;을 흡수하여, 보호막 1개당 +3/+3을 얻습니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; &lt;b&gt;모든&lt;/b&gt; 하수인의 &lt;b&gt;천상의 보호막&lt;/b&gt;을 흡수하여 보호막 1개당 +3/+3을 얻습니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7949,7 +7948,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>하수인 하나에게 피해를 $2 줍니다. 대상이 아군 악마면 +2/+2를 부여합니다.</Text>
+    <Text>하수인 하나에게 피해를 $2 줍니다. 대상이 아군 악마면, +2/+2를 부여합니다.</Text>
     <Mechanics />
     <Artist>Ben Wootten</Artist>
   </Card>
@@ -8116,7 +8115,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 하수인을 내면 그 하수인에게 피해를 $4 줍니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 상대편이 하수인을 내면, 그 하수인에게 피해를 $4 줍니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8134,7 +8133,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면 모든 적에게 피해를 2 줍니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받으면, 모든 적에게 피해를 $2 줍니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8232,7 +8231,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>공격력과 생명력 증가</Text>
+    <Text>능력치 증가</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8291,7 +8290,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>무작위로 선택된 적 하수인 하나를 처치합니다.</Text>
+    <Text>무작위 적 하수인 하나를 처치합니다.</Text>
     <Mechanics />
     <Artist>Steve Prescott</Artist>
   </Card>
@@ -8425,7 +8424,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 2 줍니다.</Text>
+피해를 $2 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8439,7 +8438,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 3 줍니다.</Text>
+피해를 $3 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8812,7 +8811,7 @@
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>내 하수인이 소환된 후에, 무작위로 선택된 적 하나에게 피해를 1 줍니다.</Text>
+    <Text>내 하수인이 소환된 후에, 무작위 적 하나에게 피해를 1 줍니다.</Text>
     <Mechanics />
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -9028,7 +9027,7 @@
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 다른 모든 하수인을 처치하고 내 손의 카드를 모두 버립니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장의 다른 &lt;b&gt;모든&lt;/b&gt; 하수인을 처치하고 내 손의 카드를 모두 버립니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -9089,7 +9088,7 @@
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>내 턴이 끝날 때, 무작위로 선택된 다른 아군 하수인 하나에게 공격력을 +1 부여합니다.</Text>
+    <Text>내 턴이 끝날 때, 다른 무작위 아군 하수인 하나에게 공격력을 +1 부여합니다.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -9170,7 +9169,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 공격력 2 이하의 적 하수인 하나를 처치합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 공격력이 2 이하인 무작위 적 하수인 하나를 처치합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -9389,7 +9388,7 @@
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 발명품 &lt;b&gt;5개&lt;/b&gt;를 소환합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 발명품 &lt;b&gt;5개&lt;/b&gt;를 무작위로 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9415,7 +9414,7 @@
     <Health>10</Health>
     <Cost>10</Cost>
     <Durability>0</Durability>
-    <Text>내 턴이 끝날 때, 무작위로 선택된 하수인 하나에게 공격력을 +1 부여합니다.</Text>
+    <Text>내 턴이 끝날 때, 무작위 하수인 하나에게 공격력을 +1 부여합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9506,7 +9505,7 @@
     <Health>2</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;선택&lt;/b&gt; - 기계 하수인 하나의 생명력을 모두 회복시킵니다. 또는 개발자 1명에게 &lt;b&gt;질풍&lt;/b&gt;을 부여합니다.</Text>
+    <Text>&lt;b&gt;선택&lt;/b&gt; - 기계 하나의 생명력을 모두 회복시킵니다. 또는 개발자 1명에게 &lt;b&gt;질풍&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9714,7 +9713,7 @@
     <Health>8</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장, &lt;b&gt;모든&lt;/b&gt; 플레이어의 손, &lt;b&gt;모든&lt;/b&gt; 덱에 있는 &lt;b&gt;모든&lt;/b&gt; 하수인을 무작위로 선택된 하수인으로 교체합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장, &lt;b&gt;모든&lt;/b&gt; 플레이어의 손, &lt;b&gt;모든&lt;/b&gt; 덱에 있는 &lt;b&gt;모든&lt;/b&gt; 하수인을 무작위 하수인으로 교체합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9740,7 +9739,7 @@
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 에릭이 없으면 이 카드의 이름을 "에릭"으로 바꿉니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 에릭이 없으면, 이 카드의 이름을 "에릭"으로 바꿉니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9767,7 +9766,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 기습, 냉혈, 절개를 시전합니다. &lt;i&gt;(대상은 무작위로 선택됨)&lt;/i&gt;</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 기습, 냉혈, 절개를 시전합니다. &lt;i&gt;(대상은 무작위로 선택)&lt;/i&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9793,7 +9792,7 @@
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>이 하수인이 다른 하수인을 처치하면 카드를 1장 뽑습니다.</Text>
+    <Text>이 하수인이 다른 하수인을 처치할 때마다 카드를 1장 뽑습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9860,7 +9859,21 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 1 줍니다.</Text>
+피해를 $1 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1_AT_132</CardId>
+    <Name>강화된 화염 작렬</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+피해를 $2 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9894,6 +9907,20 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CS2_102_H1_AT_132</CardId>
+    <Name>방어도 상승!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+방어도를 +4 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>DS1h_292_H1</CardId>
     <Name>고정 사격</Name>
     <CardSet>Hero Skins</CardSet>
@@ -9905,7 +9932,21 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 피해를 2 줍니다.</Text>
+적 영웅에게 피해를 $2 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1_AT_132</CardId>
+    <Name>쇠뇌 사격</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+적 영웅에게 피해를 $3 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9956,7 +9997,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 5 줍니다.</Text>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면, 모든 적에게 피해를 5 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9968,7 +10009,7 @@
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>라그나로스의 턴에 &lt;b&gt;모든&lt;/b&gt; 아군에게 피해를 5 줍니다.</Text>
+    <Text>라그나로스의 턴에 모든 아군에게 피해를 5 줌</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10024,7 +10065,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>상대편이 카드를 낼 때마다, 공격력을 +2 얻습니다.</Text>
+    <Text>상대편이 카드를 낼 때마다 공격력을 +2 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10134,7 +10175,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>무작위로 선택된 골렘 하나를 소환합니다.</Text>
+    <Text>무작위 골렘 하나를 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10146,7 +10187,7 @@
     <Health>0</Health>
     <Cost>2</Cost>
     <Durability>6</Durability>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 영웅 능력이 '무작위로 선택된 적 하나에게 피해를 8 줍니다.'로 바뀝니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 영웅 능력이 '무작위 적 하나에게 피해를 8 줍니다.'로 바뀝니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -10313,7 +10354,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-모든 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다. 그 주문의 비용이 (0)이 됩니다.</Text>
+모든 직업의 주문 카드 중 1장을 무작위로 내 손에 가져옵니다. 그 주문의 비용이 (0)이 됩니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10327,6 +10368,106 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 5/1 용암 광전사를 하나 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_001</CardId>
+    <Name>OLDN3wb Tank</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_002</CardId>
+    <Name>OLDN3wb Mage</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 끝날 때, 무작위 적 하수인에게 피해를 1 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_003</CardId>
+    <Name>OLDN3wb Healer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 끝날 때, 양옆에 있는 하수인들의 생명력을 2 회복시킵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_004</CardId>
+    <Name>OLDLegit Healer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>내 턴이 끝날 때, 이번 턴에 죽은 아군 하수인 하나를 무작위로 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_005</CardId>
+    <Name>OLDPvP Rogue</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;은신&lt;/b&gt;
+PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻습니다.</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_006</CardId>
+    <Name>OLDTBST Push Common Card</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>플레이어의 손에 일반 카드를 추가합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBUD_1</CardId>
+    <Name>TBUD Summon Early Minion</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>각 플레이어의 턴이 시작될 때, 내 생명력이 상대편보다 낮으면 하수인 하나를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_001</CardId>
+    <Name>우두머리 생명력 변환기</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -10392,6 +10533,122 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>TB_009</CardId>
+    <Name>비밀 15개 생성</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010</CardId>
+    <Name>덱 생성 마법 부여</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010e</CardId>
+    <Name>셋 중 하나 선택</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_011</CardId>
+    <Name>낡은 동전</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>이번 턴에만 마나 수정을 1개 획득합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_012</CardId>
+    <Name>새로운 카드를 선택하세요!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>무작위 카드 3장 중 1장을 선택하여 내 덱에 섞어 넣습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013</CardId>
+    <Name>플레이어 선택 마법 부여</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_014</CardId>
+    <Name>새로운 카드를 선택하세요!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>무작위 카드 3장 중 1장을 선택하여 내 손으로 가져옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_015</CardId>
+    <Name>해적</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_EndlessMinions01</CardId>
+    <Name>무한 강화</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_Pilot1</CardId>
+    <Name>수수께끼의 조종수</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>과연 누구일까요?!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>늙은 거먹눈 멀록</Name>
     <CardSet>Reward</CardSet>
@@ -10420,7 +10677,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 덱에서 무작위로 선택된 해적 카드 1장을 내 손으로 가져옵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 덱에 있는 무작위 해적 1장을 내 손으로 가져옵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10761,7 +11018,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>피해를 $1씩 주는 화살 5개를 무작위로 선택된 적들에게 발사합니다.</Text>
+    <Text>피해를 $1씩 주는 화살 5개를 무작위 적들에게 발사합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11787,7 +12044,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Mech</Race>
-    <Text>내 턴이 끝날 때, 무작위로 선택된 하수인 하나에게 +1/+1을 부여합니다.</Text>
+    <Text>내 턴이 끝날 때, 무작위 하수인 하나에게 +1/+1을 부여합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11814,7 +12071,7 @@
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Mech</Race>
-    <Text>내 턴이 시작될 때, 무작위로 선택된 하수인 하나를  1/1 닭으로 변신시킵니다.</Text>
+    <Text>내 턴이 시작될 때, 무작위 하수인 하나를  1/1 닭으로 변신시킵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11905,7 +12162,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>무작위로 선택된 호드 전사 하나를 소환합니다.</Text>
+    <Text>무작위 호드 전사 하나를 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12115,7 +12372,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 야수 카드 1장을 내 손으로 가져옵니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 야수 카드 1장을 내 손으로 가져옵니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12177,7 +12434,7 @@
     <Health>4</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 만약 퓨진이 죽은 상태라면 타디우스를 소환합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 퓨진이 죽은 상태라면, 타디우스를 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12205,7 +12462,7 @@
     <Health>7</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 만약 스탈라그가 죽은 상태라면 타디우스를 소환합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 스탈라그가 죽은 상태라면, 타디우스를 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12298,7 +12555,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인 중 하나가 죽으면, 무작위로 선택된 아군 하수인 하나에게 +3/+2를 부여합니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 하수인 중 하나가 죽으면, 무작위 아군 하수인 하나에게 +3/+2를 부여합니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -12346,7 +12603,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 손에서 무작위로 선택된 악마 하나를 전장에 놓습니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 손의 무작위 악마 하나를 전장에 놓습니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12363,7 +12620,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 생명력을 +3 부여합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 아군 하수인 하나에게 생명력을 +3 부여합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12425,7 +12682,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나를 내 손으로 다시 가져옵니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 아군 하수인 하나를 내 손으로 다시 가져옵니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12641,7 +12898,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-&lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 1 줍니다. 만약 하나라도 죽으면 독액괴물을 소환합니다. </Text>
+&lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 1 줍니다. 하나라도 죽으면, 독액괴물을 소환합니다. </Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12654,7 +12911,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
- 모든 적에게 피해를 2 줍니다. 만약 하나라도 죽으면 독액괴물을 소환합니다.</Text>
+ 모든 적에게 피해를 2 줍니다. 하나라도 죽으면, 독액괴물을 소환합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13084,7 +13341,7 @@
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하수인 하나를 이번 턴에만 내 편으로 만듭니다.</Text>
+무작위 적 하수인 하나를 이번 턴에만 내 편으로 만듭니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13109,7 +13366,7 @@
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하수인 하나를 내 편으로 만듭니다.</Text>
+무작위 적 하수인 하나를 내 편으로 만듭니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13205,7 +13462,7 @@
     <Health>0</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>모든 적 하수인에게 피해를 $3 줍니다. 내 영웅의 생명력을 #3 회복시킵니다.</Text>
+    <Text>모든 적 하수인에게 피해를 $3 줍니다. 내 영웅이 생명력을 #3 회복합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13320,7 +13577,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하수인 하나를 상대편의 손으로 돌려보냅니다.</Text>
+무작위 적 하수인 하나를 상대편의 손으로 돌려보냅니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13333,7 +13590,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하수인 둘을 상대편의 손으로 돌려보냅니다.</Text>
+무작위 적 하수인 둘을 상대편의 손으로 돌려보냅니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14010,7 +14267,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>무작위로 선택된 적 하수인 하나에게 피해를 $4 줍니다.</Text>
+    <Text>무작위 적 하수인 하나에게 피해를 $4 줍니다.</Text>
     <Mechanics />
     <Artist>Mauricio Herrera</Artist>
   </Card>
@@ -14043,7 +14300,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>무작위로 선택된 하수인 카드 1장을 내 손으로 가져옵니다. 그 카드의 비용이 (3) 감소합니다.</Text>
+    <Text>무작위 하수인 카드 1장을 내 손으로 가져옵니다. 그 카드의 비용이 (3) 감소합니다.</Text>
     <Mechanics />
     <Artist>Sean O'Daniels</Artist>
   </Card>
@@ -14058,7 +14315,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 전장에 내 기계 하수인이 있으면 모든 적에게 4의 피해를 무작위로 나누어 입힙니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 기계가 있으면, 모든 적에게 4의 피해를 무작위로 나누어 입힙니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14090,7 +14347,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>내 기계 하수인의 비용이 (1) 감소합니다.</Text>
+    <Text>내 기계의 비용이 (1) 감소합니다.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14215,7 +14472,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>생명력을 #3 회복시킵니다. 그래도 대상이 피해를 입은 상태라면 빛의 감시자를 소환합니다.</Text>
+    <Text>생명력을 #3 회복시킵니다. 그래도 대상이 피해를 입은 상태라면, 빛의 감시자를 소환합니다.</Text>
     <Mechanics />
     <Artist>Jesper Ejsing</Artist>
   </Card>
@@ -14229,7 +14486,7 @@
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>내 전장에 기계 하수인이 있으면 공격력을 +2 얻습니다.</Text>
+    <Text>내 전장에 기계가 있으면 공격력을 +2 얻습니다.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14291,7 +14548,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>상대편이 카드를 낼 때마다, 내 다음 카드 3장을 버립니다.</Text>
+    <Text>상대편이 카드를 낼 때마다 내 다음 카드 3장을 없앱니다.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -14307,7 +14564,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>카드를 1장 뽑습니다.
-야수 카드면 비용이 (4) 감소합니다.</Text>
+야수 카드면, 비용이 (4) 감소합니다.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -14323,7 +14580,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>이 하수인이 피해를 줄 때마다, 내 영웅이 그만큼의 생명력을 회복합니다.</Text>
+    <Text>이 하수인이 피해를 줄 때마다 그만큼 내 영웅의 생명력을 회복시킵니다.</Text>
     <Mechanics />
     <Artist>Carl Critchlow</Artist>
   </Card>
@@ -14338,7 +14595,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>하수인에게 피해를 $5 줍니다. 대상이 아군 악마면 +5/+5를 부여합니다.</Text>
+    <Text>하수인에게 피해를 $5 줍니다. 대상이 아군 악마면, +5/+5를 부여합니다.</Text>
     <Mechanics />
     <Artist>Kerem Beyit</Artist>
   </Card>
@@ -14414,7 +14671,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>내 무기에 공격력을 +3 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 공격력을 +3 부여합니다.</Text>
+    <Text>내 무기에 공격력을 +3 부여합니다. &lt;b&gt;연계:&lt;/b&gt; 무작위 아군 하수인 하나에게 공격력을 +3 부여합니다.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -14485,7 +14742,7 @@
     <Cost>3</Cost>
     <Durability>3</Durability>
     <Class>Rogue</Class>
-    <Text>내 전장에 기계 하수인이 있으면 공격력을 +2 얻습니다.</Text>
+    <Text>내 전장에 기계가 있으면 공격력을 +2 얻습니다.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14503,7 +14760,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
-    <Text>해적을 소환할 때마다, &lt;b&gt;은신&lt;/b&gt;을 얻습니다.</Text>
+    <Text>내가 해적을 소환할 때마다 &lt;b&gt;은신&lt;/b&gt;을 얻습니다.</Text>
     <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
@@ -14534,7 +14791,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Mech</Race>
-    <Text>내 턴이 끝날 때, 다른 아군 기계 하수인 하나에게 +2/+2를 부여합니다.</Text>
+    <Text>내 턴이 끝날 때, 다른 아군 기계 하나에게 +2/+2를 부여합니다.</Text>
     <Mechanics />
     <Artist>Brian Despain</Artist>
   </Card>
@@ -14548,7 +14805,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>능력치 상승</Text>
+    <Text>능력치 증가</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14562,13 +14819,13 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>상대편이 주문을 시전할 때마다, 동일한 주문을 내 손으로 가져오고 상대편에게 동전을 줍니다.</Text>
+    <Text>상대편이 주문을 시전할 때마다 동일한 주문을 내 손으로 가져오고 상대편에게 동전을 줍니다.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
     <CardId>GVG_028t</CardId>
-    <Name>갤리웍스의 동전</Name>
+    <Name>갤리윅스의 동전</Name>
     <CardSet>Goblins vs Gnomes</CardSet>
     <Type>Spell</Type>
     <Attack>0</Attack>
@@ -14590,7 +14847,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>각 플레이어의 손에서 무작위로 선택된 하수인을 하나씩 전장에 놓습니다.</Text>
+    <Text>각 플레이어의 손에서 무작위 하수인 하나를 전장에 놓습니다.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -14748,7 +15005,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Race>Mech</Race>
-    <Text>이 하수인이 피해를 입을 때마다, &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
+    <Text>이 하수인이 피해를 입을 때마다 &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -14781,7 +15038,7 @@
     <Cost>3</Cost>
     <Durability>2</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt;: 무작위로 선택된 아군 기계 하수인 하나에게 +2/+2를 부여합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리&lt;/b&gt;: 무작위 아군 기계 하나에게 +2/+2를 부여합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -14930,7 +15187,8 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 멀록 4마리를 내 손으로 가져옵니다. &lt;b&gt;과부하:&lt;/b&gt; (3)</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 멀록 4마리를 내 손으로 가져옵니다.
+&lt;b&gt;과부하:&lt;/b&gt; (3)</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14947,7 +15205,7 @@
     <Cost>2</Cost>
     <Durability>2</Durability>
     <Class>Hunter</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 공격력을 +1 부여합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 아군 하수인 하나에게 공격력을 +1 부여합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15051,7 +15309,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>무작위로 선택된 적 하수인 하나를 처치합니다. &lt;b&gt;연계&lt;/b&gt;: 상대편의 무기를 파괴합니다.</Text>
+    <Text>무작위 적 하수인 하나를 처치합니다. &lt;b&gt;연계&lt;/b&gt;: 상대편의 무기를 파괴합니다.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -15069,7 +15327,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 내 다른 기계 하수인들에게 공격력을 +2 부여합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 내 다른 기계들에게 공격력을 +2 부여합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15128,7 +15386,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>무작위로 선택된 하수인 하나에게 피해를 $1 줍니다. 하수인 하나가 죽을 때까지 반복됩니다.</Text>
+    <Text>무작위 하수인 하나에게 피해를 $1 줍니다. 하수인 하나가 죽을 때까지 반복됩니다.</Text>
     <Mechanics />
     <Artist>Andrew Hou</Artist>
   </Card>
@@ -15161,7 +15419,7 @@
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>하수인 하나를 처치합니다. 만약 내 전장에 부상 당한 하수인이 있다면, 비용이 (4) 감소합니다.</Text>
+    <Text>하수인 하나를 처치합니다. 내 전장에 부상 당한 하수인이 있으면, 비용이 (4) 감소합니다.</Text>
     <Mechanics />
     <Artist>Michael Sutfin</Artist>
   </Card>
@@ -15209,7 +15467,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 아군 기계 하수인 하나에게 +2/+2를 부여합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 아군 기계 하나에게 +2/+2를 부여합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15240,7 +15498,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 덱에 지뢰 카드를 섞어 넣습니다. 상대편이 지뢰를 뽑으면 폭발하며 피해를 10 줍니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 덱에 지뢰 카드를 섞어 넣습니다. 상대편이 지뢰를 뽑으면, 폭발하며 피해를 10 줍니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15248,7 +15506,7 @@
   </Card>
   <Card>
     <CardId>GVG_056t</CardId>
-    <Name>잠복한 지뢰</Name>
+    <Name>거미 지뢰</Name>
     <CardSet>Goblins vs Gnomes</CardSet>
     <Type>Spell</Type>
     <Attack>0</Attack>
@@ -15256,7 +15514,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>이 카드를 뽑으면 폭발하여 내게 피해를 10 줍니다. 카드를 1장 뽑습니다.</Text>
+    <Text>이 카드를 뽑으면, 폭발하여 내게 피해를 10 줍니다. 카드를 1장 뽑습니다.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -15322,7 +15580,7 @@
     <Cost>3</Cost>
     <Durability>3</Durability>
     <Class>Paladin</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 아군 하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;과 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 아군 하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;과 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15385,7 +15643,7 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Race>Mech</Race>
-    <Text>내가 기계 하수인을 소환할 때마다, &lt;b&gt;천상의 보호막&lt;/b&gt;을 얻습니다.</Text>
+    <Text>내가 기계를 소환할 때마다 &lt;b&gt;천상의 보호막&lt;/b&gt;을 얻습니다.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -15400,7 +15658,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>내 손에 있을 때, 전장의 내 하수인이 죽을 때마다, 공격력을 +1 얻습니다.</Text>
+    <Text>내 손에 있을 때, 전장의 내 하수인이 죽을 때마다 공격력을 +1 얻습니다.</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -15472,7 +15730,7 @@
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>상대편이 주문을 시전할 때마다, 공격력을 +1 얻습니다.</Text>
+    <Text>상대편이 주문을 시전할 때마다 공격력을 +1 얻습니다.</Text>
     <Mechanics />
     <Artist>Peet Cooper</Artist>
   </Card>
@@ -15500,7 +15758,7 @@
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>상대편이 주문을 시전할 때마다, 공격력을 +2 얻습니다.</Text>
+    <Text>상대편이 주문을 시전할 때마다 공격력을 +2 얻습니다.</Text>
     <Mechanics />
     <Artist>Aleksi Briclot</Artist>
   </Card>
@@ -15529,7 +15787,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅이 생명력을 8 회복합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 영웅의 생명력을 8 회복시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15588,7 +15846,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Mech</Race>
-    <Text>캐릭터가 치유될 때마다, 무작위로 선택된 적 하나에게 피해를 1 줍니다.</Text>
+    <Text>캐릭터가 치유될 때마다 무작위 적 하나에게 피해를 1 줍니다.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -15617,7 +15875,7 @@
     <Health>3</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 적에게 걸려 있는 &lt;b&gt;비밀&lt;/b&gt; 중에 무작위로 선택된 하나를 가져옵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 적에게 걸려 있는 &lt;b&gt;비밀&lt;/b&gt; 하나를 무작위로 가져옵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15633,7 +15891,7 @@
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>해적을 소환할 때마다, 무작위로 선택된 적 하나에게 피해를 2 줍니다. </Text>
+    <Text>내가 해적을 소환할 때마다 무작위 적 하나에게 피해를 2 줍니다. </Text>
     <Mechanics />
     <Artist>Warren Mahy</Artist>
   </Card>
@@ -15678,7 +15936,7 @@
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Mech</Race>
-    <Text>각 턴이 끝날 때마다, 내 전장에 다른 하수인이 없다면 이 하수인을 처치합니다.</Text>
+    <Text>각 턴이 끝날 때마다 내 전장에 다른 하수인이 없다면, 이 하수인을 처치합니다.</Text>
     <Mechanics />
     <Artist>Josh Harris</Artist>
   </Card>
@@ -15727,7 +15985,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 야수가 있다면, 7/7로 변신합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 야수가 있으면, 7/7로 변신합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15792,7 +16050,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 기계 하수인 하나에게 생명력을 +4 부여합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 기계 하나에게 생명력을 +4 부여합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15846,7 +16104,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>내가 방어도를 얻을 때마다, 이 하수인이 공격력을 +1 얻습니다.</Text>
+    <Text>내가 방어도를 얻을 때마다 이 하수인이 공격력을 +1 얻습니다.</Text>
     <Mechanics />
     <Artist>Zero Yue</Artist>
   </Card>
@@ -15906,7 +16164,7 @@
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면 내 영웅의 생명력을 4 회복시킵니다.</Text>
+    <Text>내 턴이 끝날 때 내 영웅에게 &lt;b&gt;비밀&lt;/b&gt;이 걸려 있으면, 내 영웅의 생명력을 4 회복시킵니다.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -15954,7 +16212,7 @@
     <Health>2</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다. 뽑은 카드가 하수인이면 닭으로 변신시킵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 1장 뽑습니다. 뽑은 카드가 하수인이면, 닭으로 변신시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16014,7 +16272,7 @@
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>상대편의 손에 카드가 6장 이상 있으면 공격력을 +4 갖습니다.</Text>
+    <Text>상대편의 손에 카드가 6장 이상 있으면 공격력을 +4 얻습니다.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -16031,7 +16289,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 비용 2짜리 하수인 하나를 소환합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 비용이 2인 하수인 하나를 무작위로 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16083,7 +16341,7 @@
     <Health>3</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 적 하수인 하나에게 피해를 4 줍니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 적 하수인 하나에게 피해를 4 줍니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16158,7 +16416,7 @@
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 기계 하수인이 있다면, +1/+1을 얻고 &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 기계가 있으면, +1/+1을 얻고 &lt;b&gt;예비 부품&lt;/b&gt; 카드를 내 손으로 1장 가져옵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16201,7 +16459,7 @@
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>내가 공격력이 1인 하수인을 낼 때마다, 그 하수인에게 +2/+2를 부여합니다.</Text>
+    <Text>내가 공격력이 1인 하수인을 낼 때마다 그 하수인에게 +2/+2를 부여합니다.</Text>
     <Mechanics />
     <Artist>Laurel D. Austin</Artist>
   </Card>
@@ -16228,7 +16486,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 비용 4짜리 하수인 하나를 소환합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 비용이 4인 하수인 하나를 무작위로 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16245,7 +16503,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>아군 기계 하수인이 죽을 때마다 +2/+2를 얻습니다.</Text>
+    <Text>아군 기계가 죽을 때마다 +2/+2를 얻습니다.</Text>
     <Mechanics />
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -16288,7 +16546,7 @@
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나를 무작위로 선택된 같은 비용의 하수인으로 변신시킵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나를 같은 비용의 무작위 하수인으로 변신시킵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16338,7 +16596,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 적 하나에게 피해를 1-4 줍니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 적 하나에게 피해를 1-4 줍니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16354,7 +16612,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>내 턴이 시작될 때, 내게 기계 하수인이 3대 이상 있으면 모두 파괴하고 V-07-TR-0N을 소환합니다.</Text>
+    <Text>내 턴이 시작될 때, 내 전장에 기계가 3대 이상 있으면 모두 파괴하고 V-07-TR-0N을 소환합니다.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -16416,7 +16674,7 @@
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위로 선택된 전설 하수인 하나를 소환합니다.</Text>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 무작위 전설 하수인 하나를 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16450,7 +16708,7 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>적 하수인이 죽을 때마다, 오염된 노움을 하나 소환합니다.</Text>
+    <Text>적 하수인이 죽을 때마다 오염된 노움을 하나 소환합니다.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -16464,7 +16722,7 @@
     <Health>6</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>마나 1짜리 주문을 시전할 때마다, 무작위로 선택된 기계 하수인 하나를 내 손으로 가져옵니다.</Text>
+    <Text>비용이 1인 주문을 시전할 때마다 무작위 기계를 내 손으로 가져옵니다.</Text>
     <Mechanics />
     <Artist>Luke Mancini</Artist>
   </Card>
@@ -16478,7 +16736,7 @@
     <Health>6</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>상대편이 주문을 시전할 때마다, 힘센 바위턱트로그를 하나 소환합니다.</Text>
+    <Text>상대편이 주문을 시전할 때마다 힘센 바위턱트로그를 하나 소환합니다.</Text>
     <Mechanics />
     <Artist>Mike Sass</Artist>
   </Card>
@@ -16493,7 +16751,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 플레이어가 무작위로 선택된 무기를 하나씩 장착합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 플레이어가 무작위 무기를 하나씩 장착합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -17053,7 +17311,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 마나가 남아 있다면 피해를 5 줍니다.</Text>
+적 영웅에게 마나가 남아 있으면, 피해를 5 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17066,7 +17324,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 마나가 남아 있다면 피해를 10 줍니다.</Text>
+적 영웅에게 마나가 남아 있으면, 피해를 10 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17078,7 +17336,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $5 줍니다.</Text>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면, 모든 적에게 피해를 $5 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17102,7 +17360,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면 &lt;b&gt;모든&lt;/b&gt; 적에게 피해를 $10 줍니다.</Text>
+    <Text>적 하수인을 하나 선택합니다. 그 하수인이 나의 다음 턴까지 살아남으면, 모든 적에게 피해를 $10 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17241,7 +17499,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-피해를 입은 적 하수인 중에 무작위로 선택된 하수인 하나를 처치합니다.</Text>
+피해를 입은 무작위 적 하수인 하나를 처치합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17254,7 +17512,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하수인 하나를 처치합니다.</Text>
+무작위 적 하수인 하나를 처치합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17266,7 +17524,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>무작위로 선택된 적 하나에게 피해를 $5 줍니다. 방어도를 +5 얻습니다.</Text>
+    <Text>무작위 적 하나에게 피해를 $5 줍니다. 방어도를 +5 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17686,7 +17944,7 @@
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>5</Durability>
-    <Text>타락한 알이 죽을 때마다 공격력이 +1 증가합니다.</Text>
+    <Text>타락한 알이 죽을 때마다 공격력을 +1 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17968,7 +18226,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>상대편이 주문을 시전할 때마다, +2/+2를 얻습니다.</Text>
+    <Text>상대편이 주문을 시전할 때마다 +2/+2를 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18062,7 +18320,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-상대편 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다.</Text>
+상대편 직업의 주문 카드 1장을 무작위로 내 손에 가져옵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18075,7 +18333,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-상대편 직업의 주문 카드 중 무작위로 선택된 1장을 내 손으로 가져옵니다.</Text>
+상대편 직업의 주문 카드 1장을 무작위로 내 손에 가져옵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18129,7 +18387,7 @@
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>무작위로 선택된 적 하나에게 피해를 $8 줍니다.</Text>
+    <Text>무작위 적 하나에게 피해를 $8 줍니다.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -18155,7 +18413,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 골렘 하나를 가동시킵니다.</Text>
+무작위 골렘 하나를 가동시킵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18168,7 +18426,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 골렘 하나를 가동시킵니다.</Text>
+무작위 골렘 하나를 가동시킵니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18597,7 +18855,7 @@
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>6</Durability>
-    <Text>상대편이 카드를 낼 때마다, 공격력을 +1 얻습니다.</Text>
+    <Text>상대편이 카드를 낼 때마다 공격력을 +1 얻습니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18867,7 +19125,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 내 손에 용족 하수인이 있으면 생명력을 +2 얻습니다. </Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, 생명력을 +2 얻습니다. </Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19139,7 +19397,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>피해를 $3 줍니다.
-만약 내 손에 카드가 없으면 카드를 1장 뽑습니다.</Text>
+내 손에 카드가 없으면, 카드를 1장 뽑습니다.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -19157,7 +19415,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 내 손에 카드가 없으면 +3/+3을 얻습니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 카드가 없으면, +3/+3을 얻습니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19187,7 +19445,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 $1 줍니다. 만약 내 생명력이 12 이하라면 피해를 $3 줍니다.</Text>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 $1 줍니다. 내 생명력이 12 이하면, 피해를 $3 줍니다.</Text>
     <Mechanics />
     <Artist>Ben Olson</Artist>
   </Card>
@@ -19202,7 +19460,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>이 하수인은 피해를 입을 때마다, 적 영웅에게 피해를 2 줍니다.</Text>
+    <Text>이 하수인은 피해를 입을 때마다 적 영웅에게 피해를 2 줍니다.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
   </Card>
@@ -19217,7 +19475,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>이번 게임에서 죽은 아군 하수인 중에 무작위로 선택된 하수인 하나를 소환합니다.</Text>
+    <Text>이번 게임에서 죽은 아군 하수인 하나를 무작위로 소환합니다.</Text>
     <Mechanics />
     <Artist>Luke Mancini</Artist>
   </Card>
@@ -19233,7 +19491,7 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음에 내가 내는 용족 하수인의 비용이 (2) 감소합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음에 내가 내는 용족의 비용이 (2) 감소합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19249,7 +19507,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>다음에 내가 내는 용족 하수인의 비용이 (2) 감소합니다.</Text>
+    <Text>다음에 내가 내는 용족의 비용이 (2) 감소합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19332,7 +19590,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 만약 상대편의 생명력이 15 이하라면 +3/+3을 얻습니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 생명력이 15 이하면, +3/+3을 얻습니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19376,7 +19634,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위로 선택된 비용 1짜리 하수인 하나를 상대편에게 소환해 줍니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편에게 비용이 1인 하수인 하나를 무작위로 소환해 줍니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19419,7 +19677,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하나에게 피해를 8 줍니다.</Text>
+무작위 적 하나에게 피해를 $8 줍니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19432,7 +19690,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-무작위로 선택된 적 하나에게 피해를 8 줍니다. &lt;i&gt;2번&lt;/i&gt; 발동합니다.</Text>
+무작위 적 하나에게 피해를 $8 줍니다. &lt;b&gt;2번&lt;/b&gt; 발동합니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19471,7 +19729,7 @@
     <Health>4</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 &lt;b&gt;전설&lt;/b&gt; 하수인 하나를 처치합니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, &lt;b&gt;전설&lt;/b&gt; 하수인 하나를 처치합니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19488,7 +19746,7 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt;&lt;i&gt;상대편 직업&lt;/i&gt;의 주문 카드 중 무작위로 선택된 2장을 내 손으로 가져옵니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt;&lt;i&gt;상대편 직업&lt;/i&gt;의 주문 카드 2장을 무작위로 내 손에 가져옵니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19532,7 +19790,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 +1/+1을 얻습니다.</Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, +1/+1을 얻습니다.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19561,11 +19819,3087 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족 하수인이 있으면 피해를 3 줍니다. </Text>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, 피해를 3 줍니다. </Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_001</CardId>
+    <Name>화염창</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>하수인 하나에게 피해를 $8 줍니다.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_002</CardId>
+    <Name>인형 의식</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 아군 하수인이 죽으면, 같은 비용의 무작위 하수인 하나를 소환합니다.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_003</CardId>
+    <Name>영웅의 넋</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>내 영웅 능력의 피해량이 1 증가합니다.</Text>
+    <Mechanics />
+    <Artist>Arthur Bozonnet</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_004</CardId>
+    <Name>비전 작렬</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>하수인 하나에게 피해를 $2 줍니다. 이 주문은 &lt;b&gt;주문 공격력&lt;/b&gt;의 효과를 2배로 받습니다.</Text>
+    <Mechanics />
+    <Artist>Gabor Szikszai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005</CardId>
+    <Name>변이: 멧돼지</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>하수인 하나를 &lt;b&gt;돌진&lt;/b&gt; 능력이 있는 4/2 멧돼지로 변신시킵니다.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005t</CardId>
+    <Name>멧돼지</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_006</CardId>
+    <Name>달라란 지원자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; &lt;b&gt;주문 공격력 +1&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_006e</CardId>
+    <Name>달라란의 힘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>주문 공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_007</CardId>
+    <Name>주문사수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 플레이어가 무작위 주문 카드를 1장씩 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Erik Ko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_008</CardId>
+    <Name>콜다라 비룡</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Race>Dragon</Race>
+    <Text>내 영웅 능력을 여러 번 쓸 수 있습니다.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_009</CardId>
+    <Name>로닌</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 신비한 화살 카드 3장을 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_010</CardId>
+    <Name>산양 사육사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 야수가 있으면, 무작위 야수 1마리를 소환합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Brandon Kitkouski</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011</CardId>
+    <Name>신성한 용사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>캐릭터가 하나 치유될 때마다 공격력을 +2 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Alex Garner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011e</CardId>
+    <Name>빛의 가호</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 증가</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_012</CardId>
+    <Name>어둠의 종복</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 각 영웅에게 피해를 4씩 줍니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013</CardId>
+    <Name>신의 권능: 영광</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>하수인 하나를 선택합니다. 그 하수인이 공격할 때마다 내 영웅이 생명력을 4 회복합니다.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013e</CardId>
+    <Name>신의 권능: 영광</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격할 때마다 이 하수인을 강화한 플레이어가 생명력을 4 회복함</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_014</CardId>
+    <Name>어둠의 마귀</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>내가 카드를 뽑을 때마다 그 카드의 비용이 (1) 감소합니다.</Text>
+    <Mechanics />
+    <Artist>Warren Mahy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_014e</CardId>
+    <Name>어둠의 마귀 효과</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>비용 (1) 감소</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_015</CardId>
+    <Name>교화</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>적 하수인 하나를 복사하여 내 손으로 가져옵니다.</Text>
+    <Mechanics />
+    <Artist>Dan Dos Santos</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016</CardId>
+    <Name>혼란</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인의 공격력과 생명력을 바꿉니다.</Text>
+    <Mechanics />
+    <Artist>Sean O'Danield</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016e</CardId>
+    <Name>혼란</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>공격력과 생명력 바뀜</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_017</CardId>
+    <Name>황혼의 수호자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, 공격력 +1과 &lt;b&gt;도발&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_017e</CardId>
+    <Name>황혼의 은총</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 +1, &lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_018</CardId>
+    <Name>고해사제 페일트리스</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 무작위 &lt;b&gt;전설&lt;/b&gt; 하수인 하나를 소환합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Chris Rahn</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_019</CardId>
+    <Name>공포마</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 공포마를 하나 소환합니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_020</CardId>
+    <Name>섬뜩한 파멸의 수호병</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>8</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021</CardId>
+    <Name>작고 사악한 창기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>내가 카드를 버릴 때마다 +1/+1을 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021e</CardId>
+    <Name>지옥분노</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>능력치 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_022</CardId>
+    <Name>자락서스의 주먹</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>이 카드를 내거나 버릴 때, 무작위 적 하나에게 피해를 $4 줍니다.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_023</CardId>
+    <Name>공허파괴자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 각 플레이어의 전장에서 무작위 하수인을 하나씩 처치합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024</CardId>
+    <Name>악마의 기운</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>악마 하나에게 +3/+3을 부여합니다. 상대편에게 마나 수정을 1개 줍니다.</Text>
+    <Mechanics />
+    <Artist>Kevin Chen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024e</CardId>
+    <Name>어둠 주입</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_025</CardId>
+    <Name>어둠의 거래</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>무작위 적 하수인 둘을 처치합니다. 무작위로 카드를 2장 버립니다.</Text>
+    <Mechanics />
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_026</CardId>
+    <Name>격노수호병</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>이 하수인은 피해를 입을 때마다 내 영웅에게 그만큼의 피해를 줍니다.</Text>
+    <Mechanics />
+    <Artist>Sojin Hwang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027</CardId>
+    <Name>윌프레드 피즐뱅</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>영웅 능력으로 뽑은 카드의 비용이 (0)이 됩니다.</Text>
+    <Mechanics />
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027e</CardId>
+    <Name>소환의 대가</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>비용 (0)</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_028</CardId>
+    <Name>음영파 기수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;연계:&lt;/b&gt; 공격력을 +3 얻습니다.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Ryan Metcaff</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_028e</CardId>
+    <Name>기의 창</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 +3</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_029</CardId>
+    <Name>해적단원</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Pirate</Race>
+    <Text>내가 무기를 장착할 때마다 무기에 공격력을 +1 부여합니다.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_029e</CardId>
+    <Name>날카로운 칼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 +1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_030</CardId>
+    <Name>언더시티 용맹전사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;연계:&lt;/b&gt; 피해를 1 줍니다.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Zoltan Boros </Artist>
+  </Card>
+  <Card>
+    <CardId>AT_031</CardId>
+    <Name>소매치기</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>이 하수인이 영웅을 공격할 때마다 내 손으로 동전을 하나 가져옵니다.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032</CardId>
+    <Name>암거래상</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 해적이 있으면, +1/+1을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032e</CardId>
+    <Name>거래 성사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>+1/+1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_033</CardId>
+    <Name>도둑질</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;i&gt;상대편 직업&lt;/i&gt;의 카드 2장을 무작위로 내 손에 가져옵니다.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034</CardId>
+    <Name>독 묻은 칼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>3</Durability>
+    <Class>Rogue</Class>
+    <Text>영웅 능력을 사용하면 무기를 교체하는 대신, 이 무기에 공격력을 +1 부여합니다.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034e</CardId>
+    <Name>흥건한 독</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_035</CardId>
+    <Name>땅속의 위협</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>상대편의 덱에 잠복 카드 3장을 섞어 넣습니다. 상대편이 잠복 카드를 뽑으면, 내가 4/4 네루비안을 하나 소환합니다.</Text>
+    <Mechanics />
+    <Artist>Daren Bader</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_035t</CardId>
+    <Name>잠복!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>이 카드를 뽑을 때, 상대편에게 4/4 네루비안을 하나 소환해 줍니다. 카드를 1장 뽑습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_036</CardId>
+    <Name>아눕아락</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>4</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 이 하수인을 다시 내 손으로 가져오고 4/4 네루비안을 하나 소환합니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Eric Braddock</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_036t</CardId>
+    <Name>네루비안</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037</CardId>
+    <Name>살아있는 뿌리</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;선택&lt;/b&gt; - 피해를 $2 줍니다. 또는 1/1 묘목을 둘 소환합니다.</Text>
+    <Mechanics />
+    <Artist>Dan Brereton</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_037a</CardId>
+    <Name>살아있는 뿌리</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>피해를 $2 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037b</CardId>
+    <Name>살아있는 뿌리</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>1/1 묘목을 둘 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037t</CardId>
+    <Name>묘목</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_038</CardId>
+    <Name>다르나서스 지원자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 빈 마나 수정을 1개 획득합니다.
+&lt;b&gt;죽음의 메아리:&lt;/b&gt; 마나 수정을 1개 파괴합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Laurel Austin</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039</CardId>
+    <Name>흉포한 전투원</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 이번 턴에 내 영웅에게 공격력을 +2 부여합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Alex Pascenko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039e</CardId>
+    <Name>흉포함</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>이번 턴에 공격력 +2</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_040</CardId>
+    <Name>야생길잡이</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 야수 1마리에게 생명력을 +3 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_040e</CardId>
+    <Name>야생의 영혼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>생명력 +3</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_041</CardId>
+    <Name>야생의 기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>내가 야수 1마리를 소환할 때마다 이 카드의 비용이 (1) 감소합니다.</Text>
+    <Mechanics />
+    <Artist>Ralph Horsley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_041e</CardId>
+    <Name>야생의 부름</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>비용 감소</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042</CardId>
+    <Name>칼날이빨의 드루이드</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;선택 -&lt;/b&gt; &lt;b&gt;돌진&lt;/b&gt; 또는 +1/+1과 &lt;b&gt;은신&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Arthur Gimaldinov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_042a</CardId>
+    <Name>사자 변신</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042b</CardId>
+    <Name>흑표범 변신</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+1/+1, &lt;b&gt;은신&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042t</CardId>
+    <Name>칼날이빨 사자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_042t2</CardId>
+    <Name>칼날이빨 흑표범</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;은신&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_043</CardId>
+    <Name>천공의 교감</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>마나 수정을 10개 획득합니다. 내 손의 카드를 모두 버립니다.</Text>
+    <Mechanics />
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_044</CardId>
+    <Name>양분 흡수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>하수인 하나를 처치합니다.
+상대편의 손에 무작위 하수인 카드 1장을 추가합니다.</Text>
+    <Mechanics />
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045</CardId>
+    <Name>아비아나</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>내 하수인의 비용이
+(1)이 됩니다.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Velvet Engine</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045e</CardId>
+    <Name>강화의 안개</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_045ee</CardId>
+    <Name>안개소환사 덱 강화</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_046</CardId>
+    <Name>투스카르 토템지기</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 토템류 하수인을 하나 소환합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047</CardId>
+    <Name>드레나이 토템술사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에
+있는 토템 하나당 +1/+1을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>RK Post</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047e</CardId>
+    <Name>숙련자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>능력치 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_048</CardId>
+    <Name>치유의 물결</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>생명력을 #7 회복시킵니다. 각 덱의 하수인 하나를 공개해
+내 것의 비용이 더 높으면, 생명력을 #14 회복시킵니다.</Text>
+    <Mechanics />
+    <Artist>Luca Zontini</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049</CardId>
+    <Name>썬더 블러프 용맹전사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 내 토템들에게 공격력을 +2 부여합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049e</CardId>
+    <Name>썬더 블러프의 힘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_050</CardId>
+    <Name>충전된 망치</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>4</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 영웅 능력이 '피해를 2 줍니다.'로 바뀝니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Peet Cooper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_050t</CardId>
+    <Name>번개 충격</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+피해를 $2 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_051</CardId>
+    <Name>파괴의 정기</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 $4-$5 줍니다. &lt;b&gt;과부하:&lt;/b&gt; (5)</Text>
+    <Mechanics />
+    <Artist>Tyler Walpole</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_052</CardId>
+    <Name>토템 골렘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Race>Totem</Race>
+    <Text>&lt;b&gt;과부하:&lt;/b&gt; (1)</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_053</CardId>
+    <Name>선조의 지혜</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>카드를 2장 뽑습니다. &lt;b&gt;과부하:&lt;/b&gt; (2)</Text>
+    <Mechanics />
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_054</CardId>
+    <Name>안개소환사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손과 덱에 있는 모든 하수인들에게 +1/+1을 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_055</CardId>
+    <Name>순간 치유</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>생명력을 #5 회복시킵니다.</Text>
+    <Mechanics />
+    <Artist>Marcelo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_056</CardId>
+    <Name>강화 사격</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>선택한 하수인과 그 양옆의 하수인들에게 피해를 $2 줍니다.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057</CardId>
+    <Name>마구간지기</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 이번 턴에 아군 야수 1마리에게 &lt;b&gt;피해 면역&lt;/b&gt;을 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057o</CardId>
+    <Name>관리받음</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>이번 턴에 &lt;b&gt;피해 면역&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_058</CardId>
+    <Name>왕의 엘레크</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, 그 카드를 뽑습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_059</CardId>
+    <Name>용감한 궁수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 내 손에 카드가 없으면, 적 영웅에게 피해를 2 줍니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_060</CardId>
+    <Name>곰 덫</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받은 후에 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 3/3 곰을 소환합니다.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061</CardId>
+    <Name>실탄 장전</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>이번 턴에 내가 주문을 시전할 때마다 사냥꾼 카드 1장을 무작위로 내 손에 가져옵니다.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061e</CardId>
+    <Name>실탄 장전</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_062</CardId>
+    <Name>거미떼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>1/1 그물거미 3마리를 소환합니다.</Text>
+    <Mechanics />
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063</CardId>
+    <Name>산성아귀</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>다른 하수인이 피해를 입으면, 그 하수인을 처치합니다.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063t</CardId>
+    <Name>공포비늘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>내 턴이 끝날 때, 다른 &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 1 줍니다.</Text>
+    <Mechanics />
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_064</CardId>
+    <Name>강타</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>피해를 $3 줍니다.
+방어도를 +3 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Dany Orizio</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065</CardId>
+    <Name>왕의 수호검</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>3</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>2</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 내 전장에 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 하수인이 있으면, 내구도를 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Michael Franchina</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065e</CardId>
+    <Name>왕의 수호검</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>내구도 +1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_066</CardId>
+    <Name>오그리마 지원자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 내 무기에 공격력을 +1 부여합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Hideaki Takamura</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_066e</CardId>
+    <Name>오그리마의 제련소</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_067</CardId>
+    <Name>덩치 큰 마그나타우르</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>공격하는 대상 양옆의 하수인들에게도 피해를 줍니다.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068</CardId>
+    <Name>고무</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;도발&lt;/b&gt; 능력을 가진 아군 하수인들에게 +2/+2를 부여합니다.</Text>
+    <Mechanics />
+    <Artist>Mishi McCaig</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068e</CardId>
+    <Name>고무됨</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+2/+2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_069</CardId>
+    <Name>대련 상대</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;도발&lt;/b&gt;
+&lt;b&gt;전투의 함성:&lt;/b&gt; 하수인 하나에게 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_069e</CardId>
+    <Name>훈련 완료</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_070</CardId>
+    <Name>하늘선장 크라그</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Text>&lt;b&gt;도오올지이인&lt;/b&gt;
+내 전장에 있는 해적 하나당 비용이 (1)씩 감소합니다.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071</CardId>
+    <Name>알렉스트라자의 용사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, 공격력 +1과 &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071e</CardId>
+    <Name>알렉스트라자의 은혜</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>공격력 +1, &lt;b&gt;돌진&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_072</CardId>
+    <Name>바리안 린</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 카드를 3장 뽑습니다. 하수인을 뽑으면 바로 내 전장에 놓습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073</CardId>
+    <Name>경쟁심</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 턴이 시작될 때, 내 하수인들에게 +1/+1을 부여합니다.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073e</CardId>
+    <Name>경쟁심</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_074</CardId>
+    <Name>용사의 문장</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>하수인 하나에게 공격력 +3과 &lt;b&gt;천상의 보호막&lt;/b&gt;을 부여합니다.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_074e2</CardId>
+    <Name>용사의 문장</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>공격력 +3, &lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_075</CardId>
+    <Name>전투마 조련사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>내 은빛 성기사단 신병들이 공격력을 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_075e</CardId>
+    <Name>마부의 힘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>전투마 조련사가 공격력 +1 부여</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_076</CardId>
+    <Name>멀록 기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 무작위 멀록 하나를 소환합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sam Nielsen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077</CardId>
+    <Name>은빛십자군 창</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>2</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, 내구도를 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077e</CardId>
+    <Name>더욱 견고하게</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>내구도 +1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_078</CardId>
+    <Name>경기장 입장</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>각 플레이어의 전장에서 공격력이 가장 높은 하수인 하나씩을 제외한 &lt;b&gt;모든&lt;/b&gt; 하수인을 처치합니다.</Text>
+    <Mechanics />
+    <Artist>Mauricio Herrera</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_079</CardId>
+    <Name>수수께끼의 도전자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 덱에 있는 모든 종류의 &lt;b&gt;비밀&lt;/b&gt; 카드를 1장씩 사용합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_080</CardId>
+    <Name>주둔지 사령관</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>내 영웅 능력을 한 턴에 2번 사용할 수 있습니다.</Text>
+    <Mechanics />
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081</CardId>
+    <Name>성기사 에드릭</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 모든 적 하수인의 공격력을 1로 바꿉니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist> James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081e</CardId>
+    <Name>정화됨</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>공격력 1로 바뀜</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_082</CardId>
+    <Name>풋내기 종자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 공격력을 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_082e</CardId>
+    <Name>훈련 중</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_083</CardId>
+    <Name>용매 기수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 이번 턴에 &lt;b&gt;질풍&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_083e</CardId>
+    <Name>용매의 날렵함</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>이번 턴에 &lt;b&gt;질풍&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_084</CardId>
+    <Name>창 운반꾼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 아군 하수인 하나에게 공격력을 +2 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_084e</CardId>
+    <Name>무장함</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 +2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_085</CardId>
+    <Name>호수의 여신</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>내 영웅 능력의 비용이 (1)이 됩니다.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Froilan Gardner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086</CardId>
+    <Name>파괴공작원</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음 턴에 상대편이 쓰는 영웅 능력의 비용이 (5) 증가합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086e</CardId>
+    <Name>파괴공작!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>이번 턴에 내 영웅 능력의 비용이 (5) 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_087</CardId>
+    <Name>은빛십자군 기수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;
+&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_088</CardId>
+    <Name>모고르의 용사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>50%의 확률로 엉뚱한 적을 공격합니다.</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089</CardId>
+    <Name>해골경비대 부관</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 생명력을 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089e</CardId>
+    <Name>해골경비대의 끈기</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>생명력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_090</CardId>
+    <Name>무클라의 용사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 내 다른 하수인들에게 +1/+1을 부여합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_090e</CardId>
+    <Name>유인원의 힘</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_091</CardId>
+    <Name>마상시합장 의무관</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 내 영웅의 생명력을 2 회복시킵니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_092</CardId>
+    <Name>얼음 광전사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_093</CardId>
+    <Name>눈덩이 스노볼트</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_094</CardId>
+    <Name>불꽃 곡예사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 무작위 적 하나에게 피해를 1 줍니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_095</CardId>
+    <Name>고요한 기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;은신&lt;/b&gt;
+&lt;b&gt;천상의 보호막&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Esad Ribic</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096</CardId>
+    <Name>태엽돌이 기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;전투의 함성&lt;/b&gt;: 아군 기계 하나에게 +1/+1을 부여합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096e</CardId>
+    <Name>태엽 감김</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_097</CardId>
+    <Name>마상시합 관중</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Adam Byrne</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_098</CardId>
+    <Name>공연장 주문탐식자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 상대편의 영웅 능력을 복사합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099</CardId>
+    <Name>코도 기수</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 3/5 전투코도를 1마리 소환합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Wootten</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099t</CardId>
+    <Name>전투코도</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_100</CardId>
+    <Name>은빛 성기사단 섭정</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 1/1 은빛 성기사단 신병을 1명 소환합니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_101</CardId>
+    <Name>구덩이 투사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_102</CardId>
+    <Name>사로잡힌 요르문가르</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+    <Artist>Gonzalo Ordonez</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_103</CardId>
+    <Name>북해 크라켄</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>7</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 피해를 4 줍니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Seamus Gallagher</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_104</CardId>
+    <Name>투스카르 창기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, 내 영웅의 생명력을 7 회복시킵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_105</CardId>
+    <Name>부상당한 크발디르</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 자신에게 피해를 3 줍니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_106</CardId>
+    <Name>빛의 용사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 악마 하나를 &lt;b&gt;침묵&lt;/b&gt;시킵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Andrea Uderzo</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_108</CardId>
+    <Name>중무장 전투마</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, &lt;b&gt;돌진&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Edouard Guiton &amp; Tony Washington</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109</CardId>
+    <Name>은빛십자군 경비병</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>이 하수인은 적을 공격할 수 없습니다.
+&lt;b&gt;격려:&lt;/b&gt; 이번 턴에는 공격할 수 있습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109e</CardId>
+    <Name>격려됨</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>이번 턴에는 공격 가능</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_110</CardId>
+    <Name>경기장 관리자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 이 하수인을 다시 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_111</CardId>
+    <Name>투스카르 행상인</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 영웅의 생명력을 4씩 회복시킵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_112</CardId>
+    <Name>위대한 창기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, &lt;b&gt;도발&lt;/b&gt;과 &lt;b&gt;천상의 보호막&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Penny Arcade</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_113</CardId>
+    <Name>모병관</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 2/2 종자 하나를 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_114</CardId>
+    <Name>고약한 야유꾼</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115</CardId>
+    <Name>검술 지도자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 다음에 내가 사용하는 영웅 능력의 비용이 (2) 감소합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Howard Lyon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115e</CardId>
+    <Name>검술 연습</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>내 영웅 능력의 비용이 (2) 감소</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_116</CardId>
+    <Name>고룡쉼터 요원</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 손에 용족이 있으면, 공격력 +1과 &lt;b&gt;도발&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jeff Easley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_116e</CardId>
+    <Name>덤벼라!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>공격력 +1, &lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_117</CardId>
+    <Name>마상시합 진행자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 &lt;b&gt;주문 공격력&lt;/b&gt;을 증가시키는 하수인이 있으면, +2/+2를 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_117e</CardId>
+    <Name>설명 본능</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_118</CardId>
+    <Name>고위 성전사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 성기사 카드 1장을 무작위로 내 손에 가져옵니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Todd Lockwood</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119</CardId>
+    <Name>크발디르 약탈자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; +2/+2를 얻습니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119e</CardId>
+    <Name>격려됨</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>능력치 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_120</CardId>
+    <Name>서리 거인</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>이번 게임에서 내가 영웅 능력을 사용할 때마다 비용이 (1)씩 감소합니다.</Text>
+    <Mechanics />
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121</CardId>
+    <Name>마상시합 유명인</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>내가 &lt;b&gt;전투의 함성&lt;/b&gt; 능력을 가진 하수인을 소환할 때마다 +1/+1을 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121e</CardId>
+    <Name>엄청난 자부심</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>능력치 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_122</CardId>
+    <Name>꿰뚫는 자 고르목</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 전장에 하수인이 넷 이상 있으면, 피해를 4 줍니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_123</CardId>
+    <Name>서리아귀</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;도발&lt;/b&gt;
+&lt;b&gt;죽음의 메아리:&lt;/b&gt; 내 손에 용족이 있으면, &lt;b&gt;모든&lt;/b&gt; 하수인에게 피해를 3 줍니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_124</CardId>
+    <Name>볼프 램실드</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>9</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>이 하수인은 내 영웅이 입을 피해를 대신 받습니다.</Text>
+    <Mechanics />
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_125</CardId>
+    <Name>얼음울음</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;돌진&lt;/b&gt;
+영웅을 공격할 수 없습니다.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_127</CardId>
+    <Name>연합용사 사라아드</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;격려:&lt;/b&gt; 무작위 주문 카드 1장을 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Marcleo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_128</CardId>
+    <Name>해골 기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;죽음의 메아리:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, 이 하수인을 다시 내 손으로 가져옵니다.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_129</CardId>
+    <Name>피욜라 라이트베인</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>내가 주문의 대상으로 이 하수인을 지정할 때마다 &lt;b&gt;천상의 보호막&lt;/b&gt;을 얻습니다.</Text>
+    <Mechanics />
+    <Artist>Mark Zug</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_130</CardId>
+    <Name>바다의 학살자</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>이 카드를 뽑을 때, 내 하수인들에게 피해를 1 줍니다.</Text>
+    <Mechanics />
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_131</CardId>
+    <Name>아이디스 다크베인</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>내가 주문의 대상으로 이 하수인을 지정할 때마다 무작위 적 하나에게 피해를 3 줍니다.</Text>
+    <Mechanics />
+    <Artist>Ben Thompson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132</CardId>
+    <Name>심판관 트루하트</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 내 기본 영웅 능력을 강화합니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jomaro Kindred</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUID</CardId>
+    <Name>흉포한 변신</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+ 방어도 +2.
+이번 턴에만 공격력 +2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUIDe</CardId>
+    <Name>흉포한 발톱</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>이번 턴에 공격력 +2</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_132_HUNTER</CardId>
+    <Name>쇠뇌 사격</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+적 영웅에게 피해를 $3 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_MAGE</CardId>
+    <Name>강화된 화염 작렬</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+피해를 $2 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PALADIN</CardId>
+    <Name>은빛 성기사단</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+1/1 은빛 성기사단 신병을 2명 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PRIEST</CardId>
+    <Name>치유</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+생명력을 #4 회복시킵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUE</CardId>
+    <Name>독 묻은 단검</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+2/2 무기를 장착합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUEt</CardId>
+    <Name>독 묻은 단검</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMAN</CardId>
+    <Name>토템 지배</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+내가 원하는 토템 하나를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANa</CardId>
+    <Name>치유 토템</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>내 턴이 끝날 때, 모든 아군 하수인의 생명력을 1 회복시킵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANb</CardId>
+    <Name>불타는 토템</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANc</CardId>
+    <Name>돌발톱 토템</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;도발&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANd</CardId>
+    <Name>천벌의 토템</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;주문 공격력 +1&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARLOCK</CardId>
+    <Name>영혼 전환</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+카드를 1장 뽑습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARRIOR</CardId>
+    <Name>방어도 상승!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+방어도를 +4 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_133</CardId>
+    <Name>가젯잔 창기사</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;전투의 함성:&lt;/b&gt; 각 덱의 하수인 하나를 공개해 내 것의 비용이 더 높으면, +1/+1을 얻습니다.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_133e</CardId>
+    <Name>승리!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>PlaceholderCard</CardId>

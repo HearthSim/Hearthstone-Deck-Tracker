@@ -614,6 +614,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Deathrattle",
 			"Divine Shield",
 			"Freeze",
+			"Inspire",
 			"Secret",
 			"Spellpower",
 			"Taunt",

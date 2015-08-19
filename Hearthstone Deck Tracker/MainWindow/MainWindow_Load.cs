@@ -275,6 +275,11 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
+				if(configVersion <= new Version(0, 10, 10, 0)) //button moved up with new expansion added to the list
+				{
+					Config.Instance.Reset("ExportAllSetsButtonY");
+					converted = true;
+				}
 			}
 
 			if(converted)

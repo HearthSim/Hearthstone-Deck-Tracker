@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
-		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*SubType=POWER.*Target=(?<target>(.+))");
+		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*BlockType=POWER.*Target=(?<target>(.+))");
 
 		private readonly Regex _cardAlreadyInCacheRegex =
 			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
@@ -247,7 +247,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(line.Contains("End Spectator"))
 						offset = tempOffset;
-					else if(line.Contains("CREATE_GAME"))
+					else if(line.Contains("CREATE_GAME") && line.Contains("GameState."))
 					{
 						if(foundSpectatorStart)
 						{
@@ -285,7 +285,7 @@ namespace Hearthstone_Deck_Tracker
 
 				#region [Power]
 
-				if(logLine.StartsWith("[Power]"))
+				if(logLine.StartsWith("[Power] GameState."))
 				{
 					if(logLine.Contains("CREATE_GAME"))
 					{
@@ -435,10 +435,64 @@ namespace Hearthstone_Deck_Tracker
 						}
 						if (!string.IsNullOrEmpty(actionStartingCardId))
 						{
-							if (actionStartingCardId == "BRM_007") //Gang Up
+							if (actionStartingCardId == "BRM_007")   //Gang Up
 							{
+								int id = Game.Entities.Count + 1;
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 								{
+									var target = match.Groups["target"].Value.Trim();
+									if(target.StartsWith("[") && _entityRegex.IsMatch(target))
+									{
+										var cardIdMatch = _cardIdRegex.Match(target);
+										if(cardIdMatch.Success)
+										{
+											var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
+											for(int i = 0; i < 3; i++)
+											{
+												ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
+												_gameHandler.HandlePlayerGetToDeck(targetCardId, GetTurnNumber());
+											}
+										}
+									}
+								}
+								else
+								{
+									//if I pass the entity id here I could know if a drawn card is one of the copies.
+									// (should probably not be implemented :))
+									for(int i = 0; i < 3; i++)
+									{
+										ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
+										_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+									}
+								}
+							}
+							else if(actionStartingCardId == "GVG_056")   //Iron Juggernaut
+							{
+								// burrowing mine will be the entity created next
+								int id = Game.Entities.Count + 1;
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
+									_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+								}
+								else
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
+									_gameHandler.HandlePlayerGetToDeck("GVG_056t", GetTurnNumber());
+								}
+							}
+							else if(actionStartingCardId == "GVG_031")   //Recycle
+							{
+								// Recycled card will be the entity created next
+								int id = Game.Entities.Count + 1;
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
+									_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
+								}
+								else
+								{
+									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
 									var target = match.Groups["target"].Value.Trim();
 									if(target.StartsWith("[") && _entityRegex.IsMatch(target))
 									{
@@ -451,19 +505,12 @@ namespace Hearthstone_Deck_Tracker
 										}
 									}
 								}
-								else
-								{
-									//if I pass the entity id here I could know if a drawn card is one of the copies.
-									// (should probably not be implemented :))
-									for(int i = 0; i < 3; i++)
-										_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
-								}
 							}
-							else if (actionStartingCardId == "GVG_056") //Iron Juggernaut
+							else if(actionStartingCardId == "GVG_035")	 //Malorne
 							{
-								// burrowing mine will be the entity created next
+								// Malorne will be the entity created next
 								int id = Game.Entities.Count + 1;
-								if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+								if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 								{
 									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
 									_gameHandler.HandleOpponentGetToDeck(GetTurnNumber());
@@ -471,7 +518,7 @@ namespace Hearthstone_Deck_Tracker
 								else
 								{
 									ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-									_gameHandler.HandlePlayerGetToDeck("GVG_056t", GetTurnNumber());
+									_gameHandler.HandlePlayerGetToDeck("GVG_035", GetTurnNumber());
 								}
 							}
 

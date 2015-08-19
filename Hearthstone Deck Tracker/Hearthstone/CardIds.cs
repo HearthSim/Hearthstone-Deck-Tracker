@@ -35,7 +35,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"BRMA",
 			"BRMC",
 			"TBA",
-			"TB_"
+			"TB_",
+			"TBST_"
 		};
 
 		public static readonly List<string> SecretIdsHunter = new List<string>
