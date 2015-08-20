@@ -1188,6 +1188,7 @@ namespace Hearthstone_Deck_Tracker
 			_addToTurn = -1;
 			_gameEnded = false;
 			_foundSpectatorStart = false;
+			_nextUpdatedEntityIsJoust = false;
 		}
 
 		public async Task<bool> RankedDetection(int timeoutInSeconds = 3)
