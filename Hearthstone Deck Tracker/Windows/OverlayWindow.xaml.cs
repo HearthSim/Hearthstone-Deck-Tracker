@@ -590,11 +590,12 @@ namespace Hearthstone_Deck_Tracker
 
             CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 
             CanvasOpponentChance.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+
 			if(Game.IsInMenu && !_uiMovable)
 				HideTimers();
 
@@ -977,7 +978,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelPlayer.Children.Add(CanvasPlayerChance);
 						break;
 					case "Card Counter":
-						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+						StackPanelPlayer.Children.Add(CanvasPlayerCount);
 						break;
 					case "Fatigue Counter":
 						StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
@@ -1006,7 +1007,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelOpponent.Children.Add(CanvasOpponentChance);
 						break;
 					case "Card Counter":
-						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+						StackPanelOpponent.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
 						StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
