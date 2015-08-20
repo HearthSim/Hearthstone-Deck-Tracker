@@ -2,6 +2,7 @@
 
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader;
 
 #endregion
 
@@ -113,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
 				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
+			HsLogReaderV2.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}
 
@@ -126,7 +127,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
 				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
+			HsLogReaderV2.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}
 

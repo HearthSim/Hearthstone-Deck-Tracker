@@ -16,8 +16,29 @@ using Hearthstone_Deck_Tracker.Replay;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public class HsLogReader
-	{
+    public interface IHsLogReader
+    {
+        /// <summary>
+        /// Start tracking gamelogs with default impelementaion of GameEventHandler
+        /// </summary>
+        void Start();
+
+        /// <summary>
+        /// Start tracking gamelogs with custom impelementaion of GameEventHandler
+        /// </summary>
+        /// <param name="gh"> Custom Game handler implementation </param>
+        void Start(IGameHandler gh);
+
+        void Stop();
+        void ClearLog();
+        Task<bool> RankedDetection(int timeoutInSeconds = 3);
+        void GetCurrentRegion();
+        void Reset(bool full);
+    }
+
+    [Obsolete("Use HsLogReaderV2")]
+    public class HsLogReader : IHsLogReader
+    {
 		//should be about 180,000 lines
 		private const int MaxFileLength = 6000000;
 		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*BlockType=POWER.*Target=(?<target>(.+))");
@@ -1172,7 +1193,7 @@ namespace Hearthstone_Deck_Tracker
 			_gameLoaded = false;
 		}
 
-		internal void Reset(bool full)
+        public void Reset(bool full)
 		{
 			if(full)
 			{

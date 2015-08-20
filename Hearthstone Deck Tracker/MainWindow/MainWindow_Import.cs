@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 
@@ -496,7 +497,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.GetPlayerClass;
 			}
 			SetNewDeck(deck);
-			HsLogReader.Instance.ClearLog();
+			HsLogReaderV2.Instance.ClearLog();
 		}
 	}
 }

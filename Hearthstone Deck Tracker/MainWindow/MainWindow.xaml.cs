@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateMenuItemVisibility();
 			}
 			//needs to be true for automatic deck detection to work
-			HsLogReader.Instance.Reset(true);
+			HsLogReaderV2.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
 		}
@@ -712,7 +713,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 
-			HsLogReader.Create();
+			HsLogReaderV2.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 
@@ -838,7 +839,7 @@ namespace Hearthstone_Deck_Tracker
 			SelectDeck(DeckList.Instance.ActiveDeck, true);
 
 			if(_foundHsDirectory)
-				HsLogReader.Instance.Start();
+				HsLogReaderV2.Instance.Start();
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
@@ -1228,7 +1229,7 @@ namespace Hearthstone_Deck_Tracker
 
 				_notifyIcon.Visible = false;
 				Overlay.Close();
-				HsLogReader.Instance.Stop();
+				HsLogReaderV2.Instance.Stop();
 				TimerWindow.Shutdown();
 				PlayerWindow.Shutdown();
 				OpponentWindow.Shutdown();
@@ -1363,7 +1364,7 @@ namespace Hearthstone_Deck_Tracker
 					if(!Game.IsRunning || Game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
-						HsLogReader.Instance.GetCurrentRegion();
+						HsLogReaderV2.Instance.GetCurrentRegion();
 					}
 					Overlay.UpdatePosition();
 
@@ -1414,11 +1415,11 @@ namespace Hearthstone_Deck_Tracker
 						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
 						Game.CurrentRegion = Region.UNKNOWN;
 						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-						HsLogReader.Instance.ClearLog();
+						HsLogReaderV2.Instance.ClearLog();
 						Game.Reset();
 						if(DeckList.Instance.ActiveDeck != null)
 							Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-						HsLogReader.Instance.Reset(true);
+						HsLogReaderV2.Instance.Reset(true);
 
 						if(Config.Instance.CloseWithHearthstone)
 							Close();
