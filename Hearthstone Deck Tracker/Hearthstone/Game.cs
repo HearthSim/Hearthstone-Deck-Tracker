@@ -539,6 +539,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public static void OpponentJoustReveal(string cardId)
+		{
+			if(string.IsNullOrEmpty(cardId) || OpponentCards.Any(c => c.Id == cardId && c.Jousted))
+				return;
+			var card = GetCardFromId(cardId);
+			card.Jousted = true;
+			OpponentCards.Add(card);
+		}
+
 		public static void OpponentPlay(string id, int from, int turn)
 		{
 			OpponentHandCount--;
@@ -547,6 +556,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHasCoin = false;
 			if(!string.IsNullOrEmpty(id))
 			{
+				var jousted = OpponentCards.FirstOrDefault(c => c.Id == id && c.Jousted);
+				if(jousted != null)
+					OpponentCards.Remove(jousted);
 				//key: cardid, value: turn when returned to deck
 				var wasReturnedToDeck = OpponentReturnedToDeck.Any(p => p.Key == id && p.Value <= OpponentHandAge[from - 1]);
 				var stolen = from != -1
@@ -648,6 +660,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentDeckCount--;
 			if(string.IsNullOrEmpty(cardId))
 				return;
+
+			var jousted = OpponentCards.FirstOrDefault(c => c.Id == cardId && c.Jousted);
+			if(jousted != null)
+				OpponentCards.Remove(jousted);
 
 			var card = OpponentCards.FirstOrDefault(c => c.Id == cardId && c.WasDiscarded);
 			if(card != null)

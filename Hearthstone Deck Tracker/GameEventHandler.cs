@@ -782,6 +782,14 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentPlay.Execute(Game.GetCardFromId(cardId));
 		}
 
+
+		public void HandleOpponentJoust(string cardId)
+		{
+			Game.OpponentJoustReveal(cardId);
+			Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
+			Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
+		}
+
 		public static void HandleOpponentHandDiscard(string cardId, int from, int turn)
 		{
 			LogEvent("OpponentHandDiscard", cardId, turn, from);

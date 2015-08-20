@@ -83,6 +83,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public bool Jousted { get; set; }
+
+		[XmlIgnore]
 		public int Attack { get; set; }
 
 		[XmlIgnore]
@@ -271,7 +274,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					color = Colors.Orange;
 				else if(InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
-				else if(Count <= 0)
+				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
 				else if(WasDiscarded && Game.HighlightDiscarded)
 					color = Colors.IndianRed;
@@ -367,7 +370,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 
 					//dark overlay
-					if(Count <= 0)
+					if(Count <= 0 || Jousted)
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
 
 					var brush = new ImageBrush {ImageSource = new DrawingImage(drawingGroup)};

@@ -75,7 +75,8 @@ namespace Hearthstone_Deck_Tracker
 		private ReplayKeyPoint _proposedKeyPoint;
 		private dynamic _waitForController;
 		private bool _waitingForFirstAssetUnload;
-		private bool foundSpectatorStart;
+		private bool _foundSpectatorStart;
+		private bool _nextUpdatedEntityIsJoust;
 
 		/// <summary>
 		/// Update deckTracker interface (true by default)
@@ -243,15 +244,15 @@ namespace Hearthstone_Deck_Tracker
 					if(line.Contains("Begin Spectating") || line.Contains("Start Spectator"))
 					{
 						offset = tempOffset;
-						foundSpectatorStart = true;
+						_foundSpectatorStart = true;
 					}
 					else if(line.Contains("End Spectator"))
 						offset = tempOffset;
 					else if(line.Contains("CREATE_GAME") && line.Contains("GameState."))
 					{
-						if(foundSpectatorStart)
+						if(_foundSpectatorStart)
 						{
-							foundSpectatorStart = false;
+							_foundSpectatorStart = false;
 							continue;
 						}
 						offset = tempOffset;
@@ -260,9 +261,9 @@ namespace Hearthstone_Deck_Tracker
 					tempOffset += line.Length + 1;
 					if(line.StartsWith("[Bob] legend rank"))
 					{
-						if(foundSpectatorStart)
+						if(_foundSpectatorStart)
 						{
-							foundSpectatorStart = false;
+							_foundSpectatorStart = false;
 							continue;
 						}
 						offset = tempOffset;
@@ -394,6 +395,16 @@ namespace Hearthstone_Deck_Tracker
 						{
 							var entity = _entityRegex.Match(rawEntity);
 							entityId = int.Parse(entity.Groups["id"].Value);
+							if(_nextUpdatedEntityIsJoust)
+							{
+								Entity currentEntity;
+								if(Game.Entities.TryGetValue(entityId, out currentEntity) && 
+									currentEntity.IsControlledBy(Game.OpponentId))
+								{
+									_gameHandler.HandleOpponentJoust(cardId);
+									_nextUpdatedEntityIsJoust = false;
+								}
+							}
 						}
 						else if(!int.TryParse(rawEntity, out entityId))
 							entityId = -1;
@@ -427,6 +438,7 @@ namespace Hearthstone_Deck_Tracker
 						var match = _actionStartRegex.Match(logLine);
 						var actionStartingCardId = match.Groups["cardId"].Value.Trim();
 						var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
+
 						if (string.IsNullOrEmpty(actionStartingCardId))
 						{
 							Entity tmpEntity;
@@ -545,6 +557,10 @@ namespace Hearthstone_Deck_Tracker
 								}
 							}
 						}
+					}
+					else if(logLine.Contains("BlockType=JOUST"))
+					{
+						_nextUpdatedEntityIsJoust = true;
 					}
 				}
 					#endregion
@@ -1171,7 +1187,7 @@ namespace Hearthstone_Deck_Tracker
 			_first = true;
 			_addToTurn = -1;
 			_gameEnded = false;
-			foundSpectatorStart = false;
+			_foundSpectatorStart = false;
 		}
 
 		public async Task<bool> RankedDetection(int timeoutInSeconds = 3)

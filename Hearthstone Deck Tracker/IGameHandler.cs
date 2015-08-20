@@ -58,5 +58,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGetToDeck(int turn);
 
 		#endregion OpponentHandlers
+
+		void HandleOpponentJoust(string cardId);
 	}
 }
