@@ -427,6 +427,22 @@ namespace Hearthstone_Deck_Tracker
 			MinHeight -= StatusBarNewsHeight;
 			TopRow.Height = new GridLength(0);
 		}
+		
+		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e)
+		{
+			_newsLine--;
+			if(_newsLine < 0)
+				_newsLine = _news.Length - 1;
+			UpdateNews(_newsLine);
+		}
+
+		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e)
+		{
+			_newsLine++;
+			if(_newsLine > _news.Length - 1)
+				_newsLine = 0;
+			UpdateNews(_newsLine);
+		}
 
 		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -1046,6 +1062,7 @@ namespace Hearthstone_Deck_Tracker
 				_currentNewsLine = _news[newsLine];
 				NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
 			}
+			StatusBarItemNewsIndex.Content = string.Format("({0}/{1})", _newsLine + 1, _news.Length);
 			_lastNewsUpdate = DateTime.Now;
 		}
 
