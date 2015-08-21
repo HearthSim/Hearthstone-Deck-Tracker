@@ -1,9 +1,11 @@
 ﻿#region
 
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Enums;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -29,7 +31,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
-			CheckBoxAutoDetectCardCount.IsChecked = Config.Instance.DeckImportAutoDetectCardCount;
+			ComboboxArenaImportingBehaviour.IsEnabled = !Config.Instance.UseOldArenaImporting;
+			ComboboxArenaImportingBehaviour.ItemsSource = Enum.GetValues(typeof(ArenaImportingBehaviour));
+			if(Config.Instance.SelectedArenaImportingBehaviour.HasValue)
+				ComboboxArenaImportingBehaviour.SelectedItem = Config.Instance.SelectedArenaImportingBehaviour.Value;
+			CheckboxUseOldArenaImporting.IsChecked = Config.Instance.UseOldArenaImporting;
+			BtnArenaHowTo.IsEnabled = Config.Instance.UseOldArenaImporting;
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
 			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
@@ -129,21 +136,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			Helper.MainWindow.SetupProtocol();
 		}
-
-		private void CheckBoxAutoDetectCardCount_Checked(object sender, RoutedEventArgs e)
+		
+		private void CheckboxUseOldArenaImporting_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.DeckImportAutoDetectCardCount = true;
+			Config.Instance.UseOldArenaImporting = true;
+			ComboboxArenaImportingBehaviour.IsEnabled = false;
+			ComboboxArenaImportingBehaviour.SelectedIndex = -1;
+			BtnArenaHowTo.IsEnabled = true;
 			Config.Save();
 		}
 
-		private void CheckBoxAutoDetectCardCount_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxUseOldArenaImporting_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.DeckImportAutoDetectCardCount = false;
+			Config.Instance.UseOldArenaImporting = false;
+			ComboboxArenaImportingBehaviour.IsEnabled = true;
+			ComboboxArenaImportingBehaviour.SelectedItem = ArenaImportingBehaviour.AutoAsk;
+			BtnArenaHowTo.IsEnabled = false;
 			Config.Save();
+		}
+
+		private void ComboboxArenaImportingBehaviour_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			var selected = ComboboxArenaImportingBehaviour.SelectedItem as ArenaImportingBehaviour?;
+			if(selected != null)
+			{
+				Config.Instance.SelectedArenaImportingBehaviour = selected;
+				Config.Save();
+			}
 		}
 	}
 }

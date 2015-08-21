@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -869,5 +870,80 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		#endregion
+
+		public static Deck TempArenaDeck;
+		public static readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
+
+		public static void NewArenaDeck(string heroId)
+		{
+			TempArenaDeck = new Deck
+			{
+				Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate),
+				IsArenaDeck = true,
+				Class = GetHeroNameFromId(heroId)
+			};
+			Logger.WriteLine("Created new arena deck: " + TempArenaDeck.Class);
+		}
+
+		public static async void NewArenaCard(string cardId)
+		{
+			if(TempArenaDeck == null)
+				return;
+			var existingCard = TempArenaDeck.Cards.FirstOrDefault(c => c.Id == cardId);
+			if(existingCard != null)
+				existingCard.Count++;
+			else
+				TempArenaDeck.Cards.Add((Card)GetCardFromId(cardId).Clone());
+			var numCards = TempArenaDeck.Cards.Sum(c => c.Count);
+			Logger.WriteLine(string.Format("Added new card to arena deck: {0} ({1}/30)", cardId, numCards));
+			if(numCards == 30)
+			{
+				Logger.WriteLine("Found complete arena deck!");
+				if(!Config.Instance.SelectedArenaImportingBehaviour.HasValue)
+				{
+					Logger.WriteLine("...but we are using the old importing method.");
+					return;
+				}
+				var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
+				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				{
+					Logger.WriteLine("...but we already have that one. Discarding.");
+					TempArenaDeck = null;
+					return;
+				}
+				if(DiscardedArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				{
+					Logger.WriteLine("...but it was already discarded by the user. No automatic action taken.");
+					return;
+				}
+				if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoImportSave)
+				{
+					Logger.WriteLine("...auto saving new arena deck.");
+					Helper.MainWindow.SetNewDeck(TempArenaDeck);
+					Helper.MainWindow.SaveDeck(false, TempArenaDeck.Version);
+					TempArenaDeck = null;
+				}
+				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
+				{
+					var result =
+						await
+						Helper.MainWindow.ShowMessageAsync("New arena deck detected!", "", MessageDialogStyle.AffirmativeAndNegative,
+						                                   new MetroDialogSettings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+					if(result == MessageDialogResult.Affirmative)
+					{
+						Logger.WriteLine("...saving new arena deck.");
+						Helper.MainWindow.SetNewDeck(TempArenaDeck);
+						Helper.MainWindow.ActivateWindow();
+						TempArenaDeck = null;
+					}
+					else
+					{
+						Logger.WriteLine("...discarded by user.");
+						DiscardedArenaDecks.Add(TempArenaDeck);
+						TempArenaDeck = null;
+					}
+				}
+			}
+		}
 	}
 }

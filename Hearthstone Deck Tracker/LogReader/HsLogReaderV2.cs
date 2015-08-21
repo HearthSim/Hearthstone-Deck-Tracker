@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
@@ -13,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
     {
         //should be about 180,000 lines
         private const int MaxFileLength = 6000000;
-        private readonly string _fullOutputPath;
+        private string _fullOutputPath;
         private readonly bool _ifaceUpdateNeeded;
         private readonly int _updateDelay;
         private readonly HsGameState _gameState = new HsGameState();
@@ -332,6 +333,34 @@ namespace Hearthstone_Deck_Tracker.LogReader
             catch (Exception ex)
             {
                 Logger.WriteLine("Error getting region:\n" + ex, "LogReader");
+            }
+        }
+
+        public int GetTurnNumber()
+        {
+            return _gameState.GetTurnNumber();
+        }
+
+        public void LoadLatestLogFile()
+        {
+            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var logDir = Path.Combine(localAppData, "Blizzard\\Hearthstone\\Logs");
+            var dirInfo = new DirectoryInfo(logDir);
+            var logFiles = dirInfo.GetFiles("hearthstone_*.log").OrderByDescending(f => f.CreationTime).ToList();
+            if (logFiles.Count > 0)
+            {
+                _fullOutputPath = logFiles.First().FullName;
+                foreach (var file in logFiles.Skip(1))
+                {
+                    try
+                    {
+                        file.Delete();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.WriteLine("Error deleting old hearthstone log: " + ex, "LogReader");
+                    }
+                }
             }
         }
     }
