@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
     public class HsGameState
     {
+        private readonly GameV2 _game;
         public int AddToTurn { get; set; }
         public bool AwaitingRankedDetection { get; set; }
         public bool CurrentEntityHasCardId { get; set; }
@@ -33,11 +34,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public bool FoundSpectatorStart { get; set; }
         public bool NextUpdatedEntityIsJoust { get; set; }
 
+        public HsGameState(GameV2 game)
+        {
+            _game = game;
+        }
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
         {
             if (ProposedKeyPoint != null)
-                ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player);
+                ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player, _game);
             ProposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
         }
         
@@ -48,16 +53,16 @@ namespace Hearthstone_Deck_Tracker.LogReader
         
         public int GetTurnNumber()
         {
-            if (!Game.IsMulliganDone)
+            if (!_game.IsMulliganDone)
                 return 0;
             if (AddToTurn == -1)
             {
-                var firstPlayer = Game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
+                var firstPlayer = _game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
                 if (firstPlayer.Value != null)
-                    AddToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == Game.PlayerId ? 0 : 1;
+                    AddToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == _game.PlayerId ? 0 : 1;
             }
             Entity entity;
-            if (Game.Entities.TryGetValue(1, out entity))
+            if (_game.Entities.TryGetValue(1, out entity))
                 return (entity.Tags[GAME_TAG.TURN] + (AddToTurn == -1 ? 0 : AddToTurn)) / 2;
             return 0;
         }
@@ -66,10 +71,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
         {
             if (ProposedKeyPoint != null)
             {
-                ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player);
+                ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player, _game);
                 ProposedKeyPoint = null;
             }
-            ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player);
+            ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player, _game);
         }
     }
 }

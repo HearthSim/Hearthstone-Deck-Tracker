@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -17,21 +18,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// </summary>
 	public partial class TrackerImporting
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public TrackerImporting()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+	    private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
 		{
 			Process.Start(e.Uri.AbsoluteUri);
 		}
 
-		public void Load()
+		public void Load(GameV2 game)
 		{
-			ComboboxArenaImportingBehaviour.IsEnabled = !Config.Instance.UseOldArenaImporting;
+            _game = game;
+            ComboboxArenaImportingBehaviour.IsEnabled = !Config.Instance.UseOldArenaImporting;
 			ComboboxArenaImportingBehaviour.ItemsSource = Enum.GetValues(typeof(ArenaImportingBehaviour));
 			if(Config.Instance.SelectedArenaImportingBehaviour.HasValue)
 				ComboboxArenaImportingBehaviour.SelectedItem = Config.Instance.SelectedArenaImportingBehaviour.Value;
@@ -108,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonSetUpConstructed_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.SetupConstructedImporting();
+			Helper.SetupConstructedImporting(_game);
 		}
 
 		private void BtnEditTemplate_Click(object sender, RoutedEventArgs e)

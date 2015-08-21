@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static IntPtr GetHearthstoneWindow()
 		{
-			if(!Game.IsRunning && DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
+			if(DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
 				return _hsWindow;
 			if(_hsWindow != IntPtr.Zero && IsWindow(_hsWindow))
 				return _hsWindow;

@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 			{
 				if(string.IsNullOrEmpty(id) || string.IsNullOrEmpty(count))
 					return null;
-				var card = Game.GetCardFromId(id);
+				var card = GameV2.GetCardFromId(id);
 				card.Count = int.Parse(count);
 				if(card.Count == 0)
 					card.Count = 1;

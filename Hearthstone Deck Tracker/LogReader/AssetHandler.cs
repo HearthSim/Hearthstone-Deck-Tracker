@@ -7,7 +7,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
     public class AssetHandler
     {
-        public void Handle(string logLine, HsGameState gameState)
+        public void Handle(string logLine, HsGameState gameState, GameV2 game)
         {
             if (gameState.AwaitingRankedDetection)
             {
@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             else if (HsLogReaderConstants.UnloadCardRegex.IsMatch(logLine))
             {
                 var id = HsLogReaderConstants.UnloadCardRegex.Match(logLine).Groups["id"].Value;
-                if (Game.CurrentGameMode == GameMode.Arena)
+                if (game.CurrentGameMode == GameMode.Arena)
                     gameState.GameHandler.HandlePossibleArenaCard(id);
                 else
                     gameState.GameHandler.HandlePossibleConstructedCard(id, true);

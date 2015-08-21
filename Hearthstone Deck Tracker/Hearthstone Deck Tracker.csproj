@@ -175,6 +175,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
       <DependentUpon>OpponentDeck.xaml</DependentUpon>
     </Compile>
@@ -223,8 +224,11 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\Game.cs" />
+    <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
     <Compile Include="LogReader\AssetHandler.cs" />
+    <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
     <Compile Include="LogReader\Handlers\ZoneHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
@@ -342,7 +346,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeckList.cs" />
-    <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="HsLogReader.cs" />
     <Compile Include="MainWindow\MainWindow_Edit.cs" />

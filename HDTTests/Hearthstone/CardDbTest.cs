@@ -14,33 +14,33 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestTotalCollectableCards()
 		{
-			Assert.AreEqual(566, Game.GetActualCards().Count);
+			Assert.AreEqual(566, GameV2.GetActualCards().Count);
 		}
 
 		[TestMethod]
 		public void TestHeroSkins()
 		{
-			var Alleria = Game.GetHeroNameFromId("HERO_05a");
+			var Alleria = GameV2.GetHeroNameFromId("HERO_05a");
 			Assert.AreEqual("Hunter", Alleria);
 
-			var AlleriaPower = Game.GetCardFromId("DS1h_292_H1");
+			var AlleriaPower = GameV2.GetCardFromId("DS1h_292_H1");
 			Assert.AreEqual("Steady Shot", AlleriaPower.Name);
 		}
 
 		[TestMethod]
 		public void TestBrawlCards()
 		{
-			var Rotten = Game.GetCardFromId("TB_008");
+			var Rotten = GameV2.GetCardFromId("TB_008");
 			Assert.AreEqual("Rotten Banana", Rotten.Name);
 
-			var Moira = Game.GetCardFromId("BRMC_87");
+			var Moira = GameV2.GetCardFromId("BRMC_87");
 			Assert.AreEqual("Moira Bronzebeard", Moira.Name);
 		}
 
 		[TestMethod]
 		public void TestCardImages()
 		{
-			foreach(var card in Game.GetActualCards())
+			foreach(var card in GameV2.GetActualCards())
 			{
 				Assert.IsTrue(File.Exists("Images/" + card.CardFileName + ".png"), card.Name);
 			}

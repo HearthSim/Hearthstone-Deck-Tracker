@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 					var splitEntry = entry.Split(':');
 					if(splitEntry.Length != 2)
 						continue;
-					var card = Game.GetCardFromId(splitEntry[0]);
+					var card = GameV2.GetCardFromId(splitEntry[0]);
 					if(card.Id == "UNKNOWN")
 						continue;
 					int count;
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 						cardName = match.Groups["cardname"].Value.Trim();
 					}
 
-					var card = Game.GetCardFromName(cardName, localizedNames);
+					var card = GameV2.GetCardFromName(cardName, localizedNames);
 					if(card == null || string.IsNullOrEmpty(card.Name))
 						continue;
 					card.Count = count;
@@ -285,10 +285,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnLastGame_Click(object sender, RoutedEventArgs e)
 		{
-			if(Game.DrawnLastGame == null)
+			if(_game.DrawnLastGame == null)
 				return;
 			var deck = new Deck();
-			foreach(var card in Game.DrawnLastGame)
+			foreach(var card in _game.DrawnLastGame)
 			{
 				if(card.IsStolen)
 					continue;
@@ -306,7 +306,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(Config.Instance.UseOldArenaImporting)
 			{
-				if(Config.Instance.ShowArenaImportMessage || Game.PossibleArenaCards.Count < 10)
+				if(Config.Instance.ShowArenaImportMessage || _game.PossibleArenaCards.Count < 10)
 				{
 					await
 						this.ShowMessageAsync("How this works:",
@@ -317,12 +317,12 @@ namespace Hearthstone_Deck_Tracker
 						Config.Instance.ShowArenaImportMessage = false;
 						Config.Save();
 					}
-					if(Game.PossibleArenaCards.Count < 10)
+					if(_game.PossibleArenaCards.Count < 10)
 						return;
 				}
 
 				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
-				foreach(var card in Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
+				foreach(var card in _game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
 				{
 					deck.Cards.Add(card);
 					if(deck.Class == null && card.GetPlayerClass != "Neutral")
@@ -341,13 +341,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if(Game.TempArenaDeck == null)
+				if(_game.TempArenaDeck == null)
 				{
 					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
 				}
 				else
 				{
-					SetNewDeck(Game.TempArenaDeck);
+					SetNewDeck(_game.TempArenaDeck);
 				}
 			}
 		}
@@ -468,7 +468,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowConstructedImportMessage || Game.PossibleConstructedCards.Count < 10)
+			if(Config.Instance.ShowConstructedImportMessage || _game.PossibleConstructedCards.Count < 10)
 			{
 				if(Config.Instance.ShowConstructedImportMessage)
 				{
@@ -480,30 +480,30 @@ namespace Hearthstone_Deck_Tracker
 						                      new MetroDialogSettings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
 					if(result != MessageDialogResult.Affirmative)
 						return;
-					await Helper.SetupConstructedImporting();
+					await Helper.SetupConstructedImporting(_game);
 					Config.Instance.ShowConstructedImportMessage = false;
 					Config.Save();
 				}
 				await
 					this.ShowMessageAsync("How this works:",
 					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				if(Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
-				   && Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
+				if(_game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
+				   && _game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
 					return;
 			}
 
 
 			var deck = new Deck();
-			deck.Class = Game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
+			deck.Class = _game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
 
-			var legendary = Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
+			var legendary = _game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
-				Game.PossibleConstructedCards.Where(
+                _game.PossibleConstructedCards.Where(
 				                                    c =>
 				                                    c.Rarity != "Legendary" && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
 				    .ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
-			foreach(var card in Game.PossibleConstructedCards)
+			foreach(var card in _game.PossibleConstructedCards)
 			{
 				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;

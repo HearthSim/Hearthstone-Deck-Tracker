@@ -272,11 +272,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Color color;
 				if(_justDrawn)
 					color = Colors.Orange;
-				else if(InHandCount > 0 && Game.HighlightCardsInHand || IsStolen)
+				else if(InHandCount > 0 && GameV2.Instance.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
 				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
-				else if(WasDiscarded && Game.HighlightDiscarded)
+				else if(WasDiscarded && GameV2.Instance.HighlightDiscarded)
 					color = Colors.IndianRed;
 				else
 					color = Colors.White;
@@ -421,7 +421,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(_loaded)
 				return;
 
-			var stats = Game.GetCardFromId(Id);
+			var stats = GameV2.GetCardFromId(Id);
 			PlayerClass = stats.PlayerClass;
 			Rarity = stats.Rarity;
 			Type = stats.Type;

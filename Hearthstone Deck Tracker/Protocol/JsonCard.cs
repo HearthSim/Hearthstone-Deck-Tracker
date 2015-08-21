@@ -23,9 +23,9 @@ namespace Hearthstone_Deck_Tracker.Protocol
 		{
 			Card card = null;
 			if(!string.IsNullOrEmpty(Id))
-				card = Game.GetCardFromId(Id);
+				card = GameV2.GetCardFromId(Id);
 			else if(!string.IsNullOrEmpty(Name))
-				card = Game.GetCardFromName(Name, localizedName);
+				card = GameV2.GetCardFromName(Name, localizedName);
 			if(card != null)
 				card.Count = Count;
 			return card;

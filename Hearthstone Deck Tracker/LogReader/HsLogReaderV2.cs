@@ -17,13 +17,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
         private string _fullOutputPath;
         private readonly bool _ifaceUpdateNeeded;
         private readonly int _updateDelay;
-        private readonly HsGameState _gameState = new HsGameState();
+        private HsGameState _gameState;
+        private GameV2 _game;
 
         private readonly PowerHandler _powerLineHandler = new PowerHandler();
         private readonly RachelleHandler _rachelleHandler = new RachelleHandler();
         private readonly AssetHandler _assetHandler = new AssetHandler();
         private readonly ZoneHandler _zoneHandler = new ZoneHandler();
         private readonly BobHandler _bobHandler = new BobHandler();
+        private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 
         private HsLogReaderV2() : this(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay, true) { }
 
@@ -35,7 +37,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _updateDelay = updateDelay == 0 ? 100 : updateDelay;
             while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
                 hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
-            _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+            //_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+            LoadLatestLogFile();
         }
 
         public static HsLogReaderV2 Instance { get; private set; }
@@ -50,15 +53,17 @@ namespace Hearthstone_Deck_Tracker.LogReader
             Instance = new HsLogReaderV2(hsDirectory, updateDeclay, ifaceUpdateNeeded);
         }
 
-        public void Start()
+        public void Start(GameV2 game)
         {
-            _gameState.GameHandler = new GameEventHandler();
+            _game = game;
+            _gameState = new HsGameState(game);
+            _gameState.GameHandler = new GameEventHandler(game);
             _gameState.GameHandler.ResetConstructedImporting();
             _gameState.LastGameStart = DateTime.Now;
-            Start(_gameState.GameHandler);
+            Start(_gameState.GameHandler, game);
         }
 
-        public void Start(IGameHandler gh)
+        public void Start(IGameHandler gh, GameV2 game)
         {
             _gameState.AddToTurn = -1;
             _gameState.First = true;
@@ -77,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         {
             while (_gameState.DoUpdate)
             {
-                if (File.Exists(_fullOutputPath) && Game.IsRunning)
+                if (File.Exists(_fullOutputPath) && _game.IsRunning)
                 {
                     //find end of last game (avoids reading the full log on start)
                     if (_gameState.First)
@@ -119,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                             Analyze(newLines);
 
                             if (_ifaceUpdateNeeded)
-                                Helper.UpdateEverything();
+                                Helper.UpdateEverything(_game);
                         }
 
                         _gameState.PreviousSize = newLength;
@@ -157,7 +162,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                         continue;
                     }
                     tempOffset += line.Length + 1;
-                    if (line.StartsWith("[Bob] legend rank"))
+                    if (line.Contains("[Bob] legend rank"))
                     {
                         if (_gameState.FoundSpectatorStart)
                         {
@@ -171,43 +176,48 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 return offset;
             }
         }
-        
+
         private void Analyze(string log)
         {
             var logLines = log.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var logLine in logLines)
+            foreach (var rawLogLine in logLines)
             {
+                var logLine = new string(rawLogLine.Skip(25).ToArray());
                 _gameState.CurrentOffset += logLine.Length + 1;
 
                 if (logLine.StartsWith("["))
-                    Game.AddHSLogLine(logLine);
+                    GameV2.AddHSLogLine(logLine);
 
                 if (logLine.StartsWith("[Power] GameState."))
                 {
-                    _powerLineHandler.Handle(logLine, _gameState);
+                    _powerLineHandler.Handle(logLine, _gameState,_game);
                 }
                 else if (logLine.StartsWith("[Asset]"))
                 {
-                    _assetHandler.Handle(logLine, _gameState);
+                    _assetHandler.Handle(logLine, _gameState, _game);
                 }
                 else if (logLine.StartsWith("[Bob]"))
                 {
-                    _bobHandler.Handle(logLine, _gameState);
+                    _bobHandler.Handle(logLine, _gameState, _game);
                 }
                 else if (logLine.StartsWith("[Rachelle]"))
                 {
-                    _rachelleHandler.Handle(logLine, _gameState);
+                    _rachelleHandler.Handle(logLine, _gameState, _game);
                 }
                 else if (logLine.StartsWith("[Zone]"))
                 {
                     _zoneHandler.Handle(logLine, _gameState);
+                }
+                else if (logLine.StartsWith("[Arena]"))
+                {
+                    _arenaHandler.Handle(logLine, _gameState, _game);
                 }
 
                 if (_gameState.First)
                     break;
             }
         }
-        
+
         public static int ParseTagValue(GAME_TAG tag, string rawValue)
         {
             int value;
@@ -268,6 +278,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
         public void Reset(bool full)
         {
+            if (_gameState == null)
+                return;
+
             if (full)
             {
                 _gameState.PreviousSize = 0;
@@ -322,7 +335,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                             Region region;
                             if (Enum.TryParse(match.Groups["region"].Value, out region))
                             {
-                                Game.CurrentRegion = region;
+                                _game.CurrentRegion = region;
                                 Logger.WriteLine("Current region: " + region, "LogReader");
                                 break;
                             }

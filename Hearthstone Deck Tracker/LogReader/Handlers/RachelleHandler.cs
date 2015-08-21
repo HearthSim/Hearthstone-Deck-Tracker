@@ -6,26 +6,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     public class RachelleHandler
     {
-        public void Handle(string logLine, HsGameState gameState)
+        public void Handle(string logLine, HsGameState gameState, GameV2 game)
         {
             if (HsLogReaderConstants.CardAlreadyInCacheRegex.IsMatch(logLine))
             {
                 var id = HsLogReaderConstants.CardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value;
-                if (Game.CurrentGameMode == GameMode.Arena)
+                if (game.CurrentGameMode == GameMode.Arena)
                     gameState.GameHandler.HandlePossibleArenaCard(id);
                 else
                     gameState.GameHandler.HandlePossibleConstructedCard(id, false);
             }
             else if (HsLogReaderConstants.GoldProgressRegex.IsMatch(logLine)
                      && (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
-                     && Game.CurrentGameMode != GameMode.Spectator)
+                     && game.CurrentGameMode != GameMode.Spectator)
             {
                 int wins;
                 var rawWins = HsLogReaderConstants.GoldProgressRegex.Match(logLine).Groups["wins"].Value;
                 if (int.TryParse(rawWins, out wins))
                 {
                     TimeZoneInfo timeZone = null;
-                    switch (Game.CurrentRegion)
+                    switch (game.CurrentRegion)
                     {
                         case Region.EU:
                             timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     }
                     if (timeZone != null)
                     {
-                        var region = (int)Game.CurrentRegion - 1;
+                        var region = (int)game.CurrentRegion - 1;
                         var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
                         if (Config.Instance.GoldProgressLastReset[region].Date != date)
                         {

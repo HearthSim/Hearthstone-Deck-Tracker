@@ -29,7 +29,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckStatsControl
 	{
-		private const string BtnOpponentDeckTextShow = "Show Opp. Deck";
+	    private GameV2 _game;
+	    private const string BtnOpponentDeckTextShow = "Show Opp. Deck";
 		private const string BtnOpponentDeckTextHide = "Hide Opp. Deck";
 		private const int GroupBoxHeaderHeight = 28;
 		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
@@ -39,7 +40,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public DeckStatsControl()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(GameMode));
 			ComboboxTime.ItemsSource = Enum.GetValues(typeof(TimeFrame));
 			ComboBoxOpponentClassD.ItemsSource = Enum.GetValues(typeof(HeroClassAll));
@@ -54,9 +56,10 @@ namespace Hearthstone_Deck_Tracker
 			get { return TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
-		public void LoadConfig()
+		public void LoadConfig(GameV2 game)
 		{
-			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
+            _game = game;
+            ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTimeFrame;
 			ComboboxUnassigned.SelectedValue = Config.Instance.StatsOverallFilterDeckMode;
 			ComboBoxPlayerClass.SelectedValue = Config.Instance.StatsOverallFilterPlayerHeroClass;
@@ -563,10 +566,10 @@ namespace Hearthstone_Deck_Tracker
 					if(deck != null)
 						deck.DeckStats.Games.Remove(game);
 				}
-				game.PlayerDeckVersion = dialog.SelectedVersion;
-				game.HearthStatsDeckVersionId = selectedDeck.GetVersion(dialog.SelectedVersion).HearthStatsDeckVersionId;
-				game.DeckId = selectedDeck.DeckId;
-				game.DeckName = selectedDeck.Name;
+                game.PlayerDeckVersion = dialog.SelectedVersion;
+                game.HearthStatsDeckVersionId = selectedDeck.GetVersion(dialog.SelectedVersion).HearthStatsDeckVersionId;
+                game.DeckId = selectedDeck.DeckId;
+                game.DeckName = selectedDeck.Name;
 				selectedDeck.DeckStats.Games.Add(game);
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 					HearthStatsManager.MoveMatchAsync(game, selectedDeck, background: true);
@@ -590,7 +593,7 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					if(play.Type.ToString().Contains("Player"))
 					{
-						var hero = Game.GetCardFromId(play.CardId).PlayerClass;
+						var hero = GameV2.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!playerHeroes.ContainsKey(hero))
@@ -599,7 +602,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(play.Type.ToString().Contains("Opponent"))
 					{
-						var hero = Game.GetCardFromId(play.CardId).PlayerClass;
+						var hero = GameV2.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!opponentHeroes.ContainsKey(hero))
@@ -613,7 +616,7 @@ namespace Hearthstone_Deck_Tracker
 				var pHero = playerHeroes.OrderByDescending(x => x.Value).First().Key;
 				if(game.PlayerHero != pHero)
 				{
-					game.PlayerHero = pHero;
+                    game.PlayerHero = pHero;
 					modifiedHero = true;
 				}
 			}
@@ -622,12 +625,12 @@ namespace Hearthstone_Deck_Tracker
 				var oHero = opponentHeroes.OrderByDescending(x => x.Value).First().Key;
 				if(game.OpponentHero != oHero)
 				{
-					game.OpponentHero = oHero;
+                    game.OpponentHero = oHero;
 					modifiedHero = true;
 				}
 			}
 
-			game.VerifiedHeroes = true;
+            game.VerifiedHeroes = true;
 			return modifiedHero;
 		}
 
@@ -658,8 +661,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(string.IsNullOrEmpty(game.PlayerHero))
 					{
-						//for some reason this does not get loaded after saving it to the xml
-						game.PlayerHero = @class;
+                        //for some reason this does not get loaded after saving it to the xml
+                        game.PlayerHero = @class;
 						needToSaveDeckStats = true;
 					}
 					if(!game.VerifiedHeroes && VerifyHeroes(game))

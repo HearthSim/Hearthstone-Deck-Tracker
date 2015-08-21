@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -21,13 +22,15 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class LoginWindow : INotifyPropertyChanged
 	{
-		private readonly bool _initialized;
+	    private readonly GameV2 _game;
+	    private readonly bool _initialized;
 		private ProgressDialogController _controller;
 		private Visibility _loginRegisterVisibility;
 
 		public LoginWindow()
 		{
-			InitializeComponent();
+		    _game = GameV2.Instance;
+		    InitializeComponent();
 			Logger.Initialzie();
 			Config.Load();
 			if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)
@@ -67,7 +70,7 @@ namespace Hearthstone_Deck_Tracker
 		private void StartMainApp()
 		{
 			IsEnabled = false;
-			var mainWindow = new MainWindow();
+			var mainWindow = new MainWindow(_game);
 			try
 			{
 				mainWindow.Show();
@@ -191,7 +194,7 @@ namespace Hearthstone_Deck_Tracker
 			TextBoxRegisterPasswordConfirm.Clear();
 			if(result.Success)
 			{
-				var mw = new MainWindow();
+				var mw = new MainWindow(_game);
 				mw.Show();
 				Close();
 			}

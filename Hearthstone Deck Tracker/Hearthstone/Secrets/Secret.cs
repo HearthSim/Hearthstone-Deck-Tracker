@@ -19,16 +19,15 @@ namespace Hearthstone_Deck_Tracker
 		public string CardId { get; private set; }
 		public int Count { get; set; }
 
-		public int AdjustedCount
-		{
-			get
-			{
-				return (Config.Instance.AutoGrayoutSecrets
-				        && (Game.CurrentGameMode == GameMode.Casual
-				            || Game.CurrentGameMode == GameMode.Ranked || Game.CurrentGameMode == GameMode.Brawl
-				            || Game.CurrentGameMode == GameMode.Friendly || Game.CurrentGameMode == GameMode.Practice)
-				        && Game.OpponentCards.Any(x => !x.IsStolen && x.Id == CardId & x.Count >= 2)) ? 0 : Count;
-			}
-		}
+
+	    public int AdjustedCount(GameV2 game)
+	    {
+            return (Config.Instance.AutoGrayoutSecrets
+                        && (game.CurrentGameMode == GameMode.Casual
+                            || game.CurrentGameMode == GameMode.Ranked || game.CurrentGameMode == GameMode.Brawl
+                            || game.CurrentGameMode == GameMode.Friendly || game.CurrentGameMode == GameMode.Practice)
+                        && game.OpponentCards.Any(x => !x.IsStolen && x.Id == CardId & x.Count >= 2)) ? 0 : Count;
+        }
+        
 	}
 }

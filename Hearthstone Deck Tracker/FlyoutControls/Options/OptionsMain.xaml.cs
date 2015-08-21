@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -63,19 +64,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		public void Load()
+		public void Load(GameV2 game)
 		{
-			OptionsOverlayGeneral.Load();
-			OptionsOverlayDeckWindows.Load();
-			OptionsOverlayPlayer.Load();
-			OptionsOverlayOpponent.Load();
+			OptionsOverlayGeneral.Load(game);
+			OptionsOverlayDeckWindows.Load(game);
+			OptionsOverlayPlayer.Load(game);
+			OptionsOverlayOpponent.Load(game);
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
 			OptionsTrackerExporting.Load();
-			OptionsTrackerImporting.Load();
-			OptionsTrackerLogging.Load();
+			OptionsTrackerImporting.Load(game);
+			OptionsTrackerLogging.Load(game);
 			OptionsTrackerStats.Load();
-			OptionsTrackerLogging.Load();
+			OptionsTrackerLogging.Load(game);
 			OptionsTrackerGeneral.Load();
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
