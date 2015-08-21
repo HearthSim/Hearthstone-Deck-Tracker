@@ -5,7 +5,7 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-                      Title="Opponent" Height="440" Width="226" MinWidth="226" MaxWidth="226"
+                      Title="Opponent" Height="440" Width="230" MinWidth="230" MaxWidth="230"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
                       Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
@@ -58,18 +58,23 @@
                     </Style>
                 </ListView.Resources>
             </controls1:DeckListView>
-            <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
-            <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
-            <StackPanel Name="StackPanelCount" Orientation="Horizontal" HorizontalAlignment="Stretch" Height="35" Width="218" Margin="0,5">
-                <StackPanel.Background>
+            <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
+                <Canvas.Background>
                     <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
-                </StackPanel.Background>
-                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="18" Text="3" VerticalAlignment="Center" TextAlignment="Center" Width="48" HorizontalAlignment="Left" Margin="50,0,0,0" />
-                <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="18" Text="27" TextAlignment="Center" Width="48" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" />
-            </StackPanel>
-            <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
-                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
-            </StackPanel>
+                </Canvas.Background>
+                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="18" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="18" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" />
+            </Canvas>
+            <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2">
+                <Canvas.Background>
+                    <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/opponent-chance-frame.png"/>
+                </Canvas.Background>
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="55" />
+                <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="55" />
+            </Canvas>
+                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

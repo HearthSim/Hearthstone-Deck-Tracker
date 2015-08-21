@@ -353,22 +353,26 @@ namespace Hearthstone_Deck_Tracker
 			{
 				LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
 
-				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
-				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
-				return;
+				LblOpponentDrawChance2.Text = "0%";
+				LblOpponentDrawChance1.Text = "0%";
+                LblOpponentHandChance2.Text = cardCount <= 0 ? "0%" : "100%"; ;
+                LblOpponentHandChance1.Text = cardCount <= 0 ? "0%" : "100%";
+                return;
 			}
 			LblOpponentFatigue.Text = "";
 
 			var handWithoutCoin = cardCount - (Game.OpponentHasCoin ? 1 : 0);
 
-			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
+			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance2.Text = drawNextTurn2 + "%";
+            LblOpponentHandChance2.Text = holdingNextTurn2 + "%";
 
-			var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
-		}
+            var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance1.Text = drawNextTurn + "%";
+            LblOpponentHandChance1.Text = holdingNextTurn + "%";
+        }
 
 		private void SetCardCount(int cardCount, int cardsLeftInDeck)
 		{
@@ -384,14 +388,14 @@ namespace Hearthstone_Deck_Tracker
 			{
 				LblPlayerFatigue.Text = "Next draw fatigues for: " + (Game.PlayerFatigueCount + 1);
 
-				LblDrawChance2.Text = "[2]: -%";
-				LblDrawChance1.Text = "[1]: -%";
+				LblDrawChance2.Text = "0%";
+				LblDrawChance1.Text = "0%";
 				return;
 			}
 			LblPlayerFatigue.Text = "";
 
-			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
-			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
+			LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";
+			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
 		public void ShowOverlay(bool enable)
@@ -420,12 +424,14 @@ namespace Hearthstone_Deck_Tracker
 		private void ReSizePosLists()
 		{
 			//player TODO: take labels into account
+			var totalPlayerLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblPlayerFatigue.ActualHeight
+										  + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
 			if(((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-			    - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+			    - (ListViewPlayer.Items.Count * 35 * Scaling + totalPlayerLabelsHeight)) < 1 || Scaling < 1)
 			{
-				var previousScaling = Scaling;
+                var previousScaling = Scaling;
 				Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-				          / (ListViewPlayer.Items.Count * 35);
+				          / (ListViewPlayer.Items.Count * 35 + totalPlayerLabelsHeight);
 				if(Scaling > 1)
 					Scaling = 1;
 
@@ -439,12 +445,14 @@ namespace Hearthstone_Deck_Tracker
 			               - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 
 			//opponent
+			var totalOpponentLabelsHeight = CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight + LblOpponentFatigue.ActualHeight
+										  + LblWinRateAgainst.ActualHeight;
 			if(((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-			    - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
+			    - (ListViewOpponent.Items.Count * 35 * OpponentScaling + totalOpponentLabelsHeight)) < 1 || OpponentScaling < 1)
 			{
 				var previousScaling = OpponentScaling;
 				OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-				                  / (ListViewOpponent.Items.Count * 35);
+				                  / (ListViewOpponent.Items.Count * 35 + totalOpponentLabelsHeight);
 				if(OpponentScaling > 1)
 					OpponentScaling = 1;
 
@@ -584,15 +592,14 @@ namespace Hearthstone_Deck_Tracker
 				                                && !_uiMovable ? Visibility.Collapsed : Visibility.Visible;
 			}
 
-			LblDrawChance1.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblDrawChance2.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblPlayerFatigue.Visibility = Config.Instance.HidePlayerFatigueCount ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 
-			LblOpponentDrawChance1.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDrawChance2.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+            CanvasOpponentChance.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			LblOpponentFatigue.Visibility = Config.Instance.HideOpponentFatigueCount ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+
 			if(Game.IsInMenu && !_uiMovable)
 				HideTimers();
 
@@ -972,13 +979,13 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelPlayer.Children.Add(ListViewPlayer);
 						break;
 					case "Draw Chances":
-						StackPanelPlayer.Children.Add(StackPanelPlayerDraw);
+						StackPanelPlayer.Children.Add(CanvasPlayerChance);
 						break;
 					case "Card Counter":
-						StackPanelPlayer.Children.Add(StackPanelPlayerCount);
+						StackPanelPlayer.Children.Add(CanvasPlayerCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
+						StackPanelPlayer.Children.Add(LblPlayerFatigue);
 						break;
 					case "Deck Title":
 						StackPanelPlayer.Children.Add(LblDeckTitle);
@@ -1001,14 +1008,13 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelOpponent.Children.Add(ListViewOpponent);
 						break;
 					case "Draw Chances":
-						StackPanelOpponent.Children.Add(LblOpponentDrawChance1);
-						StackPanelOpponent.Children.Add(LblOpponentDrawChance2);
+						StackPanelOpponent.Children.Add(CanvasOpponentChance);
 						break;
 					case "Card Counter":
-						StackPanelOpponent.Children.Add(StackPanelOpponentCount);
+						StackPanelOpponent.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
+						StackPanelOpponent.Children.Add(LblOpponentFatigue);
 						break;
 					case "Win Rate":
 						StackPanelOpponent.Children.Add(ViewBoxWinRateAgainst);
