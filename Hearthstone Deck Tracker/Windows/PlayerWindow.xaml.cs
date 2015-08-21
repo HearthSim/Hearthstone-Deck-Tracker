@@ -54,8 +54,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if(forScreenshot)
 			{
-				StackPanelDraw.Visibility = Visibility.Collapsed;
-				StackPanelCount.Visibility = Visibility.Collapsed;
+				CanvasPlayerChance.Visibility = Visibility.Collapsed;
+				CanvasPlayerCount.Visibility = Visibility.Collapsed;
 				LblWins.Visibility = Visibility.Collapsed;
 				LblDeckTitle.Visibility = Visibility.Collapsed;
 
@@ -73,9 +73,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Update()
 		{
-			LblDrawChance1.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblDrawChance2.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
+            CanvasPlayerChance.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasPlayerCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 			LblWins.Visibility = Config.Instance.ShowDeckWins && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -110,10 +109,10 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelMain.Children.Add(ListViewPlayer);
 						break;
 					case "Draw Chances":
-						StackPanelMain.Children.Add(StackPanelDraw);
+						StackPanelMain.Children.Add(CanvasPlayerChance);
 						break;
 					case "Card Counter":
-						StackPanelMain.Children.Add(StackPanelCount);
+						StackPanelMain.Children.Add(CanvasPlayerCount);
 						break;
 					case "Fatigue Counter":
 						StackPanelMain.Children.Add(StackPanelPlayerFatigue);
@@ -208,15 +207,15 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelMain.Children.Clear();
 			if(top)
 			{
-				StackPanelMain.Children.Add(StackPanelDraw);
-				StackPanelMain.Children.Add(StackPanelCount);
+				StackPanelMain.Children.Add(CanvasPlayerChance);
+				StackPanelMain.Children.Add(CanvasPlayerCount);
 				StackPanelMain.Children.Add(ListViewPlayer);
 			}
 			else
 			{
 				StackPanelMain.Children.Add(ListViewPlayer);
-				StackPanelMain.Children.Add(StackPanelDraw);
-				StackPanelMain.Children.Add(StackPanelCount);
+				StackPanelMain.Children.Add(CanvasPlayerChance);
+				StackPanelMain.Children.Add(CanvasPlayerCount);
 			}
 		}
 	}
