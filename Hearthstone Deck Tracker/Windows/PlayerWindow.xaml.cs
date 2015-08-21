@@ -115,7 +115,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelMain.Children.Add(CanvasPlayerCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelMain.Children.Add(StackPanelPlayerFatigue);
+						StackPanelMain.Children.Add(LblPlayerFatigue);
 						break;
 					case "Deck Title":
 						StackPanelMain.Children.Add(LblDeckTitle);
@@ -136,15 +136,15 @@ namespace Hearthstone_Deck_Tracker
 			{
 				LblPlayerFatigue.Text = "Next draw fatigues for: " + (Game.PlayerFatigueCount + 1);
 
-				LblDrawChance2.Text = "[2]: -%";
-				LblDrawChance1.Text = "[1]: -%";
+				LblDrawChance2.Text = "0%";
+				LblDrawChance1.Text = "0%";
 				return;
 			}
 
 			LblPlayerFatigue.Text = "";
 
-			LblDrawChance2.Text = "[2]: " + Math.Round(200.0f / cardsLeftInDeck, 2) + "%";
-			LblDrawChance1.Text = "[1]: " + Math.Round(100.0f / cardsLeftInDeck, 2) + "%";
+			LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";
+			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
 		private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			var allLabelsHeight = LblDrawChance1.ActualHeight + LblDeckCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight;
+			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight;
 			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;

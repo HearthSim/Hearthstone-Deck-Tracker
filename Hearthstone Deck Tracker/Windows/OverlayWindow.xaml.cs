@@ -424,12 +424,14 @@ namespace Hearthstone_Deck_Tracker
 		private void ReSizePosLists()
 		{
 			//player TODO: take labels into account
+			var totalPlayerLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblPlayerFatigue.ActualHeight
+										  + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
 			if(((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-			    - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
+			    - (ListViewPlayer.Items.Count * 35 * Scaling + totalPlayerLabelsHeight)) < 1 || Scaling < 1)
 			{
-				var previousScaling = Scaling;
+                var previousScaling = Scaling;
 				Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-				          / (ListViewPlayer.Items.Count * 35);
+				          / (ListViewPlayer.Items.Count * 35 + totalPlayerLabelsHeight);
 				if(Scaling > 1)
 					Scaling = 1;
 
@@ -443,12 +445,14 @@ namespace Hearthstone_Deck_Tracker
 			               - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 
 			//opponent
+			var totalOpponentLabelsHeight = CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight + LblOpponentFatigue.ActualHeight
+										  + LblWinRateAgainst.ActualHeight;
 			if(((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-			    - (ListViewOpponent.Items.Count * 35 * OpponentScaling)) < 1 || OpponentScaling < 1)
+			    - (ListViewOpponent.Items.Count * 35 * OpponentScaling + totalOpponentLabelsHeight)) < 1 || OpponentScaling < 1)
 			{
 				var previousScaling = OpponentScaling;
 				OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-				                  / (ListViewOpponent.Items.Count * 35);
+				                  / (ListViewOpponent.Items.Count * 35 + totalOpponentLabelsHeight);
 				if(OpponentScaling > 1)
 					OpponentScaling = 1;
 
@@ -981,7 +985,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelPlayer.Children.Add(CanvasPlayerCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelPlayer.Children.Add(StackPanelPlayerFatigue);
+						StackPanelPlayer.Children.Add(LblPlayerFatigue);
 						break;
 					case "Deck Title":
 						StackPanelPlayer.Children.Add(LblDeckTitle);
@@ -1010,7 +1014,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelOpponent.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelOpponent.Children.Add(StackPanelOpponentFatigue);
+						StackPanelOpponent.Children.Add(LblOpponentFatigue);
 						break;
 					case "Win Rate":
 						StackPanelOpponent.Children.Add(ViewBoxWinRateAgainst);

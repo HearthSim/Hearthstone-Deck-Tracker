@@ -59,9 +59,7 @@
                     <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" />
                     <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" />
                 </Canvas>
-                <StackPanel Name="StackPanelPlayerFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
-                </StackPanel>
+                <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="asd" Margin="4,0,0,0" TextAlignment="Center"/>
 
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218" Canvas.Top="203" Canvas.Left="10">
@@ -102,10 +100,7 @@
                     <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="55" />
                     <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="55" />
                 </Canvas>
-
-                <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
-                </StackPanel>
+                    <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />

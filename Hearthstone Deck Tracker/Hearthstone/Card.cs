@@ -242,22 +242,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int Height
 		{
-			get { return (int)(OverlayWindow.Scaling * 35); }
+			get { return (int)Math.Round(OverlayWindow.Scaling * 35, 0); }
 		}
 
 		public int OpponentHeight
 		{
-			get { return (int)(OverlayWindow.OpponentScaling * 35); }
+			get { return (int)Math.Round(OverlayWindow.OpponentScaling * 35, 0); }
 		}
 
 		public int PlayerWindowHeight
 		{
-			get { return (int)(PlayerWindow.Scaling * 35); }
+			get { return (int)Math.Round(PlayerWindow.Scaling * 35, 0); }
 		}
 
 		public int OpponentWindowHeight
 		{
-			get { return (int)(OpponentWindow.Scaling * 35); }
+			get { return (int)Math.Round(OpponentWindow.Scaling * 35, 0); }
 		}
 
 		public string GetPlayerClass

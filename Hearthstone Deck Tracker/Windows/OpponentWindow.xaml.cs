@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelMain.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelMain.Children.Add(StackPanelOpponentFatigue);
+						StackPanelMain.Children.Add(LblOpponentFatigue);
 						break;
 					case "Win Rate":
 						StackPanelMain.Children.Add(ViewboxWinRateAgainst);
@@ -111,8 +111,10 @@ namespace Hearthstone_Deck_Tracker
 			{
 				LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
 
-				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
-				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
+				LblOpponentDrawChance2.Text = "0%";
+				LblOpponentDrawChance1.Text = "0%";
+				LblOpponentHandChance2.Text = cardCount <= 0 ? "0%" : "100%";
+				LblOpponentHandChance1.Text = cardCount <= 0 ? "0%" : "100%";
 				return;
 			}
 
@@ -120,13 +122,15 @@ namespace Hearthstone_Deck_Tracker
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
-			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
+			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance2.Text = drawNextTurn2 + "%";
+			LblOpponentHandChance2.Text = holdingNextTurn2 + "%";
 
-			var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
+			var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance1.Text = drawNextTurn + "%";
+			LblOpponentHandChance1.Text = holdingNextTurn + "%";
 		}
 
 		private void OpponentDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -136,8 +140,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			var allLabelsHeight = LblOpponentCardCount.ActualHeight + LblOpponentDrawChance1.ActualHeight + LblOpponentDrawChance2.ActualHeight
-			                      + LblWinRateAgainst.ActualHeight;
+			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
