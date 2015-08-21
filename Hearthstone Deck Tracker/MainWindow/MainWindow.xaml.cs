@@ -1364,6 +1364,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						HsLogReader.Instance.GetCurrentRegion();
+						HsLogReader.Instance.LoadLatestLogFile();
 					}
 					Overlay.UpdatePosition();
 

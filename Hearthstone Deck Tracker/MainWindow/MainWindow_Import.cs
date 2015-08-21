@@ -303,36 +303,52 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnArena_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowArenaImportMessage || Game.PossibleArenaCards.Count < 10)
+			if(Config.Instance.UseOldArenaImporting)
 			{
-				await
-					this.ShowMessageAsync("How this works:",
-					                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
-
-				if(Config.Instance.ShowArenaImportMessage)
+				if(Config.Instance.ShowArenaImportMessage || Game.PossibleArenaCards.Count < 10)
 				{
-					Config.Instance.ShowArenaImportMessage = false;
-					Config.Save();
-				}
-				if(Game.PossibleArenaCards.Count < 10)
-					return;
-			}
+					await
+						this.ShowMessageAsync("How this works:",
+						                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
 
-			var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
-			foreach(var card in Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
-			{
-				deck.Cards.Add(card);
-				if(deck.Class == null && card.GetPlayerClass != "Neutral")
-					deck.Class = card.GetPlayerClass;
+					if(Config.Instance.ShowArenaImportMessage)
+					{
+						Config.Instance.ShowArenaImportMessage = false;
+						Config.Save();
+					}
+					if(Game.PossibleArenaCards.Count < 10)
+						return;
+				}
+
+				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				foreach(var card in Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
+				{
+					deck.Cards.Add(card);
+					if(deck.Class == null && card.GetPlayerClass != "Neutral")
+						deck.Class = card.GetPlayerClass;
+				}
+				if(Config.Instance.DeckImportAutoDetectCardCount)
+				{
+					await
+						this.ShowMessageAsync("Arena cards found!",
+						                      "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
+					var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
+					await GetCardCounts(deck);
+					await controller.CloseAsync();
+				}
+				SetNewDeck(deck);
 			}
-			if(Config.Instance.DeckImportAutoDetectCardCount)
+			else
 			{
-				await this.ShowMessageAsync("Arena cards found!", "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
-				var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
-				await GetCardCounts(deck);
-				await controller.CloseAsync();
+				if(Game.TempArenaDeck == null)
+				{
+					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
+				}
+				else
+				{
+					SetNewDeck(Game.TempArenaDeck);
+				}
 			}
-			SetNewDeck(deck);
 		}
 
 		public async Task GetCardCounts(Deck deck)

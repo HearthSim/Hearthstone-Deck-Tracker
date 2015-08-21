@@ -2,42 +2,56 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <GroupBox Header="Importing">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <CheckBox x:Name="CheckBoxAutoDetectCardCount" Content="[BETA] Auto detect card count for arena"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckBoxAutoDetectCardCount_Checked"
-                                              Unchecked="CheckBoxAutoDetectCardCount_Unchecked" />
-                    <TextBlock Margin="10,5,0,0" Text="[This feature is still a work in progress!]" FontWeight="Bold"></TextBlock>
-                    <TextBlock Margin="10,5,0,15" Text="Currently only for arena. Can currently only detect &quot;more than 1&quot;, which sets it to 2, not the actual number. Yes, both of those things will come." TextWrapping="Wrap"></TextBlock>
+                    <GroupBox Header="Arena">
+                        <StackPanel>
+                            <DockPanel Margin="10,5,10,0" >
+                                <TextBlock DockPanel.Dock="Left" Text="Importing Behaviour:" VerticalAlignment="Center"/>
+                                <ComboBox Name="ComboboxArenaImportingBehaviour" Margin="5,0,0,0" SelectionChanged="ComboboxArenaImportingBehaviour_OnSelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DockPanel>
+                            <CheckBox Name="CheckboxUseOldArenaImporting" Content="Use old arena importing method" Margin="10,5,0,0" Checked="CheckboxUseOldArenaImporting_OnChecked" Unchecked="CheckboxUseOldArenaImporting_OnUnchecked"/>
+                            <Button Name="BtnArenaHowTo" Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick" IsEnabled="False"/>
+                            <GroupBox Header="Arena deck name template">
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
+                                        <TextBlock Text="Preview:" />
+                                        <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0"/>
+                                    </DockPanel>
+                                    <Button Name="BtnEditTemplate" Content="EDIT" DockPanel.Dock="Right" Margin="5,0,0,0" Click="BtnEditTemplate_Click"/>
+                                    <TextBox Name="TextBoxArenaTemplate" IsEnabled="False" TextChanged="TextBoxArenaTemplate_OnTextChanged"/>
+                                </DockPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </GroupBox>
                     <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                                               Unchecked="CheckboxTagOnImport_Unchecked" />
                     <CheckBox Name="CheckboxAutoSaveOnImport" Content="Auto save deck on import" Margin="10,5,0,0" Checked="CheckboxAutoSaveOnImport_OnChecked" Unchecked="CheckboxAutoSaveOnImport_OnUnchecked"/>
                     <CheckBox Name="CheckboxImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0" Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked"/>
-                    <GroupBox Header="Arena deck name template">
-                        <DockPanel>
-                            <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
-                                <TextBlock Text="Preview:" />
-                                <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0"/>
-                            </DockPanel>
-                            <Button Name="BtnEditTemplate" Content="EDIT" DockPanel.Dock="Right" Margin="5,0,0,0" Click="BtnEditTemplate_Click"/>
-                            <TextBox Name="TextBoxArenaTemplate" IsEnabled="False" TextChanged="TextBoxArenaTemplate_OnTextChanged"/>
-                        </DockPanel>
-                    </GroupBox>
+                    
                     <TextBlock Margin="10,2,0,0">
                                         <Hyperlink NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                                             RequestNavigate="Hyperlink_RequestNavigate">
                                             Download NetDeck (Chrome ext.)
                                         </Hyperlink>
                     </TextBlock>
-                    <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick"/>
                     <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW CONSTRUCTED IMPORTING HOW-TO" Click="ButtonConstructedHowTo_OnClick"/>
                     <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SET UP CONSTRUCTED IMPORTING" Click="ButtonSetUpConstructed_OnClick"/>
                     <Button Margin="10,10,10,0" HorizontalAlignment="Stretch" Content="ACTIVATE HDT PROTOCOL" Click="ButtonActivateHdtProtocol_OnClick"/>

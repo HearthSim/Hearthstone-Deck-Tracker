@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 			new Regex(
 				@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
 
-		private readonly string _fullOutputPath;
+		private string _fullOutputPath;
 		private readonly Regex _gameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 		private readonly Regex _goldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
 		private readonly Regex _goldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
@@ -88,7 +88,8 @@ namespace Hearthstone_Deck_Tracker
 			_updateDelay = updateDelay == 0 ? 100 : updateDelay;
 			while(hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
 				hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
-			_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+			//_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+			LoadLatestLogFile();
 		}
 
 		private HsLogReader(string hsDirectory, int updateDeclay, bool interfaceUpdateNeeded)
@@ -100,7 +101,31 @@ namespace Hearthstone_Deck_Tracker
 			_updateDelay = updateDelay == 0 ? 100 : updateDelay;
 			while(hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
 				hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
-			_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+			//_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
+			LoadLatestLogFile();
+		}
+		
+		public void LoadLatestLogFile()
+		{
+			var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+			var logDir = Path.Combine(localAppData, "Blizzard\\Hearthstone\\Logs");
+			var dirInfo = new DirectoryInfo(logDir);
+			var logFiles = dirInfo.GetFiles("hearthstone_*.log").OrderByDescending(f => f.CreationTime).ToList();
+			if(logFiles.Count > 0)
+			{
+				_fullOutputPath = logFiles.First().FullName;
+				foreach(var file in logFiles.Skip(1))
+				{
+					try
+					{
+						file.Delete();
+					}
+					catch(Exception ex)
+					{
+						Logger.WriteLine("Error deleting old hearthstone log: " + ex, "LogReader");
+					}
+				}
+			}
 		}
 
 		public static HsLogReader Instance { get; private set; }
@@ -259,7 +284,7 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					}
 					tempOffset += line.Length + 1;
-					if(line.StartsWith("[Bob] legend rank"))
+					if(line.Contains("[Bob] legend rank"))
 					{
 						if(_foundSpectatorStart)
 						{
@@ -277,8 +302,9 @@ namespace Hearthstone_Deck_Tracker
 		private void Analyze(string log)
 		{
 			var logLines = log.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
-			foreach(var logLine in logLines)
+			foreach(var rawLogLine in logLines)
 			{
+				var logLine = new string(rawLogLine.Skip(25).ToArray());
 				_currentOffset += logLine.Length + 1;
 
 				if(logLine.StartsWith("["))
@@ -725,6 +751,33 @@ namespace Hearthstone_Deck_Tracker
 
 				#endregion
 
+				else if(logLine.StartsWith("[Arena]"))
+				{
+					var existingHeroRegex = new Regex(@"Draft Deck ID: .*, Hero Card = (?<id>(HERO_\w+))");
+					var existingCardRegex = new Regex(@"Draft deck contains card (?<id>(\w+))");
+					var newChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
+
+					var match = existingHeroRegex.Match(logLine);
+					if(match.Success)
+						Game.NewArenaDeck(match.Groups["id"].Value);
+					else
+					{
+						match = existingCardRegex.Match(logLine);
+						if(match.Success)
+							Game.NewArenaCard(match.Groups["id"].Value);
+						else
+						{
+							match = newChoiceRegex.Match(logLine);
+							if(match.Success)
+							{
+								if(Game.GetHeroNameFromId(match.Groups["id"].Value, false) != null)
+									Game.NewArenaDeck(match.Groups["id"].Value);
+								else
+									Game.NewArenaCard(match.Groups["id"].Value);
+							}
+						}
+					}
+				}
 				if(_first)
 					break;
 			}

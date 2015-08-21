@@ -16,7 +16,14 @@ namespace Hearthstone_Deck_Tracker.Enums
 		{
 			if(value == null)
 				return DependencyProperty.UnsetValue;
-			return GetDescription((Enum)value);
+			try
+			{
+				return GetDescription((Enum)value);
+			}
+			catch(Exception)
+			{
+				return DependencyProperty.UnsetValue;
+			}
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
