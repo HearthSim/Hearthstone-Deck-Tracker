@@ -60,9 +60,8 @@ namespace Hearthstone_Deck_Tracker
 		public void Update()
 		{
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
-			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			StackPanelCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentChance.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 
 			var selectedDeck = DeckList.Instance.ActiveDeck;
@@ -88,11 +87,10 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelMain.Children.Add(ListViewOpponent);
 						break;
 					case "Draw Chances":
-						StackPanelMain.Children.Add(LblOpponentDrawChance1);
-						StackPanelMain.Children.Add(LblOpponentDrawChance2);
+						StackPanelMain.Children.Add(CanvasOpponentChance);
 						break;
 					case "Card Counter":
-						StackPanelMain.Children.Add(StackPanelCount);
+						StackPanelMain.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
 						StackPanelMain.Children.Add(StackPanelOpponentFatigue);
@@ -190,18 +188,16 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelMain.Children.Clear();
 			if(top)
 			{
-				StackPanelMain.Children.Add(LblOpponentDrawChance2);
-				StackPanelMain.Children.Add(LblOpponentDrawChance1);
-				StackPanelMain.Children.Add(StackPanelCount);
+				StackPanelMain.Children.Add(CanvasOpponentChance);
+				StackPanelMain.Children.Add(CanvasOpponentCount);
 				StackPanelMain.Children.Add(ListViewOpponent);
 			}
 			else
 			{
 				StackPanelMain.Children.Add(ListViewOpponent);
-				StackPanelMain.Children.Add(LblOpponentDrawChance2);
-				StackPanelMain.Children.Add(LblOpponentDrawChance1);
-				StackPanelMain.Children.Add(StackPanelCount);
-			}
+                StackPanelMain.Children.Add(CanvasOpponentChance);
+                StackPanelMain.Children.Add(CanvasOpponentCount);
+            }
 		}
 	}
 }

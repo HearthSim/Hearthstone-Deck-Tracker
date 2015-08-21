@@ -59,8 +59,6 @@
                     <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" />
                     <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" />
                 </Canvas>
-                <StackPanel Name="StackPanelPlayerDraw" Orientation="Horizontal" HorizontalAlignment="Center">
-                </StackPanel>
                 <StackPanel Name="StackPanelPlayerFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
                     <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
                 </StackPanel>
