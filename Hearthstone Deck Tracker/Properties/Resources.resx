@@ -166,19 +166,4 @@
   <data name="hearthstats_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\HearthStats\Resources\hearthstats_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="card_icon_coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\card-icon-coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="card_icon_created" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\card-icon-created.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="card_icon_keep" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\card-icon-keep.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="card_icon_mulligan" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\card-icon-mulligan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="card_icon_returned" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Images\card-icon-returned.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>
