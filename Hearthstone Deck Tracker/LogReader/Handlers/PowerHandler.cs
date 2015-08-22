@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
         private readonly List<Entity> _tmpEntities = new List<Entity>();
         private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 
-        public void Handle(string logLine, HsGameState gameState, GameV2 game)
+        public void Handle(string logLine, IHsGameState gameState, GameV2 game)
         {
             if (logLine.Contains("CREATE_GAME"))
             {

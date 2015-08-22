@@ -4,7 +4,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     public class ZoneHandler
     {
-        public void Handle(string logLine, HsGameState gameState)
+        public void Handle(string logLine, IHsGameState gameState)
         {
             if (HsLogReaderConstants.CardMovementRegex.IsMatch(logLine))
             {

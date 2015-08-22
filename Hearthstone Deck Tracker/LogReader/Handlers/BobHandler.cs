@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     public class BobHandler
     {
-        public void Handle(string logLine, HsGameState gameState, GameV2 game)
+        public void Handle(string logLine, IHsGameState gameState, GameV2 game)
         {
             if (logLine[9] == 'R' && logLine[16] == 'r') // [Bob] ---Register
             {

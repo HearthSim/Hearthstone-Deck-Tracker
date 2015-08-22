@@ -27,20 +27,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             "Debug",
             "System"
         };
-
-        public static GameV2 Instance { get; }
+        
         private static Dictionary<string, Card> _cardDb;
-
-        static GameV2()
-	    {
-	        Instance = new GameV2();
+        
+		public GameV2()
+		{
             _cardDb = new Dictionary<string, Card>();
             LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage) ? Config.Instance.SelectedLanguage : "enUS");
-        }
-
-		private GameV2()
-		{
-			Entities = new Dictionary<int, Entity>();
+            Entities = new Dictionary<int, Entity>();
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			SetAsideCards = new List<string>();

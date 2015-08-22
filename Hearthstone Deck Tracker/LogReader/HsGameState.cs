@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Replay;
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
-    public class HsGameState
+    public class HsGameState : IHsGameState
     {
         private readonly GameV2 _game;
         public int AddToTurn { get; set; }

@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     class TagChangeHandler
     {
-        public void TagChange(HsGameState gameState, string rawTag, int id, string rawValue, GameV2 game, bool isRecursive = false)
+        public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, GameV2 game, bool isRecursive = false)
         {
             if (gameState.LastId != id)
             {

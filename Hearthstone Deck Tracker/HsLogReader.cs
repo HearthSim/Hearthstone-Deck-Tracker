@@ -272,8 +272,8 @@ namespace Hearthstone_Deck_Tracker
 
 							Analyze(newLines);
 
-							if(_ifaceUpdateNeeded)
-								Helper.UpdateEverything(GameV2.Instance);
+							//if(_ifaceUpdateNeeded)
+							//	Helper.UpdateEverything(Game.Instance);
 						}
 
 						_previousSize = newLength;
@@ -817,8 +817,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
-			if(_proposedKeyPoint != null)
-				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
+			//if(_proposedKeyPoint != null)
+			//	ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 			_proposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
 		}
 
@@ -829,7 +829,7 @@ namespace Hearthstone_Deck_Tracker
 				Game.SecondToLastUsedId = _lastId;
 				if(_proposedKeyPoint != null)
 				{
-					ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
+					//ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 					_proposedKeyPoint = null;
 				}
 			}
@@ -1124,17 +1124,17 @@ namespace Hearthstone_Deck_Tracker
 				var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
 				if(zone == (int)TAG_ZONE.HAND)
 				{
-					if(controller == Game.PlayerId)
-						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player, GameV2.Instance);
-					else if(controller == Game.OpponentId)
-						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent, GameV2.Instance);
+					//if(controller == Game.PlayerId)
+					//	ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player, GameV2.Instance);
+					//else if(controller == Game.OpponentId)
+					//	ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent, GameV2.Instance);
 				}
 				else if(zone == (int)TAG_ZONE.PLAY)
 				{
-					if(controller == Game.PlayerId)
-						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player, GameV2.Instance);
-					else if(controller == Game.OpponentId)
-						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent, GameV2.Instance);
+				//	if(controller == Game.PlayerId)
+				//		ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player, GameV2.Instance);
+				//	else if(controller == Game.OpponentId)
+				//		ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent, GameV2.Instance);
 				}
 			}
 			else if(tag == GAME_TAG.CARD_TARGET && value > 0)
@@ -1192,10 +1192,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_proposedKeyPoint != null)
 			{
-				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
+				//ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 				_proposedKeyPoint = null;
 			}
-			ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player, GameV2.Instance);
+			//ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player, GameV2.Instance);
 		}
 
 		private int ParseTagValue(GAME_TAG tag, string rawValue)

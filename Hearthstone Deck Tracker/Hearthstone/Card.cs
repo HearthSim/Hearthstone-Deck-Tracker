@@ -172,7 +172,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
 		private int? _overload;
-		[XmlIgnore]
+	    
+
+	    [XmlIgnore]
 		public int Overload
 		{
 			get
@@ -267,16 +269,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public SolidColorBrush ColorPlayer
 		{
+            //TODO: Consider moving this out of the Card class as it shouldn't care about the state of the Game 
 			get
 			{
 				Color color;
 				if(_justDrawn)
 					color = Colors.Orange;
-				else if(InHandCount > 0 && GameV2.Instance.HighlightCardsInHand || IsStolen)
+				else if(InHandCount > 0 && _game.HighlightCardsInHand || IsStolen)
 					color = Colors.GreenYellow;
 				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
-				else if(WasDiscarded && GameV2.Instance.HighlightDiscarded)
+				else if(WasDiscarded && _game.HighlightDiscarded)
 					color = Colors.IndianRed;
 				else
 					color = Colors.White;
@@ -415,6 +418,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			return Name.GetHashCode();
 		}
+
+
+        //TODO: This is to get around having a static Game class unless we change ColorPlayer
+        private static GameV2 _game;
+        public static void SetGame(GameV2 game)
+        {
+            _game = game;
+        }
 
 		public void Load()
 		{

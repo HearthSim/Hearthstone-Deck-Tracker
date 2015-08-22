@@ -45,12 +45,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
         public static void Create()
         {
-            Instance = new HsLogReaderV2();
+            if (Instance == null)
+                Instance = new HsLogReaderV2();
         }
 
         public static void Create(string hsDirectory, int updateDeclay, bool ifaceUpdateNeeded = true)
         {
-            Instance = new HsLogReaderV2(hsDirectory, updateDeclay, ifaceUpdateNeeded);
+            if (Instance == null)
+                Instance = new HsLogReaderV2(hsDirectory, updateDeclay, ifaceUpdateNeeded);
         }
 
         public void Start(GameV2 game)
@@ -190,7 +192,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
                 if (logLine.StartsWith("[Power] GameState."))
                 {
-                    _powerLineHandler.Handle(logLine, _gameState,_game);
+                    _powerLineHandler.Handle(logLine, _gameState, _game);
                 }
                 else if (logLine.StartsWith("[Asset]"))
                 {

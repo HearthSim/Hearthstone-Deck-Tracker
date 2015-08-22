@@ -4,7 +4,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     public class ArenaHandler
     {
-        public void Handle(string logLine, HsGameState gameState, GameV2 game)
+        public void Handle(string logLine, IHsGameState gameState, GameV2 game)
         {
             var match = HsLogReaderConstants.ExistingHeroRegex.Match(logLine);
             if (match.Success)
