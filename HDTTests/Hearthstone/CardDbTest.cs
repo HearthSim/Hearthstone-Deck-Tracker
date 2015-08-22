@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Linq;
+using System.IO;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,14 +8,33 @@ namespace HDTTests.Hearthstone
 	[TestClass]
 	public class CardDBTest
 	{
-		/*
-		 *  Correct for patch 2.7.0.9166
-		 */
-
+		// Test collectable card count
 		[TestMethod]
 		public void TestTotalCollectableCards()
 		{
-			Assert.AreEqual(566, Game.GetActualCards().Count);
+			// 3.0.0.9786 - TGT
+			Assert.AreEqual(698, Game.GetActualCards().Count);
+		}
+
+		// Dreadscale card has unusual id ending in 't', some tests to check it is recognized
+		[TestMethod]
+		public void TestDreadscaleFromId()
+		{
+			var card = Game.GetCardFromId("AT_063t");
+			Assert.AreEqual("Dreadscale", card.Name);
+		}
+		[TestMethod]
+		public void TestDreadscaleInGetActual()
+		{
+			var db = Game.GetActualCards();
+			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("dreadscale"));
+			Assert.IsTrue(found);
+		}
+		[TestMethod]
+		public void TestDreadscaleIsActual()
+		{
+			Card c = new Card { Id = "AT_063t", Name = "Dreadscale", Type = "Minion" };
+			Assert.IsTrue(Game.IsActualCard(c));
 		}
 
 		[TestMethod]
