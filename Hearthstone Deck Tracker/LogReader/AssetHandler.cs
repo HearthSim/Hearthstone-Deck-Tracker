@@ -7,7 +7,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
     public class AssetHandler
     {
-        public void Handle(string logLine, HsGameState gameState, GameV2 game)
+        public void Handle(string logLine, IHsGameState gameState, IGame game)
         {
             if (gameState.AwaitingRankedDetection)
             {

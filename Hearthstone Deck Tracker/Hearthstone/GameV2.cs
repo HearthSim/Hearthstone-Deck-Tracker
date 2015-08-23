@@ -927,11 +927,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
 				{
-					var result =
-						await
-						Helper.MainWindow.ShowMessageAsync("New arena deck detected!", "", MessageDialogStyle.AffirmativeAndNegative,
-						                                   new MetroDialogSettings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
-					if(result == MessageDialogResult.Affirmative)
+                    var result =
+                        await
+                        Helper.MainWindow.ShowMessageAsync("New arena deck detected!", "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]", MessageDialogStyle.AffirmativeAndNegative,
+                                                           new MetroDialogSettings { AffirmativeButtonText = "import", NegativeButtonText = "cancel" });
+
+                    if (result == MessageDialogResult.Affirmative)
 					{
 						Logger.WriteLine("...saving new arena deck.");
 						Helper.MainWindow.SetNewDeck(TempArenaDeck);
