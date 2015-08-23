@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -335,7 +336,10 @@ namespace Hearthstone_Deck_Tracker
 				_currentOffset += logLine.Length + 1;
 
 				if(logLine.StartsWith("["))
+				{
 					Game.AddHSLogLine(logLine);
+					API.LogEvents.OnLogLine.Execute(logLine);
+				}
 
 				#region [Power]
 

@@ -349,6 +349,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						foreach(var log in missing)
 						{
+							sw.WriteLine();
 							sw.WriteLine("[{0}]", log);
 							sw.WriteLine("LogLevel=1");
 							sw.WriteLine("FilePrinting=false");
