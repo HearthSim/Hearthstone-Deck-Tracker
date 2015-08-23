@@ -17,9 +17,31 @@ using Hearthstone_Deck_Tracker.Replay;
 
 namespace Hearthstone_Deck_Tracker
 {
-	public class HsLogReader
-	{
+    public interface IHsLogReader
+    {
+        /// <summary>
+        /// Start tracking gamelogs with default impelementaion of GameEventHandler
+        /// </summary>
+        void Start(GameV2 game);
+
+        /// <summary>
+        /// Start tracking gamelogs with custom impelementaion of GameEventHandler
+        /// </summary>
+        /// <param name="gh"> Custom Game handler implementation </param>
+        void Start(IGameHandler gh, GameV2 game);
+
+        void Stop();
+        void ClearLog();
+        Task<bool> RankedDetection(int timeoutInSeconds = 3);
+        void GetCurrentRegion();
+        void Reset(bool full);
+    }
+
+    [Obsolete("Use HsLogReaderV2")]
+    public class HsLogReader : IHsLogReader
+    {
 		//should be about 180,000 lines
+        
 		private const int MaxFileLength = 6000000;
 		private readonly Regex _actionStartRegex = new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*BlockType=POWER.*Target=(?<target>(.+))");
 
@@ -170,13 +192,13 @@ namespace Hearthstone_Deck_Tracker
 		/// <summary>
 		/// Start tracking gamelogs with default impelementaion of GameEventHandler
 		/// </summary>
-		public void Start()
+		public void Start(GameV2 game)
 		{
 			_addToTurn = -1;
 			_first = true;
 			_doUpdate = true;
 			_gameEnded = false;
-			_gameHandler = new GameEventHandler();
+			_gameHandler = new GameEventHandler(game);
 			_gameHandler.ResetConstructedImporting();
 			_lastGameStart = DateTime.Now;
 			ReadFileAsync();
@@ -196,7 +218,12 @@ namespace Hearthstone_Deck_Tracker
 			ReadFileAsync();
 		}
 
-		public void Stop()
+        public void Start(IGameHandler gh, GameV2 game)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Stop()
 		{
 			_doUpdate = false;
 		}
@@ -246,8 +273,8 @@ namespace Hearthstone_Deck_Tracker
 
 							Analyze(newLines);
 
-							if(_ifaceUpdateNeeded)
-								Helper.UpdateEverything();
+							//if(_ifaceUpdateNeeded)
+							//	Helper.UpdateEverything(Game.Instance);
 						}
 
 						_previousSize = newLength;
@@ -800,8 +827,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
-			if(_proposedKeyPoint != null)
-				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+			//if(_proposedKeyPoint != null)
+			//	ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 			_proposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
 		}
 
@@ -812,7 +839,7 @@ namespace Hearthstone_Deck_Tracker
 				Game.SecondToLastUsedId = _lastId;
 				if(_proposedKeyPoint != null)
 				{
-					ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+					//ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 					_proposedKeyPoint = null;
 				}
 			}
@@ -1107,17 +1134,17 @@ namespace Hearthstone_Deck_Tracker
 				var zone = Game.Entities[id].GetTag(GAME_TAG.ZONE);
 				if(zone == (int)TAG_ZONE.HAND)
 				{
-					if(controller == Game.PlayerId)
-						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player);
-					else if(controller == Game.OpponentId)
-						ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent);
+					//if(controller == Game.PlayerId)
+					//	ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player, GameV2.Instance);
+					//else if(controller == Game.OpponentId)
+					//	ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent, GameV2.Instance);
 				}
 				else if(zone == (int)TAG_ZONE.PLAY)
 				{
-					if(controller == Game.PlayerId)
-						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player);
-					else if(controller == Game.OpponentId)
-						ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent);
+				//	if(controller == Game.PlayerId)
+				//		ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player, GameV2.Instance);
+				//	else if(controller == Game.OpponentId)
+				//		ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent, GameV2.Instance);
 				}
 			}
 			else if(tag == GAME_TAG.CARD_TARGET && value > 0)
@@ -1175,10 +1202,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_proposedKeyPoint != null)
 			{
-				ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player);
+				//ReplayMaker.Generate(_proposedKeyPoint.Type, _proposedKeyPoint.Id, _proposedKeyPoint.Player, GameV2.Instance);
 				_proposedKeyPoint = null;
 			}
-			ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player);
+			//ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player, GameV2.Instance);
 		}
 
 		private int ParseTagValue(GAME_TAG tag, string rawValue)
@@ -1235,7 +1262,7 @@ namespace Hearthstone_Deck_Tracker
 			_gameLoaded = false;
 		}
 
-		internal void Reset(bool full)
+        public void Reset(bool full)
 		{
 			if(full)
 			{

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Hearthstone;
 // ReSharper disable RedundantUsingDirective
 using Hearthstone_Deck_Tracker.Windows;
 
@@ -18,16 +19,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// </summary>
 	public partial class TrackerLogging
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public TrackerLogging()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
+            _game = game;
+            ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
 			_initialized = true;
 		}
 
@@ -61,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void BtnDebugWindow_OnClick(object sender, RoutedEventArgs e)
 		{
-			var debugWindow = new DebugWindow();
+			var debugWindow = new DebugWindow(_game);
 			debugWindow.Show();
 		}
 	}

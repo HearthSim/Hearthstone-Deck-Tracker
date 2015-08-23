@@ -17,6 +17,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
+    [Obsolete("Use GameV2")]
 	public static class Game
 	{
 		static Game()

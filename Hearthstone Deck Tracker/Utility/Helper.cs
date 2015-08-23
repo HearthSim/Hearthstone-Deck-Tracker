@@ -296,19 +296,19 @@ namespace Hearthstone_Deck_Tracker
 			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation && Math.Abs(pixel.B - blue) <= deviation;
 		}
 
-		public static void UpdateEverything()
+		public static void UpdateEverything(GameV2 game)
 		{
 			if(MainWindow.Overlay.IsVisible)
 				MainWindow.Overlay.Update(false);
 
 			if(MainWindow.PlayerWindow.IsVisible)
-				MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount, 30 - Game.PlayerDrawn.Sum(card => card.Count));
+				MainWindow.PlayerWindow.SetCardCount(game.PlayerHandCount, 30 - game.PlayerDrawn.Sum(card => card.Count));
 
 			if(MainWindow.OpponentWindow.IsVisible)
-				MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+				MainWindow.OpponentWindow.SetOpponentCardCount(game.OpponentHandCount, game.OpponentDeckCount, game.OpponentHasCoin);
 
 
-			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && Game.CurrentGameMode != GameMode.Spectator)
+			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator)
 			{
 				MainWindow.IsShowingIncorrectDeckMessage = true;
 				MainWindow.ShowIncorrectDeckMessage();
@@ -395,10 +395,10 @@ namespace Hearthstone_Deck_Tracker
 			return DateTime.Now;
 		}
 
-		public static async Task SetupConstructedImporting()
+		public static async Task SetupConstructedImporting(GameV2 game)
 		{
 			var settings = new MetroDialogSettings {AffirmativeButtonText = "continue"};
-			if(!Game.IsRunning)
+			if(!game.IsRunning)
 				await MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
 			await MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
 			SettingUpConstructedImporting = true;
@@ -406,7 +406,7 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.ShowMessageAsync("Step 2:",
 				                            "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
 				                            settings: new MetroDialogSettings {AffirmativeButtonText = "done"});
-			Config.Instance.ConstructedImportingIgnoreCachedIds = Game.PossibleConstructedCards.Select(c => c.Id).ToArray();
+			Config.Instance.ConstructedImportingIgnoreCachedIds = game.PossibleConstructedCards.Select(c => c.Id).ToArray();
 			Config.Save();
 			SettingUpConstructedImporting = false;
 		}

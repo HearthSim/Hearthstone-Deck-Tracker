@@ -179,6 +179,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
       <DependentUpon>OpponentDeck.xaml</DependentUpon>
     </Compile>
@@ -227,7 +228,22 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\Game.cs" />
+    <Compile Include="Hearthstone\GameV2.cs" />
+    <Compile Include="Hearthstone\IGame.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
+    <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
+    <Compile Include="LogReader\Handlers\AssetHandler.cs" />
+    <Compile Include="LogReader\Handlers\BobHandler.cs" />
+    <Compile Include="LogReader\Handlers\PowerGameStateHandler.cs" />
+    <Compile Include="LogReader\Handlers\ZoneHandler.cs" />
+    <Compile Include="LogReader\HsGameState.cs" />
+    <Compile Include="LogReader\HsLogReaderConstants.cs" />
+    <Compile Include="LogReader\HsLogReaderV2.cs" />
+    <Compile Include="LogReader\Handlers\PowerHandler.cs" />
+    <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
+    <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
+    <Compile Include="LogReader\IHsGameState.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
@@ -337,7 +353,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeckList.cs" />
-    <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="HsLogReader.cs" />
     <Compile Include="MainWindow\MainWindow_Edit.cs" />

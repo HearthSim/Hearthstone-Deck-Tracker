@@ -19,16 +19,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayDeckWindows
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public OverlayDeckWindows()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
+            _game = game;
+            CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
 			CheckboxPlayerWindowOpenAutomatically.IsChecked = Config.Instance.PlayerWindowOnStart;
 			CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
 			CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;
@@ -202,8 +205,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Helper.MainWindow.PlayerWindow.Show();
 			Helper.MainWindow.PlayerWindow.Activate();
-			Helper.MainWindow.PlayerWindow.SetCardCount(Game.PlayerHandCount,
-			                                            30 - Game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
+			Helper.MainWindow.PlayerWindow.SetCardCount(_game.PlayerHandCount,
+			                                            30 - _game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}
@@ -223,7 +226,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Helper.MainWindow.OpponentWindow.Show();
 			Helper.MainWindow.OpponentWindow.Activate();
-			Helper.MainWindow.OpponentWindow.SetOpponentCardCount(Game.OpponentHandCount, Game.OpponentDeckCount, Game.OpponentHasCoin);
+			Helper.MainWindow.OpponentWindow.SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount, _game.OpponentHasCoin);
 			Config.Instance.OpponentWindowOnStart = true;
 			Config.Save();
 		}

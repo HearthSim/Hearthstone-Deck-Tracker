@@ -14,16 +14,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayGeneral
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public OverlayGeneral()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
+            _game = game;
+            CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
 			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
 			CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
@@ -184,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
-			if(!Game.IsInMenu)
+			if(!_game.IsInMenu)
 				Helper.MainWindow.Overlay.ShowSecrets();
 		}
 

@@ -21,13 +21,15 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static double Scaling = 1.0;
 		private readonly Config _config;
-		private readonly bool _forScreenshot;
+	    private readonly GameV2 _game;
+	    private readonly bool _forScreenshot;
 		private bool _appIsClosing;
 
-		public PlayerWindow(Config config, ObservableCollection<Card> playerDeck, bool forScreenshot = false)
+		public PlayerWindow(GameV2 game, Config config, ObservableCollection<Card> playerDeck, bool forScreenshot = false)
 		{
 			InitializeComponent();
-			_forScreenshot = forScreenshot;
+		    _game = game;
+		    _forScreenshot = forScreenshot;
 			_config = config;
 			ListViewPlayer.ItemsSource = playerDeck;
 			playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
@@ -76,8 +78,8 @@ namespace Hearthstone_Deck_Tracker
             CanvasPlayerChance.Visibility = _config.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = _config.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = _config.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
-			LblWins.Visibility = Config.Instance.ShowDeckWins && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
-			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
 			SetDeckTitle();
 			SetWinRates();
@@ -134,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(cardsLeftInDeck <= 0)
 			{
-				LblPlayerFatigue.Text = "Next draw fatigues for: " + (Game.PlayerFatigueCount + 1);
+				LblPlayerFatigue.Text = "Next draw fatigues for: " + (_game.PlayerFatigueCount + 1);
 
 				LblDrawChance2.Text = "0%";
 				LblDrawChance1.Text = "0%";

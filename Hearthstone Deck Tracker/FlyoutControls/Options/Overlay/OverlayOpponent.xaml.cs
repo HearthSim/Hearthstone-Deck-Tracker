@@ -12,16 +12,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayOpponent
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public OverlayOpponent()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
+            _game = game;
+            CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
@@ -63,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = true;
-			Game.HighlightDiscarded = true;
+            _game.HighlightDiscarded = true;
 			SaveConfig(true);
 		}
 
@@ -72,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = false;
-			Game.HighlightDiscarded = false;
+            _game.HighlightDiscarded = false;
 			SaveConfig(true);
 		}
 

@@ -16,15 +16,17 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class GameDetails
 	{
-		private GameStats _gameStats;
+	    private GameV2 _game;
+	    private GameStats _gameStats;
 		private bool _initialized;
 
 		public GameDetails()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void SetGame(GameStats gameStats)
+	    public void SetGame(GameStats gameStats)
 		{
 			_gameStats = gameStats;
 			ReloadGameStats();
@@ -64,9 +66,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void LoadConfig()
+		public void LoadConfig(GameV2 game)
 		{
-			CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
+            _game = game;
+            CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
 			CheckboxOpponentDraw.IsChecked = Config.Instance.GameDetails.ShowOpponentDraw;
 			CheckboxPlayerPlay.IsChecked = Config.Instance.GameDetails.ShowPlayerPlay;
 			CheckboxOpponentPlay.IsChecked = Config.Instance.GameDetails.ShowOpponentPlay;
@@ -194,8 +197,8 @@ namespace Hearthstone_Deck_Tracker
 					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
 					   || play.Type == PlayType.OpponentSecretTriggered)
 					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
+						var card = GameV2.GetCardFromId(play.CardId);
+						if(GameV2.IsActualCard(card))
 						{
 							if(ignoreCards.Contains(card))
 							{
@@ -211,8 +214,8 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(play.Type == PlayType.OpponentBackToHand)
 					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
+						var card = GameV2.GetCardFromId(play.CardId);
+						if(GameV2.IsActualCard(card))
 							ignoreCards.Add(card);
 					}
 				}
@@ -223,27 +226,5 @@ namespace Hearthstone_Deck_Tracker
 			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
 		}
 
-		public class GameDetailItem
-		{
-			public GameDetailItem(TurnStats.Play play, int turn)
-			{
-				Turn = turn.ToString();
-				Player = play.Type.ToString().StartsWith("Player") ? "Player" : "Opponent";
-				Action = play.Type.ToString().Replace("Player", string.Empty).Replace("Opponent", string.Empty);
-				Card = Game.GetCardFromId(play.CardId);
-
-				if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && (Card != null && Card.Type == "Spell"))
-					Action = "Play/Discard";
-			}
-
-			public GameDetailItem()
-			{
-			}
-
-			public string Turn { get; set; }
-			public string Player { get; set; }
-			public string Action { get; set; }
-			public Card Card { get; set; }
-		}
 	}
 }

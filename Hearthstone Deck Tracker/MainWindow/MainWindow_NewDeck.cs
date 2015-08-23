@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 				var formattedInput = Helper.RemoveDiacritics(TextBoxDBFilter.Text.ToLowerInvariant(), true);
 				var words = formattedInput.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
-				foreach(var card in Game.GetActualCards())
+				foreach(var card in GameV2.GetActualCards())
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
 					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput)
