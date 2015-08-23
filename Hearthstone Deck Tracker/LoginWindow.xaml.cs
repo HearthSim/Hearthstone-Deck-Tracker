@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			_game = new GameV2();
             Card.SetGame(_game);
+			API.Core.Game = _game;
 		    InitializeComponent();
 			Logger.Initialzie();
 			Config.Load();

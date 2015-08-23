@@ -105,6 +105,7 @@
     </ApplicationDefinition>
     <Compile Include="API\ActionList.cs" />
     <Compile Include="API\DeckManagerEvents.cs" />
+    <Compile Include="API\Core.cs" />
     <Compile Include="API\GameEvents.cs" />
     <Compile Include="API\LogEvents.cs" />
     <Compile Include="API\Overlay.cs" />
