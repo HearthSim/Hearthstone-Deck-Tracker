@@ -226,6 +226,7 @@
     </Compile>
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Hearthstone\GameV2.cs" />
+    <Compile Include="Hearthstone\IGame.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
     <Compile Include="LogReader\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />

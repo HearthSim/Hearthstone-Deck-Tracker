@@ -167,12 +167,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CurrentGameStats.AddPlay(play, turn, cardId);
 		}
 
+		// TODO: possibly refactor with GetActualCards, reduce duplication
 		public static bool IsActualCard(Card card)
 		{
 			if(card == null)
 				return false;
 			return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
-			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+			       && (Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t")
+			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
 			       && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
 		}
 
@@ -850,7 +852,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			return (from card in _cardDb.Values
 			        where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
-			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
+			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t"
 			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
 			        where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
 			        select card).ToList();

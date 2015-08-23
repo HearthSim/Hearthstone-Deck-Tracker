@@ -17,7 +17,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class GameV2
+	public class GameV2 : IGame
 	{
         private static List<string> hsLogLines = new List<string>();
         private static readonly List<string> InValidCardSets = new List<string>
@@ -180,12 +180,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static bool IsActualCard(Card card)
 		{
-			if(card == null)
-				return false;
-			return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
-			       && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-			       && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
-		}
+            if (card == null)
+                return false;
+            return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
+                   && (Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t")
+                   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+                   && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
+        }
 
 		public void ResetArenaCards()
 		{
@@ -848,13 +849,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static List<Card> GetActualCards()
 		{
-			return (from card in _cardDb.Values
-			        where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
-			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1))
-			        where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-			        where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
-			        select card).ToList();
-		}
+            return (from card in _cardDb.Values
+                    where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
+                    where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t"
+                    where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
+                    where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
+                    select card).ToList();
+        }
 
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 		{
