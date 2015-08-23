@@ -111,6 +111,9 @@
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CardMarker.xaml.cs">
+      <DependentUpon>CardMarker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CardToolTipControl.xaml.cs">
       <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
@@ -393,6 +396,10 @@
     </Compile>
     <Compile Include="Utility\XmlManager.cs" />
     <Page Include="Controls\Card.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CardMarker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1020,6 +1027,12 @@
     </Content>
     <Resource Include="Images\opponent-chance-frame.png" />
     <Resource Include="Images\player-chance-frame.png" />
+    <Resource Include="Images\card-icon-coin.png" />
+    <Resource Include="Images\card-icon-created.png" />
+    <Resource Include="Images\card-icon-keep.png" />
+    <Resource Include="Images\card-icon-mulligan.png" />
+    <Resource Include="Images\card-icon-returned.png" />
+    <Resource Include="Images\card-marker.png" />
     <Content Include="Images\thunder-bluff-valiant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -3592,6 +3605,7 @@
     <Resource Include="Resources\ClassIcons\General\BaseLight\all.png" />
     <Resource Include="Resources\ClassIcons\General\BaseLight\archived.png" />
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
+    <None Include="Resources\card-mark-coin.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
