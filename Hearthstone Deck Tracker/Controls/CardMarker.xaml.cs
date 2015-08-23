@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Controls
                 if (source != "")
                 {
                     CardIcon.Source = new BitmapImage(new Uri(source, UriKind.Relative));
-
+	                CardIcon.Visibility = Visibility.Visible;
                 }
                 else
                 {
