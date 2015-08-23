@@ -542,7 +542,7 @@ namespace Hearthstone_Deck_Tracker
             Canvas.SetLeft(LblPlayerTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 
             //Canvas.SetTop(LblGrid, Height * 0.03);
-            var handCount = Game.OpponentHandCount;
+            var handCount = _game.OpponentHandCount;
             if (handCount < 0)
                 handCount = 0;
             if (handCount > 10)
