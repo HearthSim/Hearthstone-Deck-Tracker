@@ -618,7 +618,7 @@ namespace Hearthstone_Deck_Tracker
                     _cardMarks[i].Mark = CardMark.None;
                 }
 
-                _cardMarks[i].Visibility = _game.IsInMenu ? Visibility.Hidden : Visibility.Visible;
+                _cardMarks[i].Visibility = (_game.IsInMenu || (Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks))? Visibility.Hidden : Visibility.Visible;
             }
             //Hide unneeded card marks.
             for (var i = handCount; i < 10; i++)
