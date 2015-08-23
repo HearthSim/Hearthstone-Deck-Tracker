@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker
 		private int _lastManaCost;
 		private bool _startImportingCached;
 		private int _unloadedCardCount;
+		private static bool _handledGameEnd;
+		private static bool _handledGameResult;
 
 		public static bool RecordCurrentGameMode
 		{
@@ -245,6 +247,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
 				return;
+			_handledGameEnd = false;
+			_handledGameResult = false;
 			_lastGameStart = DateTime.Now;
 			Logger.WriteLine("Game start", "GameEventHandler");
 
@@ -271,7 +275,7 @@ namespace Hearthstone_Deck_Tracker
 		public static async void HandleGameEnd()
 		{
 			Helper.MainWindow.Overlay.HideTimers();
-			if(Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null || _handledGameEnd)
 				return;
 			if(Game.CurrentGameMode == GameMode.Spectator && !Config.Instance.RecordSpectator)
 			{
@@ -398,6 +402,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine(string.Format("Assigned current deck to default {0} deck.", Game.PlayingAs), "GameStats");
 				_assignedDeck = null;
 			}
+			_handledGameEnd = true;
 		}
 #pragma warning restore 4014
 		private static async Task RankDetection(int timeoutInSeconds)
@@ -440,16 +445,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleWin()
 		{
-			if(Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null || _handledGameResult)
 				return;
 			Logger.WriteLine("Game was won!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Win;
 			GameEvents.OnGameWon.Execute();
 		}
-
+		
 		public static void HandleLoss()
 		{
-			if(Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null || _handledGameResult)
 				return;
 			Logger.WriteLine("Game was lost!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Loss;
@@ -458,7 +463,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void HandleTied()
 		{
-			if(Game.CurrentGameStats == null)
+			if(Game.CurrentGameStats == null || _handledGameResult)
 				return;
 			Logger.WriteLine("Game was a tie!", "GameEventHandler");
 			Game.CurrentGameStats.Result = GameResult.Draw;
