@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Controls;
 
 #endregion
 
@@ -23,14 +24,12 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class OverlayWindow
 	{
-		private readonly List<HearthstoneTextBlock> _cardLabels;
-		private readonly List<HearthstoneTextBlock> _cardMarkLabels;
 		private readonly int _customHeight;
 		private readonly int _customWidth;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements;
 		private readonly int _offsetX;
 		private readonly int _offsetY;
-		private readonly List<StackPanel> _stackPanelsMarks;
+		private readonly List<CardMarker> _cardMarks;
 		private int _cardCount;
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
@@ -64,33 +63,9 @@ namespace Hearthstone_Deck_Tracker
 			_customWidth = Config.Instance.CustomWidth;
 			_customHeight = Config.Instance.CustomHeight;
 
-			_cardLabels = new List<HearthstoneTextBlock>
-			{
-				LblCard0,
-				LblCard1,
-				LblCard2,
-				LblCard3,
-				LblCard4,
-				LblCard5,
-				LblCard6,
-				LblCard7,
-				LblCard8,
-				LblCard9
-			};
-			_cardMarkLabels = new List<HearthstoneTextBlock>
-			{
-				LblCardMark0,
-				LblCardMark1,
-				LblCardMark2,
-				LblCardMark3,
-				LblCardMark4,
-				LblCardMark5,
-				LblCardMark6,
-				LblCardMark7,
-				LblCardMark8,
-				LblCardMark9
-			};
-			_stackPanelsMarks = new List<StackPanel> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
+            // Add CardMarkers to the list.
+			_cardMarks = new List<CardMarker> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
+
 			_movableElements = new Dictionary<UIElement, ResizeGrip>
 			{
 				{StackPanelPlayer, new ResizeGrip()},
@@ -325,7 +300,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 				return;
 
-			var card = ToolTipCard.DataContext as Card;
+			var card = ToolTipCard.DataContext as Hearthstone.Card;
 			if(card == null)
 				return;
 
@@ -530,51 +505,57 @@ namespace Hearthstone_Deck_Tracker
 
 			var labelDistance = LblGrid.Width / (handCount + 1);
 
-			for(var i = 0; i < handCount; i++)
-			{
-				var offset = labelDistance * Math.Abs(i - handCount / 2);
-				offset = offset * offset * 0.0015;
+            for (var i = 0; i < handCount; i++)
+            {
+                var offset = labelDistance * Math.Abs(i - handCount / 2);
+                offset = offset * offset * 0.0015;
 
-				if(handCount % 2 == 0)
-				{
-					if(i < handCount / 2 - 1)
-					{
-						//even hand count -> both middle labels at same height
-						offset = labelDistance * Math.Abs(i - (handCount / 2 - 1));
-						offset = offset * offset * 0.0015;
-						_stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
-					}
-					else if(i > handCount / 2)
-						_stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
-					else
-					{
-						var left = (handCount == 2 && i == 0) ? Width * 0.02 : 0;
-						_stackPanelsMarks[i].Margin = new Thickness(left, 0, 0, 0);
-					}
-				}
-				else
-					_stackPanelsMarks[i].Margin = new Thickness(0, -offset, 0, 0);
+                if (handCount % 2 == 0)
+                {
+                    if (i < handCount / 2 - 1)
+                    {
+                        //even hand count -> both middle labels at same height
+                        offset = labelDistance * Math.Abs(i - (handCount / 2 - 1));
+                        offset = offset * offset * 0.0015;
+                        _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
+                    }
+                    else if (i > handCount / 2)
+                        _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
+                    else
+                    {
+                        var left = (handCount == 2 && i == 0) ? Width * 0.02 : 0;
+                        _cardMarks[i].Margin = new Thickness(left, 0, 0, 0);
+                    }
+                }
+                else
+                    _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
 
-				if(!Config.Instance.HideOpponentCardAge)
-				{
-					_cardLabels[i].Text = Game.OpponentHandAge[i].ToString();
-					_cardLabels[i].Visibility = Visibility.Visible;
-				}
-				else
-					_cardLabels[i].Visibility = Visibility.Collapsed;
+                if (!Config.Instance.HideOpponentCardAge)
+                {
+                    _cardMarks[i].Text = Game.OpponentHandAge[i].ToString();
+                }
+                else
+                {
+                    _cardMarks[i].Text = "";
+                }
 
 				if(!Config.Instance.HideOpponentCardMarks)
 				{
-					_cardMarkLabels[i].Text = ((char)Game.OpponentHandMarks[i]).ToString();
-					_cardMarkLabels[i].Visibility = Visibility.Visible;
+					_cardMarks[i].Mark = Game.OpponentHandMarks[i];
 				}
-				else
-					_cardMarkLabels[i].Visibility = Visibility.Collapsed;
+                else
+                {
+                    _cardMarks[i].Mark = CardMark.None;
+                }
 
-				_stackPanelsMarks[i].Visibility = Visibility.Visible;
+				_cardMarks[i].Visibility = Visibility.Visible;
 			}
-			for(var i = handCount; i < 10; i++)
-				_stackPanelsMarks[i].Visibility = Visibility.Collapsed;
+
+            // Hide unneeded card marks.
+            for (var i = handCount; i < 10; i++)
+            {
+                _cardMarks[i].Visibility = Visibility.Collapsed;
+            }
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
@@ -624,7 +605,7 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelWarning.Visibility = showWarning ? Visibility.Visible : Visibility.Collapsed;
 			if(showWarning)
 			{
-				var drawn = new Deck {Cards = new ObservableCollection<Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
+				var drawn = new Deck {Cards = new ObservableCollection<Hearthstone.Card>(Game.PlayerDrawn.Where(c => !c.IsStolen))};
 				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
 				if(diff.Count > 0)
 				{
@@ -712,7 +693,7 @@ namespace Hearthstone_Deck_Tracker
 			var relativePlayerDeckPos = ListViewPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ListViewOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
-			var relativeCardMark = _cardMarkLabels.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
+			var relativeCardMark = _cardMarks.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
 				                 ? Visibility.Visible : Visibility.Hidden;
 
@@ -723,13 +704,13 @@ namespace Hearthstone_Deck_Tracker
 				                                && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
-				var index = _cardMarkLabels.IndexOf(cardMark.Label);
+				var index = _cardMarks.IndexOf(cardMark.Label);
 				var card = Game.OpponentStolenCardsInformation[index];
 				if(card != null)
 				{
 					ToolTipCard.SetValue(DataContextProperty, card);
-					var topOffset = Canvas.GetTop(LblGrid) + _stackPanelsMarks[index].Margin.Top + LblGrid.ActualHeight;
-					var leftOffset = Canvas.GetLeft(LblGrid) + _stackPanelsMarks[index].ActualWidth * index;
+					var topOffset = Canvas.GetTop(LblGrid) + _cardMarks[index].Margin.Top + LblGrid.ActualHeight;
+					var leftOffset = Canvas.GetLeft(LblGrid) + _cardMarks[index].ActualWidth * index;
 					Canvas.SetTop(ToolTipCard, topOffset);
 					Canvas.SetLeft(ToolTipCard, leftOffset);
 					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visibility.Visible : Visibility.Hidden;
@@ -813,7 +794,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(ToolTipCard.Visibility == Visibility.Visible)
 			{
-				var card = ToolTipCard.GetValue(DataContextProperty) as Card;
+				var card = ToolTipCard.GetValue(DataContextProperty) as Hearthstone.Card;
 				if(card != null)
 				{
 					if(_lastToolTipCardId != card.Id)
@@ -1046,7 +1027,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!Config.Instance.AdditionalOverlayTooltips)
 				return;
-			var card = ToolTipCard.DataContext as Card;
+			var card = ToolTipCard.DataContext as Hearthstone.Card;
 			if(card == null)
 				return;
 			if(!CardIds.SubCardIds.Keys.Contains(card.Id))
