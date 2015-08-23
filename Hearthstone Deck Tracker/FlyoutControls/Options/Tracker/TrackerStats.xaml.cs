@@ -168,6 +168,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = true;
+			CheckboxAskBeforeDiscarding.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -176,6 +177,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = false;
+            CheckboxAskBeforeDiscarding.IsEnabled = false;
 			Config.Save();
 		}
 
