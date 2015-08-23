@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker
 		private bool _secretsTempVisible;
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
+		private readonly Point[][] _cardMarkPos;
 
 		public OverlayWindow()
 		{
@@ -63,8 +64,90 @@ namespace Hearthstone_Deck_Tracker
 			_customWidth = Config.Instance.CustomWidth;
 			_customHeight = Config.Instance.CustomHeight;
 
-            // Add CardMarkers to the list.
+			// Add CardMarkers to the list.
 			_cardMarks = new List<CardMarker> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
+
+			const double tWidth = 1024.0;
+			const double tHeight = 768.0;
+			_cardMarkPos = new Point[10][];
+			_cardMarkPos[0] = new[] {new Point(480 / tWidth, 48 / tHeight)};
+			_cardMarkPos[1] = new[] {new Point(439 / tWidth, 47 / tHeight), new Point(520 / tWidth, 48 / tHeight)};
+			_cardMarkPos[2] = new[]
+			{
+				new Point(392 / tWidth, 33 / tHeight),
+				new Point(479 / tWidth, 47 / tHeight),
+				new Point(569 / tWidth, 40 / tHeight)
+			};
+			_cardMarkPos[3] = new[]
+			{
+				new Point(382 / tWidth, 21 / tHeight),
+				new Point(446 / tWidth, 41 / tHeight),
+				new Point(512 / tWidth, 47 / tHeight),
+				new Point(580 / tWidth, 43 / tHeight)
+			};
+			_cardMarkPos[4] = new[]
+			{
+				new Point(375 / tWidth, 23 / tHeight),
+				new Point(427 / tWidth, 39 / tHeight),
+				new Point(479 / tWidth, 47 / tHeight),
+				new Point(533 / tWidth, 46 / tHeight),
+				new Point(586 / tWidth, 36 / tHeight)
+			};
+			_cardMarkPos[5] = new[]
+			{
+				new Point(371 / tWidth, 12 / tHeight),
+				new Point(414 / tWidth, 30 / tHeight),
+				new Point(458 / tWidth, 43 / tHeight),
+				new Point(502 / tWidth, 48 / tHeight),
+				new Point(546 / tWidth, 47 / tHeight),
+				new Point(591 / tWidth, 39 / tHeight)
+			};
+			_cardMarkPos[6] = new[]
+			{
+				new Point(368 / tWidth, 15 / tHeight),
+				new Point(405 / tWidth, 31 / tHeight),
+				new Point(442 / tWidth, 41 / tHeight),
+				new Point(479 / tWidth, 48 / tHeight),
+				new Point(517 / tWidth, 47 / tHeight),
+				new Point(555 / tWidth, 41 / tHeight),
+				new Point(594 / tWidth, 31 / tHeight)
+			};
+			_cardMarkPos[7] = new[]
+			{
+				new Point(365 / tWidth, 04 / tHeight),
+				new Point(397 / tWidth, 22 / tHeight),
+				new Point(430 / tWidth, 35 / tHeight),
+				new Point(462 / tWidth, 45 / tHeight),
+				new Point(496 / tWidth, 48 / tHeight),
+				new Point(530 / tWidth, 48 / tHeight),
+				new Point(563 / tWidth, 43 / tHeight),
+				new Point(597 / tWidth, 33 / tHeight)
+			};
+			_cardMarkPos[8] = new[]
+			{
+				new Point(363 / tWidth, 07 / tHeight),
+				new Point(392 / tWidth, 23 / tHeight),
+				new Point(421 / tWidth, 35 / tHeight),
+				new Point(450 / tWidth, 43 / tHeight),
+				new Point(479 / tWidth, 48 / tHeight),
+				new Point(508 / tWidth, 47 / tHeight),
+				new Point(539 / tWidth, 43 / tHeight),
+				new Point(569 / tWidth, 35 / tHeight),
+				new Point(599 / tWidth, 23 / tHeight)
+			};
+			_cardMarkPos[9] = new[]
+			{
+				new Point(364 / tWidth, 04 / tHeight),
+				new Point(388 / tWidth, 13 / tHeight),
+				new Point(414 / tWidth, 28 / tHeight),
+				new Point(440 / tWidth, 38 / tHeight),
+				new Point(467 / tWidth, 45 / tHeight),
+				new Point(492 / tWidth, 48 / tHeight),
+				new Point(420 / tWidth, 48 / tHeight),
+				new Point(546 / tWidth, 44 / tHeight),
+				new Point(573 / tWidth, 37 / tHeight),
+				new Point(600 / tWidth, 27 / tHeight)
+			};
 
 			_movableElements = new Dictionary<UIElement, ResizeGrip>
 			{
@@ -456,7 +539,20 @@ namespace Hearthstone_Deck_Tracker
 			Canvas.SetTop(LblPlayerTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
 			Canvas.SetLeft(LblPlayerTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 
-			Canvas.SetTop(LblGrid, Height * 0.03);
+			//Canvas.SetTop(LblGrid, Height * 0.03);
+			var handCount = Game.OpponentHandCount;
+			if(handCount < 0)
+				handCount = 0;
+			if(handCount > 10)
+				handCount = 10;
+
+			var ratio = (4.0 / 3.0) / (Width / Height);
+			for(int i = 0; i < handCount; i++)
+			{
+				Canvas.SetLeft(_cardMarks[i],
+				               DeckExporter.GetXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ratio) - _cardMarks[i].ActualWidth / 2);
+				Canvas.SetTop(_cardMarks[i], Math.Max(_cardMarkPos[handCount - 1][i].Y * Height - _cardMarks[i].ActualHeight / 3, 5));
+			}
 
 			//Gold progress
 			var goldFrameHeight = Height * 25 / 768;
@@ -471,10 +567,6 @@ namespace Hearthstone_Deck_Tracker
 			Canvas.SetLeft(RectGoldDisplay, left);
 			Canvas.SetTop(LblGoldProgress, top + (goldFrameHeight - LblGoldProgress.ActualHeight) / 2 - 2);
 			Canvas.SetLeft(LblGoldProgress, left - LblGoldProgress.ActualWidth - 10);
-
-
-			var ratio = Width / Height;
-			LblGrid.Width = ratio < 1.5 ? Width * 0.3 : Width * 0.15 * (ratio / 1.33);
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -500,37 +592,10 @@ namespace Hearthstone_Deck_Tracker
 				handCount = 0;
 			if(handCount > 10)
 				handCount = 10;
-			//offset label-grid based on handcount
-			Canvas.SetLeft(LblGrid, Width / 2 - LblGrid.ActualWidth / 2 - Width * 0.002 * handCount);
 
-			var labelDistance = LblGrid.Width / (handCount + 1);
-
-            for (var i = 0; i < handCount; i++)
+			for (var i = 0; i < handCount; i++)
             {
-                var offset = labelDistance * Math.Abs(i - handCount / 2);
-                offset = offset * offset * 0.0015;
-
-                if (handCount % 2 == 0)
-                {
-                    if (i < handCount / 2 - 1)
-                    {
-                        //even hand count -> both middle labels at same height
-                        offset = labelDistance * Math.Abs(i - (handCount / 2 - 1));
-                        offset = offset * offset * 0.0015;
-                        _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
-                    }
-                    else if (i > handCount / 2)
-                        _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
-                    else
-                    {
-                        var left = (handCount == 2 && i == 0) ? Width * 0.02 : 0;
-                        _cardMarks[i].Margin = new Thickness(left, 0, 0, 0);
-                    }
-                }
-                else
-                    _cardMarks[i].Margin = new Thickness(0, -offset, 0, 0);
-
-                if (!Config.Instance.HideOpponentCardAge)
+				if (!Config.Instance.HideOpponentCardAge)
                 {
                     _cardMarks[i].Text = Game.OpponentHandAge[i].ToString();
                 }
@@ -548,7 +613,7 @@ namespace Hearthstone_Deck_Tracker
                     _cardMarks[i].Mark = CardMark.None;
                 }
 
-				_cardMarks[i].Visibility = Visibility.Visible;
+				_cardMarks[i].Visibility = Game.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 			}
 
             // Hide unneeded card marks.
@@ -586,8 +651,6 @@ namespace Hearthstone_Deck_Tracker
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
-
-			LblGrid.Visibility = Game.IsInMenu ? Visibility.Hidden : Visibility.Visible;
 
 			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
 			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
@@ -709,8 +772,8 @@ namespace Hearthstone_Deck_Tracker
 				if(card != null)
 				{
 					ToolTipCard.SetValue(DataContextProperty, card);
-					var topOffset = Canvas.GetTop(LblGrid) + _cardMarks[index].Margin.Top + LblGrid.ActualHeight;
-					var leftOffset = Canvas.GetLeft(LblGrid) + _cardMarks[index].ActualWidth * index;
+					var topOffset = Canvas.GetTop(_cardMarks[index]) + _cardMarks[index].ActualHeight;
+					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + _cardMarks[index].ActualWidth * index;
 					Canvas.SetTop(ToolTipCard, topOffset);
 					Canvas.SetLeft(ToolTipCard, leftOffset);
 					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visibility.Visible : Visibility.Hidden;

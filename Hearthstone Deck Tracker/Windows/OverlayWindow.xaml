@@ -105,20 +105,16 @@
 
             <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
-            <UniformGrid x:Name="LblGrid" Width="320" Rows="1" HorizontalAlignment="Center" Canvas.Left="73" Canvas.Top="105">
-                <controls:CardMarker x:Name="Marks0" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks1" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks2" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks3" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks4" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks5" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks6" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
-                <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
-                    
-               
-            </UniformGrid>
+            <controls:CardMarker x:Name="Marks0" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks1" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks2" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks3" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks4" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks5" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks6" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203"
                                Visibility="Hidden" />
             <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
