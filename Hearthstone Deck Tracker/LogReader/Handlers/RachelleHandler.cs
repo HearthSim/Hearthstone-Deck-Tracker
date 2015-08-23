@@ -6,7 +6,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
     public class RachelleHandler
     {
-        public void Handle(string logLine, IHsGameState gameState, GameV2 game)
+        public void Handle(string logLine, IHsGameState gameState, IGame game)
         {
             if (HsLogReaderConstants.CardAlreadyInCacheRegex.IsMatch(logLine))
             {

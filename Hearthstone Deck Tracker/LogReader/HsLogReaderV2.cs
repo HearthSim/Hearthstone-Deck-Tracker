@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         private HsGameState _gameState;
         private GameV2 _game;
 
+        private readonly PowerGameStateHandler _powerGameStateLineHandler = new PowerGameStateHandler();
         private readonly PowerHandler _powerLineHandler = new PowerHandler();
         private readonly RachelleHandler _rachelleHandler = new RachelleHandler();
         private readonly AssetHandler _assetHandler = new AssetHandler();
@@ -155,11 +156,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
                         offset = tempOffset;
                     else if (line.Contains("CREATE_GAME") && line.Contains("GameState."))
                     {
-                        //if (_gameState.FoundSpectatorStart)
-                        //{
-                        //    _gameState.FoundSpectatorStart = false;
-                        //    continue;
-                        //}
+                        if (_gameState.FoundSpectatorStart)
+                        {
+                            _gameState.FoundSpectatorStart = false;
+                            continue;
+                        }
                         offset = tempOffset;
                         continue;
                     }
@@ -188,9 +189,16 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 _gameState.CurrentOffset += logLine.Length + 1;
 
                 if (logLine.StartsWith("["))
+                {
                     GameV2.AddHSLogLine(logLine);
+                    API.LogEvents.OnLogLine.Execute(logLine);
+                }
 
                 if (logLine.StartsWith("[Power] GameState."))
+                {
+                    _powerGameStateLineHandler.Handle(logLine, _gameState, _game);
+                }
+                else if (logLine.StartsWith("[Power]"))
                 {
                     _powerLineHandler.Handle(logLine, _gameState, _game);
                 }

@@ -60,6 +60,7 @@
     <Compile Include="LogReader\ArenaHandlerTest.cs" />
     <Compile Include="LogReader\AssetHandlerTest.cs" />
     <Compile Include="LogReader\BobHandlerTest.cs" />
+    <Compile Include="LogReader\PowerHandlerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,10 +70,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Content Include="LogReader\TestFiles\ExampleBobLogLines.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LogReader\TestFiles\ExampleBobLogLines.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

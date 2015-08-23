@@ -232,9 +232,10 @@
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
-    <Compile Include="LogReader\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
+    <Compile Include="LogReader\Handlers\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
+    <Compile Include="LogReader\Handlers\PowerGameStateHandler.cs" />
     <Compile Include="LogReader\Handlers\ZoneHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
     <Compile Include="LogReader\HsLogReaderConstants.cs" />

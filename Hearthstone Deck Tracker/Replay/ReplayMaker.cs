@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Points.Clear();
 		}
 
-		public static void Generate(KeyPointType type, int id, ActivePlayer player, GameV2 game)
+		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game)
 		{
 			Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
 		}
