@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(prop.Name == "HSLogLines" || prop.Name == "Entities")
 					continue;
 				string val = "";
-				var propVal = prop.GetValue(prop);
+				var propVal = prop.GetValue(_game, null);
 				if(propVal != null)
 				{
 					var enumerable = propVal as IEnumerable<object>;

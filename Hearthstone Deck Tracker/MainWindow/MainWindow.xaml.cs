@@ -678,8 +678,6 @@ namespace Hearthstone_Deck_Tracker
 		public MainWindow(GameV2 game)
 		{
 		    _game = game;
-		    // Set working directory to path of executable
-			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 			InitializeComponent();
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
