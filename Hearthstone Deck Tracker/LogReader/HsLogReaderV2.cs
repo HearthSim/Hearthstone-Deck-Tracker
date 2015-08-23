@@ -156,11 +156,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
                         offset = tempOffset;
                     else if (line.Contains("CREATE_GAME") && line.Contains("GameState."))
                     {
-                        if (_gameState.FoundSpectatorStart)
-                        {
-                            _gameState.FoundSpectatorStart = false;
-                            continue;
-                        }
+                        //if (_gameState.FoundSpectatorStart)
+                        //{
+                        //    _gameState.FoundSpectatorStart = false;
+                        //    continue;
+                        //}
                         offset = tempOffset;
                         continue;
                     }
