@@ -303,11 +303,11 @@ namespace Hearthstone_Deck_Tracker
 						offset = tempOffset;
 					else if(line.Contains("CREATE_GAME") && line.Contains("GameState."))
 					{
-						if(_foundSpectatorStart)
-						{
-							_foundSpectatorStart = false;
-							continue;
-						}
+						//if(_foundSpectatorStart)
+						//{
+						//	_foundSpectatorStart = false;
+						//	continue;
+						//}
 						offset = tempOffset;
 						continue;
 					}
@@ -478,13 +478,6 @@ namespace Hearthstone_Deck_Tracker
 						var match = _creationTagRegex.Match(logLine);
 						TagChange(match.Groups["tag"].Value, _currentEntityId, match.Groups["value"].Value);
 					}
-					else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && Game.IsInMenu)
-						_gameHandler.SetGameMode(GameMode.Spectator);
-					else if(logLine.Contains("End Spectator"))
-					{
-						_gameHandler.SetGameMode(GameMode.Spectator);
-						_gameHandler.HandleGameEnd();
-					}
 					else if(_actionStartRegex.IsMatch(logLine))
 					{
 						var playerEntity =
@@ -618,6 +611,19 @@ namespace Hearthstone_Deck_Tracker
 					else if(logLine.Contains("BlockType=JOUST"))
 					{
 						_nextUpdatedEntityIsJoust = true;
+					}
+				}
+				else if(logLine.StartsWith("[Power]"))
+				{
+					if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator") || _foundSpectatorStart) && Game.IsInMenu)
+					{
+						_gameHandler.SetGameMode(GameMode.Spectator);
+						_foundSpectatorStart = false;
+					}
+					else if(logLine.Contains("End Spectator"))
+					{
+						_gameHandler.SetGameMode(GameMode.Spectator);
+						_gameHandler.HandleGameEnd();
 					}
 				}
 					#endregion
