@@ -27,7 +27,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
-			CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
 			CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
