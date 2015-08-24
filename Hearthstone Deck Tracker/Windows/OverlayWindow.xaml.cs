@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker
                new Point(440 / tWidth, 38 / tHeight),
                new Point(467 / tWidth, 45 / tHeight),
                new Point(492 / tWidth, 48 / tHeight),
-               new Point(420 / tWidth, 48 / tHeight),
+               new Point(520 / tWidth, 48 / tHeight),
                new Point(546 / tWidth, 44 / tHeight),
                new Point(573 / tWidth, 37 / tHeight),
                new Point(600 / tWidth, 27 / tHeight)
