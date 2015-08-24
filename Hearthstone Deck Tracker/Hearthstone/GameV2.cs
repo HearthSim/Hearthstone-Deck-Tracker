@@ -923,7 +923,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public async void NewArenaCard(string cardId)
 		{
-			if(TempArenaDeck == null)
+			if(TempArenaDeck == null || string.IsNullOrEmpty(cardId))
 				return;
 			var existingCard = TempArenaDeck.Cards.FirstOrDefault(c => c.Id == cardId);
 			if(existingCard != null)
