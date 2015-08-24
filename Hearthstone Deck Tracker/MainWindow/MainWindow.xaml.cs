@@ -1279,31 +1279,31 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			//wait for player hero to be detected
+			//wait for player hero to be detected and at least 3 cards to be drawn
 			for(var i = 0; i < 50; i++)
 			{
-				if(_game.PlayingAs != null)
+				if(_game.PlayingAs != null && _game.PlayerDrawn.Count >= 3)
 					break;
 				await Task.Delay(100);
 			}
-			if(_game.PlayingAs == null)
+			if(_game.PlayingAs == null || _game.PlayerDrawn.Count < 3)
 			{
 				IsShowingIncorrectDeckMessage = false;
+				Logger.WriteLine("No player hero detected or less then 3 cards drawn. Not showing dialog.", "IncorrectDeckMessage");
 				return;
 			}
+			await Task.Delay(1000);
 
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
 				                              d.Class == _game.PlayingAs && !d.Archived
-				                              && _game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				                              && _game.PlayerDrawnIdsTotal.Distinct().All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
 				        .ToList();
-
-			if(decks.Contains(DeckList.Instance.ActiveDeckVersion))
-				decks.Remove(DeckList.Instance.ActiveDeckVersion);
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
 			_game.NoMatchingDeck = decks.Count == 0;
+			
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
@@ -1312,10 +1312,13 @@ namespace Hearthstone_Deck_Tracker
 				UpdateDeckList(deck);
 				UseDeck(deck);
 			}
-			else if(decks.Count > 0)
+			else
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
 				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
+				if(decks.Count == 1 && DeckList.Instance.ActiveDeckVersion != null)
+					decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
+								   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 				dsDialog.ShowDialog();
 
@@ -1325,7 +1328,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(selectedDeck.Name == "Use no deck")
 						SelectDeck(null, true);
-					else
+					else if(selectedDeck.Name != "No match - Keep using active deck")
 					{
 						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
 						DeckPickerList.SelectDeck(selectedDeck);
@@ -1366,7 +1369,6 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						HsLogReaderV2.Instance.GetCurrentRegion();
-						HsLogReaderV2.Instance.LoadLatestLogFile();
 					}
 					Overlay.UpdatePosition();
 

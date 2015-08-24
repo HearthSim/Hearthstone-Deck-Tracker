@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (!string.IsNullOrEmpty(hero))
                 {
-                    _game.PlayingAs = hero;
+                    //_game.PlayingAs = hero;
                     if (_game.CurrentGameStats != null)
                         _game.CurrentGameStats.PlayerHero = hero;
                     var selectedDeck = DeckList.Instance.ActiveDeckVersion;
@@ -202,17 +202,16 @@ namespace Hearthstone_Deck_Tracker
                         else if (DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == _game.PlayingAs))
                         {
                             var lastDeck = DeckList.Instance.LastDeckClass.First(ldc => ldc.Class == _game.PlayingAs);
-                            Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 
                             var deck = lastDeck.Id == Guid.Empty
                                            ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
                                            : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
-
-                            if (deck != null)
-                            {
-                                if (deck.Archived)
+							if( deck != null && _game.PlayerDrawnIdsTotal.Distinct().All(id => deck.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
+							{
+								Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
+								if (deck.Archived)
                                 {
-                                    Logger.WriteLine("Deck " + deck.Name + " is archived - not switching", "HandleGameStart");
+                                    Logger.WriteLine("Deck " + deck.Name + " is archived - waiting for deck selection dialog", "HandleGameStart");
                                     return;
                                 }
 

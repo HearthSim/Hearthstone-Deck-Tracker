@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentReturnedToDeck = new List<KeyValuePair<string, int>>();
 			PlayerDeck = new ObservableCollection<Card>();
 			PlayerDrawn = new ObservableCollection<Card>();
+			PlayerDrawnIdsTotal = new ObservableCollection<string>();
 			OpponentCards = new ObservableCollection<Card>();
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
@@ -88,7 +89,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			ReplayMaker.Reset();
 			PlayerDrawn.Clear();
-			Entities.Clear();
+			PlayerDrawnIdsTotal.Clear();
+            Entities.Clear();
 			PlayerId = -1;
 			OpponentId = -1;
 			SavedReplay = false;
@@ -106,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentStolenCardsInformation = new Card[MaxHandSize];
 			OpponentSecrets.ClearSecrets();
 			NoMatchingDeck = false;
+			_playingAs = null;
 
 			for(var i = 0; i < MaxHandSize; i++)
 			{
@@ -244,10 +247,33 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public ObservableCollection<Card> PlayerDeck { get; set; }
 		public ObservableCollection<Card> PlayerDrawn { get; set; }
+		public ObservableCollection<string> PlayerDrawnIdsTotal { get; set; }
 		public int PlayerHandCount { get; set; }
 		public int PlayerFatigueCount { get; set; }
 		public string PlayingAgainst { get; set; }
-		public string PlayingAs { get; set; }
+
+		private string _playingAs;
+		public string PlayingAs
+		{
+			get
+			{
+				if(string.IsNullOrEmpty(_playingAs))
+				{
+					var pEntity = Entities.Values.FirstOrDefault(e => e.GetTag(GAME_TAG.PLAYER_ID) == PlayerId);
+					if(pEntity != null)
+					{
+						var hEntityId = pEntity.GetTag(GAME_TAG.HERO_ENTITY);
+						Entity hEntity;
+						if(Entities.TryGetValue(hEntityId, out hEntity))
+						{
+							_playingAs = GetHeroNameFromId(hEntity.CardId);
+						}
+					}
+				}
+				return _playingAs;
+			}
+			
+		}
 		public string PlayerName { get; set; }
 		public string OpponentName { get; set; }
 
@@ -291,7 +317,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				drawnCard = GetCardFromId(cardId);
 				PlayerDrawn.Add(drawnCard);
-			}
+				PlayerDrawnIdsTotal.Add(cardId);
+            }
 			drawnCard.InHandCount++;
 			drawnCard.JustDrawn();
 
@@ -453,7 +480,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
 			if(drawnCard == null)
+			{
 				PlayerDrawn.Add(GetCardFromId(cardId));
+				PlayerDrawnIdsTotal.Add(cardId);
+            }
 			else
 				drawnCard.Count++;
 

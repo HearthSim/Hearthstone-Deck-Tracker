@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         int PlayerHandCount { get; set; }
         int PlayerFatigueCount { get; set; }
         string PlayingAgainst { get; set; }
-        string PlayingAs { get; set; }
+        string PlayingAs { get; }
         string PlayerName { get; set; }
         string OpponentName { get; set; }
         List<string> SetAsideCards { get; set; }
