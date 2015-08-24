@@ -143,7 +143,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight;
+			const int offsetToMakeSureGraphicsAreNotClipped = 30;
+			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
