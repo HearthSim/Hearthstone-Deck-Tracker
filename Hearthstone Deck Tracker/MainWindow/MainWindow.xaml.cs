@@ -1358,7 +1358,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void UpdateOverlayAsync()
 		{
-			UpdateCheck();
+			if(Config.Instance.CheckForUpdates)
+				UpdateCheck();
 			var hsForegroundChanged = false;
 			while(_doUpdate)
 			{
