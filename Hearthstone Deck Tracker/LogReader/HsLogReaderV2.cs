@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
     {
         //should be about 180,000 lines
         private const int MaxFileLength = 6000000;
-        private string _fullOutputPath;
+        private readonly string _fullOutputPath;
         private readonly bool _ifaceUpdateNeeded;
         private readonly int _updateDelay;
         private HsGameState _gameState;
@@ -38,8 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _updateDelay = updateDelay == 0 ? 100 : updateDelay;
             while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
                 hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
-            //_fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
-            LoadLatestLogFile();
+            _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
         }
 
         public static HsLogReaderV2 Instance { get; private set; }
@@ -183,9 +182,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
         private void Analyze(string log)
         {
             var logLines = log.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var rawLogLine in logLines)
+            foreach (var logLine in logLines)
             {
-                var logLine = new string(rawLogLine.Skip(25).ToArray());
                 _gameState.CurrentOffset += logLine.Length + 1;
 
                 if (logLine.StartsWith("["))
@@ -362,29 +360,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public int GetTurnNumber()
         {
             return _gameState.GetTurnNumber();
-        }
-
-        public void LoadLatestLogFile()
-        {
-            var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var logDir = Path.Combine(localAppData, "Blizzard\\Hearthstone\\Logs");
-            var dirInfo = new DirectoryInfo(logDir);
-            var logFiles = dirInfo.GetFiles("hearthstone_*.log").OrderByDescending(f => f.CreationTime).ToList();
-            if (logFiles.Count > 0)
-            {
-                _fullOutputPath = logFiles.First().FullName;
-                foreach (var file in logFiles.Skip(1))
-                {
-                    try
-                    {
-                        file.Delete();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.WriteLine("Error deleting old hearthstone log: " + ex, "LogReader");
-                    }
-                }
-            }
         }
     }
 }
