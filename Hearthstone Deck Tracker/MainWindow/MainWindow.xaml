@@ -341,10 +341,14 @@
             <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="0" Visibility="Collapsed">
+                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
+                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE"></TextBlock>
+                </Button>
+                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
                     <DockPanel>
                         <TextBlock Text="SELECTED VERSION:" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
@@ -356,7 +360,7 @@
                         </ComboBox>
                     </DockPanel>
                 </Border>
-                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="0"  Visibility="Collapsed">
+                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1"  Visibility="Collapsed">
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Right" Margin="0,0,2,0" Orientation="Horizontal">
                             <TextBlock Name="TextBlockIconNaxx" Text="Naxx" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the Curse of Naxxramas expansion."/>
@@ -375,7 +379,7 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-                <ListView x:Name="ListViewDeck" Grid.Row="1" Background="#696969"
+                <ListView x:Name="ListViewDeck" Grid.Row="2" Background="#696969"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -415,7 +419,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="2" Height="150" Margin="0,0,0,6" />
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,0,0,6" />
             </Grid>
                 <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2"

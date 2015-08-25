@@ -1382,6 +1382,8 @@ namespace Hearthstone_Deck_Tracker
 					if(!_game.IsRunning)
 						Overlay.Update(true);
 
+					BtnStartHearthstone.Visibility = Visibility.Collapsed;
+
 					_game.IsRunning = true;
 					if(User32.IsHearthstoneInForeground())
 					{
@@ -1425,6 +1427,8 @@ namespace Hearthstone_Deck_Tracker
 						if(DeckList.Instance.ActiveDeck != null)
 							_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 						HsLogReaderV2.Instance.Reset(true);
+
+						BtnStartHearthstone.Visibility = Visibility.Visible;
 
 						if(Config.Instance.CloseWithHearthstone)
 							Close();
@@ -1795,5 +1799,46 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private async void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
+		{
+			BtnStartHearthstone.IsEnabled = false;
+
+			try
+			{
+				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
+				if(bnetProc == null)
+				{
+					Process.Start("battlenet://");
+
+					var foundBnetWindow = false;
+					TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
+					for(int i = 0; i < 20; i++)
+					{
+						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
+						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
+						{
+							foundBnetWindow = true;
+							break;
+						}
+						await Task.Delay(500);
+					}
+					TextBlockBtnStartHearthstone.Text = "START LAUNCHER / HEARTHSTONE";
+					if(!foundBnetWindow)
+					{
+						this.ShowMessageAsync("Error starting battle.net launcher", "Could not find or start the battle.net launcher.");
+						BtnStartHearthstone.IsEnabled = true;
+						return;
+					}
+				}
+				Process.Start("battlenet://WTCG");
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error starting launcher/hearthstone: " + ex);
+			}
+
+			BtnStartHearthstone.IsEnabled = true;
+		}
 	}
 }
