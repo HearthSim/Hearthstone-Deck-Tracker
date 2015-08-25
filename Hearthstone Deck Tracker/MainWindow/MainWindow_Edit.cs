@@ -218,10 +218,12 @@ namespace Hearthstone_Deck_Tracker
 		internal async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-            		deck = deck.GetSelectedDeckVersion();
 
 			if(deck == null)
 				return;
+	
+			deck = deck.GetSelectedDeckVersion();
+
 			var cloneStats =
 				(await
 				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
