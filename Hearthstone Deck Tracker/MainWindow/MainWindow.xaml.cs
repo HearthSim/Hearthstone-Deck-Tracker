@@ -769,6 +769,10 @@ namespace Hearthstone_Deck_Tracker
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
 
+			MenuItem startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => StartHearthstoneAsync());
+			startHearthstonMenuItem.Name = "startHearthstone";
+			_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
+
 			MenuItem useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu());
 			useNoDeckMenuItem.Name = "useNoDeck";
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
@@ -1361,6 +1365,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.CheckForUpdates)
 				UpdateCheck();
 			var hsForegroundChanged = false;
+			int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			while(_doUpdate)
 			{
 
@@ -1383,6 +1388,7 @@ namespace Hearthstone_Deck_Tracker
 						Overlay.Update(true);
 
 					BtnStartHearthstone.Visibility = Visibility.Collapsed;
+					_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
 
 					_game.IsRunning = true;
 					if(User32.IsHearthstoneInForeground())
@@ -1429,6 +1435,7 @@ namespace Hearthstone_Deck_Tracker
 						HsLogReaderV2.Instance.Reset(true);
 
 						BtnStartHearthstone.Visibility = Visibility.Visible;
+						_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
 
 						if(Config.Instance.CloseWithHearthstone)
 							Close();
@@ -1800,10 +1807,18 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		private async void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
+		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
 		{
-			BtnStartHearthstone.IsEnabled = false;
+			StartHearthstoneAsync();
+		}
 
+		private async Task StartHearthstoneAsync()
+		{
+			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
+				return;
+			BtnStartHearthstone.IsEnabled = false;
+			int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
+			_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = false;
 			try
 			{
 				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
@@ -1831,6 +1846,7 @@ namespace Hearthstone_Deck_Tracker
 						return;
 					}
 				}
+				await Task.Delay(2000); //just to make sure
 				Process.Start("battlenet://WTCG");
 			}
 			catch(Exception ex)
@@ -1838,6 +1854,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Error starting launcher/hearthstone: " + ex);
 			}
 
+			_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = true;
 			BtnStartHearthstone.IsEnabled = true;
 		}
 	}
