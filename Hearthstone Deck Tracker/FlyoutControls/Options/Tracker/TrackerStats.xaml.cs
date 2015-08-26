@@ -334,5 +334,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
 		}
+
+		private void ButtonCheckForDuplicateMatches_OnClick(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.RemoveDuplicateMatches(true);
+		}
 	}
 }

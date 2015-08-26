@@ -2,9 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
@@ -83,10 +86,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
 			await controller.CloseAsync();
 			await this.ShowMessageAsync("Success", "Deleted " + _allWrappers.Count(x => x.ToDelete) + " duplicates.");
+			Config.Instance.FixedDuplicateMatches = true;
+			Config.Save();
 			Close();
 		}
 
-		public class GameStatsWrapper
+		public class GameStatsWrapper : INotifyPropertyChanged
 		{
 			public GameStatsWrapper(GameStats gameStats)
 			{
@@ -97,7 +102,37 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 			public GameStats GameStats { get; set; }
 			public string DisplayName { get; set; }
-			public bool ToDelete { get; set; }
+
+			private bool _toDelete;
+			public bool ToDelete {
+				get { return _toDelete; }
+				set
+				{
+					_toDelete = value;
+					OnPropertyChanged();
+				}
+			}
+			public event PropertyChangedEventHandler PropertyChanged;
+
+			[NotifyPropertyChangedInvocator]
+			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+			{
+				var handler = PropertyChanged;
+				if(handler != null)
+					handler(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		private void ButtonSelectAll_Click(object sender, RoutedEventArgs e)
+		{
+			foreach(var wrapper in _allWrappers)
+				wrapper.ToDelete = true;
+		}
+
+		private void ButtonDeselectAll_Click(object sender, RoutedEventArgs e)
+		{
+			foreach(var wrapper in _allWrappers)
+				wrapper.ToDelete = false;
 		}
 	}
 }

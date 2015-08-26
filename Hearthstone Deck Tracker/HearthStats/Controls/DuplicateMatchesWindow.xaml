@@ -12,7 +12,11 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Top" Margin="5" Text="Due to synchronization issues some matches have been duplicated, below you can find a list of all the detected ones. Duplicate detection is based on Player-Hero, Opponent-Hero, Turn-Number, Rank and Opponent-Name, so some non-duplicate matches could have been caught in the crossfire. You can always restore backups in options > tracker > backups." TextWrapping="Wrap"/>
         <Separator DockPanel.Dock="Top"/>
-        <Button DockPanel.Dock="Bottom" Content="Delete selected (checked)" Click="Button_Click" Margin="5" Style="{StaticResource AccentedSquareButtonStyle}"/>
+        <DockPanel DockPanel.Dock="Bottom" Margin="5">
+            <Button DockPanel.Dock="Left" Content="Select all" Width="75" Margin="0,0,5,0" Style="{StaticResource SquareButtonStyle}" Click="ButtonSelectAll_Click"/>
+            <Button DockPanel.Dock="Left" Content="Deselect all" Width="75" Style="{StaticResource SquareButtonStyle}" Click="ButtonDeselectAll_Click"/>
+            <Button Content="Delete selected (checked)" Click="Button_Click" Margin="5,0,0,0" Style="{StaticResource AccentedSquareButtonStyle}"/>
+        </DockPanel>
         <TreeView Name="TreeViewGames"/>
     </DockPanel>
 </controls:MetroWindow>

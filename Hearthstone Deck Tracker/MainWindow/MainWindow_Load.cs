@@ -598,7 +598,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			if(!Config.Instance.FixedDuplicateMatches)
-				RemoveDuplicateMatches();
+				RemoveDuplicateMatches(false);
 
 			if(!Config.Instance.ResolvedOpponentNames)
 				ResolveOpponentNames();

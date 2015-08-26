@@ -867,7 +867,7 @@ namespace Hearthstone_Deck_Tracker
 			PluginManager.Instance.StartUpdateAsync();
 		}
 
-		private async void RemoveDuplicateMatches()
+		internal async void RemoveDuplicateMatches(bool showDialogIfNoneFound)
 		{
 			try
 			{
@@ -875,13 +875,16 @@ namespace Hearthstone_Deck_Tracker
 				var toRemove = new Dictionary<GameStats, List<GameStats>>();
 				foreach(var deck in DeckList.Instance.Decks)
 				{
-					var duplicates = deck.DeckStats.Games.GroupBy(g => new {g.OpponentName, g.Turns, g.PlayerHero, g.OpponentHero, g.Rank});
+					var duplicates = deck.DeckStats.Games.Where(x => !string.IsNullOrEmpty(x.OpponentName)).GroupBy(g => new {g.OpponentName, g.Turns, g.PlayerHero, g.OpponentHero, g.Rank});
 					foreach(var games in duplicates)
 					{
 						if(games.Count() > 1)
 						{
 							var ordered = games.OrderBy(x => x.StartTime);
-							toRemove.Add(ordered.First(), ordered.Skip(1).ToList());
+							var original = ordered.First();
+							var filtered = ordered.Skip(1).Where(x => x.HasHearthStatsId).ToList();
+							if(filtered.Count > 0)
+								toRemove.Add(original, filtered);
 						}
 					}
 				}
@@ -911,6 +914,10 @@ namespace Hearthstone_Deck_Tracker
 						Config.Instance.FixedDuplicateMatches = true;
 						Config.Save();
 					}
+				}
+				else if(showDialogIfNoneFound)
+				{
+					await this.ShowMessageAsync("No duplicate matches found.", "");
 				}
 			}
 			catch(Exception e)
@@ -1088,7 +1095,7 @@ namespace Hearthstone_Deck_Tracker
 						if(_currentNewsId > oldNewsId
 						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
 						{
-							TopRow.Height = new GridLength(20);
+							TopRow.Height = new GridLength(24);
 							StatusBarNews.Visibility = Visibility.Visible;
 							MinHeight += StatusBarNewsHeight;
 							UpdateNews(0);

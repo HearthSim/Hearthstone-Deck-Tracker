@@ -584,7 +584,7 @@
                     </ScrollViewer>
                 </DockPanel>
             </Grid>
-            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="20" Margin="0,1,0,0" Visibility="Collapsed">
+            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="24" Margin="0,1,0,0" Visibility="Collapsed">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
