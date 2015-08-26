@@ -49,9 +49,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 Instance = new HsLogReaderV2();
         }
 
-        public static void Create(string hsDirectory, int updateDeclay, bool ifaceUpdateNeeded = true)
+        public static void Create(string hsDirectory, int updateDeclay, bool ifaceUpdateNeeded = true, bool forceNewInstance = false)
         {
-            if (Instance == null)
+            if (Instance == null || forceNewInstance)
                 Instance = new HsLogReaderV2(hsDirectory, updateDeclay, ifaceUpdateNeeded);
         }
 
