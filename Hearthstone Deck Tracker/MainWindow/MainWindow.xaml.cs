@@ -1217,6 +1217,14 @@ namespace Hearthstone_Deck_Tracker
 				MinimizeToTray();
 		}
 
+		private void MetroWindow_SourceInitalized(object sender, EventArgs e)
+		{
+			// we need to take ownership of the overlay to prevent it from appearing
+			// in the alt+tab switcher but we also need a valid window handle.
+			// this is the soonest we'll have one.
+			Overlay.Owner = this;
+		}
+
 		private async void Window_Closing(object sender, CancelEventArgs e)
 		{
 			try
