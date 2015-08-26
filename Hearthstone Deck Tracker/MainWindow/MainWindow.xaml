@@ -13,7 +13,7 @@
                       MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
                       Icon="..\Images\HearthstoneDeckTracker.ico"
-                      StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
+                      StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded" SourceInitialized="MetroWindow_SourceInitalized"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
     <Window.Resources>
         <ResourceDictionary>
