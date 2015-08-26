@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HearthStats.Controls;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
@@ -825,6 +826,8 @@ namespace Hearthstone_Deck_Tracker
 				RemoveNoteUrls();
 			if(!Config.Instance.ResolvedDeckStatsIssue)
 				ResolveDeckStatsIssue();
+			if(!Config.Instance.FixedDuplicateMatches)
+				RemoveDuplicateMatches();
 
 			TurnTimer.Create(90);
 
@@ -864,6 +867,60 @@ namespace Hearthstone_Deck_Tracker
 			PluginManager.Instance.LoadPlugins();
 			Options.OptionsTrackerPlugins.Load();
 			PluginManager.Instance.StartUpdateAsync();
+		}
+
+		private async void RemoveDuplicateMatches()
+		{
+			try
+			{
+				Logger.WriteLine("Checking for duplicate matches...");
+				var toRemove = new Dictionary<GameStats, List<GameStats>>();
+				foreach(var deck in DeckList.Instance.Decks)
+				{
+					var duplicates = deck.DeckStats.Games.GroupBy(g => new {g.OpponentName, g.Turns, g.PlayerHero, g.OpponentHero, g.Rank});
+					foreach(var games in duplicates)
+					{
+						if(games.Count() > 1)
+						{
+							var ordered = games.OrderBy(x => x.StartTime);
+							toRemove.Add(ordered.First(), ordered.Skip(1).ToList());
+						}
+					}
+				}
+				if(toRemove.Count > 0)
+				{
+					var numMatches = toRemove.Sum(x => x.Value.Count);
+					Logger.WriteLine(numMatches + " duplicate matches found.");
+					//wait for window to be loaded
+					await Task.Delay(10000);
+					var result =
+						await
+						this.ShowMessageAsync("Detected " + numMatches + " duplicate matches.",
+						                      "Due to sync issues some matches have been duplicated, click \"fix now\" to see and delete duplicates. Sorry about this.",
+						                      MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+						                      new MetroDialogSettings
+						                      {
+							                      AffirmativeButtonText = "fix now",
+							                      NegativeButtonText = "fix later",
+							                      FirstAuxiliaryButtonText = "don't fix"
+						                      });
+					if(result == MessageDialogResult.Affirmative)
+					{
+						var dmw = new DuplicateMatchesWindow();
+						dmw.LoadMatches(toRemove);
+						dmw.Show();
+					}
+					else if(result == MessageDialogResult.FirstAuxiliary)
+					{
+						Config.Instance.FixedDuplicateMatches = true;
+						Config.Save();
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine("Error checking for duplicate matches: "  + e);
+			}
 		}
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)

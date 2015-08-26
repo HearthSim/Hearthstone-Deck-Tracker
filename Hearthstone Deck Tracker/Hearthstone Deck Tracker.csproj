@@ -229,6 +229,9 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HearthStats\Controls\DuplicateMatchesWindow.xaml.cs">
+      <DependentUpon>DuplicateMatchesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />
@@ -532,6 +535,10 @@
     <Page Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HearthStats\Controls\DuplicateMatchesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>

@@ -211,6 +211,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
 
+		[DefaultValue(false)]
+		public bool FixedDuplicateMatches = false;
+
 		[DefaultValue(true)]
 		public bool FlashHsOnTurnStart = true;
 
