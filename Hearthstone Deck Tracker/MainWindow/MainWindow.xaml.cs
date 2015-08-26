@@ -1088,7 +1088,7 @@ namespace Hearthstone_Deck_Tracker
 						if(_currentNewsId > oldNewsId
 						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
 						{
-							TopRow.Height = new GridLength(20);
+							TopRow.Height = new GridLength(30);
 							StatusBarNews.Visibility = Visibility.Visible;
 							MinHeight += StatusBarNewsHeight;
 							UpdateNews(0);
