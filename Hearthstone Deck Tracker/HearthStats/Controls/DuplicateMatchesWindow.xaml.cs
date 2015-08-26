@@ -32,9 +32,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				_allWrappers.Clear();
 				foreach(var set in games.OrderBy(x => x.Value.Count))
 				{
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == set.Key.DeckId);
 					var tvi = new TreeViewItem();
 					tvi.ItemTemplate = (DataTemplate)FindResource("DataTemplateCheckBox");
-					tvi.Header = string.Format("[Original] {0} ({1} duplicate(s))", GetMatchInfo(set.Key), set.Value.Count);
+					tvi.Header = string.Format("[Original - Deck: {0}] : {1} ({2} duplicate(s))", deck != null ? deck.Name : "", GetMatchInfo(set.Key),  set.Value.Count);
 					tvi.IsExpanded = true;
 					foreach(var game in set.Value)
 					{

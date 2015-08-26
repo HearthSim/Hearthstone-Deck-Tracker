@@ -826,8 +826,6 @@ namespace Hearthstone_Deck_Tracker
 				RemoveNoteUrls();
 			if(!Config.Instance.ResolvedDeckStatsIssue)
 				ResolveDeckStatsIssue();
-			if(!Config.Instance.FixedDuplicateMatches)
-				RemoveDuplicateMatches();
 
 			TurnTimer.Create(90);
 
@@ -891,8 +889,6 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var numMatches = toRemove.Sum(x => x.Value.Count);
 					Logger.WriteLine(numMatches + " duplicate matches found.");
-					//wait for window to be loaded
-					await Task.Delay(10000);
 					var result =
 						await
 						this.ShowMessageAsync("Detected " + numMatches + " duplicate matches.",
