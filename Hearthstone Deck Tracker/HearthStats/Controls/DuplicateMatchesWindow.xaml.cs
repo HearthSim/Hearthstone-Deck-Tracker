@@ -38,7 +38,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == set.Key.DeckId);
 					var tvi = new TreeViewItem();
 					tvi.ItemTemplate = (DataTemplate)FindResource("DataTemplateCheckBox");
-					tvi.Header = string.Format("[Original - Deck: {0}] : {1} ({2} duplicate(s))", deck != null ? deck.Name : "", GetMatchInfo(set.Key),  set.Value.Count);
+					tvi.Header = string.Format("[Original - Deck: {0}] : {1} ({2} duplicate(s))", deck != null ? deck.Name : "", GetMatchInfo(set.Key),
+					                           set.Value.Count);
 					tvi.IsExpanded = true;
 					foreach(var game in set.Value)
 					{
@@ -54,7 +55,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 						}
 					}
 					TreeViewGames.Items.Add(tvi);
-
 				}
 			}
 			catch(Exception ex)
@@ -70,57 +70,29 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			var matches = _allWrappers.Where(x => x.ToDelete).Select(x => x.GameStats).ToList();
-			Logger.WriteLine("Deleting " + matches.Count + " duplicate matches.");
-			var controller = await this.ShowProgressAsync("Deleting duplicate matches...", "Deleting duplicates on HearthStats...");
-			await HearthStatsManager.DeleteMatchesAsync(matches.ToList(), false);
-			controller.SetMessage("Deleting local duplicates...");
-			foreach(var match in matches)
+			var selected = _allWrappers.Where(x => x.ToDelete).ToList();
+			if(selected.Any())
 			{
-				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == match.DeckId);
-				if(deck == null)
-					continue;
-				deck.DeckStats.Games.Remove(match);
+				var matches = selected.Select(x => x.GameStats).ToList();
+				Logger.WriteLine("Deleting " + matches.Count + " duplicate matches.");
+				var controller = await this.ShowProgressAsync("Deleting duplicate matches...", "Deleting duplicates on HearthStats...");
+				await HearthStatsManager.DeleteMatchesAsync(matches.ToList(), false);
+				controller.SetMessage("Deleting local duplicates...");
+				foreach(var match in matches)
+				{
+					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == match.DeckId);
+					if(deck == null)
+						continue;
+					deck.DeckStats.Games.Remove(match);
+				}
+				DeckStatsList.Save();
+				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				await controller.CloseAsync();
 			}
-			DeckStatsList.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			await controller.CloseAsync();
 			await this.ShowMessageAsync("Success", "Deleted " + _allWrappers.Count(x => x.ToDelete) + " duplicates.");
 			Config.Instance.FixedDuplicateMatches = true;
 			Config.Save();
 			Close();
-		}
-
-		public class GameStatsWrapper : INotifyPropertyChanged
-		{
-			public GameStatsWrapper(GameStats gameStats)
-			{
-				GameStats = gameStats;
-				DisplayName = "[Duplicate] " + GetMatchInfo(gameStats);
-				ToDelete = true;
-			}
-
-			public GameStats GameStats { get; set; }
-			public string DisplayName { get; set; }
-
-			private bool _toDelete;
-			public bool ToDelete {
-				get { return _toDelete; }
-				set
-				{
-					_toDelete = value;
-					OnPropertyChanged();
-				}
-			}
-			public event PropertyChangedEventHandler PropertyChanged;
-
-			[NotifyPropertyChangedInvocator]
-			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-			{
-				var handler = PropertyChanged;
-				if(handler != null)
-					handler(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 
 		private void ButtonSelectAll_Click(object sender, RoutedEventArgs e)
@@ -133,6 +105,41 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		{
 			foreach(var wrapper in _allWrappers)
 				wrapper.ToDelete = false;
+		}
+
+		public class GameStatsWrapper : INotifyPropertyChanged
+		{
+			private bool _toDelete;
+
+			public GameStatsWrapper(GameStats gameStats)
+			{
+				GameStats = gameStats;
+				DisplayName = "[Duplicate] " + GetMatchInfo(gameStats);
+				ToDelete = true;
+			}
+
+			public GameStats GameStats { get; set; }
+			public string DisplayName { get; set; }
+
+			public bool ToDelete
+			{
+				get { return _toDelete; }
+				set
+				{
+					_toDelete = value;
+					OnPropertyChanged();
+				}
+			}
+
+			public event PropertyChangedEventHandler PropertyChanged;
+
+			[NotifyPropertyChangedInvocator]
+			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+			{
+				var handler = PropertyChanged;
+				if(handler != null)
+					handler(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
