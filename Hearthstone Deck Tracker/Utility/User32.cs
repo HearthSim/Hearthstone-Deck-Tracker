@@ -101,16 +101,16 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Config.Instance.AdvancedWindowSearch)
 			{
-				Parallel.ForEach(Process.GetProcesses(), (process, state) =>
+				foreach(var process in Process.GetProcesses())
 				{
 					var sb = new StringBuilder(200);
 					GetClassName(process.MainWindowHandle, sb, 200);
 					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
 					{
 						_hsWindow = process.MainWindowHandle;
-						state.Break();
+						break;
 					}
-				});
+				};
 			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
