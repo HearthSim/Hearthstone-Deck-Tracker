@@ -305,6 +305,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 #pragma warning disable 4014
 		public async Task<bool> PlayerDraw(string cardId)
 		{
+			if(string.IsNullOrEmpty(_playingAs))
+			{
+				//Make sure the value get's cached as early as possible to avoid problems
+				//at the end of a game, in case the hero changes - e.g. to Jaraxxus.
+				PlayingAs.GetType();
+			}
 			PlayerHandCount++;
 
 			if(string.IsNullOrEmpty(cardId))
