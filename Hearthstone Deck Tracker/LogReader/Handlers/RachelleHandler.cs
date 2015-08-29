@@ -36,6 +36,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                         case Region.ASIA:
                             timeZone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
                             break;
+                        case Region.CHINA:
+                            timeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+                            break;
                     }
                     if (timeZone != null)
                     {
