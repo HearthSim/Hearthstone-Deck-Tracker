@@ -85,8 +85,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 }
                 if (timeZone != null)
                 {
-                    wins++;
                     var region = (int) game.CurrentRegion - 1;
+                    wins = Config.Instance.GoldProgress[region];
+                    wins++;
                     var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
                     if (Config.Instance.GoldProgressLastReset[region].Date != date)
                     {
