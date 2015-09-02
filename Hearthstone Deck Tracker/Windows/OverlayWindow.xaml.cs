@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker
     /// <summary>
     ///     Interaction logic for OverlayWindow.xaml
     /// </summary>
-    public partial class OverlayWindow
+    public partial class OverlayWindow : Window
     {
         private readonly GameV2 _game;
         private readonly int _customHeight;
