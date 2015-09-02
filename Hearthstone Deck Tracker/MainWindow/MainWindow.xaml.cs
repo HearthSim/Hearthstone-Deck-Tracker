@@ -25,6 +25,8 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HearthStats.Controls;
+using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -47,20 +49,21 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class MainWindow : INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+	    private readonly GameV2 _game;
+	    public event PropertyChangedEventHandler PropertyChanged;
 
 		public void UseDeck(Deck selected)
 		{
-			Game.Reset();
+			_game.Reset();
 
 			if(selected != null)
 			{
 				DeckList.Instance.ActiveDeck = selected;
-				Game.SetPremadeDeck((Deck)selected.Clone());
+				_game.SetPremadeDeck((Deck)selected.Clone());
 				UpdateMenuItemVisibility();
 			}
 			//needs to be true for automatic deck detection to work
-			HsLogReader.Instance.Reset(true);
+			HsLogReaderV2.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
 		}
@@ -427,6 +430,22 @@ namespace Hearthstone_Deck_Tracker
 			MinHeight -= StatusBarNewsHeight;
 			TopRow.Height = new GridLength(0);
 		}
+		
+		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e)
+		{
+			_newsLine--;
+			if(_newsLine < 0)
+				_newsLine = _news.Length - 1;
+			UpdateNews(_newsLine);
+		}
+
+		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e)
+		{
+			_newsLine++;
+			if(_newsLine > _news.Length - 1)
+				_newsLine = 0;
+			UpdateNews(_newsLine);
+		}
 
 		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -657,10 +676,9 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Constructor
 
-		public MainWindow()
+		public MainWindow(GameV2 game)
 		{
-			// Set working directory to path of executable
-			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+		    _game = game;
 
 			InitializeComponent();
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
@@ -696,7 +714,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 
-			HsLogReader.Create();
+			HsLogReaderV2.Create();
 
 			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 
@@ -723,7 +741,7 @@ namespace Hearthstone_Deck_Tracker
 				_updatedLogConfig = UpdateLogConfigFile();
 
 			//hearthstone, loads db etc - needs to be loaded before playerdecks, since cards are only saved as ids now
-			Game.Reset();
+			_game.Reset();
 
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset("DataDirPath");
@@ -752,6 +770,10 @@ namespace Hearthstone_Deck_Tracker
 				Text = "Hearthstone Deck Tracker v" + versionString
 			};
 
+			MenuItem startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => StartHearthstoneAsync());
+			startHearthstonMenuItem.Name = "startHearthstone";
+			_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
+
 			MenuItem useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu());
 			useNoDeckMenuItem.Name = "useNoDeck";
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
@@ -773,10 +795,10 @@ namespace Hearthstone_Deck_Tracker
 			};
 
 			//create overlay
-			Overlay = new OverlayWindow {Topmost = true};
+			Overlay = new OverlayWindow(_game) {Topmost = true};
 
-			PlayerWindow = new PlayerWindow(Config.Instance, Game.IsUsingPremade ? Game.PlayerDeck : Game.PlayerDrawn);
-			OpponentWindow = new OpponentWindow(Config.Instance, Game.OpponentCards);
+			PlayerWindow = new PlayerWindow(_game,Config.Instance, _game.IsUsingPremade ? _game.PlayerDeck : _game.PlayerDrawn);
+			OpponentWindow = new OpponentWindow(_game, Config.Instance, _game.OpponentCards);
 			TimerWindow = new TimerWindow(Config.Instance);
 			StatsWindow = new StatsWindow();
 
@@ -822,7 +844,7 @@ namespace Hearthstone_Deck_Tracker
 			SelectDeck(DeckList.Instance.ActiveDeck, true);
 
 			if(_foundHsDirectory)
-				HsLogReader.Instance.Start();
+				HsLogReaderV2.Instance.Start(_game);
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
@@ -843,6 +865,65 @@ namespace Hearthstone_Deck_Tracker
 			PluginManager.Instance.LoadPlugins();
 			Options.OptionsTrackerPlugins.Load();
 			PluginManager.Instance.StartUpdateAsync();
+		}
+
+		internal async void RemoveDuplicateMatches(bool showDialogIfNoneFound)
+		{
+			try
+			{
+				Logger.WriteLine("Checking for duplicate matches...");
+				var toRemove = new Dictionary<GameStats, List<GameStats>>();
+				foreach(var deck in DeckList.Instance.Decks)
+				{
+					var duplicates = deck.DeckStats.Games.Where(x => !string.IsNullOrEmpty(x.OpponentName)).GroupBy(g => new {g.OpponentName, g.Turns, g.PlayerHero, g.OpponentHero, g.Rank});
+					foreach(var games in duplicates)
+					{
+						if(games.Count() > 1)
+						{
+							var ordered = games.OrderBy(x => x.StartTime);
+							var original = ordered.First();
+							var filtered = ordered.Skip(1).Where(x => x.HasHearthStatsId).ToList();
+							if(filtered.Count > 0)
+								toRemove.Add(original, filtered);
+						}
+					}
+				}
+				if(toRemove.Count > 0)
+				{
+					var numMatches = toRemove.Sum(x => x.Value.Count);
+					Logger.WriteLine(numMatches + " duplicate matches found.");
+					var result =
+						await
+						this.ShowMessageAsync("Detected " + numMatches + " duplicate matches.",
+						                      "Due to sync issues some matches have been duplicated, click \"fix now\" to see and delete duplicates. Sorry about this.",
+						                      MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+						                      new MetroDialogSettings
+						                      {
+							                      AffirmativeButtonText = "fix now",
+							                      NegativeButtonText = "fix later",
+							                      FirstAuxiliaryButtonText = "don't fix"
+						                      });
+					if(result == MessageDialogResult.Affirmative)
+					{
+						var dmw = new DuplicateMatchesWindow();
+						dmw.LoadMatches(toRemove);
+						dmw.Show();
+					}
+					else if(result == MessageDialogResult.FirstAuxiliary)
+					{
+						Config.Instance.FixedDuplicateMatches = true;
+						Config.Save();
+					}
+				}
+				else if(showDialogIfNoneFound)
+				{
+					await this.ShowMessageAsync("No duplicate matches found.", "");
+				}
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine("Error checking for duplicate matches: "  + e);
+			}
 		}
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -1014,7 +1095,7 @@ namespace Hearthstone_Deck_Tracker
 						if(_currentNewsId > oldNewsId
 						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
 						{
-							TopRow.Height = new GridLength(20);
+							TopRow.Height = new GridLength(26);
 							StatusBarNews.Visibility = Visibility.Visible;
 							MinHeight += StatusBarNewsHeight;
 							UpdateNews(0);
@@ -1046,6 +1127,7 @@ namespace Hearthstone_Deck_Tracker
 				_currentNewsLine = _news[newsLine];
 				NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
 			}
+			StatusBarItemNewsIndex.Content = string.Format("({0}/{1})", _newsLine + 1, _news.Length);
 			_lastNewsUpdate = DateTime.Now;
 		}
 
@@ -1211,7 +1293,7 @@ namespace Hearthstone_Deck_Tracker
 
 				_notifyIcon.Visible = false;
 				Overlay.Close();
-				HsLogReader.Instance.Stop();
+				HsLogReaderV2.Instance.Stop();
 				TimerWindow.Shutdown();
 				PlayerWindow.Shutdown();
 				OpponentWindow.Shutdown();
@@ -1253,25 +1335,39 @@ namespace Hearthstone_Deck_Tracker
 
 		#region GENERAL METHODS
 
-		public void ShowIncorrectDeckMessage()
+		public async void ShowIncorrectDeckMessage()
 		{
-			if(Game.PlayerDrawn.Count == 0)
+			if(_game.PlayerDrawn.Count == 0)
 			{
 				IsShowingIncorrectDeckMessage = false;
 				return;
 			}
+
+			//wait for player hero to be detected and at least 3 cards to be drawn
+			for(var i = 0; i < 50; i++)
+			{
+				if(_game.PlayingAs != null && _game.PlayerDrawn.Count >= 3)
+					break;
+				await Task.Delay(100);
+			}
+			if(_game.PlayingAs == null || _game.PlayerDrawn.Count < 3)
+			{
+				IsShowingIncorrectDeckMessage = false;
+				Logger.WriteLine("No player hero detected or less then 3 cards drawn. Not showing dialog.", "IncorrectDeckMessage");
+				return;
+			}
+			await Task.Delay(1000);
+
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              d.Class == Game.PlayingAs && !d.Archived
-				                              && Game.PlayerDrawn.Where(c => !c.IsStolen).All(c => d.GetSelectedDeckVersion().Cards.Contains(c)))
+				                              d.Class == _game.PlayingAs && !d.Archived
+				                              && _game.PlayerDrawnIdsTotal.Distinct().All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
 				        .ToList();
 
-			if(decks.Contains(DeckList.Instance.ActiveDeckVersion))
-				decks.Remove(DeckList.Instance.ActiveDeckVersion);
-
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
-			Game.NoMatchingDeck = decks.Count == 0;
+			_game.NoMatchingDeck = decks.Count == 0;
+			
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
@@ -1280,10 +1376,13 @@ namespace Hearthstone_Deck_Tracker
 				UpdateDeckList(deck);
 				UseDeck(deck);
 			}
-			else if(decks.Count > 0)
+			else
 			{
 				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
 				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
+				if(decks.Count == 1 && DeckList.Instance.ActiveDeckVersion != null)
+					decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
+								   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 				var dsDialog = new DeckSelectionDialog(decks);
 				dsDialog.ShowDialog();
 
@@ -1293,7 +1392,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(selectedDeck.Name == "Use no deck")
 						SelectDeck(null, true);
-					else
+					else if(selectedDeck.Name != "No match - Keep using active deck")
 					{
 						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
 						DeckPickerList.SelectDeck(selectedDeck);
@@ -1323,29 +1422,35 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void UpdateOverlayAsync()
 		{
-			UpdateCheck();
+			if(Config.Instance.CheckForUpdates)
+				UpdateCheck();
 			var hsForegroundChanged = false;
+			int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			while(_doUpdate)
 			{
+
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
-					if(!Game.IsRunning || Game.CurrentRegion == Region.UNKNOWN)
+					if(_game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
-						HsLogReader.Instance.GetCurrentRegion();
+						HsLogReaderV2.Instance.GetCurrentRegion();
 					}
 					Overlay.UpdatePosition();
 
 					if(!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)
 					{
-						if(!Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0) && !_showingUpdateMessage)
+						if(!_game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0) && !_showingUpdateMessage)
 							UpdateCheck();
 					}
 
-					if(!Game.IsRunning)
+					if(!_game.IsRunning)
 						Overlay.Update(true);
 
-					Game.IsRunning = true;
+					BtnStartHearthstone.Visibility = Visibility.Collapsed;
+					_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
+
+					_game.IsRunning = true;
 					if(User32.IsHearthstoneInForeground())
 					{
 						if(hsForegroundChanged)
@@ -1377,22 +1482,25 @@ namespace Hearthstone_Deck_Tracker
 				else
 				{
 					Overlay.ShowOverlay(false);
-					if(Game.IsRunning)
+					if(_game.IsRunning)
 					{
 						//game was closed
 						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
-						Game.CurrentRegion = Region.UNKNOWN;
+						_game.CurrentRegion = Region.UNKNOWN;
 						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-						HsLogReader.Instance.ClearLog();
-						Game.Reset();
+						HsLogReaderV2.Instance.ClearLog();
+						_game.Reset();
 						if(DeckList.Instance.ActiveDeck != null)
-							Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-						HsLogReader.Instance.Reset(true);
+							_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+						HsLogReaderV2.Instance.Reset(true);
+
+						BtnStartHearthstone.Visibility = Visibility.Visible;
+						_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
 
 						if(Config.Instance.CloseWithHearthstone)
 							Close();
 					}
-					Game.IsRunning = false;
+					_game.IsRunning = false;
 				}
 
 				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
@@ -1572,7 +1680,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Close();
 			Process.Start(Application.ResourceAssembly.Location);
-			Application.Current.Shutdown();
+			if(Application.Current != null)
+				Application.Current.Shutdown();
 		}
 
 		public void ActivateWindow()
@@ -1618,7 +1727,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
-			SelectDeck(deck, false);
+			SelectDeck(deck, Config.Instance.AutoUseDeck);
 		}
 
 		public void SelectDeck(Deck deck, bool setActive)
@@ -1643,8 +1752,8 @@ namespace Hearthstone_Deck_Tracker
 				//set and save last used deck for class
 				if(setActive)
 				{
-					Overlay.ListViewPlayer.ItemsSource = Game.PlayerDeck;
-					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDeck;
+					Overlay.ListViewPlayer.ItemsSource = _game.PlayerDeck;
+					PlayerWindow.ListViewPlayer.ItemsSource = _game.PlayerDeck;
 					Logger.WriteLine("Set player itemsource as PlayerDeck", "Tracker");
 					while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
 					{
@@ -1665,7 +1774,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				Game.IsUsingPremade = false;
+				_game.IsUsingPremade = false;
 
 				if(DeckList.Instance.ActiveDeck != null)
 					DeckList.Instance.ActiveDeck.IsSelectedInGui = false;
@@ -1674,8 +1783,8 @@ namespace Hearthstone_Deck_Tracker
 				if(setActive)
 				{
 					DeckPickerList.DeselectDeck();
-					Overlay.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
-					PlayerWindow.ListViewPlayer.ItemsSource = Game.PlayerDrawn;
+					Overlay.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
+					PlayerWindow.ListViewPlayer.ItemsSource = _game.PlayerDrawn;
 					Logger.WriteLine("set player item source to PlayerDrawn", "Tracker");
 				}
 
@@ -1757,5 +1866,56 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
+		{
+			StartHearthstoneAsync();
+		}
+
+		private async Task StartHearthstoneAsync()
+		{
+			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
+				return;
+			BtnStartHearthstone.IsEnabled = false;
+			int useNoDeckMenuItem = _notifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
+			_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = false;
+			try
+			{
+				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
+				if(bnetProc == null)
+				{
+					Process.Start("battlenet://");
+
+					var foundBnetWindow = false;
+					TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
+					for(int i = 0; i < 20; i++)
+					{
+						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
+						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
+						{
+							foundBnetWindow = true;
+							break;
+						}
+						await Task.Delay(500);
+					}
+					TextBlockBtnStartHearthstone.Text = "START LAUNCHER / HEARTHSTONE";
+					if(!foundBnetWindow)
+					{
+						this.ShowMessageAsync("Error starting battle.net launcher", "Could not find or start the battle.net launcher.");
+						BtnStartHearthstone.IsEnabled = true;
+						return;
+					}
+				}
+				await Task.Delay(2000); //just to make sure
+				Process.Start("battlenet://WTCG");
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error starting launcher/hearthstone: " + ex);
+			}
+
+			_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = true;
+			BtnStartHearthstone.IsEnabled = true;
+		}
 	}
 }

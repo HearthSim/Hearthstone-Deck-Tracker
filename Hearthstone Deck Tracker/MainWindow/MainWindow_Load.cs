@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using HDTHelper;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
@@ -275,6 +274,11 @@ namespace Hearthstone_Deck_Tracker
 						converted = true;
 					}
 				}
+				if(configVersion <= new Version(0, 10, 10, 0)) //button moved up with new expansion added to the list
+				{
+					Config.Instance.Reset("ExportAllSetsButtonY");
+					converted = true;
+				}
 			}
 
 			if(converted)
@@ -322,7 +326,7 @@ namespace Hearthstone_Deck_Tracker
 			//check for log config and create if not existing
 			try
 			{
-				var requiredLogs = new[] {"Zone", "Bob", "Power", "Asset", "Rachelle"};
+				var requiredLogs = new[] {"Zone", "Bob", "Power", "Asset", "Rachelle", "Arena"};
 
 				string[] actualLogs = {};
 				if(File.Exists(_logConfigPath))
@@ -345,6 +349,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						foreach(var log in missing)
 						{
+							sw.WriteLine();
 							sw.WriteLine("[{0}]", log);
 							sw.WriteLine("LogLevel=1");
 							sw.WriteLine("FilePrinting=false");
@@ -496,11 +501,11 @@ namespace Hearthstone_Deck_Tracker
 				                                                           ? new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor1"])
 				                                                           : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
 
-			Options.Load();
+			Options.Load(_game);
 
 
-			Game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
-			Game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
+            _game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
+            _game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
 			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			SetContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
 
@@ -533,17 +538,17 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.KeyPressOnGameEnd = "None";
 
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
-			ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
+			//ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 
 			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			SetContextMenuProperty("classCardsFirst", "Checked", (bool)CheckboxClassCardsFirst.IsChecked);
 			SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
 
 
-			DeckStatsFlyout.LoadConfig();
-			GameDetailsFlyout.LoadConfig();
-			StatsWindow.StatsControl.LoadConfig();
-			StatsWindow.GameDetailsFlyout.LoadConfig();
+			DeckStatsFlyout.LoadConfig(_game);
+			GameDetailsFlyout.LoadConfig(_game);
+			StatsWindow.StatsControl.LoadConfig(_game);
+			StatsWindow.GameDetailsFlyout.LoadConfig(_game);
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
@@ -591,6 +596,9 @@ namespace Hearthstone_Deck_Tracker
 					this.ShowMessage("Restart Hearthstone",
 					                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Hearthstone once, for the tracker to work properly.");
 			}
+
+			if(!Config.Instance.FixedDuplicateMatches)
+				RemoveDuplicateMatches(false);
 
 			if(!Config.Instance.ResolvedOpponentNames)
 				ResolveOpponentNames();

@@ -24,6 +24,7 @@
                     <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="Appearance" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemTrackerLogging" Header="Logging" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
+                    <TreeViewItem Name="TreeViewItemTrackerBackups" Header="Backups" Selected="TreeViewItemTrackerBackups_OnSelected"/>
                 </TreeViewItem>
             </TreeView>
             </Border>

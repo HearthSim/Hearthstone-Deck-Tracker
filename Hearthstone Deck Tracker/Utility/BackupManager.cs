@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class BackupManager
 	{
 		private const int MaxBackups = 7;
-		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml"};
+		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml"};
 
 		public static void Run()
 		{
@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			try
 			{
 				var backups = dirInfo.GetFiles("Backup_*");
-				while(backups.Count() >= MaxBackups)
+				while(backups.Count() > MaxBackups)
 				{
 					var oldest = backups.OrderBy(x => x.CreationTime).First();
 					Logger.WriteLine("Deleting old backup: " + oldest.Name, "BackupManager");
@@ -45,9 +45,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 
 			Logger.WriteLine("Creating backup for today", "BackupManager");
+
+			CreateBackup(backupFileName);
+		}
+
+		public static void CreateBackup(string fileName)
+		{
 			try
 			{
-				var backupFilePath = Path.Combine(Config.Instance.BackupDir, backupFileName);
+				var count = 1;
+				var fileInfo = new FileInfo(fileName);
+				while(File.Exists(Path.Combine(Config.Instance.BackupDir, fileName)))
+					fileName = string.Format("{0}_{1}.{2}", fileInfo.Name, count++, fileInfo.Extension);
+
+				var backupFilePath = Path.Combine(Config.Instance.BackupDir, fileName);
 				using(var zip = ZipFile.Open(backupFilePath, ZipArchiveMode.Create))
 				{
 					foreach(var file in Files)
@@ -59,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error creating todays backup: " + ex, "BackupManager");
+				Logger.WriteLine("Error creating backup: " + ex, "BackupManager");
 			}
 		}
 	}

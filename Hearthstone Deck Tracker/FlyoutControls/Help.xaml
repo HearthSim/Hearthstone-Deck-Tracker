@@ -4,21 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <ScrollViewer Margin="0,0,0,33">
             <StackPanel>
-                <GroupBox Header="What are all these percentages?">
-                    <StackPanel Margin="10,0,10,0">
-                        <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                <GroupBox Header="FAQ">
+                    <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ"
+                                        RequestNavigate="Hyperlink_RequestNavigate">
+                                        Go to the FAQ.
+                                    </Hyperlink>
+                    </TextBlock>
+                </GroupBox>
+                <GroupBox Header="The Overlay">
+                    <StackPanel>
+                        <GroupBox Header="Card marks">
+                            <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                                    <Run Text="(C)oin, (R)eturned, (K)ept, (M)ulliganed, (S)tolen" />
+                            </TextBlock>
+                        </GroupBox>
+                        <GroupBox Header="What are all these percentages?">
+                            <StackPanel Margin="10,0,10,0">
+                                <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                         <Bold>
                                             <Run Text="Player: " />
                                         </Bold>
                                         <LineBreak />
                                         <Run
                                             Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
-                        </TextBlock>
-                        <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                                </TextBlock>
+                                <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                                         <Bold>
                                             <Run Text="Opponent: " />
                                         </Bold>
@@ -49,18 +65,22 @@
                             <LineBreak />
                                         <Run
                                             Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)" />
+                                </TextBlock>
+                            </StackPanel>
+                        </GroupBox>
+                        <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Overlay"
+                                        RequestNavigate="Hyperlink_RequestNavigate">
+                                        Additional information can be found here.
+                                    </Hyperlink>
                         </TextBlock>
                     </StackPanel>
+                    
                 </GroupBox>
-
-                <GroupBox Header="Card Marks">
+                <GroupBox Header="Reporting bugs / requesting features">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="(C)oin, (R)eturned, (K)ept, (M)ulliganed, (S)tolen" />
-                    </TextBlock>
-                </GroupBox>
-                <GroupBox Header="I found a bug, what do I do?">
-                    <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="Two options here:" />
+                                    <Run Text="Two options:" />
                                     <LineBreak />
                                     <Run Text="1) Check out the" />
                                     <Hyperlink
@@ -69,8 +89,13 @@
                                         issues on GitHub.
                                     </Hyperlink>
                                     <Run
-                                        Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request." />
-                                    <LineBreak />
+                                        Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request. For some futher information on what you might want to include in the issue " />
+                                    <Hyperlink
+                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
+                                        RequestNavigate="Hyperlink_RequestNavigate">
+                                        click here.
+                                    </Hyperlink>
+                        <LineBreak />
                                     <Run Text="2) Send me an email: epikz37@gmail.com" />
                     </TextBlock>
                 </GroupBox>

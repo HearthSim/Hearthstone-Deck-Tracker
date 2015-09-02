@@ -4,7 +4,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls;
@@ -58,6 +60,57 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(fileName));
+		}
+
+		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
+		{
+			var settings = new MetroDialogSettings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"};
+			var sb = new StringBuilder();
+			if(fileName != null)
+				sb.AppendLine("Saved to\n\"" + fileName + "\"");
+			sb.AppendLine("Uploaded to\n" + url);
+			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+			if(result == MessageDialogResult.Negative)
+			{
+				try
+				{
+					Process.Start(url);
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error starting browser: " + ex, "ScreenshotMessageDialog");
+				}
+			}
+			else if(result == MessageDialogResult.FirstAuxiliary)
+			{
+				try
+				{
+					Clipboard.SetText(url);
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error copying url to clipboard: " + ex, "ScreenshotMessageDialog");
+				}
+			}
+		}
+
+		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
+		{
+			var settings = new MetroDialogSettings
+			{
+				AffirmativeButtonText = "save only",
+				NegativeButtonText = "save & upload",
+				FirstAuxiliaryButtonText = "upload only"
+			};
+			var result =
+				await
+				window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
+				                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+			return new SaveScreenshotOperation
+			{
+				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
+				Upload = result != MessageDialogResult.Affirmative
+			};
 		}
 
 		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
@@ -140,5 +193,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});
 		}
+	}
+
+	public class SaveScreenshotOperation
+	{
+		public bool SaveLocal { get; set; }
+		public bool Upload { get; set; }
 	}
 }

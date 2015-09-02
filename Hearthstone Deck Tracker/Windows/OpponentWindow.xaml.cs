@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -21,13 +22,15 @@ namespace Hearthstone_Deck_Tracker
 	public partial class OpponentWindow
 	{
 		public static double Scaling = 1.0;
-		private readonly Config _config;
+	    private readonly GameV2 _game;
+	    private readonly Config _config;
 		private bool _appIsClosing;
 
-		public OpponentWindow(Config config, ObservableCollection<Card> opponentDeck)
+		public OpponentWindow(GameV2 game, Config config, ObservableCollection<Card> opponentDeck)
 		{
 			InitializeComponent();
-			_config = config;
+		    _game = game;
+		    _config = config;
 			ListViewOpponent.ItemsSource = opponentDeck;
 			opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
 			Height = _config.OpponentWindowHeight;
@@ -59,22 +62,20 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Update()
 		{
-			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && Game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
-			LblOpponentDrawChance1.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDrawChance2.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentCardCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-			LblOpponentDeckCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			CanvasOpponentChance.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
-			if(Game.PlayingAgainst != string.Empty)
+			if(_game.PlayingAgainst != string.Empty)
 			{
-				var winsVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == Game.PlayingAgainst);
-				var lossesVS = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == Game.PlayingAgainst);
-				var percent = (winsVS + lossesVS) > 0 ? Math.Round(winsVS * 100.0 / (winsVS + lossesVS), 0).ToString() : "-";
-				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", Game.PlayingAgainst, winsVS, lossesVS, percent);
+				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.PlayingAgainst);
+				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.PlayingAgainst);
+				var percent = (winsVs + lossesVs) > 0 ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString(CultureInfo.InvariantCulture) : "-";
+				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", _game.PlayingAgainst, winsVs, lossesVs, percent);
 			}
 		}
 
@@ -89,14 +90,13 @@ namespace Hearthstone_Deck_Tracker
 						StackPanelMain.Children.Add(ListViewOpponent);
 						break;
 					case "Draw Chances":
-						StackPanelMain.Children.Add(LblOpponentDrawChance1);
-						StackPanelMain.Children.Add(LblOpponentDrawChance2);
+						StackPanelMain.Children.Add(CanvasOpponentChance);
 						break;
 					case "Card Counter":
-						StackPanelMain.Children.Add(StackPanelCount);
+						StackPanelMain.Children.Add(CanvasOpponentCount);
 						break;
 					case "Fatigue Counter":
-						StackPanelMain.Children.Add(StackPanelOpponentFatigue);
+						StackPanelMain.Children.Add(LblOpponentFatigue);
 						break;
 					case "Win Rate":
 						StackPanelMain.Children.Add(ViewboxWinRateAgainst);
@@ -107,15 +107,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
 		{
-			LblOpponentCardCount.Text = "Hand: " + cardCount;
-			LblOpponentDeckCount.Text = "Deck: " + cardsLeftInDeck;
+			LblOpponentCardCount.Text = cardCount.ToString();
+			LblOpponentDeckCount.Text = cardsLeftInDeck.ToString();
 
 			if(cardsLeftInDeck <= 0)
 			{
-				LblOpponentFatigue.Text = "Next draw fatigues for: " + (Game.OpponentFatigueCount + 1);
+				LblOpponentFatigue.Text = "Next draw fatigues for: " + (_game.OpponentFatigueCount + 1);
 
-				LblOpponentDrawChance2.Text = cardCount <= 0 ? "[2]: -% / -%" : "[2]: 100% / -%";
-				LblOpponentDrawChance1.Text = cardCount <= 0 ? "[1]: -% / -%" : "[1]: 100% / -%";
+				LblOpponentDrawChance2.Text = "0%";
+				LblOpponentDrawChance1.Text = "0%";
+				LblOpponentHandChance2.Text = cardCount <= 0 ? "0%" : "100%";
+				LblOpponentHandChance1.Text = cardCount <= 0 ? "0%" : "100%";
 				return;
 			}
 
@@ -123,13 +125,15 @@ namespace Hearthstone_Deck_Tracker
 
 			var handWithoutCoin = cardCount - (opponentHasCoin ? 1 : 0);
 
-			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance2.Text = "[2]: " + holdingNextTurn2 + "% / " + drawNextTurn2 + "%";
+			var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance2.Text = drawNextTurn2 + "%";
+			LblOpponentHandChance2.Text = holdingNextTurn2 + "%";
 
-			var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 2);
-			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 2);
-			LblOpponentDrawChance1.Text = "[1]: " + holdingNextTurn + "% / " + drawNextTurn + "%";
+			var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
+			var drawNextTurn = Math.Round(100.0f / cardsLeftInDeck, 1);
+			LblOpponentDrawChance1.Text = drawNextTurn + "%";
+			LblOpponentHandChance1.Text = holdingNextTurn + "%";
 		}
 
 		private void OpponentDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -139,8 +143,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			var allLabelsHeight = LblOpponentCardCount.ActualHeight + LblOpponentDrawChance1.ActualHeight + LblOpponentDrawChance2.ActualHeight
-			                      + LblWinRateAgainst.ActualHeight;
+			const int offsetToMakeSureGraphicsAreNotClipped = 30;
+			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
@@ -191,18 +195,16 @@ namespace Hearthstone_Deck_Tracker
 			StackPanelMain.Children.Clear();
 			if(top)
 			{
-				StackPanelMain.Children.Add(LblOpponentDrawChance2);
-				StackPanelMain.Children.Add(LblOpponentDrawChance1);
-				StackPanelMain.Children.Add(StackPanelCount);
+				StackPanelMain.Children.Add(CanvasOpponentChance);
+				StackPanelMain.Children.Add(CanvasOpponentCount);
 				StackPanelMain.Children.Add(ListViewOpponent);
 			}
 			else
 			{
 				StackPanelMain.Children.Add(ListViewOpponent);
-				StackPanelMain.Children.Add(LblOpponentDrawChance2);
-				StackPanelMain.Children.Add(LblOpponentDrawChance1);
-				StackPanelMain.Children.Add(StackPanelCount);
-			}
+                StackPanelMain.Children.Add(CanvasOpponentChance);
+                StackPanelMain.Children.Add(CanvasOpponentCount);
+            }
 		}
 	}
 }

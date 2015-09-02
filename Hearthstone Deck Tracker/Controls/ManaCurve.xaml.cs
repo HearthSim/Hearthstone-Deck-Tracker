@@ -1,6 +1,10 @@
 ﻿#region
 
+using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -31,6 +35,9 @@ namespace Hearthstone_Deck_Tracker
 				ManaCostBar6,
 				ManaCostBar7
 			};
+
+			ComboBoxStatType.ItemsSource = Enum.GetValues(typeof(StatType)).Cast<StatType>().Select(st => new StatTypeWrapper {StatType = st});
+			ComboBoxStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 		}
 
 		public void SetDeck(Deck deck)
@@ -38,11 +45,14 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 			{
 				ClearDeck();
+				TextBlockNoMechanics.Visibility = Visibility.Visible;
 				return;
 			}
 			_deck = deck;
 			deck.GetSelectedDeckVersion().Cards.CollectionChanged += (sender, args) => UpdateValues();
 			UpdateValues();
+			ItemsControlMechanics.ItemsSource = deck.Mechanics;
+			TextBlockNoMechanics.Visibility = deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		public void ClearDeck()
@@ -78,6 +88,9 @@ namespace Hearthstone_Deck_Tracker
 					case StatType.Attack:
 						statValue = card.Attack;
 						break;
+					case StatType.Overload:
+						statValue = card.Overload;
+						break;
 				}
 				if(statValue == -1)
 					continue;
@@ -100,7 +113,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					if(Config.Instance.ManaCurveFilter == StatType.Mana)
+					if(Config.Instance.ManaCurveFilter == StatType.Mana || Config.Instance.ManaCurveFilter == StatType.Overload)
 					{
 						switch(card.Type)
 						{
@@ -147,42 +160,40 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void ListViewStatType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxStatType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(e.AddedItems.Count == 0)
+			var selected = ComboBoxStatType.SelectedItem as StatTypeWrapper;
+			if(selected != null)
 			{
-				if(e.RemovedItems.Count > 0)
-				{
-					var item = e.RemovedItems[0] as ListViewItem;
-					if(item != null)
-					{
-						ListViewStatType.SelectedItem = item;
-						return;
-					}
-				}
-				//Config.Instance.ManaCurveFilter = StatType.Mana;
+				Config.Instance.ManaCurveFilter = selected.StatType;
+				Config.Save();
+				UpdateValues();
+			}
+		}
+
+		private void ManaCurveMechanics_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			if(BorderMechanics.Visibility != Visibility.Visible)
+			{
+				BorderMechanics.Visibility = Visibility.Visible;
+				TextBlockManaCurveMechanics.Text = "HIDE";
 			}
 			else
 			{
-				var item = e.AddedItems[0] as ListViewItem;
-				if(item != null)
-				{
-					switch(item.Name)
-					{
-						case "ListViewItemMana":
-							Config.Instance.ManaCurveFilter = StatType.Mana;
-							break;
-						case "ListViewItemHealth":
-							Config.Instance.ManaCurveFilter = StatType.Health;
-							break;
-						case "ListViewItemAttack":
-							Config.Instance.ManaCurveFilter = StatType.Attack;
-							break;
-					}
-				}
+				BorderMechanics.Visibility = Visibility.Collapsed;
+				TextBlockManaCurveMechanics.Text = "MECHANICS";
 			}
-			Config.Save();
-			UpdateValues();
+			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
+		}
+	}
+
+	public class StatTypeWrapper
+	{
+		public StatType StatType { get; set; }
+
+		public string DisplayName
+		{
+			get { return StatType.ToString().ToUpper(); }
 		}
 	}
 }

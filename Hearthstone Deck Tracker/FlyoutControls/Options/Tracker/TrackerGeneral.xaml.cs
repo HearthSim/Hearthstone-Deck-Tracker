@@ -23,10 +23,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
+			CheckBoxAutoUse.IsChecked = Config.Instance.AutoUseDeck;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
-			CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
 			CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
@@ -236,6 +236,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.RarityCardFrames = false;
 			Config.Save();
+		}
+
+		private void CheckBoxAutoUse_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoUseDeck = true;
+			Config.Save();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+
+		}
+
+		private void CheckBoxAutoUse_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoUseDeck = false;
+			Config.Save();
+			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+
 		}
 	}
 }

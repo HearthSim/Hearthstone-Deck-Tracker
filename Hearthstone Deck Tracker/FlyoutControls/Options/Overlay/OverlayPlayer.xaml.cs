@@ -2,6 +2,7 @@
 
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader;
 
 #endregion
 
@@ -12,16 +13,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayPlayer
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public OverlayPlayer()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
+            _game = game;
+            CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
 			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
@@ -70,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = true;
-			Game.HighlightCardsInHand = true;
+			_game.HighlightCardsInHand = true;
 			SaveConfig(true);
 		}
 
@@ -79,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = false;
-			Game.HighlightCardsInHand = false;
+			_game.HighlightCardsInHand = false;
 			SaveConfig(true);
 		}
 
@@ -106,27 +110,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized || !Game.IsUsingPremade)
+			if(!_initialized || !_game.IsUsingPremade)
 				return;
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
-			Game.Reset();
+			_game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
+				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+			HsLogReaderV2.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}
 
 		private void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized || !Game.IsUsingPremade)
+			if(!_initialized || !_game.IsUsingPremade)
 				return;
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
-			Game.Reset();
+			_game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
+				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+			HsLogReaderV2.Instance.Reset(true);
 			Helper.MainWindow.Overlay.Update(true);
 		}
 

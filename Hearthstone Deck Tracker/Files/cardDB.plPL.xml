@@ -13,7 +13,7 @@
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Przywróć 2 pkt. zdrowia.</Text>
+Przywróć #2 pkt. zdrowia.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -108,7 +108,8 @@ Przywróć 2 pkt. zdrowia.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Umieść w twojej ręce kopię losowej karty z ręki przeciwnika.</Text>
+    <Text>Umieść w twojej ręce kopię losowej karty
+z ręki przeciwnika.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -124,7 +125,8 @@ Przywróć 2 pkt. zdrowia.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj stronnikowi +2 do zdrowia.
+    <Text>Daj stronnikowi
++2 do zdrowia.
 Dobierz kartę.</Text>
     <Mechanics />
     <Artist>Jessica Jung</Artist>
@@ -246,7 +248,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim postaciom +2 do ataku w tej turze.</Text>
+    <Text>Daj twoim postaciom +2 do ataku w tej turze.</Text>
     <Mechanics />
     <Artist>Grace Liu</Artist>
   </Card>
@@ -354,7 +356,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Przemień stronnika w owcę 1/1.</Text>
+    <Text>Przemień stronnika
+w Owcę 1/1.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -370,7 +373,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Ten stronnik został przemieniony w owcę 1/1.</Text>
+    <Text>Ten stronnik został przemieniony w Owcę 1/1.</Text>
     <Mechanics>
       <string>Morph</string>
     </Mechanics>
@@ -455,7 +458,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Przyzwij dwóch stronników 0/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Text>Przyzwij dwóch stronników 0/2
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -522,7 +526,7 @@ Dobierz kartę.</Text>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 1 pkt. obrażeń.</Text>
+Zadaj $1 pkt. obrażeń.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -537,7 +541,8 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $1 pkt. obrażeń wrogiej postaci i ją &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
+    <Text>Zadaj $1 pkt. obrażeń wrogiej postaci
+i ją &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -555,7 +560,8 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj stronnikowi &lt;b&gt;Furię wichru&lt;/b&gt;.</Text>
+    <Text>Daj stronnikowi
+&lt;b&gt;Furię wichru&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
@@ -571,7 +577,9 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Przywróć stronnika do pełni zdrowia i daj mu &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
+    <Text>Przywróć stronnika
+do pełni zdrowia
+i daj mu &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -602,7 +610,8 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -620,7 +629,8 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj przyjaznej postaci +3 do ataku w tej turze.</Text>
+    <Text>Daj przyjaznej postaci +3 do ataku
+w tej turze.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -651,7 +661,8 @@ Zadaj 1 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim stronnikom +3 do ataku w tej turze.</Text>
+    <Text>Daj twoim stronnikom +3 do ataku
+w tej turze.</Text>
     <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
@@ -750,7 +761,7 @@ Przyzwij losowy Totem.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
+Dobierz kartę i otrzymaj $2 pkt. obrażeń.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -813,7 +824,8 @@ Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Wybierz wrogiego stronnika i zniszcz go na początku twojej tury.</Text>
+    <Text>Wybierz wrogiego stronnika i zniszcz go
+na początku twojej tury.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -843,7 +855,8 @@ Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń WSZYSTKIM pozostałym postaciom.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń WSZYSTKIM pozostałym postaciom.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -896,7 +909,8 @@ Dobierz kartę i otrzymaj 2 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj twojej broni +2 do ataku.</Text>
+    <Text>Daj twojej broni
++2 do ataku.</Text>
     <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -1061,7 +1075,8 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj stronnikowi +3 do ataku.</Text>
+    <Text>Daj stronnikowi
++3 do ataku.</Text>
     <Mechanics />
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -1091,7 +1106,8 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 6 pkt. zdrowia twojemu bohaterowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć
+6 pkt. zdrowia twojemu bohaterowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1109,7 +1125,8 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Przywróć #6 pkt. zdrowia.</Text>
+    <Text>Przywróć
+#6 pkt. zdrowia.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -1185,7 +1202,7 @@ Wyposaż bohatera w sztylet 1/2.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $3 pkt. obrażeń
+    <Text>Zadaj $3 pkt. obrażeń.
 Dobierz kartę.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
@@ -1540,7 +1557,8 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1591,7 +1609,8 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+2 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1770,7 +1789,8 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1894,7 +1914,7 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 za każdego innego przyjaznego stronnika na polu bitwy.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 za każdego pozostałego przyjaznego stronnika na polu bitwy.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -1941,7 +1961,9 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Zniszcz stronnika z atakiem 3 lub mniejszym.</Text>
+    <Text>Zniszcz stronnika
+z atakiem 3
+lub mniejszym.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -1956,7 +1978,8 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Za każdym razem gdy stronnik zostanie uleczony, dobierz kartę.</Text>
+    <Text>Za każdym razem gdy stronnik zostanie uzdrowiony,
+dobierz kartę.</Text>
     <Mechanics>
       <string>HealTarget</string>
     </Mechanics>
@@ -2064,7 +2087,7 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
+Zadaj $2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -2078,7 +2101,8 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 2 pkt. zdrowia wszystkim przyjaznym postaciom.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć
+2 pkt. zdrowia wszystkim przyjaznym postaciom.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2205,7 +2229,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>Spójrz na trzy górne karty z twojej talii. Jedną dobierz na rękę, a dwie pozostałe odrzuć.</Text>
+    <Text>Spójrz na trzy górne karty z twojej talii. Jedną dobierz do ręki, a dwie pozostałe odrzuć.</Text>
     <Mechanics />
     <Artist>Mauro Cascioli</Artist>
   </Card>
@@ -2252,7 +2276,8 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć 2 pkt. zdrowia.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć
+2 pkt. zdrowia.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2426,7 +2451,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $5 pkt. obrażeń
+    <Text>Zadaj $5 pkt. obrażeń.
 Dobierz kartę.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
@@ -2443,7 +2468,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim Totemom +2 do zdrowia.</Text>
+    <Text>Daj twoim Totemom
++2 do zdrowia.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -2472,7 +2498,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Przemień stronnika w żabę 0/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Text>Przemień stronnika
+w Żabę 0/1
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
@@ -2588,7 +2616,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Zmień atak stronnika na 1.</Text>
+    <Text>Zmień atak
+stronnika na 1.</Text>
     <Mechanics />
     <Artist>Daren Bader</Artist>
   </Card>
@@ -2618,7 +2647,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj stronnikowi &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
+    <Text>Daj stronnikowi
+&lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
@@ -2633,7 +2663,7 @@ Dobierz kartę.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Otrzymuje +3 do ataku za każdym razem, gdy zostanie zraniony.</Text>
+    <Text>Otrzymuje +3 do ataku za każdym razem, gdy otrzyma obrażenia.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -2709,10 +2739,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
-    <Text>WSZYSTKIE pozostałe Murloki otrzymują +1 do ataku.</Text>
-    <Mechanics>
-      <string>Aura</string>
-    </Mechanics>
+    <Text>WSZYSTKIE pozostałe Murloki otrzymują
++1 do ataku.</Text>
+    <Mechanics />
     <Artist>Phil Saunders</Artist>
   </Card>
   <Card>
@@ -2788,7 +2817,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Cofnij wrogiego stronnika na rękę przeciwnika.</Text>
+    <Text>Cofnij wrogiego stronnika do ręki przeciwnika.</Text>
     <Mechanics />
     <Artist>Scott Altmann</Artist>
   </Card>
@@ -2838,7 +2867,8 @@ Dobierz kartę.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń wrogiemu bohaterowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2856,7 +2886,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Otrzymujesz 5 pkt. pancerza.
+    <Text>Otrzymujesz
+5 pkt. pancerza.
 Dobierz kartę.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
@@ -2872,7 +2903,9 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Zniszcz stronnika z atakiem 5 lub większym.</Text>
+    <Text>Zniszcz stronnika
+z atakiem 5
+lub większym.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -3141,7 +3174,7 @@ Dobierz kartę.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Cofnij wszystkich stronników na ręce właścicieli.</Text>
+    <Text>Cofnij wszystkich stronników do rąk właścicieli.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -3326,7 +3359,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $2 pkt. obrażeń wszystkim wrogim stronnikom i ich &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
+    <Text>Zadaj $2 pkt. obrażeń wszystkim wrogim stronnikom
+i ich &lt;b&gt;Zamroź&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -3344,7 +3378,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Zamroź&lt;/b&gt; postać. Jeśli jest już &lt;b&gt;Zamrożona&lt;/b&gt;, zadaj zamiast tego $4 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Zamroź&lt;/b&gt; postać. Jeśli jest już &lt;b&gt;Zamrożona&lt;/b&gt;, zadaj zamiast tego
+$4 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -3816,7 +3851,7 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Dream</Class>
-    <Text>Cofnij stronnika na rękę właściciela.</Text>
+    <Text>Cofnij stronnika do ręki właściciela.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3925,7 +3960,10 @@ Dobierz kartę.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Na koniec twojej tury daj innemu losowemu przyjaznemu stronnikowi +1 do zdrowia.</Text>
+    <Text>Na koniec twojej tury
+daj innemu losowemu
+przyjaznemu stronnikowi
++1 do zdrowia.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -3968,7 +4006,10 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Na początku twojej tury zamień tego stronnika z innym wybranym losowo z twojej ręki.</Text>
+    <Text>Na początku twojej tury
+zamień tego stronnika
+z innym, wybranym losowo
+z twojej ręki.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -4383,7 +4424,7 @@ Dobierz kartę.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika na twoją rękę.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika do twojej ręki.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4447,7 +4488,7 @@ Dobierz kartę.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika na twoją rękę.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Cofnij przyjaznego stronnika do twojej ręki.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4510,7 +4551,8 @@ Dobierz kartę.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Szarża&lt;/b&gt;. &lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;
+&lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Charge</string>
       <string>Divine Shield</string>
@@ -4572,7 +4614,8 @@ Dobierz kartę.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi innymi postaciami.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi pozostałymi postaciami.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4589,7 +4632,7 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przemień innego losowego stronnika w diabłozaura 5/5 lub wiewiórkę 1/1.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przemień innego losowego stronnika w Diabłozaura 5/5 lub Wiewiórkę 1/1.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4874,7 +4917,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $2 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj $4 pkt. obrażeń.</Text>
+    <Text>Zadaj $2 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj
+$4 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -4908,7 +4952,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim stronnikom &lt;b&gt;Ukrycie&lt;/b&gt; do twojej następnej tury.</Text>
+    <Text>Daj twoim stronnikom &lt;b&gt;Ukrycie&lt;/b&gt; do twojej następnej tury.</Text>
     <Mechanics />
     <Artist>Steve Hui</Artist>
   </Card>
@@ -4937,7 +4981,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg zaatakuje, przyzwij Obrońcę 2/1 jako nowy cel ataku.</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg zaatakuje, przyzwij Obrońcę 2/1 jako
+nowy cel ataku.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -5018,7 +5063,8 @@ Dobierz kartę.</Text>
     <Durability>2</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj 2 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń. &lt;b&gt;Kombinacja:&lt;/b&gt; Zamiast tego zadaj 2 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Combo</string>
       <string>Battlecry</string>
@@ -5037,7 +5083,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Zadaj 2 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Zadaj
+2 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -5073,7 +5120,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $2 pkt. obrażeń wrogiemu bohaterowi. &lt;b&gt;Kombinacja:&lt;/b&gt; W następnej turze cofnij tę kartę na rękę.</Text>
+    <Text>Zadaj $2 pkt. obrażeń wrogiemu bohaterowi. &lt;b&gt;Kombinacja:&lt;/b&gt; W następnej turze cofnij tę kartę do ręki.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -5091,7 +5138,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Cofnij przyjaznego stronnika na twoją rękę i zmniejsz jego koszt o (2).</Text>
+    <Text>Cofnij przyjaznego stronnika do twojej ręki i zmniejsz jego koszt o (2).</Text>
     <Mechanics />
     <Artist>Graven Tung</Artist>
   </Card>
@@ -5252,7 +5299,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim stronnikom zdolność „&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Drzewca 2/2”.</Text>
+    <Text>Daj twoim stronnikom zdolność „&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Drzewca 2/2”.</Text>
     <Mechanics />
     <Artist>Markus Erdt</Artist>
   </Card>
@@ -5294,7 +5341,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj swoim stronnikom +1/+1; lub przyzwij Panterę 3/2.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj twoim stronnikom +1/+1; lub przyzwij Panterę 3/2.</Text>
     <Mechanics />
     <Artist>Steve Tappin</Artist>
   </Card>
@@ -5323,7 +5370,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj swoim stronnikom +1/+1.</Text>
+    <Text>Daj twoim stronnikom +1/+1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -5365,7 +5412,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Zniszcz stronnika. Przeciwnik dobiera 2 karty.</Text>
+    <Text>Zniszcz stronnika. Przeciwnik dobiera
+2 karty.</Text>
     <Mechanics />
     <Artist>Leo Che</Artist>
   </Card>
@@ -5412,7 +5460,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Otrzymujesz 2 kryształy many; lub dobierz 3 karty.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Otrzymujesz 2 kryształy many; lub dobierz
+3 karty.</Text>
     <Mechanics />
     <Artist>Terese Nielsen</Artist>
   </Card>
@@ -5456,7 +5505,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; &lt;b&gt;Szarża&lt;/b&gt;; lub +2 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; &lt;b&gt;Szarża&lt;/b&gt;; 
+lub +2 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
@@ -5536,7 +5586,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Zadaj 2 pkt. obrażeń; lub &lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Zadaj
+2 pkt. obrażeń; lub
+&lt;b&gt;Wycisz&lt;/b&gt; stronnika.</Text>
     <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
@@ -5601,7 +5653,8 @@ Dobierz kartę.</Text>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; 
-+5 do ataku; lub +5 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
++5 do ataku; lub
++5 do zdrowia oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -5722,7 +5775,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wycisz&lt;/b&gt; stronnika, a następnie zadaj mu $1 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Wycisz&lt;/b&gt; stronnika,
+a następnie zadaj mu
+$1 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Silence</string>
     </Mechanics>
@@ -5756,7 +5811,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Przyzwij dwa Duchowe wilki 2/3 z &lt;b&gt;Prowokacją&lt;/b&gt;. &lt;b&gt;Przeciążenie:&lt;/b&gt; (2)</Text>
+    <Text>Przyzwij dwa Duchowe wilki 2/3
+z &lt;b&gt;Prowokacją&lt;/b&gt;. &lt;b&gt;Przeciążenie:&lt;/b&gt; (2)</Text>
     <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
@@ -5771,7 +5827,7 @@ Dobierz kartę.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Na koniec twojej tury zadaj 2 pkt. obrażeń WSZYSTKIM innym postaciom.</Text>
+    <Text>Na koniec twojej tury zadaj 2 pkt. obrażeń WSZYSTKIM pozostałym postaciom.</Text>
     <Mechanics />
     <Artist>Ian Ameling</Artist>
   </Card>
@@ -5866,7 +5922,8 @@ Dobierz kartę.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Otrzymuje +2/+2, jeśli pod koniec twojej tury kontrolujesz &lt;b&gt;Sekret&lt;/b&gt;.</Text>
+    <Text>Otrzymuje +2/+2, jeśli
+pod koniec twojej tury kontrolujesz &lt;b&gt;Sekret&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -6002,7 +6059,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, przyzwij jego kopię.</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, przyzwij
+jego kopię.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -6069,7 +6127,7 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz jeden ze swoich kryształów many.</Text>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz jeden z twoich kryształów many.</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Taunt</string>
@@ -6088,7 +6146,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Zniszcz przyjaznego stronnika i zadaj obrażenia o wartości jego ataku wszystkim wrogim stronnikom.</Text>
+    <Text>Zniszcz przyjaznego stronnika i zadaj obrażenia
+o wartości jego ataku wszystkim wrogim stronnikom.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -6190,7 +6249,8 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 5 pkt. obrażeń twojemu bohaterowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+5 pkt. obrażeń twojemu bohaterowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -6256,7 +6316,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Umieść w ręce 2 losowe Demony z twojej talii.</Text>
+    <Text>Umieść w ręce
+2 losowe Demony
+z twojej talii.</Text>
     <Mechanics />
     <Artist>Raven Mimura</Artist>
   </Card>
@@ -6288,7 +6350,8 @@ Dobierz kartę.</Text>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń twojemu bohaterowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń twojemu bohaterowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -6414,7 +6477,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Atak tego stronnika jest zawsze równy jego zdrowiu.</Text>
+    <Text>Atak tego stronnika
+jest zawsze równy
+jego zdrowiu.</Text>
     <Mechanics />
     <Artist>Daarken</Artist>
   </Card>
@@ -6462,7 +6527,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Umieść kopię losowego stronnika z talii przeciwnika na polu bitwy.</Text>
+    <Text>Umieść kopię losowego stronnika
+z talii przeciwnika
+na polu bitwy.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -6508,7 +6575,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Podwajasz wartości obrażeń i leczenia z twoich zaklęć oraz mocy specjalnej.</Text>
+    <Text>Podwajasz wartości obrażeń i uzdrawiania z twoich zaklęć oraz mocy specjalnej.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -6524,7 +6591,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Przywróć #8 pkt. zdrowia. Dobierz 3 karty.</Text>
+    <Text>Przywróć #8 pkt. zdrowia.
+Dobierz 3 karty.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -6585,7 +6653,7 @@ Dobierz kartę.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Wybierz stronnika. Dobierz kartę za każdym razem, gdy zaatakuje.</Text>
+    <Text>Wybierz stronnika. Za każdym razem gdy zaatakuje, dobierz kartę.</Text>
     <Mechanics />
     <Artist>Chippy</Artist>
   </Card>
@@ -6627,7 +6695,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Dobierz kartę i zadaj obrażenia równe jej kosztowi.</Text>
+    <Text>Dobierz kartę
+i zadaj obrażenia
+równe jej kosztowi.</Text>
     <Mechanics />
     <Artist>Justin Sweet</Artist>
   </Card>
@@ -6643,7 +6713,7 @@ Dobierz kartę.</Text>
     <Durability>5</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Gdy przyzywasz stronnika, otrzymuje on +1/+1, zaś miecz traci 1 pkt. wytrzymałości.</Text>
+    <Text>Gdy przyzywasz stronnika, daj mu +1/+1, zaś miecz traci 1 pkt. wytrzymałości.</Text>
     <Mechanics />
     <Artist>Efrem Palacios</Artist>
   </Card>
@@ -6672,7 +6742,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zmniejsz jego zdrowie do 1.</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zmniejsz
+jego zdrowie do 1.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -6899,7 +6970,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Otrzymujesz 1 pkt. pancerza za każdym razem, gdy przyjazny stronnik zostanie zraniony.</Text>
+    <Text>Otrzymujesz 1 pkt. pancerza za każdym razem, gdy przyjazny stronnik otrzyma obrażenia.</Text>
     <Mechanics />
     <Artist>Greg Hildebrandt</Artist>
   </Card>
@@ -7023,7 +7094,8 @@ Dobierz kartę.</Text>
     <Durability>1</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Koszt zaatakowania stronnika wynosi 1 ataku zamiast 1 wytrzymałości.</Text>
+    <Text>Koszt zaatakowania stronnika wynosi
+1 ataku zamiast 1 wytrzymałości.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -7226,7 +7298,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij dwie Hieny 2/2.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij
+dwie Hieny 2/2.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -7258,7 +7331,7 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>2</Durability>
     <Class>Hunter</Class>
-    <Text>Za każdym razem gdy ujawniony zostaje przyjazny &lt;b&gt;Sekret&lt;/b&gt;, zyskuje 1 pkt. wytrzymałości.</Text>
+    <Text>Za każdym razem gdy ujawniony zostaje przyjazny &lt;b&gt;Sekret&lt;/b&gt;, otrzymuje 1 pkt. wytrzymałości.</Text>
     <Mechanics />
     <Artist>Cyril Van Der Haegen</Artist>
   </Card>
@@ -7287,7 +7360,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>Zadaj $5 pkt. obrażeń stronnikowi oraz $2 pkt. obrażeń jego sąsiadom.</Text>
+    <Text>Zadaj $5 pkt. obrażeń stronnikowi oraz $2 pkt. obrażeń
+jego sąsiadom.</Text>
     <Mechanics />
     <Artist>Tom Baxa</Artist>
   </Card>
@@ -7302,7 +7376,8 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Przyzwij Ogara 1/1 z &lt;b&gt;Szarżą&lt;/b&gt; za każdego wrogiego stronnika.</Text>
+    <Text>Przyzwij Ogara 1/1
+z &lt;b&gt;Szarżą&lt;/b&gt; za każdego wrogiego stronnika.</Text>
     <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
@@ -7369,7 +7444,9 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>Daj przyjaznej Bestii +2 do ataku oraz &lt;b&gt;Niewrażliwość&lt;/b&gt; w tej turze.</Text>
+    <Text>Daj przyjaznej Bestii +2 do ataku
+oraz &lt;b&gt;Niewrażliwość&lt;/b&gt;
+w tej turze.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -7483,7 +7560,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Za każdym razem gdy rzucasz zaklęcie, umieść w ręce zaklęcie „Kula ognia”.</Text>
+    <Text>Za każdym razem gdy rzucasz zaklęcie, umieść
+w ręce zaklęcie „Kula ognia”.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -7678,7 +7756,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj wszystkim swoim pozostałym stronnikom +2/+2; lub przyzwij dwa Drzewce 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj wszystkim twoim pozostałym stronnikom +2/+2; lub przyzwij dwa Drzewce 2/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -7693,7 +7771,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Twoi pozostali stronnicy otrzymują +2/+2.</Text>
+    <Text>Daj twoim pozostałym stronnikom +2/+2.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -7849,7 +7927,7 @@ Dobierz kartę.</Text>
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Kosztuje (1) mniej za każdego innego stronnika na polu bitwy.</Text>
+    <Text>Kosztuje (1) mniej za każdego pozostałego stronnika na polu bitwy.</Text>
     <Mechanics />
     <Artist>Svetlin Velinov</Artist>
   </Card>
@@ -7930,7 +8008,7 @@ Dobierz kartę.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Dobierz kartę za każdym razem, gdy zginie jeden z twoich stronników.</Text>
+    <Text>Dobierz kartę za każdym razem, gdy zginie jeden z twoich pozostałych stronników.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -8006,7 +8084,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń stronnikowi i daj mu +2 do ataku.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń stronnikowi i daj mu +2 do ataku.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8037,7 +8116,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Otrzymuje +1 do ataku za każdym razem, gdy dowolny stronnik zostanie zraniony.</Text>
+    <Text>Otrzymuje +1 do ataku za każdym razem, gdy dowolny stronnik otrzyma obrażenia.</Text>
     <Mechanics />
     <Artist>Simon Bisley</Artist>
   </Card>
@@ -8113,7 +8192,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zadaj mu $4 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój przeciwnik zagra stronnika, zadaj mu
+$4 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8149,7 +8229,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wrogi stronnik zaatakuje, cofnij go na rękę właściciela i zwiększ jego koszt o (2).</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wrogi stronnik zaatakuje, cofnij go do ręki właściciela
+i zwiększ jego koszt o (2).</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8213,7 +8294,8 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Otrzymuje +2/+2 za każdą kartę zagraną wcześniej w tej turze.</Text>
+    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Otrzymuje +2/+2 za każdą kartę zagraną wcześniej
+w tej turze.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -8229,7 +8311,7 @@ Dobierz kartę.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Ten stronnik ma zwiększony atak oraz zdrowie.</Text>
+    <Text>Zwiększone statystyki.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8406,7 +8488,9 @@ Dobierz kartę.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Twoja moc specjalna zmienia się w „Zadaj 2 pkt. obrażeń”. Jeśli posiadasz już postać cienia: 3 pkt. obrażeń.</Text>
+    <Text>Twoja moc specjalna zmienia się na „Zadaj 2 pkt. obrażeń”. Jeśli jesteś już
+w postaci cienia:
+3 pkt. obrażeń.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -8421,7 +8505,7 @@ Dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 2 pkt. obrażeń.</Text>
+Zadaj $2 pkt. obrażeń.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8435,7 +8519,7 @@ Zadaj 2 pkt. obrażeń.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 3 pkt. obrażeń.</Text>
+Zadaj $3 pkt. obrażeń.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8587,7 +8671,7 @@ Przyzwij Infernala 6/6.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Cofnij stronnika na rękę właściciela.</Text>
+    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Cofnij stronnika do ręki właściciela.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -8822,7 +8906,8 @@ Przyzwij Infernala 6/6.</Text>
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Gdy rzucisz zaklęcie, zadaj 1 pkt. obrażeń WSZYSTKIM stronnikom.</Text>
+    <Text>Gdy rzucisz zaklęcie, zadaj
+1 pkt. obrażeń WSZYSTKIM stronnikom.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -8920,7 +9005,7 @@ Przyzwij Infernala 6/6.</Text>
   </Card>
   <Card>
     <CardId>NEW1_025e</CardId>
-    <Name>Wzmocnienie</Name>
+    <Name>Dopakowano</Name>
     <CardSet>Classic</CardSet>
     <Type>Enchantment</Type>
     <Attack>0</Attack>
@@ -9085,7 +9170,10 @@ Przyzwij Infernala 6/6.</Text>
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Na koniec twojej tury daj innemu losowemu przyjaznemu stronnikowi +1 do ataku.</Text>
+    <Text>Na koniec twojej tury
+daj innemu losowemu
+przyjaznemu stronnikowi
++1 do ataku.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -9225,7 +9313,8 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg rzuci zaklęcie na stronnika, przyzwij stronnika 1/3 jako nowy cel.</Text>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy wróg rzuci zaklęcie na stronnika, przyzwij stronnika 1/3
+jako nowy cel.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -9736,7 +9825,7 @@ Przyzwij Infernala 6/6.</Text>
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli nie masz innych Ericów na polu bitwy, zmień nazwę tej karty na „Eric”.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli nie kontrolujesz innych Ericów na polu bitwy, zmień nazwę tej karty na „Eric”.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9776,7 +9865,7 @@ Przyzwij Infernala 6/6.</Text>
     <Health>9</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 3 Sprinty oraz Maraton do swojej ręki.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 3 Sprinty oraz Maraton do twojej ręki.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9815,7 +9904,9 @@ Przyzwij Infernala 6/6.</Text>
     <Health>2</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 1 pkt. obrażeń każdemu z 2 strategicznych celów.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń każdemu
+z 2 strategicznych celów.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9856,7 +9947,21 @@ Przyzwij Infernala 6/6.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 1 pkt. obrażeń.</Text>
+Zadaj $1 pkt. obrażeń.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>CS2_034_H1_AT_132</CardId>
+    <Name>Ognisty Pocisk (Ranga 2)</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj $2 pkt. obrażeń.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9890,6 +9995,20 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>CS2_102_H1_AT_132</CardId>
+    <Name>Mur!</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Otrzymujesz 4 pkt. pancerza.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>DS1h_292_H1</CardId>
     <Name>Pewny strzał</Name>
     <CardSet>Hero Skins</CardSet>
@@ -9901,7 +10020,21 @@ Otrzymujesz 2 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
+Zadaj $2 pkt. obrażeń wrogiemu bohaterowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>DS1h_292_H1_AT_132</CardId>
+    <Name>Strzał z balisty</Name>
+    <CardSet>Hero Skins</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj $3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9976,7 +10109,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Health>0</Health>
     <Cost>8</Cost>
     <Durability>0</Durability>
-    <Text>Zapełnij swoją planszę Pisklętami 2/2.</Text>
+    <Text>Zapełnij twoją planszę Pisklętami 2/2.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10100,7 +10233,8 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+6 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10142,7 +10276,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Health>0</Health>
     <Cost>2</Cost>
     <Durability>6</Durability>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Moc specjalna twojego bohatera zmienia się na „Zadaj 8 pkt. obrażeń losowemu wrogowi”.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Twoja moc specjalna zmienia się na „Zadaj 8 pkt. obrażeń losowemu wrogowi”.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -10235,7 +10369,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Na początku twojej tury daj swoim stronnikom
+    <Text>Na początku twojej tury daj twoim stronnikom
 +3 do ataku.</Text>
     <Mechanics />
   </Card>
@@ -10261,7 +10395,7 @@ Zadaj 2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Health>8</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>Za każdym razem gdy ten stronnik zostanie zraniony, przyzwij Żywiołaka 2/3 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Text>Za każdym razem gdy ten stronnik otrzyma obrażenia, przyzwij Żywiołaka 2/3 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10327,6 +10461,106 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TBST_001</CardId>
+    <Name>Amatorski czołg</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_002</CardId>
+    <Name>Amatorski mag</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Na koniec twojej tury zadaj 1 pkt. obrażeń losowemu wrogiemu stronnikowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_003</CardId>
+    <Name>Amatorski uzdrowiciel</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Na koniec twojej tury wylecz 2 pkt. obrażeń u sąsiadujących stronników.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_004</CardId>
+    <Name>Legalny uzdrowiciel</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Na koniec twojej tury przyzwij losowego przyjaznego stronnika, który zginął w tej turze.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBST_005</CardId>
+    <Name>Łotr PvP</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Ukrycie&lt;/b&gt;
+Odzyskuje &lt;b&gt;Ukrycie&lt;/b&gt;, gdy zabije stronnika.</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TBST_006</CardId>
+    <Name>TBST Push Common Card</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Dodaje zwykłą kartę do ręki gracza.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TBUD_1</CardId>
+    <Name>TBUD Summon Early Minion</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Jeśli masz mniej zdrowia niż przeciwnik, w każdej turze przyzywasz darmowego stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_001</CardId>
+    <Name>Zamieniacz zdrowia bossów</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_006</CardId>
     <Name>Wielki banan</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10352,7 +10586,7 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
   </Card>
   <Card>
     <CardId>TB_007</CardId>
-    <Name>Wygięty banan</Name>
+    <Name>Wypaczony banan</Name>
     <CardSet>Tavern Brawl</CardSet>
     <Type>Spell</Type>
     <Attack>0</Attack>
@@ -10371,7 +10605,7 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Atak i zdrowie zostały zamienione przez Wygięty banan.</Text>
+    <Text>Atak i zdrowie zostały zamienione przez Wypaczony banan.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10389,6 +10623,122 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>TB_009</CardId>
+    <Name>Stworzenie 15 sekretów</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010</CardId>
+    <Name>Zaklęcie tworzenia talii</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_010e</CardId>
+    <Name>Wybierz jedno z trzech</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_011</CardId>
+    <Name>Zaśniedziała moneta</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Otrzymujesz 1 kryształ many w tej turze.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_012</CardId>
+    <Name>Wybierz nową kartę!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Spójrz na 3 losowe karty. Wybierz jedną i wtasuj ją do talii.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013</CardId>
+    <Name>Zaklęcie gracza</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_014</CardId>
+    <Name>Wybierz nową kartę!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Spójrz na 3 losowe karty. Wybierz jedną i weź ją do ręki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_015</CardId>
+    <Name>Pirat</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_EndlessMinions01</CardId>
+    <Name>Ciągły urok</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_Pilot1</CardId>
+    <Name>Tajemniczy pilot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Kto to może być?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Stary Mętnooki</Name>
     <CardSet>Reward</CardSet>
@@ -10400,7 +10750,10 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
-    <Text>&lt;b&gt;Szarża&lt;/b&gt;. Otrzymuje +1 do ataku za każdego innego Murloka na polu bitwy.</Text>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;. Otrzymuje
+1 do ataku za każdego
+pozostałego Murloka
+na polu bitwy.</Text>
     <Mechanics>
       <string>Charge</string>
     </Mechanics>
@@ -10818,7 +11171,7 @@ Przyzwij dwóch stronników 2/1.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Daj swoim stronnikom +2/+2. &lt;i&gt;(+2 do ataku/+2 do zdrowia)&lt;/i&gt;</Text>
+    <Text>Daj twoim stronnikom +2/+2. &lt;i&gt;(+2 do ataku/+2 do zdrowia)&lt;/i&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12218,7 +12571,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Health>5</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy: Wycisz&lt;/b&gt; swoich pozostałych stronników.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy: Wycisz&lt;/b&gt; twoich pozostałych stronników.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -12343,7 +12696,8 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Umieść losowego Demona z ręki na polu bitwy.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Umieść losowego Demona z ręki
+na polu bitwy.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12407,7 +12761,8 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>Zniszcz stronnika, a następnie przywróć go do życia z pełnym zdrowiem.</Text>
+    <Text>Zniszcz stronnika, a następnie przywróć
+go do życia z pełnym zdrowiem.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -12422,7 +12777,7 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Cofnij losowego przyjaznego stronnika na twoją rękę.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Cofnij losowego przyjaznego stronnika do twojej ręki.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12452,7 +12807,8 @@ Agonia:&lt;/b&gt; Przyzwij Śluz 1/2 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Otrzymuje +1 do ataku za każdym razem, gdy przyzywasz stronnika z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
+    <Text>Otrzymuje +1 do ataku
+za każdym razem, gdy przyzywasz stronnika z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Jonboy Meyers</Artist>
   </Card>
@@ -12867,7 +13223,7 @@ Zamień atak i zdrowie wszystkich stronników.</Text>
     <Health>0</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Daj swoim stronnikom +2 do zdrowia.</Text>
+    <Text>Daj twoim stronnikom +2 do zdrowia.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13317,7 +13673,7 @@ Wystrzel pocisk za każdą kartę w ręce przeciwnika.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Cofnij losowego wrogiego stronnika na rękę przeciwnika.</Text>
+Cofnij losowego wrogiego stronnika do ręki przeciwnika.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13330,7 +13686,7 @@ Cofnij losowego wrogiego stronnika na rękę przeciwnika.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Cofnij 2 losowych wrogich stronników na rękę przeciwnika.</Text>
+Cofnij 2 losowych wrogich stronników do ręki przeciwnika.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13426,7 +13782,7 @@ Za każdym razem gdy zginie wrogi stronnik, przyzwij Szkielet 5/5.</Text>
     <Health>0</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>Zniszcz wszystkich stronników nie będących szkieletami.</Text>
+    <Text>Zniszcz wszystkich stronników niebędących szkieletami.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13744,7 +14100,7 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego giermka dla przeciwnika.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego giermka twojemu przeciwnikowi.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13770,7 +14126,7 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego wojownika dla przeciwnika.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego wojownika twojemu przeciwnikowi.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13796,7 +14152,7 @@ Dobierz kartę. Otrzymujesz kryształ many.</Text>
     <Health>6</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego jeźdźca dla przeciwnika.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij Widmowego jeźdźca twojemu przeciwnikowi.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -14055,7 +14411,7 @@ Dobierz 2 karty.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli kontrolujesz Mecha, zadaj 4 punkty obrażeń losowo rozdzielone pomiędzy wszystkimi wrogami.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli kontrolujesz Mecha, zadaj 4 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi wrogami.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14087,7 +14443,8 @@ Dobierz 2 karty.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Twoje Mechy kosztują (1) mniej.</Text>
+    <Text>Twoje Mechy
+kosztują (1) mniej.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14137,7 +14494,8 @@ Dobierz 2 karty.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń każdemu bohaterowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń każdemu bohaterowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14288,7 +14646,7 @@ Dobierz 2 karty.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Za każdym razem gdy przeciwnik zagra kartę, odrzuć 3 górne karty z twojej talii.</Text>
+    <Text>Za każdym razem gdy przeciwnik zagra kartę, usuń 3 górne karty z twojej talii.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -14364,7 +14722,8 @@ Jeśli jest to Bestia, kosztuje (4) mniej.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Mech</Race>
-    <Text>Na koniec twojej tury zadaj 2 pkt. obrażeń losowemu stronnikowi nie będącemu Mechem.</Text>
+    <Text>Na koniec twojej tury zadaj
+2 pkt. obrażeń losowemu stronnikowi niebędącemu Mechem.</Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -14453,7 +14812,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy&lt;/b&gt;: Daj twojej broni +1 do ataku.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twojej broni +1 do ataku.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -14500,7 +14859,8 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
-    <Text>Otrzymuje &lt;b&gt;Ukrycie&lt;/b&gt; za każdym razem, gdy przyzwiesz Pirata.</Text>
+    <Text>Otrzymuje &lt;b&gt;Ukrycie&lt;/b&gt;
+za każdym razem, gdy przyzywasz Pirata.</Text>
     <Mechanics />
     <Artist>Danny Beck</Artist>
   </Card>
@@ -14515,7 +14875,8 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Aktywuj &lt;b&gt;Agonię&lt;/b&gt; u wszystkich twoich stronników.</Text>
+    <Text>Aktywuj &lt;b&gt;Agonię&lt;/b&gt;
+u wszystkich twoich stronników.</Text>
     <Mechanics />
     <Artist>Luca Zontini</Artist>
   </Card>
@@ -14587,7 +14948,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>Umieść po jednym, losowym stronniku z ręki każdego z graczy na polu bitwy.</Text>
+    <Text>Umieść po jednym, losowym stronniku z ręki każdego gracza na polu bitwy.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -14689,7 +15050,8 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj każdemu z graczy kryształ many; lub każdy z graczy dobiera kartę.</Text>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Daj każdemu graczowi kryształ many;
+lub każdy gracz dobiera kartę.</Text>
     <Mechanics />
     <Artist>Chris Rahn</Artist>
   </Card>
@@ -14703,7 +15065,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Daj każdemu z graczy po krysztale many.</Text>
+    <Text>Daj każdemu graczowi po krysztale many.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14716,7 +15078,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Każdy z graczy dobiera kartę.</Text>
+    <Text>Każdy gracz dobiera kartę.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14860,7 +15222,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Race>Murloc</Race>
-    <Text>Dobierz kartę za każdym razem, gdy zginie przyjazny Murlok. &lt;b&gt;Przeciążenie:&lt;/b&gt; (1)</Text>
+    <Text>Dobierz kartę za każdym razem, gdy zginie inny przyjazny Murlok. &lt;b&gt;Przeciążenie:&lt;/b&gt; (1)</Text>
     <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
@@ -14929,7 +15291,10 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj 4 losowe Murloki do twojej ręki. &lt;b&gt;Przeciążenie:&lt;/b&gt; (3)</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj
+4 losowe Murloki
+do twojej ręki.
+&lt;b&gt;Przeciążenie:&lt;/b&gt; (3)</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15019,7 +15384,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku za każdą Bestię, którą kontrolujesz.</Text>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;. &lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku za każdą pozostałą Bestię, którą kontrolujesz.</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Taunt</string>
@@ -15050,7 +15415,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Zniszcz losowego wrogiego stronnika. &lt;b&gt;Kombinacja&lt;/b&gt;: Oraz broń przeciwnika.</Text>
+    <Text>Zniszcz losowego wrogiego stronnika. &lt;b&gt;Kombinacja:&lt;/b&gt; Oraz broń przeciwnika.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -15068,7 +15433,8 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twoim innym Mechom +2 do ataku.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twoim pozostałym Mechom
++2 do ataku.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15099,7 +15465,7 @@ Twój bohater posiada &lt;b&gt;Niewrażliwość&lt;/b&gt;.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Za każdym razem gdy ten stronnik zostanie zraniony, podwaja wartość swojego ataku.</Text>
+    <Text>Za każdym razem gdy ten stronnik otrzyma obrażenia, podwaja wartość swojego ataku.</Text>
     <Mechanics />
     <Artist>Raymond Swanland</Artist>
   </Card>
@@ -15273,7 +15639,8 @@ wroga.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Przywróć #4 pkt. zdrowia twojemu bohaterowi i zyskaj +2 do ataku w tej turze.</Text>
+    <Text>Przywróć #4 pkt. zdrowia twojemu bohaterowi i zyskaj
++2 do ataku w tej turze.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -15385,7 +15752,8 @@ wroga.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Race>Mech</Race>
-    <Text>Otrzymuje &lt;b&gt;Boską tarczę&lt;/b&gt; za każdym razem, gdy przyzywasz Mecha.</Text>
+    <Text>Otrzymuje &lt;b&gt;Boską tarczę&lt;/b&gt;
+za każdym razem, gdy przyzywasz Mecha.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -15590,7 +15958,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Mech</Race>
-    <Text>Za każdym razem gdy jakaś postać zostanie uleczona, zadaj 1 pkt. obrażeń losowemu wrogowi.</Text>
+    <Text>Za każdym razem gdy jakaś postać zostanie uzdrowiona, zadaj 1 pkt. obrażeń losowemu wrogowi.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -15635,7 +16003,8 @@ Przeciążenie:&lt;/b&gt; (1)
     <Health>3</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Za każdym razem gdy przyzwiesz Pirata, zadaj 2 pkt. obrażeń losowemu wrogowi.</Text>
+    <Text>Za każdym razem gdy przyzywasz Pirata, zadaj
+2 pkt. obrażeń losowemu wrogowi.</Text>
     <Mechanics />
     <Artist>Warren Mahy</Artist>
   </Card>
@@ -15680,7 +16049,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Mech</Race>
-    <Text>Na końcu każdej tury zniszcz tego stronnika, jeśli nie posiadasz innych w grze.</Text>
+    <Text>Na końcu każdej tury
+zniszcz tego stronnika, jeśli nie posiadasz innych
+w grze.</Text>
     <Mechanics />
     <Artist>Josh Harris</Artist>
   </Card>
@@ -15695,7 +16066,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj każdemu z graczy po karcie &lt;b&gt;Części zamiennej&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Daj każdemu graczowi po karcie &lt;b&gt;Części zamiennej&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -15848,7 +16219,9 @@ Przeciążenie:&lt;/b&gt; (1)
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Race>Mech</Race>
-    <Text>Za każdym razem gdy otrzymujesz pancerz, daj temu stronnikowi +1 do ataku.</Text>
+    <Text>Za każdym razem gdy otrzymujesz pancerz,
+daj temu stronnikowi
++1 do ataku.</Text>
     <Mechanics />
     <Artist>Zero Yue</Artist>
   </Card>
@@ -15876,7 +16249,7 @@ Przeciążenie:&lt;/b&gt; (1)
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Moc specjalna twojego bohatera może być stosowana wobec stronników.</Text>
+    <Text>Twoja moc specjalna może być stosowana wobec stronników.</Text>
     <Mechanics />
     <Artist>Jun Kang</Artist>
   </Card>
@@ -15922,7 +16295,8 @@ Przeciążenie:&lt;/b&gt; (1)
     <Health>4</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi innymi postaciami.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+6 pkt. obrażeń losowo rozdzielone pomiędzy wszystkimi pozostałymi postaciami.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15956,7 +16330,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Health>2</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę. Jeśli to stronnik, zamieni się w Kurczaka.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz kartę. Jeśli to stronnik, przemieni się w Kurczaka.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16002,7 +16376,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Każdy gracz kończący turę musi dobrać karty, aż będzie mieć ich 3 na ręce.</Text>
+    <Text>Każdy gracz kończący turę musi dobrać karty, aż będzie mieć ich 3 w ręce.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -16085,7 +16459,8 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Health>3</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 4 pkt. obrażeń losowemu wrogiemu stronnikowi.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+4 pkt. obrażeń losowemu wrogiemu stronnikowi.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16131,7 +16506,10 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń wszystkim stronnikom z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt;
+Zadaj 2 pkt. obrażeń
+wszystkim stronnikom
+z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16274,7 +16652,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Twoi pozostali stronnicy otrzymują &lt;b&gt;Furię wichru&lt;/b&gt;, &lt;b&gt;Prowokację&lt;/b&gt; lub &lt;b&gt;Boską tarczę&lt;/b&gt;.
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj twoim pozostałym stronnikom &lt;b&gt;Furię wichru&lt;/b&gt;, &lt;b&gt;Prowokację&lt;/b&gt; lub &lt;b&gt;Boską tarczę&lt;/b&gt;.
 &lt;i&gt;(losowo)&lt;/i&gt;</Text>
     <Mechanics>
       <string>Battlecry</string>
@@ -16496,7 +16874,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wyposaż każdego z graczy w losową broń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Wyposaż każdego gracza w losową broń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16617,7 +16995,7 @@ Nie może zostać wybrany jako cel zaklęć lub mocy specjalnych.</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Cofnij przyjaznego stronnika na twoją rękę.</Text>
+    <Text>Cofnij przyjaznego stronnika do twojej ręki.</Text>
     <Mechanics />
     <Artist>Nutthapon Petthai</Artist>
   </Card>
@@ -18088,7 +18466,8 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Health>3</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 6 pkt. obrażeń.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+6 pkt. obrażeń.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -18792,7 +19171,8 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Dobierz 2 karty. Kosztuje (1) mniej za każdego stronnika, który zginął w tej turze.</Text>
+    <Text>Dobierz 2 karty. Kosztuje (1) mniej
+za każdego stronnika, który zginął w tej turze.</Text>
     <Mechanics />
     <Artist>Jaime Jones</Artist>
   </Card>
@@ -18822,7 +19202,8 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Gdy rzucisz zaklęcie, zadaj 2 pkt. obrażeń rozdzielone losowo pomiędzy wszystkimi wrogami.</Text>
+    <Text>Gdy rzucisz zaklęcie, zadaj
+2 pkt. obrażeń rozdzielone losowo pomiędzy wszystkimi wrogami.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -18868,7 +19249,7 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +2 do zdrowia, jeśli masz w ręku Smoka.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +2 do zdrowia, jeśli masz w ręce Smoka.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -18908,7 +19289,7 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Zadaj $2 pkt. obrażeń wszystkim stronnikom nie będącym Demonami.</Text>
+    <Text>Zadaj $2 pkt. obrażeń wszystkim stronnikom niebędącym Demonami.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -18926,7 +19307,7 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>Za każdym razem gdy ten stronnik zostanie zraniony, przyzwij Chochlika 1/1.</Text>
+    <Text>Za każdym razem gdy ten stronnik otrzyma obrażenia, przyzwij Chochlika 1/1.</Text>
     <Mechanics />
     <Artist>Steve Prescott</Artist>
   </Card>
@@ -18969,7 +19350,8 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 2 pkt. obrażeń wszystkim niezranionym wrogim stronnikom.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+2 pkt. obrażeń wszystkim niezranionym wrogim stronnikom.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -18987,7 +19369,8 @@ Otrzymujesz 4 pkt. pancerza.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Prowokacja.&lt;/b&gt;
-Kosztuje (1) mniej za każdego stronnika, który zginął w tej turze.</Text>
+Kosztuje (1) mniej za każdego stronnika, który zginął
+w tej turze.</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
@@ -19158,7 +19541,8 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +3/+3, jeśli masz pustą rękę.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +3/+3, jeśli masz
+pustą rękę.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19188,7 +19572,10 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Zadaj $1 pkt. obrażeń wszystkim stronnikom. Jeśli masz 12 pkt. zdrowia lub mniej, zamiast tego zadaj $3 pkt. obrażeń.</Text>
+    <Text>Zadaj $1 pkt. obrażeń wszystkim stronnikom.
+Jeśli masz 12 pkt. zdrowia
+lub mniej, zamiast tego
+zadaj $3 pkt. obrażeń.</Text>
     <Mechanics />
     <Artist>Ben Olson</Artist>
   </Card>
@@ -19278,7 +19665,7 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Otrzymuje +1/+1 za każdym razem, gdy stanie się celem twojego zaklęcia.</Text>
+    <Text>Za każdym razem gdy stanie się celem twojego zaklęcia, otrzymuje +1/+1.</Text>
     <Mechanics />
     <Artist>Edouard Guiton &amp; Stuido HIVE</Artist>
   </Card>
@@ -19304,7 +19691,7 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Za każdym razem gdy ten stronnik zostanie zraniony, przyzwij Pisklę 2/1.</Text>
+    <Text>Za każdym razem gdy ten stronnik otrzyma obrażenia, przyzwij Pisklę 2/1.</Text>
     <Mechanics />
     <Artist>Jaemin Kim</Artist>
   </Card>
@@ -19420,7 +19807,7 @@ Jeśli masz pustą rękę, dobierz kartę.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 8 pkt. obrażeń losowemu wrogowi.</Text>
+Zadaj $8 pkt. obrażeń losowemu wrogowi.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19433,7 +19820,7 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
+Zadaj $8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19472,7 +19859,7 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Health>4</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli masz w ręku Smoka, zniszcz &lt;b&gt;legendarnego&lt;/b&gt; stronnika.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zniszcz &lt;b&gt;legendarnego&lt;/b&gt; stronnika, jeśli masz w ręce Smoka.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19533,7 +19920,7 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1, jeśli masz w ręku Smoka.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1, jeśli masz w ręce Smoka.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19562,11 +19949,3143 @@ Zadaj 8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń, jeśli masz w ręku Smoka.</Text>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń, jeśli masz w ręce Smoka.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_001</CardId>
+    <Name>Płomienna lanca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Zadaj $8 pkt. obrażeń stronnikowi.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_002</CardId>
+    <Name>Kukła</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy zginie przyjazny stronnik, przyzwij losowego stronnika o takim samym koszcie.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_003</CardId>
+    <Name>Upadły bohater</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Twoja moc specjalna zadaje 1 pkt. dodatkowych obrażeń.</Text>
+    <Mechanics />
+    <Artist>Arthur Bozonnet</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_004</CardId>
+    <Name>Tajemny wybuch</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Zadaj $2 pkt. obrażeń stronnikowi. Zaklęcie to otrzymuje podwójną premię od &lt;b&gt;Obrażeń zaklęć&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Gabor Szikszai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005</CardId>
+    <Name>Polimorfia: Dzik</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Przemień stronnika w Dzika 4/2 z &lt;b&gt;Szarżą&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_005t</CardId>
+    <Name>Dzik</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_006</CardId>
+    <Name>Pretendent z Dalaranu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Otrzymuje &lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_006e</CardId>
+    <Name>Moc Dalaranu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Zwiększone obrażenia zaklęć</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_007</CardId>
+    <Name>Czaromiot</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj losowe zaklęcie do ręki każdego gracza.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Erik Ko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_008</CardId>
+    <Name>Smokowiec z Mrozarry</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Race>Dragon</Race>
+    <Text>Możesz używać twojej mocy specjalnej dowolną liczbę razy.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_009</CardId>
+    <Name>Rhonin</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Dodaj 3 kopie zaklęcia „Tajemne pociski” do twojej ręki.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_010</CardId>
+    <Name>Hodowca bestii</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Jeśli kontrolujesz Bestię, przyzwij
+losową Bestię.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Brandon Kitkouski</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011</CardId>
+    <Name>Święta czempionka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Otrzymuje +2 do ataku
+za każdym razem, gdy dowolna postać zostanie uzdrowiona.</Text>
+    <Mechanics />
+    <Artist>Alex Garner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_011e</CardId>
+    <Name>Błogosławieństwo Światłości</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_012</CardId>
+    <Name>Pomiot Cieni</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Zadaj 4 pkt. obrażeń każdemu bohaterowi.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013</CardId>
+    <Name>Słowo mocy: Chwała</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Wybierz stronnika. Za każdym razem gdy zaatakuje,
+przywróć 4 pkt. zdrowia twojemu bohaterowi.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_013e</CardId>
+    <Name>Słowo mocy: Chwała</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Kiedy zaatakuje, przywróć 4 pkt. zdrowia bohaterowi gracza, który dokonał wzmocnienia.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_014</CardId>
+    <Name>Bies Cienia</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Za każdym razem gdy dobierasz kartę, zmniejsz jej koszt o (1).</Text>
+    <Mechanics />
+    <Artist>Warren Mahy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_014e</CardId>
+    <Name>Cieniozbiesienie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Kosztuje (1) mniej.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_015</CardId>
+    <Name>Nawrócenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Umieść w twojej ręce kopię wrogiego stronnika.</Text>
+    <Mechanics />
+    <Artist>Dan Dos Santos</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016</CardId>
+    <Name>Zamęt</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Zamień atak i zdrowie wszystkich stronników.</Text>
+    <Mechanics />
+    <Artist>Sean O'Danield</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_016e</CardId>
+    <Name>Zamęt</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Zamieniony atak i zdrowie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_017</CardId>
+    <Name>Strażnik Zmierzchu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku i &lt;b&gt;Prowokację&lt;/b&gt;, jeśli masz w ręce Smoka.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_017e</CardId>
+    <Name>Objęcia Zmierzchu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 do ataku oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_018</CardId>
+    <Name>Spowiedniczka Szarowłosa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Przyzwij losowego &lt;b&gt;legendarnego&lt;/b&gt; stronnika.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Chris Rahn</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_019</CardId>
+    <Name>Upiorny rumak</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Przyzwij
+Upiornego rumaka.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_020</CardId>
+    <Name>Potężny Strażnik Zagłady</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>8</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021</CardId>
+    <Name>Tyci Rycerz Zła</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Otrzymuje +1/+1 za każdym razem, gdy odrzucasz kartę.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_021e</CardId>
+    <Name>Szał spaczenia</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Zwiększone statystyki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_022</CardId>
+    <Name>Pięść Jaraxxusa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Kiedy zagrasz lub odrzucisz tę kartę,
+zadaj $4 pkt. obrażeń losowemu wrogowi.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_023</CardId>
+    <Name>Miażdżyciel Pustki</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Zniszcz losowego stronnika
+u każdego gracza.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024</CardId>
+    <Name>Demonizacja</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Daj Demonowi +3/+3. Daj twojemu przeciwnikowi
+kryształ many.</Text>
+    <Mechanics />
+    <Artist>Kevin Chen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_024e</CardId>
+    <Name>Mroczna fuzja</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_025</CardId>
+    <Name>Mroczny kontrakt</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Zniszcz 2 losowych, wrogich stronników. Odrzuć 2 losowe karty.</Text>
+    <Mechanics />
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_026</CardId>
+    <Name>Strażnik Gniewu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Race>Demon</Race>
+    <Text>Za każdym razem gdy ten stronnik otrzyma obrażenia, zadaj tyle samo obrażeń twojemu bohaterowi.</Text>
+    <Mechanics />
+    <Artist>Sojin Hwang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027</CardId>
+    <Name>Wilfred Bombik</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Karty dobierane dzięki twojej mocy specjalnej kosztują (0).</Text>
+    <Mechanics />
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_027e</CardId>
+    <Name>Mistrz przywoływania</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Kosztuje (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_028</CardId>
+    <Name>Jeździec z Szado-Pan</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Otrzymuje
++3 do ataku.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Ryan Metcaff</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_028e</CardId>
+    <Name>Lanca Czi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_029</CardId>
+    <Name>Bukanier</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Pirate</Race>
+    <Text>Za każdym razem gdy wyposażasz bohatera
+w broń, daj jej
++1 do ataku.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_029e</CardId>
+    <Name>Super kłująca broń</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_030</CardId>
+    <Name>Śmiałek z Podmiasta</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Kombinacja:&lt;/b&gt; Zadaj
+1 pkt. obrażeń.</Text>
+    <Mechanics>
+      <string>Combo</string>
+    </Mechanics>
+    <Artist>Zoltan Boros </Artist>
+  </Card>
+  <Card>
+    <CardId>AT_031</CardId>
+    <Name>Rzezimieszek</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Za każdym razem, kiedy ten stronnik atakuje bohatera, dodaj Monetę do twojej ręki.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032</CardId>
+    <Name>Szemrany handlarz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1, jeśli kontrolujesz Pirata.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tooth</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_032e</CardId>
+    <Name>Szemrany handel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_033</CardId>
+    <Name>Włam</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Dodaj 2 losowe karty klasowe do twojej ręki &lt;i&gt;(z klasy przeciwnika)&lt;/i&gt;.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034</CardId>
+    <Name>Zatrute Ostrze</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>3</Durability>
+    <Class>Rogue</Class>
+    <Text>Twoja moc specjalna daje broni +1 do ataku zamiast ją zastępować.</Text>
+    <Mechanics />
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_034e</CardId>
+    <Name>Zatrucie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_035</CardId>
+    <Name>Spod ziemi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Wtasuj 3 karty Zasadzki! do talii przeciwnika. Kiedy jedna
+z nich zostanie dobrana, przyzwij Nerubianina 4/4.</Text>
+    <Mechanics />
+    <Artist>Daren Bader</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_035t</CardId>
+    <Name>Zasadzka!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Kiedy dobierasz tę kartę, przyzwij Nerubianina 4/4 twojemu przeciwnikowi. Dobierz kartę.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_036</CardId>
+    <Name>Anub'arak</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>4</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Cofnij tego stronnika
+do twojej ręki i przyzwij
+Nerubianina 4/4.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Eric Braddock</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_036t</CardId>
+    <Name>Nerubianin</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037</CardId>
+    <Name>Żywe korzenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Zadaj $2 pkt. obrażeń; lub przyzwij dwie Sadzonki 1/1.</Text>
+    <Mechanics />
+    <Artist>Dan Brereton</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_037a</CardId>
+    <Name>Żywe korzenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zadaj $2 pkt. obrażeń.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037b</CardId>
+    <Name>Żywe korzenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Przyzwij dwie Sadzonki 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_037t</CardId>
+    <Name>Sadzonka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_038</CardId>
+    <Name>Pretendentka z Darnassus</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymujesz pusty kryształ many.
+&lt;b&gt;Agonia:&lt;/b&gt; Tracisz kryształ many.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Laurel Austin</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039</CardId>
+    <Name>Zdziczały dzikun</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Daj
+twojemu bohaterowi
++2 do ataku
+w tej turze.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Alex Pascenko</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_039e</CardId>
+    <Name>Dzikość</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 do ataku w tej turze.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_040</CardId>
+    <Name>Dzika wędrowniczka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznej Bestii
++3 do zdrowia.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_040e</CardId>
+    <Name>Pokrewny duch</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+3 do zdrowia.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_041</CardId>
+    <Name>Rycerz Ostępów</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Za każdym razem gdy przyzywasz Bestię, zmniejsz koszt tej karty o (1).</Text>
+    <Mechanics />
+    <Artist>Ralph Horsley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_041e</CardId>
+    <Name>Zew Ostępów</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zmniejszony koszt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042</CardId>
+    <Name>Druidka Szabli</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Wybierz jedno:&lt;/b&gt; Przemień
+w stronnika z &lt;b&gt;Szarżą&lt;/b&gt;;
+lub w stronnika +1/+1
+z &lt;b&gt;Ukryciem&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Arthur Gimaldinov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_042a</CardId>
+    <Name>Postać lwa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042b</CardId>
+    <Name>Postać pantery</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+1/+1 oraz &lt;b&gt;Ukrycie&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_042t</CardId>
+    <Name>Lew szablozębny</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_042t2</CardId>
+    <Name>Pantera szablozębna</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Ukrycie&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_043</CardId>
+    <Name>Jedność astralna</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Otrzymujesz 10 kryształów many. Odrzuć całą rękę.</Text>
+    <Mechanics />
+    <Artist>Christopher Moeller</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_044</CardId>
+    <Name>Na kompost!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Zniszcz stronnika.
+Dodaj losowego stronnika do ręki przeciwnika.</Text>
+    <Mechanics />
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045</CardId>
+    <Name>Aviana</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>Twoi stronnicy kosztują (1).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Velvet Engine</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_045e</CardId>
+    <Name>Pokrzepiająca mgła</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_045ee</CardId>
+    <Name>Talia Zaklinacza Mgieł</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_046</CardId>
+    <Name>Kiełzar totemistrz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przyzwij DOWOLNY losowy Totem.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047</CardId>
+    <Name>Rzeźbiarka totemów</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1/+1 za każdy przyjazny Totem.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>RK Post</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_047e</CardId>
+    <Name>Doświadczenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Zwiększone statystyki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_048</CardId>
+    <Name>Uzdrawiająca fala</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Przywróć #7 pkt. zdrowia. Ujawnij stronnika
+z każdej talii. Jeśli twój kosztuje więcej, przywróć
+#14 pkt.</Text>
+    <Mechanics />
+    <Artist>Luca Zontini</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049</CardId>
+    <Name>Śmiałek z Gromowych Urwisk</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Daj twoim Totemom +2 do ataku.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_049e</CardId>
+    <Name>Moc Urwisk</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_050</CardId>
+    <Name>Naładowany Młot</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>4</Cost>
+    <Durability>4</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Twoja moc specjalna zmienia się na „Zadaj 2 pkt. obrażeń”.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Peet Cooper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_050t</CardId>
+    <Name>Rażący piorun</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj $2 pkt. obrażeń.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_051</CardId>
+    <Name>Niszczycielskie żywioły</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Zadaj $4-$5 pkt. obrażeń wszystkim stronnikom. &lt;b&gt;Przeciążenie:&lt;/b&gt; (5)</Text>
+    <Mechanics />
+    <Artist>Tyler Walpole</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_052</CardId>
+    <Name>Totemiczny golem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Race>Totem</Race>
+    <Text>&lt;b&gt;Przeciążenie:&lt;/b&gt; (1)</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_053</CardId>
+    <Name>Pradawna wiedza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Dobierz 2 karty. &lt;b&gt;Przeciążenie: (2)&lt;/b&gt;</Text>
+    <Mechanics />
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_054</CardId>
+    <Name>Zaklinacz Mgieł</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj wszystkim twoim stronnikom w ręce
+i w talii +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_055</CardId>
+    <Name>Szybkie uzdrowienie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Przywróć
+#5 pkt. zdrowia.</Text>
+    <Mechanics />
+    <Artist>Marcelo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_056</CardId>
+    <Name>Potężna salwa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Zadaj $2 pkt. obrażeń stronnikowi oraz stronnikom
+obok niego.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057</CardId>
+    <Name>Stajenna</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznej Bestii &lt;b&gt;Niewrażliwość&lt;/b&gt;
+w tej turze.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_057o</CardId>
+    <Name>Oporządzenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Niewrażliwość&lt;/b&gt; w tej turze.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_058</CardId>
+    <Name>Królewski Elekk</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika z każdej talii.
+Jeśli twój kosztuje więcej, dobierz go.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_059</CardId>
+    <Name>Waleczna łuczniczka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Jeśli masz
+pustą rękę, zadaj 2 pkt.
+obrażeń wrogiemu bohaterowi.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Eva Widermann</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_060</CardId>
+    <Name>Niedźwiedzia pułapka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Gdy twój bohater zostanie zaatakowany, przyzwij Niedźwiedzia 3/3
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061</CardId>
+    <Name>Cel! Pal!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Za każdym razem gdy rzucisz w tej turze zaklęcie, dodaj losową kartę łowcy do twojej ręki.</Text>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_061e</CardId>
+    <Name>Cel! Pal!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_062</CardId>
+    <Name>Gniazdo pająków</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Przyzwij trzy
+Tkacze sieci 1/1.</Text>
+    <Mechanics />
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063</CardId>
+    <Name>Żrącopaszczy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Za każdym razem gdy inny stronnik otrzyma obrażenia, zniszcz go.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_063t</CardId>
+    <Name>Strasznołuski</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Na koniec twojej tury zadaj
+1 pkt. obrażeń wszystkim pozostałym stronnikom.</Text>
+    <Mechanics />
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_064</CardId>
+    <Name>Walnięcie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Zadaj $3 pkt. obrażeń.
+Otrzymujesz 3 pkt. pancerza.</Text>
+    <Mechanics />
+    <Artist>Dany Orizio</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065</CardId>
+    <Name>Królewski Obrońca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>3</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>2</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do wytrzymałości, jeśli kontrolujesz stronnika z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Michael Franchina</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_065e</CardId>
+    <Name>Królewski Obrońca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 do wytrzymałości.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_066</CardId>
+    <Name>Pretendent z Orgrimmaru</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Daj twojej broni +1 do ataku.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Hideaki Takamura</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_066e</CardId>
+    <Name>Kuźnie Orgrimmaru</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_067</CardId>
+    <Name>Magnataur alfa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Zadaj również obrażenia stronnikom znajdującym się obok celu ataku.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068</CardId>
+    <Name>Dopakowanie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Daj twoim stronnikom
+z &lt;b&gt;Prowokacją&lt;/b&gt; +2/+2.</Text>
+    <Mechanics />
+    <Artist>Mishi McCaig</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_068e</CardId>
+    <Name>Dopakowano</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_069</CardId>
+    <Name>Partner sparingowy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Prowokacja.&lt;/b&gt;
+&lt;b&gt;Okrzyk bojowy:&lt;/b&gt;
+Daj stronnikowi
+&lt;b&gt;Prowokację&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_069e</CardId>
+    <Name>Szkolenie zakończone</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_070</CardId>
+    <Name>Lotny Kapitan Kragg</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Pirate</Race>
+    <Text>&lt;b&gt;Szarrrrża&lt;/b&gt;
+Kosztuje (1) mniej
+za każdego przyjaznego Pirata.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071</CardId>
+    <Name>Czempionka Alexstrazy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku i &lt;b&gt;Szarżę&lt;/b&gt;, jeśli masz w ręce Smoka.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_071e</CardId>
+    <Name>Życzliwość Alexstrazy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>+1 do ataku oraz &lt;b&gt;Szarża&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_072</CardId>
+    <Name>Varian Wrynn</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dobierz 3 karty.
+Umieść wszystkich dobranych stronników od razu
+na polu bitwy.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wei Wang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073</CardId>
+    <Name>Duch rywalizacji</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Sekret:&lt;/b&gt; Na początku twojej tury, daj twoim stronnikom +1/+1.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_073e</CardId>
+    <Name>Duch rywalizacji</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_074</CardId>
+    <Name>Pieczęć Mistrzów</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Daj stronnikowi
++3 do ataku
+oraz &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Jonboy Meyers</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_074e2</CardId>
+    <Name>Pieczęć Mistrzów</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>+3 do ataku oraz &lt;b&gt;Boska tarcza&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_075</CardId>
+    <Name>Treser rumaków</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Twoi Rekruci Srebnej Dłoni otrzymują +1 do ataku.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Zoltan &amp; Gabor</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_075e</CardId>
+    <Name>Potęga siodła</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Trener rumaków daje temu stronnikowi +1 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_076</CardId>
+    <Name>Murlok rycerz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Przyzwij losowego Murloka.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sam Nielsen</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077</CardId>
+    <Name>Argentowa kopia</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>2</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika z każdej talii. Jeśli twój kosztuje więcej, ta broń otrzymuje +1 do wytrzymałości.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_077e</CardId>
+    <Name>Dodatkowe dźgnięcie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1 do wytrzymałości.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_078</CardId>
+    <Name>Przetrwają najsilniejsi</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Zniszcz wszystkich stronników każdego gracza oprócz tych z największym atakiem.</Text>
+    <Mechanics />
+    <Artist>Mauricio Herrera</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_079</CardId>
+    <Name>Tajemniczy pretendent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Umieść jeden &lt;b&gt;Sekret&lt;/b&gt; każdego typu
+z twojej talii
+na polu bitwy.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_080</CardId>
+    <Name>Dowódca garnizonu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Możesz używać
+twojej mocy specjalnej dwa razy na turę.</Text>
+    <Mechanics />
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081</CardId>
+    <Name>Eadric Czysty</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zmień atak wszystkich wrogich stronników na 1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist> James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_081e</CardId>
+    <Name>Oczyszczenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Atak zmieniony na 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_082</CardId>
+    <Name>Pokorny giermek</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Otrzymuje
++1 do ataku.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_082e</CardId>
+    <Name>Szkolenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_083</CardId>
+    <Name>Podniebny jeździec</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Otrzymuje
+w tej turze &lt;b&gt;Furię wichru&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_083e</CardId>
+    <Name>Podniebność</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furia wichru&lt;/b&gt; w tej turze.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_084</CardId>
+    <Name>Tragarz oręża</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu stronnikowi +2 do ataku.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_084e</CardId>
+    <Name>Uzbrojenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_085</CardId>
+    <Name>Pani Jeziora</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Twoja moc specjalna kosztuje (1).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Froilan Gardner</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086</CardId>
+    <Name>Sabotażysta</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Moc specjalna twojego przeciwnika kosztuje (5) więcej w następnej turze.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_086e</CardId>
+    <Name>Łajdactwo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Twoja moc specjalna kosztuje (5) więcej w tej turze.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_087</CardId>
+    <Name>Konny Argentu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;
+&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Charge</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Evgeniy Zagumennyy</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_088</CardId>
+    <Name>Czempion Mogora</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>50% szans na zaatakowanie niewłaściwego
+wroga.</Text>
+    <Mechanics />
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089</CardId>
+    <Name>Porucznik Kościostraży</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Otrzymuje
++1 do zdrowia.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_089e</CardId>
+    <Name>Kościostraż</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększone zdrowie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_090</CardId>
+    <Name>Czempion Mukli</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Daj twoim pozostałym stronnikom +1/+1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_090e</CardId>
+    <Name>Potęga małpy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_091</CardId>
+    <Name>Turniejowy konował</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Przywróć 2 pkt. zdrowia twojemu bohaterowi.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Sean McNally</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_092</CardId>
+    <Name>Lodowy furiat</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_093</CardId>
+    <Name>Lodowaty śniebold</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Spellpower</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_094</CardId>
+    <Name>Żongler płomieni</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>3</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+1 pkt. obrażeń losowemu wrogowi.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_095</CardId>
+    <Name>Milczący rycerz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Ukrycie&lt;/b&gt;
+&lt;b&gt;Boska tarcza&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Stealth</string>
+      <string>Divine Shield</string>
+    </Mechanics>
+    <Artist>Esad Ribic</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096</CardId>
+    <Name>Nakręcany rycerz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Daj przyjaznemu Mechowi +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_096e</CardId>
+    <Name>Nakręcenie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_097</CardId>
+    <Name>Uczestnik turnieju</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Adam Byrne</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_098</CardId>
+    <Name>Czarożerczyni</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Skopiuj moc specjalną przeciwnika.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099</CardId>
+    <Name>Jeździec kodo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Przyzwij Bojowego kodo 3/5.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Wootten</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_099t</CardId>
+    <Name>Bojowy kodo</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_100</CardId>
+    <Name>Regentka Srebrnej Dłoni</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Przyzwij Rekruta Srebrnej Dłoni 1/1.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_101</CardId>
+    <Name>Gladiatorka</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_102</CardId>
+    <Name>Schwytany jormungar</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Mechanics />
+    <Artist>Gonzalo Ordonez</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_103</CardId>
+    <Name>Kraken z Północnych Mórz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>7</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+4 pkt. obrażeń.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Seamus Gallagher</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_104</CardId>
+    <Name>Kiełzar lansjer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika z każdej talii. Jeśli twój kosztuje więcej, przywróć 7 pkt. zdrowia twojemu bohaterowi.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_105</CardId>
+    <Name>Ranny kvaldir</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+3 pkt. obrażeń temu stronnikowi.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_106</CardId>
+    <Name>Czempion Światłości</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt;
+&lt;b&gt;Wycisz&lt;/b&gt; Demona.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Andrea Uderzo</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_108</CardId>
+    <Name>Pancerny rumak</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika z każdej talii. Jeśli twój kosztuje więcej, rumak otrzymuje &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Edouard Guiton &amp; Tony Washington</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109</CardId>
+    <Name>Strażnik Argentu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Nie może atakować.
+&lt;b&gt;Inspiracja:&lt;/b&gt; W tej turze
+może normalnie atakować.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_109e</CardId>
+    <Name>Inspiracja</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Może atakować w tej turze.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_110</CardId>
+    <Name>Zarządca koloseum</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Cofnij tego stronnika do twojej ręki.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_111</CardId>
+    <Name>Sprzedawca przekąsek</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Przywróć
+4 pkt. zdrowia każdemu bohaterowi.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ron Spears</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_112</CardId>
+    <Name>Mistrz lansjer</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika
+z każdej talii. Jeśli twój kosztuje więcej, Mistrz otrzymuje &lt;b&gt;Prowokację&lt;/b&gt; oraz &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Penny Arcade</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_113</CardId>
+    <Name>Rekruter</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Dodaj Giermka 2/2 do twojej ręki.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_114</CardId>
+    <Name>Nikczemny wichrzyciel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Dan Scott</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115</CardId>
+    <Name>Nauczyciel szermierki</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Następne użycie twojej mocy specjalnej kosztuje (2) mniej.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Howard Lyon</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_115e</CardId>
+    <Name>Nauka szermierki</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Twoja moc specjalna kosztuje (2) mniej.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_116</CardId>
+    <Name>Smoczy agent</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>4</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +1 do ataku i &lt;b&gt;Prowokację&lt;/b&gt;, jeśli masz w ręce Smoka.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jeff Easley</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_116e</CardId>
+    <Name>Pokaż, co potrafisz!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>+1 do ataku oraz &lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_117</CardId>
+    <Name>Mistrzyni ceremonii</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Otrzymuje +2/+2, jeśli kontrolujesz stronnika z &lt;b&gt;Obrażeniami zaklęć&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jesper Ejsing</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_117e</CardId>
+    <Name>Ceremonia</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_118</CardId>
+    <Name>Starszy Krzyżowiec</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Dodaj losową kartę paladyna do twojej ręki.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Todd Lockwood</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119</CardId>
+    <Name>Kvaldir grabieżca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Otrzymuje +2/+2.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_119e</CardId>
+    <Name>Inspiracja</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększone statystyki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_120</CardId>
+    <Name>Lodowy olbrzym</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Kosztuje (1) mniej
+za każde użycie twojej
+mocy specjalnej
+w tej grze.</Text>
+    <Mechanics />
+    <Artist>Greg Staples</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121</CardId>
+    <Name>Ulubieniec tłumu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Otrzymuje +1/+1 za każdym razem, gdy zagrasz kartę z &lt;b&gt;Okrzykiem bojowym&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_121e</CardId>
+    <Name>Wielkie ego</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększone statystyki.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_122</CardId>
+    <Name>Gormok Palownik</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj
+4 pkt. obrażeń, jeśli kontrolujesz co najmniej 4 innych stronników.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Nutthapon Petchthai</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_123</CardId>
+    <Name>Zimnopaszcza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Race>Dragon</Race>
+    <Text>&lt;b&gt;Prowokacja.&lt;/b&gt;
+&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń wszystkim stronnikom, jeśli masz w ręce Smoka.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_124</CardId>
+    <Name>Bolf Walitarcza</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>9</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>Za każdym razem gdy twój bohater otrzymuje obrażenia, przechodzą na tego stronnika.</Text>
+    <Mechanics />
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_125</CardId>
+    <Name>Zmrożec</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Szarża&lt;/b&gt;
+Nie może atakować bohaterów.</Text>
+    <Mechanics>
+      <string>Charge</string>
+    </Mechanics>
+    <Artist>John Polidora</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_127</CardId>
+    <Name>Saraad Mistrz Nexusa</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inspiracja:&lt;/b&gt; Dodaj losowe zaklęcie do twojej ręki.</Text>
+    <Mechanics>
+      <string>Inspire</string>
+    </Mechanics>
+    <Artist>Marcleo Vignali</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_128</CardId>
+    <Name>Szkieletowy Rycerz</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Agonia:&lt;/b&gt; Ujawnij stronnika z każdej talii. Jeśli twój kosztuje więcej, cofnij tego stronnika do twojej ręki.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_129</CardId>
+    <Name>Fjola Jasnozgubna</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Za każdym razem gdy stanie się celem twojego zaklęcia, otrzymuje &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mark Zug</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_130</CardId>
+    <Name>Morski grabieżca</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>7</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Gdy dobierzesz tę kartę, zadaj 1 pkt. obrażeń wszystkim twoim stronnikom.</Text>
+    <Mechanics />
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_131</CardId>
+    <Name>Eydis Ciemnozgubna</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Za każdym razem gdy stanie się celem twojego zaklęcia, zadaj 3 pkt. obrażeń losowemu wrogowi.</Text>
+    <Mechanics />
+    <Artist>Ben Thompson</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132</CardId>
+    <Name>Justycjariuszka Mariel</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zastąp twoją startową moc specjalną ulepszoną mocą.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jomaro Kindred</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUID</CardId>
+    <Name>Dzika zmiennokształtność</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Otrzymujesz 2 pkt. pancerza +2 do ataku w tej turze.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_DRUIDe</CardId>
+    <Name>Straszne pazury</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>+2 do ataku w tej turze.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>AT_132_HUNTER</CardId>
+    <Name>Strzał z balisty</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj $3 pkt. obrażeń wrogiemu bohaterowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_MAGE</CardId>
+    <Name>Ognisty Pocisk (Ranga 2)</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj $2 pkt. obrażeń.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PALADIN</CardId>
+    <Name>Srebrna Dłoń</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij dwóch Rekrutów 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_PRIEST</CardId>
+    <Name>Uzdrowienie</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przywróć #4 pkt. zdrowia.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUE</CardId>
+    <Name>Zatrute sztylety</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Otrzymujesz broń 2/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_ROGUEt</CardId>
+    <Name>Zatruty sztylet</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Class>Rogue</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMAN</CardId>
+    <Name>Właściwy totem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij wybrany przez siebie Totem.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANa</CardId>
+    <Name>Uzdrawiający totem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Na koniec twojej tury przywróć 1 pkt. zdrowia wszystkim przyjaznym stronnikom.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANb</CardId>
+    <Name>Gorejący totem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANc</CardId>
+    <Name>Skalnoszpony totem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_SHAMANd</CardId>
+    <Name>Eteryczny totem</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>&lt;b&gt;Obrażenia zaklęć +1&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARLOCK</CardId>
+    <Name>Moc duszy</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Dobierz kartę.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_132_WARRIOR</CardId>
+    <Name>Mur!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Otrzymujesz 4 pkt. pancerza.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>AT_133</CardId>
+    <Name>Lansjerka z Gadżetonu</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Ujawnij stronnika z każdej talii. Jeśli twój kosztuje więcej, Lansjerka otrzymuje +1/+1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>AT_133e</CardId>
+    <Name>Zwycięstwo!</Name>
+    <CardSet>The Grand Tournament</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1.</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>PlaceholderCard</CardId>

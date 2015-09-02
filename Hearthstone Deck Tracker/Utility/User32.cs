@@ -12,7 +12,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
-	internal class User32
+	public class User32
 	{
 		[Flags]
 		public enum MouseEventFlags : uint
@@ -20,10 +20,12 @@ namespace Hearthstone_Deck_Tracker
 			LeftDown = 0x00000002,
 			LeftUp = 0x00000004,
 			RightDown = 0x00000008,
-			RightUp = 0x00000010
+			RightUp = 0x00000010,
+			Wheel = 0x00000800
 		}
 
-		private const int WsExTransparent = 0x00000020;
+		public const int WsExTransparent = 0x00000020;
+		public const int WsExToolWindow = 0x00000080;
 		private const int GwlExstyle = (-20);
 		public const int SwRestore = 9;
 		private static DateTime _lastCheck;
@@ -48,7 +50,7 @@ namespace Hearthstone_Deck_Tracker
 		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll")]
-		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
+		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, int dwData, UIntPtr dwExtraInfo);
 
 		[DllImport("user32.dll")]
 		public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
@@ -65,10 +67,10 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-		public static void SetWindowExTransparent(IntPtr hwnd)
+		public static void SetWindowExStyle(IntPtr hwnd, int style)
 		{
 			var extendedStyle = GetWindowLong(hwnd, GwlExstyle);
-			SetWindowLong(hwnd, GwlExstyle, extendedStyle | WsExTransparent);
+			SetWindowLong(hwnd, GwlExstyle, extendedStyle | style);
 		}
 
 		public static bool IsHearthstoneInForeground()
@@ -89,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static IntPtr GetHearthstoneWindow()
 		{
-			if(!Game.IsRunning && DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
+			if(DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
 				return _hsWindow;
 			if(_hsWindow != IntPtr.Zero && IsWindow(_hsWindow))
 				return _hsWindow;
@@ -99,16 +101,16 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Config.Instance.AdvancedWindowSearch)
 			{
-				Parallel.ForEach(Process.GetProcesses(), (process, state) =>
+				foreach(var process in Process.GetProcesses())
 				{
 					var sb = new StringBuilder(200);
 					GetClassName(process.MainWindowHandle, sb, 200);
 					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
 					{
 						_hsWindow = process.MainWindowHandle;
-						state.Break();
+						break;
 					}
-				});
+				};
 			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;

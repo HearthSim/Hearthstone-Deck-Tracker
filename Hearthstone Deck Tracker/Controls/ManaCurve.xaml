@@ -4,46 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
              d:DesignHeight="300" Width="235">
     <DockPanel>
-        <ListView Name="ListViewStatType" DockPanel.Dock="Top"
-                  SelectionChanged="ListViewStatType_OnSelectionChanged"
-                  SelectionMode="Single" Height="28" BorderThickness="1"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
-            <ListView.Resources>
-                <Style TargetType="GridViewColumnHeader">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                </Style>
-            </ListView.Resources>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListViewItem Name="ListViewItemMana" Grid.Column="0">
-                <TextBlock Text="MANA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                           FontWeight="SemiBold" />
-            </ListViewItem>
-            <ListViewItem Name="ListViewItemHealth" Grid.Column="1">
-                <TextBlock Text="HEALTH" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                           FontWeight="SemiBold" />
-            </ListViewItem>
-            <ListViewItem Name="ListViewItemAttack" Grid.Column="2">
-                <TextBlock Text="ATTACK" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                           FontWeight="SemiBold" />
-            </ListViewItem>
-        </ListView>
+        <DockPanel Name="ListViewStatType" DockPanel.Dock="Top" Height="28">
+            <Border BorderThickness="1"
+                Width="100" Height="28" DockPanel.Dock="Right" Margin="2,-2,0,0"
+                BorderBrush="{DynamicResource TextBrush}" PreviewMouseLeftButtonUp="ManaCurveMechanics_OnPreviewMouseLeftButtonUp">
+                <Grid>
+                    <Grid.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                    <Setter Property="Border.Background" Value="{DynamicResource AccentColorBrush3}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <TextBlock Name="TextBlockManaCurveMechanics" Text="MECHANICS" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold"/>
+                </Grid>
+            </Border>
 
+
+            <ComboBox Name="ComboBoxStatType" Height="28" Margin="0,-2,0,0" SelectionChanged="ComboBoxStatType_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+        </DockPanel>
+        
         <Border BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,2,0,0">
-            <Grid Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+            <Grid>
+                <Grid Name="GridManaCurve" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -100,6 +98,24 @@
                 <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" Foreground="Black" />
+            </Grid>
+
+                <Border Name="BorderMechanics" Margin="10" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{DynamicResource TextBrush}" BorderThickness="1" Visibility="Collapsed">
+                    <Grid>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource WindowBackgroundBrush}">
+                            <ItemsControl Name="ItemsControlMechanics">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DisplayValue}" FontSize="14"
+                           FontWeight="SemiBold" Margin="2,0,0,0"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <TextBlock Name="TextBlockNoMechanics" Text="None"  Background="{DynamicResource WindowBackgroundBrush}" FontSize="14"
+                           FontWeight="SemiBold" Margin="2,0,0,0"/>
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
     </DockPanel>

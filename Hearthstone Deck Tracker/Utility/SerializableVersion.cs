@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(string.IsNullOrEmpty(verionString))
 					return Default;
-				if(verionString.Length == 1)
+				if(!verionString.Contains("."))
 					verionString += ".0";
 				Version version;
 				if(Version.TryParse(verionString.Replace("v", ""), out version))

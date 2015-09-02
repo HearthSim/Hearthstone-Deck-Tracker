@@ -24,9 +24,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Points.Clear();
 		}
 
-		public static void Generate(KeyPointType type, int id, ActivePlayer player)
+		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game)
 		{
-			Points.Add(new ReplayKeyPoint(Game.Entities.Values.ToArray(), type, id, player));
+			Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
 		}
 
 		public static string SaveToDisk()
@@ -62,13 +62,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 						                  x =>
 						                  !string.IsNullOrEmpty(x.CardId)
 						                  && ((x.CardId.StartsWith("NAX") && x.CardId.Contains("_01")) || x.CardId.StartsWith("BRMA"))
-						                  && Game.GetHeroNameFromId(x.CardId) != null);
+						                  && GameV2.GetHeroNameFromId(x.CardId) != null);
 
-					ResolveOpponentName(Game.GetHeroNameFromId(opponentHero.CardId));
+					ResolveOpponentName(GameV2.GetHeroNameFromId(opponentHero.CardId));
 				}
 
-				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Game.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-				                             Game.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, GameV2.GetHeroNameFromId(playerHero.CardId), opponent.Name,
+                                             GameV2.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))
@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 							using(var logStream = hsLog.Open())
 							using(var swLog = new StreamWriter(logStream))
-								Game.HSLogLines.ForEach(swLog.WriteLine);
+                                GameV2.HSLogLines.ForEach(swLog.WriteLine);
 						}
 					}
 

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -29,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public TrackerSettings OptionsTrackerSettings;
 		public TrackerStats OptionsTrackerStats;
 		public TrackerAppearance OptionsTrackerAppearance;
+		public TrackerBackups OptionsTrackerBackups;
 
 		public OptionsMain()
 		{
@@ -48,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerGeneral = new TrackerGeneral();
 			OptionsTrackerPlugins = new TrackerPlugins();
 			OptionsTrackerAppearance = new TrackerAppearance();
+			OptionsTrackerBackups = new TrackerBackups();
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
@@ -61,21 +64,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		public void Load()
+		public void Load(GameV2 game)
 		{
-			OptionsOverlayGeneral.Load();
-			OptionsOverlayDeckWindows.Load();
-			OptionsOverlayPlayer.Load();
-			OptionsOverlayOpponent.Load();
+			OptionsOverlayGeneral.Load(game);
+			OptionsOverlayDeckWindows.Load(game);
+			OptionsOverlayPlayer.Load(game);
+			OptionsOverlayOpponent.Load(game);
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
 			OptionsTrackerExporting.Load();
-			OptionsTrackerImporting.Load();
-			OptionsTrackerLogging.Load();
+			OptionsTrackerImporting.Load(game);
+			OptionsTrackerLogging.Load(game);
 			OptionsTrackerStats.Load();
-			OptionsTrackerLogging.Load();
+			OptionsTrackerLogging.Load(game);
 			OptionsTrackerGeneral.Load();
 			OptionsTrackerAppearance.Load();
+			OptionsTrackerBackups.Load();
 			//OptionsTrackerPlugins.Load(); - load in main after loading plugins
 		}
 
@@ -142,6 +146,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsTrackerAppearance;
+		}
+
+		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentControlOptions.Content = OptionsTrackerBackups;
 		}
 	}
 }

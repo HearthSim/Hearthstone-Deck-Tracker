@@ -21,12 +21,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class DebugWindow : Window
 	{
-		private List<object> _previous = new List<object>();
+	    private readonly GameV2 _game;
+	    private List<object> _previous = new List<object>();
 		private bool _update;
 
-		public DebugWindow()
+		public DebugWindow(GameV2 game)
 		{
-			InitializeComponent();
+		    _game = game;
+		    InitializeComponent();
 			_update = true;
 			Closing += (sender, args) => _update = false;
 			Update();
@@ -52,10 +54,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void FilterEntities()
 		{
 			List<object> list = new List<object>();
-			foreach(var entity in Game.Entities)
+			foreach(var entity in _game.Entities)
 			{
 				var tags = entity.Value.Tags.Select(GetTagKeyValue).Aggregate((c, n) => c + " | " + n);
-				var card = Game.GetCardFromId(entity.Value.CardId);
+				var card = GameV2.GetCardFromId(entity.Value.CardId);
 				var cardName = card != null ? card.Name : "";
 				var name = string.IsNullOrEmpty(entity.Value.Name) ? cardName : entity.Value.Name;
 				list.Add(new {Name = name, entity.Value.CardId, Tags = tags});
@@ -101,13 +103,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void FilterGame()
 		{
 			List<object> list = new List<object>();
-			var props = typeof(Game).GetProperties().OrderBy(x => x.Name);
+			var props = typeof(GameV2).GetProperties().OrderBy(x => x.Name);
 			foreach(var prop in props)
 			{
 				if(prop.Name == "HSLogLines" || prop.Name == "Entities")
 					continue;
 				string val = "";
-				var propVal = prop.GetValue(prop);
+				var propVal = prop.GetValue(_game, null);
 				if(propVal != null)
 				{
 					var enumerable = propVal as IEnumerable<object>;

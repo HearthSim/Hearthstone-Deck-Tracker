@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Height="52" Margin="0,-1,0,0">
     <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,1,0,1">
@@ -15,7 +16,7 @@
                        RenderOptions.BitmapScalingMode="Fant" />
             </Grid>
             <Border DockPanel.Dock="Right" PreviewMouseDown="UseButton_OnPreviewMouseDown" Background="#01000000"
-                    Width="65">
+                    Width="65" Visibility="{Binding Source={ x:Static hearthstoneDeckTracker:Helper.UseButtonVisiblity}}">
                 <Border.Style>
                     <Style>
                         <Style.Triggers>

@@ -62,10 +62,10 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-            if(selectedDeck == null)
+			if(selectedDeck == null)
 				return;
 			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(Config.Instance, selectedDeck.GetSelectedDeckVersion().Cards, true);
+			var screenShotWindow = new PlayerWindow(_game, Config.Instance, selectedDeck.GetSelectedDeckVersion().Cards, true);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -77,21 +77,51 @@ namespace Hearthstone_Deck_Tracker
 			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
 			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
 
-			var deck = DeckList.Instance.ActiveDeckVersion;
+			var deck = selectedDeck.GetSelectedDeckVersion();
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
 			screenShotWindow.Shutdown();
 
 			if(pngEncoder != null)
 			{
-				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png");
-
+				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
+				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
+				var fileName = saveOperation.SaveLocal
+					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
-					using(var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-						pngEncoder.Save(stream);
+					string imgurUrl = null;
+					using(var ms = new MemoryStream())
+					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+					{
+						pngEncoder.Save(ms);
+						ms.WriteTo(fs);
+						if(saveOperation.Upload)
+						{
+							var controller = await this.ShowProgressAsync("Uploading...", "");
+							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, deck.Name);
+							await controller.CloseAsync();
+						}
+					}
 
-					await this.ShowSavedFileMessage(fileName);
+					if(imgurUrl != null)
+					{
+						await this.ShowSavedAndUploadedFileMessage(saveOperation.SaveLocal ? fileName : null, imgurUrl);
+						Logger.WriteLine("Uploaded screenshot to " + imgurUrl, "Export");
+					}
+					else
+						await this.ShowSavedFileMessage(fileName);
 					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+				}
+				if(tmpFile.Exists)
+				{
+					try
+					{
+						tmpFile.Delete();
+					}
+					catch(Exception ex)
+					{
+						Logger.WriteLine(ex.ToString(), "ExportScreenshot");
+					}
 				}
 			}
 		}
@@ -125,8 +155,9 @@ namespace Hearthstone_Deck_Tracker
 		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null)
+			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
 				return;
+
 			var english = true;
 			if(Config.Instance.SelectedLanguage != "enUS")
 			{
@@ -147,13 +178,21 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine(ex.ToString());
 				}
 			}
-			var names =
-				deck.GetSelectedDeckVersion()
-				    .Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-				    .Aggregate((c, n) => c + Environment.NewLine + n);
-			Clipboard.SetText(names);
-			this.ShowMessage("", "copied names to clipboard");
-			Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
+			try
+			{
+				var names =
+					deck.GetSelectedDeckVersion()
+						.Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+						.Aggregate((c, n) => c + Environment.NewLine + n);
+				Clipboard.SetText(names);
+				this.ShowMessage("", "copied names to clipboard");
+				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error copying card names to clipboard: " + ex);
+				this.ShowMessage("", "Error copying card names to clipboard.");
+			}
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)

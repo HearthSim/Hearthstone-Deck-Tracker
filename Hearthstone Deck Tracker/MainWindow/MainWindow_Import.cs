@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 
@@ -143,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 					var splitEntry = entry.Split(':');
 					if(splitEntry.Length != 2)
 						continue;
-					var card = Game.GetCardFromId(splitEntry[0]);
+					var card = GameV2.GetCardFromId(splitEntry[0]);
 					if(card.Id == "UNKNOWN")
 						continue;
 					int count;
@@ -221,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 						cardName = match.Groups["cardname"].Value.Trim();
 					}
 
-					var card = Game.GetCardFromName(cardName, localizedNames);
+					var card = GameV2.GetCardFromName(cardName, localizedNames);
 					if(card == null || string.IsNullOrEmpty(card.Name))
 						continue;
 					card.Count = count;
@@ -284,10 +285,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnLastGame_Click(object sender, RoutedEventArgs e)
 		{
-			if(Game.DrawnLastGame == null)
+			if(_game.DrawnLastGame == null)
 				return;
 			var deck = new Deck();
-			foreach(var card in Game.DrawnLastGame)
+			foreach(var card in _game.DrawnLastGame)
 			{
 				if(card.IsStolen)
 					continue;
@@ -303,34 +304,171 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnArena_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowArenaImportMessage || Game.PossibleArenaCards.Count < 10)
+			if(Config.Instance.UseOldArenaImporting)
 			{
-				await
-					this.ShowMessageAsync("How this works:",
-					                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
-
-				if(Config.Instance.ShowArenaImportMessage)
+				if(Config.Instance.ShowArenaImportMessage || _game.PossibleArenaCards.Count < 10)
 				{
-					Config.Instance.ShowArenaImportMessage = false;
-					Config.Save();
+					await
+						this.ShowMessageAsync("How this works:",
+						                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
+
+					if(Config.Instance.ShowArenaImportMessage)
+					{
+						Config.Instance.ShowArenaImportMessage = false;
+						Config.Save();
+					}
+					if(_game.PossibleArenaCards.Count < 10)
+						return;
 				}
-				if(Game.PossibleArenaCards.Count < 10)
-					return;
+
+				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				foreach(var card in _game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
+				{
+					deck.Cards.Add(card);
+					if(deck.Class == null && card.GetPlayerClass != "Neutral")
+						deck.Class = card.GetPlayerClass;
+				}
+				if(Config.Instance.DeckImportAutoDetectCardCount)
+				{
+					await
+						this.ShowMessageAsync("Arena cards found!",
+						                      "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
+					var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
+					await GetCardCounts(deck);
+					await controller.CloseAsync();
+				}
+				SetNewDeck(deck);
+			}
+			else
+			{
+				if(_game.TempArenaDeck == null)
+				{
+					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
+				}
+				else
+				{
+					SetNewDeck(_game.TempArenaDeck);
+				}
+			}
+		}
+
+		public async Task GetCardCounts(Deck deck)
+		{
+			var hsHandle = User32.GetHearthstoneWindow();
+			if(!User32.IsHearthstoneInForeground())
+			{
+				//restore window and bring to foreground
+				User32.ShowWindow(hsHandle, User32.SwRestore);
+				User32.SetForegroundWindow(hsHandle);
+				//wait it to actually be in foreground, else the rect might be wrong
+				await Task.Delay(500);
+			}
+			if(!User32.IsHearthstoneInForeground())
+			{
+				MessageBox.Show("Can't find Hearthstone window.");
+				Logger.WriteLine("Can't find Hearthstone window.", "ArenaImport");
+				return;
+			}
+			await Task.Delay(1000);
+			Overlay.ForceHidden = true;
+			Overlay.UpdatePosition();
+			const double xScale = 0.013; 
+			const double yScale = 0.017;
+			const int targetHue = 53;
+			const int hueMargin = 3;
+			const int numVisibleCards = 21;
+			var hsRect = User32.GetHearthstoneRect(false);
+			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
+			var posX = (int)DeckExporter.GetXPos(0.92, hsRect.Width, ratio);
+			var startY = 71.0/768.0 * hsRect.Height;
+			var strideY = 29.0/768.0 * hsRect.Height;
+			int width = (int)Math.Round(hsRect.Width * xScale);
+			int height = (int)Math.Round(hsRect.Height * yScale);
+
+			for(var i = 0; i < Math.Min(numVisibleCards, deck.Cards.Count); i++)
+			{
+				var posY = (int)(startY + strideY * i);
+				var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+				if(capture != null)
+				{
+					var yellowPixels = 0;
+					for(int x = 0; x < width; x++)
+					{
+						for(int y = 0; y < height; y++)
+						{
+							var pixel = capture.GetPixel(x, y);
+							if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+								yellowPixels++;
+						}
+					}
+					//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
+					//capture.Save("arenadeckimages/" + i + ".png");
+					var yellowPixelRatio = yellowPixels / (double)(width * height);
+					if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+						deck.Cards[i].Count = 2;
+				}
 			}
 
-			var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
-			foreach(var card in Game.PossibleArenaCards)
+			if(deck.Cards.Count > numVisibleCards)
 			{
-				deck.Cards.Add(card);
-				if(deck.Class == null && card.GetPlayerClass != "Neutral")
-					deck.Class = card.GetPlayerClass;
+				const int scrollClicksPerCard = 4;
+				const int scrollDistance = 120;
+				var clientPoint = new System.Drawing.Point(posX, (int)startY);
+				var previousPos = System.Windows.Forms.Cursor.Position;
+				User32.ClientToScreen(hsHandle, ref clientPoint);
+				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - numVisibleCards); j++)
+				{
+					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, -scrollDistance, UIntPtr.Zero);
+					await Task.Delay(30);
+				}
+				System.Windows.Forms.Cursor.Position = previousPos;
+				await Task.Delay(100);
+
+				var remainingCards = deck.Cards.Count - numVisibleCards;
+				startY = 76.0 / 768.0 * hsRect.Height + (numVisibleCards - remainingCards) * strideY;
+                for(int i = 0; i < remainingCards ; i++)
+				{
+					var posY = (int)(startY + strideY * i);
+					var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+					if(capture != null)
+					{
+						var yellowPixels = 0;
+						for(int x = 0; x < width; x++)
+						{
+							for(int y = 0; y < height; y++)
+							{
+								var pixel = capture.GetPixel(x, y);
+								if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+									yellowPixels++;
+							}
+						}
+						//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
+						//capture.Save("arenadeckimages/" + i + 21 + ".png");
+						var yellowPixelRatio = yellowPixels / (double)(width * height);
+                        if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+							deck.Cards[numVisibleCards + i].Count = 2;
+					}
+				}
+
+				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - 21); j++)
+				{
+					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, scrollDistance, UIntPtr.Zero);
+					await Task.Delay(30);
+				}
+				System.Windows.Forms.Cursor.Position = previousPos;
 			}
-			SetNewDeck(deck);
+
+			Overlay.ForceHidden = false;
+			Overlay.UpdatePosition();
+
+			ActivateWindow();
 		}
 
 		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowConstructedImportMessage || Game.PossibleConstructedCards.Count < 10)
+			if(Config.Instance.ShowConstructedImportMessage || _game.PossibleConstructedCards.Count < 10)
 			{
 				if(Config.Instance.ShowConstructedImportMessage)
 				{
@@ -342,30 +480,30 @@ namespace Hearthstone_Deck_Tracker
 						                      new MetroDialogSettings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
 					if(result != MessageDialogResult.Affirmative)
 						return;
-					await Helper.SetupConstructedImporting();
+					await Helper.SetupConstructedImporting(_game);
 					Config.Instance.ShowConstructedImportMessage = false;
 					Config.Save();
 				}
 				await
 					this.ShowMessageAsync("How this works:",
 					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				if(Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
-				   && Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
+				if(_game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
+				   && _game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
 					return;
 			}
 
 
 			var deck = new Deck();
-			deck.Class = Game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
+			deck.Class = _game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
 
-			var legendary = Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
+			var legendary = _game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
-				Game.PossibleConstructedCards.Where(
+                _game.PossibleConstructedCards.Where(
 				                                    c =>
 				                                    c.Rarity != "Legendary" && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
 				    .ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
-			foreach(var card in Game.PossibleConstructedCards)
+			foreach(var card in _game.PossibleConstructedCards)
 			{
 				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;
@@ -375,7 +513,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.GetPlayerClass;
 			}
 			SetNewDeck(deck);
-			HsLogReader.Instance.ClearLog();
+			HsLogReaderV2.Instance.ClearLog();
 		}
 	}
 }

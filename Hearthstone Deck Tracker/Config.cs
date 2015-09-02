@@ -54,7 +54,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AutoSaveOnImport = false;
 
-        [DefaultValue(true)]
+		[DefaultValue(false)]
+		public bool AutoUseDeck = false;
+
+		[DefaultValue(true)]
         public bool DeckPickerCaps = true;
 
 		[DefaultValue(true)]
@@ -113,6 +116,9 @@ namespace Hearthstone_Deck_Tracker
 		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
 		[DefaultValue(false)]
+		public bool DeckImportAutoDetectCardCount = false;
+
+		[DefaultValue(false)]
 		public bool DiscardGameIfIncorrectDeck = false;
 
 		[DefaultValue(false)]
@@ -160,8 +166,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.067)]
 		public double ExportAllSetsButtonX = 0.067;
 
-		[DefaultValue(0.639)]
-		public double ExportAllSetsButtonY = 0.639;
+		[DefaultValue(0.607)]
+		public double ExportAllSetsButtonY = 0.607;
 
 		[DefaultValue(0.04)]
 		public double ExportCard1X = 0.04;
@@ -199,11 +205,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ExportSetDeckName = true;
 
-		[DefaultValue(0)]
-		public int ExportStartDelay = 0;
+		[DefaultValue(1)]
+		public int ExportStartDelay = 1;
 
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
+
+		[DefaultValue(false)]
+		public bool FixedDuplicateMatches = false;
 
 		[DefaultValue(true)]
 		public bool FlashHsOnTurnStart = true;
@@ -406,11 +415,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OwnsGoldenStalagg = false;
 
-		[DefaultValue(new[] {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
-		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
+		[DefaultValue(new[] {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
+		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
 
-		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"})]
-		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Draw Chances", "Card Counter", "Fatigue Counter"};
+		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
+		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
 
 		[DefaultValue(65)]
 		public double PlayerDeckHeight = 65;
@@ -453,6 +462,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool RecordOther = false;
+
+		[DefaultValue(false)]
+		public bool RecordBrawl = false;
 
 		[DefaultValue(false)]
 		public bool RecordPractice = false;
@@ -544,6 +556,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(5)]
 		public double SecretsTop = 5;
 
+		[DefaultValue(ArenaImportingBehaviour.AutoAsk)]
+		public ArenaImportingBehaviour? SelectedArenaImportingBehaviour = ArenaImportingBehaviour.AutoAsk;
+
 		[DefaultValue(new[] {HeroClassAll.All})]
 		public HeroClassAll[] SelectedDeckPickerClasses = {HeroClassAll.All};
 
@@ -590,6 +605,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowExportingDialog = true;
+
+		[DefaultValue("c7b1c7904951f7a")]
+		public string ImgurClientId = "c7b1c7904951f7a";
 
 		[DefaultValue(false)]
 		public bool ShowInTaskbar = false;
@@ -719,6 +737,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool UseFullTextSearch = false;
+
+		[DefaultValue(false)]
+		public bool UseOldArenaImporting = false;
 
 		[DefaultValue(true)]
 		public bool UseSameScaling = true;

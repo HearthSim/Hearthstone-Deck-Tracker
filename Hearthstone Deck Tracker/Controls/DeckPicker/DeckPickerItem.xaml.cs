@@ -97,6 +97,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			get { return Deck.LastPlayed; }
 		}
 
+		public DateTime LastPlayedNewFirst
+		{
+			get { return Deck.LastPlayedNewFirst; }
+		}
+
 		public double WinPercent
 		{
 			get { return Deck.WinPercent; }

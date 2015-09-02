@@ -169,6 +169,10 @@ namespace Hearthstone_Deck_Tracker
 
 		internal async void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+
+			if(deck == null)
+				return;
 			var cloneStats =
 				(await
 				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
@@ -178,13 +182,14 @@ namespace Hearthstone_Deck_Tracker
 					                       AffirmativeButtonText = "clone history",
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 
 			var clone = (Deck)deck.CloneWithNewId(false);
-			var originalStats = deck.DeckStats;
+
 			clone.ResetHearthstatsIds();
 			clone.Versions.ForEach(v => v.ResetHearthstatsIds());
 			clone.Archived = false;
+
+			var originalStats = deck.DeckStats;
 
 			DeckList.Instance.Decks.Add(clone);
 			DeckList.Save();
@@ -213,8 +218,12 @@ namespace Hearthstone_Deck_Tracker
 		internal async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+
 			if(deck == null)
 				return;
+	
+			deck = deck.GetSelectedDeckVersion();
+
 			var cloneStats =
 				(await
 				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
@@ -224,30 +233,18 @@ namespace Hearthstone_Deck_Tracker
 					                       AffirmativeButtonText = "clone history",
 					                       NegativeButtonText = "do not clone history"
 				                       })) == MessageDialogResult.Affirmative;
+
 			var clone = (Deck)deck.CloneWithNewId(false);
+
 			clone.ResetVersions();
 			clone.ResetHearthstatsIds();
 			clone.Archived = false;
 
 			var originalStatsEntry = clone.DeckStats;
 
-			/*while(DeckList.DecksList.Any(d => d.Name == clone.Name))
-			{
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "Set", DefaultText = clone.Name};
-				var name =
-					await
-					this.ShowInputAsync("Name already exists", "You already have a deck with that name, please select a different one.", settings);
-
-				if(string.IsNullOrEmpty(name))
-					return;
-
-				clone.Name = name;
-			}*/
-
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-
 
 			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
 			if(newStatsEntry == null)

@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public Card Card
 		{
-			get { return KeyPoint == null ? null : Game.GetCardFromId(KeyPoint.GetCardId()); }
+			get { return KeyPoint == null ? null : GameV2.GetCardFromId(KeyPoint.GetCardId()); }
 		}
 
 		public string TurnString
@@ -140,6 +140,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				case KeyPointType.Obtain:
 				case KeyPointType.PlayToDeck:
 				case KeyPointType.PlayToHand:
+				case KeyPointType.CreateToDeck:
 					return "action_draw";
 				case KeyPointType.HeroPower:
 					return "action_play";

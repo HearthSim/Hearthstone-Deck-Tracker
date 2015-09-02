@@ -302,6 +302,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var games = DeckStats.Games;
+				return !games.Any() ? DateTime.MinValue : games.OrderByDescending(g => g.StartTime).First().StartTime;
+			}
+		}
+
+		[XmlIgnore]
+		public DateTime LastPlayedNewFirst
+		{
+			get
+			{
+				var games = DeckStats.Games;
 				return !games.Any() ? LastEdited : games.OrderByDescending(g => g.StartTime).First().StartTime;
 			}
 		}
@@ -591,90 +601,98 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		/// returns the number of cards in the deck with mechanics matching the newmechanic.
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
-		public int getMechanicCount(String newmechanic)
+		public int GetMechanicCount(string newmechanic)
 		{
-			int count;
+			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)));
+		}
 
-			count = 0;
-			foreach(var card in Cards)
+		private readonly string[] _relevantMechanics =
+		{
+			"Battlecry",
+			"Charge",
+			"Combo",
+			"Deathrattle",
+			"Divine Shield",
+			"Freeze",
+			"Inspire",
+			"Secret",
+			"Spellpower",
+			"Taunt",
+			"Windfury"
+		};
+
+		[XmlIgnore]
+		public List<Mechanic> Mechanics
+		{
+			get
 			{
-				if(card.Mechanics != null)
-				{
-					foreach(var mechanic in card.Mechanics)
-					{
-						if(mechanic.Equals(newmechanic))
-							count++;
-					}
-				}
+				return _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
 			}
+		} 
 
-			Console.WriteLine(newmechanic + count + "\n");
-			return count;
+		public int GetNumTaunt()
+		{
+			return GetMechanicCount("Taunt");
 		}
 
-		public int getNumTaunt()
+		public int GetNumBattlecry()
 		{
-			return getMechanicCount("Taunt");
+			return GetMechanicCount("Battlecry");
 		}
 
-		public int getNumBattlecry()
+		public int GetNumImmuneToSpellpower()
 		{
-			return getMechanicCount("Battlecry");
+			return GetMechanicCount("ImmuneToSpellpower");
 		}
 
-		public int getNumImmuneToSpellpower()
+		public int GetNumSpellpower()
 		{
-			return getMechanicCount("ImmuneToSpellpower");
+			return GetMechanicCount("Spellpower");
 		}
 
-		public int getNumSpellpower()
+		public int GetNumOneTurnEffect()
 		{
-			return getMechanicCount("Spellpower");
+			return GetMechanicCount("OneTurnEffect");
 		}
 
-		public int getNumOneTurnEffect()
+		public int GetNumCharge()
 		{
-			return getMechanicCount("OneTurnEffect");
+			return GetMechanicCount("Charge") + GetMechanicCount("GrantCharge");
 		}
 
-		public int getNumCharge()
+		public int GetNumFreeze()
 		{
-			return getMechanicCount("Charge") + getMechanicCount("GrantCharge");
+			return GetMechanicCount("Freeze");
 		}
 
-		public int getNumFreeze()
+		public int GetNumAdjacentBuff()
 		{
-			return getMechanicCount("Freeze");
+			return GetMechanicCount("AdjacentBuff");
 		}
 
-		public int getNumAdjacentBuff()
+		public int GetNumSecret()
 		{
-			return getMechanicCount("AdjacentBuff");
+			return GetMechanicCount("Secret");
 		}
 
-		public int getNumSecret()
+		public int GetNumDeathrattle()
 		{
-			return getMechanicCount("Secret");
+			return GetMechanicCount("Deathrattle");
 		}
 
-		public int getNumDeathrattle()
+		public int GetNumWindfury()
 		{
-			return getMechanicCount("Deathrattle");
+			return GetMechanicCount("Windfury");
 		}
 
-		public int getNumWindfury()
+		public int GetNumDivineShield()
 		{
-			return getMechanicCount("Windfury");
+			return GetMechanicCount("Divine Shield");
 		}
 
-		public int getNumDivineShield()
+		public int GetNumCombo()
 		{
-			return getMechanicCount("Divine Shield");
-		}
-
-		public int getNumCombo()
-		{
-			return getMechanicCount("Combo");
+			return GetMechanicCount("Combo");
 		}
 
 		public override string ToString()

@@ -1,6 +1,11 @@
 Hearthstone-Deck-Tracker
 ========================
 
+###[Download](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases)
+###[FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
+
+[![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is an automatic deck tracker for Hearthstone.
 
 The ingame overlay:
@@ -9,7 +14,7 @@ The ingame overlay:
 
 The app: 
 
-![Tracker](http://i.imgur.com/0b9lYaG.png "The tracker")
+![Tracker](http://i.imgur.com/FE7Xwxl.png "The tracker")
 
 
 Features:
@@ -47,7 +52,7 @@ Features:
 
 How to use: 
 ===========
-1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (green button)  
+1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (Hearthstone.Deck.Tracker-vx.xx.xx.zip)  
 2) Extract file  
 3) Run "Hearthstone Deck Tracker.exe"  
 4) Create your decks under "New" (or import from any of the supported websites), click save.  
@@ -57,9 +62,7 @@ How to use:
 
 FAQ:
 =============
-- **It's not picking up the cards I / my opponent play.**
-   - Copy the `log.config` from `Hearthstone Deck Tracker/Files` to `%LocalAppData%/Blizzard/Hearthstone`. Overwrite the existing one, restart HDT and Hearthstone.
-   - (if it's still not working) Make sure the Hearthstone path is set correctly. `options > tracker > settings > set hearthstone path` (There were user reports of this not working, manual: edit `%AppData%/HearthstoneDeckTracker/config.xml` with any texteditor, look for `<HearthstoneDirectory>...</HearthstoneDirectory>`.
+[Go to FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
 
 How it works:
 =============

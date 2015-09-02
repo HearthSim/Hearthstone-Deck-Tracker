@@ -90,8 +90,8 @@
                 Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
             <Grid Margin="0,0,5,0">
-                <TextBlock Text="NONE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                           HorizontalAlignment="Left" />
+                <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                           HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
                 <DockPanel>
                     <DockPanel.Resources>
                         <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
@@ -116,6 +116,8 @@
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
+                <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
+                <Separator Name="SeparatorUseDeck" />
                 <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
                 <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
                 <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />

@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			CheckboxRecordArena.IsChecked = Config.Instance.RecordArena;
+			CheckboxRecordBrawl.IsChecked = Config.Instance.RecordBrawl;
 			CheckboxRecordCasual.IsChecked = Config.Instance.RecordCasual;
 			CheckboxRecordFriendly.IsChecked = Config.Instance.RecordFriendly;
 			CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
@@ -79,6 +80,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.RecordArena = false;
+			Config.Save();
+		}
+
+		private void CheckboxRecordBrawl_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordBrawl = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordBrawl_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordBrawl = false;
 			Config.Save();
 		}
 
@@ -151,6 +168,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = true;
+			CheckboxAskBeforeDiscarding.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -159,6 +177,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = false;
+            CheckboxAskBeforeDiscarding.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -314,6 +333,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
+		}
+
+		private void ButtonCheckForDuplicateMatches_OnClick(object sender, RoutedEventArgs e)
+		{
+			Helper.MainWindow.RemoveDuplicateMatches(true);
 		}
 	}
 }

@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
 						cardName = cardName.Replace(" GvG", "");
 					if(cardName.EndsWith(" BrM"))
 						cardName = cardName.Replace(" BrM", "");
-					var card = Game.GetCardFromName(cardName);
+					var card = GameV2.GetCardFromName(cardName);
 					card.Count = cardObj.quantity;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -138,7 +138,7 @@ namespace Hearthstone_Deck_Tracker
 						var count = match.Groups[1].Value;
 						var name = match.Groups[2].Value;
 
-						var card = Game.GetCardFromName(name);
+						var card = GameV2.GetCardFromName(name);
 						card.Count = count.Equals("2") ? 2 : 1;
 						deck.Cards.Add(card);
 						if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var nameRaw = nameNodes.ElementAt(i).InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					card.Count = int.Parse(countNodes.ElementAt(i).InnerText);
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker
 					var id = cardNode.Attributes["real_id"].Value;
 					var count = int.Parse(cardNode.Attributes["nb_card"].Value);
 
-					var card = Game.GetCardFromId(id);
+					var card = GameV2.GetCardFromId(id);
 					card.Count = count;
 
 					deck.Cards.Add(card);
@@ -269,7 +269,7 @@ namespace Hearthstone_Deck_Tracker
 					var cardId = node.Attributes["data-original"].Value;
 					int count;
 					int.TryParse(node.Attributes["data-count"].Value, out count);
-					var card = Game.GetCardFromId(cardId);
+					var card = GameV2.GetCardFromId(cardId);
 					card.Count = count;
 					deck.Cards.Add(card);
 
@@ -302,7 +302,7 @@ namespace Hearthstone_Deck_Tracker
 					var id = cardNode.Attributes["real_id"].Value;
 					var count = int.Parse(cardNode.Attributes["nb_card"].Value);
 
-					var card = Game.GetCardFromId(id);
+					var card = GameV2.GetCardFromId(id);
 					card.Count = count;
 
 					deck.Cards.Add(card);
@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach(var info in cardInfo)
 				{
-					var card = Game.GetCardFromName(info.Name);
+					var card = GameV2.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -375,7 +375,7 @@ namespace Hearthstone_Deck_Tracker
 					var nameRaw = cardNode.SelectSingleNode(".//a").InnerText;
 					var name = HttpUtility.HtmlDecode(nameRaw);
 					var count = cardNode.InnerText.Remove(0, nameRaw.Length - 1).Contains("2") ? 2 : 1;
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -418,7 +418,7 @@ namespace Hearthstone_Deck_Tracker
 					if(countNode != null)
 						count = int.Parse(countNode.InnerText);
 
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 					card.Count = count;
@@ -466,7 +466,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach(var info in cardInfo)
 				{
-					var card = Game.GetCardFromName(info.Name);
+					var card = GameV2.GetCardFromName(info.Name);
 					card.Count = info.Count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -506,7 +506,7 @@ namespace Hearthstone_Deck_Tracker
 
 						foreach(var item in cards)
 						{
-							var card = Game.GetCardFromName(item.card.name.ToString());
+							var card = GameV2.GetCardFromName(item.card.name.ToString());
 							card.Count = item.qty.ToString().Equals("2") ? 2 : 1;
 							deck.Cards.Add(card);
 							if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -546,7 +546,7 @@ namespace Hearthstone_Deck_Tracker
 					var temp = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/small").InnerText[0].ToString());
 					var count = int.Parse(temp);
 
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -582,7 +582,7 @@ namespace Hearthstone_Deck_Tracker
 					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-name']").InnerText);
 					var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-count']").InnerText));
 
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -618,7 +618,7 @@ namespace Hearthstone_Deck_Tracker
 						                       cardNode.SelectSingleNode(
 						                                                 ".//span[@class='nombreCarta rarity_legendary' or @class='nombreCarta rarity_epic' or @class='nombreCarta rarity_rare' or @class='nombreCarta rarity_common' or @class='nombreCarta rarity_basic']")
 						                               .InnerText);
-					var card = Game.GetCardFromName(name);
+					var card = GameV2.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -657,7 +657,7 @@ namespace Hearthstone_Deck_Tracker
 						var name = match.Groups[1].Value;
 						var count = match.Groups[2].Value;
 
-						var card = Game.GetCardFromName(name);
+						var card = GameV2.GetCardFromName(name);
 						card.Count = String.IsNullOrEmpty(count) ? 1 : 2;
 						deck.Cards.Add(card);
 						if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")

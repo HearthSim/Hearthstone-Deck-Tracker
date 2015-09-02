@@ -17,6 +17,7 @@
                         Margin="0,5,0,0">
                         <system:String>Name</system:String>
                         <system:String>Last Played</system:String>
+                        <system:String>Last Played (new first)</system:String>
                         <system:String>Last Edited</system:String>
                         <system:String>Tag</system:String>
                         <system:String>Win Rate</system:String>
@@ -30,8 +31,9 @@
                         <ComboBox Name="ComboboxDeckSortingArena" SelectionChanged="SelectorArena_OnSelectionChanged"
                             Margin="0,5,0,0">
                             <system:String>Name</system:String>
-                            <system:String>Last Played</system:String>
-                            <system:String>Last Edited</system:String>
+                        <system:String>Last Played</system:String>
+                        <system:String>Last Played (new first)</system:String>
+                        <system:String>Last Edited</system:String>
                             <system:String>Tag</system:String>
                             <system:String>Win Rate</system:String>
                         </ComboBox>
