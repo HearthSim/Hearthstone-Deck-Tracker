@@ -226,16 +226,20 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.075)]
 		public double GoldProgessY = 0.93;
 
-		[DefaultValue(new[] {0, 0, 0})]
-		//move this to some data file
-		public int[] GoldProgress = {0, 0, 0};
+        [DefaultValue(new[] { 0, 0, 0, 0, 0 })]
+        //move this to some data file
+        public int[] GoldProgress = { 0, 0, 0, 0, 0 };
 
-		//move this to some data file
-		public DateTime[] GoldProgressLastReset = {DateTime.MinValue, DateTime.MinValue, DateTime.MinValue};
+        //move this to some data file
+        public DateTime[] GoldProgressLastReset =
+        {
+            DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
+            DateTime.MinValue, DateTime.MinValue,
+        };
 
-		[DefaultValue(new[] {0, 0, 0})]
-		//move this to some data file
-		public int[] GoldProgressTotal = {0, 0, 0};
+        [DefaultValue(new[] { 0, 0, 0, 0, 0 })]
+        //move this to some data file
+        public int[] GoldProgressTotal = { 0, 0, 0, 0, 0 };
 
 		[DefaultValue(null)]
 		public bool? HearthStatsAutoDeleteDecks = null;

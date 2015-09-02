@@ -711,8 +711,18 @@ namespace Hearthstone_Deck_Tracker
             var region = (int)_game.CurrentRegion - 1;
             if (region >= 0)
             {
-                LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", Config.Instance.GoldProgress[region],
-                                                     Config.Instance.GoldProgressTotal[region]);
+                int wins = Config.Instance.GoldProgress[region];
+                if (wins < 3)
+                {
+                    LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", wins,
+                        Config.Instance.GoldProgressTotal[region]);
+                }
+                else
+                {
+                    LblGoldProgress.Text = string.Format("At least {2} wins did not get gold reward , Wins: {0}/3 ({1}/100G) , ",
+                        wins,
+                        Config.Instance.GoldProgressTotal[region], wins - 2);
+                }
             }
         }
 
