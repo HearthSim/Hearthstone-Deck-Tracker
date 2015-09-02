@@ -395,7 +395,7 @@ namespace Hearthstone_Deck_Tracker
                     await GameModeSaved(15);
                     if (_game.CurrentGameMode == GameMode.Arena)
                         HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-                    if (_game.CurrentGameMode == GameMode.Brawl)
+                    else if (_game.CurrentGameMode == GameMode.Brawl)
                     { /* do nothing */ }
                     else
                         HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
