@@ -764,6 +764,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
+        
+        [DefaultValue(4096)]
+        public int BufferSize = 4096;
 
 		private GameDetailsConfig _gameDetails;
 

@@ -57,6 +57,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.KeyPressOnGameEnd = "None";
 			ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
+            TextBoxBufferSize.Text = Config.Instance.BufferSize + ""; //requires restart on change;
+
 			_initialized = true;
 		}
 
@@ -189,8 +191,34 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Helper.MainWindow.Restart();
 		}
+        private async void TextBoxBufferSize_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            string strSize = TextBoxBufferSize.Text;
+            int size;
+            if(int.TryParse(strSize, out size))
+            {
+                if (size >= 1024)
+                {
+                    Config.Instance.BufferSize = size;
+                    Config.Save();
+                    await Helper.MainWindow.ShowMessage("Restart required", "Click ok to restart HDT");
+                    Helper.MainWindow.Restart();
+                }
+                else
+                {
+                    TextBoxBufferSize.Text = "1024";
+                    await Helper.MainWindow.ShowMessage("Caution!", "It is recommended that you set the buffer size higher than 1024");
+                }
+            }
+            else
+            {
+                TextBoxBufferSize.Text = Config.Instance.BufferSize + "";
+            }           
+        }
 
-		private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;

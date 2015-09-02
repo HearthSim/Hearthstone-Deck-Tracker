@@ -24,6 +24,11 @@
                                                   VerticalAlignment="Top" Width="150"
                                                   SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
                     </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Read buffer size:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox x:Name="TextBoxBufferSize" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Text="4096"
+                                 LostFocus="TextBoxBufferSize_LostFocus" />
+                    </DockPanel>
                     <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"

@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         private readonly string _fullOutputPath;
         private readonly bool _ifaceUpdateNeeded;
         private readonly int _updateDelay;
+        private readonly int _bufferSize;
         private HsGameState _gameState;
         private GameV2 _game;
 
@@ -28,14 +29,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
         private readonly BobHandler _bobHandler = new BobHandler();
         private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 
-        private HsLogReaderV2() : this(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay, true) { }
+        private HsLogReaderV2() : this(Config.Instance.HearthstoneDirectory, Config.Instance.UpdateDelay, Config.Instance.BufferSize, true) { }
 
-        private HsLogReaderV2(string hsDirectory, int updateDeclay, bool interfaceUpdateNeeded)
+        private HsLogReaderV2(string hsDirectory, int updateDeclay, int bufferSize, bool interfaceUpdateNeeded)
         {
             var hsDirPath = hsDirectory;
             var updateDelay = updateDeclay;
             _ifaceUpdateNeeded = interfaceUpdateNeeded;
             _updateDelay = updateDelay == 0 ? 100 : updateDelay;
+            _bufferSize = bufferSize;
             while (hsDirPath.EndsWith("\\") || hsDirPath.EndsWith("/"))
                 hsDirPath = hsDirPath.Remove(hsDirPath.Length - 1);
             _fullOutputPath = @hsDirPath + @"\Hearthstone_Data\output_log.txt";
@@ -49,10 +51,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 Instance = new HsLogReaderV2();
         }
 
-        public static void Create(string hsDirectory, int updateDeclay, bool ifaceUpdateNeeded = true)
+        public static void Create(string hsDirectory, int updateDeclay, int bufferSize, bool ifaceUpdateNeeded = true)
         {
             if (Instance == null)
-                Instance = new HsLogReaderV2(hsDirectory, updateDeclay, ifaceUpdateNeeded);
+                Instance = new HsLogReaderV2(hsDirectory, updateDeclay, bufferSize, ifaceUpdateNeeded);
         }
 
         public void Start(GameV2 game)
@@ -103,7 +105,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
                         }
                     }
 
-                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+
+                    using (var fs = new FileStream(_fullOutputPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, _bufferSize, false))
                     {
                         fs.Seek(_gameState.PreviousSize, SeekOrigin.Begin);
                         if (fs.Length == _gameState.PreviousSize)
@@ -130,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                         }
 
                         _gameState.PreviousSize = newLength;
-                    }
+                    }                    
                 }
 
                 await Task.Delay(_updateDelay);

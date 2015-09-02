@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public TrackerSettings OptionsTrackerSettings;
 		public TrackerStats OptionsTrackerStats;
 		public TrackerAppearance OptionsTrackerAppearance;
-		public TrackerBackups OptionsTrackerBackups;
+		public TrackerBackups OptionsTrackerBackups;        
 
 		public OptionsMain()
 		{
@@ -152,5 +152,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentControlOptions.Content = OptionsTrackerBackups;
 		}
-	}
+    }
 }
