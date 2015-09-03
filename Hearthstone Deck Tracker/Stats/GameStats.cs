@@ -384,7 +384,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
 					   || play.Type == PlayType.OpponentSecretTriggered)
 					{
-						var card = GameV2.GetCardFromId(play.CardId);
+						var card = Database.GetCardFromId(play.CardId);
 						if(GameV2.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
 						{
 							if(ignoreCards.Contains(card))
@@ -401,7 +401,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 					}
 					else if(play.Type == PlayType.OpponentBackToHand)
 					{
-						var card = GameV2.GetCardFromId(play.CardId);
+						var card = Database.GetCardFromId(play.CardId);
 						if(GameV2.IsActualCard(card))
 							ignoreCards.Add(card);
 					}

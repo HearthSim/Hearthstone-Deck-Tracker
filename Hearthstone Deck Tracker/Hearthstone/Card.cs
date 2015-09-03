@@ -432,7 +432,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(_loaded)
 				return;
 
-			var stats = GameV2.GetCardFromId(Id);
+			var stats = Database.GetCardFromId(Id);
 			PlayerClass = stats.PlayerClass;
 			Rarity = stats.Rarity;
 			Type = stats.Type;

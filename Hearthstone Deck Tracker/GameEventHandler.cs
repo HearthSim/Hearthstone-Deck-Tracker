@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if (_doneImportingConstructed)
                 return;
-            var card = GameV2.GetCardFromId(id);
+            var card = Database.GetCardFromId(id);
             if (card == null || !GameV2.IsActualCard(card))
                 return;
             if (canBeDoneImporting)
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePossibleArenaCard(string id)
         {
-            var card = GameV2.GetCardFromId(id);
+            var card = Database.GetCardFromId(id);
             if (!GameV2.IsActualCard(card))
                 return;
             if (!_game.PossibleArenaCards.Contains(card))
@@ -584,7 +584,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             _game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
-            GameEvents.OnPlayerGet.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerGet.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerBackToHand(string cardId, int turn)
@@ -594,7 +594,7 @@ namespace Hearthstone_Deck_Tracker
             LogEvent("PlayerBackToHand", cardId);
             _game.PlayerGet(cardId, true, turn);
             _game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
-            GameEvents.OnPlayerPlayToHand.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerPlayToHand.Execute(Database.GetCardFromId(cardId));
         }
 
         public async void HandlePlayerDraw(string cardId, int turn)
@@ -620,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
                 Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
                 _game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
             }
-            GameEvents.OnPlayerDraw.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerDraw.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerMulligan(string cardId)
@@ -636,7 +636,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 
             _game.AddPlayToCurrentGame(PlayType.PlayerMulligan, 0, cardId);
-            GameEvents.OnPlayerMulligan.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerMulligan.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerSecretPlayed(string cardId, int turn, bool fromDeck)
@@ -651,7 +651,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
-            GameEvents.OnPlayerPlay.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerHandDiscard(string cardId, int turn)
@@ -665,7 +665,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.PlayerHandDiscard, turn, cardId);
-            GameEvents.OnPlayerHandDiscard.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerHandDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerPlay(string cardId, int turn)
@@ -678,7 +678,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 
             _game.AddPlayToCurrentGame(PlayType.PlayerPlay, turn, cardId);
-            GameEvents.OnPlayerPlay.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerDeckDiscard(string cardId, int turn)
@@ -696,7 +696,7 @@ namespace Hearthstone_Deck_Tracker
 
             Helper.MainWindow.Overlay.ListViewPlayer.Items.Refresh();
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
-            GameEvents.OnPlayerDeckDiscard.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerDeckDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerPlayToDeck(string cardId, int turn)
@@ -711,7 +711,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.PlayerWindow.ListViewPlayer.Items.Refresh();
 
             _game.AddPlayToCurrentGame(PlayType.PlayerPlayToDeck, turn, cardId);
-            GameEvents.OnPlayerPlayToDeck.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnPlayerPlayToDeck.Execute(Database.GetCardFromId(cardId));
         }
 
         #endregion
@@ -789,7 +789,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
             Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
-            GameEvents.OnOpponentPlay.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
 
 
@@ -814,7 +814,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
             Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
-            GameEvents.OnOpponentHandDiscard.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlOpponentDraw(int turn)
@@ -856,7 +856,7 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecrets.NewSecretPlayed(otherId, isStolenCard);
 
             Helper.MainWindow.Overlay.ShowSecrets();
-            GameEvents.OnOpponentPlay.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandleOpponentPlayToHand(string cardId, int turn, int id)
@@ -866,7 +866,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
             Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
-            GameEvents.OnOpponentPlayToHand.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentPlayToHand.Execute(Database.GetCardFromId(cardId));
         }
 
 
@@ -877,7 +877,7 @@ namespace Hearthstone_Deck_Tracker
             _game.AddPlayToCurrentGame(PlayType.OpponentPlayToDeck, turn, cardId);
             Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
             Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
-            GameEvents.OnOpponentPlayToDeck.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentPlayToDeck.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandleOpponentSecretTrigger(string cardId, int turn, int otherId)
@@ -895,7 +895,7 @@ namespace Hearthstone_Deck_Tracker
                 Helper.MainWindow.Overlay.ShowSecrets();
             }
             _game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
-            GameEvents.OnOpponentSecretTriggered.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandleOpponentDeckDiscard(string cardId, int turn)
@@ -908,7 +908,7 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ListViewOpponent.Items.Refresh();
             Helper.MainWindow.OpponentWindow.ListViewOpponent.Items.Refresh();
             _game.AddPlayToCurrentGame(PlayType.OpponentDeckDiscard, turn, cardId);
-            GameEvents.OnOpponentDeckDiscard.Execute(GameV2.GetCardFromId(cardId));
+            GameEvents.OnOpponentDeckDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
         #endregion

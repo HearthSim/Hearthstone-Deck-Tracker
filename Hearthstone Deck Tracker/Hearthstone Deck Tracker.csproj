@@ -232,6 +232,7 @@
     <Compile Include="HearthStats\Controls\DuplicateMatchesWindow.xaml.cs">
       <DependentUpon>DuplicateMatchesWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\Database.cs" />
     <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />

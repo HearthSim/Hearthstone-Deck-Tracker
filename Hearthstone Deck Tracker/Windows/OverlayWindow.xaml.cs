@@ -1091,7 +1091,7 @@ namespace Hearthstone_Deck_Tracker
             foreach (var id in secrets)
             {
                 var cardObj = new Controls.Card();
-                var card = GameV2.GetCardFromId(id.CardId);
+                var card = Database.GetCardFromId(id.CardId);
                 card.Count = id.AdjustedCount(_game);
                 cardObj.SetValue(DataContextProperty, card);
                 StackPanelSecrets.Children.Add(cardObj);
@@ -1117,7 +1117,7 @@ namespace Hearthstone_Deck_Tracker
             foreach (var id in CardIds.SubCardIds[card.Id])
             {
                 var tooltip = new CardToolTip();
-                tooltip.SetValue(DataContextProperty, GameV2.GetCardFromId(id));
+                tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
                 StackPanelAdditionalTooltips.Children.Add(tooltip);
             }
 

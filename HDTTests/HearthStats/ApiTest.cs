@@ -40,7 +40,7 @@ namespace HDTTests.HearthStats
 			_deck1.Note = "test note 1";
 			_deck1.Tags = new List<string> {"testtag1", "testtag2"};
 			_deck1.Class = "Mage";
-			foreach(var card in GameV2.GetActualCards().Where(c => c.PlayerClass == "Mage").Take(30))
+			foreach(var card in Database.GetActualCards().Where(c => c.PlayerClass == "Mage").Take(30))
 				_deck1.Cards.Add(card);
 
 			_deck2 = new Deck();
@@ -49,7 +49,7 @@ namespace HDTTests.HearthStats
 			_deck2.Note = "test note 2";
 			_deck2.Tags = new List<string> {"testtag3", "testtag4"};
 			_deck2.Class = "Druid";
-			foreach(var card in GameV2.GetActualCards().Where(c => c.PlayerClass == "Druid").Take(30))
+			foreach(var card in Database.GetActualCards().Where(c => c.PlayerClass == "Druid").Take(30))
 				_deck2.Cards.Add(card);
 		}
 

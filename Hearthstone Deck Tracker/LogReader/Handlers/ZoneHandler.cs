@@ -19,9 +19,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     if (!from.Contains("PLAY"))
                     {
                         if (to.Contains("FRIENDLY"))
-                            gameState.GameHandler.SetPlayerHero(GameV2.GetHeroNameFromId(id, false));
+                            gameState.GameHandler.SetPlayerHero(Database.GetHeroNameFromId(id, false));
                         else if (to.Contains("OPPOSING"))
-                            gameState.GameHandler.SetOpponentHero(GameV2.GetHeroNameFromId(id, false));
+                            gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(id, false));
                     }
                 }
             }

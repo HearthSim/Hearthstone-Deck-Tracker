@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public Card Card
 		{
-			get { return KeyPoint == null ? null : GameV2.GetCardFromId(KeyPoint.GetCardId()); }
+			get { return KeyPoint == null ? null : Database.GetCardFromId(KeyPoint.GetCardId()); }
 		}
 
 		public string TurnString

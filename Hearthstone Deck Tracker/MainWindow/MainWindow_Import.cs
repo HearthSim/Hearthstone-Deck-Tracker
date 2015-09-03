@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 					var splitEntry = entry.Split(':');
 					if(splitEntry.Length != 2)
 						continue;
-					var card = GameV2.GetCardFromId(splitEntry[0]);
+					var card = Database.GetCardFromId(splitEntry[0]);
 					if(card.Id == "UNKNOWN")
 						continue;
 					int count;
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 						cardName = match.Groups["cardname"].Value.Trim();
 					}
 
-					var card = GameV2.GetCardFromName(cardName, localizedNames);
+					var card = Database.GetCardFromName(cardName, localizedNames);
 					if(card == null || string.IsNullOrEmpty(card.Name))
 						continue;
 					card.Count = count;

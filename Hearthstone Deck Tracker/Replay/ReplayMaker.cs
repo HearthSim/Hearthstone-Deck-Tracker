@@ -62,13 +62,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 						                  x =>
 						                  !string.IsNullOrEmpty(x.CardId)
 						                  && ((x.CardId.StartsWith("NAX") && x.CardId.Contains("_01")) || x.CardId.StartsWith("BRMA"))
-						                  && GameV2.GetHeroNameFromId(x.CardId) != null);
+						                  && Database.GetHeroNameFromId(x.CardId) != null);
 
-					ResolveOpponentName(GameV2.GetHeroNameFromId(opponentHero.CardId));
+					ResolveOpponentName(Database.GetHeroNameFromId(opponentHero.CardId));
 				}
 
-				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, GameV2.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-                                             GameV2.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Database.GetHeroNameFromId(playerHero.CardId), opponent.Name,
+                                             Database.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))

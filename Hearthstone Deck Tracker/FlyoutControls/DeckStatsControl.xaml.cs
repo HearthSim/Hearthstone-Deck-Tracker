@@ -593,7 +593,7 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					if(play.Type.ToString().Contains("Player"))
 					{
-						var hero = GameV2.GetCardFromId(play.CardId).PlayerClass;
+						var hero = Database.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!playerHeroes.ContainsKey(hero))
@@ -602,7 +602,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(play.Type.ToString().Contains("Opponent"))
 					{
-						var hero = GameV2.GetCardFromId(play.CardId).PlayerClass;
+						var hero = Database.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!opponentHeroes.ContainsKey(hero))

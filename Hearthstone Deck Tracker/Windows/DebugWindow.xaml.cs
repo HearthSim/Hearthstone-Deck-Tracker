@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var entity in _game.Entities)
 			{
 				var tags = entity.Value.Tags.Select(GetTagKeyValue).Aggregate((c, n) => c + " | " + n);
-				var card = GameV2.GetCardFromId(entity.Value.CardId);
+				var card = Database.GetCardFromId(entity.Value.CardId);
 				var cardName = card != null ? card.Name : "";
 				var name = string.IsNullOrEmpty(entity.Value.Name) ? cardName : entity.Value.Name;
 				list.Add(new {Name = name, entity.Value.CardId, Tags = tags});

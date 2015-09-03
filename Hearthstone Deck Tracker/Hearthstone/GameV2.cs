@@ -20,20 +20,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class GameV2 : IGame
 	{
         private static List<string> hsLogLines = new List<string>();
-        private static readonly List<string> InValidCardSets = new List<string>
-        {
-            "Credits",
-            "Missions",
-            "Debug",
-            "System"
-        };
-        
-        private static Dictionary<string, Card> _cardDb;
 
 	    static GameV2()
 	    {
-            _cardDb = new Dictionary<string, Card>();
-            LoadCardDb(Helper.LanguageDict.ContainsValue(Config.Instance.SelectedLanguage) ? Config.Instance.SelectedLanguage : "enUS");
+
         }
 
 		public GameV2()
@@ -321,7 +311,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				drawnCard.Count++;
 			else
 			{
-				drawnCard = GetCardFromId(cardId);
+				drawnCard = Database.GetCardFromId(cardId);
 				PlayerDrawn.Add(drawnCard);
 				PlayerDrawnIdsTotal.Add(cardId);
             }
@@ -390,7 +380,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					drawnCard.Count++;
 				else
 				{
-					drawnCard = GetCardFromId(cardId);
+					drawnCard = Database.GetCardFromId(cardId);
 					drawnCard.IsStolen = true;
 					PlayerDrawn.Add(drawnCard);
 				}
@@ -406,7 +396,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				else
 				{
-					deckCard = GetCardFromId(cardId);
+					deckCard = Database.GetCardFromId(cardId);
 					deckCard.InHandCount++;
 					deckCard.IsStolen = true;
 					PlayerDeck.Add(deckCard);
@@ -468,7 +458,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			else if(Config.Instance.RemoveCardsFromDeck)
 			{
-				deckCard = GetCardFromId(cardId);
+				deckCard = Database.GetCardFromId(cardId);
 				PlayerDeck.Add(deckCard);
 				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
 			}
@@ -487,7 +477,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var drawnCard = PlayerDrawn.FirstOrDefault(c => c.Id == cardId);
 			if(drawnCard == null)
 			{
-				PlayerDrawn.Add(GetCardFromId(cardId));
+				PlayerDrawn.Add(Database.GetCardFromId(cardId));
 				PlayerDrawnIdsTotal.Add(cardId);
             }
 			else
@@ -519,7 +509,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			else if(Config.Instance.RemoveCardsFromDeck)
 			{
-				deckCard = GetCardFromId(cardId);
+				deckCard = Database.GetCardFromId(cardId);
 				PlayerDeck.Add(deckCard);
 				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
 			}
@@ -540,7 +530,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			else
 			{
-				deckCard = GetCardFromId(cardId);
+				deckCard = Database.GetCardFromId(cardId);
 				deckCard.IsStolen = true;
 				PlayerDeck.Add(deckCard);
 				Logger.WriteLine("Added " + deckCard.Name + " to deck (count was 0)", "Game");
@@ -586,7 +576,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(string.IsNullOrEmpty(cardId) || OpponentCards.Any(c => c.Id == cardId && c.Jousted))
 				return;
-			var card = GetCardFromId(cardId);
+			var card = Database.GetCardFromId(cardId);
 			card.Jousted = true;
 			OpponentCards.Add(card);
 		}
@@ -618,7 +608,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					card.Count++;
 				else
 				{
-					card = GetCardFromId(id);
+					card = Database.GetCardFromId(id);
 					card.IsStolen = stolen;
 					OpponentCards.Add(card);
 				}
@@ -681,7 +671,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OpponentHandMarks[OpponentHandCount - 1] = CardMark.Returned;
 				if(!string.IsNullOrEmpty(cardId))
 				{
-					var card = GetCardFromId(cardId);
+					var card = Database.GetCardFromId(cardId);
 					if(card != null)
 						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
 				}
@@ -713,7 +703,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.Count++;
 			else
 			{
-				card = GetCardFromId(cardId);
+				card = Database.GetCardFromId(cardId);
 				card.WasDiscarded = true;
 				OpponentCards.Add(card);
 			}
@@ -730,7 +720,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				card.Count++;
 			else
 			{
-				card = GetCardFromId(cardId);
+				card = Database.GetCardFromId(cardId);
 				OpponentCards.Add(card);
 			}
 
@@ -760,7 +750,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(string.IsNullOrEmpty(cardId))
 						cardId = Entities[SecondToLastUsedId.Value].CardId;
 
-					var card = GetCardFromId(cardId);
+					var card = Database.GetCardFromId(cardId);
 					if(card != null)
 						OpponentStolenCardsInformation[OpponentHandCount - 1] = card;
 				}
@@ -773,142 +763,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		#endregion
 
 		#region Database
-
-		/*private void LoadCardDb(string languageTag)
-		{
-			try
-			{
-				var localizedCards = new Dictionary<string, Card>();
-				if(languageTag != "enUS")
-				{
-					var file = string.Format("Files/cardsDB.{0}.json", languageTag);
-					if(File.Exists(file))
-					{
-						var localized = JObject.Parse(File.ReadAllText(file));
-						foreach(var cardType in localized)
-						{
-							if(!ValidCardSets.Any(cs => cs.Equals(cardType.Key)))
-								continue;
-							foreach(var card in cardType.Value)
-							{
-								var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-								localizedCards.Add(tmp.Id, tmp);
-							}
-						}
-					}
-					Logger.WriteLine("Done loading localized card database (" + languageTag + ")", "Hearthstone");
-				}
-
-
-				//load engish db (needed for importing, etc)
-				const string fileEng = "Files/cardsDB.enUS.json";
-				var tempDb = new Dictionary<string, Card>();
-				if(File.Exists(fileEng))
-				{
-					var obj = JObject.Parse(File.ReadAllText(fileEng));
-					foreach(var cardType in obj)
-					{
-						var set = ValidCardSets.FirstOrDefault(cs => cs.Equals(cardType.Key));
-						if(set == null)
-							continue;
-
-						foreach(var card in cardType.Value)
-						{
-							var tmp = JsonConvert.DeserializeObject<Card>(card.ToString());
-							if(languageTag != "enUS")
-							{
-								var localizedCard = localizedCards[tmp.Id];
-								tmp.LocalizedName = localizedCard.Name;
-								tmp.Text = localizedCard.Text;
-							}
-							tmp.Set = set;
-							tempDb.Add(tmp.Id, tmp);
-						}
-					}
-					Logger.WriteLine("Done loading card database (enUS)", "Game");
-				}
-				_cardDb = new Dictionary<string, Card>(tempDb);
-			}
-			catch(Exception e)
-			{
-				Logger.WriteLine("Error loading db: \n" + e, "Game");
-			}
-		}*/
-
-		private static void LoadCardDb(string languageTag)
-		{
-			try
-			{
-				var db = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", "enUS"));
-				_cardDb = db.Cards.Where(x => InValidCardSets.All(set => x.CardSet != set)).ToDictionary(x => x.CardId, x => x.ToCard());
-				if(languageTag != "enUS")
-				{
-					var localized = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", languageTag));
-					foreach(var card in localized.Cards)
-					{
-						Card c;
-						if(_cardDb.TryGetValue(card.CardId, out c))
-						{
-							c.LocalizedName = card.Name;
-							c.EnglishText = c.Text;
-							c.Text = card.Text;
-						}
-					}
-				}
-			}
-			catch(Exception e)
-			{
-				Logger.WriteLine("Error loading db: \n" + e, "Game");
-			}
-		}
-
+		
+		[Obsolete("Use Hearthstone.Database.GetCardFromId")]
 		public static Card GetCardFromId(string cardId)
 		{
-			if(string.IsNullOrEmpty(cardId))
-				return null;
-			Card card;
-			//_cardDb.TryGetValue(cardId, out card);
-			if(_cardDb.TryGetValue(cardId, out card))
-				return (Card)card.Clone();
-			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Game");
-			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
+			return Database.GetCardFromId(cardId);
 		}
 
+		[Obsolete("Use Hearthstone.Database.GetCardFromName")]
 		public static Card GetCardFromName(string name, bool localized = false)
 		{
-			var card =
-				GetActualCards()
-					.FirstOrDefault(c => string.Equals(localized ? c.LocalizedName : c.Name, name, StringComparison.InvariantCultureIgnoreCase));
-			if(card != null)
-				return (Card)card.Clone();
-
-			//not sure with all the values here
-			Logger.WriteLine("Could not get card from name: " + name, "Game");
-			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
+			return Database.GetCardFromName(name, localized);
 		}
 
+		[Obsolete("Use Hearthstone.Database.GetActualCards")]
 		public static List<Card> GetActualCards()
 		{
-            return (from card in _cardDb.Values
-                    where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
-                    where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t"
-                    where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-                    where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
-                    select card).ToList();
-        }
+			return Database.GetActualCards();
+		}
 
+		[Obsolete("Use Hearthstone.Database.GetHeroNameFromId")]
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 		{
-			string name;
-			var match = Regex.Match(id, @"(?<base>(.*_\d+)).*");
-			if(match.Success)
-				id = match.Groups["base"].Value;
-			if(CardIds.HeroIdDict.TryGetValue(id, out name))
-				return name;
-			var card = GetCardFromId(id);
-			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")
-				return returnIdIfNotFound ? id : null;
-			return card.Name;
+			return Database.GetHeroNameFromId(id, returnIdIfNotFound);
 		}
 
 		#endregion
@@ -935,7 +812,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(existingCard != null)
 				existingCard.Count++;
 			else
-				TempArenaDeck.Cards.Add((Card)GetCardFromId(cardId).Clone());
+				TempArenaDeck.Cards.Add((Card)Database.GetCardFromId(cardId).Clone());
 			var numCards = TempArenaDeck.Cards.Sum(c => c.Count);
 			Logger.WriteLine(string.Format("Added new card to arena deck: {0} ({1}/30)", cardId, numCards));
 			if(numCards == 30)
