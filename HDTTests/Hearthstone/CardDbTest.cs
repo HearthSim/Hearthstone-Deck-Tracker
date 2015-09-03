@@ -34,7 +34,7 @@ namespace HDTTests.Hearthstone
 		public void TestDreadscaleIsActual()
 		{
 			Card c = new Card { Id = "AT_063t", Name = "Dreadscale", Type = "Minion" };
-			Assert.IsTrue(GameV2.IsActualCard(c));
+			Assert.IsTrue(Database.IsActualCard(c));
 		}
 
 		[TestMethod]

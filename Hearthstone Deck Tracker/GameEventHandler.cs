@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker
             if (_doneImportingConstructed)
                 return;
             var card = Database.GetCardFromId(id);
-            if (card == null || !GameV2.IsActualCard(card))
+            if (card == null || !Database.IsActualCard(card))
                 return;
             if (canBeDoneImporting)
             {
@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker
         public void HandlePossibleArenaCard(string id)
         {
             var card = Database.GetCardFromId(id);
-            if (!GameV2.IsActualCard(card))
+            if (!Database.IsActualCard(card))
                 return;
             if (!_game.PossibleArenaCards.Contains(card))
                 _game.PossibleArenaCards.Add(card);

@@ -175,16 +175,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CurrentGameStats.AddPlay(play, turn, cardId);
 		}
 
-		public static bool IsActualCard(Card card)
-		{
-            if (card == null)
-                return false;
-            return (card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon")
-                   && (Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t")
-                   && Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-                   && !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id));
-        }
-
 		public void ResetArenaCards()
 		{
 			PossibleArenaCards.Clear();
@@ -256,7 +246,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						Entity hEntity;
 						if(Entities.TryGetValue(hEntityId, out hEntity))
 						{
-							_playingAs = GetHeroNameFromId(hEntity.CardId);
+							_playingAs = Database.GetHeroNameFromId(hEntity.CardId);
 						}
 					}
 				}
@@ -788,6 +778,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Database.GetHeroNameFromId(id, returnIdIfNotFound);
 		}
 
+		[Obsolete("Use Hearthstone.Database.IsActualCard")]
+		public static bool IsActualCard(Card card)
+		{
+			return Database.IsActualCard(card);
+		}
+
 		#endregion
 
 		public Deck TempArenaDeck;
@@ -799,7 +795,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate),
 				IsArenaDeck = true,
-				Class = GetHeroNameFromId(heroId)
+				Class = Database.GetHeroNameFromId(heroId)
 			};
 			Logger.WriteLine("Created new arena deck: " + TempArenaDeck.Class);
 		}

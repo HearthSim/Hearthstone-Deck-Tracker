@@ -198,7 +198,7 @@ namespace Hearthstone_Deck_Tracker
 					   || play.Type == PlayType.OpponentSecretTriggered)
 					{
 						var card = Database.GetCardFromId(play.CardId);
-						if(GameV2.IsActualCard(card))
+						if(Database.IsActualCard(card))
 						{
 							if(ignoreCards.Contains(card))
 							{
@@ -215,7 +215,7 @@ namespace Hearthstone_Deck_Tracker
 					else if(play.Type == PlayType.OpponentBackToHand)
 					{
 						var card = Database.GetCardFromId(play.CardId);
-						if(GameV2.IsActualCard(card))
+						if(Database.IsActualCard(card))
 							ignoreCards.Add(card);
 					}
 				}
