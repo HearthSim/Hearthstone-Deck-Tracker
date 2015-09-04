@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Deployment.Application;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
 		public bool DrawnCardsMatchDeck { get; set; }
-
+		public bool IsLocalPlayer { get; private set; }
 		public bool HasCoin
 		{
 			get { return Hand.Any(ce => ce.CardId == "GAME_005" || (ce.Entity != null && ce.Entity.CardId == "GAME_005")); }
@@ -41,8 +42,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string> DrawnCardsDistinctTotalIds { get; private set; }
 		public const int DeckSize = 30;
 
+		private readonly Queue<string> _hightlightedCards = new Queue<string>(); 
+
 		public List<Card> DisplayCards
 		{
+			//TODO: this may need some refactoring :)
 			get
 			{
 				if(DeckList.Instance.ActiveDeck == null)
@@ -50,15 +54,56 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 				var stillInDeck =
 					Deck.Where(ce => !string.IsNullOrEmpty(ce.CardId))
-					    .GroupBy(ce => new { ce.CardId, ce.CardMark, ce.Discarded})
-					    .Select(g => new Card() {Id = g.Key.CardId, Count = g.Count(), IsStolen = g.Key.CardMark == CardMark.Stolen, WasDiscarded = g.Key.Discarded})
+					    .GroupBy(ce => new {ce.CardId, ce.CardMark, ce.Discarded})
+					    .Select(
+					            g =>
+					            new Card()
+					            {
+						            Id = g.Key.CardId,
+						            Count = g.Count(),
+						            IsStolen = g.Key.CardMark == CardMark.Stolen,
+						            WasDiscarded = g.Key.Discarded,
+						            HighlightDraw = _hightlightedCards.Contains(g.Key.CardId),
+						            HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId)
+					            })
 					    .ToList();
 				if(Config.Instance.RemoveCardsFromDeck)
+				{
+					if(Config.Instance.HighlightLastDrawn)
+					{
+						var drawHighlight =
+							DeckList.Instance.ActiveDeck.Cards.Where(c => _hightlightedCards.Contains(c.Id) && stillInDeck.All(c2 => c2.Id != c.Id))
+							        .Select(c =>
+							        {
+								        var card = (Card)c.Clone();
+								        card.Count = 0;
+								        card.HighlightDraw = true;
+								        return card;
+							        });
+						stillInDeck = stillInDeck.Concat(drawHighlight).ToList();
+					}
+					if(Config.Instance.HighlightCardsInHand)
+					{
+						var inHand =
+							DeckList.Instance.ActiveDeck.Cards.Where(c => stillInDeck.All(c2 => c2.Id != c.Id) && Hand.Any(ce => c.Id == ce.CardId))
+							        .Select(c =>
+							        {
+								        var card = (Card)c.Clone();
+								        card.Count = 0;
+								        card.HighlightInHand = true;
+								        return card;
+							        });
+						;
+						stillInDeck = stillInDeck.Concat(inHand).ToList();
+					}
 					return stillInDeck.ToList();
+				}
 				var notInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Where(c => Deck.All(ce => ce.CardId != c.Id)).Select(c =>
 				{
 					var card = (Card)c.Clone();
 					card.Count = 0;
+					card.HighlightDraw = _hightlightedCards.Contains(c.Id);
+					card.HighlightInHand = Hand.Any(ce => ce.CardId == c.Id);
 					return card;
 				});
 				return stillInDeck.Concat(notInDeck).ToList();
@@ -80,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private bool _mulliganed;
 
-		public Player()
+		public Player(bool isLocalPlayer)
 		{
 			Hand = new List<CardEntity>();
 			Board = new List<CardEntity>();
@@ -90,6 +135,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			RevealedCards = new List<CardEntity>();
 			DrawnCards = new List<Card>();
 			DrawnCardsDistinctTotalIds = new List<string>();
+			IsLocalPlayer = isLocalPlayer;
 		}
 
 		public void Print()
@@ -165,7 +211,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				DrawnCardsMatchDeck = false;
 			}
 			to.Add(cardEntity);
-			from.Sort(ZonePosComparison);
+			//from.Sort(ZonePosComparison);
 			to.Sort(ZonePosComparison);
 			cardEntity.Turn = turn;
 			Print();
@@ -178,17 +224,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public CardEntity Entity { get; set; }
 		}
 
-		public void Draw(Entity entity, int turn)
-		{
-			MoveCardEntity(entity, Deck, Hand, turn);
-			Logger.WriteLine(string.Format("id={0}, cardId={1}, zonePos={2}", entity.Id, entity.CardId, entity.GetTag(GAME_TAG.ZONE_POSITION)), " >>> Draw");
-		}
-
 		private int ZonePosComparison(CardEntity ce1, CardEntity ce2)
 		{
 			var v1 = (ce1.Entity != null ? ce1.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
 			var v2 = (ce2.Entity != null ? ce2.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
 			return v1.CompareTo(v2);
+		}
+
+		public void Draw(Entity entity, int turn)
+		{
+			MoveCardEntity(entity, Deck, Hand, turn);
+			if(IsLocalPlayer)
+				Highlight(entity.CardId);
+			Logger.WriteLine(string.Format("id={0}, cardId={1}, zonePos={2}", entity.Id, entity.CardId, entity.GetTag(GAME_TAG.ZONE_POSITION)), " >>> Draw");
+		}
+
+		private async void Highlight(string cardId)
+		{
+			_hightlightedCards.Enqueue(cardId);
+			Helper.UpdatePlayerCards();
+			await Task.Delay(3000);
+			_hightlightedCards.Dequeue();
+			Helper.UpdatePlayerCards();
 		}
 
 		public void Play(Entity entity, int turn)

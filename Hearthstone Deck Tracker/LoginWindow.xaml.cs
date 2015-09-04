@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker
 			Config.Load();
 			Logger.Initialzie();
 			_game = new GameV2();
-            Card.SetGame(_game);
+            //Card.SetGame(_game);
 			API.Core.Game = _game;
 		    InitializeComponent();
 			if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)

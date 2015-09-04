@@ -14,8 +14,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         bool IsMulliganDone { get; }
         //int PlayerDeckSize { get; set; }
         bool NoMatchingDeck { get; set; }
-        bool HighlightCardsInHand { get; set; }
-        bool HighlightDiscarded { get; set; }
+        //bool HighlightCardsInHand { get; set; }
+        //bool HighlightDiscarded { get; set; }
         //ObservableCollection<Card> OpponentCards { get; set; }
         //int OpponentHandCount { get; set; }
         //int OpponentFatigueCount { get; set; }

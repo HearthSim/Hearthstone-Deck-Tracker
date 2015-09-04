@@ -233,7 +233,6 @@
       <DependentUpon>DuplicateMatchesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\Database.cs" />
-    <Compile Include="Hearthstone\Game.cs" />
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
@@ -361,7 +360,6 @@
     </Compile>
     <Compile Include="DeckList.cs" />
     <Compile Include="Utility\Helper.cs" />
-    <Compile Include="HsLogReader.cs" />
     <Compile Include="MainWindow\MainWindow_Edit.cs" />
     <Compile Include="MainWindow\MainWindow_Export.cs" />
     <Compile Include="MainWindow\MainWindow_Import.cs" />

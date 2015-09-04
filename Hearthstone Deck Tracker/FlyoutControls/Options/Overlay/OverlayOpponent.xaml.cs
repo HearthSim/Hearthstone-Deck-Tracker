@@ -66,7 +66,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = true;
-            _game.HighlightDiscarded = true;
 			SaveConfig(true);
 		}
 
@@ -75,7 +74,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = false;
-            _game.HighlightDiscarded = false;
 			SaveConfig(true);
 		}
 

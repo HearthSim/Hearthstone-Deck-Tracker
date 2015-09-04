@@ -74,7 +74,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = true;
-			_game.HighlightCardsInHand = true;
 			SaveConfig(true);
 		}
 
@@ -83,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = false;
-			_game.HighlightCardsInHand = false;
 			SaveConfig(true);
 		}
 

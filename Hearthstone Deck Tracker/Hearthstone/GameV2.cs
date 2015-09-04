@@ -31,8 +31,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public GameV2()
 		{
-			Player = new Player();
-			Opponent = new Player();
+			Player = new Player(true);
+			Opponent = new Player(false);
 
             Entities = new Dictionary<int, Entity>();
 			CurrentGameMode = GameMode.None;
@@ -54,8 +54,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			//	OpponentHandAge[i] = -1;
 			//	OpponentHandMarks[i] = CardMark.None;
 			//}
-
-			
 		}
 
 		public bool IsMulliganDone
@@ -211,8 +209,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		//private const int DefaultCoinPosition = 4;
 		//private const int MaxHandSize = 10;
-		public bool HighlightCardsInHand { get; set; }
-		public bool HighlightDiscarded { get; set; }
 
 		//public ObservableCollection<Card> OpponentCards { get; set; }
 		//public int OpponentHandCount { get; set; }
