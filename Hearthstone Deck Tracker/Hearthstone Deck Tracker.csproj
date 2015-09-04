@@ -237,6 +237,7 @@
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />
     <Compile Include="Hearthstone\Mechanic.cs" />
+    <Compile Include="Hearthstone\Player.cs" />
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
     <Compile Include="LogReader\Handlers\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\IHsGameState.cs" />
+    <Compile Include="LogReader\IHSLogReader.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />

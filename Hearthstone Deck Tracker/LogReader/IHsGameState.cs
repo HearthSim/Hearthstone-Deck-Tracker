@@ -28,8 +28,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
         dynamic WaitForController { get; set; }
         bool WaitingForFirstAssetUnload { get; set; }
         bool FoundSpectatorStart { get; set; }
-        bool NextUpdatedEntityIsJoust { get; set; }
-        void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
+	    int JoustReveals { get; set; }
+	    void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
         void GameEnd();
         int GetTurnNumber();
         void GameEndKeyPoint(bool victory, int id);

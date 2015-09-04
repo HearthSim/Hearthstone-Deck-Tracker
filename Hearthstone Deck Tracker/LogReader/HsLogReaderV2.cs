@@ -303,7 +303,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _gameState.AddToTurn = -1;
             _gameState.GameEnded = false;
             _gameState.FoundSpectatorStart = false;
-            _gameState.NextUpdatedEntityIsJoust = false;
+            _gameState.JoustReveals = 0;
         }
 
         public async Task<bool> RankedDetection(int timeoutInSeconds = 3)

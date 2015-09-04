@@ -205,8 +205,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Helper.MainWindow.PlayerWindow.Show();
 			Helper.MainWindow.PlayerWindow.Activate();
-			Helper.MainWindow.PlayerWindow.SetCardCount(_game.PlayerHandCount,
-			                                            30 - _game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
+			Helper.MainWindow.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.Player.DeckCount);
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}
@@ -226,7 +225,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Helper.MainWindow.OpponentWindow.Show();
 			Helper.MainWindow.OpponentWindow.Activate();
-			Helper.MainWindow.OpponentWindow.SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount, _game.OpponentHasCoin);
+			Helper.MainWindow.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.Opponent.DeckCount, _game.Opponent.HasCoin);
 			Config.Instance.OpponentWindowOnStart = true;
 			Config.Save();
 		}

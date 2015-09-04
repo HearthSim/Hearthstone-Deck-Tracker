@@ -190,6 +190,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
+		public bool IsSecret
+		{
+			get { return HasTag(GAME_TAG.SECRET); }
+		}
+
 		public bool IsInZone(TAG_ZONE zone)
 		{
 			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;

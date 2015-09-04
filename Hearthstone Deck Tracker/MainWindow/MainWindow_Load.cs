@@ -284,7 +284,7 @@ namespace Hearthstone_Deck_Tracker
 			if(converted)
 			{
 				Logger.WriteLine("changed config values", "ConvertLegacyConfig");
-				Config.SaveBackup();
+				//Config.SaveBackup();
 				Config.Save();
 			}
 
