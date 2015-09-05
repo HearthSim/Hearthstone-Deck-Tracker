@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker
 			var deck = new Deck();
 			foreach(var card in _game.DrawnLastGame)
 			{
-				if(card.IsStolen)
+				if(card.IsCreated)
 					continue;
 
 				deck.Cards.Add(card);

@@ -99,11 +99,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                             case TAG_ZONE.GRAVEYARD:
                             //case TAG_ZONE.SETASIDE:
                             case TAG_ZONE.PLAY:
-		                        //if(gameState.JoustReveals > 0)
-		                        //{
-			                    //    gameState.JoustReveals--;
-			                    //    break;
-		                        //}
                                 if (controller == game.Player.Id)
                                 {
                                     gameState.GameHandler.HandlePlayerDeckDiscard(game.Entities[id], cardId, gameState.GetTurnNumber());
@@ -127,8 +122,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     gameState.ProposeKeyPoint(KeyPointType.SecretPlayed, id, ActivePlayer.Player);
                                 }
                                 break;
+							default:
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+		                        break;
+
+
                         }
-                        break;
+						break;
                     case TAG_ZONE.HAND:
                         switch ((TAG_ZONE)value)
                         {
@@ -181,7 +181,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     gameState.ProposeKeyPoint(KeyPointType.Mulligan, id, ActivePlayer.Opponent);
                                 }
                                 break;
-                        }
+							default:
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								break;
+						}
                         break;
                     case TAG_ZONE.PLAY:
                         switch ((TAG_ZONE)value)
@@ -226,7 +229,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 											gameState.ProposeKeyPoint(KeyPointType.Death, id, ActivePlayer.Opponent);
                                     }
 		                        break;
-                        }
+							default:
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								break;
+						}
                         break;
                     case TAG_ZONE.SECRET:
                         switch ((TAG_ZONE)value)
@@ -241,7 +247,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     gameState.ProposeKeyPoint(KeyPointType.SecretTriggered, id, ActivePlayer.Opponent);
                                 }
                                 break;
-                        }
+							default:
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								break;
+						}
                         break;
                     case TAG_ZONE.GRAVEYARD:
                     case TAG_ZONE.SETASIDE:
@@ -284,8 +293,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     gameState.ProposeKeyPoint(KeyPointType.Obtain, id, ActivePlayer.Opponent);
                                 }
                                 break;
-                        }
+							default:
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								break;
+						}
                         break;
+					default:
+						Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+		                break;
                 }
             }
             else if (tag == GAME_TAG.PLAYSTATE)

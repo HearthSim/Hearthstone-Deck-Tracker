@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Controls
                     case CardMark.Returned:
                         source = "/HearthstoneDeckTracker;component/Images/card-icon-returned.png";
                         break;
-                    case CardMark.Stolen:
+                    case CardMark.Created:
                         source = "/HearthstoneDeckTracker;component/Images/card-icon-created.png";
                         break;
                     default:

@@ -685,7 +685,7 @@ namespace Hearthstone_Deck_Tracker
             if (showWarning)
             {
 				//TODO
-                /*var drawn = new Deck { Cards = new ObservableCollection<Card>(_game.PlayerDrawn.Where(c => !c.IsStolen)) };
+                /*var drawn = new Deck { Cards = new ObservableCollection<Card>(_game.PlayerDrawn.Where(c => !c.IsCreated)) };
                 var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
                 if (diff.Count > 0)
                 {

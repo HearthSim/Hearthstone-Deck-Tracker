@@ -29,7 +29,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleLoss();
 		void HandleWin();
 		void HandleTied();
-		void PlayerSetAside(string id);
 		void ResetConstructedImporting();
 		void HandlePossibleConstructedCard(string id, bool canBeDoneImporting);
 		void HandlePossibleArenaCard(string id);

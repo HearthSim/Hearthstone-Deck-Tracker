@@ -22,8 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _coloredFrame;
 		private int _count;
 		private int _inHandCount;
-		private bool _isStolen;
-		//private bool _justDrawn;
+		private bool _isCreated;
 		private int _lastCount;
 		private bool _loaded;
 		private string _localizedName;
@@ -221,12 +220,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public bool IsStolen
+		public bool IsCreated
 		{
-			get { return _isStolen; }
+			get { return _isCreated; }
 			set
 			{
-				_isStolen = value;
+				_isCreated = value;
 				OnPropertyChanged();
 			}
 		}
@@ -274,7 +273,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Color color;
 				if(HighlightDraw && Config.Instance.HighlightLastDrawn)
 					color = Colors.Orange;
-				else if(IsStolen || (HighlightInHand && Config.Instance.HighlightCardsInHand))
+				else if(IsCreated || (HighlightInHand && Config.Instance.HighlightCardsInHand))
 					color = Colors.GreenYellow;
 				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
@@ -421,14 +420,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Name.GetHashCode();
 		}
 
-
-        //TODO: This is to get around having a static Game class unless we change ColorPlayer
-        //private static GameV2 _game;
-        //public static void SetGame(GameV2 game)
-        //{
-        //    _game = game;
-        //}
-
 		public void Load()
 		{
 			if(_loaded)
@@ -455,18 +446,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_loaded = true;
 			OnPropertyChanged();
 		}
-
-		/*public async Task JustDrawn()
-		{
-			if(!Config.Instance.HighlightLastDrawn)
-				return;
-
-			_justDrawn = true;
-			OnPropertyChanged("ColorPlayer");
-			await Task.Delay(4000);
-			_justDrawn = false;
-			OnPropertyChanged("ColorPlayer");
-		}*/
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
