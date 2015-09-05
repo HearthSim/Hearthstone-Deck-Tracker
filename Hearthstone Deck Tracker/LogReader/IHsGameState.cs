@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Replay;
 
@@ -29,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         bool WaitingForFirstAssetUnload { get; set; }
         bool FoundSpectatorStart { get; set; }
 	    int JoustReveals { get; set; }
+	    Dictionary<int, string> KnownCardIds { get; set; }
 	    void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
         void GameEnd();
         int GetTurnNumber();

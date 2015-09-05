@@ -304,6 +304,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _gameState.GameEnded = false;
             _gameState.FoundSpectatorStart = false;
             _gameState.JoustReveals = 0;
+			_gameState.KnownCardIds.Clear();
         }
 
         public async Task<bool> RankedDetection(int timeoutInSeconds = 3)

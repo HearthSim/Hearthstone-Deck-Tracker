@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -33,10 +34,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public bool WaitingForFirstAssetUnload { get; set; }
         public bool FoundSpectatorStart { get; set; }
         public int JoustReveals { get; set; }
+	    public Dictionary<int, string> KnownCardIds { get; set; }
 
 	    public HsGameState(GameV2 game)
         {
             _game = game;
+			KnownCardIds = new Dictionary<int, string>();
         }
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)

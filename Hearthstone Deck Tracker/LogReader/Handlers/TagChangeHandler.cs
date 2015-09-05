@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 //Logger.WriteLine("--------" + player + " " + game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
                 //                 (TAG_ZONE)value);
 
-                if (((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY) && game.IsMulliganDone) && gameState.WaitForController == null)
+                if (((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY || (TAG_ZONE)value == TAG_ZONE.DECK) && game.IsMulliganDone) && gameState.WaitForController == null)
                 {
                     if (!game.IsMulliganDone)
                         prevZone = (int)TAG_ZONE.DECK;
@@ -95,9 +95,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     gameState.ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Opponent);
                                 }
                                 break;
-                            //case TAG_ZONE.REMOVEDFROMGAME:
-                            case TAG_ZONE.GRAVEYARD:
-                            //case TAG_ZONE.SETASIDE:
+							//case TAG_ZONE.SETASIDE: TODO - these may need to be handled? test Hunter: Tracker
+							//case TAG_ZONE.REMOVEDFROMGAME:
+							case TAG_ZONE.GRAVEYARD:
                             case TAG_ZONE.PLAY:
                                 if (controller == game.Player.Id)
                                 {
@@ -275,10 +275,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(controller == game.Player.Id)
 								{
 									gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], cardId, gameState.GetTurnNumber());
+									gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
 								}
 								if(controller == game.Opponent.Id)
 								{
 									gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
+									gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
 								}
 								break;
 							case TAG_ZONE.HAND:

@@ -109,8 +109,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 var match = HsLogReaderConstants.CreationRegex.Match(logLine);
                 var id = int.Parse(match.Groups["id"].Value);
                 var cardId = match.Groups["cardId"].Value;
-                if (!game.Entities.ContainsKey(id))
-                    game.Entities.Add(id, new Entity(id) { CardId = cardId });
+	            if(!game.Entities.ContainsKey(id))
+	            {
+		            if(string.IsNullOrEmpty(cardId))
+		            {
+			            if(gameState.KnownCardIds.TryGetValue(id, out cardId))
+			            {
+				            Logger.WriteLine(string.Format("Found known cardId for entity {0}: {1}", id, cardId));
+				            gameState.KnownCardIds.Remove(id);
+			            }
+		            }
+		            game.Entities.Add(id, new Entity(id) { CardId = cardId });
+	            }
                 gameState.CurrentEntityId = id;
                 gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
             }
@@ -182,89 +192,77 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 {
                     if (actionStartingCardId == "BRM_007") //Gang Up
                     {
-                        int id = game.Entities.Count + 1;
                         if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
                         {
                             var target = match.Groups["target"].Value.Trim();
                             if (target.StartsWith("[") && HsLogReaderConstants.EntityRegex.IsMatch(target))
                             {
                                 var cardIdMatch = HsLogReaderConstants.CardIdRegex.Match(target);
-                                if (cardIdMatch.Success)
-                                {
-                                    var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-                                    for (int i = 0; i < 3; i++)
-                                    {
-                                        gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-                                        gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], targetCardId, gameState.GetTurnNumber());
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //if I pass the entity id here I could know if a drawn card is one of the copies.
-                            // (should probably not be implemented :))
-                            for (int i = 0; i < 3; i++)
-                            {
-                                gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
-                                gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
+	                            if(cardIdMatch.Success)
+	                            {
+		                            var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
+
+		                            for(int i = 0; i < 3; i++)
+									{
+										var id = game.Entities.Count + i + 1;
+										Entity entity;
+			                            if(game.Entities.TryGetValue(id, out entity))
+				                            entity.CardId = targetCardId;
+			                            else if(!gameState.KnownCardIds.ContainsKey(id))
+				                            gameState.KnownCardIds.Add(id, targetCardId);
+		                            }
+	                            }
                             }
                         }
                     }
                     else if (actionStartingCardId == "GVG_056") //Iron Juggernaut
                     {
-                        // burrowing mine will be the entity created next
+	                    // burrowing mine will be the entity created next
                         int id = game.Entities.Count + 1;
-                        if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
-                            gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
-                        }
-                        else
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-                            gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], "GVG_056t", gameState.GetTurnNumber());
-                        }
+	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    {
+		                    Entity entity;
+		                    if(game.Entities.TryGetValue(id, out entity))
+			                    entity.CardId = "GVG_056t";
+		                    else if(!gameState.KnownCardIds.ContainsKey(id))
+			                    gameState.KnownCardIds.Add(id, "GVG_056t");
+	                    }
                     }
                     else if (actionStartingCardId == "GVG_031") //Recycle
                     {
-                        // Recycled card will be the entity created next
+	                    // Recycled card will be the entity created next
                         int id = game.Entities.Count + 1;
-                        if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
-                            //gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
-                        }
-                        else
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-                            var target = match.Groups["target"].Value.Trim();
-                            if (target.StartsWith("[") && HsLogReaderConstants.EntityRegex.IsMatch(target))
-                            {
-                                var cardIdMatch = HsLogReaderConstants.CardIdRegex.Match(target);
-                                if (cardIdMatch.Success)
-                                {
-                                    var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-                                    for (int i = 0; i < 3; i++)
-                                        gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], targetCardId, gameState.GetTurnNumber());
-                                }
-                            }
-                        }
+	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    {
+		                    gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
+		                    var target = match.Groups["target"].Value.Trim();
+		                    if(target.StartsWith("[") && HsLogReaderConstants.EntityRegex.IsMatch(target))
+		                    {
+			                    var cardIdMatch = HsLogReaderConstants.CardIdRegex.Match(target);
+			                    if(cardIdMatch.Success)
+			                    {
+				                    var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
+				                    Entity entity;
+				                    if(game.Entities.TryGetValue(id, out entity))
+					                    entity.CardId = targetCardId;
+				                    else if(!gameState.KnownCardIds.ContainsKey(id))
+					                    gameState.KnownCardIds.Add(id, targetCardId);
+			                    }
+		                    }
+	                    }
                     }
                     else if (actionStartingCardId == "GVG_035") //Malorne
                     {
-                        // Malorne will be the entity created next
+	                    // Malorne will be the entity created next
                         int id = game.Entities.Count + 1;
-                        if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
-                            gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
-                        }
-                        else
-                        {
-                            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-                            gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], "GVG_035", gameState.GetTurnNumber());
-                        }
+	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    {
+		                    Entity entity;
+		                    if(game.Entities.TryGetValue(id, out entity))
+			                    entity.CardId = "GVG_035";
+		                    else if(!gameState.KnownCardIds.ContainsKey(id))
+			                    gameState.KnownCardIds.Add(id, "GVG_035");
+	                    }
                     }
 
 

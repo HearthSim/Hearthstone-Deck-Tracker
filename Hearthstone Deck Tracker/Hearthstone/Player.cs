@@ -62,7 +62,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						            Id = g.Key.CardId,
 						            Count = g.Count(),
 						            IsCreated = g.Key.CardMark == CardMark.Created,
-						            WasDiscarded = g.Key.Discarded,
 						            HighlightDraw = _hightlightedCards.Contains(g.Key.CardId),
 						            HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId)
 					            })
@@ -266,6 +265,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Play(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Hand, entity.IsSecret ? Secrets : Board, turn);
+			if(entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.TOKEN)
+				ce.CardMark = CardMark.Created;
 			UpdateRevealedEntity(entity, turn);
 			Log("Play", ce);
 		}
