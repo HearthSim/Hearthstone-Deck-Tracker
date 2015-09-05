@@ -192,8 +192,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 {
                     if (actionStartingCardId == "BRM_007") //Gang Up
                     {
-                        if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
-                        {
+                        //if (playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+                        //{
                             var target = match.Groups["target"].Value.Trim();
                             if (target.StartsWith("[") && HsLogReaderConstants.EntityRegex.IsMatch(target))
                             {
@@ -205,35 +205,29 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		                            for(int i = 0; i < 3; i++)
 									{
 										var id = game.Entities.Count + i + 1;
-										Entity entity;
-			                            if(game.Entities.TryGetValue(id, out entity))
-				                            entity.CardId = targetCardId;
-			                            else if(!gameState.KnownCardIds.ContainsKey(id))
+			                            if(!gameState.KnownCardIds.ContainsKey(id))
 				                            gameState.KnownCardIds.Add(id, targetCardId);
 		                            }
 	                            }
                             }
-                        }
+                        //}
                     }
                     else if (actionStartingCardId == "GVG_056") //Iron Juggernaut
                     {
 	                    // burrowing mine will be the entity created next
                         int id = game.Entities.Count + 1;
-	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
-	                    {
-		                    Entity entity;
-		                    if(game.Entities.TryGetValue(id, out entity))
-			                    entity.CardId = "GVG_056t";
-		                    else if(!gameState.KnownCardIds.ContainsKey(id))
+	                    //if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    //{
+		                    if(!gameState.KnownCardIds.ContainsKey(id))
 			                    gameState.KnownCardIds.Add(id, "GVG_056t");
-	                    }
+	                    //}
                     }
                     else if (actionStartingCardId == "GVG_031") //Recycle
                     {
 	                    // Recycled card will be the entity created next
                         int id = game.Entities.Count + 1;
-	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
-	                    {
+	                    //if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    //{
 		                    gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
 		                    var target = match.Groups["target"].Value.Trim();
 		                    if(target.StartsWith("[") && HsLogReaderConstants.EntityRegex.IsMatch(target))
@@ -242,27 +236,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			                    if(cardIdMatch.Success)
 			                    {
 				                    var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-				                    Entity entity;
-				                    if(game.Entities.TryGetValue(id, out entity))
-					                    entity.CardId = targetCardId;
-				                    else if(!gameState.KnownCardIds.ContainsKey(id))
+				                    if(!gameState.KnownCardIds.ContainsKey(id))
 					                    gameState.KnownCardIds.Add(id, targetCardId);
 			                    }
 		                    }
-	                    }
+	                    //}
                     }
                     else if (actionStartingCardId == "GVG_035") //Malorne
                     {
 	                    // Malorne will be the entity created next
                         int id = game.Entities.Count + 1;
-	                    if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
-	                    {
-		                    Entity entity;
-		                    if(game.Entities.TryGetValue(id, out entity))
-			                    entity.CardId = "GVG_035";
-		                    else if(!gameState.KnownCardIds.ContainsKey(id))
+	                    //if(playerEntity.Value == null || playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) != 1)
+	                    //{
+							if(!gameState.KnownCardIds.ContainsKey(id))
 			                    gameState.KnownCardIds.Add(id, "GVG_035");
-	                    }
+	                   // }
                     }
 
 

@@ -66,6 +66,8 @@ namespace Hearthstone_Deck_Tracker
 			HsLogReaderV2.Instance.Reset(true);
 			Overlay.Update(false);
 			Overlay.SortViews();
+			Overlay.UpdatePlayerCards();
+			PlayerWindow.UpdatePlayerCards();
 		}
 
 		private void UpdateMenuItemVisibility()
@@ -1362,7 +1364,8 @@ namespace Hearthstone_Deck_Tracker
 				DeckList.Instance.Decks.Where(
 				                              d =>
 				                              d.Class == _game.Player.Class && !d.Archived
-				                              && _game.Player.DrawnCardsDistinctTotalIds.All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
+				                              && _game.Player.DrawnCardIdsTotal.Distinct().All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id))
+											  && _game.Player.DrawnCards.All(c => d.GetSelectedDeckVersion().Cards.Any(c2 => c2.Id == c.Id && c2.Count >= c.Count)))
 				        .ToList();
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");

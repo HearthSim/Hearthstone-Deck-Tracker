@@ -208,7 +208,7 @@ namespace Hearthstone_Deck_Tracker
                             var deck = lastDeck.Id == Guid.Empty
                                            ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
                                            : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
-							if( deck != null && _game.Player.DrawnCardsDistinctTotalIds.All(id => deck.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
+							if( deck != null && _game.Player.DrawnCardIdsTotal.Distinct().All(id => deck.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
 							{
 								Logger.WriteLine("Found more than 1 deck to switch to - last played: " + lastDeck.Name, "HandleGameStart");
 								if (deck.Archived)
@@ -750,6 +750,18 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.JoustReveal(entity, turn);
 			Helper.UpdatePlayerCards();
 		}
+
+	    public void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn)
+	    {
+		    _game.Player.DeckToPlay(entity, turn);
+			Helper.UpdatePlayerCards();
+	    }
+
+	    public void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn)
+	    {
+		    _game.Opponent.DeckToPlay(entity, turn);
+			Helper.UpdateOpponentCards();
+	    }
 
 	    public void HandleDustReward(int amount)
         {

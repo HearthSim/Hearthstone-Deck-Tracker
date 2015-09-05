@@ -91,6 +91,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 }
                                 else if (controller == game.Opponent.Id)
                                 {
+	                                if(!string.IsNullOrEmpty(game.Entities[id].CardId))
+	                                {
+		                                Logger.WriteLine(string.Format("Opponent Draw (EntityID={0}) already has a CardID. Removing. Blizzard Pls.", id), "TagChange");
+		                                game.Entities[id].CardId = string.Empty;
+	                                }
                                     gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber());
                                     gameState.ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Opponent);
                                 }
@@ -98,15 +103,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							//case TAG_ZONE.SETASIDE: TODO - these may need to be handled? test Hunter: Tracker
 							//case TAG_ZONE.REMOVEDFROMGAME:
 							case TAG_ZONE.GRAVEYARD:
-                            case TAG_ZONE.PLAY:
+								if(controller == game.Player.Id)
+								{
+									gameState.GameHandler.HandlePlayerDeckDiscard(game.Entities[id], cardId, gameState.GetTurnNumber());
+									gameState.ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Player);
+								}
+								else if(controller == game.Opponent.Id)
+								{
+									gameState.GameHandler.HandleOpponentDeckDiscard(game.Entities[id], cardId, gameState.GetTurnNumber());
+									gameState.ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Opponent);
+								}
+								break;
+							case TAG_ZONE.PLAY:
                                 if (controller == game.Player.Id)
                                 {
-                                    gameState.GameHandler.HandlePlayerDeckDiscard(game.Entities[id], cardId, gameState.GetTurnNumber());
+                                    gameState.GameHandler.HandlePlayerDeckToPlay(game.Entities[id], cardId, gameState.GetTurnNumber());
                                     gameState.ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Player);
                                 }
                                 else if (controller == game.Opponent.Id)
                                 {
-                                    gameState.GameHandler.HandleOpponentDeckDiscard(game.Entities[id], cardId, gameState.GetTurnNumber());
+                                    gameState.GameHandler.HandleOpponentDeckToPlay(game.Entities[id], cardId, gameState.GetTurnNumber());
                                     gameState.ProposeKeyPoint(KeyPointType.DeckDiscard, id, ActivePlayer.Opponent);
                                 }
                                 break;

@@ -67,5 +67,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE tagZone);
 		void HandlePlayerJoust(Entity entity, string cardId, int turn);
+		void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn);
+		void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn);
 	}
 }

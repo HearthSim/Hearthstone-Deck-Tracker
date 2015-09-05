@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public List<Card> PlayerDeck
 		{
-			get { return _game.Player.DisplayRevealedCards; }
+			get { return _game.Player.DisplayCards; }
 		}
 
 		public bool ShowToolTip
