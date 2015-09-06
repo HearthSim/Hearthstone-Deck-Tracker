@@ -48,8 +48,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				{
 					if(!_loaded)
 					{
-						Load();
+						var couldLoad = Load();
 						Logger.WriteLine("Enabled " + Name, "PluginWrapper");
+						if(!couldLoad)
+							return;
 					}
 				}
 				else
@@ -64,10 +66,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public void Load()
+		public bool Load()
 		{
 			if(Plugin == null)
-				return;
+				return false;
 			try
 			{
 				Logger.WriteLine("Loading " + Name, "PluginWrapper");
@@ -83,7 +85,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			catch(Exception ex)
 			{
 				Logger.WriteLine("Error loading " + Name + ":\n" + ex, "PluginWrapper");
+				return false;
 			}
+			return true;
 		}
 
 		public void Update()
