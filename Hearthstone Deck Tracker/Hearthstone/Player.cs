@@ -162,21 +162,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsLocalPlayer = isLocalPlayer;
 		}
 
-		public void Print()
-		{
-			Console.WriteLine("======= " + Name + " =======");
-			if(Hand.Any())
-				Console.WriteLine("Hand: " + Hand.Select(x => x.CardId + " (id: " + x.Entity.Id + ", t:" + x.Turn + ", zp:" + x.Entity.GetTag(GAME_TAG.ZONE_POSITION) + ") " + x.CardMark).Aggregate((c, n) => c + " | " + n));
-			if(Board.Any())
-				Console.WriteLine("Board: " + Board.Select(x => x.CardId + " (" + x.Turn + ") ").Aggregate((c, n) => c + ", " + n));
-			if(Deck.Any())
-				Console.WriteLine("Deck: " + Deck.Select(x => x.CardId).Aggregate((c, n) => c + ", " + n));
-			if(Graveyard.Any())
-				Console.WriteLine("Graveyard: " + Graveyard.Select(x => x.CardId).Aggregate((c, n) => c + ", " + n));
-			if(Secrets.Any())
-				Console.WriteLine("Secrets: " + Secrets.Select(x => x.CardId + " (" + x.Turn + ") ").Aggregate((c, n) => c + ", " + n));
-		}
-
 		public void Reset()
 		{
 			Name = "";
@@ -235,10 +220,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 			}
 			to.Add(cardEntity);
-			//from.Sort(ZonePosComparison);
 			to.Sort(ZonePosComparison);
 			cardEntity.Turn = turn;
-			//Print();
 			return cardEntity;
 		}
 
@@ -255,13 +238,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return v1.CompareTo(v2);
 		}
 
-		public void Draw(Entity entity, int turn, bool reset = false)
+		public void Draw(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Deck, Hand, turn);
-			if(reset)
-				ce.Reset();
 			if(IsLocalPlayer)
 				Highlight(entity.CardId);
+			else
+				ce.Reset();
+
 			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
 			{
 				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
@@ -282,7 +266,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private void Log(string action, CardEntity ce)
 		{
 			var player = IsLocalPlayer ? "Player " : "Opponent ";
-			Logger.WriteLine(ce.ToString() + ", deck=" + Deck.Count, player + action);
+			Logger.WriteLine(ce.ToString(), player + action);
 		}
 
 		private async void Highlight(string cardId)
@@ -368,7 +352,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void CreateInPlay(Entity entity, int turn)
 		{
-			var ce = new CardEntity(entity) {Turn = turn};
+			var ce = new CardEntity(entity) {Turn = turn, Created = true};
             Board.Add(ce);
 			Log("CreateInPlay", ce);
 		}

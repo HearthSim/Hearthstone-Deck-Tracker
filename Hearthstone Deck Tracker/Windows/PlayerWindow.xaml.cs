@@ -238,6 +238,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("PlayerDeck");
+			Helper.SortCardCollection(ListViewPlayer.Items, false);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

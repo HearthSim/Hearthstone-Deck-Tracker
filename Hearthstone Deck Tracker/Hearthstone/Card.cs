@@ -442,7 +442,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = stats.Mechanics;
 			Artist = stats.Artist;
 			Set = stats.Set;
-			_wasDiscarded = false;
 			_loaded = true;
 			OnPropertyChanged();
 		}

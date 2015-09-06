@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 #endif
 										game.Entities[id].CardId = string.Empty;
 	                                }
-                                    gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber(), true);
+                                    gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber());
                                     gameState.ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Opponent);
                                 }
                                 break;

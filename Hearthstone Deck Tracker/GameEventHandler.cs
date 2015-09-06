@@ -859,10 +859,10 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
-        public void HandlOpponentDraw(Entity entity, int turn, bool reset)
+        public void HandlOpponentDraw(Entity entity, int turn)
         {
             LogEvent("OpponentDraw", turn: turn);
-			_game.Opponent.Draw(entity, turn, reset);
+			_game.Opponent.Draw(entity, turn);
             _game.AddPlayToCurrentGame(PlayType.OpponentDraw, turn, string.Empty);
             GameEvents.OnOpponentDraw.Execute();
         }
@@ -1009,9 +1009,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentHandDiscard(entity, cardId, @from, turn);
         }
 
-        void IGameHandler.HandleOpponentDraw(Entity entity, int turn, bool reset)
+        void IGameHandler.HandleOpponentDraw(Entity entity, int turn)
         {
-            HandlOpponentDraw(entity, turn, reset);
+            HandlOpponentDraw(entity, turn);
         }
 
         void IGameHandler.HandleOpponentMulligan(Entity entity, int @from)
