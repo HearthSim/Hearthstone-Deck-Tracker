@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
@@ -213,8 +214,13 @@ namespace Hearthstone_Deck_Tracker
             }
 		}
 
-		public void UpdateOpponentCards()
+		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
+		public async void UpdateOpponentCards()
 		{
+			_lastOpponentUpdateReqest = DateTime.Now;
+			await Task.Delay(50);
+			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
+				return;
 			OnPropertyChanged("OpponentDeck");
 		}
 

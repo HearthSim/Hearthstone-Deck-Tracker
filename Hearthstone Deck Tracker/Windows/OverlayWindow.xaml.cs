@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -1291,14 +1292,24 @@ namespace Hearthstone_Deck_Tracker
             }
 		}
 
-		public void UpdatePlayerCards()
+	    private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
+		public async void UpdatePlayerCards()
 		{
+			_lastPlayerUpdateReqest = DateTime.Now;
+			await Task.Delay(50);
+			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
+				return;
 			OnPropertyChanged("PlayerDeck");
 			Helper.SortCardCollection(ListViewPlayer.Items, false);
 		}
 
-		public void UpdateOpponentCards()
+		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
+		public async void UpdateOpponentCards()
 		{
+			_lastOpponentUpdateReqest = DateTime.Now;
+			await Task.Delay(50);
+			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
+				return;
 			OnPropertyChanged("OpponentDeck");
 			Helper.SortCardCollection(ListViewOpponent.Items, false);
 		}

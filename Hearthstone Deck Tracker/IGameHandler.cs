@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleOpponentPlay(Entity entity, string cardId, int from, int turn);
 		void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn);
-		void HandleOpponentDraw(Entity entity, int turn);
+		void HandleOpponentDraw(Entity entity, int turn, bool reset);
 		void HandleOpponentMulligan(Entity entity, int from);
 		void HandleOpponentGet(Entity entity, int turn, int id);
 		void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, bool fromDeck, int otherId);
@@ -65,9 +65,11 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn);
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
-		void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE tagZone);
+		void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE tagZone, int turn);
 		void HandlePlayerJoust(Entity entity, string cardId, int turn);
 		void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn);
+		void HandlePlayerRemoveFromDeck(Entity entity, int turn);
+		void HandleOpponentRemoveFromDeck(Entity entity, int turn);
 	}
 }

@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						else if(currentEntity.IsControlledBy(game.Player.Id))
 							gameState.GameHandler.HandlePlayerJoust(currentEntity, cardId, gameState.GetTurnNumber());
 					}
-					gameState.JoustReveals--;
+					//gameState.JoustReveals--;
 				}
 			}
             else if (HsLogReaderConstants.CreationTagRegex.IsMatch(logLine) && !logLine.Contains("HIDE_ENTITY"))

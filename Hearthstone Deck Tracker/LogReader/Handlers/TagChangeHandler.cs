@@ -93,15 +93,36 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 {
 	                                if(!string.IsNullOrEmpty(game.Entities[id].CardId))
 	                                {
-		                                Logger.WriteLine(string.Format("Opponent Draw (EntityID={0}) already has a CardID. Removing. Blizzard Pls.", id), "TagChange");
-		                                game.Entities[id].CardId = string.Empty;
+#if DEBUG
+										Logger.WriteLine(string.Format("Opponent Draw (EntityID={0}) already has a CardID. Removing. Blizzard Pls.", id), "TagChange");
+#endif
+										game.Entities[id].CardId = string.Empty;
 	                                }
-                                    gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber());
+                                    gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber(), true);
                                     gameState.ProposeKeyPoint(KeyPointType.Draw, id, ActivePlayer.Opponent);
                                 }
                                 break;
-							//case TAG_ZONE.SETASIDE: TODO - these may need to be handled? test Hunter: Tracker
-							//case TAG_ZONE.REMOVEDFROMGAME:
+							case TAG_ZONE.SETASIDE:
+							case TAG_ZONE.REMOVEDFROMGAME:
+								if(controller == game.Player.Id)
+								{
+									if(gameState.JoustReveals > 0)
+									{
+										gameState.JoustReveals--;
+                                        break;
+									}
+									gameState.GameHandler.HandlePlayerRemoveFromDeck(game.Entities[id], gameState.GetTurnNumber());
+								}
+								else if(controller == game.Opponent.Id)
+								{
+									if(gameState.JoustReveals > 0)
+									{
+										gameState.JoustReveals--;
+										break;
+									}
+									gameState.GameHandler.HandleOpponentRemoveFromDeck(game.Entities[id], gameState.GetTurnNumber());
+								}
+								break;
 							case TAG_ZONE.GRAVEYARD:
 								if(controller == game.Player.Id)
 								{
@@ -290,11 +311,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case TAG_ZONE.DECK:
 								if(controller == game.Player.Id)
 								{
+									if(gameState.JoustReveals > 0)
+										break;
 									gameState.GameHandler.HandlePlayerGetToDeck(game.Entities[id], cardId, gameState.GetTurnNumber());
 									gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
 								}
 								if(controller == game.Opponent.Id)
 								{
+									if(gameState.JoustReveals > 0)
+										break;
 									gameState.GameHandler.HandleOpponentGetToDeck(game.Entities[id], gameState.GetTurnNumber());
 									gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Opponent);
 								}
@@ -376,12 +401,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	                if(controller == game.Player.Id)
 	                {
 		                ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Player, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, TAG_ZONE.HAND);
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, TAG_ZONE.HAND, gameState.GetTurnNumber());
 					}
                     else if(controller == game.Opponent.Id)
                     {
 	                    ReplayMaker.Generate(KeyPointType.HandPos, id, ActivePlayer.Opponent, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, TAG_ZONE.HAND);
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, TAG_ZONE.HAND, gameState.GetTurnNumber());
 					}
                 }
                 else if (zone == (int)TAG_ZONE.PLAY)
@@ -389,12 +414,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	                if(controller == game.Player.Id)
 	                {
 		                ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Player, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, TAG_ZONE.PLAY);
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, TAG_ZONE.PLAY, gameState.GetTurnNumber());
 					}
                     else if(controller == game.Opponent.Id)
                     {
 	                    ReplayMaker.Generate(KeyPointType.BoardPos, id, ActivePlayer.Opponent, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, TAG_ZONE.PLAY);
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, TAG_ZONE.PLAY, gameState.GetTurnNumber());
 					}
                 }
             }

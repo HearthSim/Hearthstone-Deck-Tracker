@@ -737,12 +737,12 @@ namespace Hearthstone_Deck_Tracker
 			_game.Opponent.CreateInPlay(entity, turn);
 		}
 
-	    public void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE zone)
+	    public void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE zone, int turn)
 	    {
 		    if(player == ActivePlayer.Player)
-			    _game.Player.UpdateZonePos(zone);
+			    _game.Player.UpdateZonePos(zone, turn);
 		    else if(player == ActivePlayer.Opponent)
-			    _game.Opponent.UpdateZonePos(zone);
+			    _game.Opponent.UpdateZonePos(zone, turn);
 	    }
 
 	    public void HandlePlayerJoust(Entity entity, string cardId, int turn)
@@ -762,6 +762,18 @@ namespace Hearthstone_Deck_Tracker
 		    _game.Opponent.DeckToPlay(entity, turn);
 			Helper.UpdateOpponentCards();
 	    }
+
+	    public void HandlePlayerRemoveFromDeck(Entity entity, int turn)
+	    {
+		    _game.Player.RemoveFromDeck(entity, turn);
+			Helper.UpdatePlayerCards();
+		}
+
+	    public void HandleOpponentRemoveFromDeck(Entity entity, int turn)
+		{
+			_game.Opponent.RemoveFromDeck(entity, turn);
+			Helper.UpdateOpponentCards();
+		}
 
 	    public void HandleDustReward(int amount)
         {
@@ -847,10 +859,10 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
         }
 
-        public void HandlOpponentDraw(Entity entity, int turn)
+        public void HandlOpponentDraw(Entity entity, int turn, bool reset)
         {
             LogEvent("OpponentDraw", turn: turn);
-			_game.Opponent.Draw(entity, turn);
+			_game.Opponent.Draw(entity, turn, reset);
             _game.AddPlayToCurrentGame(PlayType.OpponentDraw, turn, string.Empty);
             GameEvents.OnOpponentDraw.Execute();
         }
@@ -997,9 +1009,9 @@ namespace Hearthstone_Deck_Tracker
             HandleOpponentHandDiscard(entity, cardId, @from, turn);
         }
 
-        void IGameHandler.HandleOpponentDraw(Entity entity, int turn)
+        void IGameHandler.HandleOpponentDraw(Entity entity, int turn, bool reset)
         {
-            HandlOpponentDraw(entity, turn);
+            HandlOpponentDraw(entity, turn, reset);
         }
 
         void IGameHandler.HandleOpponentMulligan(Entity entity, int @from)

@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
@@ -228,8 +229,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void UpdatePlayerCards()
+
+		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
+		public async void UpdatePlayerCards()
 		{
+			_lastPlayerUpdateReqest = DateTime.Now;
+			await Task.Delay(50);
+			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
+				return;
 			OnPropertyChanged("PlayerDeck");
 		}
 

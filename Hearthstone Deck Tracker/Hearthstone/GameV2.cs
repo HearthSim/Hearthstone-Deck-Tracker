@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			foreach(var card in deck.GetSelectedDeckVersion().Cards)
 			{
 				for(var i = 0; i < card.Count; i++)
-					Player.RevealDeckCard(card.Id);
+					Player.RevealDeckCard(card.Id, -1);
 			}
 			Helper.UpdatePlayerCards();
 			Helper.UpdateOpponentCards();
