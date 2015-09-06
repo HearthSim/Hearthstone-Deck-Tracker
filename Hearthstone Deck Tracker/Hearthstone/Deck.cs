@@ -302,7 +302,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var games = DeckStats.Games;
-				return !games.Any() ? DateTime.MinValue : games.OrderByDescending(g => g.StartTime).First().StartTime;
+				return !games.Any() ? DateTime.MinValue : games.Max(g => g.StartTime);
 			}
 		}
 
@@ -312,7 +312,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var games = DeckStats.Games;
-				return !games.Any() ? LastEdited : games.OrderByDescending(g => g.StartTime).First().StartTime;
+				return !games.Any() ? LastEdited : games.Max(g => g.StartTime);
 			}
 		}
 

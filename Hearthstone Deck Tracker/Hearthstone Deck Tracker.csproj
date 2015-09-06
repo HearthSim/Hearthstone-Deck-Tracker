@@ -118,6 +118,7 @@
     <Compile Include="Controls\CardToolTipControl.xaml.cs">
       <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckPicker\DateConverter.cs" />
     <Compile Include="Controls\DeckPicker\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
     </Compile>
