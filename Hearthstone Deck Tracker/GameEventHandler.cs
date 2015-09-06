@@ -171,10 +171,6 @@ namespace Hearthstone_Deck_Tracker
             if (_game.CurrentGameStats != null)
                 _game.CurrentGameStats.OpponentHero = hero;
             Logger.WriteLine("Playing against " + hero, "GameEventHandler");
-
-            HeroClass heroClass;
-            if (Enum.TryParse(hero, true, out heroClass))
-                _game.OpponentSecrets.HeroClass = heroClass;
         }
 
         public void SetPlayerHero(string hero)
@@ -899,9 +895,26 @@ namespace Hearthstone_Deck_Tracker
 			}
             _game.AddPlayToCurrentGame(PlayType.OpponentSecretPlayed, turn, cardId);
 
-            _game.OpponentSecrets.NewSecretPlayed(otherId, false); //TODO
+			HeroClass heroClass;
+			var className = ((TAG_CLASS)entity.GetTag(GAME_TAG.CLASS)).ToString();
+	        if(!string.IsNullOrEmpty(className))
+	        {
+				className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
+		        if(!Enum.TryParse(className, out heroClass))
+		        {
+			        if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+				        return;
+		        }
+            }
+	        else
+	        {
+		        if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+			        return;
+	        }
+			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, false);
+			
 
-            Helper.MainWindow.Overlay.ShowSecrets();
+			Helper.MainWindow.Overlay.ShowSecrets();
             GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
 
@@ -935,7 +948,7 @@ namespace Hearthstone_Deck_Tracker
             else
             {
                 if (Config.Instance.AutoGrayoutSecrets)
-                    _game.OpponentSecrets.SetZero(cardId);
+                    _game.OpponentSecrets.SetZero(cardId, null);
                 Helper.MainWindow.Overlay.ShowSecrets();
 			}
 			Helper.UpdateOpponentCards();

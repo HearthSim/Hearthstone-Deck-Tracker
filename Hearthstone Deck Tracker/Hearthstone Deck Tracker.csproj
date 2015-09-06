@@ -145,6 +145,7 @@
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
+    <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>

@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				return
 					RevealedCards.Where(ce => !string.IsNullOrEmpty(ce.CardId))
-					             .GroupBy(ce => new {ce.CardId, Hidden = (ce.InHand || ce.InDeck), ce.Created, ce.Discarded})
+					             .GroupBy(ce => new {ce.CardId, Hidden = (ce.InHand || ce.InDeck), ce.Created, Discarded = ce.Discarded && Config.Instance.HighlightDiscarded})
 					             .Select(g => new Card() {Id = g.Key.CardId, Count = g.Count(), Jousted = g.Key.Hidden, IsCreated = g.Key.Created, WasDiscarded = g.Key.Discarded })
 					             .ToList();
 			}

@@ -255,6 +255,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
                     Enum.TryParse(rawValue, out type);
                     value = (int)type;
                     break;
+				case GAME_TAG.CLASS:
+		            TAG_CLASS @class;
+		            Enum.TryParse(rawValue, out @class);
+		            value = (int)@class;
+		            break;
                 default:
                     int.TryParse(rawValue, out value);
                     break;

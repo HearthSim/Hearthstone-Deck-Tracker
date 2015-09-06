@@ -1,8 +1,10 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -16,11 +18,45 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public List<SecretHelper> Secrets { get; private set; }
-		public HeroClass HeroClass { get; set; }
 
-		public void NewSecretPlayed(int id, bool stolen)
+		public List<HeroClass> DisplayedClasses
 		{
-			Secrets.Add(new SecretHelper(HeroClass, id, stolen));
+			get { return Secrets.Select(x => x.HeroClass).Distinct().OrderBy(x => x).ToList(); }
+		}
+
+		public int GetIndexOffset(HeroClass heroClass)
+		{
+			switch(heroClass)
+			{
+				case HeroClass.Hunter:
+					return 0;
+				case HeroClass.Mage:
+					if(DisplayedClasses.Contains(HeroClass.Hunter))
+						return SecretHelper.GetMaxSecretCount(HeroClass.Hunter);
+					return 0;
+				case HeroClass.Paladin:
+					if(DisplayedClasses.Contains(HeroClass.Hunter) && DisplayedClasses.Contains(HeroClass.Mage))
+						return SecretHelper.GetMaxSecretCount(HeroClass.Hunter) + SecretHelper.GetMaxSecretCount(HeroClass.Mage);
+					if(DisplayedClasses.Contains(HeroClass.Hunter))
+						return SecretHelper.GetMaxSecretCount(HeroClass.Hunter);
+					if(DisplayedClasses.Contains(HeroClass.Mage))
+						return SecretHelper.GetMaxSecretCount(HeroClass.Mage);
+					return 0;
+			}
+			return 0;
+		}
+
+		public HeroClass? GetHeroClass(string cardId)
+		{
+			HeroClass heroClass;
+			if(!Enum.TryParse(Database.GetCardFromId(cardId).PlayerClass, out heroClass))
+				return null;
+			return heroClass;
+		}
+
+		public void NewSecretPlayed(HeroClass heroClass, int id, bool stolen)
+		{
+			Secrets.Add(new SecretHelper(heroClass, id, stolen));
 			Logger.WriteLine("Added secret with id:" + id, "OpponentSecrets");
 		}
 
@@ -39,41 +75,57 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Trigger(string cardId)
 		{
-			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
+			var heroClass = GetHeroClass(cardId);
+			if(!heroClass.HasValue)
+				return;
+			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
 			if(index == -1)
 				return;
-			if(Secrets.Any(s => s.PossibleSecrets[index]))
-				SetZero(index);
+			//index += GetIndexOffset(heroClass.Value);
+			if(Secrets.Where(s => s.HeroClass == heroClass).Any(s => s.PossibleSecrets[index]))
+				SetZero(index, heroClass.Value);
 			else
-				SetMax(index);
+				SetMax(index, heroClass.Value);
 		}
 
-		public void SetMax(string cardId)
+		public void SetMax(string cardId, HeroClass? heroClass)
 		{
-			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
+			if(heroClass == null)
+			{
+				heroClass = GetHeroClass(cardId);
+				if(!heroClass.HasValue)
+					return;
+			}
+			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
 			if(index != -1)
-				SetMax(index);
+				SetMax(index, heroClass.Value);
 		}
 
-		public void SetMax(int index)
+		public void SetMax(int index, HeroClass heroClass)
 		{
-			foreach(var secret in Secrets)
+			foreach(var secret in Secrets.Where(s => s.HeroClass == heroClass))
 			{
 				if(index > 0 || index < secret.PossibleSecrets.Length)
 					secret.PossibleSecrets[index] = true;
 			}
 		}
 
-		public void SetZero(string cardId)
+		public void SetZero(string cardId, HeroClass? heroClass)
 		{
-			var index = SecretHelper.GetSecretIndex(HeroClass, cardId);
+			if(heroClass == null)
+			{
+				heroClass = GetHeroClass(cardId);
+				if(!heroClass.HasValue)
+					return;
+			}
+			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
 			if(index != -1)
-				SetZero(index);
+				SetZero(index, heroClass.Value);
 		}
 
-		public void SetZero(int index)
+		public void SetZero(int index, HeroClass heroClass)
 		{
-			foreach(var secret in Secrets)
+			foreach(var secret in Secrets.Where(s => s.HeroClass == heroClass))
 			{
 				if(index > 0 || index < secret.PossibleSecrets.Length)
 					secret.PossibleSecrets[index] = false;
@@ -82,19 +134,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public Secret[] GetSecrets()
 		{
-			var count = SecretHelper.GetMaxSecretCount(HeroClass);
-			var returnThis = new Secret[count];
-			for(var i = 0; i < count; i++)
-				returnThis[i] = new Secret(SecretHelper.GetSecretIds(HeroClass)[i], 0);
+			var secrets = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToArray();
 			foreach(var secret in Secrets)
 			{
-				for(var i = 0; i < count; i++)
+				var offset = GetIndexOffset(secret.HeroClass);
+				for(var i = 0; i < secret.PossibleSecrets.Count(); i++)
 				{
 					if(secret.PossibleSecrets[i])
-						returnThis[i].Count++;
+						secrets[i+offset].Count++;
 				}
 			}
-			return returnThis;
+			return secrets;
 		}
 
 		public Secret[] GetDefaultSecrets(HeroClass heroClass)
