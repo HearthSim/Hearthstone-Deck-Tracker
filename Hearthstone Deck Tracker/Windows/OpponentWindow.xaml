@@ -27,6 +27,7 @@
             <controls1:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                ItemsSource="{Binding OpponentDeck, RelativeSource={RelativeSource AncestorType=local:OpponentWindow}}"
                                 ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">

@@ -284,7 +284,7 @@ namespace Hearthstone_Deck_Tracker
 			if(converted)
 			{
 				Logger.WriteLine("changed config values", "ConvertLegacyConfig");
-				Config.SaveBackup();
+				//Config.SaveBackup();
 				Config.Save();
 			}
 
@@ -504,8 +504,6 @@ namespace Hearthstone_Deck_Tracker
 			Options.Load(_game);
 
 
-            _game.HighlightCardsInHand = Config.Instance.HighlightCardsInHand;
-            _game.HighlightDiscarded = Config.Instance.HighlightDiscarded;
 			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			SetContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
 

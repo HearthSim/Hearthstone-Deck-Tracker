@@ -3,10 +3,10 @@ namespace Hearthstone_Deck_Tracker.Enums
 	public enum CardMark
 	{
 		None = ' ',
-		Coin = 'C',
+		Coin = 'c',
 		Returned = 'R',
 		Mulliganed = 'M',
-		Stolen = 'S',
+		Created = 'C',
 		Kept = 'K'
 	}
 }

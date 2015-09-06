@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,17 +39,66 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			while(_update)
 			{
-				switch((string)ComboBoxData.SelectedValue)
+				if(TabControlDebug.SelectedIndex == 0)
 				{
-					case "Game":
-						FilterGame();
-						break;
-					case "Entities":
-						FilterEntities();
-						break;
+					UpdateCards();
+				}
+				else
+				{
+					switch((string)ComboBoxData.SelectedValue)
+					{
+						case "Game":
+							FilterGame();
+							break;
+						case "Entities":
+							FilterEntities();
+							break;
+					}
 				}
 				await Task.Delay(500);
 			}
+		}
+
+		private void UpdateCards()
+		{
+			TreeViewCards.Items.Clear();
+			var collections = new[]
+			{
+				new CollectionItem(_game.Player.Hand, "Player Hand"),
+				new CollectionItem(_game.Player.Board, "Player Board"),
+				new CollectionItem(_game.Player.Deck, "Player Deck"),
+				new CollectionItem(_game.Player.Graveyard, "Player Graveyard"),
+				new CollectionItem(_game.Player.Secrets, "Player Secrets"),
+				new CollectionItem(_game.Player.RevealedCards, "Player RevealedCards"),
+				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
+				new CollectionItem(_game.Opponent.Board, "Opponent Board"),
+				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),
+				new CollectionItem(_game.Opponent.Graveyard, "Opponent Graveyard"),
+				new CollectionItem(_game.Opponent.Secrets, "Opponent Secrets"),
+				new CollectionItem(_game.Opponent.RevealedCards, "Opponent RevealedCards")
+			};
+			foreach(var collection in collections)
+			{
+				var tvi = new TreeViewItem();
+				tvi.IsExpanded = true;
+				tvi.Header = collection.Name;
+				foreach(var item in collection.Collection)
+				{
+					tvi.Items.Add(item.ToString());
+				}
+				TreeViewCards.Items.Add(tvi);
+			}
+		}
+
+		public class CollectionItem
+		{
+			public CollectionItem(List<CardEntity> collection, string name)
+			{
+				Collection = collection;
+				Name = name;
+			}
+			public List<CardEntity> Collection { get; set; }
+			public string Name { get; set; }
 		}
 
 		private void FilterEntities()

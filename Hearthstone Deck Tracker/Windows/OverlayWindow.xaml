@@ -31,7 +31,7 @@
                                     Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial" ItemsSource="{Binding PlayerDeck, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -70,6 +70,7 @@
                                     Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    ItemsSource="{Binding OpponentDeck, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"
                                     ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">

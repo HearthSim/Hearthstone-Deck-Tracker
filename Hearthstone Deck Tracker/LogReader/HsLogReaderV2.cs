@@ -255,6 +255,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
                     Enum.TryParse(rawValue, out type);
                     value = (int)type;
                     break;
+				case GAME_TAG.CLASS:
+		            TAG_CLASS @class;
+		            Enum.TryParse(rawValue, out @class);
+		            value = (int)@class;
+		            break;
                 default:
                     int.TryParse(rawValue, out value);
                     break;
@@ -303,7 +308,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _gameState.AddToTurn = -1;
             _gameState.GameEnded = false;
             _gameState.FoundSpectatorStart = false;
-            _gameState.NextUpdatedEntityIsJoust = false;
+            _gameState.JoustReveals = 0;
+			_gameState.KnownCardIds.Clear();
         }
 
         public async Task<bool> RankedDetection(int timeoutInSeconds = 3)

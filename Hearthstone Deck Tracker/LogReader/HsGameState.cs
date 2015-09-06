@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -32,11 +33,13 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public dynamic WaitForController { get; set; }
         public bool WaitingForFirstAssetUnload { get; set; }
         public bool FoundSpectatorStart { get; set; }
-        public bool NextUpdatedEntityIsJoust { get; set; }
+        public int JoustReveals { get; set; }
+	    public Dictionary<int, string> KnownCardIds { get; set; }
 
-        public HsGameState(GameV2 game)
+	    public HsGameState(GameV2 game)
         {
             _game = game;
+			KnownCardIds = new Dictionary<int, string>();
         }
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
@@ -59,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             {
                 var firstPlayer = _game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER));
                 if (firstPlayer.Value != null)
-                    AddToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == _game.PlayerId ? 0 : 1;
+                    AddToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == _game.Player.Id ? 0 : 1;
             }
             Entity entity;
             if (_game.Entities.TryGetValue(1, out entity))

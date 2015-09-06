@@ -302,10 +302,10 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.Overlay.Update(false);
 
 			if(MainWindow.PlayerWindow.IsVisible)
-				MainWindow.PlayerWindow.SetCardCount(game.PlayerHandCount, 30 - game.PlayerDrawn.Sum(card => card.Count));
+				MainWindow.PlayerWindow.SetCardCount(game.Player.HandCount, game.Player.DeckCount);
 
 			if(MainWindow.OpponentWindow.IsVisible)
-				MainWindow.OpponentWindow.SetOpponentCardCount(game.OpponentHandCount, game.OpponentDeckCount, game.OpponentHasCoin);
+				MainWindow.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
 
 
 			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator)
@@ -463,6 +463,18 @@ namespace Hearthstone_Deck_Tracker
 				}
 				file.ExtractToFile(completeFileName, true);
 			}
+		}
+
+		public static void UpdatePlayerCards()
+		{
+			MainWindow.Overlay.UpdatePlayerCards();
+			MainWindow.PlayerWindow.UpdatePlayerCards();
+		}
+
+		public static void UpdateOpponentCards()
+		{
+			MainWindow.Overlay.UpdateOpponentCards();
+			MainWindow.OpponentWindow.UpdateOpponentCards();
 		}
 	}
 }
