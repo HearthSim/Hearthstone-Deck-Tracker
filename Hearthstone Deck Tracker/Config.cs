@@ -31,9 +31,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool AdditionalOverlayTooltips = true;
 
 		[DefaultValue(true)]
-		public bool AdvancedWindowSearch = true;
-
-		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
 
 		[DefaultValue(false)]
@@ -261,6 +258,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue("")]
 		public string HearthstoneDirectory = "";
+
+		[DefaultValue("Hearthstone")]
+		public string HearthstoneWindowName = "Hearthstone";
 
 		[DefaultValue(false)]
 		public bool HideDecksInOverlay = false;
@@ -738,6 +738,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(100)]
 		public int UpdateDelay = 100;
+
+		[DefaultValue(false)]
+		public bool UseAnyUnityWindow = false;
 
 		[DefaultValue(false)]
 		public bool UseFullTextSearch = false;

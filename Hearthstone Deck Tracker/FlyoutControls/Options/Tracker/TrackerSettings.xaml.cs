@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
-			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.AdvancedWindowSearch;
+			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AdvancedWindowSearch = true;
+			Config.Instance.UseAnyUnityWindow = true;
 			Config.Save();
 		}
 
@@ -202,7 +202,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.AdvancedWindowSearch = false;
+			Config.Instance.UseAnyUnityWindow = false;
 			Config.Save();
 		}
 
