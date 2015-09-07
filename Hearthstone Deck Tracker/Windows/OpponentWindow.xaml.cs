@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("OpponentDeck");
-			Helper.SortCardCollection(ListViewOpponent.Items, false);
+			Helper.SortCardCollection(ListViewOpponent.ItemsSource, false);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

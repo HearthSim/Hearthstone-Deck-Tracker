@@ -1300,7 +1300,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("PlayerDeck");
-			Helper.SortCardCollection(ListViewPlayer.Items, false);
+			Helper.SortCardCollection(ListViewPlayer.ItemsSource, false);
 		}
 
 		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
@@ -1311,7 +1311,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("OpponentDeck");
-			Helper.SortCardCollection(ListViewOpponent.Items, false);
+			Helper.SortCardCollection(ListViewOpponent.ItemsSource, false);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
