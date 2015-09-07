@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public const int DeckSize = 30;
 
-		private readonly Queue<string> _hightlightedCards = new Queue<string>(); 
+		private readonly Queue<string> _hightlightedCards = new Queue<string>();
 
 		public List<Card> DisplayCards
 		{
@@ -75,22 +75,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}).ToList() : new List<Card>();
 
 				if(DeckList.Instance.ActiveDeck == null)
-					return DrawnCards.Concat(createdInHand).ToList();
+					return DrawnCards.Concat(createdInHand).ToSortedCardList();
 
 				var stillInDeck =
-					Deck.Where(ce => !string.IsNullOrEmpty(ce.CardId))
-					    .GroupBy(ce => new {ce.CardId, ce.CardMark, ce.Discarded})
-					    .Select(
-					            g =>
-					            new Card()
-					            {
-						            Id = g.Key.CardId,
-						            Count = g.Count(),
-						            IsCreated = g.Key.CardMark == CardMark.Created,
-						            HighlightDraw = _hightlightedCards.Contains(g.Key.CardId),
-						            HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId)
-					            })
-					    .ToList();
+					Deck.Where(ce => !string.IsNullOrEmpty(ce.CardId)).GroupBy(ce => new {ce.CardId, ce.CardMark, ce.Discarded}).Select(g =>
+					{
+						var card = Database.GetCardFromId(g.Key.CardId);
+						card.Count = g.Count();
+						card.IsCreated = g.Key.CardMark == CardMark.Created;
+						card.HighlightDraw = _hightlightedCards.Contains(g.Key.CardId);
+						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
+						return card;
+					}).ToList();
 				if(Config.Instance.RemoveCardsFromDeck)
 				{
 					if(Config.Instance.HighlightLastDrawn)
@@ -120,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						;
 						stillInDeck = stillInDeck.Concat(inHand).ToList();
 					}
-					return stillInDeck.Concat(createdInHand).ToList();
+					return stillInDeck.Concat(createdInHand).ToSortedCardList();
 				}
 				var notInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Where(c => Deck.All(ce => ce.CardId != c.Id)).Select(c =>
 				{
@@ -130,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					card.HighlightInHand = Hand.Any(ce => ce.CardId == c.Id);
 					return card;
 				});
-				return stillInDeck.Concat(notInDeck).Concat(createdInHand).ToList();
+				return stillInDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
 			}
 		}
 
@@ -142,8 +138,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return
 					RevealedCards.Where(ce => !string.IsNullOrEmpty(ce.CardId))
 					             .GroupBy(ce => new {ce.CardId, Hidden = (ce.InHand || ce.InDeck), ce.Created, Discarded = ce.Discarded && Config.Instance.HighlightDiscarded})
-					             .Select(g => new Card() {Id = g.Key.CardId, Count = g.Count(), Jousted = g.Key.Hidden, IsCreated = g.Key.Created, WasDiscarded = g.Key.Discarded })
-					             .ToList();
+					             .Select(g =>
+								 {
+									 var card = Database.GetCardFromId(g.Key.CardId);
+									 card.Count = g.Count();
+									 card.Jousted = g.Key.Hidden;
+									 card.IsCreated = g.Key.Created;
+									 card.WasDiscarded = g.Key.Discarded;
+                                     return card;
+					             })
+					             .ToSortedCardList();
 			}
 		}
 

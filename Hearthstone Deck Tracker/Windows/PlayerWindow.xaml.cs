@@ -234,11 +234,10 @@ namespace Hearthstone_Deck_Tracker
 		public async void UpdatePlayerCards()
 		{
 			_lastPlayerUpdateReqest = DateTime.Now;
-			await Task.Delay(50);
-			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
+			await Task.Delay(100);
+			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
 				return;
 			OnPropertyChanged("PlayerDeck");
-			Helper.SortCardCollection(ListViewPlayer.ItemsSource, false);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

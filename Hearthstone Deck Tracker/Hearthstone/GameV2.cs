@@ -108,8 +108,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				for(var i = 0; i < card.Count; i++)
 					Player.RevealDeckCard(card.Id, -1);
 			}
-			Helper.UpdatePlayerCards();
-			Helper.UpdateOpponentCards();
 			IsUsingPremade = true;
 		}
 

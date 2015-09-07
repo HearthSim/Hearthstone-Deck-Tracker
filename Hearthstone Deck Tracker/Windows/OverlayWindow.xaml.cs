@@ -406,17 +406,8 @@ namespace Hearthstone_Deck_Tracker
             ShowSecrets();
         }
 
-        public void SortViews()
-        {
-            Helper.SortCardCollection(ListViewPlayer.ItemsSource, Config.Instance.CardSortingClassFirst);
-            Helper.SortCardCollection(ListViewOpponent.ItemsSource, Config.Instance.CardSortingClassFirst);
-        }
-
         private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
         {
-            //previous cardcout > current -> opponent played -> resort list
-            if (_opponentCardCount > cardCount)
-                Helper.SortCardCollection(ListViewOpponent.ItemsSource, Config.Instance.CardSortingClassFirst);
             _opponentCardCount = cardCount;
 
             LblOpponentCardCount.Text = cardCount.ToString();
@@ -449,9 +440,6 @@ namespace Hearthstone_Deck_Tracker
 
         private void SetCardCount(int cardCount, int cardsLeftInDeck)
         {
-            //previous < current -> draw
-            if (_cardCount < cardCount)
-                Helper.SortCardCollection(ListViewPlayer.ItemsSource, Config.Instance.CardSortingClassFirst);
             _cardCount = cardCount;
 
             LblCardCount.Text = cardCount.ToString();
@@ -1300,7 +1288,6 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("PlayerDeck");
-			Helper.SortCardCollection(ListViewPlayer.ItemsSource, false);
 		}
 
 		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
@@ -1311,7 +1298,6 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("OpponentDeck");
-			Helper.SortCardCollection(ListViewOpponent.ItemsSource, false);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

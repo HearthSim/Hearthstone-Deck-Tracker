@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
@@ -219,6 +220,11 @@ namespace Hearthstone_Deck_Tracker
 			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
 			view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
+		}
+
+		public static List<Card> ToSortedCardList(this IEnumerable<Card> cards)
+		{
+			return cards.OrderBy(x => x.Cost).ThenByDescending(x => x.Type).ThenBy(x => x.LocalizedName).ToArray().ToList();
 		}
 
 		public static string DeckToIdString(Deck deck)

@@ -65,7 +65,6 @@ namespace Hearthstone_Deck_Tracker
 			//needs to be true for automatic deck detection to work
 			HsLogReaderV2.Instance.Reset(true);
 			Overlay.Update(false);
-			Overlay.SortViews();
 			Overlay.UpdatePlayerCards();
 			PlayerWindow.UpdatePlayerCards();
 		}
