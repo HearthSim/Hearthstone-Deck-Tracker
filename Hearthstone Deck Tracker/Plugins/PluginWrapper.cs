@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls.Error;
 
 #endregion
 
@@ -84,6 +85,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
+				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"", "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Logger.WriteLine("Error loading " + Name + ":\n" + ex, "PluginWrapper");
 				return false;
 			}
