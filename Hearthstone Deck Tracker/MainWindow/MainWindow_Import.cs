@@ -494,7 +494,10 @@ namespace Hearthstone_Deck_Tracker
 
 
 			var deck = new Deck();
-			deck.Class = _game.PossibleConstructedCards.Last(c => !string.IsNullOrEmpty(c.PlayerClass)).PlayerClass;
+			var lastNonNeutralCard = _game.PossibleConstructedCards.LastOrDefault(c => !string.IsNullOrEmpty(c.PlayerClass));
+			if(lastNonNeutralCard == null)
+				return;
+            deck.Class = lastNonNeutralCard.PlayerClass;
 
 			var legendary = _game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
