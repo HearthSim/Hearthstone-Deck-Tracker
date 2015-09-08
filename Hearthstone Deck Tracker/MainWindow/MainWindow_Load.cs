@@ -343,7 +343,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					LogLevel = 1;
 					FilePrinting = true;
-					ConsolePrinting = false;
+					ConsolePrinting = Config.Instance.LogConfigConsolePrinting;
 					ScreenPrinting = false;
 				}
 			}
@@ -409,6 +409,8 @@ namespace Hearthstone_Deck_Tracker
 								continue;
 							}
 						}
+						if(current != null)
+							logConfig.Configitems.Add(current);
 					}
 				}
 
