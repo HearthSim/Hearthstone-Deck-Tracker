@@ -42,6 +42,17 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			KnownCardIds = new Dictionary<int, string>();
         }
 
+	    public void Reset()
+	    {
+			First = true;
+			AddToTurn = -1;
+			GameEnded = false;
+			FoundSpectatorStart = false;
+			JoustReveals = 0;
+			KnownCardIds.Clear();
+			LastGameStart = DateTime.Now;
+		}
+
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
         {
             if (ProposedKeyPoint != null)

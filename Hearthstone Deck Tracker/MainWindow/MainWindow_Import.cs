@@ -516,7 +516,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Class = card.GetPlayerClass;
 			}
 			SetNewDeck(deck);
-			HsLogReaderV2.Instance.ClearLog();
+			//HsLogReaderV2.Instance.ClearLog();
 		}
 	}
 }

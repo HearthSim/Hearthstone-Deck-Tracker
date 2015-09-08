@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		void Stop();
 		void ClearLog();
 		Task<bool> RankedDetection(int timeoutInSeconds = 3);
-		void GetCurrentRegion();
+		//void GetCurrentRegion();
 		void Reset(bool full);
 	}
 }

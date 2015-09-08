@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker
             }
             if (!_game.IsUsingPremade)
                 _game.DrawnLastGame = new List<Card>(_game.Player.DrawnCards);
-            HsLogReaderV2.Instance.ClearLog();
+            //HsLogReaderV2.Instance.ClearLog();
             if (!Config.Instance.KeepDecksVisible)
                 _game.Reset(false);
             if (_game.CurrentGameStats != null && _game.CurrentGameStats.Result != GameResult.None)
@@ -296,7 +296,7 @@ namespace Hearthstone_Deck_Tracker
             else
                 _game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
 
-            _game.CurrentGameStats.Turns = HsLogReaderV2.Instance.GetTurnNumber();
+            _game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
             if (Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
             {
                 Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)", "GameEventHandler");
@@ -387,7 +387,7 @@ namespace Hearthstone_Deck_Tracker
                     if (_game.CurrentGameMode == GameMode.None)
                         await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
                     if (_game.CurrentGameMode == GameMode.Casual)
-                        await HsLogReaderV2.Instance.RankedDetection();
+                        await LogReaderManager.RankedDetection();
                     if (_game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
                         await RankDetection(5);
                     await GameModeSaved(15);
@@ -485,7 +485,7 @@ namespace Hearthstone_Deck_Tracker
 
                 if (_game.CurrentGameStats != null)
                 {
-                    _game.CurrentGameStats.Turns = HsLogReaderV2.Instance.GetTurnNumber();
+                    _game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
                     if (Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
                     {
                         Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)", "GameEventHandler");

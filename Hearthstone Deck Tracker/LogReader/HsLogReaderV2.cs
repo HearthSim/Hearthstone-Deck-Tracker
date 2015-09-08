@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             return _gameState.FoundRanked;
         }
 
-        public async void GetCurrentRegion()
+        public static void GetCurrentRegion(GameV2 game)
         {
             try
             {
@@ -349,7 +349,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                             Region region;
                             if (Enum.TryParse(match.Groups["region"].Value, out region))
                             {
-                                _game.CurrentRegion = region;
+								game.CurrentRegion = region;
                                 Logger.WriteLine("Current region: " + region, "LogReader");
                                 break;
                             }

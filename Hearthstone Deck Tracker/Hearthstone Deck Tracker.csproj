@@ -251,6 +251,7 @@
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\IHsGameState.cs" />
     <Compile Include="LogReader\IHSLogReader.cs" />
+    <Compile Include="LogReader\LogReaderManager.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
