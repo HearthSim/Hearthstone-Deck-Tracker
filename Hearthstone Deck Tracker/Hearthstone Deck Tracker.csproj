@@ -249,13 +249,12 @@
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
-    <Compile Include="LogReader\IHsGameState.cs" />
-    <Compile Include="LogReader\IHSLogReader.cs" />
+    <Compile Include="LogReader\Interfaces\IHsGameState.cs" />
+    <Compile Include="LogReader\Interfaces\IHSLogReader.cs" />
     <Compile Include="LogReader\LogLineItem.cs" />
     <Compile Include="LogReader\LogReader.cs" />
     <Compile Include="LogReader\LogReaderInfo.cs" />
     <Compile Include="LogReader\LogReaderManager.cs" />
-    <Compile Include="LogReader\LogReaderNamespaces.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
@@ -3670,7 +3669,9 @@
       <Name>HDTHelper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="LogReader\LogFileReader\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
-namespace Hearthstone_Deck_Tracker.LogReader
+namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 {
 	public interface IHsLogReader
 	{

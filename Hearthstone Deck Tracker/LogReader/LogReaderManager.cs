@@ -13,6 +13,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
 	public class LogReaderManager
 	{
+		private static readonly SortedList<DateTime, List<LogLineItem>> ToProcess = new SortedList<DateTime, List<LogLineItem>>();
+		private static readonly List<LogReader> LogReaders = new List<LogReader>();
 		private static readonly PowerGameStateHandler PowerGameStateLineHandler = new PowerGameStateHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
 		private static readonly AssetHandler AssetHandler = new AssetHandler();
@@ -21,24 +23,22 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static LogReader _powerLogReader;
 		private static LogReader _bobLogReader;
-		private static readonly List<LogReader> LogReaders = new List<LogReader>();
-		private static bool _running;
 		private static HsGameState _gameState;
 		private static GameV2 _game;
 		private static DateTime _startingPoint;
-		private static readonly SortedList<DateTime, List<LogLineItem>> ToProcess = new SortedList<DateTime, List<LogLineItem>>();
 		private static bool _stop;
+		private static bool _running;
 
 		private static void InitializeLogReaders()
 		{
-			_powerLogReader = new LogReader(LogReaderNamespaces.PowerLogReaderInfo);
-			_bobLogReader = new LogReader(LogReaderNamespaces.BobLogReaderInfo);
+			_powerLogReader = new LogReader(HsLogReaderConstants.PowerLogReaderInfo);
+			_bobLogReader = new LogReader(HsLogReaderConstants.BobLogReaderInfo);
 			LogReaders.Add(_powerLogReader);
 			LogReaders.Add(_bobLogReader);
-			LogReaders.Add(new LogReader(LogReaderNamespaces.ZoneLogReaderInfo));
-			LogReaders.Add(new LogReader(LogReaderNamespaces.RachelleLogReaderInfo));
-			LogReaders.Add(new LogReader(LogReaderNamespaces.AssetLogReaderInfo));
-			LogReaders.Add(new LogReader(LogReaderNamespaces.ArenaLogReaderInfo));
+			LogReaders.Add(new LogReader(HsLogReaderConstants.ZoneLogReaderInfo));
+			LogReaders.Add(new LogReader(HsLogReaderConstants.RachelleLogReaderInfo));
+			LogReaders.Add(new LogReader(HsLogReaderConstants.AssetLogReaderInfo));
+			LogReaders.Add(new LogReader(HsLogReaderConstants.ArenaLogReaderInfo));
 		}
 
 		public static void Start(GameV2 game)

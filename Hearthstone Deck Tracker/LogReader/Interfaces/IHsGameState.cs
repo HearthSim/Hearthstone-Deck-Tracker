@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Replay;
 
-namespace Hearthstone_Deck_Tracker.LogReader
+namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 {
     public interface IHsGameState
     {

@@ -1,15 +1,16 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
+	[Obsolete("")]
     public class HsLogReaderV2 : IHsLogReader
     {
         //should be about 180,000 lines
