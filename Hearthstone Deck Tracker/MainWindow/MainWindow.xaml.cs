@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateMenuItemVisibility();
 			}
 			//needs to be true for automatic deck detection to work
-			await LogReaderManager.Restart(true);
+			await LogReaderManager.Restart();
 			Overlay.Update(false);
 			Overlay.UpdatePlayerCards();
 			PlayerWindow.UpdatePlayerCards();
@@ -1495,7 +1495,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.Reset();
 						if(DeckList.Instance.ActiveDeck != null)
 							_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-						await LogReaderManager.Restart(true);
+						await LogReaderManager.Restart();
 
 						BtnStartHearthstone.Visibility = Visibility.Visible;
 						_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;

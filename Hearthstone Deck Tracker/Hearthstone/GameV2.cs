@@ -99,6 +99,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			}
 			_hsLogLines = new List<string>();
+
+			if(Helper.MainWindow.Overlay != null)
+			{
+				Helper.UpdatePlayerCards();
+				Helper.UpdateOpponentCards();
+			}
 		}
 
 		public void SetPremadeDeck(Deck deck)

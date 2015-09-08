@@ -1,9 +1,11 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -320,6 +322,38 @@ namespace Hearthstone_Deck_Tracker
 			return found;
 		}
 
+		public class LogConfig
+		{
+			public readonly List<ConfigItem> Configitems = new List<ConfigItem>();
+			public class ConfigItem
+			{
+				public string Name { get; set; }
+				public int LogLevel { get; set; }
+				public bool FilePrinting { get; set; }
+				public bool ConsolePrinting { get; set; }
+				public bool ScreenPrinting { get; set; }
+
+				public ConfigItem(string name)
+				{
+					Name = name;
+					ResetValues();
+				}
+
+				public void ResetValues()
+				{
+					LogLevel = 1;
+					FilePrinting = true;
+					ConsolePrinting = false;
+					ScreenPrinting = false;
+				}
+			}
+			public static readonly Regex NameRegex = new Regex(@"\[(?<value>(\w+))\]");
+			public static readonly Regex LogLevelRegex = new Regex(@"LogLevel=(?<value>(\d+))");
+			public static readonly Regex FilePrintingRegex = new Regex(@"FilePrinting=(?<value>(\w+))");
+			public static readonly Regex ConsolePrintingRegex = new Regex(@"ConsolePrinting=(?<value>(\w+))");
+			public static readonly Regex ScreenPrintingRegex = new Regex(@"ScreenPrinting=(?<value>(\w+))");
+		}
+
 		private bool UpdateLogConfigFile()
 		{
 			var updated = false;
@@ -328,41 +362,88 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var requiredLogs = new[] {"Zone", "Bob", "Power", "Asset", "Rachelle", "Arena"};
 
-				string[] actualLogs = {};
+				LogConfig logConfig = new LogConfig();
 				if(File.Exists(_logConfigPath))
 				{
 					using(var sr = new StreamReader(_logConfigPath))
 					{
-						var content = sr.ReadToEnd();
-						actualLogs =
-							content.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries)
-							       .Where(x => x.StartsWith("["))
-							       .Select(x => x.Substring(1, x.Length - 2))
-							       .ToArray();
+						LogConfig.ConfigItem current = null;
+						string line;
+						while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
+						{
+							var nameMatch = LogConfig.NameRegex.Match(line);
+							if(nameMatch.Success)
+							{
+								if(current != null)
+									logConfig.Configitems.Add(current);
+								current = new LogConfig.ConfigItem(nameMatch.Groups["value"].Value);
+								continue;
+							}
+							if(current == null)
+								continue;
+							var logLevelMatch = LogConfig.LogLevelRegex.Match(line);
+							if(logLevelMatch.Success)
+							{
+								current.LogLevel = int.Parse(logLevelMatch.Groups["value"].Value);
+								continue;
+							}
+
+							var filePrintingMatch = LogConfig.FilePrintingRegex.Match(line);
+							if(filePrintingMatch.Success)
+							{
+								current.FilePrinting = bool.Parse(filePrintingMatch.Groups["value"].Value);
+								continue;
+							}
+
+							var consolePrintingMatch = LogConfig.ConsolePrintingRegex.Match(line);
+							if(consolePrintingMatch.Success)
+							{
+								current.ConsolePrinting = bool.Parse(consolePrintingMatch.Groups["value"].Value);
+								continue;
+							}
+
+							var screenPrintingMatch = LogConfig.ScreenPrintingRegex.Match(line);
+							if(screenPrintingMatch.Success)
+							{
+								current.ScreenPrinting = bool.Parse(screenPrintingMatch.Groups["value"].Value);
+								continue;
+							}
+						}
 					}
 				}
 
-				var missing = requiredLogs.Where(x => !actualLogs.Contains(x)).ToList();
-				if(missing.Any())
+				foreach(var requiredLog in requiredLogs)
 				{
-					using(var sw = new StreamWriter(_logConfigPath, true))
+					if(logConfig.Configitems.All(x => x.Name != requiredLog))
 					{
-						foreach(var log in missing)
-						{
-							sw.WriteLine();
-							sw.WriteLine("[{0}]", log);
-							sw.WriteLine("LogLevel=1");
-							sw.WriteLine("FilePrinting=false");
-							sw.WriteLine("ConsolePrinting=true");
-							sw.WriteLine("ScreenPrinting=false");
-							Logger.WriteLine("Added " + log + " to log.config.", "UpdateLogConfig");
-						}
+						logConfig.Configitems.Add(new LogConfig.ConfigItem(requiredLog));
+						Logger.WriteLine("Added " + requiredLog + " to log.config.", "UpdateLogConfig");
+						updated = true;
 					}
+				}
+
+				if(logConfig.Configitems.Any(x => !x.FilePrinting || x.ConsolePrinting != Config.Instance.LogConfigConsolePrinting))
+				{
+					foreach(var configItem in logConfig.Configitems)
+						configItem.ResetValues();
 					updated = true;
 				}
-				var additional = actualLogs.Where(x => !requiredLogs.Contains(x)).ToList();
-				foreach(var log in additional)
-					Logger.WriteLine("log.config contains additional log: " + log + ".", "UpdateLogConfig");
+
+				if(updated)
+				{
+					using(var sw = new StreamWriter(_logConfigPath))
+					{
+						foreach(var configItem in logConfig.Configitems)
+						{
+							sw.WriteLine("[{0}]", configItem.Name);
+							sw.WriteLine("LogLevel={0}", configItem.LogLevel);
+							sw.WriteLine("FilePrinting={0}", configItem.FilePrinting.ToString().ToLower());
+							sw.WriteLine("ConsolePrinting={0}", configItem.ConsolePrinting.ToString().ToLower());
+							sw.WriteLine("ScreenPrinting={0}", configItem.ScreenPrinting.ToString().ToLower());
+						}
+					}
+				}
+
 			}
 			catch(Exception e)
 			{
