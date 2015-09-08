@@ -189,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 if (logLine.StartsWith("["))
                 {
                     GameV2.AddHSLogLine(logLine);
-                    API.LogEvents.OnLogLine.Execute(logLine);
+                    //API.LogEvents.OnLogLine.Execute(logLine);
                 }
 
                 if (logLine.StartsWith("[Power] GameState."))

@@ -14,7 +14,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public class LogReaderManager
 	{
 		private static readonly PowerGameStateHandler PowerGameStateLineHandler = new PowerGameStateHandler();
-		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
 		private static readonly AssetHandler AssetHandler = new AssetHandler();
 		private static readonly ZoneHandler ZoneHandler = new ZoneHandler();
@@ -138,7 +137,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static void ProcessNewLines()
 		{
-			var updateInterface = false;
 			foreach(var item in ToProcess)
 			{
 				foreach(var line in item.Value)
@@ -147,29 +145,34 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					{
 						case "Power":
 							PowerGameStateLineHandler.Handle(line.Line, _gameState, _game);
-							updateInterface = true;
+							API.LogEvents.OnPowerLogLine.Execute(line.Line);
+							GameV2.AddHSLogLine(line.Line);
 							break;
 						case "Zone":
 							ZoneHandler.Handle(line.Line, _gameState);
+							API.LogEvents.OnZoneLogLine.Execute(line.Line);
 							break;
 						case "Asset":
 							AssetHandler.Handle(line.Line, _gameState, _game);
+							API.LogEvents.OnAssetLogLine.Execute(line.Line);
 							break;
 						case "Bob":
 							BobHandler.Handle(line.Line, _gameState, _game);
+                            API.LogEvents.OnBobLogLine.Execute(line.Line);
 							break;
 						case "Rachelle":
 							RachelleHandler.Handle(line.Line, _gameState, _game);
+							API.LogEvents.OnRachelleLogLine.Execute(line.Line);
 							break;
 						case "Arena":
 							ArenaHandler.Handle(line.Line, _gameState, _game);
+							API.LogEvents.OnArenaLogLine.Execute(line.Line);
 							break;
 					}
 				}
 			}
 			ToProcess.Clear();
-			//if(updateInterface)
-				Helper.UpdateEverything(_game);
+			Helper.UpdateEverything(_game);
 		}
 	}
 }
