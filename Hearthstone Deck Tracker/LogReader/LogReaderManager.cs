@@ -51,6 +51,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static async void StartLogReaders()
 		{
+			if(_running)
+				return;
 			foreach(var logReader in LogReaders)
 				logReader.Start(_startingPoint);
 			_running = true;
