@@ -60,6 +60,11 @@ namespace Hearthstone_Deck_Tracker
 			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
 		}
 
+		public string ToString(bool reverseRevBuild)
+		{
+			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
+		}
+
 		/// <summary>
 		/// {M}: Major, {m}: Minor, {r}: Revision, {b}: Build
 		/// </summary>

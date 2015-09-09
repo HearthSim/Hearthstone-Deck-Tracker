@@ -120,6 +120,9 @@
             <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="Errors">
                 <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=local:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
             </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=local:MainWindow}}">
+                <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
+            </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
     <Grid>

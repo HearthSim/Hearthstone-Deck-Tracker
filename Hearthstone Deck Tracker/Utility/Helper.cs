@@ -94,13 +94,14 @@ namespace Hearthstone_Deck_Tracker
 			return null;
 		}
 
+		private static Version _currentVersion;
 		// A bug in the SerializableVersion.ToString() method causes this to load Version.xml incorrectly.
 		// The build and revision numbers are swapped (i.e. a Revision of 21 in Version.xml loads to Version.Build == 21).
 		public static Version GetCurrentVersion()
 		{
 			try
 			{
-				return new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString());
+				return _currentVersion ?? (_currentVersion = new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString()));
 			}
 			catch(Exception e)
 			{

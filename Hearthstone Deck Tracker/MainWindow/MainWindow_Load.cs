@@ -667,7 +667,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 			ManaCurveMyDecks.UpdateValues();
 			if(_updatedVersion != null)
-				await this.ShowUpdateNotesMessage();
+			{
+				FlyoutUpdateNotes.IsOpen = true;
+				UpdateNotesControl.LoadUpdateNotes();
+				//await this.ShowUpdateNotesMessage();
+			}
 
 			if(!_foundHsDirectory)
 				await this.ShowHsNotInstalledMessage();

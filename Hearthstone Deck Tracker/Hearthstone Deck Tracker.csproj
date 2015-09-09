@@ -230,6 +230,9 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml.cs">
       <DependentUpon>OverlayPlayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\UpdateNotes.xaml.cs">
+      <DependentUpon>UpdateNotes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="HearthStats\Controls\DuplicateMatchesWindow.xaml.cs">
       <DependentUpon>DuplicateMatchesWindow.xaml</DependentUpon>
     </Compile>
@@ -272,6 +275,8 @@
     <Compile Include="Protocol\PipeServer.cs" />
     <Compile Include="Utility\ImageCache.cs" />
     <Compile Include="Utility\Imgur.cs" />
+    <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
+    <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -541,6 +546,10 @@
     <Page Include="FlyoutControls\Options\Overlay\OverlayPlayer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FlyoutControls\UpdateNotes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HearthStats\Controls\DuplicateMatchesWindow.xaml">
       <SubType>Designer</SubType>
@@ -3621,6 +3630,7 @@
     <Resource Include="Resources\ClassIcons\General\BaseLight\archived.png" />
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
     <None Include="Resources\card-mark-coin.png" />
+    <Resource Include="Utility\Markdown.Xaml\License.txt" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
