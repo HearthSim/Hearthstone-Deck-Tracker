@@ -42,8 +42,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public List<GithubRelease> ReleaseNotes
 		{
 			get
-			{
-				return _fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).Take(_numVersions).ToList();
+			{ 
+				var upToInstalled =_fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
+				return (upToInstalled.Any() ? upToInstalled : _fullReleaseNotes).Take(_numVersions).ToList();
 			}
 		}
 
