@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null)
 				return;
 			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(_game, true);
+			var screenShotWindow = new PlayerWindow(_game, selectedDeck.Cards.ToSortedCardList());
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -74,11 +74,12 @@ namespace Hearthstone_Deck_Tracker
 			if(source == null)
 				return;
 
-			var dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
-			var dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
+			//adjusting the DPI is apparently no longer/not necessary?
+			var dpiX = 96.0; //* source.CompositionTarget.TransformToDevice.M11;
+			var dpiY = 96.0; //* source.CompositionTarget.TransformToDevice.M22;
 
 			var deck = selectedDeck.GetSelectedDeckVersion();
-			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, dpiX, dpiY, deck.Name);
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, 96, 96, deck.Name);
 			screenShotWindow.Shutdown();
 
 			if(pngEncoder != null)
