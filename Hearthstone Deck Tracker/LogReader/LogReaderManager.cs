@@ -137,9 +137,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static void ProcessNewLines()
 		{
-			foreach(var item in ToProcess)
+			foreach(var item in ToProcess.Where(item => item.Value != null))
 			{
-				foreach(var line in item.Value)
+				foreach(var line in item.Value.Where(line => line != null))
 				{
 					switch(line.Namespace)
 					{
