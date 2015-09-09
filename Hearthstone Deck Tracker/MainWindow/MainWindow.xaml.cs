@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker
 	    private readonly GameV2 _game;
 	    public event PropertyChangedEventHandler PropertyChanged;
 
-		public void UseDeck(Deck selected)
+		public async void UseDeck(Deck selected)
 		{
 			_game.Reset();
 
@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker
 				UpdateMenuItemVisibility();
 			}
 			//needs to be true for automatic deck detection to work
-			HsLogReaderV2.Instance.Reset(true);
+			await LogReaderManager.Restart();
 			Overlay.Update(false);
 			Overlay.UpdatePlayerCards();
 			PlayerWindow.UpdatePlayerCards();
@@ -845,7 +845,8 @@ namespace Hearthstone_Deck_Tracker
 			SelectDeck(DeckList.Instance.ActiveDeck, true);
 
 			if(_foundHsDirectory)
-				HsLogReaderV2.Instance.Start(_game);
+				//HsLogReaderV2.Instance.Start(_game);
+				LogReaderManager.Start(_game);
 
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
@@ -1294,7 +1295,7 @@ namespace Hearthstone_Deck_Tracker
 
 				_notifyIcon.Visible = false;
 				Overlay.Close();
-				HsLogReaderV2.Instance.Stop();
+				await LogReaderManager.Stop();
 				TimerWindow.Shutdown();
 				PlayerWindow.Shutdown();
 				OpponentWindow.Shutdown();
@@ -1436,7 +1437,7 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
-						HsLogReaderV2.Instance.GetCurrentRegion();
+						HsLogReaderV2.GetCurrentRegion(_game);
 					}
 					Overlay.UpdatePosition();
 
@@ -1490,11 +1491,11 @@ namespace Hearthstone_Deck_Tracker
 						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
 						_game.CurrentRegion = Region.UNKNOWN;
 						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-						HsLogReaderV2.Instance.ClearLog();
+						//HsLogReaderV2.Instance.ClearLog();
 						_game.Reset();
 						if(DeckList.Instance.ActiveDeck != null)
 							_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-						HsLogReaderV2.Instance.Reset(true);
+						await LogReaderManager.Restart();
 
 						BtnStartHearthstone.Visibility = Visibility.Visible;
 						_notifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;

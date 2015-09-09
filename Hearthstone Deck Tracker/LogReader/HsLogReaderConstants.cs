@@ -24,5 +24,30 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public static readonly Regex ExistingHeroRegex = new Regex(@"Draft Deck ID: .*, Hero Card = (?<id>(HERO_\w+))");
         public static readonly Regex ExistingCardRegex = new Regex(@"Draft deck contains card (?<id>(\w+))");
         public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
-    }
+
+		public static LogReaderInfo PowerLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Power", StartsWithFilters = new[] { "GameState." }, ContainsFilters = new[] { "Begin Spectating", "Start Spectator", "End Spectator" } }; }
+		}
+		public static LogReaderInfo AssetLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Asset" }; }
+		}
+		public static LogReaderInfo BobLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Bob" }; }
+		}
+		public static LogReaderInfo RachelleLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Rachelle" }; }
+		}
+		public static LogReaderInfo ZoneLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Zone", ContainsFilters = new[] { "zone from" } }; }
+		}
+		public static LogReaderInfo ArenaLogReaderInfo
+		{
+			get { return new LogReaderInfo { Name = "Arena" }; }
+		}
+	}
 }

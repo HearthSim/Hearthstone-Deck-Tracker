@@ -347,6 +347,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0L)]
 		public long LastHearthStatsGamesSync = 0L;
 
+		[DefaultValue(false)]
+		public bool LogConfigConsolePrinting = false;
+
 		[DefaultValue(0)]
 		public int LogLevel = 0;
 

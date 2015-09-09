@@ -4,6 +4,7 @@ using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
 
 namespace Hearthstone_Deck_Tracker.LogReader
@@ -41,6 +42,17 @@ namespace Hearthstone_Deck_Tracker.LogReader
             _game = game;
 			KnownCardIds = new Dictionary<int, string>();
         }
+
+	    public void Reset()
+	    {
+			First = true;
+			AddToTurn = -1;
+			GameEnded = false;
+			FoundSpectatorStart = false;
+			JoustReveals = 0;
+			KnownCardIds.Clear();
+			LastGameStart = DateTime.Now;
+		}
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
         {

@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
