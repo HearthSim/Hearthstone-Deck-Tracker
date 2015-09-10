@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -111,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 										if(logLine.Time >= _startingPoint)
 											_lines.Add(logLine);
 									}
-									_offset += line.Length + Environment.NewLine.Length;
+									_offset += Encoding.UTF8.GetByteCount(line + Environment.NewLine);
 								}
 							}
 						}
