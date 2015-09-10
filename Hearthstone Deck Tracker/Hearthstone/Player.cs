@@ -493,7 +493,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				case TAG_ZONE.HAND:
 					Hand.Sort(ZonePosComparison);
-					if(turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
+					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
 					{
 						Hand[4].CardMark = CardMark.Coin;
 						Hand[4].Created = true;
