@@ -401,7 +401,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.CaptureHearthstone(
 				                          new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
 				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
-			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
+			return capture != null && ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
 		}
 
 		private static bool ColorDistance(Color color, Color target, double distance)
