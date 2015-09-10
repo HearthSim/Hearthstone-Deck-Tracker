@@ -56,12 +56,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
         private void GoldTracking(string logLine, IGame game)
         {
             if (
-                logLine.Equals(
-                    "[Rachelle] RewardUtils.GetViewableRewards() - processing reward [GoldRewardData: Amount=10 Origin=TOURNEY OriginData=0]"))
+                logLine.Contains(
+                    "RewardUtils.GetViewableRewards() - processing reward [GoldRewardData: Amount=10 Origin=TOURNEY OriginData=0]"))
             {
                 win3Times = true;
             }
-            if (logLine.Equals("[Rachelle] VictoryScreen.InitGoldRewardUI(): goldRewardState = INVALID"))
+            if (logLine.Contains("VictoryScreen.InitGoldRewardUI(): goldRewardState = INVALID"))
             {
                 winCheck = true;
             }
