@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			const int offsetToMakeSureGraphicsAreNotClipped = 30;
+			const int offsetToMakeSureGraphicsAreNotClipped = 40;
 			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
@@ -222,6 +222,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged("OpponentDeck");
+			Scale();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
