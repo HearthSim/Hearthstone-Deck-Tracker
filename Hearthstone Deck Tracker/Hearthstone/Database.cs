@@ -48,6 +48,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			catch (Exception e)
 			{
 				Logger.WriteLine("Error loading db: \n" + e, "Game");
+				if(_cards == null)
+					_cards = new Dictionary<string, Card>();
 			}
 		}
 
