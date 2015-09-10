@@ -689,8 +689,8 @@ namespace Hearthstone_Deck_Tracker
 				ResolveOpponentNames();
 			if(!Config.Instance.ResolvedDeckStatsIds)
 			{
-				if(ResolveDeckStatsIds())
-					Restart();
+				ResolveDeckStatsIds();
+					//Restart();
 			}
 			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.SyncAsync(background: true);

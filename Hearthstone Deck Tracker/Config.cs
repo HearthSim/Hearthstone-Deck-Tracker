@@ -910,8 +910,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(Instance.ConfigDir != string.Empty)
 					Directory.CreateDirectory(Instance.ConfigDir);
-				using(var sr = new StreamWriter(Instance.ConfigPath, false))
-					sr.WriteLine("<Config></Config>");
+				Save();
 			}
 			else if(Instance.SaveConfigInAppData != null)
 			{
