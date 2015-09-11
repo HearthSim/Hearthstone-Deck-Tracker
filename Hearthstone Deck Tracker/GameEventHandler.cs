@@ -574,8 +574,8 @@ namespace Hearthstone_Deck_Tracker
                 _game.CurrentGameStats.Coin = true;
                 Logger.WriteLine("Got coin", "GameStats");
             }
-
-            _game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
+			Helper.UpdatePlayerCards();
+			_game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
             GameEvents.OnPlayerGet.Execute(Database.GetCardFromId(cardId));
         }
 
