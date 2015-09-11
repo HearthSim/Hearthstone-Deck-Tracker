@@ -41,21 +41,35 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private void MoveOrDeleteLogFile()
 		{
-			try
+			if(File.Exists(_filePath))
 			{
 				var old = _filePath.Replace(".log", "_old.log");
-				File.Move(_filePath, old);
-			}
-			catch
-			{
+				if(File.Exists(old))
+				{
+					try
+					{
+						File.Delete(old);
+					}
+					catch
+					{
+					}
+				}
 				try
 				{
-					File.Delete(_filePath);
+					File.Move(_filePath, old);
 				}
 				catch
 				{
+					try
+					{
+						File.Delete(_filePath);
+					}
+					catch
+					{
+					}
 				}
 			}
+			
 		}
 
 		public async Task Stop()
