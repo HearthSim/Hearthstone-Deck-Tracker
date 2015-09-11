@@ -69,50 +69,64 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             {
                 winCheck = false;
                 TimeZoneInfo timeZone = null;
-                switch (game.CurrentRegion)
-                {
-                    case Region.EU:
-                        timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-                        break;
-                    case Region.US:
-                        timeZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
-                        break;
-                    case Region.ASIA:
-                        timeZone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
-                        break;
-                    case Region.CHINA:
-                        timeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
-                        break;
-                }
+	            try
+				{
+					switch(game.CurrentRegion)
+					{
+						case Region.EU:
+							timeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+							break;
+						case Region.US:
+							timeZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
+							break;
+						case Region.ASIA:
+							timeZone = TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
+							break;
+						case Region.CHINA:
+							timeZone = TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+							break;
+					}
+				}
+	            catch(Exception ex)
+	            {
+					Logger.WriteLine("Error determining region: " + ex, "RachelleHandler");
+	            }
                 if (timeZone != null)
                 {
-                    var region = (int) game.CurrentRegion - 1;
-                    wins = Config.Instance.GoldProgress[region];
-                    wins++;
-                    var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
-                    if (Config.Instance.GoldProgressLastReset[region].Date != date)
-                    {
-                        wins = 1;
-                        Config.Instance.GoldProgressTotal[region] = 0;
-                        Config.Instance.GoldProgressLastReset[region] = date;
-                    }
-                    if (win3Times)
-                    {
-                        if (wins >= 4)
-                        {
-                            Logger.WriteLine(string.Format("Current wins is {0},{1} wins did not get gold reward.", wins,
-                                wins - 3));
-                        }
-                        wins = 0;
-                        win3Times = false;
-                        Config.Instance.GoldProgressTotal[region] += 10;
-                    }
-                    if (Config.Instance.GoldProgressTotal[region] == 100)
-                    {
-                        wins = 0;
-                    }
-                    Config.Instance.GoldProgress[region] = wins;
-                    Config.Save();
+	                try
+					{
+						var region = (int)game.CurrentRegion - 1;
+						wins = Config.Instance.GoldProgress[region];
+						wins++;
+						var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
+						if(Config.Instance.GoldProgressLastReset[region].Date != date)
+						{
+							wins = 1;
+							Config.Instance.GoldProgressTotal[region] = 0;
+							Config.Instance.GoldProgressLastReset[region] = date;
+						}
+						if(win3Times)
+						{
+							if(wins >= 4)
+							{
+								Logger.WriteLine(string.Format("Current wins is {0},{1} wins did not get gold reward.", wins,
+									wins - 3));
+							}
+							wins = 0;
+							win3Times = false;
+							Config.Instance.GoldProgressTotal[region] += 10;
+						}
+						if(Config.Instance.GoldProgressTotal[region] == 100)
+						{
+							wins = 0;
+						}
+						Config.Instance.GoldProgress[region] = wins;
+						Config.Save();
+					}
+	                catch(Exception ex)
+	                {
+						Logger.WriteLine("Error updating gold progress: " + ex, "RachelleHandler");
+	                }
                 }
                 else
                 {
