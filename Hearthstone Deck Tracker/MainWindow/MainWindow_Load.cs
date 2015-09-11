@@ -285,7 +285,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(Config.Instance.GoldProgressLastReset.Length < 5)
 					{
-						Config.Instance.Reset("GoldProgressLastReset");
+						Config.Instance.GoldProgressLastReset = new[] { DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue};
 						converted = true;
 					}
 					if(Config.Instance.GoldProgress.Length < 5)
