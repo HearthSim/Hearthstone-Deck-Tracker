@@ -93,7 +93,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public static async Task<bool> RankedDetection(int timeoutInSeconds = 3)
 		{
-			Logger.WriteLine("waiting for ranked detection", "LogReader");
 			_gameState.AwaitingRankedDetection = true;
 			_gameState.WaitingForFirstAssetUnload = true;
 			_gameState.FoundRanked = false;

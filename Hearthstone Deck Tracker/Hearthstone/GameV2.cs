@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -132,6 +133,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void ResetConstructedCards()
 		{
 			PossibleConstructedCards.Clear();
+		}
+
+		public async Task GameModeDetection(int timeoutInSeconds)
+		{
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
 		}
 
 		public void NewArenaDeck(string heroId)

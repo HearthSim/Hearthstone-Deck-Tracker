@@ -385,9 +385,15 @@ namespace Hearthstone_Deck_Tracker
                 if (HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
                 {
                     if (_game.CurrentGameMode == GameMode.None)
-                        await GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
-                    if (_game.CurrentGameMode == GameMode.Casual)
-                        await LogReaderManager.RankedDetection();
+					{
+						Logger.WriteLine("waiting for game mode detection", "GameEventHandler");
+						await _game.GameModeDetection(300); //give the user 5 minutes to get out of the victory/defeat screen
+					}
+	                if(_game.CurrentGameMode == GameMode.Casual)
+					{
+						Logger.WriteLine("waiting for ranked detection", "GameEventHandler");
+						await LogReaderManager.RankedDetection();
+	                }
                     if (_game.CurrentGameMode == GameMode.Ranked && !_lastGame.HasRank)
                         await RankDetection(5);
                     await GameModeSaved(15);
@@ -416,16 +422,6 @@ namespace Hearthstone_Deck_Tracker
             while (_lastGame != null && !_lastGame.HasRank && (DateTime.Now - startTime) < timeout)
                 await Task.Delay(100);
         }
-
-        private async Task GameModeDetection(int timeoutInSeconds)
-        {
-            Logger.WriteLine("waiting for game mode detection", "GameEventHandler");
-            var startTime = DateTime.Now;
-            var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
-            while (_game.CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
-                await Task.Delay(100);
-        }
-
         private async Task GameModeSaved(int timeoutInSeconds)
         {
             Logger.WriteLine("waiting for game mode to be saved to game", "GameEventHandler");
