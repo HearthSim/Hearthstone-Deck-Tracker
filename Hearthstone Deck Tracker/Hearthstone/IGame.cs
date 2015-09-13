@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         bool IsRunning { get; set; }
         Region CurrentRegion { get; set; }
         GameMode CurrentGameMode { get; set; }
+        GameMode LastKnownGameMode { get; set; }
         GameStats CurrentGameStats { get; set; }
         OpponentSecrets OpponentSecrets { get; set; }
         List<Card> DrawnLastGame { get; set; }
