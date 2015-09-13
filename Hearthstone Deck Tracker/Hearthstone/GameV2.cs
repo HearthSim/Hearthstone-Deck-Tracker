@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private static List<string> _hsLogLines = new List<string>();
 		public readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
 		private GameMode _currentGameMode;
+        private GameMode _lastKnownGameMode;
 		public Deck TempArenaDeck;
 
 		public GameV2()
@@ -28,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			Entities = new Dictionary<int, Entity>();
 			CurrentGameMode = GameMode.None;
+            LastKnownGameMode = GameMode.None;
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
@@ -73,10 +75,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return _currentGameMode; }
 			set
 			{
+                LastKnownGameMode = _currentGameMode;
 				_currentGameMode = value;
 				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
 			}
 		}
+
+        public GameMode LastKnownGameMode
+        {
+            get { return _lastKnownGameMode; }
+            set
+            {
+                _lastKnownGameMode = value;
+                Logger.WriteLine("set LastKnownGameMode to " + value, "Game");
+            }
+        }
 
 		public void Reset(bool resetStats = true)
 		{
