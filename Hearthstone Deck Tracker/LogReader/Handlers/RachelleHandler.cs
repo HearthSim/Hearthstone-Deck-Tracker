@@ -32,8 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                     gameState.GameHandler.HandlePossibleConstructedCard(id, false);
             }
-            else if ((DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
-                     && game.CurrentGameMode != GameMode.Spectator)
+            else if ((DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10))
             {
                 GoldTracking(logLine, game);
             }
@@ -55,6 +54,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
         private void GoldTracking(string logLine, IGame game)
         {
+            if (game.CurrentGameMode == GameMode.Casual || game.CurrentGameMode == GameMode.Ranked || game.CurrentGameMode == GameMode.Brawl)
+            {
+            }
+            else
+            {
+                return;
+            }
+
             if (
                 logLine.Contains(
                     "RewardUtils.GetViewableRewards() - processing reward [GoldRewardData: Amount=10 Origin=TOURNEY OriginData=0]"))
