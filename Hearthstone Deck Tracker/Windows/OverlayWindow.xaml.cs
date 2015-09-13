@@ -245,8 +245,8 @@ namespace Hearthstone_Deck_Tracker
                         Config.Instance.SecretsPanelScaling += Math.Abs(delta.Y) > Math.Abs(delta.X) ? delta.Y / (100 * height) : delta.X / (100 * width);
                         if (Config.Instance.SecretsPanelScaling > 1)
                             Config.Instance.SecretsPanelScaling = 1;
-                        else if (Config.Instance.SecretsPanelScaling < 0.4)
-                            Config.Instance.SecretsPanelScaling = 0.4;
+                        else if (Config.Instance.SecretsPanelScaling < 0.2)
+                            Config.Instance.SecretsPanelScaling = 0.2;
                         _movableElements[panel].RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling,
                                                                                      Config.Instance.SecretsPanelScaling);
                     }
@@ -487,11 +487,11 @@ namespace Hearthstone_Deck_Tracker
             //player TODO: take labels into account
             var totalPlayerLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblPlayerFatigue.ActualHeight
                                           + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
-            if (((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
+            if (((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 50) / 50)
                 - (ListViewPlayer.Items.Count * 35 * Scaling + totalPlayerLabelsHeight)) < 1 || Scaling < 1)
             {
                 var previousScaling = Scaling;
-                Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
+                Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 50) / 50)
                           / (ListViewPlayer.Items.Count * 35 + totalPlayerLabelsHeight);
                 if (Scaling > 1)
                     Scaling = 1;
@@ -508,11 +508,11 @@ namespace Hearthstone_Deck_Tracker
             //opponent
             var totalOpponentLabelsHeight = CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight + LblOpponentFatigue.ActualHeight
                                           + LblWinRateAgainst.ActualHeight;
-            if (((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
+            if (((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 50) / 50)
                 - (ListViewOpponent.Items.Count * 35 * OpponentScaling + totalOpponentLabelsHeight)) < 1 || OpponentScaling < 1)
             {
                 var previousScaling = OpponentScaling;
-                OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
+                OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 50) / 50)
                                   / (ListViewOpponent.Items.Count * 35 + totalOpponentLabelsHeight);
                 if (OpponentScaling > 1)
                     OpponentScaling = 1;
@@ -522,7 +522,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //secrets
-            StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
+            StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling*2, Config.Instance.SecretsPanelScaling*2);
 
             Canvas.SetTop(StackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
             Canvas.SetLeft(StackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
@@ -1011,10 +1011,10 @@ namespace Hearthstone_Deck_Tracker
 
         public void UpdateScaling()
         {
-            StackPanelPlayer.RenderTransform = new ScaleTransform(Config.Instance.OverlayPlayerScaling / 100,
-                                                                  Config.Instance.OverlayPlayerScaling / 100);
-            StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
-                                                                    Config.Instance.OverlayOpponentScaling / 100);
+            StackPanelPlayer.RenderTransform = new ScaleTransform(Config.Instance.OverlayPlayerScaling / 50,
+                                                                  Config.Instance.OverlayPlayerScaling / 50);
+            StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 50,
+                                                                    Config.Instance.OverlayOpponentScaling / 50);
         }
 
         public void HideTimers()
