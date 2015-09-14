@@ -350,6 +350,7 @@ namespace Hearthstone_Deck_Tracker
 				public bool FilePrinting { get; set; }
 				public bool ConsolePrinting { get; set; }
 				public bool ScreenPrinting { get; set; }
+				public bool Verbose { get; set; }
 
 				public ConfigItem(string name)
 				{
@@ -363,6 +364,7 @@ namespace Hearthstone_Deck_Tracker
 					FilePrinting = true;
 					ConsolePrinting = Config.Instance.LogConfigConsolePrinting;
 					ScreenPrinting = false;
+					Verbose = true;
 				}
 			}
 			public static readonly Regex NameRegex = new Regex(@"\[(?<value>(\w+))\]");
@@ -370,6 +372,7 @@ namespace Hearthstone_Deck_Tracker
 			public static readonly Regex FilePrintingRegex = new Regex(@"FilePrinting=(?<value>(\w+))");
 			public static readonly Regex ConsolePrintingRegex = new Regex(@"ConsolePrinting=(?<value>(\w+))");
 			public static readonly Regex ScreenPrintingRegex = new Regex(@"ScreenPrinting=(?<value>(\w+))");
+			public static readonly Regex VerboseRegex = new Regex(@"Verbose=(?<value>(\w+))");
 		}
 
 		private bool UpdateLogConfigFile()
@@ -426,6 +429,12 @@ namespace Hearthstone_Deck_Tracker
 								current.ScreenPrinting = bool.Parse(screenPrintingMatch.Groups["value"].Value);
 								continue;
 							}
+
+							var verboseMatch = LogConfig.VerboseRegex.Match(line);
+							if(verboseMatch.Success)
+							{
+								current.Verbose = bool.Parse(verboseMatch.Groups["value"].Value);
+							}
 						}
 						if(current != null)
 							logConfig.Configitems.Add(current);
@@ -460,6 +469,7 @@ namespace Hearthstone_Deck_Tracker
 							sw.WriteLine("FilePrinting={0}", configItem.FilePrinting.ToString().ToLower());
 							sw.WriteLine("ConsolePrinting={0}", configItem.ConsolePrinting.ToString().ToLower());
 							sw.WriteLine("ScreenPrinting={0}", configItem.ScreenPrinting.ToString().ToLower());
+							sw.WriteLine("Verbose={0}", configItem.Verbose.ToString().ToLower());
 						}
 					}
 				}
@@ -693,11 +703,11 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!_foundHsDirectory)
 				await this.ShowHsNotInstalledMessage();
-			else if(_updatedLogConfig)
+			else if(_updatedLogConfig && _game.IsRunning)
 			{
 				await
 					this.ShowMessage("Restart Hearthstone",
-					                 "This is either your first time starting the tracker or the log.config file has been updated. Please restart Hearthstone once, for the tracker to work properly.");
+					                 "This is either your first time starting HDT or the log.config file has been updated. Please restart Hearthstone, for HDT to work properly.");
 			}
 
 			if(!Config.Instance.FixedDuplicateMatches)
