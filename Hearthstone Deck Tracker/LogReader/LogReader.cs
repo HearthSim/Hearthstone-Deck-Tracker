@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 								var logLine = new LogLineItem(_info.Name, lines[i], fileInfo.LastWriteTime);
 								if(logLine.Time < _startingPoint)
 								{
-									var negativeOffset = lines.Take(i).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
+									var negativeOffset = lines.Take(i + 1).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
 									_offset = Math.Max(fs.Length - offset + negativeOffset, 0);
 									return;
 								}
