@@ -557,6 +557,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;
 
+		[DefaultValue(100)]
+		public double SecretsOpacity = 100;
+
 		[DefaultValue(1)]
 		public double SecretsPanelScaling = 1;
 

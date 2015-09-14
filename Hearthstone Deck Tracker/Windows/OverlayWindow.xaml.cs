@@ -240,6 +240,7 @@ namespace Hearthstone_Deck_Tracker
                 {
                     if (_resizeElement)
                     {
+						/*
                         const int width = 215;
                         var height = 35 * StackPanelSecrets.Children.Count;
                         Config.Instance.SecretsPanelScaling += Math.Abs(delta.Y) > Math.Abs(delta.X) ? delta.Y / (100 * height) : delta.X / (100 * width);
@@ -249,6 +250,7 @@ namespace Hearthstone_Deck_Tracker
                             Config.Instance.SecretsPanelScaling = 0.4;
                         _movableElements[panel].RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling,
                                                                                      Config.Instance.SecretsPanelScaling);
+																					 */
                     }
                     else
                     {
@@ -522,7 +524,7 @@ namespace Hearthstone_Deck_Tracker
             }
 
             //secrets
-            StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
+            //StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 
             Canvas.SetTop(StackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
             Canvas.SetLeft(StackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
@@ -629,6 +631,7 @@ namespace Hearthstone_Deck_Tracker
 
             StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
             StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
+	        StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
             Opacity = Config.Instance.OverlayOpacity / 100;
 
             if (!_playerCardsHidden)
@@ -1013,8 +1016,10 @@ namespace Hearthstone_Deck_Tracker
         {
             StackPanelPlayer.RenderTransform = new ScaleTransform(Config.Instance.OverlayPlayerScaling / 100,
                                                                   Config.Instance.OverlayPlayerScaling / 100);
-            StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
-                                                                    Config.Instance.OverlayOpponentScaling / 100);
+			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
+																	Config.Instance.OverlayOpponentScaling / 100);
+	        StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling,
+	                                                               Config.Instance.SecretsPanelScaling);
         }
 
         public void HideTimers()

@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="400">
     <Grid>
         <GroupBox Header="Opponent">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -16,19 +17,33 @@
                                   Checked="CheckboxSameScaling_Checked"
                                   Unchecked="CheckboxSameScaling_Unchecked" />
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Scaling:" HorizontalAlignment="Left"
-                                           VerticalAlignment="Top" />
+                        <Label Content="Scaling:" />
+                        <TextBox Name="TextBoxScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput" Text="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}" DockPanel.Dock="Right" Margin="5,0,0,0" Width="50"/>
                         <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="150" Value="100"
-                                            ValueChanged="SliderOverlayOpponentScaling_ValueChanged"
-                                            Minimum="0.0001" />
+                                            VerticalAlignment="Center" Width="150" Value="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
+                                            Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
                         <Label Content="Opacity:" HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
                         <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="150" Value="100"
+                                            VerticalAlignment="Center" Width="205" Value="100"
                                             ValueChanged="SliderOpponentOpacity_ValueChanged" />
+
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Secret scaling:" />
+                        <TextBox Name="TextBoxSecretScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput" Text="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}" DockPanel.Dock="Right" Margin="5,0,0,0" Width="50"/>
+                        <Slider x:Name="SliderOverlaySecretScaling" HorizontalAlignment="Right"
+                                            VerticalAlignment="Center" Width="150" Value="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
+                                            Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Secret opacity:" HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+                        <Slider x:Name="SliderSecretOpacity" HorizontalAlignment="Right"
+                                            VerticalAlignment="Center" Width="205" Value="100"
+                                            ValueChanged="SliderSecretOpacity_ValueChanged" />
 
                     </DockPanel>
                     <CheckBox x:Name="CheckboxHighlightDiscarded"

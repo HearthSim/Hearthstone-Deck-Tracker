@@ -1,6 +1,12 @@
 ﻿#region
 
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader;
 
@@ -11,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class OverlayPlayer
+	public partial class OverlayPlayer : INotifyPropertyChanged
 	{
 	    private GameV2 _game;
 	    private bool _initialized;
@@ -31,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 			SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
 			SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
+			TextBoxScaling.Text = Config.Instance.OverlayPlayerScaling.ToString(CultureInfo.InvariantCulture);
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 
 			ElementSorterPlayer.IsPlayer = true;
@@ -91,19 +98,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.PlayerOpacity = SliderPlayerOpacity.Value;
 			SaveConfig(true);
-		}
-
-		private void SliderOverlayPlayerScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if(!_initialized)
-				return;
-			var scaling = SliderOverlayPlayerScaling.Value;
-			Config.Instance.OverlayPlayerScaling = scaling;
-			SaveConfig(false);
-			Helper.MainWindow.Overlay.UpdateScaling();
-
-			if(Config.Instance.UseSameScaling && Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value != scaling)
-				Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value = scaling;
 		}
 
 		private async void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
@@ -189,6 +183,43 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = false;
 			Config.Instance.UseSameScaling = false;
 			Config.Save();
+		}
+		
+		public double PlayerScaling
+		{
+			get { return Config.Instance.OverlayPlayerScaling; }
+			set
+			{
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlayPlayerScaling.Minimum)
+					value = SliderOverlayPlayerScaling.Minimum;
+				else if(value > SliderOverlayPlayerScaling.Maximum)
+					value = SliderOverlayPlayerScaling.Maximum;
+				Config.Instance.OverlayPlayerScaling = value;
+				Config.Save();
+				Helper.MainWindow.Overlay.UpdateScaling();
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayOpponentScaling != value)
+					Helper.OptionsMain.OptionsOverlayOpponent.OpponentScaling = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void TextBoxScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
 		}
 	}
 }
