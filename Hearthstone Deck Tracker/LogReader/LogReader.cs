@@ -94,6 +94,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private void ReadLogFile()
 		{
 			_running = true;
+			FindInitialOffset();
 			while(!_stop)
 			{
 				lock(_sync)
@@ -137,6 +138,51 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				Thread.Sleep(Config.Instance.UpdateDelay);
 			}
 			_running = false;
+		}
+
+		private void FindInitialOffset()
+		{
+			var fileInfo = new FileInfo(_filePath);
+			if(fileInfo.Exists)
+			{
+				using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				{
+					using (var sr = new StreamReader(fs))
+					{
+						var offset = 0;
+						while(offset < fs.Length)
+						{
+							offset += 4096;
+							var buffer = new char[4096];
+							fs.Seek(Math.Max(fs.Length - offset, 0), SeekOrigin.Begin);
+							sr.ReadBlock(buffer, 0, 4096);
+							var skip = 0;
+							for(var i = 0; i < 4096; i++)
+							{
+								if(buffer[i] == '\n')
+									break;
+								skip++;
+							}
+							offset -= skip;
+							var lines = (new string(buffer.Skip(skip).ToArray())).Split(new [] {Environment.NewLine}, StringSplitOptions.None).ToArray();
+							for(int i = lines.Length - 1; i > 0; i--)
+							{
+								if(string.IsNullOrWhiteSpace(lines[i]))
+									continue;
+								var logLine = new LogLineItem(_info.Name, lines[i], fileInfo.LastWriteTime);
+								if(logLine.Time < _startingPoint)
+								{
+									var negativeOffset = lines.Take(i).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
+									_offset = Math.Max(fs.Length - offset + negativeOffset, 0);
+									return;
+								}
+							}
+						}
+
+					}
+				}
+			}
+			_offset = 0;
 		}
 
 		public DateTime FindEntryPoint(string str)
