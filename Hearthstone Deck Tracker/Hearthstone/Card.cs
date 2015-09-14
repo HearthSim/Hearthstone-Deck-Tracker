@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -273,7 +274,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Color color;
 				if(HighlightDraw && Config.Instance.HighlightLastDrawn)
 					color = Colors.Orange;
-				else if(IsCreated || (HighlightInHand && Config.Instance.HighlightCardsInHand))
+				else if(HighlightInHand && Config.Instance.HighlightCardsInHand)
 					color = Colors.GreenYellow;
 				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
@@ -350,7 +351,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
 
-					//extra info?
 					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
@@ -368,6 +368,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
 							                                           new Rect(194, 8, 18, 21)));
 						}
+					}
+
+					if(IsCreated)
+					{
+						var xOffset = Math.Abs(Count) > 1 || Rarity == "Legendary" ? 23 : 3;
+                        drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"),
+																   new Rect(192 - xOffset, 8, 21, 21)));
+						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-icon-created.png", "Images"),
+							                                           new Rect(194 - xOffset, 9, 16, 16)));
 					}
 
 					//dark overlay

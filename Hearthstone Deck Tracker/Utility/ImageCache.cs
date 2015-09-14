@@ -69,12 +69,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return GetClassIcon(HeroClassAll.Warrior); }
 		}
 
-		public static BitmapImage GetImage(string resourcePath)
+		public static BitmapImage GetImage(string resourcePath, string basePath = "Resources")
 		{
 			BitmapImage image;
 			if(ImageCacheDict.TryGetValue(resourcePath, out image))
 				return image;
-			var uri = new Uri(string.Format("pack://application:,,,/Resources/{0}", resourcePath), UriKind.Absolute);
+			var uri = new Uri(string.Format("pack://application:,,,/{0}/{1}", basePath, resourcePath), UriKind.Absolute);
 			image = new BitmapImage(uri);
 			ImageCacheDict.Add(resourcePath, image);
 			return image;

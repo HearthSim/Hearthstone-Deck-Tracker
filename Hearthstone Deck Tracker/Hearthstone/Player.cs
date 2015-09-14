@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var card = Database.GetCardFromId(x.Key);
 					card.Count = x.Count();
 					card.IsCreated = true;
+					card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
 					return card;
 				}).ToList() : new List<Card>();
 
