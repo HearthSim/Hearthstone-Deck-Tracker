@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
+		    SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var itemName in Config.Instance.PanelOrderOpponent)
