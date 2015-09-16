@@ -76,9 +76,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 if (firstPlayer.Value != null)
                     AddToTurn = firstPlayer.Value.GetTag(GAME_TAG.CONTROLLER) == _game.Player.Id ? 0 : 1;
             }
-            Entity entity;
-            if (_game.Entities.TryGetValue(1, out entity))
-                return (entity.Tags[GAME_TAG.TURN] + (AddToTurn == -1 ? 0 : AddToTurn)) / 2;
+	        var entity = _game.Entities.FirstOrDefault(e => e.Value != null && e.Value.Name == "GameEntity").Value;
+	        if(entity != null)
+				return (entity.Tags[GAME_TAG.TURN] + (AddToTurn == -1 ? 0 : AddToTurn)) / 2;
             return 0;
         }
         
