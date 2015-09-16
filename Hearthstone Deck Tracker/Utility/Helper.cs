@@ -315,7 +315,8 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
 
 
-			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator)
+			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
+				&& game.IgnoreIncorrectDeck != DeckList.Instance.ActiveDeck)
 			{
 				MainWindow.IsShowingIncorrectDeckMessage = true;
 				MainWindow.ShowIncorrectDeckMessage();

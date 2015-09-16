@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
 		public bool NoMatchingDeck { get; set; }
+		public Deck IgnoreIncorrectDeck { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
 		public int OpponentSecretCount { get; set; }

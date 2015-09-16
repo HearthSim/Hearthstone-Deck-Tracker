@@ -1395,7 +1395,12 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(selectedDeck.Name == "Use no deck")
 						SelectDeck(null, true);
-					else if(selectedDeck.Name != "No match - Keep using active deck")
+					else if(selectedDeck.Name == "No match - Keep using active deck")
+					{
+						_game.IgnoreIncorrectDeck = DeckList.Instance.ActiveDeck;
+						Logger.WriteLine(string.Format("Now ignoring {0} as an incorrect deck", DeckList.Instance.ActiveDeck.Name), "IncorrectDeckMessage");
+					}
+					else
 					{
 						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
 						DeckPickerList.SelectDeck(selectedDeck);
