@@ -59,6 +59,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                 {
                     var entity = game.Entities.FirstOrDefault(x => x.Value.Name == rawEntity);
+
+	                if(entity.Value == null)
+	                {
+		                entity = game.Entities.FirstOrDefault(x => x.Value.Name == "UNKNOWN HUMAN PLAYER");
+		                if(entity.Value != null)
+			                entity.Value.Name = rawEntity;
+	                }
+
                     if (entity.Value == null)
                     {
                         //while the id is unknown, store in tmp entities
