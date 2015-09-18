@@ -454,7 +454,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						DeckList.Instance.AllTags.Add(decktype);
 						DeckList.Save();
-						Helper.MainWindow.ReloadTags();
+						if (Helper.MainWindow != null) // to avoid errors when running tests
+							Helper.MainWindow.ReloadTags();
 					}
 					deck.Tags.Add(decktype);
 				}
