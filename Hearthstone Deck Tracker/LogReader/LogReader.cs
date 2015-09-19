@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			{
 				using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					using (var sr = new StreamReader(fs))
+					using (var sr = new StreamReader(fs, Encoding.ASCII))
 					{
 						var offset = 0;
 						while(offset < fs.Length)
@@ -159,9 +159,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							var skip = 0;
 							for(var i = 0; i < 4096; i++)
 							{
+								skip++;
 								if(buffer[i] == '\n')
 									break;
-								skip++;
 							}
 							offset -= skip;
 							var lines = (new string(buffer.Skip(skip).ToArray())).Split(new [] {Environment.NewLine}, StringSplitOptions.None).ToArray();
@@ -193,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				var target = new string(str.Reverse().ToArray());
 				using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					using(var sr = new StreamReader(fs))
+					using(var sr = new StreamReader(fs, Encoding.ASCII))
 					{
 						var offset = 0;
 						while(offset < fs.Length)
@@ -205,9 +205,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							var skip = 0;
 							for(var i = 0; i < 4096; i++)
 							{
+								skip++;
 								if(buffer[i] == '\n')
 									break;
-								skip++;
 							}
 							offset -= skip;
 							var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
