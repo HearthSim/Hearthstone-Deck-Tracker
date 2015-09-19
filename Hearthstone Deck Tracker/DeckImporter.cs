@@ -236,6 +236,7 @@ namespace Hearthstone_Deck_Tracker
 				using(var wb = new WebBrowser())
 				{
 					var done = false;
+					wb.ScriptErrorsSuppressed = true;
 					wb.Navigate(newUrl + "#" + DateTime.Now.Ticks);
 					wb.DocumentCompleted += (sender, args) => done = true;
 
@@ -715,8 +716,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			using(var wb = new WebBrowser())
 			{
-				var done = false;
+				var done = false;				
 				var doc = new HtmlDocument();
+				wb.ScriptErrorsSuppressed = true;
 				//                  avoid cache
 				wb.Navigate(url + "?" + DateTime.Now.Ticks);
 				wb.DocumentCompleted += (sender, args) => done = true;
