@@ -582,6 +582,13 @@ namespace Hearthstone_Deck_Tracker
 
 		private bool VerifyHeroes(GameStats game)
 		{
+			// If its Brawl skip verification
+			if(game.GameMode == GameMode.Brawl)
+			{
+				game.VerifiedHeroes = true;
+				return false;
+			}
+
 			var modifiedHero = false;
 			var playerHeroes = new Dictionary<string, int>();
 			var opponentHeroes = new Dictionary<string, int>();
