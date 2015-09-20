@@ -257,8 +257,16 @@ namespace Hearthstone_Deck_Tracker
 						await Task.Delay(200 - Config.Instance.DeckExportDelay);
 						if(CardHasLock(hsHandle, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287), width, height))
 						{
-							Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter", 1);
-							return 1;
+							if(CardExists(hsHandle, (int)card2PosX, (int)cardPosY, width, height))
+							{
+								await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
+								return 0;
+							}
+							else
+							{
+								Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter", 1);
+								return 1;
+							}
 						}
 
 						await ClickOnPoint(hsHandle, new Point((int)cardPosX + 50, (int)cardPosY + 50));
