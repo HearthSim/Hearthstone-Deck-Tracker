@@ -19,6 +19,10 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerPlay(Entity entity, string cardId, int turn);
 		void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToDeck(Entity entity, string cardId, int turn);
+
+		// TODO: arguments?
+		void HandlePlayerAttack(bool isHero);
+
 		void HandlePlayerHeroPower(string cardId, int turn);
 		void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);

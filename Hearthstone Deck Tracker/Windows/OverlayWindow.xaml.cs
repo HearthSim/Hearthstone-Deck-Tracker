@@ -395,6 +395,7 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+        // TODO: if game state is properly tracked, don't need a user interface to gray secrets
         private void GrayOutSecrets(Point mousePos)
         {
             if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))

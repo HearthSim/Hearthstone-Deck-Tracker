@@ -247,6 +247,28 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnTurnStart.Execute(player);
         }
 
+        public void HandlePlayerAttack(bool isHero)
+        {
+            if (isHero)
+            {
+                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
+                _game.OpponentSecrets.SetZero("AT_060", HeroClass.Hunter); //bear trap
+                _game.OpponentSecrets.SetZero("EX1_610", HeroClass.Hunter); //explosive trap
+                _game.OpponentSecrets.SetZero("EX1_533", HeroClass.Hunter); //misdirection
+                _game.OpponentSecrets.SetZero("EX1_289", HeroClass.Mage); //ice barrier
+                _game.OpponentSecrets.SetZero("EX1_594", HeroClass.Mage); //vaporize
+                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+            }
+            else
+            {
+                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
+                _game.OpponentSecrets.SetZero("EX1_554", HeroClass.Hunter); //snake trap
+                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+            }
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
         public void HandleGameStart()
         {
             if (DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started

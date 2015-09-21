@@ -16,30 +16,23 @@ namespace Hearthstone_Deck_Tracker
 			Id = id;
 			Stolen = stolen;
 			HeroClass = heroClass;
-			PossibleSecrets = new bool[GetMaxSecretCount(heroClass)];
+			PossibleSecrets = new Dictionary<string, bool>();
 
-			for(var i = 0; i < PossibleSecrets.Length; i++)
-				PossibleSecrets[i] = true;
+			foreach (var cardId in GetSecretIds(heroClass))
+			{
+				PossibleSecrets[cardId] = true;
+			}
 		}
 
 		public int Id { get; private set; }
 		public bool Stolen { get; private set; }
 		public HeroClass HeroClass { get; private set; }
-		public bool[] PossibleSecrets { get; set; }
+		public Dictionary<string, bool> PossibleSecrets { get; set; }
+
 
 		public static int GetMaxSecretCount(HeroClass heroClass)
 		{
-			switch(heroClass)
-			{
-				case HeroClass.Hunter:
-					return CardIds.SecretIdsHunter.Count;
-				case HeroClass.Mage:
-					return CardIds.SecretIdsMage.Count;
-				case HeroClass.Paladin:
-					return CardIds.SecretIdsPaladin.Count;
-				default:
-					return 0;
-			}
+			return GetSecretIds(heroClass).Count;
 		}
 
 		public static List<string> GetSecretIds(HeroClass heroClass)
@@ -55,20 +48,6 @@ namespace Hearthstone_Deck_Tracker
 				default:
 					return new List<string>();
 			}
-		}
-
-		public static int GetSecretIndex(HeroClass heroClass, string cardId)
-		{
-			switch(heroClass)
-			{
-				case HeroClass.Hunter:
-					return CardIds.SecretIdsHunter.IndexOf(cardId);
-				case HeroClass.Mage:
-					return CardIds.SecretIdsMage.IndexOf(cardId);
-				case HeroClass.Paladin:
-					return CardIds.SecretIdsPaladin.IndexOf(cardId);
-			}
-			return -1;
 		}
 	}
 }

@@ -387,6 +387,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                     gameState.OpponentUsedHeroPower = false;
             }
+            else if (tag == GAME_TAG.DEFENDING && value == 1)
+            {
+                if (player == "OPPOSING" && CardIds.HeroIdDict.Keys.Contains(cardId))
+                {
+                    Logger.WriteLine("Opposing player attacked");
+                    gameState.GameHandler.HandlePlayerAttack(true);
+                }
+                else if (player == "OPPOSING" && !CardIds.HeroIdDict.Keys.Contains(cardId))
+                {
+                    Logger.WriteLine("Opposing minion attacked");
+                    gameState.GameHandler.HandlePlayerAttack(false);
+                }
+            }
             else if (tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
             {
                 if (controller == game.Player.Id)
