@@ -269,6 +269,39 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ShowSecrets();
         }
 
+        public void HandlePlayerMinionPlayed()
+        {
+            _game.OpponentSecrets.SetZero("EX1_609", HeroClass.Hunter); //snipe
+            _game.OpponentSecrets.SetZero("EX1_294", HeroClass.Mage); //mirror entity
+            _game.OpponentSecrets.SetZero("EX1_379", HeroClass.Paladin); //repentance
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerSpellPlayed(bool isMinionTargeted)
+        {
+            if (isMinionTargeted)
+            {
+                _game.OpponentSecrets.SetZero("tt_010", HeroClass.Mage); //spellbender
+            }
+            _game.OpponentSecrets.SetZero("EX1_287", HeroClass.Mage); //counterspell
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerMinionDeath()
+        {
+            _game.OpponentSecrets.SetZero("FP1_018", HeroClass.Mage); //duplicate
+            _game.OpponentSecrets.SetZero("AT_002", HeroClass.Mage); //effigy
+            _game.OpponentSecrets.SetZero("FP1_020", HeroClass.Paladin); //avenge
+            _game.OpponentSecrets.SetZero("EX1_136", HeroClass.Paladin); //redemption
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        //eye for an eye (opponent damage)
+        //competitive spirit (turn start /w minion in play)
+
         public void HandleGameStart()
         {
             if (DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started

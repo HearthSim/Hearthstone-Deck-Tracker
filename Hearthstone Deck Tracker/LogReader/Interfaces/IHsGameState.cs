@@ -35,5 +35,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
         void GameEnd();
         int GetTurnNumber();
         void GameEndKeyPoint(bool victory, int id);
+        bool PlayersTurn();
     }
 }

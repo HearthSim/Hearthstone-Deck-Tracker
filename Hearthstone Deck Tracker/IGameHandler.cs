@@ -22,8 +22,11 @@ namespace Hearthstone_Deck_Tracker
 
 		// TODO: arguments?
 		void HandlePlayerAttack(bool isHero);
+		void HandlePlayerMinionPlayed();
+        void HandlePlayerSpellPlayed(bool isMinionTargeted);
+        void HandlePlayerMinionDeath();
 
-		void HandlePlayerHeroPower(string cardId, int turn);
+        void HandlePlayerHeroPower(string cardId, int turn);
 		void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
