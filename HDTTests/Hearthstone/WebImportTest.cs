@@ -14,8 +14,8 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void Hearthstats()
 		{
-			Deck expected = CreateDeck("Inner Rage;2", "Cruel Taskmaster;2", "Loot Hoarder;2", "Slam;0", "Unstable Ghoul;0");
-			Deck found = DeckImporter.Import(@"https://hearthstats.net/decks/pavel-s-onog-tgt-patron-warrior--2").Result;
+			Deck expected = CreateDeck();
+			Deck found = DeckImporter.Import(@"https://hearthstats.net/decks/senfglas-patron--248").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
