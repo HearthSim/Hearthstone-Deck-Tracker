@@ -247,9 +247,9 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnTurnStart.Execute(player);
         }
 
-        public void HandlePlayerAttack(bool isHero)
+        public void HandlePlayerAttack(Entity entity)
         {
-            if (isHero)
+            if (CardIds.HeroIdDict.Keys.Contains(entity.CardId))
             {
                 _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
                 _game.OpponentSecrets.SetZero("AT_060", HeroClass.Hunter); //bear trap
@@ -299,8 +299,23 @@ namespace Hearthstone_Deck_Tracker
             Helper.MainWindow.Overlay.ShowSecrets();
         }
 
-        //eye for an eye (opponent damage)
-        //competitive spirit (turn start /w minion in play)
+        public void HandleOpponentDamage(Entity entity)
+        {
+            if (entity.IsOpponent)
+            {
+                _game.OpponentSecrets.SetZero("EX1_132", HeroClass.Paladin); //eye for an eye
+                Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
+
+        public void HandleOpponentTurnStart(Entity entity)
+        {
+            if (entity.IsMinion)
+            {
+                _game.OpponentSecrets.SetZero("AT_073", HeroClass.Paladin); //competitive spirit
+                Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
 
         public void HandleGameStart()
         {

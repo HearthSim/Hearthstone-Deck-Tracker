@@ -19,15 +19,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerPlay(Entity entity, string cardId, int turn);
 		void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToDeck(Entity entity, string cardId, int turn);
-
-		// TODO: arguments?
-		void HandlePlayerAttack(bool isHero);
-		void HandlePlayerMinionPlayed();
-        void HandlePlayerSpellPlayed(bool isMinionTargeted);
-        void HandlePlayerMinionDeath();
-
         void HandlePlayerHeroPower(string cardId, int turn);
-		void SetPlayerHero(string playerHero);
+        void SetPlayerHero(string playerHero);
 		void HandlePlayerName(string name);
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
 		void TurnStart(ActivePlayer player, int turnNumber);
@@ -48,9 +41,20 @@ namespace Hearthstone_Deck_Tracker
 		void HandleDustReward(int amount);
 		void HandleGoldReward(int amount);
 
-		#region OpponentHandlers
+        #region SecretTriggers
 
-		void HandleOpponentPlay(Entity entity, string cardId, int from, int turn);
+        void HandlePlayerAttack(Entity entity);
+        void HandlePlayerMinionPlayed();
+        void HandlePlayerSpellPlayed(bool isMinionTargeted);
+        void HandlePlayerMinionDeath();
+        void HandleOpponentDamage(Entity entity);
+        void HandleOpponentTurnStart(Entity entity);
+
+        #endregion
+
+        #region OpponentHandlers
+
+        void HandleOpponentPlay(Entity entity, string cardId, int from, int turn);
 		void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn);
 		void HandleOpponentDraw(Entity entity, int turn);
 		void HandleOpponentMulligan(Entity entity, int from);
