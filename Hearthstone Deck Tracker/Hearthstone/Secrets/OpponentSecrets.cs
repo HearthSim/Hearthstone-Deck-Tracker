@@ -88,18 +88,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		// TODO: maybe deprecate this? if we track game state, don't need to click to toggle
-		public void Trigger(string cardId)
-		{
-			var heroClass = GetHeroClass(cardId);
-			if(!heroClass.HasValue)
-				return;
-			if(Secrets.Where(s => s.HeroClass == heroClass).Any(s => s.PossibleSecrets[cardId]))
-				SetZero(cardId, heroClass.Value);
-			else
-				SetMax(cardId, heroClass.Value);
-		}
-
 		public void SetMax(string cardId, HeroClass? heroClass)
 		{
 			if(heroClass == null)

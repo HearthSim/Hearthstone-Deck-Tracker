@@ -249,6 +249,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePlayerAttack(Entity entity)
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             if (CardIds.HeroIdDict.Keys.Contains(entity.CardId))
             {
                 _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
@@ -271,6 +274,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePlayerMinionPlayed()
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             _game.OpponentSecrets.SetZero("EX1_609", HeroClass.Hunter); //snipe
             _game.OpponentSecrets.SetZero("EX1_294", HeroClass.Mage); //mirror entity
             _game.OpponentSecrets.SetZero("EX1_379", HeroClass.Paladin); //repentance
@@ -280,6 +286,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePlayerSpellPlayed(bool isMinionTargeted)
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             if (isMinionTargeted)
             {
                 _game.OpponentSecrets.SetZero("tt_010", HeroClass.Mage); //spellbender
@@ -291,6 +300,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePlayerMinionDeath()
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             _game.OpponentSecrets.SetZero("FP1_018", HeroClass.Mage); //duplicate
             _game.OpponentSecrets.SetZero("AT_002", HeroClass.Mage); //effigy
             _game.OpponentSecrets.SetZero("FP1_020", HeroClass.Paladin); //avenge
@@ -301,6 +313,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandleOpponentDamage(Entity entity)
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             if (entity.IsOpponent)
             {
                 _game.OpponentSecrets.SetZero("EX1_132", HeroClass.Paladin); //eye for an eye
@@ -310,6 +325,9 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandleOpponentTurnStart(Entity entity)
         {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
             if (entity.IsMinion)
             {
                 _game.OpponentSecrets.SetZero("AT_073", HeroClass.Paladin); //competitive spirit
