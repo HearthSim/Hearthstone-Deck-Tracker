@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_currentGameMode = value;
-				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
+				Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
 			}
 		}
 
