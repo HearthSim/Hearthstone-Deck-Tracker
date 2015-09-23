@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public LogReader(LogReaderInfo info)
 		{
 			_info = info;
-			_filePath = Path.Combine(Config.Instance.HearthstoneDirectory, string.Format("Logs/{0}.log", _info.Name));
+			_filePath = string.IsNullOrEmpty(info.FilePath) ? Path.Combine(Config.Instance.HearthstoneDirectory, string.Format("Logs/{0}.log", _info.Name)) : info.FilePath;
 		}
 
 
@@ -187,10 +187,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public DateTime FindEntryPoint(string str)
 		{
+			return FindEntryPoint(new [] {str});
+		}
+
+		public DateTime FindEntryPoint(string[] str)
+		{
 			var fileInfo = new FileInfo(_filePath);
 			if(fileInfo.Exists)
 			{
-				var target = new string(str.Reverse().ToArray());
+				var targets = str.Select(x => new string(x.Reverse().ToArray())).ToList();
 				using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
 					using(var sr = new StreamReader(fs, Encoding.ASCII))
@@ -211,10 +216,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							}
 							offset -= skip;
 							var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
-							var gameStartOffset = reverse.IndexOf(target, StringComparison.Ordinal);
-							if(gameStartOffset != -1)
+							var targetOffsets = targets.Select(x => reverse.IndexOf(x, StringComparison.Ordinal)).Where(x => x > -1).ToList();
+							var targetOffset = targetOffsets.Any() ? targetOffsets.Min() : -1;
+							if(targetOffset != -1)
 							{
-								var line = new string(reverse.Substring(gameStartOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
+								var line = new string(reverse.Substring(targetOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
 								return new LogLineItem("", line, fileInfo.LastWriteTime).Time;
 							}
 						}
