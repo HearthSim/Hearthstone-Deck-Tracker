@@ -573,6 +573,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.CreateInDeck(entity, turn);
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
+	        GameEvents.OnPlayerCreateInDeck.Execute(Database.GetCardFromId(cardId));
         }
 
         public void HandlePlayerGet(Entity entity, string cardId, int turn)
@@ -738,11 +739,13 @@ namespace Hearthstone_Deck_Tracker
 	    public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
 	    {
 			_game.Player.CreateInPlay(entity, turn);
-	    }
+			GameEvents.OnPlayerCreateInPlay.Execute(Database.GetCardFromId(cardId));
+		}
 
 	    public void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn)
 		{
 			_game.Opponent.CreateInPlay(entity, turn);
+			GameEvents.OnOpponentCreateInPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
 	    public void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE zone, int turn)
@@ -757,19 +760,22 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Player.JoustReveal(entity, turn);
 			Helper.UpdatePlayerCards();
+			GameEvents.OnPlayerJoustReveal.Execute(Database.GetCardFromId(cardId));
 		}
 
 	    public void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn)
 	    {
 		    _game.Player.DeckToPlay(entity, turn);
 			Helper.UpdatePlayerCards();
-	    }
+			GameEvents.OnPlayerDeckToPlay.Execute(Database.GetCardFromId(cardId));
+		}
 
 	    public void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn)
 	    {
 		    _game.Opponent.DeckToPlay(entity, turn);
 			Helper.UpdateOpponentCards();
-	    }
+			GameEvents.OnOpponentDeckToPlay.Execute(Database.GetCardFromId(cardId));
+		}
 
 	    public void HandlePlayerRemoveFromDeck(Entity entity, int turn)
 	    {
@@ -849,6 +855,7 @@ namespace Hearthstone_Deck_Tracker
         {
 			_game.Opponent.JoustReveal(entity, turn);
 			Helper.UpdateOpponentCards();
+			GameEvents.OnOpponentJoustReveal.Execute(Database.GetCardFromId(cardId));
 		}
 
         public void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn)
