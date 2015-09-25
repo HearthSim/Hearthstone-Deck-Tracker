@@ -46,7 +46,9 @@ namespace HDTTests.Hearthstone
             _heroOpponent.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
             _heroOpponent.IsPlayer = false;
             _minion1 = CreateNewEntity("EX1_010");
+            _minion1.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
             _minion2 = CreateNewEntity("EX1_020");
+            _minion2.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
             _secretHunter1 = CreateNewEntity("");
             _secretHunter1.SetTag(GAME_TAG.CLASS, (int) TAG_CLASS.HUNTER);
             _secretHunter2 = CreateNewEntity("");
