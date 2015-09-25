@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck == null)
 				return;
 			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
-			var screenShotWindow = new PlayerWindow(_game, selectedDeck.Cards.ToSortedCardList());
+			var screenShotWindow = new PlayerWindow(_game, selectedDeck.GetSelectedDeckVersion().Cards.ToSortedCardList());
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
