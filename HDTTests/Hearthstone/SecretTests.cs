@@ -1,4 +1,5 @@
-﻿using Hearthstone_Deck_Tracker;
+﻿using System.Linq;
+using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -17,8 +18,8 @@ namespace HDTTests.Hearthstone
         private GameV2 _game;
         private GameEventHandler _gameEventHandler;
 
-        private Entity _hero1,
-            _hero2,
+        private Entity _heroPlayer,
+            _heroOpponent,
             _minion1,
             _minion2,
             _secretHunter1,
@@ -38,8 +39,12 @@ namespace HDTTests.Hearthstone
         {
             _game = new GameV2();
             _gameEventHandler = new GameEventHandler(_game);
-            _hero1 = CreateNewEntity("HERO_01");
-            _hero2 = CreateNewEntity("HERO_02");
+            _heroPlayer = CreateNewEntity("HERO_01");
+            _heroPlayer.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
+            _heroPlayer.IsPlayer = true;
+            _heroOpponent = CreateNewEntity("HERO_02");
+            _heroOpponent.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
+            _heroOpponent.IsPlayer = false;
             _minion1 = CreateNewEntity("EX1_010");
             _minion2 = CreateNewEntity("EX1_020");
             _secretHunter1 = CreateNewEntity("");
@@ -65,128 +70,111 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_HeroToHero_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_hero1, _hero2);
-            var hunterSecrets = _game.OpponentSecrets.Secrets[0].PossibleSecrets;
-            Assert.IsFalse(hunterSecrets[HunterSecrets.BearTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.ExplosiveTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.FreezingTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.Misdirection]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.SnakeTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Snipe]);
-
-            var mageSecrets = _game.OpponentSecrets.Secrets[1].PossibleSecrets;
-            Assert.IsTrue(mageSecrets[MageSecrets.Counterspell]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Duplicate]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Effigy]);
-            Assert.IsFalse(mageSecrets[MageSecrets.IceBarrier]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBlock]);
-            Assert.IsTrue(mageSecrets[MageSecrets.MirrorEntity]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Spellbender]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Vaporize]);
-
-
-            var paladinSecrets = _game.OpponentSecrets.Secrets[2].PossibleSecrets;
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Avenge]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.CompetitiveSpirit]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.EyeForAnEye]);
-            Assert.IsFalse(paladinSecrets[PaladinSecrets.NobleSacrifice]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Redemption]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Repentance]);
+            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _heroOpponent);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
+                HunterSecrets.Misdirection);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
 
         [TestMethod]
         public void SingleSecret_MinionToHero_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_minion1, _hero2);
-            var hunterSecrets = _game.OpponentSecrets.Secrets[0].PossibleSecrets;
-            Assert.IsFalse(hunterSecrets[HunterSecrets.BearTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.ExplosiveTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.FreezingTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.Misdirection]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.SnakeTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Snipe]);
-
-            var mageSecrets = _game.OpponentSecrets.Secrets[1].PossibleSecrets;
-            Assert.IsTrue(mageSecrets[MageSecrets.Counterspell]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Duplicate]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Effigy]);
-            Assert.IsFalse(mageSecrets[MageSecrets.IceBarrier]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBlock]);
-            Assert.IsTrue(mageSecrets[MageSecrets.MirrorEntity]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Spellbender]);
-            Assert.IsFalse(mageSecrets[MageSecrets.Vaporize]);
-
-
-            var paladinSecrets = _game.OpponentSecrets.Secrets[2].PossibleSecrets;
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Avenge]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.CompetitiveSpirit]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.EyeForAnEye]);
-            Assert.IsFalse(paladinSecrets[PaladinSecrets.NobleSacrifice]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Redemption]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Repentance]);
+            _gameEventHandler.HandlePlayerAttack(_minion1, _heroOpponent);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
+                HunterSecrets.FreezingTrap, HunterSecrets.Misdirection);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
 
         [TestMethod]
         public void SingleSecret_HeroToMinion_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_hero1, _minion2);
-            var hunterSecrets = _game.OpponentSecrets.Secrets[0].PossibleSecrets;
-            Assert.IsTrue(hunterSecrets[HunterSecrets.BearTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.ExplosiveTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.FreezingTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Misdirection]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.SnakeTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Snipe]);
-
-            var mageSecrets = _game.OpponentSecrets.Secrets[1].PossibleSecrets;
-            Assert.IsTrue(mageSecrets[MageSecrets.Counterspell]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Duplicate]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Effigy]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBarrier]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBlock]);
-            Assert.IsTrue(mageSecrets[MageSecrets.MirrorEntity]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Spellbender]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Vaporize]);
-
-
-            var paladinSecrets = _game.OpponentSecrets.Secrets[2].PossibleSecrets;
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Avenge]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.CompetitiveSpirit]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.EyeForAnEye]);
-            Assert.IsFalse(paladinSecrets[PaladinSecrets.NobleSacrifice]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Redemption]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Repentance]);
+            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _minion2);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap);
+            VerifySecrets(1, MageSecrets.All);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
 
         [TestMethod]
         public void SingleSecret_MinionToMinion_PlayerAttackTest()
         {
             _gameEventHandler.HandlePlayerAttack(_minion1, _minion2);
-            var hunterSecrets = _game.OpponentSecrets.Secrets[0].PossibleSecrets;
-            Assert.IsTrue(hunterSecrets[HunterSecrets.BearTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.ExplosiveTrap]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.FreezingTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Misdirection]);
-            Assert.IsFalse(hunterSecrets[HunterSecrets.SnakeTrap]);
-            Assert.IsTrue(hunterSecrets[HunterSecrets.Snipe]);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap);
+            VerifySecrets(1, MageSecrets.All);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+        }
 
-            var mageSecrets = _game.OpponentSecrets.Secrets[1].PossibleSecrets;
-            Assert.IsTrue(mageSecrets[MageSecrets.Counterspell]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Duplicate]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Effigy]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBarrier]);
-            Assert.IsTrue(mageSecrets[MageSecrets.IceBlock]);
-            Assert.IsTrue(mageSecrets[MageSecrets.MirrorEntity]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Spellbender]);
-            Assert.IsTrue(mageSecrets[MageSecrets.Vaporize]);
+        [TestMethod]
+        public void SingleSecret_MinionDied()
+        {
+            //TODO: this behaviour is not always true. https://www.youtube.com/watch?v=oHdveuZXoHg
+            _gameEventHandler.HandlePlayerMinionDeath();
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);
+        }
 
-            var paladinSecrets = _game.OpponentSecrets.Secrets[2].PossibleSecrets;
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Avenge]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.CompetitiveSpirit]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.EyeForAnEye]);
-            Assert.IsFalse(paladinSecrets[PaladinSecrets.NobleSacrifice]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Redemption]);
-            Assert.IsTrue(paladinSecrets[PaladinSecrets.Repentance]);
+        [TestMethod]
+        public void SingleSecret_MinionPlayed()
+        {
+            _gameEventHandler.HandlePlayerMinionPlayed();
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+        }
+
+        [TestMethod]
+        public void SingleSecret_OpponentDamage()
+        {
+            _gameEventHandler.HandleOpponentDamage(_heroOpponent);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.EyeForAnEye);
+        }
+
+        [TestMethod]
+        public void SingleSecret_MinionTarget_SpellPlayed()
+        {
+            _gameEventHandler.HandlePlayerSpellPlayed(true);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender);
+            VerifySecrets(2, PaladinSecrets.All);
+        }
+
+        [TestMethod]
+        public void SingleSecret_NoMinionTarget_SpellPlayed()
+        {
+            _gameEventHandler.HandlePlayerSpellPlayed(false);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell);
+            VerifySecrets(2, PaladinSecrets.All);
+        }
+
+        [TestMethod]
+        public void SingleSecret_MinionInPlay_OpponentTurnStart()
+        {
+            _gameEventHandler.HandleOpponentTurnStart(_minion2);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
+        }
+
+        [TestMethod]
+        public void SingleSecret_NoMinionInPlay_OpponentTurnStart()
+        {
+            _gameEventHandler.HandleOpponentTurnStart(_heroOpponent);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All);
+            VerifySecrets(2, PaladinSecrets.All);
+        }
+
+        private void VerifySecrets(int secretIndex, string[] allSecrets, params string[] triggered)
+        {
+            var secrets = _game.OpponentSecrets.Secrets[secretIndex];
+            foreach (var secret in allSecrets)
+                Assert.AreEqual(secrets.PossibleSecrets[secret], !triggered.Contains(secret),
+                    Database.GetCardFromId(secret).Name);
         }
     }
 }
