@@ -247,29 +247,65 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnTurnStart.Execute(player);
         }
 
-        public void HandlePlayerAttack(Entity entity)
+        private Entity _attackingEntity;
+        private Entity _defendingEntity;
+        public void HandleAttackingEntity(Entity entity)
+        {
+            _attackingEntity = entity;
+            if(_attackingEntity != null && _defendingEntity != null)
+                HandlePlayerAttack(_attackingEntity, _defendingEntity);
+        }
+
+        public void HandleDefendingEntity(Entity entity)
+        {
+            _defendingEntity = entity;
+            if(_attackingEntity != null && _defendingEntity != null)
+                HandlePlayerAttack(_attackingEntity, _defendingEntity);
+        }
+
+        public void HandlePlayerAttack(Entity source, Entity target)
         {
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
 
-            if (CardIds.HeroIdDict.Keys.Contains(entity.CardId))
+            if (source.IsHero)
             {
-                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
-                _game.OpponentSecrets.SetZero("AT_060", HeroClass.Hunter); //bear trap
-                _game.OpponentSecrets.SetZero("EX1_610", HeroClass.Hunter); //explosive trap
-                _game.OpponentSecrets.SetZero("EX1_533", HeroClass.Hunter); //misdirection
-                _game.OpponentSecrets.SetZero("EX1_289", HeroClass.Mage); //ice barrier
-                _game.OpponentSecrets.SetZero("EX1_594", HeroClass.Mage); //vaporize
-                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+                if (target.IsHero)
+                {
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.BearTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.ExplosiveTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.Misdirection, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.IceBarrier, HeroClass.Mage);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.NobleSacrifice, HeroClass.Paladin);
+                }
+                else
+                {
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.SnakeTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.NobleSacrifice, HeroClass.Paladin);
+                }
             }
             else
             {
-                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
-                _game.OpponentSecrets.SetZero("EX1_554", HeroClass.Hunter); //snake trap
-                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+                if (target.IsHero)
+                {
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.BearTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.ExplosiveTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.FreezingTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.Misdirection, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.IceBarrier, HeroClass.Mage);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Vaporize, HeroClass.Mage);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.NobleSacrifice, HeroClass.Paladin);
+                }
+                else
+                {
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.FreezingTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.SnakeTrap, HeroClass.Hunter);
+                    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.NobleSacrifice, HeroClass.Paladin);
+                }
             }
 
-            Helper.MainWindow.Overlay.ShowSecrets();
+            if (Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
         }
 
         public void HandlePlayerMinionPlayed()
@@ -280,8 +316,9 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecrets.SetZero("EX1_609", HeroClass.Hunter); //snipe
             _game.OpponentSecrets.SetZero("EX1_294", HeroClass.Mage); //mirror entity
             _game.OpponentSecrets.SetZero("EX1_379", HeroClass.Paladin); //repentance
-
-            Helper.MainWindow.Overlay.ShowSecrets();
+            
+            if(Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
         }
 
         public void HandlePlayerSpellPlayed(bool isMinionTargeted)
@@ -295,7 +332,8 @@ namespace Hearthstone_Deck_Tracker
             }
             _game.OpponentSecrets.SetZero("EX1_287", HeroClass.Mage); //counterspell
 
-            Helper.MainWindow.Overlay.ShowSecrets();
+            if(Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
         }
 
         public void HandlePlayerMinionDeath()
@@ -308,7 +346,8 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecrets.SetZero("FP1_020", HeroClass.Paladin); //avenge
             _game.OpponentSecrets.SetZero("EX1_136", HeroClass.Paladin); //redemption
 
-            Helper.MainWindow.Overlay.ShowSecrets();
+            if(Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
         }
 
         public void HandleOpponentDamage(Entity entity)
@@ -319,7 +358,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsOpponent)
             {
                 _game.OpponentSecrets.SetZero("EX1_132", HeroClass.Paladin); //eye for an eye
-                Helper.MainWindow.Overlay.ShowSecrets();
+                if(Helper.MainWindow != null)
+                    Helper.MainWindow.Overlay.ShowSecrets();
             }
         }
 
@@ -331,7 +371,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsMinion)
             {
                 _game.OpponentSecrets.SetZero("AT_073", HeroClass.Paladin); //competitive spirit
-                Helper.MainWindow.Overlay.ShowSecrets();
+                if(Helper.MainWindow != null)
+                    Helper.MainWindow.Overlay.ShowSecrets();
             }
         }
 
@@ -996,9 +1037,9 @@ namespace Hearthstone_Deck_Tracker
 			        return;
 	        }
 			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, false);
-			
 
-			Helper.MainWindow.Overlay.ShowSecrets();
+            if (Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
             GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
 

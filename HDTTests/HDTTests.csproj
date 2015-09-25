@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="HearthStats\ApiTest.cs" />
+    <Compile Include="Hearthstone\SecretTests.cs" />
     <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />

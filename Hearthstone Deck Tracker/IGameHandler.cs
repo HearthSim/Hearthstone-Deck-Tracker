@@ -43,7 +43,9 @@ namespace Hearthstone_Deck_Tracker
 
         #region SecretTriggers
 
-        void HandlePlayerAttack(Entity entity);
+        void HandlePlayerAttack(Entity source, Entity target);
+	    void HandleAttackingEntity(Entity entity);
+	    void HandleDefendingEntity(Entity entity);
         void HandlePlayerMinionPlayed();
         void HandlePlayerSpellPlayed(bool isMinionTargeted);
         void HandlePlayerMinionDeath();

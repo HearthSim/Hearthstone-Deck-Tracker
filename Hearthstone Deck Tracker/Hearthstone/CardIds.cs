@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 
 #endregion
@@ -39,7 +40,53 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"TBST_"
 		};
 
-		public static readonly List<string> SecretIdsHunter = new List<string>
+	    public static class Secrets
+        {
+            public static class Hunter
+            {
+                public static string[] All
+                {
+                    get { return new[] { BearTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap }; }
+                }
+                public static string BearTrap { get { return "AT_060"; } }
+                public static string ExplosiveTrap { get { return "EX1_610"; } }
+                public static string FreezingTrap { get { return "EX1_611"; } }
+                public static string Misdirection { get { return "EX1_533"; } }
+                public static string Snipe { get { return "EX1_609"; } }
+                public static string SnakeTrap { get { return "EX1_554"; } }
+            }
+            public static class Mage
+            {
+                public static string[] All
+                {
+                    get { return new[] { Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize }; }
+                }
+                public static string Counterspell { get { return "EX1_287"; } }
+                public static string Duplicate { get { return "FP1_018"; } }
+                public static string Effigy { get { return "AT_002"; } }
+                public static string IceBarrier { get { return "EX1_289"; } }
+                public static string IceBlock { get { return "EX1_295"; } }
+                public static string MirrorEntity { get { return "EX1_294"; } }
+                public static string Spellbender { get { return "tt_010"; } }
+                public static string Vaporize { get { return "EX1_594"; } }
+            }
+            public static class Paladin
+            {
+                public static string[] All
+                {
+                    get { return new[] { Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance }; }
+                }
+                public static string Avenge { get { return "FP1_020"; } }
+                public static string CompetitiveSpirit { get { return "AT_073"; } }
+                public static string EyeForAnEye { get { return "EX1_132"; } }
+                public static string NobleSacrifice { get { return "EX1_130"; } }
+                public static string Redemption { get { return "EX1_136"; } }
+                public static string Repentance { get { return "EX1_379"; } }
+            }
+        }
+
+        [Obsolete("Use Secrets.Hunter.All")]
+        public static readonly List<string> SecretIdsHunter = new List<string>
 		{
 			"AT_060",  //bear trap
 			"EX1_610", //explosive trap
@@ -49,7 +96,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"EX1_554"  //snake trap
 		};
 
-		public static readonly List<string> SecretIdsMage = new List<string>
+        [Obsolete("Use Secrets.Mage.All")]
+        public static readonly List<string> SecretIdsMage = new List<string>
 		{
 			"EX1_287", //counterspell
 			"FP1_018", //duplicate
@@ -61,7 +109,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"EX1_594"  //vaporize
 		};
 
-		public static readonly List<string> SecretIdsPaladin = new List<string>
+        [Obsolete("Use Secrets.Paladin.All")]
+        public static readonly List<string> SecretIdsPaladin = new List<string>
 		{
 			"FP1_020", //avenge
 			"AT_073",  //competitive spirit
@@ -71,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"EX1_379"  //repentance
 		};
 
-		public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
 		{
 			{
 				//Ysera

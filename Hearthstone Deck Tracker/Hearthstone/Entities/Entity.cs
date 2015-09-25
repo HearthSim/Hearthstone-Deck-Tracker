@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
@@ -33,6 +34,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int Id { get; set; }
 		public string CardId { get; set; }
 		public bool IsPlayer { get; set; }
+
+        [JsonIgnore]
+        public bool IsHero
+	    {
+	        get { return CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId); }
+	    }
 
 		[JsonIgnore]
 		public bool IsOpponent

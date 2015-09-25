@@ -387,12 +387,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                     gameState.OpponentUsedHeroPower = false;
             }
-            else if (tag == GAME_TAG.DEFENDING && value == 1)
+            else if (tag == GAME_TAG.DEFENDING)
             {
-                if (player == "OPPOSING" && CardIds.HeroIdDict.Keys.Contains(cardId))
-                {
-                    gameState.GameHandler.HandlePlayerAttack(game.Entities[id]);
-                }
+                if (player == "OPPOSING")
+                    gameState.GameHandler.HandleDefendingEntity(value == 1 ? game.Entities[id] : null);
+            }
+            else if (tag == GAME_TAG.ATTACKING)
+            {
+                if (player == "FRIENDLY")
+                    gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
             }
             else if (tag == GAME_TAG.NUM_MINIONS_PLAYED_THIS_TURN && value > 0)
             {
