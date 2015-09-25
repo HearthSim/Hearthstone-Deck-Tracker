@@ -584,6 +584,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";
 
+		[XmlArray(ElementName = "AlternativeLanguages")]
+		[XmlArrayItem(ElementName = "Language")]
+		public List<string> AlternativeLanguages = new List<string>();
+
 		[DefaultValue(GameMode.All)]
 		public GameMode SelectedStatsFilterGameMode = GameMode.All;
 

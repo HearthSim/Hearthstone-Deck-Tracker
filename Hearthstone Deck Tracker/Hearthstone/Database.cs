@@ -51,6 +51,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(_cards == null)
 					_cards = new Dictionary<string, Card>();
 			}
+
+			foreach (string altnativeLanguage in Config.Instance.AlternativeLanguages)
+			{
+				if (altnativeLanguage == language)
+					continue;
+				try
+				{
+					LoadAlternativeLanguage(altnativeLanguage);
+				}
+				catch (Exception e)
+				{
+					Logger.WriteLine("Error loading alternative language " + altnativeLanguage + ": \n" + e, "Game");
+				} 
+			}
+		}
+
+		private static void LoadAlternativeLanguage(string language)
+		{
+			var alternative = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", language));
+			foreach(var card in alternative.Cards)
+			{
+				Card c;
+				if(_cards.TryGetValue(card.CardId, out c))
+				{
+					c.AlternativeNames.Add(card.Name);
+					c.AlternativeTexts.Add(card.Text);
+				}
+			}
 		}
 
 		public static Card GetCardFromId(string cardId)
