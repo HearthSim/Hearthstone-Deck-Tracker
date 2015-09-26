@@ -161,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public Visibility ShowAlternativeLanguageTextInTooltip
 		{
-			get { return AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Hidden; }
+			get { return AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		[XmlIgnore]
