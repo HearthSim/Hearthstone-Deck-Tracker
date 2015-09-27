@@ -113,8 +113,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{
-			Helper.MainWindow.Overlay.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
-			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
+			Core.Overlay.Dispatcher.BeginInvoke(new Action(() => Core.Overlay.UpdateTurnTimer(timerEventArgs)));
+			Core.Windows.TimerWindow.Dispatcher.BeginInvoke(new Action(() => Core.Windows.TimerWindow.Update(timerEventArgs)));
 
 			if(CurrentActivePlayer == ActivePlayer.Player)
 				CheckForTimerAlarm();

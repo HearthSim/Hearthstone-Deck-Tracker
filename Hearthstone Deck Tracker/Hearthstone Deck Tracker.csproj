@@ -143,6 +143,7 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
@@ -404,6 +405,9 @@
     </Compile>
     <Compile Include="Utility\SerializableVersion.cs" />
     <Compile Include="Utility\User32.cs" />
+    <Compile Include="Windows\SplashScreenWindow.xaml.cs">
+      <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
@@ -664,6 +668,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\SplashScreenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\StatsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -691,7 +699,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
-    <SplashScreen Include="SplashScreen.png" />
+    <Resource Include="Resources\SplashScreen.png" />
     <Content Include="Files\cardDB.deDE.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -44,5 +44,11 @@ namespace Hearthstone_Deck_Tracker
 			Shutdown();
 #endif
 		}
+
+	    private void App_OnStartup(object sender, StartupEventArgs e)
+        {
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Core.Initialize();
+	    }
 	}
 }

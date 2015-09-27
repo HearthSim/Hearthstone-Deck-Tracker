@@ -305,14 +305,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateEverything(GameV2 game)
 		{
-			if(MainWindow.Overlay.IsVisible)
-				MainWindow.Overlay.Update(false);
+			if(Core.Overlay.IsVisible)
+                Core.Overlay.Update(false);
 
-			if(MainWindow.PlayerWindow.IsVisible)
-				MainWindow.PlayerWindow.SetCardCount(game.Player.HandCount, game.Player.DeckCount);
+			if(Core.Windows.PlayerWindow.IsVisible)
+                Core.Windows.PlayerWindow.SetCardCount(game.Player.HandCount, game.Player.DeckCount);
 
-			if(MainWindow.OpponentWindow.IsVisible)
-				MainWindow.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
+			if(Core.Windows.OpponentWindow.IsVisible)
+                Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
 
 
 			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
@@ -475,14 +475,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdatePlayerCards()
 		{
-			MainWindow.Overlay.UpdatePlayerCards();
-			MainWindow.PlayerWindow.UpdatePlayerCards();
+			Core.Overlay.UpdatePlayerCards();
+			Core.Windows.PlayerWindow.UpdatePlayerCards();
 		}
 
 		public static void UpdateOpponentCards()
 		{
-			MainWindow.Overlay.UpdateOpponentCards();
-			MainWindow.OpponentWindow.UpdateOpponentCards();
+			Core.Overlay.UpdateOpponentCards();
+			Core.Windows.OpponentWindow.UpdateOpponentCards();
 		}
 	}
 }

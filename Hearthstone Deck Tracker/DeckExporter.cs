@@ -55,8 +55,8 @@ namespace Hearthstone_Deck_Tracker
 				var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
 
 
-				Helper.MainWindow.Overlay.ForceHidden = true;
-				Helper.MainWindow.Overlay.UpdatePosition();
+				Core.Overlay.ForceHidden = true;
+				Core.Overlay.UpdatePosition();
 
 				if(Config.Instance.AutoClearDeck)
 					await ClearDeck(hsRect.Width, hsRect.Height, hsHandle, ratio);
@@ -102,8 +102,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			finally
 			{
-				Helper.MainWindow.Overlay.ForceHidden = false;
-				Helper.MainWindow.Overlay.UpdatePosition();
+				Core.Overlay.ForceHidden = false;
+				Core.Overlay.UpdatePosition();
 				if(Config.Instance.ExportPasteClipboard && Current_Clipboard != "")
 					Clipboard.SetText(Current_Clipboard);
 			}

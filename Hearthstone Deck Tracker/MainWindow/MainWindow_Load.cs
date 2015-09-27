@@ -656,8 +656,8 @@ namespace Hearthstone_Deck_Tracker
 
 			DeckStatsFlyout.LoadConfig(_game);
 			GameDetailsFlyout.LoadConfig(_game);
-			StatsWindow.StatsControl.LoadConfig(_game);
-			StatsWindow.GameDetailsFlyout.LoadConfig(_game);
+			Core.Windows.StatsWindow.StatsControl.LoadConfig(_game);
+			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig(_game);
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;

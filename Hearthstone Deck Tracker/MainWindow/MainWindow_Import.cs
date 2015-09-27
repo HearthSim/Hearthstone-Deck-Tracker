@@ -370,8 +370,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			await Task.Delay(1000);
-			Overlay.ForceHidden = true;
-			Overlay.UpdatePosition();
+			Core.Overlay.ForceHidden = true;
+			Core.Overlay.UpdatePosition();
 			const double xScale = 0.013; 
 			const double yScale = 0.017;
 			const int targetHue = 53;
@@ -460,8 +460,8 @@ namespace Hearthstone_Deck_Tracker
 				System.Windows.Forms.Cursor.Position = previousPos;
 			}
 
-			Overlay.ForceHidden = false;
-			Overlay.UpdatePosition();
+			Core.Overlay.ForceHidden = false;
+			Core.Overlay.UpdatePosition();
 
 			ActivateWindow();
 		}

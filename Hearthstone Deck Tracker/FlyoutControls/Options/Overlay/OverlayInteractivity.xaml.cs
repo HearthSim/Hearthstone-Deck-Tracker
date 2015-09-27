@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ForceMouseHook = true;
-			Helper.MainWindow.Overlay.HookMouse();
+			Core.Overlay.HookMouse();
 			Config.Save();
 		}
 
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ForceMouseHook = false;
-			Helper.MainWindow.Overlay.UnHookMouse();
+			Core.Overlay.UnHookMouse();
 			Config.Save();
 		}
 	}

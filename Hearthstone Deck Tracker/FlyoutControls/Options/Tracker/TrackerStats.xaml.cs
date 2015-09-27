@@ -284,7 +284,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
 			Config.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -294,7 +294,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
 			Config.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void ComboboxDisplayedTimeFrame_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -304,7 +304,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
 			Config.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
 				                                  ? Visibility.Visible : Visibility.Collapsed;
 		}
@@ -316,7 +316,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
 			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxAskBeforeDiscarding_Checked(object sender, RoutedEventArgs e)

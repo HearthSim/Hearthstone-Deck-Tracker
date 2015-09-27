@@ -71,8 +71,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Helper.MainWindow.Overlay.UpdatePlayerLayout();
-			Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
+			Core.Overlay.UpdatePlayerLayout();
+			Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			_initialized = true;
 		}
 
@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(DeckList.Instance.ActiveDeck != null)
 				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 			await LogReaderManager.Restart();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private async void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(DeckList.Instance.ActiveDeck != null)
 				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
 			await LogReaderManager.Restart();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxHighlightLastDrawn_Checked(object sender, RoutedEventArgs e)
@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowPlayerGet = true;
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxShowPlayerGet_Unchecked(object sender, RoutedEventArgs e)
@@ -157,14 +157,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowPlayerGet = false;
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void SaveConfig(bool updateOverlay)
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
@@ -199,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 					value = SliderOverlayPlayerScaling.Maximum;
 				Config.Instance.OverlayPlayerScaling = value;
 				Config.Save();
-				Helper.MainWindow.Overlay.UpdateScaling();
+				Core.Overlay.UpdateScaling();
 				if(Config.Instance.UseSameScaling && Config.Instance.OverlayOpponentScaling != value)
 					Helper.OptionsMain.OptionsOverlayOpponent.OpponentScaling = value;
 				OnPropertyChanged();

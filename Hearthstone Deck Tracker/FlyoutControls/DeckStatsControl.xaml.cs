@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			MetroWindow window;
 			if(Config.Instance.StatsInWindow)
-				window = Helper.MainWindow.StatsWindow;
+				window = Core.Windows.StatsWindow;
 			else
 				window = Helper.MainWindow;
 
@@ -359,9 +359,9 @@ namespace Hearthstone_Deck_Tracker
 					ReplayReader.LaunchReplayViewer(selected.ReplayFile);
 				else if(Config.Instance.StatsInWindow)
 				{
-					Helper.MainWindow.StatsWindow.GameDetailsFlyout.SetGame(selected);
-					Helper.MainWindow.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
-					Helper.MainWindow.StatsWindow.FlyoutGameDetails.IsOpen = true;
+					Core.Windows.StatsWindow.GameDetailsFlyout.SetGame(selected);
+					Core.Windows.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
+					Core.Windows.StatsWindow.FlyoutGameDetails.IsOpen = true;
 				}
 				else
 				{
@@ -476,7 +476,7 @@ namespace Hearthstone_Deck_Tracker
 			var settings = new MetroDialogSettings {DefaultText = selected.Note};
 			string newNote;
 			if(Config.Instance.StatsInWindow)
-				newNote = await Helper.MainWindow.StatsWindow.ShowInputAsync("Note", "", settings);
+				newNote = await Core.Windows.StatsWindow.ShowInputAsync("Note", "", settings);
 			else
 				newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
@@ -543,7 +543,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
-				dialog.Owner = Helper.MainWindow.StatsWindow;
+				dialog.Owner = Core.Windows.StatsWindow;
 			else
 				dialog.Owner = Helper.MainWindow;
 

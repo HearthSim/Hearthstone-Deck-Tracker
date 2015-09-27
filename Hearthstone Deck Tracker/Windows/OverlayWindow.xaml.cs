@@ -705,10 +705,10 @@ namespace Hearthstone_Deck_Tracker
             ReSizePosLists();
 
 
-            if (Helper.MainWindow.PlayerWindow.Visibility == Visibility.Visible)
-                Helper.MainWindow.PlayerWindow.Update();
-            if (Helper.MainWindow.OpponentWindow.Visibility == Visibility.Visible)
-                Helper.MainWindow.OpponentWindow.Update();
+            if (Core.Windows.PlayerWindow.Visibility == Visibility.Visible)
+                Core.Windows.PlayerWindow.Update();
+            if (Core.Windows.OpponentWindow.Visibility == Visibility.Visible)
+                Core.Windows.OpponentWindow.Update();
         }
 
         private void UpdateGoldProgress()

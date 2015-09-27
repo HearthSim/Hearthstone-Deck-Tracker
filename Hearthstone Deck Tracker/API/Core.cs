@@ -13,12 +13,12 @@ namespace Hearthstone_Deck_Tracker.API
 
 		public static Canvas OverlayCanvas
 		{
-			get { return Helper.MainWindow.Overlay.CanvasInfo; }
+			get { return Hearthstone_Deck_Tracker.Core.Overlay.CanvasInfo; }
 		}
 
 		public static MainWindow MainWindow
 		{
-			get { return Helper.MainWindow; }
+			get { return Hearthstone_Deck_Tracker.Core.MainWindow; }
 		}
 	}
 }

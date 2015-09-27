@@ -123,8 +123,8 @@ namespace Hearthstone_Deck_Tracker
 			_game.IsInMenu = true;
 
 			TurnTimer.Instance.Stop();
-			Helper.MainWindow.Overlay.HideTimers();
-			Helper.MainWindow.Overlay.HideSecrets();
+			Core.Overlay.HideTimers();
+			Core.Overlay.HideSecrets();
 
 			if (Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
                && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
@@ -276,7 +276,7 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
         public async void HandleGameEnd()
         {
-            Helper.MainWindow.Overlay.HideTimers();
+            Core.Overlay.HideTimers();
 	        if(_game.CurrentGameStats == null || _handledGameEnd)
 	        {
 				Logger.WriteLine("HandleGameEnd was already called.", "HandleGameEnd");
@@ -486,7 +486,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void SaveAndUpdateStats()
         {
-            var statsControl = Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
+            var statsControl = Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
             if (RecordCurrentGameMode)
             {
                 if (Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
@@ -933,7 +933,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, false);
 			
 
-			Helper.MainWindow.Overlay.ShowSecrets();
+			Core.Overlay.ShowSecrets();
             GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
 
@@ -963,12 +963,12 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecretCount--;
             _game.OpponentSecrets.SecretRemoved(otherId);
             if (_game.OpponentSecretCount <= 0)
-                Helper.MainWindow.Overlay.HideSecrets();
+                Core.Overlay.HideSecrets();
             else
             {
                 if (Config.Instance.AutoGrayoutSecrets)
                     _game.OpponentSecrets.SetZero(cardId, null);
-                Helper.MainWindow.Overlay.ShowSecrets();
+                Core.Overlay.ShowSecrets();
 			}
 			Helper.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);

@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			_hsLogLines = new List<string>();
 
-			if(Helper.MainWindow.Overlay != null)
+			if(Core.Overlay != null)
 			{
 				Helper.UpdatePlayerCards();
 				Helper.UpdateOpponentCards();
