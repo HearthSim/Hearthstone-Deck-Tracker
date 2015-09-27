@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -50,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
-		            string set)
+		            string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -70,6 +71,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = mechanics;
 			Artist = artist;
 			Set = set;
+			if (alternativeNames != null)
+				AlternativeNames = alternativeNames;
+			if (alternativeTexts != null)
+				AlternativeTexts = alternativeTexts;
 		}
 
 		public int Count
@@ -123,6 +128,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								   .Replace("#", "")
 								   .Replace("\\n", "\n") : null;
 			}
+		}
+
+		[XmlIgnore]
+		public string AlternativeLanguageText
+		{
+			get
+			{
+				string result = "";
+				for (int i = 0; i < AlternativeNames.Count; ++i)
+				{
+					if (i > 0)
+					{
+						result += "-\n";
+					}
+					result += "[" + AlternativeNames[i] + "]\n";
+					if (AlternativeTexts[i] != null)
+					{						 
+						result += AlternativeTexts[i].Replace("<b>", "")
+									   .Replace("</b>", "")
+									   .Replace("<i>", "")
+									   .Replace("</i>", "")
+									   .Replace("$", "")
+									   .Replace("#", "")
+									   .Replace("\\n", "\n")  + "\n";
+					}
+				}
+				return result.TrimEnd(new char[]{' ', '\n'});
+			}
+		}
+
+		[XmlIgnore]
+		public Visibility ShowAlternativeLanguageTextInTooltip
+		{
+			get { return AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		[XmlIgnore]
@@ -202,6 +241,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
 			set { _localizedName = value; }
 		}
+
+		[XmlIgnore]
+		public List<string> AlternativeNames = new List<string>();
+
+		[XmlIgnore]
+		public List<string> AlternativeTexts = new List<string>();
 
 		[XmlIgnore]
 		public int InHandCount
@@ -400,7 +445,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack, Health, Race,
-			                       Mechanics, Durability, Artist, Set);
+			                       Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 			return newcard;
 		}
 
@@ -451,6 +496,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = stats.Mechanics;
 			Artist = stats.Artist;
 			Set = stats.Set;
+			AlternativeNames = stats.AlternativeNames;
+			AlternativeTexts = stats.AlternativeTexts;
 			_loaded = true;
 			OnPropertyChanged();
 		}

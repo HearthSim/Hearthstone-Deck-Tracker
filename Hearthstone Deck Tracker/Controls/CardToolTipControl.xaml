@@ -12,6 +12,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.ColumnDefinitions>
@@ -38,7 +39,11 @@
             <TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14"
                        Foreground="{DynamicResource TextBrush}" VerticalAlignment="Top" FontWeight="Medium"
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0" TextAlignment="Center" />
-            <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
+            <TextBlock Name="AlternativeLanguageText" Text="{Binding AlternativeLanguageText}" Grid.Row="2" FontSize="12"
+                       Foreground="#FF7F7F7F" VerticalAlignment="Top"
+                       Visibility="{Binding ShowAlternativeLanguageTextInTooltip}"
+                       HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,10,10,0" TextAlignment="Center" />
+            <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14"
                                             VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
                                             TextAlignment="Center" />
