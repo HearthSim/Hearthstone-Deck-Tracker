@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker
 					                w =>
 					                !cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
 					                && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
-					                && card.AlternativeTexts.All((x) => !x.ToLowerInvariant().Contains(formattedInput))
+					                && card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
 					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
 					                && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;

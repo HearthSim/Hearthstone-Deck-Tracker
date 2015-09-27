@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Card c;
 				if(_cards.TryGetValue(card.CardId, out c))
 				{
+					if (card.Name == null) continue;
 					c.AlternativeNames.Add(card.Name);
 					c.AlternativeTexts.Add(card.Text);
 				}
