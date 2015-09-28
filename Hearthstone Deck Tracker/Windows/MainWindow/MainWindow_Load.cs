@@ -54,18 +54,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					MinimizeToTray();
 			}
 
-			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
-			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
-
-
-			
-			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
-				                                                           ? new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor1"])
-				                                                           : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
-
 			Options.Load(Core.Game);
             Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 

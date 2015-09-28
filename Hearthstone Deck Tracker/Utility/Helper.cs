@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -717,5 +718,18 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
+	    public static void UpdateAppTheme()
+	    {
+
+            var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
+                            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
+            var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
+                             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+            Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
+                                                                           ? new SolidColorBrush((System.Windows.Media.Color)Application.Current.Resources["GrayTextColor1"])
+                                                                           : new SolidColorBrush((System.Windows.Media.Color)Application.Current.Resources["GrayTextColor2"]);
+
+        }
     }
 }

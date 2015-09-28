@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker
             Config.Load();
             ConfigManager.Run();
             Logger.Initialzie();
+            Helper.UpdateAppTheme();
             var splashScreenWindow = new SplashScreenWindow();
             splashScreenWindow.Show();
             Game = new GameV2();
