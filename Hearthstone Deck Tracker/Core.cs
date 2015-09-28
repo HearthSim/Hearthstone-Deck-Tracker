@@ -41,6 +41,7 @@ namespace Hearthstone_Deck_Tracker
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             Config.Load();
+            ConfigManager.Run();
             Logger.Initialzie();
             var splashScreenWindow = new SplashScreenWindow();
             splashScreenWindow.Show();
@@ -63,7 +64,6 @@ namespace Hearthstone_Deck_Tracker
             MainWindow.Show();
             splashScreenWindow.Close();
 
-            ConfigManager.Run();
             if (ConfigManager.UpdatedVersion != null)
             {
                 Updater.Cleanup();

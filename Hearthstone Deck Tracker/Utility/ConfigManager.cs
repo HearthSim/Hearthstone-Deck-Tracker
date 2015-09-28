@@ -22,8 +22,6 @@ namespace Hearthstone_Deck_Tracker.Utility
             var currentVersion = Helper.GetCurrentVersion();
             if (currentVersion != null)
             {
-                Core.MainWindow.Help.TxtblockVersion.Text = "Version: " + currentVersion.ToVersionString();
-
                 // Assign current version to the config instance so that it will be saved when the config
                 // is rewritten to disk, thereby telling us what version of the application created it
                 Config.Instance.CreatedByVersion = currentVersion.ToString();

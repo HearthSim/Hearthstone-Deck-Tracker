@@ -67,9 +67,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				                                                           : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
 
 			Options.Load(Core.Game);
+            Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 
-
-			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
+            CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
 
 			// Don't select the 'archived' class on load
