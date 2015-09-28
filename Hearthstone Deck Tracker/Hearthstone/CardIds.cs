@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 {
                     get { return new[] { BearTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap }; }
                 }
+
                 public static string BearTrap { get { return "AT_060"; } }
                 public static string ExplosiveTrap { get { return "EX1_610"; } }
                 public static string FreezingTrap { get { return "EX1_611"; } }
@@ -83,6 +84,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 public static string Redemption { get { return "EX1_136"; } }
                 public static string Repentance { get { return "EX1_379"; } }
             }
+
+            public static List<string> FastCombat = new List<string> {
+                Hunter.FreezingTrap,
+                Hunter.ExplosiveTrap,
+                Hunter.Misdirection,
+                Paladin.NobleSacrifice,
+                Mage.Vaporize
+            };
         }
 
         [Obsolete("Use Secrets.Hunter.All")]

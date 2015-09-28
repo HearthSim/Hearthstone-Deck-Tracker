@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
-			OpponentSecrets = new OpponentSecrets();
+			OpponentSecrets = new OpponentSecrets(this);
 		}
 
 		public static List<string> HSLogLines

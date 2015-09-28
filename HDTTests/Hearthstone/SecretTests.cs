@@ -74,13 +74,13 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_HeroToHero_PlayerAttackTest()
         {
             _minion1.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.HAND);
-            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _heroOpponent);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _heroOpponent);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap);
             VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 
             _minion1.SetTag(GAME_TAG.ZONE, (int) TAG_ZONE.PLAY);
-            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _heroOpponent);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _heroOpponent);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
                              HunterSecrets.Misdirection);
             VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
@@ -91,7 +91,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_MinionToHero_PlayerAttackTest()
         {
             _minion1.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.PLAY);
-            _gameEventHandler.HandlePlayerAttack(_minion1, _heroOpponent);
+            _game.OpponentSecrets.ZeroFromAttack(_minion1, _heroOpponent);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
                 HunterSecrets.FreezingTrap, HunterSecrets.Misdirection);
             VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
@@ -101,7 +101,7 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_HeroToMinion_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _minion2);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _minion2);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
@@ -110,7 +110,7 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionToMinion_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_minion1, _minion2);
+            _game.OpponentSecrets.ZeroFromAttack(_minion1, _minion2);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);

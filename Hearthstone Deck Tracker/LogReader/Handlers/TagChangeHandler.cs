@@ -397,6 +397,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 if (player == "FRIENDLY")
                     gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
             }
+            else if (tag == GAME_TAG.PROPOSED_DEFENDER)
+            {
+                game.OpponentSecrets.proposedDefenderEntityId = value;
+            }
+            else if (tag == GAME_TAG.PROPOSED_ATTACKER)
+            {
+                game.OpponentSecrets.proposedAttackerEntityId = value;
+            }
             else if (tag == GAME_TAG.NUM_MINIONS_PLAYED_THIS_TURN && value > 0)
             {
                 if (gameState.PlayersTurn())
