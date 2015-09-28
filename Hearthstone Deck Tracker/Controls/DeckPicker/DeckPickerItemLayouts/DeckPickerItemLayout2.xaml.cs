@@ -24,9 +24,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts
 				return;
 			if(deck.Equals(DeckList.Instance.ActiveDeck))
 				return;
-			Helper.MainWindow.DeckPickerList.SelectDeck(deck);
-			Helper.MainWindow.SelectDeck(deck, true);
-			Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+			Core.MainWindow.DeckPickerList.SelectDeck(deck);
+			Core.MainWindow.SelectDeck(deck, true);
+			Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 		}
 	}
 }

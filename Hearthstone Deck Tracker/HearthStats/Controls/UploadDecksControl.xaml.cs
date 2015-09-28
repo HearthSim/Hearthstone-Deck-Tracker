@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		{
 			_selectedDecks = ListViewLocalDecksSync.Items.Cast<Deck>().ToList();
 			_done = true;
-			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
+			Core.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
 		}
 
 		private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			_selectedDecks = new List<Deck>();
 			_done = true;
-			Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
+			Core.MainWindow.FlyoutHearthStatsUpload.IsOpen = false;
 		}
 	}
 }

@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker
 							DeckList.Instance.AllTags.Add(decktype);
 							DeckList.Save();
 							if(Helper.MainWindow != null) // to avoid errors when running tests
-								Helper.MainWindow.ReloadTags();
+								Core.MainWindow.ReloadTags();
 						}
 						deck.Tags.Add(decktype);
 					}
@@ -519,7 +519,7 @@ namespace Hearthstone_Deck_Tracker
 						DeckList.Instance.AllTags.Add(decktype);
 						DeckList.Save();
 						if (Helper.MainWindow != null) // to avoid errors when running tests
-							Helper.MainWindow.ReloadTags();
+							Core.MainWindow.ReloadTags();
 					}
 					deck.Tags.Add(decktype);
 				}

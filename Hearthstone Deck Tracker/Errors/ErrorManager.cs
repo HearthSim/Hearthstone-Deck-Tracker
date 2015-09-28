@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Error
 			if(!Errors.Contains(error))
 			{
 				Errors.Add(error);
-				Helper.MainWindow.ErrorsPropertyChanged();
+				Core.MainWindow.ErrorsPropertyChanged();
 			}
 		}
 
@@ -41,9 +41,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Error
 			if(Errors.Contains(error))
 			{
 				Errors.Remove(error);
-				Helper.MainWindow.ErrorsPropertyChanged();
+				Core.MainWindow.ErrorsPropertyChanged();
 				if(!Errors.Any())
-					Helper.MainWindow.FlyoutErrors.IsOpen = false;
+					Core.MainWindow.FlyoutErrors.IsOpen = false;
 			}
 		}
 	}

@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				sr.WriteLine("########## " + DateTime.Now + " ##########");
 				sr.WriteLine(e.Exception);
-				sr.WriteLine(Helper.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
+				sr.WriteLine(Core.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
 			}
 
 			MessageBox.Show(

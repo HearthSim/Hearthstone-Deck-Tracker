@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			catch
 			{
-				Helper.MainWindow.ShowMessage("Could not start browser",
+				Core.MainWindow.ShowMessage("Could not start browser",
 				                              "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
 			}
 		}
@@ -127,13 +127,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			catch(Exception)
 			{
-				Helper.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!");
+				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!");
 			}
 		}
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.FlyoutUpdateNotes.IsOpen = false;
+			Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
 		}
 
 		public class GithubRelease

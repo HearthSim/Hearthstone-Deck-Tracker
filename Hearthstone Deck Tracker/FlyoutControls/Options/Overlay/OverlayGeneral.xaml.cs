@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			var result =
 				await
-				Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
+				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
 				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
 				                                   MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.CardSortingClassFirst = true;
 			SaveConfig(false);
-			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, true);
+			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, true);
 			//Helper.SortCardCollection(ListViewNewDeck.Items, true);
 		}
 
@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.CardSortingClassFirst = false;
 			SaveConfig(false);
-			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, false);
+			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, false);
 			//Helper.SortCardCollection(ListViewNewDeck.Items, false);
 		}
 

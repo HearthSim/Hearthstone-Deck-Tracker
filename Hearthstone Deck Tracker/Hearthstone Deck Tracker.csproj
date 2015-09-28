@@ -274,10 +274,14 @@
     </Compile>
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Protocol\PipeServer.cs" />
+    <Compile Include="Utility\ConfigManager.cs" />
+    <Compile Include="Utility\DataIssueResolver.cs" />
     <Compile Include="Utility\ImageCache.cs" />
     <Compile Include="Utility\Imgur.cs" />
     <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
+    <Compile Include="Utility\NetDeck.cs" />
+    <Compile Include="Utility\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>

@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker
                 _game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 
             SaveAndUpdateStats();
-            if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+            if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd, "GameEventHandler");
@@ -192,8 +192,8 @@ namespace Hearthstone_Deck_Tracker
                             Logger.WriteLine("Found no deck to switch to", "HandleGameStart");
                         else if (classDecks.Count == 1)
                         {
-                            Helper.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
-                            Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+                            Core.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
+                            Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
                             Logger.WriteLine("Found deck to switch to: " + classDecks[0].Name, "HandleGameStart");
                         }
                         else if (DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == _game.Player.Class))
@@ -212,11 +212,11 @@ namespace Hearthstone_Deck_Tracker
                                     return;
                                 }
 
-                                Helper.MainWindow.NeedToIncorrectDeckMessage = false;
-                                Helper.MainWindow.DeckPickerList.SelectDeck(deck);
-                                Helper.MainWindow.UpdateDeckList(deck);
-                                Helper.MainWindow.UseDeck(deck);
-                                Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+                                Core.MainWindow.NeedToIncorrectDeckMessage = false;
+                                Core.MainWindow.DeckPickerList.SelectDeck(deck);
+                                Core.MainWindow.UpdateDeckList(deck);
+                                Core.MainWindow.UseDeck(deck);
+                                Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
                             }
                         }
                     }
@@ -259,7 +259,7 @@ namespace Hearthstone_Deck_Tracker
             if (Config.Instance.BringHsToForeground)
                 User32.BringHsToForeground();
 
-            if (Config.Instance.KeyPressOnGameStart != "None" && Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+            if (Config.Instance.KeyPressOnGameStart != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart, "GameEventHandler");
@@ -382,7 +382,7 @@ namespace Hearthstone_Deck_Tracker
                 if (_assignedDeck.Archived)
                 {
                     Logger.WriteLine("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game", "HandleGameEnd");
-                    Helper.MainWindow.ArchiveDeck(_assignedDeck, false);
+                    Core.MainWindow.ArchiveDeck(_assignedDeck, false);
                 }
 
                 if (HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
@@ -486,7 +486,7 @@ namespace Hearthstone_Deck_Tracker
 
         private void SaveAndUpdateStats()
         {
-            var statsControl = Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout;
+            var statsControl = Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Core.MainWindow.DeckStatsFlyout;
             if (RecordCurrentGameMode)
             {
                 if (Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
@@ -519,7 +519,7 @@ namespace Hearthstone_Deck_Tracker
                     DeckStatsList.Save();
                 }
 
-                Helper.MainWindow.DeckPickerList.UpdateDecks();
+                Core.MainWindow.DeckPickerList.UpdateDecks();
                 statsControl.Refresh();
             }
             else if (_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
@@ -614,10 +614,10 @@ namespace Hearthstone_Deck_Tracker
 				_game.Player.Draw(entity, turn);
 				Helper.UpdatePlayerCards();
 
-				if (!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage
-                   && !Helper.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != GameMode.Spectator)
+				if (!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Core.MainWindow.NeedToIncorrectDeckMessage
+                   && !Core.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != GameMode.Spectator)
                 {
-                    Helper.MainWindow.NeedToIncorrectDeckMessage = true;
+                    Core.MainWindow.NeedToIncorrectDeckMessage = true;
                     Logger.WriteLine("Found incorrect deck on PlayerDraw", "GameEventHandler");
                 }
 
@@ -684,10 +684,10 @@ namespace Hearthstone_Deck_Tracker
         {
             LogEvent("PlayerDeckDiscard", cardId);
 			_game.Player.DeckDiscard(entity, turn);
-            if (!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Helper.MainWindow.NeedToIncorrectDeckMessage
-               && !Helper.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != GameMode.Spectator)
+            if (!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Core.MainWindow.NeedToIncorrectDeckMessage
+               && !Core.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != GameMode.Spectator)
             {
-                Helper.MainWindow.NeedToIncorrectDeckMessage = true;
+                Core.MainWindow.NeedToIncorrectDeckMessage = true;
                 Logger.WriteLine("Found incorrect deck on PlayerDeckDiscard", "GameEventHandler");
             }
             _game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);

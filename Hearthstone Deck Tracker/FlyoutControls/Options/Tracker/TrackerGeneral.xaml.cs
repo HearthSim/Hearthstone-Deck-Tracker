@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = true;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
 			Config.Save();
 		}
 
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = false;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			Config.Save();
 		}
 
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
@@ -244,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = true;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 
 		}
 
@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 
 		}
 	}

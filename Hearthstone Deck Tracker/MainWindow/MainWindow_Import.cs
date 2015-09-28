@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader;
+using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 
@@ -18,10 +19,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		private readonly Regex _cardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!-]+)");
-		private readonly Regex _cardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(x\s*)(?<count>\d))(\s*)$");
-		private readonly Regex _cardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(?<count>\d))(\s*)$");
-
 		private async void BtnWeb_Click(object sender, RoutedEventArgs e)
 		{
 			var url = await InputDeckURL();
@@ -170,7 +167,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				if(CheckClipboardForNetDeckImport())
+				if(NetDeck.CheckForClipboardImport())
 				{
 					if(!Config.Instance.NetDeckClipboardCheck.HasValue)
 					{
@@ -182,7 +179,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				if(Clipboard.ContainsText())
 				{
-					var deck = ParseCardString(Clipboard.GetText());
+					var deck = Helper.ParseCardString(Clipboard.GetText());
 					if(deck != null)
 					{
 						SetNewDeck(deck);
@@ -197,58 +194,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private Deck ParseCardString(string cards, bool localizedNames = false)
-		{
-			try
-			{
-				var deck = new Deck();
-				var lines = cards.Split('\n');
-				foreach(var line in lines)
-				{
-					var count = 1;
-					var cardName = line.Trim();
-					Match match = null;
-					if(_cardLineRegexCountFirst.IsMatch(cardName))
-						match = _cardLineRegexCountFirst.Match(cardName);
-					else if(_cardLineRegexCountLast.IsMatch(cardName))
-						match = _cardLineRegexCountLast.Match(cardName);
-					else if(_cardLineRegexCountLast2.IsMatch(cardName))
-						match = _cardLineRegexCountLast2.Match(cardName);
-					if(match != null)
-					{
-						var tmpCount = match.Groups["count"];
-						if(tmpCount.Success)
-							count = int.Parse(tmpCount.Value);
-						cardName = match.Groups["cardname"].Value.Trim();
-					}
-
-					var card = Database.GetCardFromName(cardName, localizedNames);
-					if(card == null || string.IsNullOrEmpty(card.Name))
-						continue;
-					card.Count = count;
-
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
-
-					if(deck.Cards.Contains(card))
-					{
-						var deckCard = deck.Cards.First(c => c.Equals(card));
-						deck.Cards.Remove(deckCard);
-						deckCard.Count += count;
-						deck.Cards.Add(deckCard);
-					}
-					else
-						deck.Cards.Add(card);
-				}
-				return deck;
-			}
-			catch(Exception ex)
-			{
-				Logger.WriteLine("Error parsing card string: " + ex, "Import");
-				return null;
-			}
-		}
-
+		
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
@@ -262,7 +208,7 @@ namespace Hearthstone_Deck_Tracker
 					if(dialog.FileName.EndsWith(".txt"))
 					{
 						using(var sr = new StreamReader(dialog.FileName))
-							deck = ParseCardString(sr.ReadToEnd());
+							deck = Helper.ParseCardString(sr.ReadToEnd());
 					}
 					else if(dialog.FileName.EndsWith(".xml"))
 					{
@@ -285,10 +231,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnLastGame_Click(object sender, RoutedEventArgs e)
 		{
-			if(_game.DrawnLastGame == null)
+			if(Core.Game.DrawnLastGame == null)
 				return;
 			var deck = new Deck();
-			foreach(var card in _game.DrawnLastGame)
+			foreach(var card in Core.Game.DrawnLastGame)
 			{
 				if(card.IsCreated)
 					continue;
@@ -306,7 +252,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(Config.Instance.UseOldArenaImporting)
 			{
-				if(Config.Instance.ShowArenaImportMessage || _game.PossibleArenaCards.Count < 10)
+				if(Config.Instance.ShowArenaImportMessage || Core.Game.PossibleArenaCards.Count < 10)
 				{
 					await
 						this.ShowMessageAsync("How this works:",
@@ -317,12 +263,12 @@ namespace Hearthstone_Deck_Tracker
 						Config.Instance.ShowArenaImportMessage = false;
 						Config.Save();
 					}
-					if(_game.PossibleArenaCards.Count < 10)
+					if(Core.Game.PossibleArenaCards.Count < 10)
 						return;
 				}
 
 				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
-				foreach(var card in _game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
+				foreach(var card in Core.Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
 				{
 					deck.Cards.Add(card);
 					if(deck.Class == null && card.GetPlayerClass != "Neutral")
@@ -341,13 +287,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if(_game.TempArenaDeck == null)
+				if(Core.Game.TempArenaDeck == null)
 				{
 					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
 				}
 				else
 				{
-					SetNewDeck(_game.TempArenaDeck);
+					SetNewDeck(Core.Game.TempArenaDeck);
 				}
 			}
 		}
@@ -468,7 +414,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			if(Config.Instance.ShowConstructedImportMessage || _game.PossibleConstructedCards.Count < 10)
+			if(Config.Instance.ShowConstructedImportMessage || Core.Game.PossibleConstructedCards.Count < 10)
 			{
 				if(Config.Instance.ShowConstructedImportMessage)
 				{
@@ -480,33 +426,33 @@ namespace Hearthstone_Deck_Tracker
 						                      new MetroDialogSettings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
 					if(result != MessageDialogResult.Affirmative)
 						return;
-					await Helper.SetupConstructedImporting(_game);
+					await Helper.SetupConstructedImporting(Core.Game);
 					Config.Instance.ShowConstructedImportMessage = false;
 					Config.Save();
 				}
 				await
 					this.ShowMessageAsync("How this works:",
 					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				if(_game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
-				   && _game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
+				if(Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
+				   && Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
 					return;
 			}
 
 
 			var deck = new Deck();
-			var lastNonNeutralCard = _game.PossibleConstructedCards.LastOrDefault(c => !string.IsNullOrEmpty(c.PlayerClass));
+			var lastNonNeutralCard = Core.Game.PossibleConstructedCards.LastOrDefault(c => !string.IsNullOrEmpty(c.PlayerClass));
 			if(lastNonNeutralCard == null)
 				return;
             deck.Class = lastNonNeutralCard.PlayerClass;
 
-			var legendary = _game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
+			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
-                _game.PossibleConstructedCards.Where(
+                Core.Game.PossibleConstructedCards.Where(
 				                                    c =>
 				                                    c.Rarity != "Legendary" && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
 				    .ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
-			foreach(var card in _game.PossibleConstructedCards)
+			foreach(var card in Core.Game.PossibleConstructedCards)
 			{
 				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;

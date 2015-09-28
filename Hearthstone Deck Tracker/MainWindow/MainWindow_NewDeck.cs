@@ -570,12 +570,12 @@ namespace Hearthstone_Deck_Tracker
 			SelectLastUsedDeck();
 		}
 
-		private void SaveDeckWithOverwriteCheck()
+		internal void SaveDeckWithOverwriteCheck()
 		{
 			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-		private void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+        internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
 			if(saveAsNew)
 			{

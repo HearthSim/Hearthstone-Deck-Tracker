@@ -79,8 +79,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				MenuItem = Plugin.MenuItem;
 				if(MenuItem != null)
 				{
-					Helper.MainWindow.MenuItemPlugins.Items.Add(MenuItem);
-					Helper.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Collapsed;
+					Core.MainWindow.MenuItemPlugins.Items.Add(MenuItem);
+					Core.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Collapsed;
 				}
 			}
 			catch(Exception ex)
@@ -143,9 +143,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			_loaded = false;
 			if(MenuItem != null)
 			{
-				Helper.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
-				if(Helper.MainWindow.MenuItemPlugins.Items.Count == 1)
-					Helper.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Visible;
+				Core.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
+				if(Core.MainWindow.MenuItemPlugins.Items.Count == 1)
+					Core.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Visible;
 			}
 		}
 	}

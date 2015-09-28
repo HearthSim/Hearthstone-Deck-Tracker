@@ -42,8 +42,8 @@ namespace Hearthstone_Deck_Tracker
 				if(Equals(_activeDeck, value))
 					return;
 				_activeDeck = value;
-				Helper.MainWindow.DeckPickerList.ActiveDeckChanged();
-				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+				Core.MainWindow.DeckPickerList.ActiveDeckChanged();
+				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 				Logger.WriteLine("Set active deck to: " + value, "DeckList");
 				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
 				Config.Save();
@@ -55,20 +55,29 @@ namespace Hearthstone_Deck_Tracker
 			get { return ActiveDeck == null ? null : ActiveDeck.GetSelectedDeckVersion(); }
 		}
 
-		public static DeckList Instance
-		{
-			get { return _instance ?? (_instance = new DeckList()); }
-		}
+	    public static DeckList Instance
+	    {
+	        get
+	        {
+	            if (_instance == null)
+	                Load();
+	            return _instance ?? (_instance = new DeckList());
+	        }
+	    }
 
-		public void LoadActiveDeck()
-		{
-			ActiveDeck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
-		}
+	    public void LoadActiveDeck()
+	    {
+	        var deck = Decks.FirstOrDefault(d => d.DeckId == Config.Instance.ActiveDeckId);
+	        if (deck != null && deck.Archived)
+	            deck = null;
+	        ActiveDeck = deck;
+	    }
 
-		//public Guid ActiveDeckId { get; set; }
+	    //public Guid ActiveDeckId { get; set; }
 
 		public static void Load()
 		{
+            SetupDeckListFile();
 			var file = Config.Instance.DataDir + "PlayerDecks.xml";
 			if(!File.Exists(file))
 				return;
@@ -136,7 +145,42 @@ namespace Hearthstone_Deck_Tracker
 			Instance.LoadActiveDeck();
 		}
 
-		public static void Save()
+        internal static void SetupDeckListFile()
+        {
+            if(Config.Instance.SaveDataInAppData == null)
+                return;
+            var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
+            var dataDirPath = Config.Instance.DataDirPath + @"\PlayerDecks.xml";
+            if(Config.Instance.SaveDataInAppData.Value)
+            {
+                if(File.Exists(dataDirPath))
+                {
+                    if(File.Exists(appDataPath))
+                        //backup in case the file already exists
+                        File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
+                    File.Move(dataDirPath, appDataPath);
+                    Logger.WriteLine("Moved decks to appdata", "Load");
+                }
+            }
+            else if(File.Exists(appDataPath))
+            {
+                if(File.Exists(dataDirPath))
+                    //backup in case the file already exists
+                    File.Move(dataDirPath, dataDirPath + DateTime.Now.ToFileTime());
+                File.Move(appDataPath, dataDirPath);
+                Logger.WriteLine("Moved decks to local", "Load");
+            }
+
+            //create file if it doesn't exist
+            var path = Path.Combine(Config.Instance.DataDir, "PlayerDecks.xml");
+            if(!File.Exists(path))
+            {
+                using(var sr = new StreamWriter(path, false))
+                    sr.WriteLine("<Decks></Decks>");
+            }
+        }
+
+        public static void Save()
 		{
 			var file = Config.Instance.DataDir + "PlayerDecks.xml";
 			XmlManager<DeckList>.Save(file, Instance);

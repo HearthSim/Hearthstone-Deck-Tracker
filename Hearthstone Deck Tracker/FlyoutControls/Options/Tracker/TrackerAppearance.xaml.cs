@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.");
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -156,12 +156,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.");
 		}
 
 		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.Restart();
+			Core.MainWindow.Restart();
 		}
 
 		private void CheckboxDeckPickerCaps_Checked(object sender, RoutedEventArgs e)
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = true;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = false;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 	}
 }
