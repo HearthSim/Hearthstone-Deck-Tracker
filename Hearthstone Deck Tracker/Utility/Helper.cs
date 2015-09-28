@@ -575,14 +575,14 @@ namespace Hearthstone_Deck_Tracker
             return Region.UNKNOWN;
         }
 
-	    private static bool? _foundHearthstoneDir;
-	    public static bool FoundHearthstoneDir
+	    private static bool? _hearthstoneDirExists;
+	    public static bool HearthstoneDirExists
 	    {
 	        get
 	        {
-	            if (!_foundHearthstoneDir.HasValue)
-	                _foundHearthstoneDir = FindHearthstoneDir();
-	            return _foundHearthstoneDir.Value;
+	            if (!_hearthstoneDirExists.HasValue)
+	                _hearthstoneDirExists = FindHearthstoneDir();
+	            return _hearthstoneDirExists.Value;
 	        }
 	    }
 
@@ -668,6 +668,51 @@ namespace Hearthstone_Deck_Tracker
             {
                 Logger.WriteLine("Error parsing card string: " + ex, "Import");
                 return null;
+            }
+        }
+
+
+        public static void CopyReplayFiles()
+        {
+            if(Config.Instance.SaveDataInAppData == null)
+                return;
+            var appDataReplayDirPath = Config.Instance.AppDataPath + @"\Replays";
+            var dataReplayDirPath = Config.Instance.DataDirPath + @"\Replays";
+            if(Config.Instance.SaveDataInAppData.Value)
+            {
+                if(Directory.Exists(dataReplayDirPath))
+                {
+                    //backup in case the file already exists
+                    var time = DateTime.Now.ToFileTime();
+                    if(Directory.Exists(appDataReplayDirPath))
+                    {
+                        CopyFolder(appDataReplayDirPath, appDataReplayDirPath + time);
+                        Directory.Delete(appDataReplayDirPath, true);
+                        Logger.WriteLine("Created backups of replays in appdata", "Load");
+                    }
+
+
+                    CopyFolder(dataReplayDirPath, appDataReplayDirPath);
+                    Directory.Delete(dataReplayDirPath, true);
+
+                    Logger.WriteLine("Moved replays to appdata", "Load");
+                }
+            }
+            else if(Directory.Exists(appDataReplayDirPath)) //Save in DataDir and AppData Replay dir still exists
+            {
+                //backup in case the file already exists
+                var time = DateTime.Now.ToFileTime();
+                if(Directory.Exists(dataReplayDirPath))
+                {
+                    CopyFolder(dataReplayDirPath, dataReplayDirPath + time);
+                    Directory.Delete(dataReplayDirPath, true);
+                }
+                Logger.WriteLine("Created backups of replays locally", "Load");
+
+
+                CopyFolder(appDataReplayDirPath, dataReplayDirPath);
+                Directory.Delete(appDataReplayDirPath, true);
+                Logger.WriteLine("Moved replays to appdata", "Load");
             }
         }
 

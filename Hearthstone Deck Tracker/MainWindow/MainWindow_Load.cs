@@ -28,51 +28,8 @@ namespace Hearthstone_Deck_Tracker
 {
 	public partial class MainWindow
 	{
-		public void CopyReplayFiles()
-		{
-			if(Config.Instance.SaveDataInAppData == null)
-				return;
-			var appDataReplayDirPath = Config.Instance.AppDataPath + @"\Replays";
-			var dataReplayDirPath = Config.Instance.DataDirPath + @"\Replays";
-			if(Config.Instance.SaveDataInAppData.Value)
-			{
-				if(Directory.Exists(dataReplayDirPath))
-				{
-					//backup in case the file already exists
-					var time = DateTime.Now.ToFileTime();
-					if(Directory.Exists(appDataReplayDirPath))
-					{
-						Helper.CopyFolder(appDataReplayDirPath, appDataReplayDirPath + time);
-						Directory.Delete(appDataReplayDirPath, true);
-						Logger.WriteLine("Created backups of replays in appdata", "Load");
-					}
 
-
-					Helper.CopyFolder(dataReplayDirPath, appDataReplayDirPath);
-					Directory.Delete(dataReplayDirPath, true);
-
-					Logger.WriteLine("Moved replays to appdata", "Load");
-				}
-			}
-			else if(Directory.Exists(appDataReplayDirPath)) //Save in DataDir and AppData Replay dir still exists
-			{
-				//backup in case the file already exists
-				var time = DateTime.Now.ToFileTime();
-				if(Directory.Exists(dataReplayDirPath))
-				{
-					Helper.CopyFolder(dataReplayDirPath, dataReplayDirPath + time);
-					Directory.Delete(dataReplayDirPath, true);
-				}
-				Logger.WriteLine("Created backups of replays locally", "Load");
-
-
-				Helper.CopyFolder(appDataReplayDirPath, dataReplayDirPath);
-				Directory.Delete(appDataReplayDirPath, true);
-				Logger.WriteLine("Moved replays to appdata", "Load");
-			}
-		}
-
-		private void LoadConfig()
+	    internal void LoadConfigSettings()
 		{
 			if(Config.Instance.TrackerWindowTop.HasValue)
 				Top = Config.Instance.TrackerWindowTop.Value;
@@ -190,7 +147,7 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 		}
 
-		private async void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
 		{
 			var presentationsource = PresentationSource.FromVisual(this);
 			if(presentationsource != null) // make sure it's connected
@@ -198,29 +155,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
 			}
-			ManaCurveMyDecks.UpdateValues();
-			if(ConfigManager.UpdatedVersion != null)
-			{
-				FlyoutUpdateNotes.IsOpen = true;
-				UpdateNotesControl.LoadUpdateNotes();
-				//await this.ShowUpdateNotesMessage();
-			}
-
-			if(!Helper.FoundHearthstoneDir)
-				await this.ShowHsNotInstalledMessage();
-			else if(Helper.UpdateLogConfig && Core.Game.IsRunning)
-			{
-				await
-					this.ShowMessage("Restart Hearthstone",
-					                 "This is either your first time starting HDT or the log.config file has been updated. Please restart Hearthstone, for HDT to work properly.");
-			}
-
-
-			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.SyncAsync(background: true);
-
-			//SetupProtocol(); turn on later
-		}
+        }
 
 		internal async Task<bool> SetupProtocol()
 		{

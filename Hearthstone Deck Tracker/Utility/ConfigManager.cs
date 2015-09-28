@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Utility
             if (Config.Instance.SelectedTags.Count == 0)
                 Config.Instance.SelectedTags.Add("All");
 
-            if (Helper.FoundHearthstoneDir)
+            if (Helper.HearthstoneDirExists)
                 Helper.UpdateLogConfig = UpdateLogConfigFile();
 
             if (!Directory.Exists(Config.Instance.DataDir))

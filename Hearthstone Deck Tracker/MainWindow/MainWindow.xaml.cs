@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker
 			Restart();
 		}
 
-		private void LoadHearthStats()
+		public void LoadHearthStatsMenu()
 		{
 			if(HearthStatsAPI.IsLoggedIn)
 			{
@@ -403,7 +403,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
 		{
-			Config.Instance.IgnoreNewsId = _currentNewsId;
+			Config.Instance.IgnoreNewsId = NewsUpdater.CurrentNewsId;
 			Config.Save();
 			StatusBarNews.Visibility = Visibility.Collapsed;
 			MinHeight -= StatusBarNewsHeight;
@@ -411,22 +411,17 @@ namespace Hearthstone_Deck_Tracker
 		}
 		
 		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e)
-		{
-			_newsLine--;
-			if(_newsLine < 0)
-				_newsLine = _news.Length - 1;
-			UpdateNews(_newsLine);
-		}
+        {
+            NewsUpdater.PreviousNewsItem();
+        }
 
-		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e)
-		{
-			_newsLine++;
-			if(_newsLine > _news.Length - 1)
-				_newsLine = 0;
-			UpdateNews(_newsLine);
-		}
+        private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e)
+        {
+            NewsUpdater.NextNewsItem();
+        }
 
-		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
+
+        private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
 		{
 			var result =
 				await
@@ -581,34 +576,19 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Properties
 
-		private const int NewsCheckInterval = 300;
-		private const int NewsTickerUpdateInterval = 30;
-		private const int HearthStatsAutoSyncInterval = 300;
-		private bool _initialized;
+        private bool _initialized { get { return Core.Initialized; } }
 		public bool EditingDeck;
 
 
 		public bool IsShowingIncorrectDeckMessage;
 		public bool NeedToIncorrectDeckMessage;
-		private bool _canShowDown;
-		private int _currentNewsId;
-		private string _currentNewsLine;
-		private bool _doUpdate;
-		private DateTime _lastHearthStatsSync;
-		private DateTime _lastNewsCheck;
-		private DateTime _lastNewsUpdate;
-		private DateTime _lastUpdateCheck;
 		private Deck _newDeck;
 		private bool _newDeckUnsavedChanges;
-		private string[] _news;
-		private int _newsLine;
 		private Deck _originalDeck;
-		private bool _tempUpdateCheckDisabled;
-		private bool _update;
 
-		private double _heightChangeDueToSearchBox;
-		private const int SearchBoxHeight = 30;
-		private const int StatusBarNewsHeight = 20;
+        private double _heightChangeDueToSearchBox;
+		public const int SearchBoxHeight = 30;
+		public int StatusBarNewsHeight { get { return 20; } }
 
 		public bool ShowToolTip
 		{
@@ -630,46 +610,20 @@ namespace Hearthstone_Deck_Tracker
             SortFilterDecksFlyout.HideStuffToCreateNewTag();
             FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
         }
-
-		public void LoadMainWindow()
-        {
-            Updater.Cleanup();
-		    ConfigManager.Run();
+        
+	    public void LoadAndUpdateDecks()
+	    {
             UpdateDeckList(DeckList.Instance.ActiveDeck);
-            LoadConfig();
-		    NetDeck.CheckForChromeExtention();
-
-            DataIssueResolver.Run();
-
             UpdateDbListView();
-
             SelectDeck(DeckList.Instance.ActiveDeck, true);
-
-            if(Helper.FoundHearthstoneDir)
-                LogReaderManager.Start(Core.Game);
-
             Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
             DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
             DeckPickerList.UpdateDecks();
             DeckPickerList.UpdateArchivedClassVisibility();
-
-            CopyReplayFiles();
-
-            LoadHearthStats();
-
-            UpdateOverlayAsync();
-            UpdateAsync();
-
-            BackupManager.Run();
-
-            _initialized = true;
-
-            PluginManager.Instance.LoadPlugins();
-            Options.OptionsTrackerPlugins.Load();
-            PluginManager.Instance.StartUpdateAsync();
+            ManaCurveMyDecks.UpdateValues();
         }
 
-		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if(e.PropertyName == "ArchivedClassVisible")
 				MinHeight += DeckPickerList.ArchivedClassVisible ? DeckPickerClassItem.Big : -DeckPickerClassItem.Big;
@@ -701,121 +655,11 @@ namespace Hearthstone_Deck_Tracker
 			get { return new Thickness(0, TitlebarHeight, 0, 0); }
 		}
 
-		private async void UpdateAsync()
-		{
-			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
-			_update = true;
-			_lastNewsCheck = DateTime.MinValue;
-			_lastNewsUpdate = DateTime.MinValue;
-			_currentNewsId = Config.Instance.IgnoreNewsId;
-			_lastHearthStatsSync = DateTime.Now;
-			while(_update)
-			{
-				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(NewsCheckInterval))
-				{
-					try
-					{
-						var oldNewsId = _currentNewsId;
-						using(var client = new WebClient())
-						{
-							var raw = await client.DownloadStringTaskAsync(url);
-							var content = raw.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-							try
-							{
-								_currentNewsId = int.Parse(content[0].Split(':')[1].Trim());
-							}
-							catch(Exception)
-							{
-								_currentNewsId = 0;
-							}
-							_news = content.Skip(1).ToArray();
-						}
-						if(_currentNewsId > oldNewsId
-						   || StatusBarNews.Visibility == Visibility.Collapsed && _currentNewsId > Config.Instance.IgnoreNewsId)
-						{
-							TopRow.Height = new GridLength(26);
-							StatusBarNews.Visibility = Visibility.Visible;
-							MinHeight += StatusBarNewsHeight;
-							UpdateNews(0);
-						}
-					}
-					catch(Exception e)
-					{
-						Logger.WriteLine("Error loading news: " + e, "UpdateNews");
-					}
-					_lastNewsCheck = DateTime.Now;
-				}
-				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(NewsTickerUpdateInterval))
-					UpdateNews();
-
-				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoSyncInBackground
-				   && (DateTime.Now - _lastHearthStatsSync) > TimeSpan.FromSeconds(HearthStatsAutoSyncInterval))
-				{
-					_lastHearthStatsSync = DateTime.Now;
-					HearthStatsManager.SyncAsync(background: true);
-				}
-				await Task.Delay(1000);
-			}
-		}
-
-		private void UpdateNews(int newsLine)
-		{
-			if(newsLine < _news.Length && _currentNewsLine != _news[newsLine])
-			{
-				_currentNewsLine = _news[newsLine];
-				NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
-			}
-			StatusBarItemNewsIndex.Content = string.Format("({0}/{1})", _newsLine + 1, _news.Length);
-			_lastNewsUpdate = DateTime.Now;
-		}
-
-		private void UpdateNews()
-		{
-			if(_news == null || _news.Length == 0)
-				return;
-			_newsLine++;
-			if(_newsLine > _news.Length - 1)
-				_newsLine = 0;
-			UpdateNews(_newsLine);
-		}
-
-		private TextBlock StringToTextBlock(string text)
-		{
-			var tb = new TextBlock();
-			ParseMarkup(text, tb);
-			return tb;
-		}
-
-		private void ParseMarkup(string text, TextBlock tb)
-		{
-			const string urlMarkup = @"\[(?<text>(.*?))\]\((?<url>(http[s]?://.+\..+?))\)";
-
-			var url = Regex.Match(text, urlMarkup);
-			var rest = url.Success ? text.Split(new[] {(url.Value)}, StringSplitOptions.None) : new[] {text};
-			if(rest.Length == 1)
-				tb.Inlines.Add(rest[0]);
-			else
-			{
-				for(int restIndex = 0, urlIndex = 0; restIndex < rest.Length; restIndex += 2, urlIndex++)
-				{
-					ParseMarkup(rest[restIndex], tb);
-					var link = new Hyperlink();
-					link.NavigateUri = new Uri(url.Groups["url"].Value);
-					link.RequestNavigate += (sender, args) => Process.Start(args.Uri.AbsoluteUri);
-					link.Inlines.Add(new Run(url.Groups["text"].Value));
-					link.Foreground = new SolidColorBrush(Colors.White);
-					tb.Inlines.Add(link);
-					ParseMarkup(rest[restIndex + 1], tb);
-				}
-			}
-		}
-
 		#endregion
 
 		#region GENERAL GUI
 
 		private bool _closeAnyway;
-		private bool _showingUpdateMessage;
 
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
@@ -852,13 +696,13 @@ namespace Hearthstone_Deck_Tracker
 		                Close();
 		            }
 		        }
-		        _doUpdate = false;
-		        _update = false;
+		        Core.UpdateOverlay = false;
+		        Core.Update = false;
 
 		        //wait for update to finish, might otherwise crash when overlay gets disposed
 		        for (var i = 0; i < 100; i++)
 		        {
-		            if (_canShowDown)
+		            if (Core.CanShutdown)
 		                break;
 		            await Task.Delay(50);
 		        }
@@ -1041,171 +885,10 @@ namespace Hearthstone_Deck_Tracker
 			ShowInTaskbar = false;
 		}
 
-		private async void UpdateOverlayAsync()
-		{
-			if(Config.Instance.CheckForUpdates)
-				UpdateCheck();
-            var hsForegroundChanged = false;
-			int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
-            _doUpdate = Helper.FoundHearthstoneDir;
-            while(_doUpdate)
-			{
+		
 
-				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
-				{
-					if(Core.Game.CurrentRegion == Region.UNKNOWN)
-					{
-						//game started
-						Core.Game.CurrentRegion = Helper.GetCurrentRegion();
-					}
-					Core.Overlay.UpdatePosition();
-
-					if(!_tempUpdateCheckDisabled && Config.Instance.CheckForUpdates)
-					{
-						if(!Core.Game.IsRunning && (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0) && !_showingUpdateMessage)
-							UpdateCheck();
-					}
-
-					if(!Core.Game.IsRunning)
-						Core.Overlay.Update(true);
-
-					BtnStartHearthstone.Visibility = Visibility.Collapsed;
-                    Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
-
-					Core.Game.IsRunning = true;
-					if(User32.IsHearthstoneInForeground())
-					{
-						if(hsForegroundChanged)
-						{
-							Core.Overlay.Update(true);
-							if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
-							{
-								//if player topmost is set to true before opponent:
-								//clicking on the playerwindow and back to hs causes the playerwindow to be behind hs.
-								//other way around it works for both windows... what?
-								Core.Windows.OpponentWindow.Topmost = true;
-								Core.Windows.PlayerWindow.Topmost = true;
-								Core.Windows.TimerWindow.Topmost = true;
-							}
-							hsForegroundChanged = false;
-						}
-					}
-					else if(!hsForegroundChanged)
-					{
-						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
-						{
-							Core.Windows.PlayerWindow.Topmost = false;
-							Core.Windows.OpponentWindow.Topmost = false;
-							Core.Windows.TimerWindow.Topmost = false;
-						}
-						hsForegroundChanged = true;
-					}
-				}
-				else
-				{
-					Core.Overlay.ShowOverlay(false);
-					if(Core.Game.IsRunning)
-					{
-						//game was closed
-						Logger.WriteLine("Exited game", "UpdateOverlayLoop");
-						Core.Game.CurrentRegion = Region.UNKNOWN;
-						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-						//HsLogReaderV2.Instance.ClearLog();
-						Core.Game.Reset();
-						if(DeckList.Instance.ActiveDeck != null)
-							Core.Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-						await LogReaderManager.Restart();
-
-						BtnStartHearthstone.Visibility = Visibility.Visible;
-                        Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
-
-						if(Config.Instance.CloseWithHearthstone)
-							Close();
-					}
-					Core.Game.IsRunning = false;
-				}
-
-				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && _initialized
-				   && !User32.IsHearthstoneInForeground())
-					NetDeck.CheckForClipboardImport();
-
-				await Task.Delay(Config.Instance.UpdateDelay);
-			}
-			_canShowDown = true;
-		}
-
-		private async void UpdateCheck()
-		{
-			_lastUpdateCheck = DateTime.Now;
-			var newVersion = await Helper.CheckForUpdates(false);
-			if(newVersion != null)
-				ShowNewUpdateMessage(newVersion, false);
-			else if(Config.Instance.CheckForBetaUpdates)
-			{
-				newVersion = await Helper.CheckForUpdates(true);
-				if(newVersion != null)
-					ShowNewUpdateMessage(newVersion, true);
-			}
-		}
+		
         
-		private async void ShowNewUpdateMessage(Version newVersion, bool beta)
-		{
-			if(_showingUpdateMessage)
-				return;
-			_showingUpdateMessage = true;
-
-			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
-			if(newVersion == null)
-			{
-				_showingUpdateMessage = false;
-				return;
-			}
-			try
-			{
-				await Task.Delay(10000);
-				ActivateWindow();
-				while(Visibility != Visibility.Visible || WindowState == WindowState.Minimized)
-					await Task.Delay(100);
-				var newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
-				var betaString = beta ? " BETA" : "";
-				var result =
-					await
-					this.ShowMessageAsync("New" + betaString + " Update available!", "Press \"Download\" to automatically download.",
-					                      MessageDialogStyle.AffirmativeAndNegative, settings);
-
-				if(result == MessageDialogResult.Affirmative)
-				{
-					//recheck, in case there was no immediate response to the dialog
-					if((DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
-					{
-						newVersion = await Helper.CheckForUpdates(beta);
-						if(newVersion != null)
-							newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
-					}
-					try
-					{
-						Process.Start("HDTUpdate.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
-						Close();
-						Application.Current.Shutdown();
-					}
-					catch
-					{
-						Logger.WriteLine("Error starting updater");
-						Process.Start(releaseDownloadUrl);
-					}
-				}
-				else
-					_tempUpdateCheckDisabled = true;
-
-				_showingUpdateMessage = false;
-			}
-			catch(Exception e)
-			{
-				_showingUpdateMessage = false;
-				Logger.WriteLine("Error showing new update message\n" + e.Message);
-			}
-		}
 
 		public void Restart()
 		{

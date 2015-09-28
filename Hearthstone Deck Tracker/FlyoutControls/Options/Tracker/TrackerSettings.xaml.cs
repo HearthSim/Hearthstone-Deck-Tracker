@@ -257,7 +257,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					foreach(var value in new List<bool> {true, false})
 					{
 						Config.Instance.SaveDataInAppData = value;
-						Core.MainWindow.CopyReplayFiles();
+						Helper.CopyReplayFiles();
 						DeckStatsList.SetupDeckStatsFile();
 						DeckList.SetupDeckListFile();
 						DefaultDeckStats.SetupDefaultDeckStatsFile();
