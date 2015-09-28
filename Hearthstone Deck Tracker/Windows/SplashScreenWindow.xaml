@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
-        Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True">
+        Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True" ShowInTaskbar="False">
     <Grid>
         <Rectangle Width="300" Height="300">
             <Rectangle.Fill>
