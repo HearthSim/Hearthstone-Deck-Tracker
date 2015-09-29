@@ -12,7 +12,7 @@
                       Title="Hearthstone Deck Tracker" Height="603" Width="700"
                       MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
-                      Icon="..\..\Images\HearthstoneDeckTracker.ico"
+                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
     <Window.Resources>
