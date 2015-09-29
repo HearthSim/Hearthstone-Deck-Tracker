@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker
                     Overlay.UpdatePosition();
 
                     if (Config.Instance.CheckForUpdates)
-                        Updater.CheckForUpdates(true);
+                        Updater.CheckForUpdates();
 
                     if (!Game.IsRunning)
                         Overlay.Update(true);
