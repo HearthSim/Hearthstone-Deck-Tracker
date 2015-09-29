@@ -179,47 +179,47 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
-                            <Image Source="../../Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
