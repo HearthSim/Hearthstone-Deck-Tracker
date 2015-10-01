@@ -108,7 +108,7 @@
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>從對手手上複製一張隨機卡片，並放到你的手中</Text>
+    <Text>從對手手中複製一張隨機卡片，並放到你的手中</Text>
     <Mechanics />
     <Artist>Michael Komarck</Artist>
   </Card>
@@ -2786,7 +2786,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>使一個敵方手下返回對手的手上</Text>
+    <Text>使一個敵方手下返回對手的手中</Text>
     <Mechanics />
     <Artist>Scott Altmann</Artist>
   </Card>
@@ -3139,7 +3139,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>使全部手下返回擁有者的手上</Text>
+    <Text>使全部手下返回擁有者的手中</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -3814,7 +3814,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Dream</Class>
-    <Text>使一個手下返回擁有者的手上</Text>
+    <Text>使一個手下返回擁有者的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3966,7 +3966,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>在你的回合開始時，與你手牌中的隨機一個手下交換</Text>
+    <Text>在你的回合開始時，與你手中的隨機一個手下交換</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -4381,7 +4381,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;使一個友方手下從戰場返回你的手上</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;使一個友方手下從戰場返回你的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4445,7 +4445,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;把一個友方手下從戰場返回你的手上</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;使一個友方手下從戰場返回你的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4798,7 +4798,7 @@
     <Cost>12</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>你手上的其他每一張牌使消耗減少(1)點</Text>
+    <Text>你手中的其他每一張牌使消耗減少(1)點</Text>
     <Mechanics />
     <Artist>Samwise</Artist>
   </Card>
@@ -5072,7 +5072,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>對敵方英雄造成$2點傷害。&lt;b&gt;連擊：&lt;/b&gt;下回合這張牌將返回你手上</Text>
+    <Text>對敵方英雄造成$2點傷害。&lt;b&gt;連擊：&lt;/b&gt;下回合這張牌將返回你手中</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -5090,7 +5090,7 @@
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>使一個友方手下返回你手上。它的消耗減少(2)點</Text>
+    <Text>使一個友方手下返回你手中。它的消耗減少(2)點</Text>
     <Mechanics />
     <Artist>Graven Tung</Artist>
   </Card>
@@ -8146,7 +8146,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;秘密：&lt;/b&gt;將一個進攻的敵方手下返回手上，並使其消耗增加(2)點</Text>
+    <Text>&lt;b&gt;秘密：&lt;/b&gt;將一個進攻的敵方手下返回手中，並使其消耗增加(2)點</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8584,7 +8584,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;連擊：&lt;/b&gt;將一個手下返回擁有者手上</Text>
+    <Text>&lt;b&gt;連擊：&lt;/b&gt;使一個手下返回擁有者手中</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -9524,7 +9524,7 @@
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，金卡的法力消耗減少(1)點</Text>
+    <Text>若這張牌在你手中，金卡的法力消耗減少(1)點</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9563,7 +9563,7 @@
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;把麥迪文的回音和迴音軟泥怪放到手牌中</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;把麥迪文的回音和迴音軟泥怪放到手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9772,7 +9772,7 @@
     <Health>9</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;把3張疾跑和1張馬拉松放到手牌中</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;把3張疾跑和1張馬拉松放到手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9982,6 +9982,134 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>疊上去！</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+從雙方牌堆中取出一個手下並放到戰場</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>不滿的觀眾</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>召喚一個有&lt;b&gt;嘲諷&lt;/b&gt;的1/1觀眾</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>不滿的觀眾</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+召喚一個有&lt;b&gt;嘲諷&lt;/b&gt;的1/1觀眾</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>管理者</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+召喚一個3/3喚焰者侍僧</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>我砸</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>摧毀一個隨機敵方手下</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>我砸</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+摧毀一個隨機敵方手下</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>打開閘門</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+召喚三個1/1幼龍</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>野性魔法</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+從對手的職業獲得一張隨機法術牌並放到手中</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>啟動！</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+啟動一個隨機的強力魔像</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>骸骨爪牙</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+召喚兩個2/1的骸骨魔像</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>活體爆彈</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10098,7 +10226,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>同時也會對他目標身邊的手下造成傷害</Text>
+    <Text>同時也會對他目標兩側的手下造成傷害</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10154,7 +10282,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Text>鬥毆絕不會輸。
-&lt;b&gt;戰吼：&lt;/b&gt;把鬥毆放到手牌中</Text>
+&lt;b&gt;戰吼：&lt;/b&gt;把鬥毆放到手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10316,6 +10444,58 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>毒雲</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>　&lt;b&gt;英雄能力&lt;/b&gt;
+對全部敵方手下造成1點傷害。若有手下死亡，召喚一個泥漿怪</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>滅殺</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+將全部敵方手下的生命值改為1點</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>蛛網纏繞</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+使一個隨機的敵方手下返回對手的手中</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>收割</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+抽一張牌。獲得一顆法力水晶</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>『炎魔』拉格納羅斯</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10347,7 +10527,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-隨機獲得任意職業的法術牌，並放到手牌中。其消耗為(0)</Text>
+隨機獲得任意職業的法術牌，並放到手中。其消耗為(0)</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10602,7 +10782,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>從三張隨機卡片中選一張。將該卡片放入你的手牌中</Text>
+    <Text>從三張隨機卡片中選一張。將該卡片放入你的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10630,8 +10810,82 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>煩人機器人</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>哈囉！哈囉！哈囉！</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+賦予攻擊力最低的手下&lt;b&gt;聖盾術&lt;/b&gt;及&lt;b&gt;嘲諷&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>爆爆機器人</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>爆爆機器人二世</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;英雄能力&lt;/b&gt;
+對2個隨機敵人造成1點傷害</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
-    <Name>神秘的駕駛</Name>
+    <Name>神秘賓客</Name>
     <CardSet>Tavern Brawl</CardSet>
     <Type>Enchantment</Type>
     <Attack>0</Attack>
@@ -10639,6 +10893,39 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>他究竟是誰！？</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>Boss HP Swapper2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -10670,7 +10957,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;從你的牌堆中取出一張隨機海盜並放到你的手牌中</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;從你的牌堆中取出一張隨機海盜並放到你的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -12596,7 +12883,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;將你手上的一個隨機惡魔放到戰場</Text>
+    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;將你手中的一個隨機惡魔放到戰場</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12675,7 +12962,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使一個隨機的友方手下返回你的手上</Text>
+    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使一個隨機的友方手下返回你的手中</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12812,7 +13099,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>8</Durability>
-    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使這把武器回到手牌中</Text>
+    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使這把武器回到手中</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12827,7 +13114,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>8</Durability>
     <Text>&lt;b&gt;風怒&lt;/b&gt;
-&lt;b&gt;死亡之聲：&lt;/b&gt;使這把武器回到手牌中</Text>
+&lt;b&gt;死亡之聲：&lt;/b&gt;使這把武器回到手中</Text>
     <Mechanics>
       <string>Windfury</string>
       <string>Deathrattle</string>
@@ -13570,7 +13857,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-使一個隨機的敵方手下返回對手的手上</Text>
+使一個隨機的敵方手下返回對手的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13583,7 +13870,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-使2個隨機的敵方手下返回對手的手上</Text>
+使2個隨機的敵方手下返回對手的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14840,7 +15127,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>從雙方玩家的手牌中各挑選一個隨機手下並放到戰場</Text>
+    <Text>從雙方玩家的手中各挑選一個隨機手下並放到戰場</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -15650,7 +15937,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>若這張牌在你手牌中，每當友方手下死掉時，便獲得+1攻擊力</Text>
+    <Text>若這張牌在你手中，每當友方手下死掉時，便獲得+1攻擊力</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -16250,7 +16537,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>在每一個玩家回合結束時，替該玩家抽牌直到手上至少有3張牌</Text>
+    <Text>在每一個玩家回合結束時，替該玩家抽牌直到手中至少有3張牌</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -16408,7 +16695,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你有機械，獲得+1/+1並放一張&lt;b&gt;備用零件&lt;/b&gt;到你的手牌中</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你有機械，獲得+1/+1並放一張&lt;b&gt;備用零件&lt;/b&gt;到你的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16651,7 +16938,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>同時也會對他目標身邊的手下造成傷害</Text>
+    <Text>同時也會對他目標兩側的手下造成傷害</Text>
     <Mechanics />
     <Artist>James Ryman</Artist>
   </Card>
@@ -16682,7 +16969,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>7</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;戰吼及死亡之聲：&lt;/b&gt;放一張&lt;b&gt;備用零件&lt;/b&gt;到你的手牌中</Text>
+    <Text>&lt;b&gt;戰吼及死亡之聲：&lt;/b&gt;放一張&lt;b&gt;備用零件&lt;/b&gt;到你的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Deathrattle</string>
@@ -16864,7 +17151,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>使一個友方手下返回你的手上</Text>
+    <Text>使一個友方手下返回你的手中</Text>
     <Mechanics />
     <Artist>Nutthapon Petthai</Artist>
   </Card>
@@ -18056,7 +18343,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-在回合結束時，將一張龍血之痛加到對手的手牌中</Text>
+在回合結束時，將一張龍血之痛加到對手的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18069,7 +18356,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-在回合結束時，將一張龍血之痛加到對手的手牌中</Text>
+在回合結束時，將一張龍血之痛加到對手的手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18081,7 +18368,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，在你的回合開始時，對你造成1點傷害</Text>
+    <Text>若這張牌在你手中，在你的回合開始時，對你造成1點傷害</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -18095,7 +18382,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，在你的回合開始時，對你造成3點傷害</Text>
+    <Text>若這張牌在你手中，在你的回合開始時，對你造成3點傷害</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -18109,7 +18396,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，在你的回合開始時，為你的對手恢復2點生命值</Text>
+    <Text>若這張牌在你手中，在你的回合開始時，為你的對手恢復2點生命值</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18121,7 +18408,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，在你的回合開始時，為你的對手恢復6點生命值</Text>
+    <Text>若這張牌在你手中，在你的回合開始時，為你的對手恢復6點生命值</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18133,7 +18420,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，克洛瑪古斯的法術消耗減少(1)點</Text>
+    <Text>若這張牌在你手中，克洛瑪古斯的法術消耗減少(1)點</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18145,7 +18432,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，克洛瑪古斯的法術消耗減少(3)點</Text>
+    <Text>若這張牌在你手中，克洛瑪古斯的法術消耗減少(3)點</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18157,7 +18444,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，每當克洛瑪古斯抽牌，他將能得到一張同樣的牌</Text>
+    <Text>若這張牌在你手中，每當克洛瑪古斯抽牌，他將能得到一張同樣的牌</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18169,7 +18456,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，每當克洛瑪古斯抽牌，他將能得到一張同樣的牌</Text>
+    <Text>若這張牌在你手中，每當克洛瑪古斯抽牌，他將能得到一張同樣的牌</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18181,7 +18468,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，克洛瑪古斯的手下消耗減少(1)點</Text>
+    <Text>若這張牌在你手中，克洛瑪古斯的手下消耗減少(1)點</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18193,7 +18480,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>若這張牌在你手牌中，克洛瑪古斯的手下消耗減少(3)點</Text>
+    <Text>若這張牌在你手中，克洛瑪古斯的手下消耗減少(3)點</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18312,7 +18599,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-從對手的職業獲得一張隨機法術牌並放到手牌中</Text>
+從對手的職業獲得一張隨機法術牌並放到手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18325,7 +18612,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;英雄能力&lt;/b&gt;
-從對手的職業獲得一張隨機法術牌並放到手牌中</Text>
+從對手的職業獲得一張隨機法術牌並放到手中</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19116,7 +19403,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，獲得+2生命值</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，獲得+2生命值</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19388,7 +19675,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Text>造成$3點傷害。
-若你手上沒有牌，抽一張牌</Text>
+若你手中沒有牌，抽一張牌</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -19694,7 +19981,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>在你的回合結束時，使你手牌中的卡片消耗降低(1)點</Text>
+    <Text>在你的回合結束時，使你手中的卡片消耗降低(1)點</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -19720,7 +20007,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>4</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，摧毀一個&lt;b&gt;傳說&lt;/b&gt;手下</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，摧毀一個&lt;b&gt;傳說&lt;/b&gt;手下</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19781,7 +20068,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，獲得+1/+1</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，獲得+1/+1</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19810,7 +20097,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，造成3點傷害</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，造成3點傷害</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19949,11 +20236,11 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;放一張隨機法術牌到雙方玩家的手牌中</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;放一張隨機法術牌到雙方玩家的手中</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20064,7 +20351,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>選擇一個手下。每當它進行攻擊，為你的英雄恢復4點生命值</Text>
+    <Text>選擇一個手下。每當其進行攻擊，為你的英雄恢復4點生命值</Text>
     <Mechanics />
     <Artist>Mike Sass</Artist>
   </Card>
@@ -20162,7 +20449,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，獲得+1攻擊力和&lt;b&gt;嘲諷&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，獲得+1攻擊力和&lt;b&gt;嘲諷&lt;/b&gt;</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -20303,7 +20590,6 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>賦予一個惡魔+3/+3。給你的對手一顆法力水晶</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20362,7 +20648,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>使用英雄能力抽到的牌消耗為(0)</Text>
+    <Text>使用你英雄能力抽到的牌消耗為(0)</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -20479,7 +20765,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你有海盜，獲得+1/+1</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你有海盜在場上，獲得+1/+1</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -20580,7 +20866,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使這張牌返回你的手上，並召喚一個4/4的奈幽蟲族</Text>
+    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;使這張牌返回你的手中，並召喚一個4/4的奈幽蟲族</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -20646,6 +20932,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -20859,7 +21146,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>摧毀一個手下。放一張隨機手下到對手的手牌中</Text>
+    <Text>摧毀一個手下。放一張隨機手下到對手的手中</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -20874,7 +21161,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>你手下的法力消耗只需(1)點</Text>
+    <Text>你手下的法力消耗改為(1)點</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -20931,7 +21218,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;戰場上每一個友方圖騰都使其獲得+1/+1</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;場上每一個友方圖騰都使其獲得+1/+1</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -21083,7 +21370,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;賦予你手上和牌堆中所有的手下+1/+1</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;賦予你手中和牌堆中所有的手下+1/+1</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -21365,7 +21652,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>同時也會對他目標身邊的手下造成傷害</Text>
+    <Text>同時也會對他目標兩側的手下造成傷害</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -21458,7 +21745,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，獲得+1攻擊力和&lt;b&gt;衝鋒&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，獲得+1攻擊力和&lt;b&gt;衝鋒&lt;/b&gt;</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -21599,7 +21886,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -21907,7 +22194,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;激勵：&lt;/b&gt;賦予其他手下+1/+1</Text>
+    <Text>&lt;b&gt;激勵：&lt;/b&gt;賦予你的其他手下+1/+1</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
@@ -22229,7 +22516,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>無法攻擊
-&lt;b&gt;激勵：&lt;/b&gt;本回合可以進行攻擊</Text>
+&lt;b&gt;激勵：&lt;/b&gt;本回合可攻擊(進場回合除外)</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
@@ -22259,7 +22546,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>5</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;激勵：&lt;/b&gt;使這個手下返回你的手上</Text>
+    <Text>&lt;b&gt;激勵：&lt;/b&gt;使這個手下返回你的手中</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
@@ -22368,7 +22655,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手牌中有龍類，獲得+1攻擊力和&lt;b&gt;嘲諷&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;戰吼：&lt;/b&gt;若你手中有龍類，獲得+1攻擊力和&lt;b&gt;嘲諷&lt;/b&gt;</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22527,7 +22814,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;嘲諷&lt;/b&gt;
-&lt;b&gt;死亡之聲：&lt;/b&gt;若你手牌中有龍類，對全部手下造成3點傷害</Text>
+&lt;b&gt;死亡之聲：&lt;/b&gt;若你手中有龍類，對全部手下造成3點傷害</Text>
     <Mechanics>
       <string>Deathrattle</string>
       <string>Taunt</string>
@@ -22591,7 +22878,7 @@ PvP盜賊殺掉一個手下以後可以重新&lt;b&gt;潛行&lt;/b&gt;</Text>
     <Health>4</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;各翻一張牌堆手下，若你的消耗較高，使這張牌返回你的手上</Text>
+    <Text>&lt;b&gt;死亡之聲：&lt;/b&gt;各翻一張牌堆手下，若你的消耗較高，使這張牌返回你的手中</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>

@@ -9982,6 +9982,134 @@ Deal $3 damage to the enemy hero.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Pile On!!!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Put a minion from each deck into the battlefield.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Jeering Crowd</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Summon a 1/1 Spectator with &lt;b&gt;Taunt&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Jeering Crowd</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Summon a 1/1 Spectator with &lt;b&gt;Taunt&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>The Majordomo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Summon a 3/3 Flamewaker Acolyte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>ME SMASH</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Destroy a random enemy minion.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>ME SMASH</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Destroy a random enemy minion.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Open the Gates</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Summon three 1/1 Whelps.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Wild Magic</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Put a random spell from your opponent's class into your hand.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Activate!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Activate a random Tron.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Bone Minions</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Summon two 2/1 Bone Constructs.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Living Bomb</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10316,6 +10444,58 @@ Deal $3 damage to the enemy hero.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Poison Cloud</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Deal 1 damage to all enemy minions. If any die, summon a slime.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Decimate</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Change the Health of enemy minions to 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Web Wrap</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Return a random enemy minion to your opponent's hand.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Harvest</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Draw a card. Gain a Mana Crystal.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros the Firelord</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10630,6 +10810,80 @@ Regain &lt;b&gt;Stealth&lt;/b&gt; when PvP Rogue kills a minion.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Annoy-o-Tron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>Hello! Hello! Hello!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Give your lowest attack minion &lt;b&gt;Divine Shield&lt;/b&gt; and &lt;b&gt;Taunt&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Boom Bot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Boom Bot Jr.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Hero Power&lt;/b&gt;
+Deal 1 damage to 2 random enemies.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Mystery Pilot</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10639,6 +10893,39 @@ Regain &lt;b&gt;Stealth&lt;/b&gt; when PvP Rogue kills a minion.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Who could it be?!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -16156,7 +16443,7 @@ Your hero is &lt;b&gt;Immune&lt;/b&gt;.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>If you control a &lt;b&gt;Secret&lt;/b&gt; at the end of your turn, restore 4 health to your hero.</Text>
+    <Text>If you control a &lt;b&gt;Secret&lt;/b&gt; at the end of your turn, restore 4 Health to your hero.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -19955,7 +20242,7 @@ Deal $8 damage to a random enemy. TWICE.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20307,7 +20594,6 @@ your hero.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Give a Demon +3/+3. Give your opponent a Mana Crystal.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20650,6 +20936,7 @@ your hero.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21608,7 +21895,7 @@ Put any minions you drew directly into the battlefield.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>

@@ -6095,7 +6095,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge i servitori adiacenti e ne ottiene l'Attacco e la Salute.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge i servitori adiacenti e ne ottiene Attacco e Salute.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7120,7 +7120,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
-    <Text>Ottiene +1 Attacco quando un Murloc viene evocato.</Text>
+    <Text>Ottiene +1 Attacco quando viene evocato un Murloc.</Text>
     <Mechanics />
     <Artist>Jaemin Kim</Artist>
   </Card>
@@ -9973,6 +9973,134 @@ Infligge $3 danni all'eroe nemico.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Ammucchiata!!!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette in gioco un servitore dal mazzo di ogni giocatore.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Folla Beffarda</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Evoca uno Spettatore 1/1 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Folla Beffarda</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca uno Spettatore 1/1 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>Maggiordomo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Accolito Destafiamme 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>IO SCHIACCIARE</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge un servitore nemico casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>IO SCHIACCIARE</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Distrugge un servitore nemico casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Apertura dei Cancelli</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca tre Draghetti 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Magia Selvaggia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette nella tua mano una Magia casuale della classe dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Attivazione!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Attiva un Tron casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Servitori d'Ossa</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca due Costrutti d'Ossa 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Bomba Vivente</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10306,6 +10434,58 @@ Infligge $3 danni all'eroe nemico.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Nube di Veleno</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Infligge 1 danno a tutti i servitori nemici ed evoca una Fanghiglia per ogni servitore morto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Decimazione</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+La Salute dei servitori nemici diventa pari a 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Ragnatela Avvolgente</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Fa tornare un servitore nemico casuale nella mano dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Mietitura</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Pesca una carta e ottiene 1 Cristallo di Mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10620,6 +10800,80 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Fastidiobot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>Ciao! Ciao! Ciao!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Fornisce &lt;b&gt;Scudo Divino&lt;/b&gt; e &lt;b&gt;Provocazione&lt;/b&gt; al tuo servitore con l'Attacco più basso.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Robobomba</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Mini-Robobombe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Infligge 1 danno a due nemici casuali.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Pilota Misterioso</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10629,6 +10883,39 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Chi sarà mai?!?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -19927,7 +20214,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20277,7 +20564,6 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>+3/+3 a un Demone. Fornisce 1 Cristallo di Mana all'avversario.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20483,7 +20769,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Mette nella tua mano due Magie casuali della classe dell'avversario.</Text>
+    <Text>Mette nella tua mano due carte casuali della classe dell'avversario.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -20620,6 +20906,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21476,7 +21763,7 @@ Infligge $2 danni.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>&lt;b&gt;Segreto&lt;/b&gt; all'inizio del tuo turno, +1/+1 ai tuoi servitori.</Text>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; all'inizio del tuo turno, +1/+1 ai tuoi servitori.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -21568,7 +21855,7 @@ Infligge $2 danni.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -21787,7 +22074,7 @@ Infligge $2 danni.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, il Potere Eroe del nemico costa (5) Mana.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, il Potere Eroe dell'avversario costa (5) Mana in più.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22743,7 +23030,7 @@ Equipaggia un pugnale 2/2.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Evoca un totem a tua scelta.</Text>
+Evoca un Totem a tua scelta.</Text>
     <Mechanics />
   </Card>
   <Card>

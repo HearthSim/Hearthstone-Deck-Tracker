@@ -10002,6 +10002,134 @@ Inflige $3 points de dégâts au héros adverse.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Pioche forcée !</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Place un serviteur de chaque deck sur le champ de bataille.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Foule moqueuse</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Invoque un spectateur 1/1 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Foule moqueuse</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un spectateur 1/1 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>Le chambellan</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un acolyte attise-flammes 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>MOI TOUT CASSER</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit un serviteur adverse aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>MOI TOUT CASSER</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Détruit un serviteur adverse aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Ouvrir les portes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque trois dragonnets 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Magie sauvage</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Place un sort aléatoire de la classe de votre adversaire dans votre main.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Activation !</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Active un Tron aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Séides des os</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque deux assemblages d’os 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Bombe vivante</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10336,6 +10464,59 @@ Inflige $3 points de dégâts au héros adverse.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Nuage empoisonné</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige 1 point de dégâts à
+ tous les serviteurs adverses. Invoque une gelée si l’un d’eux meurt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Décimer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Fait passer les points de vie des serviteurs adverses à 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Entoilage</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Renvoie un serviteur ennemi aléatoire dans la main de votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Moisson</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Vous piochez une carte et gagnez un cristal de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros, seigneur du feu</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10650,6 +10831,80 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Ennuy-o-tron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>Bonjour ! Bonjour ! Bonjour !</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Confère &lt;b&gt;Bouclier divin&lt;/b&gt; et &lt;b&gt;Provocation&lt;/b&gt; à votre serviteur ayant la plus faible attaque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Ro’Boum</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Ro’Boum junior</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige 1 point de dégâts à 2 adversaires aléatoires.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Pilote mystère</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10659,6 +10914,39 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Qui ça peut bien être ?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -19982,7 +20270,7 @@ Inflige $8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20335,7 +20623,6 @@ Inflige $8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Confère +3/+3 à un démon et un cristal de mana à votre adversaire.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20680,6 +20967,7 @@ Inflige $8 points de dégâts à un adversaire aléatoire. DEUX FOIS.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21240,7 +21528,7 @@ de dégâts à tous les serviteurs.
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>&lt;b&gt;Secret :&lt;/b&gt; invoque un ours 3/3 avec &lt;b&gt;Provocation&lt;/b&gt; quand votre héros est attaqué.</Text>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; invoque un ours 3/3 avec &lt;b&gt;Provocation&lt;/b&gt; une fois que votre héros a été attaqué.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -21644,7 +21932,7 @@ Coûte (1) |4(cristal,cristaux) de moins pour chaque pirate allié.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>

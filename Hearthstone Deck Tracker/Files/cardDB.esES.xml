@@ -9856,7 +9856,7 @@ Inflige $1 p. de daño.</Text>
   </Card>
   <Card>
     <CardId>CS2_034_H1_AT_132</CardId>
-    <Name>Explosión de Fuego: rango 2</Name>
+    <Name>Explosión de Fuego II</Name>
     <CardSet>Hero Skins</CardSet>
     <Type>Hero Power</Type>
     <Attack>0</Attack>
@@ -9978,6 +9978,134 @@ Inflige $3 p. de daño al héroe enemigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>¡¡¡Cuantos más, mejor!!!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Coloca un esbirro de cada mazo en el campo de batalla.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Abucheos del público</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Invoca a un espectador 1/1 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Abucheos del público</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un espectador 1/1 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>El mayordomo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un acólito despiertallamas 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>YO MACHACAR</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye a un esbirro enemigo aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>YO MACHACAR</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Destruye a un esbirro enemigo aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Abrid las puertas</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a tres crías 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Magia salvaje</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Coloca un hechizo aleatorio de la clase de tu oponente en tu mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>¡Activar!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Activa un "tron" aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Esbirros osarios</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca dos ensamblajes osarios 2/1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10315,6 +10443,58 @@ Inflige $3 p. de daño al héroe enemigo.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Nube de veneno</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Inflige 1 p. de daño a todos los esbirros enemigos. Si alguno muere, invoca una babosa.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Diezmar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Cambia la salud de los esbirros enemigos a 1 p.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Trampa arácnida</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Devuelve a un esbirro enemigo aleatorio a la mano de tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Cosechar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Roba una carta. Obtiene un cristal de maná.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros, Señor del Fuego</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10629,6 +10809,80 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Plastatrón</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>¡Hola! ¡Hola! ¡Hola!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Otorga &lt;b&gt;Escudo divino&lt;/b&gt; y &lt;b&gt;Provocar&lt;/b&gt; a tu esbirro con el ataque más bajo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Robot bum</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Robot bum Jr.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Inflige 1 p. de daño a 2 enemigos aleatorios.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Piloto misterioso</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10638,6 +10892,39 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>¡¿Quién será?!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -19954,7 +20241,7 @@ Inflige $8 p. de daño a un enemigo aleatorio. DOS VECES.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20306,7 +20593,6 @@ tu héroe.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Otorga +3/+3 a un demonio. Da un cristal de maná a tu oponente.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20649,6 +20935,7 @@ tu héroe.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21606,7 +21893,7 @@ Coloca los esbirros que has robado directamente en el campo de batalla.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -22709,7 +22996,7 @@ Inflige $3 p. de daño al héroe enemigo.</Text>
   </Card>
   <Card>
     <CardId>AT_132_MAGE</CardId>
-    <Name>Explosión de Fuego: rango 2</Name>
+    <Name>Explosión de Fuego II</Name>
     <CardSet>The Grand Tournament</CardSet>
     <Type>Hero Power</Type>
     <Attack>0</Attack>
