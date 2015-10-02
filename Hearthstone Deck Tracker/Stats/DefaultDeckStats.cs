@@ -32,8 +32,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 	    public DeckStats GetDeckStats(string hero)
 		{
-			if(!Enum.GetNames(typeof(HeroClass)).Contains(hero))
-				return null;
+			//if(!Enum.GetNames(typeof(HeroClass)).Contains(hero))
+			//	return null;
+		    if(string.IsNullOrEmpty(hero))
+			    return null;
 			var ds = DeckStats.FirstOrDefault(d => d.Name == hero);
 			if(ds == null)
 			{
