@@ -76,10 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="LogReader\TestFiles\Test1_Bob.log">
+    <Content Include="LogReader\TestFiles\Test1_Bob.log.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="LogReader\TestFiles\Test1_Power.log">
+    <Content Include="LogReader\TestFiles\Test1_Power.log.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
