@@ -12,7 +12,6 @@
                 <Label Content="WARNING:" FontWeight="Bold"/>
                 <Label Content="May cause the cursor to freeze occasionally" Margin="0,-10,0,0" />
                 <Label Content="FEATURES:" FontWeight="Bold"/>
-                <Label Content="- Gray out secrets when clicked"  Margin="0,-10,0,0"/>
                 <Label Content="- Hide deck when friendslist is open" Margin="0,-10,0,0"/>
                 <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures" Margin="10,0,0,0"
                                                    OnLabel="Enabled" OffLabel="Disabled"

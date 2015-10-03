@@ -246,6 +246,94 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnTurnStart.Execute(player);
         }
 
+        public void HandlePlayerAttack(Entity entity)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (CardIds.HeroIdDict.Keys.Contains(entity.CardId))
+            {
+                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
+                _game.OpponentSecrets.SetZero("AT_060", HeroClass.Hunter); //bear trap
+                _game.OpponentSecrets.SetZero("EX1_610", HeroClass.Hunter); //explosive trap
+                _game.OpponentSecrets.SetZero("EX1_533", HeroClass.Hunter); //misdirection
+                _game.OpponentSecrets.SetZero("EX1_289", HeroClass.Mage); //ice barrier
+                _game.OpponentSecrets.SetZero("EX1_594", HeroClass.Mage); //vaporize
+                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+            }
+            else
+            {
+                _game.OpponentSecrets.SetZero("EX1_611", HeroClass.Hunter); //freezing trap
+                _game.OpponentSecrets.SetZero("EX1_554", HeroClass.Hunter); //snake trap
+                _game.OpponentSecrets.SetZero("EX1_130", HeroClass.Paladin); //noble sacrifice
+            }
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerMinionPlayed()
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            _game.OpponentSecrets.SetZero("EX1_609", HeroClass.Hunter); //snipe
+            _game.OpponentSecrets.SetZero("EX1_294", HeroClass.Mage); //mirror entity
+            _game.OpponentSecrets.SetZero("EX1_379", HeroClass.Paladin); //repentance
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerSpellPlayed(bool isMinionTargeted)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (isMinionTargeted)
+            {
+                _game.OpponentSecrets.SetZero("tt_010", HeroClass.Mage); //spellbender
+            }
+            _game.OpponentSecrets.SetZero("EX1_287", HeroClass.Mage); //counterspell
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerMinionDeath()
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            _game.OpponentSecrets.SetZero("FP1_018", HeroClass.Mage); //duplicate
+            _game.OpponentSecrets.SetZero("AT_002", HeroClass.Mage); //effigy
+            _game.OpponentSecrets.SetZero("FP1_020", HeroClass.Paladin); //avenge
+            _game.OpponentSecrets.SetZero("EX1_136", HeroClass.Paladin); //redemption
+
+            Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandleOpponentDamage(Entity entity)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (entity.IsOpponent)
+            {
+                _game.OpponentSecrets.SetZero("EX1_132", HeroClass.Paladin); //eye for an eye
+                Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
+
+        public void HandleOpponentTurnStart(Entity entity)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (entity.IsMinion)
+            {
+                _game.OpponentSecrets.SetZero("AT_073", HeroClass.Paladin); //competitive spirit
+                Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
+
         public void HandleGameStart()
         {
             if (DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started

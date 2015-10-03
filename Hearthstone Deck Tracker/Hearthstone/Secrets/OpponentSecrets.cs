@@ -73,19 +73,19 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Cleared secrets", "OpponentSecrets");
 		}
 
-		public void Trigger(string cardId)
+		public void LogSecretState()
 		{
-			var heroClass = GetHeroClass(cardId);
-			if(!heroClass.HasValue)
-				return;
-			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
-			if(index == -1)
-				return;
-			//index += GetIndexOffset(heroClass.Value);
-			if(Secrets.Where(s => s.HeroClass == heroClass).Any(s => s.PossibleSecrets[index]))
-				SetZero(index, heroClass.Value);
-			else
-				SetMax(index, heroClass.Value);
+			Logger.WriteLine("Secrets. Count: " + Secrets.Count, "OpponentSecrets");
+			int i = 0;
+			foreach (var secret in Secrets)
+			{
+				Logger.WriteLine("Secret " + i + " Stolen: " + secret.Stolen + " HeroClass " + secret.HeroClass.ToString());
+				foreach(var poss in secret.PossibleSecrets)
+				{
+					Logger.WriteLine(poss.Key + " " + poss.Value);
+				}
+				i++;
+			}
 		}
 
 		public void SetMax(string cardId, HeroClass? heroClass)
@@ -96,18 +96,13 @@ namespace Hearthstone_Deck_Tracker
 				if(!heroClass.HasValue)
 					return;
 			}
-			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
-			if(index != -1)
-				SetMax(index, heroClass.Value);
-		}
 
-		public void SetMax(int index, HeroClass heroClass)
-		{
 			foreach(var secret in Secrets.Where(s => s.HeroClass == heroClass))
 			{
-				if(index > 0 || index < secret.PossibleSecrets.Length)
-					secret.PossibleSecrets[index] = true;
+				secret.PossibleSecrets[cardId] = true;
 			}
+
+			LogSecretState();
 		}
 
 		public void SetZero(string cardId, HeroClass? heroClass)
@@ -118,41 +113,43 @@ namespace Hearthstone_Deck_Tracker
 				if(!heroClass.HasValue)
 					return;
 			}
-			var index = SecretHelper.GetSecretIndex(heroClass.Value, cardId);
-			if(index != -1)
-				SetZero(index, heroClass.Value);
-		}
 
-		public void SetZero(int index, HeroClass heroClass)
-		{
-			foreach(var secret in Secrets.Where(s => s.HeroClass == heroClass))
+			foreach (var secret in Secrets.Where(s => s.HeroClass == heroClass))
 			{
-				if(index > 0 || index < secret.PossibleSecrets.Length)
-					secret.PossibleSecrets[index] = false;
+				secret.PossibleSecrets[cardId] = false;
 			}
+
+			LogSecretState();
 		}
 
-		public Secret[] GetSecrets()
+		public List<Secret> GetSecrets()
 		{
-			var secrets = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToArray();
-			foreach(var secret in Secrets)
+			LogSecretState();
+			var returnThis = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToList();
+
+			foreach (var secret in Secrets)
 			{
-				var offset = GetIndexOffset(secret.HeroClass);
-				for(var i = 0; i < secret.PossibleSecrets.Count(); i++)
+				foreach (var possible in secret.PossibleSecrets)
 				{
-					if(secret.PossibleSecrets[i])
-						secrets[i+offset].Count++;
+					if (possible.Value)
+					{
+						returnThis.Find(x => x.CardId == possible.Key).Count = 1;
+					}
 				}
+
 			}
-			return secrets;
+
+			return returnThis;
 		}
 
-		public Secret[] GetDefaultSecrets(HeroClass heroClass)
+		public List<Secret> GetDefaultSecrets(HeroClass heroClass)
 		{
 			var count = SecretHelper.GetMaxSecretCount(heroClass);
-			var returnThis = new Secret[count];
-			for(var i = 0; i < count; i++)
-				returnThis[i] = new Secret(SecretHelper.GetSecretIds(heroClass)[i], 1);
+			var returnThis = new List<Secret>();
+
+			foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
+				returnThis.Add(new Secret(cardId, 1));
+
 			return returnThis;
 		}
 	}

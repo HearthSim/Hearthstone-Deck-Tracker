@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		[JsonIgnore]
 		public bool IsOpponent
 		{
-			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
+			get { return !IsPlayer && HasTag(GAME_TAG.CARDTYPE) && (GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO); }
 		}
 
 		[JsonIgnore]

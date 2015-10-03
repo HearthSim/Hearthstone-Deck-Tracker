@@ -336,8 +336,6 @@ namespace Hearthstone_Deck_Tracker
             }
 
             HideCardsWhenFriendsListOpen(PointFromScreen(_mousePos));
-
-            GrayOutSecrets(_mousePos);
         }
 
         private async void HideCardsWhenFriendsListOpen(Point clickPos)
@@ -393,19 +391,6 @@ namespace Hearthstone_Deck_Tracker
                     }
                 }
             }
-        }
-
-        private void GrayOutSecrets(Point mousePos)
-        {
-            if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
-                return;
-
-            var card = ToolTipCard.DataContext as Card;
-            if (card == null)
-                return;
-
-            _game.OpponentSecrets.Trigger(card.Id);
-            ShowSecrets();
         }
 
         private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)

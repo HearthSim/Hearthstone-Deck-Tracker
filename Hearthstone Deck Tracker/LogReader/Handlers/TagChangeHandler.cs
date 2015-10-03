@@ -387,6 +387,41 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                     gameState.OpponentUsedHeroPower = false;
             }
+            else if (tag == GAME_TAG.DEFENDING && value == 1)
+            {
+                if (player == "OPPOSING" && CardIds.HeroIdDict.Keys.Contains(cardId))
+                {
+                    gameState.GameHandler.HandlePlayerAttack(game.Entities[id]);
+                }
+            }
+            else if (tag == GAME_TAG.NUM_MINIONS_PLAYED_THIS_TURN && value > 0)
+            {
+                if (gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandlePlayerMinionPlayed();
+                }
+            }
+            else if (tag == GAME_TAG.NUM_FRIENDLY_MINIONS_THAT_DIED_THIS_TURN && value > 0)
+            {
+                if (gameState.PlayersTurn() && player == "OPPOSING")
+                {
+                    gameState.GameHandler.HandlePlayerMinionDeath();
+                }
+            }
+            else if (tag == GAME_TAG.PREDAMAGE && value > 0)
+            {
+                if (gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandleOpponentDamage(game.Entities[id]);
+                }
+            }
+            else if (tag == GAME_TAG.NUM_TURNS_IN_PLAY && value > 0)
+            {
+                if (!gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
+                }
+            }
             else if (tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
             {
                 if (controller == game.Player.Id)
