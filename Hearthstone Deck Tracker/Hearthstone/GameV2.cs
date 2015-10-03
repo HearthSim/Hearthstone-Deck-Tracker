@@ -75,7 +75,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null; }
         }
 
-		public GameMode CurrentGameMode
+        public bool IsOpponentMinionInPlay
+        {
+            get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null; }
+        }
+
+        public GameMode CurrentGameMode
 		{
 			get { return _currentGameMode; }
 			set

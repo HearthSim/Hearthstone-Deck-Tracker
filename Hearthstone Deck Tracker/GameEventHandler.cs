@@ -291,16 +291,19 @@ namespace Hearthstone_Deck_Tracker
                 Helper.MainWindow.Overlay.ShowSecrets();
         }
 
-        public void HandlePlayerMinionDeath()
+        public void HandleOpponentMinionDeath()
         {
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
+
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
-            _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
 
-            if(Helper.MainWindow != null)
+            if (_game.IsOpponentMinionInPlay)
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+
+            if (Helper.MainWindow != null)
                 Helper.MainWindow.Overlay.ShowSecrets();
         }
 
@@ -797,10 +800,13 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 	    }
 
-	    public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn)
-		{
-			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
-		}
+        public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn)
+        {
+            _game.Opponent.PlayToGraveyard(entity, cardId, turn);
+
+            if (entity.IsMinion)
+                HandleOpponentMinionDeath();
+        }
 
 	    public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
 	    {

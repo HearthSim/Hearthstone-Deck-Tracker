@@ -412,13 +412,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     gameState.GameHandler.HandlePlayerMinionPlayed();
                 }
             }
-            else if (tag == GAME_TAG.NUM_FRIENDLY_MINIONS_THAT_DIED_THIS_TURN && value > 0)
-            {
-                if (gameState.PlayersTurn() && player == "OPPOSING")
-                {
-                    gameState.GameHandler.HandlePlayerMinionDeath();
-                }
-            }
             else if (tag == GAME_TAG.PREDAMAGE && value > 0)
             {
                 if (gameState.PlayersTurn())

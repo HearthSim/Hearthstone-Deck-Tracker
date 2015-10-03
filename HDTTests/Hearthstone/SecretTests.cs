@@ -120,7 +120,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_MinionDied()
         {
             //TODO: this behaviour is not always true. https://www.youtube.com/watch?v=oHdveuZXoHg
-            _gameEventHandler.HandlePlayerMinionDeath();
+            _gameEventHandler.HandleOpponentMinionDeath();
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);
