@@ -12,12 +12,12 @@ namespace HDTTests.LogReader
 
 		private LogReaderInfo PowerLogReaderInfo
 		{
-			get { return new LogReaderInfo { Name = "Power", StartsWithFilters = new[] { "GameState." }, ContainsFilters = new[] { "Begin Spectating", "Start Spectator", "End Spectator" }, FilePath = "LogReader/TestFiles/Test1_Power.log" }; }
+			get { return new LogReaderInfo { Name = "Power", StartsWithFilters = new[] { "GameState." }, ContainsFilters = new[] { "Begin Spectating", "Start Spectator", "End Spectator" }, FilePath = "LogReader/TestFiles/Test1_Power.log.txt" }; }
 		}
 
 		private LogReaderInfo BobLogReaderInfo
 		{
-			get { return new LogReaderInfo { Name = "Bob", FilePath = "LogReader/TestFiles/Test1_Bob.log" }; }
+			get { return new LogReaderInfo { Name = "Bob", FilePath = "LogReader/TestFiles/Test1_Bob.log.txt" }; }
 		}
 		[TestInitialize]
 		public void Setup()
