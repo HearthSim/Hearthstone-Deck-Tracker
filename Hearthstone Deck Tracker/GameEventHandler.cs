@@ -281,11 +281,10 @@ namespace Hearthstone_Deck_Tracker
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
 
-            if (isMinionTargeted)
-            {
-                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Spellbender);
-            }
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Counterspell);
+
+            if (isMinionTargeted)
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Spellbender);
 
             if(Helper.MainWindow != null)
                 Helper.MainWindow.Overlay.ShowSecrets();
@@ -297,11 +296,18 @@ namespace Hearthstone_Deck_Tracker
                 return;
 
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
-            _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
-            _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
 
-            if (_game.IsOpponentMinionInPlay)
+            if (_game.OpponentMinionCount > 0)
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+
+            // todo: redemption (and maybe effigy) won't trigger if a deathrattle effect fills up the board
+            // example: opponent has 7 minions and you kill their sludge belcher
+            // this conditional is wrong because _game.OpponentMinionCount equals 6 in the above scenario
+            if (_game.OpponentMinionCount < 7)
+            {
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
+            }
 
             if (Helper.MainWindow != null)
                 Helper.MainWindow.Overlay.ShowSecrets();
