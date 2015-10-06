@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
@@ -122,6 +123,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 								{
 									if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
 										break;
+									if(_info.Name == "Power")
+										GameV2.AddHSLogLine(line);
 									if(!_info.HasFilters || _info.StartsWithFilters.Any(x => line.Substring(19).StartsWith(x))
 									   || _info.ContainsFilters.Any(x => line.Substring(19).Contains(x)))
 									{
