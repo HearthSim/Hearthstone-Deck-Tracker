@@ -71,5 +71,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn);
 		void HandlePlayerRemoveFromDeck(Entity entity, int turn);
 		void HandleOpponentRemoveFromDeck(Entity entity, int turn);
+		void HandlePlayerStolen(Entity entity, string cardId, int turn);
+		void HandleOpponentStolen(Entity entity, string cardId, int turn);
 	}
 }

@@ -789,6 +789,18 @@ namespace Hearthstone_Deck_Tracker
 			Helper.UpdateOpponentCards();
 		}
 
+	    public void HandlePlayerStolen(Entity entity, string cardId, int turn)
+	    {
+		    _game.Player.StolenByOpponent(entity, turn);
+			_game.Opponent.StolenFromOpponent(entity, turn);
+	    }
+
+	    public void HandleOpponentStolen(Entity entity, string cardId, int turn)
+		{
+			_game.Opponent.StolenByOpponent(entity, turn);
+			_game.Player.StolenFromOpponent(entity, turn);
+		}
+
 	    public void HandleDustReward(int amount)
         {
             if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
