@@ -458,14 +458,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
 		            }
 		            else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
-                        gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
-	            }
+						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+				}
 	            else if (value == game.Opponent.Id)
 	            {
 		            if (game.Entities[id].IsInZone(TAG_ZONE.SECRET))
 			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
 					else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
-                        gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+						gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 	            }
             }
             else if (tag == GAME_TAG.FATIGUE)
