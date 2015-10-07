@@ -126,6 +126,14 @@
                 <local:HearthstoneTextBlock x:Name="LblWarning" Text="Cards not found in deck:" Margin="3" FontSize="16" Fill="White"/>
                 <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
             </StackPanel>
+            <Grid Name="IconBoardAttackOpponent" Canvas.Top="300" Canvas.Left="300" Width="35" Height="35">
+                <Image Source="../Resources/damage.png"/>
+                <local:HearthstoneTextBlock x:Name="TextBlockOpponentAttack"  Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0"/>
+            </Grid>
+            <Grid Name="IconBoardAttackPlayer" Canvas.Top="300" Canvas.Left="350" Width="35" Height="35">
+                <Image Source="../Resources/damage.png"/>
+                <local:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0"/>
+            </Grid>
         </Canvas>
 
     </Grid>

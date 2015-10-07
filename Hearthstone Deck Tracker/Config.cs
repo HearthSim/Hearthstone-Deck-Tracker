@@ -39,6 +39,18 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
+		[DefaultValue(73.5)]
+		public double AttackIconPlayerVerticalPosition = 73.5;
+
+		[DefaultValue(33)]
+		public double AttackIconPlayerHorizontalPosition = 33;
+
+		[DefaultValue(21)]
+		public double AttackIconOpponentVerticalPosition = 21;
+
+		[DefaultValue(33)]
+		public double AttackIconOpponentHorizontalPosition = 33;
+
 		[DefaultValue(true)]
 		public bool AutoClearDeck = true;
 
@@ -275,6 +287,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideInMenu = false;
 
 		[DefaultValue(false)]
+		public bool HideOpponentAttackIcon = false;
+
+		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
 		[DefaultValue(false)]
@@ -297,6 +312,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool HideOverlayInSpectator = false;
+
+		[DefaultValue(false)]
+		public bool HidePlayerAttackIcon = false;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
