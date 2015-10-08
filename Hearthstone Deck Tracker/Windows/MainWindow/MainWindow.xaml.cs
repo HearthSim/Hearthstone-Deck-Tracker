@@ -563,6 +563,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		#region Properties
+		
+		[Obsolete("Use API.Core.OverlayWindow")]   //for plugin compatibility
+		public OverlayWindow Overlay { get { return Core.Overlay; } }
 
         private bool _initialized { get { return Core.Initialized; } }
 		public bool EditingDeck;
