@@ -5,8 +5,10 @@
 // ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using Hearthstone_Deck_Tracker.Controls.Error;
 
 #endregion
 
@@ -21,6 +23,18 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
+			if(e.Exception is MissingMethodException || e.Exception is TypeLoadException)
+			{
+				var plugin = Plugins.PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
+				if(plugin != null)
+				{
+					plugin.IsEnabled = false;
+					var header = string.Format("{0} is not compatible with HDT {1}.", plugin.NameAndVersion,
+					                           Helper.GetCurrentVersion().ToVersionString());
+					ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
+					e.Handled = true;
+				}
+			}
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
