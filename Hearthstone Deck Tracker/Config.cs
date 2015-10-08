@@ -286,8 +286,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideInMenu = false;
 
-		[DefaultValue(false)]
-		public bool HideOpponentAttackIcon = false;
+		[DefaultValue(true)]
+		public bool HideOpponentAttackIcon = true;
 
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
@@ -313,8 +313,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideOverlayInSpectator = false;
 
-		[DefaultValue(false)]
-		public bool HidePlayerAttackIcon = false;
+		[DefaultValue(true)]
+		public bool HidePlayerAttackIcon = true;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
