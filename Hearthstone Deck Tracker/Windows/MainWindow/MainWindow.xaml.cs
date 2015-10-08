@@ -811,7 +811,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
-				                              d.Class == Core.Game.Player.Class && !d.Archived
+				                              d.Class == Core.Game.Player.Class && !d.Archived && d.IsArenaRunCompleted != true
 				                              && Core.Game.Player.DrawnCardIdsTotal.Distinct().All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id))
 											  && Core.Game.Player.DrawnCards.All(c => d.GetSelectedDeckVersion().Cards.Any(c2 => c2.Id == c.Id && c2.Count >= c.Count)))
 				        .ToList();
