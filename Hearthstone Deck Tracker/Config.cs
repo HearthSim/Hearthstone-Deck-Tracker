@@ -477,6 +477,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool RarityCardFrames = true;
 
 		[DefaultValue(true)]
+		public bool RarityCardGems = true;
+
+		[DefaultValue(true)]
 		public bool RecordArena = true;
 
 		[DefaultValue(true)]

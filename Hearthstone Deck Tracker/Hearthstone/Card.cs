@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		private ImageBrush _cachedBackground;
 		private bool _coloredFrame;
+		private bool _coloredGem;
 		private int _count;
 		private int _inHandCount;
 		private bool _isCreated;
@@ -354,10 +355,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames)
+				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems)
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
+				_coloredGem = Config.Instance.RarityCardGems;
 				if(Id == null || Name == null)
 					return new ImageBrush();
 				try
@@ -380,6 +382,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						switch(Rarity)
 						{
+							case "Free":
 							case "Common":
 								frame = "Images/frame_rarity_common.png";
 								break;
@@ -395,6 +398,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						}
 					}
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
+					//gem
+					if(Config.Instance.RarityCardGems)
+					{
+						var gem = "Images/gem_rarity_common.png";
+						switch(Rarity)
+						{
+							case "Rare":
+								gem = "Images/gem_rarity_rare.png";
+								break;
+							case "Epic":
+								gem = "Images/gem_rarity_epic.png";
+								break;
+							case "Legendary":
+								gem = "Images/gem_rarity_legendary.png";
+								break;
+						}
+						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(gem, UriKind.Relative)), new Rect(3, 3, 28, 28)));
+					}
 
 					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
 					{
