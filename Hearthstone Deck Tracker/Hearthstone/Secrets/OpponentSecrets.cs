@@ -134,21 +134,6 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Cleared secrets", "OpponentSecrets");
 		}
 
-		public void LogSecretState()
-		{
-			Logger.WriteLine("Secrets. Count: " + Secrets.Count, "OpponentSecrets");
-			int i = 0;
-			foreach (var secret in Secrets)
-			{
-				Logger.WriteLine("Secret " + i + " Stolen: " + secret.Stolen + " HeroClass " + secret.HeroClass.ToString());
-				foreach(var poss in secret.PossibleSecrets)
-				{
-					Logger.WriteLine(poss.Key + " " + poss.Value);
-				}
-				i++;
-			}
-		}
-
 		public void SetMax(string cardId, HeroClass? heroClass)
 		{
 			if(heroClass == null)
@@ -162,8 +147,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				secret.PossibleSecrets[cardId] = true;
 			}
-
-			LogSecretState();
 		}
 
         public void SetZero(string cardId, int? cutoff = null)
@@ -172,13 +155,10 @@ namespace Hearthstone_Deck_Tracker
 
             for (int index = 0; index < cutoff; index++)
                 Secrets[index].PossibleSecrets[cardId] = false;
-
-            LogSecretState();
         }
 
 		public List<Secret> GetSecrets()
 		{
-			LogSecretState();
 			var returnThis = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToList();
 
 			foreach (var secret in Secrets)
