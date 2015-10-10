@@ -154,18 +154,12 @@ namespace Hearthstone_Deck_Tracker
 
         public void SetZero(string cardId)
         {
-            SetZeroNewer(cardId, 0);
+            SetZeroOlder(cardId, Secrets.Count);
         }
 
         public void SetZeroOlder(string cardId, int stopIndex)
         {
             for (int index = 0; index < stopIndex; index++)
-                Secrets[index].PossibleSecrets[cardId] = false;
-        }
-
-        public void SetZeroNewer(string cardId, int startIndex)
-        {
-            for (int index = startIndex; index < Secrets.Count; index++)
                 Secrets[index].PossibleSecrets[cardId] = false;
         }
 

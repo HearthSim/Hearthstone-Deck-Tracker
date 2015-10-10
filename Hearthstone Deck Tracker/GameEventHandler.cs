@@ -307,15 +307,18 @@ namespace Hearthstone_Deck_Tracker
 
             // redemption never triggers if a deathrattle effect fills up the board
             // effigy can trigger ahead of the deathrattle effect, but only if effigy was played before the deathrattle minion
-            // todo: need to properly break ties when effigy + deathrattle played in same turn
             if (_game.OpponentMinionCount < 7 - numDeathrattleMinions)
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
-
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
+            }
+            else
+            {
+                // todo: need to properly break ties when effigy + deathrattle played in same turn
                 int minionTurnPlayed = turn - entity.GetTag(GAME_TAG.NUM_TURNS_IN_PLAY);
                 SecretHelper secret = _game.OpponentSecrets.Secrets.FirstOrDefault(x => x.TurnPlayed >= minionTurnPlayed);
                 int secretOffset = secret != null ? _game.OpponentSecrets.Secrets.IndexOf(secret) : 0;
-                _game.OpponentSecrets.SetZeroNewer(CardIds.Secrets.Mage.Effigy, secretOffset);
+                _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
             }
 
             if (Helper.MainWindow != null)
