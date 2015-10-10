@@ -22,7 +22,7 @@ Community
 - **Gitter**: [![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 - **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](http://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
 
-Features:
+Features
 =========
 An in-game overlay:
 
