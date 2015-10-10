@@ -261,9 +261,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	                                }
                                     else if(controller == game.Opponent.Id)
 									{
-										gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId,
-																						   gameState.GetTurnNumber());
-										if(game.Entities[id].HasTag(GAME_TAG.HEALTH))
+                                        gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId,
+                                                                                           gameState.GetTurnNumber(), gameState.PlayersTurn());
+                                        if (game.Entities[id].HasTag(GAME_TAG.HEALTH))
 											gameState.ProposeKeyPoint(KeyPointType.Death, id, ActivePlayer.Opponent);
                                     }
 		                        break;

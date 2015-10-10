@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker
                 Helper.MainWindow.Overlay.ShowSecrets();
         }
 
-        public void HandleOpponentMinionDeath()
+        public void HandleOpponentMinionDeath(Entity entity, int turn)
         {
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
@@ -300,18 +300,22 @@ namespace Hearthstone_Deck_Tracker
             if (_game.OpponentMinionCount > 0)
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
 
-            // Minion first: no effigy trigger
-            // Minion after: effigy trigger
-            // Minion first: no redemption trigger
-            // Minion after: no redemption trigger
+            int numDeathrattleMinions = 0;
 
-            // todo: redemption (and maybe effigy) won't trigger if a deathrattle effect fills up the board
-            // example: opponent has 7 minions and you kill their sludge belcher
-            // this conditional is wrong because _game.OpponentMinionCount equals 6 in the above scenario
-            if (_game.OpponentMinionCount < 7)
+            if (entity.IsActiveDeathrattle)
+                CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions);
+
+            // redemption never triggers if a deathrattle effect fills up the board
+            // effigy can trigger ahead of the deathrattle effect, but only if effigy was played before the deathrattle minion
+            // todo: need to properly break ties when effigy + deathrattle played in same turn
+            if (_game.OpponentMinionCount < 7 - numDeathrattleMinions)
             {
-                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
+
+                int minionTurnPlayed = turn - entity.GetTag(GAME_TAG.NUM_TURNS_IN_PLAY);
+                SecretHelper secret = _game.OpponentSecrets.Secrets.FirstOrDefault(x => x.TurnPlayed >= minionTurnPlayed);
+                int secretOffset = secret != null ? _game.OpponentSecrets.Secrets.IndexOf(secret) : 0;
+                _game.OpponentSecrets.SetZeroNewer(CardIds.Secrets.Mage.Effigy, secretOffset);
             }
 
             if (Helper.MainWindow != null)
@@ -811,12 +815,12 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 	    }
 
-        public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn)
+        public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
         {
             _game.Opponent.PlayToGraveyard(entity, cardId, turn);
 
-            if (entity.IsMinion)
-                HandleOpponentMinionDeath();
+            if (playersTurn && entity.IsMinion)
+                HandleOpponentMinionDeath(entity, turn);
         }
 
 	    public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)

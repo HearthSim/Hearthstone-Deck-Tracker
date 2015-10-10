@@ -44,9 +44,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
         {
             public static class Hunter
             {
-                public static string[] All
+                public static List<string> All
                 {
-                    get { return new[] { BearTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap }; }
+                    get { return new List<string> { BearTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap }; }
                 }
 
                 public static string BearTrap { get { return "AT_060"; } }
@@ -58,9 +58,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             }
             public static class Mage
             {
-                public static string[] All
+                public static List<string> All
                 {
-                    get { return new[] { Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize }; }
+                    get { return new List<string> { Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize }; }
                 }
                 public static string Counterspell { get { return "EX1_287"; } }
                 public static string Duplicate { get { return "FP1_018"; } }
@@ -73,9 +73,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             }
             public static class Paladin
             {
-                public static string[] All
+                public static List<string> All
                 {
-                    get { return new[] { Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance }; }
+                    get { return new List<string> { Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance }; }
                 }
                 public static string Avenge { get { return "FP1_020"; } }
                 public static string CompetitiveSpirit { get { return "AT_073"; } }
@@ -94,6 +94,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             };
         }
 
+        // todo: spells which add deathrattle. Soul of the Forest, Ancestral Spirit
+        // todo: conditional deathrattle summons: Voidcaller, Stalagg/Feugen
+        // todo: Baron Rivendare
+        public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
+        {
+            { "EX1_534", 2 }, // Savannah Highmane
+            { "AT_036", 1 }, // Anub'arak
+            { "AT_019", 1 }, // Dreadsteed
+            { "EX1_110", 1 }, // Cairne Bloodhoof
+            { "EX1_556", 1 }, // Harvest Golem
+            { "GVG_096", 1 }, // Piloted Shredder
+            { "GVG_105", 1 }, // Piloted Sky Golem
+            { "GVG_114", 1 }, // Sneed's Old Shredder
+            { "FP1_002", 2 }, // Haunted Creeper
+            { "FP1_007", 1 }, // Nerubian Egg
+            { "FP1_012", 1 }, // Sludge Belcher
+        };
+        
         public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
 		{
 			{

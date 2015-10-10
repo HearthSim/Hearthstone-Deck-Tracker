@@ -89,39 +89,42 @@ namespace Hearthstone_Deck_Tracker
             Logger.WriteLine("Removed secret with id:" + id, "OpponentSecrets");
         }
 
-        public void ZeroFromAttack(Entity attacker, Entity defender, bool fastOnly = false, int? index = null)
+        public void ZeroFromAttack(Entity attacker, Entity defender, bool fastOnly = false, int stopIndex = -1)
         {
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
 
-            SetZero(CardIds.Secrets.Paladin.NobleSacrifice, index);
+            if (stopIndex == -1)
+                stopIndex = Secrets.Count;
+
+            SetZeroOlder(CardIds.Secrets.Paladin.NobleSacrifice, stopIndex);
 
             if (defender.IsHero)
             {
                 if (!fastOnly)
                 {
-                    SetZero(CardIds.Secrets.Hunter.BearTrap, index);
-                    SetZero(CardIds.Secrets.Mage.IceBarrier, index);
+                    SetZeroOlder(CardIds.Secrets.Hunter.BearTrap, stopIndex);
+                    SetZeroOlder(CardIds.Secrets.Mage.IceBarrier, stopIndex);
                 }
 
-                SetZero(CardIds.Secrets.Hunter.ExplosiveTrap, index);
+                SetZeroOlder(CardIds.Secrets.Hunter.ExplosiveTrap, stopIndex);
 
                 if (Game.IsMinionInPlay)
-                    SetZero(CardIds.Secrets.Hunter.Misdirection, index);
+                    SetZeroOlder(CardIds.Secrets.Hunter.Misdirection, stopIndex);
 
                 if (attacker.IsMinion)
                 {
-                    SetZero(CardIds.Secrets.Mage.Vaporize, index);
-                    SetZero(CardIds.Secrets.Hunter.FreezingTrap, index);
+                    SetZeroOlder(CardIds.Secrets.Mage.Vaporize, stopIndex);
+                    SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
                 }
             }
             else
             {
                 if (!fastOnly)
-                    SetZero(CardIds.Secrets.Hunter.SnakeTrap, index);
+                    SetZeroOlder(CardIds.Secrets.Hunter.SnakeTrap, stopIndex);
 
                 if (attacker.IsMinion)
-                    SetZero(CardIds.Secrets.Hunter.FreezingTrap, index);
+                    SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
             }
 
             if (Helper.MainWindow != null)
@@ -149,15 +152,24 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-        public void SetZero(string cardId, int? cutoff = null)
+        public void SetZero(string cardId)
         {
-            cutoff = cutoff ?? Secrets.Count;
+            SetZeroNewer(cardId, 0);
+        }
 
-            for (int index = 0; index < cutoff; index++)
+        public void SetZeroOlder(string cardId, int stopIndex)
+        {
+            for (int index = 0; index < stopIndex; index++)
                 Secrets[index].PossibleSecrets[cardId] = false;
         }
 
-		public List<Secret> GetSecrets()
+        public void SetZeroNewer(string cardId, int startIndex)
+        {
+            for (int index = startIndex; index < Secrets.Count; index++)
+                Secrets[index].PossibleSecrets[cardId] = false;
+        }
+
+        public List<Secret> GetSecrets()
 		{
 			var returnThis = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToList();
 

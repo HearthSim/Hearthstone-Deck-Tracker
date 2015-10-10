@@ -40,11 +40,11 @@ namespace Hearthstone_Deck_Tracker
 			switch(heroClass)
 			{
 				case HeroClass.Hunter:
-					return CardIds.SecretIdsHunter;
+					return CardIds.Secrets.Hunter.All;
 				case HeroClass.Mage:
-					return CardIds.SecretIdsMage;
+					return CardIds.Secrets.Mage.All;
 				case HeroClass.Paladin:
-					return CardIds.SecretIdsPaladin;
+					return CardIds.Secrets.Paladin.All;
 				default:
 					return new List<string>();
 			}

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -135,8 +136,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_OnlyMinionDied()
         {
             _opponentMinion2.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.HAND);
-            //TODO: this behaviour is not always true. https://www.youtube.com/watch?v=oHdveuZXoHg
-            _gameEventHandler.HandleOpponentMinionDeath();
+            _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption);
@@ -146,8 +146,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_OneMinionDied()
         {
             _opponentMinion2.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.PLAY);
-            //TODO: this behaviour is not always true. https://www.youtube.com/watch?v=oHdveuZXoHg
-            _gameEventHandler.HandleOpponentMinionDeath();
+            _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);
@@ -207,7 +206,7 @@ namespace HDTTests.Hearthstone
             VerifySecrets(2, PaladinSecrets.All);
         }
 
-        private void VerifySecrets(int secretIndex, string[] allSecrets, params string[] triggered)
+        private void VerifySecrets(int secretIndex, List<string> allSecrets, params string[] triggered)
         {
             var secrets = _game.OpponentSecrets.Secrets[secretIndex];
             foreach (var secret in allSecrets)
