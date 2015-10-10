@@ -300,6 +300,11 @@ namespace Hearthstone_Deck_Tracker
             if (_game.OpponentMinionCount > 0)
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
 
+            // Minion first: no effigy trigger
+            // Minion after: effigy trigger
+            // Minion first: no redemption trigger
+            // Minion after: no redemption trigger
+
             // todo: redemption (and maybe effigy) won't trigger if a deathrattle effect fills up the board
             // example: opponent has 7 minions and you kill their sludge belcher
             // this conditional is wrong because _game.OpponentMinionCount equals 6 in the above scenario
@@ -1002,7 +1007,7 @@ namespace Hearthstone_Deck_Tracker
 		        if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
 			        return;
 	        }
-			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, false);
+			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, turn);
 
             if (Helper.MainWindow != null)
                 Helper.MainWindow.Overlay.ShowSecrets();

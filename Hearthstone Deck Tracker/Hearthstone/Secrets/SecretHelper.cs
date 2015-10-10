@@ -11,10 +11,10 @@ namespace Hearthstone_Deck_Tracker
 	public class SecretHelper
 	{
 
-		public SecretHelper(HeroClass heroClass, int id, bool stolen)
+		public SecretHelper(HeroClass heroClass, int id, int turnPlayed)
 		{
 			Id = id;
-			Stolen = stolen;
+            TurnPlayed = turnPlayed;
 			HeroClass = heroClass;
 			PossibleSecrets = new Dictionary<string, bool>();
 
@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public int Id { get; private set; }
-		public bool Stolen { get; private set; }
+		public int TurnPlayed { get; private set; }
 		public HeroClass HeroClass { get; private set; }
 		public Dictionary<string, bool> PossibleSecrets { get; set; }
 
