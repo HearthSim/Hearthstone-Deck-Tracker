@@ -11,10 +11,10 @@ namespace Hearthstone_Deck_Tracker
 	public class SecretHelper
 	{
 
-		public SecretHelper(HeroClass heroClass, int id, bool stolen)
+		public SecretHelper(HeroClass heroClass, int id, int turnPlayed)
 		{
 			Id = id;
-			Stolen = stolen;
+            TurnPlayed = turnPlayed;
 			HeroClass = heroClass;
 			PossibleSecrets = new Dictionary<string, bool>();
 
@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public int Id { get; private set; }
-		public bool Stolen { get; private set; }
+		public int TurnPlayed { get; private set; }
 		public HeroClass HeroClass { get; private set; }
 		public Dictionary<string, bool> PossibleSecrets { get; set; }
 
@@ -40,11 +40,11 @@ namespace Hearthstone_Deck_Tracker
 			switch(heroClass)
 			{
 				case HeroClass.Hunter:
-					return CardIds.SecretIdsHunter;
+					return CardIds.Secrets.Hunter.All;
 				case HeroClass.Mage:
-					return CardIds.SecretIdsMage;
+					return CardIds.Secrets.Mage.All;
 				case HeroClass.Paladin:
-					return CardIds.SecretIdsPaladin;
+					return CardIds.Secrets.Paladin.All;
 				default:
 					return new List<string>();
 			}

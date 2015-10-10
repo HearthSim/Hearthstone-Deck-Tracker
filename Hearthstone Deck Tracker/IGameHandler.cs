@@ -43,12 +43,11 @@ namespace Hearthstone_Deck_Tracker
 
         #region SecretTriggers
 
-        void HandlePlayerAttack(Entity source, Entity target);
-	    void HandleAttackingEntity(Entity entity);
-	    void HandleDefendingEntity(Entity entity);
+        void HandleAttackingEntity(Entity entity);
+        void HandleDefendingEntity(Entity entity);
         void HandlePlayerMinionPlayed();
         void HandlePlayerSpellPlayed(bool isMinionTargeted);
-        void HandlePlayerMinionDeath();
+        void HandleOpponentMinionDeath(Entity entity, int turn);
         void HandleOpponentDamage(Entity entity);
         void HandleOpponentTurnStart(Entity entity);
 
@@ -75,7 +74,7 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleOpponentJoust(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn);
-		void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn);
+        void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE tagZone, int turn);

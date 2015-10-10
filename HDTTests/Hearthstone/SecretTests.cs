@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -20,8 +21,9 @@ namespace HDTTests.Hearthstone
 
         private Entity _heroPlayer,
             _heroOpponent,
-            _minion1,
-            _minion2,
+            _playerMinion1,
+            _opponentMinion1,
+            _opponentMinion2,
             _secretHunter1,
             _secretHunter2,
             _secretMage1,
@@ -39,16 +41,33 @@ namespace HDTTests.Hearthstone
         {
             _game = new GameV2();
             _gameEventHandler = new GameEventHandler(_game);
+
             _heroPlayer = CreateNewEntity("HERO_01");
             _heroPlayer.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
             _heroPlayer.IsPlayer = true;
             _heroOpponent = CreateNewEntity("HERO_02");
             _heroOpponent.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
             _heroOpponent.IsPlayer = false;
-            _minion1 = CreateNewEntity("EX1_010");
-            _minion1.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
-            _minion2 = CreateNewEntity("EX1_020");
-            _minion2.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
+
+            _game.Entities.Add(0, _heroPlayer);
+            _game.Player.Id = _heroPlayer.Id;
+            _game.Entities.Add(1, _heroOpponent);
+            _game.Opponent.Id = _heroOpponent.Id;
+
+            _playerMinion1 = CreateNewEntity("EX1_010");
+            _playerMinion1.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
+            _playerMinion1.SetTag(GAME_TAG.CONTROLLER, _heroPlayer.Id);
+            _opponentMinion1 = CreateNewEntity("EX1_020");
+            _opponentMinion1.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
+            _opponentMinion1.SetTag(GAME_TAG.CONTROLLER, _heroOpponent.Id);
+            _opponentMinion2 = CreateNewEntity("EX1_021");
+            _opponentMinion2.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
+            _opponentMinion2.SetTag(GAME_TAG.CONTROLLER, _heroOpponent.Id);
+
+            _game.Entities.Add(2, _playerMinion1);
+            _game.Entities.Add(3, _opponentMinion1);
+            _game.Entities.Add(4, _opponentMinion2);
+
             _secretHunter1 = CreateNewEntity("");
             _secretHunter1.SetTag(GAME_TAG.CLASS, (int) TAG_CLASS.HUNTER);
             _secretHunter2 = CreateNewEntity("");
@@ -61,20 +80,25 @@ namespace HDTTests.Hearthstone
             _secretPaladin1.SetTag(GAME_TAG.CLASS, (int) TAG_CLASS.PALADIN);
             _secretPaladin2 = CreateNewEntity("");
             _secretPaladin2.SetTag(GAME_TAG.CLASS, (int) TAG_CLASS.PALADIN);
+
             _gameEventHandler.HandleOpponentSecretPlayed(_secretHunter1, "", 0, 0, false, _secretHunter1.Id);
-            //_gameEventHandler.HandleOpponentSecretPlayed(_secretHunter2, "", 0, 0, false, _secretHunter2.Id);
             _gameEventHandler.HandleOpponentSecretPlayed(_secretMage1, "", 0, 0, false, _secretMage1.Id);
-            //_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, false, _secretMage2.Id);
             _gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin1, "", 0, 0, false, _secretPaladin1.Id);
-            //_gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin2, "", 0, 0, false, _secretPaladin2.Id);
         }
 
         [TestMethod]
         public void SingleSecret_HeroToHero_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _heroOpponent);
+            _playerMinion1.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.HAND);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _heroOpponent);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+
+            _playerMinion1.SetTag(GAME_TAG.ZONE, (int) TAG_ZONE.PLAY);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _heroOpponent);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
-                HunterSecrets.Misdirection);
+                             HunterSecrets.Misdirection);
             VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
@@ -82,7 +106,8 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionToHero_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_minion1, _heroOpponent);
+            _playerMinion1.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.PLAY);
+            _game.OpponentSecrets.ZeroFromAttack(_playerMinion1, _heroOpponent);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
                 HunterSecrets.FreezingTrap, HunterSecrets.Misdirection);
             VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
@@ -92,7 +117,7 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_HeroToMinion_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_heroPlayer, _minion2);
+            _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _opponentMinion1);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
@@ -101,17 +126,27 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionToMinion_PlayerAttackTest()
         {
-            _gameEventHandler.HandlePlayerAttack(_minion1, _minion2);
+            _game.OpponentSecrets.ZeroFromAttack(_playerMinion1, _opponentMinion1);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
 
         [TestMethod]
-        public void SingleSecret_MinionDied()
+        public void SingleSecret_OnlyMinionDied()
         {
-            //TODO: this behaviour is not always true. https://www.youtube.com/watch?v=oHdveuZXoHg
-            _gameEventHandler.HandlePlayerMinionDeath();
+            _opponentMinion2.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.HAND);
+            _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
+            VerifySecrets(0, HunterSecrets.All);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption);
+        }
+
+        [TestMethod]
+        public void SingleSecret_OneMinionDied()
+        {
+            _opponentMinion2.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.PLAY);
+            _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);
@@ -156,7 +191,7 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionInPlay_OpponentTurnStart()
         {
-            _gameEventHandler.HandleOpponentTurnStart(_minion2);
+            _gameEventHandler.HandleOpponentTurnStart(_opponentMinion1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
@@ -171,7 +206,7 @@ namespace HDTTests.Hearthstone
             VerifySecrets(2, PaladinSecrets.All);
         }
 
-        private void VerifySecrets(int secretIndex, string[] allSecrets, params string[] triggered)
+        private void VerifySecrets(int secretIndex, List<string> allSecrets, params string[] triggered)
         {
             var secrets = _game.OpponentSecrets.Secrets[secretIndex];
             foreach (var secret in allSecrets)
