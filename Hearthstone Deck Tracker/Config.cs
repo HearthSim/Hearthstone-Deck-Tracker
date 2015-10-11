@@ -217,6 +217,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(1)]
 		public int ExportStartDelay = 1;
 
+		[DefaultValue(true)]
+		public bool EnableExportAutoFilter = true;
+
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
 
