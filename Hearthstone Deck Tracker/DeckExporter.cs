@@ -64,7 +64,8 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
 					await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
 
-				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
+				if (Config.Instance.EnableExportAutoFilter)
+					await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 				Logger.WriteLine("Creating deck...", "DeckExporter");
 				deck.MissingCards.Clear();
