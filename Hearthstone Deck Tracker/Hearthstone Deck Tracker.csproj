@@ -1071,6 +1071,9 @@
     <Resource Include="Images\card-icon-mulligan.png" />
     <Resource Include="Images\card-icon-returned.png" />
     <Resource Include="Images\card-marker.png" />
+    <Content Include="Images\board_damage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\gem_rarity_common.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
