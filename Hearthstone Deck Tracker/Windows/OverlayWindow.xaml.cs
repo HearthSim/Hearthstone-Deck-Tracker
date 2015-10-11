@@ -616,9 +616,9 @@ namespace Hearthstone_Deck_Tracker
 
 			//Attack icons
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
-			Canvas.SetLeft(IconBoardAttackPlayer, Width * Config.Instance.AttackIconPlayerHorizontalPosition / 100);
+			Canvas.SetLeft(IconBoardAttackPlayer, DeckExporter.GetXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
-			Canvas.SetLeft(IconBoardAttackOpponent, Width * Config.Instance.AttackIconOpponentHorizontalPosition / 100);
+			Canvas.SetLeft(IconBoardAttackOpponent, DeckExporter.GetXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
 		}
 
         private void Window_SourceInitialized_1(object sender, EventArgs e)
