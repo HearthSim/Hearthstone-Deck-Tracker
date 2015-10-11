@@ -39,17 +39,17 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
-		[DefaultValue(73.5)]
-		public double AttackIconPlayerVerticalPosition = 73.5;
+		[DefaultValue(71.67)]
+		public double AttackIconPlayerVerticalPosition = 71.67;
 
-		[DefaultValue(33)]
-		public double AttackIconPlayerHorizontalPosition = 33;
+		[DefaultValue(64.43)]
+		public double AttackIconPlayerHorizontalPosition = 64.43;
 
-		[DefaultValue(21)]
-		public double AttackIconOpponentVerticalPosition = 21;
+		[DefaultValue(19.91)]
+		public double AttackIconOpponentVerticalPosition = 19.91;
 
-		[DefaultValue(33)]
-		public double AttackIconOpponentHorizontalPosition = 33;
+		[DefaultValue(64.43)]
+		public double AttackIconOpponentHorizontalPosition = 64.43;
 
 		[DefaultValue(true)]
 		public bool AutoClearDeck = true;
