@@ -299,20 +299,21 @@ namespace Hearthstone_Deck_Tracker
 	        var grid = _selectedUIElement as Grid;
 	        if(grid != null)
 			{
+				var ratio = (4.0 / 3.0) / (Width / Height);
 				if(grid.Equals(IconBoardAttackPlayer))
 				{
 					Config.Instance.AttackIconPlayerVerticalPosition += delta.Y / Height;
-					Config.Instance.AttackIconPlayerHorizontalPosition += delta.X / Width;
+					Config.Instance.AttackIconPlayerHorizontalPosition += delta.X / (Width * ratio);
 					Canvas.SetTop(_movableElements[grid], Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
-					Canvas.SetLeft(_movableElements[grid], Width * Config.Instance.AttackIconPlayerHorizontalPosition / 100);
+					Canvas.SetLeft(_movableElements[grid], Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
 					return;
 				}
 				if(grid.Equals(IconBoardAttackOpponent))
 				{
 					Config.Instance.AttackIconOpponentVerticalPosition += delta.Y / Height;
-					Config.Instance.AttackIconOpponentHorizontalPosition += delta.X / Width;
+					Config.Instance.AttackIconOpponentHorizontalPosition += delta.X / (Width * ratio);
 					Canvas.SetTop(_movableElements[grid], Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
-					Canvas.SetLeft(_movableElements[grid], Width * Config.Instance.AttackIconOpponentHorizontalPosition / 100);
+					Canvas.SetLeft(_movableElements[grid], Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
 					return;
 				}
 			}
@@ -591,7 +592,7 @@ namespace Hearthstone_Deck_Tracker
             for (int i = 0; i < handCount; i++)
             {
                 Canvas.SetLeft(_cardMarks[i],
-                DeckExporter.GetXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ratio) - _cardMarks[i].ActualWidth / 2);
+                Helper.GetScaledXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ratio) - _cardMarks[i].ActualWidth / 2);
                 Canvas.SetTop(_cardMarks[i], Math.Max(_cardMarkPos[handCount - 1][i].Y * Height - _cardMarks[i].ActualHeight / 3, 5));
             }
 
@@ -616,9 +617,9 @@ namespace Hearthstone_Deck_Tracker
 
 			//Attack icons
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
-			Canvas.SetLeft(IconBoardAttackPlayer, DeckExporter.GetXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
+			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
-			Canvas.SetLeft(IconBoardAttackOpponent, DeckExporter.GetXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
+			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
 		}
 
         private void Window_SourceInitialized_1(object sender, EventArgs e)
