@@ -323,7 +323,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			const int numVisibleCards = 21;
 			var hsRect = User32.GetHearthstoneRect(false);
 			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
-			var posX = (int)DeckExporter.GetXPos(0.92, hsRect.Width, ratio);
+			var posX = (int)Helper.GetScaledXPos(0.92, hsRect.Width, ratio);
 			var startY = 71.0/768.0 * hsRect.Height;
 			var strideY = 29.0/768.0 * hsRect.Height;
 			int width = (int)Math.Round(hsRect.Width * xScale);

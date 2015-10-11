@@ -731,5 +731,10 @@ namespace Hearthstone_Deck_Tracker
                                                                            : new SolidColorBrush((System.Windows.Media.Color)Application.Current.Resources["GrayTextColor2"]);
 
         }
-    }
+
+		public static double GetScaledXPos(double left, int width, double ratio)
+		{
+			return (width * ratio * left) + (width * (1 - ratio) / 2);
+		}
+	}
 }
