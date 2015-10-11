@@ -1071,6 +1071,15 @@
     <Resource Include="Images\card-icon-mulligan.png" />
     <Resource Include="Images\card-icon-returned.png" />
     <Resource Include="Images\card-marker.png" />
+    <Content Include="Images\gold_progress_frame_center.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gold_progress_frame_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gold_progress_frame_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\thunder-bluff-valiant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

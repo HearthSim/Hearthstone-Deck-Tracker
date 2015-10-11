@@ -601,13 +601,18 @@ namespace Hearthstone_Deck_Tracker
             var goldFrameOffset = 85 / 25 * goldFrameHeight;
             RectGoldDisplay.Height = goldFrameHeight;
             RectGoldDisplay.Width = goldFrameWidth;
-            LblGoldProgress.Height = goldFrameHeight;
             var left = Width - RectGoldDisplay.ActualWidth - goldFrameOffset;
-            var top = Height - RectGoldDisplay.ActualHeight - 2;
+            var top = Height - RectGoldDisplay.ActualHeight;// - 2;
             Canvas.SetTop(RectGoldDisplay, top);
             Canvas.SetLeft(RectGoldDisplay, left);
-            Canvas.SetTop(LblGoldProgress, top + (goldFrameHeight - LblGoldProgress.ActualHeight) / 2 - 2);
-            Canvas.SetLeft(LblGoldProgress, left - LblGoldProgress.ActualWidth - 10);
+
+            GoldProgressGrid.Height = goldFrameHeight;
+            GPLeftCol.Width = new GridLength(goldFrameHeight);
+            GPRightCol.Width = new GridLength(goldFrameHeight);
+            LblGoldProgress.Margin = new Thickness(goldFrameHeight * 1.2, 0, goldFrameHeight * 0.8, 0);
+            LblGoldProgress.FontSize = Height * 0.017;
+            Canvas.SetTop(GoldProgressGrid, top + (goldFrameHeight - GoldProgressGrid.ActualHeight) / 2);// - 2);
+            Canvas.SetLeft(GoldProgressGrid, left - GoldProgressGrid.ActualWidth - 10);
 
 			//Attack icons
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
@@ -733,11 +738,11 @@ namespace Hearthstone_Deck_Tracker
                 if (Config.Instance.AlwaysShowGoldProgress)
                 {
                     UpdateGoldProgress();
-                    LblGoldProgress.Visibility = Visibility.Visible;
+                    GoldProgressGrid.Visibility = Visibility.Visible;
                 }
             }
             else
-                LblGoldProgress.Visibility = Visibility.Collapsed;
+                GoldProgressGrid.Visibility = Visibility.Collapsed;
 
 	        UpdateAttackValues();
 
@@ -767,16 +772,10 @@ namespace Hearthstone_Deck_Tracker
             if (region >= 0)
             {
                 int wins = Config.Instance.GoldProgress[region];
-                if (wins < 3)
+                if (wins >= 0)
                 {
                     LblGoldProgress.Text = string.Format("Wins: {0}/3 ({1}/100G)", wins,
                         Config.Instance.GoldProgressTotal[region]);
-                }
-                else
-                {
-                    LblGoldProgress.Text = string.Format("At least {2} wins did not get gold reward , Wins: {0}/3 ({1}/100G) , ",
-                        wins,
-                        Config.Instance.GoldProgressTotal[region], wins - 2);
                 }
             }
         }
@@ -972,10 +971,10 @@ namespace Hearthstone_Deck_Tracker
                                          RectGoldDisplay.ActualHeight))
                 {
                     UpdateGoldProgress();
-                    LblGoldProgress.Visibility = Visibility.Visible;
+                    GoldProgressGrid.Visibility = Visibility.Visible;
                 }
                 else
-                    LblGoldProgress.Visibility = Visibility.Hidden;
+                    GoldProgressGrid.Visibility = Visibility.Hidden;
             }
         }
 
