@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -24,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			CheckboxRecordArena.IsChecked = Config.Instance.RecordArena;
+			CheckboxRecordBrawl.IsChecked = Config.Instance.RecordBrawl;
 			CheckboxRecordCasual.IsChecked = Config.Instance.RecordCasual;
 			CheckboxRecordFriendly.IsChecked = Config.Instance.RecordFriendly;
 			CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
@@ -79,6 +81,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.RecordArena = false;
+			Config.Save();
+		}
+
+		private void CheckboxRecordBrawl_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordBrawl = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordBrawl_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordBrawl = false;
 			Config.Save();
 		}
 
@@ -151,6 +169,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = true;
+			CheckboxAskBeforeDiscarding.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -159,6 +178,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = false;
+            CheckboxAskBeforeDiscarding.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -264,8 +284,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
 			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.Overlay.Update(true);
 		}
 
 		private void ComboboxGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -274,8 +294,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
 			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.Overlay.Update(true);
 		}
 
 		private void ComboboxDisplayedTimeFrame_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -284,8 +304,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
 			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.Overlay.Update(true);
 			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
 				                                  ? Visibility.Visible : Visibility.Collapsed;
 		}
@@ -296,8 +316,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxAskBeforeDiscarding_Checked(object sender, RoutedEventArgs e)
@@ -314,6 +334,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
+		}
+
+		private void ButtonCheckForDuplicateMatches_OnClick(object sender, RoutedEventArgs e)
+		{
+			DataIssueResolver.RemoveDuplicateMatches(true);
 		}
 	}
 }

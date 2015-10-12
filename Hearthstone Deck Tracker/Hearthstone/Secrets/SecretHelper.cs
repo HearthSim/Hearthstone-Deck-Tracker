@@ -10,10 +10,12 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class SecretHelper
 	{
+
 		public SecretHelper(HeroClass heroClass, int id, bool stolen)
 		{
 			Id = id;
 			Stolen = stolen;
+			HeroClass = heroClass;
 			PossibleSecrets = new bool[GetMaxSecretCount(heroClass)];
 
 			for(var i = 0; i < PossibleSecrets.Length; i++)
@@ -22,6 +24,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public int Id { get; private set; }
 		public bool Stolen { get; private set; }
+		public HeroClass HeroClass { get; private set; }
 		public bool[] PossibleSecrets { get; set; }
 
 		public static int GetMaxSecretCount(HeroClass heroClass)

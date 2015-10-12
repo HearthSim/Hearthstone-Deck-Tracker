@@ -19,6 +19,192 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class SortFilterDecks
 	{
+		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
+		private bool _initialized;
+
+		public SortFilterDecks()
+		{
+			InitializeComponent();
+			ListboxTags.ItemsSource = Tags;
+		}
+
+		private void NewTag(string tag)
+		{
+			if(!DeckList.Instance.AllTags.Contains(tag))
+			{
+				DeckList.Instance.AllTags.Add(tag);
+				DeckList.Save();
+				Core.MainWindow.ReloadTags();
+			}
+		}
+
+		private void DeleteTag(string tag)
+		{
+			if(DeckList.Instance.AllTags.Contains(tag))
+			{
+				DeckList.Instance.AllTags.Remove(tag);
+
+				foreach(var deck in DeckList.Instance.Decks.Where(deck => deck.Tags.Contains(tag)))
+					deck.Tags.Remove(tag);
+
+				DeckList.Save();
+				Core.MainWindow.ReloadTags();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
+			}
+		}
+
+		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized || !Core.MainWindow.IsLoaded)
+				return;
+
+			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
+			if(selectedValue == null)
+				return;
+
+
+			if(Config.Instance.SelectedDeckSorting != selectedValue)
+			{
+				Config.Instance.SelectedDeckSorting = selectedValue;
+				Config.Save();
+			}
+
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
+		{
+			//only set tags if tags were changed in "My Decks"
+			if(Name == "SortFilterDecksFlyout")
+			{
+				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
+				Config.Instance.SelectedTags = tags;
+				Config.Save();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
+				Core.Windows.StatsWindow.StatsControl.LoadOverallStats();
+				Core.MainWindow.DeckStatsFlyout.LoadOverallStats();
+			}
+			else if(Name == "TagControlEdit")
+			{
+				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
+				var ignore = Tags.Where(tag => tag.Selected == null).Select(tag => tag.Name).ToList();
+				foreach(var deck in Core.MainWindow.DeckPickerList.SelectedDecks)
+				{
+					var keep = deck.Tags.Intersect(ignore);
+					deck.Tags = new List<string>(tags.Concat(keep));
+					deck.Edited();
+					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewDecks)
+						HearthStatsManager.UpdateDeckAsync(deck);
+				}
+				Core.MainWindow.DeckPickerList.UpdateDecks(false);
+				DeckList.Save();
+				Core.MainWindow.UpdateQuickFilterItemSource();
+			}
+		}
+
+		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 2; //decklist.alltags includes "all" and "none", this does not
+			if(index > 1)
+				MoveTag(selectedTag.Name, index, index - 1);
+		}
+
+		private void BtnDown_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 2;
+			if(index < Tags.Count + 1)
+				MoveTag(selectedTag.Name, index, index + 1);
+		}
+
+		private void BtnTop_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 2;
+			MoveTag(selectedTag.Name, index, 2);
+		}
+
+		private void BtnBottom_OnClick(object sender, RoutedEventArgs e)
+		{
+			var selectedTag = ListboxTags.SelectedItem as Tag;
+			if(selectedTag == null)
+				return;
+			var index = Tags.IndexOf(selectedTag) + 2;
+			MoveTag(selectedTag.Name, index, Tags.Count + 1);
+		}
+
+		private void MoveTag(string tagName, int from, int to)
+		{
+			DeckList.Instance.AllTags.RemoveAt(from);
+			DeckList.Instance.AllTags.Insert(to, tagName);
+			DeckList.Save();
+			Core.MainWindow.ReloadTags();
+			ListboxTags.SelectedIndex = to - 2;
+			Core.MainWindow.UpdateQuickFilterItemSource();
+		}
+
+		private void CheckBoxSortByClass_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = true;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClass_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClass = false;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClassArena_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClassArena = true;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortByClassArena_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksByClassArena = false;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void SelectorArena_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized || !Core.MainWindow.IsLoaded)
+				return;
+
+			var selectedValue = ComboboxDeckSortingArena.SelectedValue as string;
+			if(selectedValue == null)
+				return;
+
+
+			if(Config.Instance.SelectedDeckSortingArena != selectedValue)
+			{
+				Config.Instance.SelectedDeckSortingArena = selectedValue;
+				Config.Save();
+			}
+
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
 		#region Tag
 
 		public new class Tag
@@ -48,20 +234,17 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		public readonly ObservableCollection<Tag> Tags = new ObservableCollection<Tag>();
-		private bool _initialized;
-
 		#region Methods
 
 		public void HideStuffToCreateNewTag()
 		{
-			TextboxNewTag.Visibility = Visibility.Hidden;
-			BtnAddTag.Visibility = Visibility.Hidden;
-			BtnDeleteTag.Visibility = Visibility.Hidden;
-			BtnUp.Visibility = Visibility.Hidden;
-			BtnDown.Visibility = Visibility.Hidden;
-			BtnTop.Visibility = Visibility.Hidden;
-			BtnBottom.Visibility = Visibility.Hidden;
+			TextboxNewTag.Visibility = Visibility.Collapsed;
+			BtnAddTag.Visibility = Visibility.Collapsed;
+			BtnDeleteTag.Visibility = Visibility.Collapsed;
+			BtnUp.Visibility = Visibility.Collapsed;
+			BtnDown.Visibility = Visibility.Collapsed;
+			BtnTop.Visibility = Visibility.Collapsed;
+			BtnBottom.Visibility = Visibility.Collapsed;
 		}
 
 		public void LoadTags(List<string> tags)
@@ -132,12 +315,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			Tags.First(t => t.Name == tag).Selected = true;
-
-			//if (SelectedTagsChanged != null)
-			//{
-			//var tagNames = _tags.Where(t => t.Selected).Select(t => t.Name).ToList();
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
-			//}
 		}
 
 		#endregion
@@ -170,11 +348,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				ListboxTags.Items.Refresh();
-				//if (SelectedTagsChanged != null)
-				//{
-				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				SortFilterDecksFlyoutOnSelectedTagsChanged();
-				//}
 			}
 		}
 
@@ -192,12 +366,7 @@ namespace Hearthstone_Deck_Tracker
 					var selectedValue = checkBox.Content.ToString();
 					Tags.First(t => t.Name == selectedValue).Selected = false;
 				}
-
-				//if (SelectedTagsChanged != null)
-				//{
-				//var tagNames = _tags.Where(tag => tag.Selected).Select(tag => tag.Name).ToList();
 				SortFilterDecksFlyoutOnSelectedTagsChanged();
-				//}
 			}
 		}
 
@@ -209,9 +378,8 @@ namespace Hearthstone_Deck_Tracker
 
 			Tags.Add(new Tag(tag));
 
-			//if (TagControlOnNewTag != null)
-			TagControlOnNewTag(this, tag);
-			Helper.MainWindow.UpdateQuickFilterItemSource();
+			NewTag(tag);
+			Core.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
@@ -229,177 +397,22 @@ namespace Hearthstone_Deck_Tracker
 
 			Tags.Remove(Tags.First(t => t.Equals(tag)));
 
-			//if (DeleteTag != null)
-			TagControlOnDeleteTag(this, tag.Name);
-			Helper.MainWindow.UpdateQuickFilterItemSource();
+			DeleteTag(tag.Name);
+			Core.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
 		{
-			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.And);
+			Config.Instance.TagOperation = TagFilerOperation.And;
+			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void OperationSwitch_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-			//if (OperationChanged != null)
-			SortFilterDecksFlyoutOnOperationChanged(this, TagFilerOperation.Or);
+			Config.Instance.TagOperation = TagFilerOperation.Or;
+			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		#endregion
-
-		public SortFilterDecks()
-		{
-			InitializeComponent();
-
-			ListboxTags.ItemsSource = Tags;
-
-			//TagControlOnNewTag += TagControlOnNewTag;
-			//SelectedTagsChanged += TagControlOnSelectedTagsChanged;
-			//DeleteTag += TagControlOnDeleteTag;
-		}
-
-
-		//public MainWindow Window;
-
-		private void TagControlOnNewTag(SortFilterDecks sender, string tag)
-		{
-			if(!DeckList.Instance.AllTags.Contains(tag))
-			{
-				DeckList.Instance.AllTags.Add(tag);
-				DeckList.Save();
-				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All" && t != "None").ToList());
-			}
-		}
-
-
-		private void TagControlOnDeleteTag(SortFilterDecks sender, string tag)
-		{
-			if(DeckList.Instance.AllTags.Contains(tag))
-			{
-				DeckList.Instance.AllTags.Remove(tag);
-
-				foreach(var deck in DeckList.Instance.Decks.Where(deck => deck.Tags.Contains(tag)))
-					deck.Tags.Remove(tag);
-
-				//if(Helper.MainWindow.NewDeck.Tags.Contains(tag))
-				//	Helper.MainWindow.NewDeck.Tags.Remove(tag);
-
-				DeckList.Save();
-				Helper.MainWindow.SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-				Helper.MainWindow.TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(t => t != "All" && t != "None").ToList());
-				//Helper.MainWindow.DeckPickerList.UpdateList();
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
-			}
-		}
-
-		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			//Helper.MainWindow.DeckPickerList.SortDecks();
-			if(!_initialized || !Helper.MainWindow.IsLoaded)
-				return;
-
-			var selectedValue = ComboboxDeckSorting.SelectedValue as string;
-			if(selectedValue == null)
-				return;
-
-
-			if(Config.Instance.SelectedDeckSorting != selectedValue)
-			{
-				Config.Instance.SelectedDeckSorting = selectedValue;
-				Config.Save();
-			}
-
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-		}
-
-		private void SortFilterDecksFlyoutOnOperationChanged(SortFilterDecks sender, TagFilerOperation operation)
-		{
-			Config.Instance.TagOperation = operation;
-			//Helper.MainWindow.DeckPickerList.SetTagOperation(operation);
-			//Helper.MainWindow.DeckPickerList.UpdateList();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
-		}
-
-		private void SortFilterDecksFlyoutOnSelectedTagsChanged()
-		{
-			//only set tags if tags were changed in "My Decks"
-			if(Name == "SortFilterDecksFlyout")
-			{
-				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
-				//Helper.MainWindow.DeckPickerList.SetSelectedTags(tags);
-				Config.Instance.SelectedTags = tags;
-				Config.Save();
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
-				Helper.MainWindow.StatsWindow.StatsControl.LoadOverallStats();
-				Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
-			}
-			else if(Name == "TagControlEdit")
-			{
-				var tags = Tags.Where(tag => tag.Selected == true).Select(tag => tag.Name).ToList();
-				var ignore = Tags.Where(tag => tag.Selected == null).Select(tag => tag.Name).ToList();
-				//DeckList.Instance.ActiveDeck.Tags = new List<string>(tags);
-				foreach(var deck in Helper.MainWindow.DeckPickerList.SelectedDecks)
-				{
-					var keep = deck.Tags.Intersect(ignore);
-					deck.Tags = new List<string>(tags.Concat(keep));
-					deck.Edited();
-					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewDecks)
-						HearthStatsManager.UpdateDeckAsync(deck);
-				}
-				Helper.MainWindow.DeckPickerList.UpdateDecks(false, false);
-				DeckList.Save();
-				Helper.MainWindow.UpdateQuickFilterItemSource();
-			}
-		}
-
-		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
-		{
-			var selectedTag = ListboxTags.SelectedItem as Tag;
-			if(selectedTag == null)
-				return;
-			var index = Tags.IndexOf(selectedTag) + 2; //decklist.alltags includes "all" and "none", this does not
-			if(index > 1)
-				MoveTag(selectedTag.Name, index, index - 1);
-		}
-
-		private void BtnDown_OnClick(object sender, RoutedEventArgs e)
-		{
-			var selectedTag = ListboxTags.SelectedItem as Tag;
-			if(selectedTag == null)
-				return;
-			var index = Tags.IndexOf(selectedTag) + 2;
-			if(index < Tags.Count + 1)
-				MoveTag(selectedTag.Name, index, index + 1);
-		}
-
-		private void BtnTop_OnClick(object sender, RoutedEventArgs e)
-		{
-			var selectedTag = ListboxTags.SelectedItem as Tag;
-			if(selectedTag == null)
-				return;
-			var index = Tags.IndexOf(selectedTag) + 2;
-			MoveTag(selectedTag.Name, index, 2);
-		}
-
-		private void BtnBottom_OnClick(object sender, RoutedEventArgs e)
-		{
-			var selectedTag = ListboxTags.SelectedItem as Tag;
-			if(selectedTag == null)
-				return;
-			var index = Tags.IndexOf(selectedTag) + 2;
-			MoveTag(selectedTag.Name, index, Tags.Count + 1);
-		}
-
-		private void MoveTag(string tagName, int from, int to)
-		{
-			DeckList.Instance.AllTags.RemoveAt(from);
-			DeckList.Instance.AllTags.Insert(to, tagName);
-			DeckList.Save();
-			Helper.MainWindow.ReloadTags();
-			ListboxTags.SelectedIndex = to - 2;
-			Helper.MainWindow.UpdateQuickFilterItemSource();
-		}
 	}
 }

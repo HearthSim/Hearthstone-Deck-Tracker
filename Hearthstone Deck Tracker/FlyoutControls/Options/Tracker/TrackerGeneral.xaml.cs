@@ -3,6 +3,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -22,10 +23,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
+			CheckBoxAutoUse.IsChecked = Config.Instance.AutoUseDeck;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
-			CheckboxAutoSelectDeck.IsEnabled = Config.Instance.AutoDeckDetection;
 			CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
@@ -34,9 +35,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
+			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 			_initialized = true;
 		}
-
 
 		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
 		{
@@ -59,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = true;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
 			Config.Save();
 		}
 
@@ -68,28 +69,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = false;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			Config.Save();
 		}
 
-		private async void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxTrackerCardToolTips_Checked(object sender, RoutedEventArgs e)
 		{
 			//this is probably somehow possible without restarting
 			if(!_initialized)
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
-		private async void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
 		{
 			//this is probably somehow possible without restarting
 			if(!_initialized)
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			await Helper.MainWindow.Restart();
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
@@ -204,7 +205,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-
 		private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -225,7 +225,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
 		{
-
 			if(!_initialized)
 				return;
 			Config.Instance.RarityCardFrames = true;
@@ -234,11 +233,46 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
 		{
-
 			if(!_initialized)
 				return;
 			Config.Instance.RarityCardFrames = false;
 			Config.Save();
+		}
+
+		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = true;
+			Config.Save();
+		}
+
+		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = false;
+			Config.Save();
+		}
+
+		private void CheckBoxAutoUse_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoUseDeck = true;
+			Config.Save();
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+
+		}
+
+		private void CheckBoxAutoUse_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoUseDeck = false;
+			Config.Save();
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+
 		}
 	}
 }

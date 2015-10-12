@@ -1,11 +1,16 @@
 ﻿<Application x:Class="Hearthstone_Deck_Tracker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow\MainWindow.xaml"
+             Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Color x:Key="GrayTextColor1">#FF7F7F7F</Color>
+                    <Color x:Key="GrayTextColor2">#FFAAAAAA</Color>
+                    <SolidColorBrush x:Key="GrayTextColorBrush" Color="#FF7F7F7F"/>
+                </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />

@@ -5,7 +5,7 @@
 		Druid,
 		Hunter,
 		Mage,
-        Paladin,
+		Paladin,
 		Priest,
 		Rogue,
 		Shaman,

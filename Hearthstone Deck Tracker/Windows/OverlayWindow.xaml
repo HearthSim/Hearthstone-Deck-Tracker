@@ -2,6 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+        xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+        xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         Title="HearthstoneOverlay" Height="571" Width="832" Background="{x:Null}" ResizeMode="NoResize"
         ShowInTaskbar="False" SourceInitialized="Window_SourceInitialized_1" AllowsTransparency="True"
         Loaded="OverlayWindow_OnLoaded"
@@ -22,14 +24,14 @@
                 <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua" />
             </ScrollViewer>
 
-            <StackPanel Name="StackPanelPlayer" Canvas.Left="438" Canvas.Top="47" Width="218">
+            <StackPanel Name="StackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
                 <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0 - 0 (0%)" />
-                <local:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147"
+                <controls:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147"
                                     Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial">
+                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial" ItemsSource="{Binding PlayerDeck, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -42,27 +44,33 @@
                             <Setter Property="Margin" Value="0,-2,0,0" />
                         </Style>
                     </ListView.Resources>
-                </local:DeckListView>
-                <StackPanel Name="StackPanelPlayerDraw" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" />
-                    <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Margin="4,0,0,0" />
-                </StackPanel>
-                <StackPanel Name="StackPanelPlayerCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="14" Text="Hand: 0" />
-                    <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
-                </StackPanel>
-                <StackPanel Name="StackPanelPlayerFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
-                </StackPanel>
+                </controls:DeckListView>
+                <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
+                    </Canvas.Background>
+                    <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="18" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" />
+                    <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="18" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" />
+                </Canvas>
+                <Canvas Name="CanvasPlayerChance" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/player-chance-frame.png"/>
+                    </Canvas.Background>
+                    <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                    <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                </Canvas>
+                <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="asd" Margin="4,0,0,0" TextAlignment="Center"/>
+
             </StackPanel>
-            <StackPanel Name="StackPanelOpponent" Width="218">
+            <StackPanel Name="StackPanelOpponent" Width="218" Canvas.Top="203" Canvas.Left="10">
                 <Viewbox StretchDirection="DownOnly" Name="ViewBoxWinRateAgainst">
                     <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"/>
                 </Viewbox>
-                <local:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147"
+                <controls:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147"
                                     Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                    ItemsSource="{Binding OpponentDeck, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"
                                     ScrollViewer.CanContentScroll="False" FontWeight="Bold" FontFamily="Arial">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
@@ -76,73 +84,69 @@
                             <Setter Property="Margin" Value="0,-2,0,0" />
                         </Style>
                     </ListView.Resources>
-                </local:DeckListView>
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" />
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" />
-                <StackPanel Name="StackPanelOpponentCount" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="14" Text="Hand: 0" />
-                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="14" Text="Deck: 0" Margin="4,0,0,0" />
-                </StackPanel>
-                <StackPanel Name="StackPanelOpponentFatigue" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" />
-                </StackPanel>
+                </controls:DeckListView>
+                <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
+                    </Canvas.Background>
+                    <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="18" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="18" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" />
+                </Canvas>
+                <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2">
+                    <Canvas.Background>
+                        <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/opponent-chance-frame.png"/>
+                    </Canvas.Background>
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="18" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="55" />
+                    <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="55" />
+                </Canvas>
+                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
             </StackPanel>
 
-			<StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
+            <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
-            <UniformGrid x:Name="LblGrid" Width="300" Rows="1" HorizontalAlignment="Center" Canvas.Left="73"
-                         Canvas.Top="105">
-                <StackPanel Name="Marks0">
-                    <local:HearthstoneTextBlock x:Name="LblCard0" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark0" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks1">
-                    <local:HearthstoneTextBlock x:Name="LblCard1" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark1" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks2">
-                    <local:HearthstoneTextBlock x:Name="LblCard2" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark2" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks3">
-                    <local:HearthstoneTextBlock x:Name="LblCard3" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark3" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks4">
-                    <local:HearthstoneTextBlock x:Name="LblCard4" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark4" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks5">
-                    <local:HearthstoneTextBlock x:Name="LblCard5" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark5" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks6">
-                    <local:HearthstoneTextBlock x:Name="LblCard6" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark6" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks7">
-                    <local:HearthstoneTextBlock x:Name="LblCard7" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark7" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks8">
-                    <local:HearthstoneTextBlock x:Name="LblCard8" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark8" FontSize="20" Text="0" />
-                </StackPanel>
-                <StackPanel Name="Marks9">
-                    <local:HearthstoneTextBlock x:Name="LblCard9" FontSize="20" Text="0" />
-                    <local:HearthstoneTextBlock x:Name="LblCardMark9" FontSize="20" Text="0" />
-                </StackPanel>
-            </UniformGrid>
+            <controls:CardMarker x:Name="Marks0" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks1" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks2" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks3" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks4" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks5" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks6" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
+            <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203"
                                Visibility="Hidden" />
             <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
             <Rectangle Name="RectGoldDisplay" Width="150" Height="25" Visibility="Hidden"/>
-            <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" Margin="3" FontSize="16" Visibility="Hidden"/>
+            <Grid Name="GoldProgressGrid" Height="33" Visibility="Hidden">
+                <Grid SnapsToDevicePixels="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Name="GPLeftCol" Width="33" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Name="GPRightCol" Width="33" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_left.png" />
+                    <Image Grid.Column="1" Stretch="Fill" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_center.png"/>
+                    <Image Grid.Column="2" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_right.png" />
+                </Grid>
+                <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" FontSize="16"
+                                            TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible"/>
+            </Grid>
             <StackPanel Orientation="Horizontal" Name="StackPanelWarning">
                 <local:HearthstoneTextBlock Text="Warning!" Margin="3" FontSize="16" Fill="Red"/>
                 <local:HearthstoneTextBlock x:Name="LblWarning" Text="Cards not found in deck:" Margin="3" FontSize="16" Fill="White"/>
                 <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
             </StackPanel>
+            <Grid Name="IconBoardAttackOpponent" Canvas.Top="300" Canvas.Left="300" Width="75" Height="75">
+                <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
+                <local:HearthstoneTextBlock x:Name="TextBlockOpponentAttack"  FontSize="24" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
+            <Grid Name="IconBoardAttackPlayer" Canvas.Top="300" Canvas.Left="350" Width="75" Height="75">
+                <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
+                <local:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" FontSize="24" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+            </Grid>
         </Canvas>
 
     </Grid>

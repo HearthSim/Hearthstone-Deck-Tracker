@@ -4,10 +4,9 @@
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Wrong deck detected" Height="265" Width="450" Topmost="True" WindowStyle="ToolWindow"
-                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <Grid>
-        <ListView Name="ListViewDecks" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+        <ListView Name="ListViewDecks"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged" SelectionMode="Single" BorderThickness="1" Margin="0,34,0,0">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">

@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,12 +22,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class DebugWindow : Window
 	{
-		private List<object> _previous = new List<object>();
+	    private readonly GameV2 _game;
+	    private List<object> _previous = new List<object>();
 		private bool _update;
 
-		public DebugWindow()
+		public DebugWindow(GameV2 game)
 		{
-			InitializeComponent();
+		    _game = game;
+		    InitializeComponent();
 			_update = true;
 			Closing += (sender, args) => _update = false;
 			Update();
@@ -36,26 +39,75 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			while(_update)
 			{
-				switch((string)ComboBoxData.SelectedValue)
+				if(TabControlDebug.SelectedIndex == 0)
 				{
-					case "Game":
-						FilterGame();
-						break;
-					case "Entities":
-						FilterEntities();
-						break;
+					UpdateCards();
+				}
+				else
+				{
+					switch((string)ComboBoxData.SelectedValue)
+					{
+						case "Game":
+							FilterGame();
+							break;
+						case "Entities":
+							FilterEntities();
+							break;
+					}
 				}
 				await Task.Delay(500);
 			}
 		}
 
+		private void UpdateCards()
+		{
+			TreeViewCards.Items.Clear();
+			var collections = new[]
+			{
+				new CollectionItem(_game.Player.Hand, "Player Hand"),
+				new CollectionItem(_game.Player.Board, "Player Board"),
+				new CollectionItem(_game.Player.Deck, "Player Deck"),
+				new CollectionItem(_game.Player.Graveyard, "Player Graveyard"),
+				new CollectionItem(_game.Player.Secrets, "Player Secrets"),
+				new CollectionItem(_game.Player.RevealedCards, "Player RevealedCards"),
+				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
+				new CollectionItem(_game.Opponent.Board, "Opponent Board"),
+				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),
+				new CollectionItem(_game.Opponent.Graveyard, "Opponent Graveyard"),
+				new CollectionItem(_game.Opponent.Secrets, "Opponent Secrets"),
+				new CollectionItem(_game.Opponent.RevealedCards, "Opponent RevealedCards")
+			};
+			foreach(var collection in collections)
+			{
+				var tvi = new TreeViewItem();
+				tvi.IsExpanded = true;
+				tvi.Header = collection.Name;
+				foreach(var item in collection.Collection)
+				{
+					tvi.Items.Add(item.ToString());
+				}
+				TreeViewCards.Items.Add(tvi);
+			}
+		}
+
+		public class CollectionItem
+		{
+			public CollectionItem(List<CardEntity> collection, string name)
+			{
+				Collection = collection;
+				Name = name;
+			}
+			public List<CardEntity> Collection { get; set; }
+			public string Name { get; set; }
+		}
+
 		private void FilterEntities()
 		{
 			List<object> list = new List<object>();
-			foreach(var entity in Game.Entities)
+			foreach(var entity in _game.Entities)
 			{
 				var tags = entity.Value.Tags.Select(GetTagKeyValue).Aggregate((c, n) => c + " | " + n);
-				var card = Game.GetCardFromId(entity.Value.CardId);
+				var card = Database.GetCardFromId(entity.Value.CardId);
 				var cardName = card != null ? card.Name : "";
 				var name = string.IsNullOrEmpty(entity.Value.Name) ? cardName : entity.Value.Name;
 				list.Add(new {Name = name, entity.Value.CardId, Tags = tags});
@@ -101,13 +153,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void FilterGame()
 		{
 			List<object> list = new List<object>();
-			var props = typeof(Game).GetProperties().OrderBy(x => x.Name);
+			var props = typeof(GameV2).GetProperties().OrderBy(x => x.Name);
 			foreach(var prop in props)
 			{
 				if(prop.Name == "HSLogLines" || prop.Name == "Entities")
 					continue;
 				string val = "";
-				var propVal = prop.GetValue(prop);
+				var propVal = prop.GetValue(_game, null);
 				if(propVal != null)
 				{
 					var enumerable = propVal as IEnumerable<object>;

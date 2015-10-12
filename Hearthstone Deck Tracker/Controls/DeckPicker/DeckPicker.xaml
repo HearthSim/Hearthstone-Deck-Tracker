@@ -1,0 +1,159 @@
+﻿<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPicker"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+           xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+           mc:Ignorable="d"
+           d:DesignHeight="500" d:DesignWidth="300">
+    <DockPanel DockPanel.Dock="Top">
+        <Border
+            Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+            BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
+            <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="Search..."
+                     controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
+        </Border>
+        <Border BorderThickness="1"
+                Width="28" Height="28" DockPanel.Dock="Right" Margin="2,-2,0,0"
+                BorderBrush="{DynamicResource TextBrush}">
+            <Grid>
+                <Grid.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                <Setter Property="Border.Background" Value="{DynamicResource AccentColorBrush3}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Rectangle Name="RectangleSearchIcon" Margin="2"
+                           Visibility="{Binding VisibilitySearchIcon, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                           PreviewMouseLeftButtonUp="RectangleSearchIcon_OnPreviewMouseLeftButtonUp">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{DynamicResource appbar_magnify}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Name="RectangleCloseIcon" Margin="2"
+                           Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                           PreviewMouseLeftButtonUp="RectangleCloseIcon_OnPreviewMouseLeftButtonUp">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{DynamicResource appbar_close}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+        </Border>
+        <ListView Name="ListViewDeckType" SelectionChanged="ListViewDeckType_OnSelectionChanged" SelectionMode="Single"
+                  Height="28" Margin="0,0,0,2" BorderThickness="1"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ItemsSource="{Binding DeckTypeItems, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+    <ListView Name="ListViewClasses" Height="40" DockPanel.Dock="Top" SelectionChanged="Selector_OnSelectionChanged"
+              BorderThickness="1" Margin="0,0,0,2"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+              ScrollViewer.CanContentScroll="True">
+        <ListView.Resources>
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+        </ListView.Resources>
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Rows="1" />
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+    </ListView>
+    <Border BorderThickness="1" DockPanel.Dock="Bottom" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"
+            PreviewMouseDown="ActiveDeckPanel_OnPreviewMouseDown" Height="26">
+        <DockPanel>
+            <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
+                       VerticalAlignment="Center" Margin="5,0,0,0" DockPanel.Dock="Left" />
+            <Image
+                Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
+            <Grid Margin="0,0,5,0">
+                <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                           HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
+                <DockPanel>
+                    <DockPanel.Resources>
+                        <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
+                        <deckPicker:MarginConverterRight x:Key="MarginConverterRight" />
+                    </DockPanel.Resources>
+                    <TextBlock Name="TextBlockName" Background="{DynamicResource ControlBackgroundBrush}"
+                               Text="{Binding ActiveDeck.NameAndVersion, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                               Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterRight}}"
+                               FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                               DockPanel.Dock="Left" />
+                    <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
+                               Foreground="{DynamicResource GrayTextColorBrush}"
+                               Text="{Binding ActiveDeck.StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                               Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
+                    <Grid />
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Border>
+    <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True"
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
+              SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
+        <ListView.ContextMenu>
+            <ContextMenu Opened="ContextMenu_OnOpened">
+                <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
+                <Separator Name="SeparatorUseDeck" />
+                <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
+                <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
+                <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
+                <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
+                <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+                <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click"
+                          Visibility="Collapsed" />
+                <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED"
+                          Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed" />
+                <Separator Name="SeparatorDeck1" />
+                <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS"
+                          ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick" />
+                <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
+                <MenuItem Name="MenuItemOpenHearthStats" Header="OPEN _HEARTHSTATS" Click="BtnOpenHearthStats_Click" />
+                <Separator />
+                <MenuItem Name="MenuItemArchive" Header="_ARCHIVE" Click="BtnArchiveDeck_Click" />
+                <MenuItem Name="MenuItemUnarchive" Header="UN_ARCHIVE" Click="BtnUnarchiveDeck_Click" />
+                <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
+                <MenuItem Header="CLONE">
+                    <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                </MenuItem>
+            </ContextMenu>
+        </ListView.ContextMenu>
+        <ListView.Resources>
+            <Style TargetType="GridViewColumnHeader">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+        </ListView.Resources>
+    </ListView>
+
+</DockPanel>

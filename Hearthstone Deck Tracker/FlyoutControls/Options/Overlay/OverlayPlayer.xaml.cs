@@ -1,7 +1,14 @@
 ﻿#region
 
+using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader;
 
 #endregion
 
@@ -10,23 +17,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// <summary>
 	/// Interaction logic for Player.xaml
 	/// </summary>
-	public partial class OverlayPlayer
+	public partial class OverlayPlayer : INotifyPropertyChanged
 	{
-		private bool _initialized;
+	    private GameV2 _game;
+	    private bool _initialized;
 
 		public OverlayPlayer()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 		}
 
-		public void Load()
+	    public void Load(GameV2 game)
 		{
-			CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
+            _game = game;
+            CheckboxHighlightCardsInHand.IsChecked = Config.Instance.HighlightCardsInHand;
 			CheckboxRemoveCards.IsChecked = Config.Instance.RemoveCardsFromDeck;
 			CheckboxHighlightLastDrawn.IsChecked = Config.Instance.HighlightLastDrawn;
 			CheckboxShowPlayerGet.IsChecked = Config.Instance.ShowPlayerGet;
 			SliderPlayerOpacity.Value = Config.Instance.PlayerOpacity;
 			SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
+			TextBoxScaling.Text = Config.Instance.OverlayPlayerScaling.ToString(CultureInfo.InvariantCulture);
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 
 			ElementSorterPlayer.IsPlayer = true;
@@ -60,8 +71,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Helper.MainWindow.Overlay.UpdatePlayerLayout();
-			Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
+			Core.Overlay.UpdatePlayerLayout();
+			Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			_initialized = true;
 		}
 
@@ -70,7 +81,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = true;
-			Game.HighlightCardsInHand = true;
 			SaveConfig(true);
 		}
 
@@ -79,7 +89,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightCardsInHand = false;
-			Game.HighlightCardsInHand = false;
 			SaveConfig(true);
 		}
 
@@ -91,43 +100,30 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-		private void SliderOverlayPlayerScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		private async void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized)
-				return;
-			var scaling = SliderOverlayPlayerScaling.Value;
-			Config.Instance.OverlayPlayerScaling = scaling;
-			SaveConfig(false);
-			Helper.MainWindow.Overlay.UpdateScaling();
-
-			if(Config.Instance.UseSameScaling && Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value != scaling)
-				Helper.OptionsMain.OptionsOverlayOpponent.SliderOverlayOpponentScaling.Value = scaling;
-		}
-
-		private void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized || !Game.IsUsingPremade)
+			if(!_initialized || !_game.IsUsingPremade)
 				return;
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
-			Game.Reset();
+			_game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
-			Helper.MainWindow.Overlay.Update(true);
+				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+			await LogReaderManager.Restart();
+			Core.Overlay.Update(true);
 		}
 
-		private void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
+		private async void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized || !Game.IsUsingPremade)
+			if(!_initialized || !_game.IsUsingPremade)
 				return;
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
-			Game.Reset();
+			_game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			HsLogReader.Instance.Reset(true);
-			Helper.MainWindow.Overlay.Update(true);
+				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+			await LogReaderManager.Restart();
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxHighlightLastDrawn_Checked(object sender, RoutedEventArgs e)
@@ -152,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowPlayerGet = true;
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void CheckboxShowPlayerGet_Unchecked(object sender, RoutedEventArgs e)
@@ -161,14 +157,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowPlayerGet = false;
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(true);
+			Core.Overlay.Update(true);
 		}
 
 		private void SaveConfig(bool updateOverlay)
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
@@ -187,6 +183,43 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = false;
 			Config.Instance.UseSameScaling = false;
 			Config.Save();
+		}
+		
+		public double PlayerScaling
+		{
+			get { return Config.Instance.OverlayPlayerScaling; }
+			set
+			{
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlayPlayerScaling.Minimum)
+					value = SliderOverlayPlayerScaling.Minimum;
+				else if(value > SliderOverlayPlayerScaling.Maximum)
+					value = SliderOverlayPlayerScaling.Maximum;
+				Config.Instance.OverlayPlayerScaling = value;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayOpponentScaling != value)
+					Helper.OptionsMain.OptionsOverlayOpponent.OpponentScaling = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void TextBoxScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
 		}
 	}
 }

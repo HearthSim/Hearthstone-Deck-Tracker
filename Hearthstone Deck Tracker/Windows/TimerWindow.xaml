@@ -6,6 +6,15 @@
                       Title="Timer" Height="130" Width="150"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
     <Grid>
         <StackPanel VerticalAlignment="Center">
             <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" />

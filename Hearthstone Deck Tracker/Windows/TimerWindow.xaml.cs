@@ -62,7 +62,6 @@ namespace Hearthstone_Deck_Tracker
 			Hide();
 		}
 
-
 		internal void Shutdown()
 		{
 			_appIsClosing = true;

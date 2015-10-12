@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -28,7 +29,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckStatsControl
 	{
-		private const string BtnOpponentDeckTextShow = "Show Opp. Deck";
+	    private GameV2 _game;
+	    private const string BtnOpponentDeckTextShow = "Show Opp. Deck";
 		private const string BtnOpponentDeckTextHide = "Hide Opp. Deck";
 		private const int GroupBoxHeaderHeight = 28;
 		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
@@ -38,7 +40,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public DeckStatsControl()
 		{
-			InitializeComponent();
+		    
+		    InitializeComponent();
 			ComboboxGameMode.ItemsSource = Enum.GetValues(typeof(GameMode));
 			ComboboxTime.ItemsSource = Enum.GetValues(typeof(TimeFrame));
 			ComboBoxOpponentClassD.ItemsSource = Enum.GetValues(typeof(HeroClassAll));
@@ -53,9 +56,10 @@ namespace Hearthstone_Deck_Tracker
 			get { return TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
-		public void LoadConfig()
+		public void LoadConfig(GameV2 game)
 		{
-			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
+            _game = game;
+            ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTimeFrame;
 			ComboboxUnassigned.SelectedValue = Config.Instance.StatsOverallFilterDeckMode;
 			ComboBoxPlayerClass.SelectedValue = Config.Instance.StatsOverallFilterPlayerHeroClass;
@@ -72,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
 			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 			DataGridOverallGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 
-			Helper.MainWindow.FlyoutOpponentDeck.ClosingFinished += (sender, args) =>
+			Core.MainWindow.FlyoutOpponentDeck.ClosingFinished += (sender, args) =>
 			{
 				BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 				BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
@@ -90,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			MetroWindow window;
 			if(Config.Instance.StatsInWindow)
-				window = Helper.MainWindow.StatsWindow;
+				window = Core.Windows.StatsWindow;
 			else
 				window = Helper.MainWindow;
 
@@ -138,10 +142,10 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
+				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Core.MainWindow.CheckHearthStatsMatchDeletion())
 					HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
-				//Helper.MainWindow.DeckPickerList.Items.Refresh();
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				//Core.MainWindow.DeckPickerList.Items.Refresh();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
 			}
 			else if(count > 1)
@@ -186,12 +190,12 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId)
-				   && await Helper.MainWindow.CheckHearthStatsMatchDeletion())
+				   && await Core.MainWindow.CheckHearthStatsMatchDeletion())
 					HearthStatsManager.DeleteMatchesAsync(selectedGames);
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games", "DeckStatsControl");
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
 			}
 		}
@@ -309,7 +313,8 @@ namespace Hearthstone_Deck_Tracker
 				            g =>
 				            (g.GameMode == selectedGameMode || selectedGameMode == GameMode.All) && g.StartTime >= startTime
 				            && g.StartTime <= endTime
-				            && (g.Note == null && noteFilter == string.Empty || g.Note != null && g.Note.ToLowerInvariant().Contains(noteFilter.ToLowerInvariant())));
+				            && (g.Note == null && noteFilter == string.Empty
+				                || g.Note != null && g.Note.ToLowerInvariant().Contains(noteFilter.ToLowerInvariant())));
 		}
 
 		public void Refresh()
@@ -351,18 +356,18 @@ namespace Hearthstone_Deck_Tracker
 			if(selected != null)
 			{
 				if(selected.HasReplayFile && !Keyboard.IsKeyDown(Key.LeftCtrl)) //hold ctrl to open old game viewer
-					ReplayReader.Read(selected.ReplayFile);
+					ReplayReader.LaunchReplayViewer(selected.ReplayFile);
 				else if(Config.Instance.StatsInWindow)
 				{
-					Helper.MainWindow.StatsWindow.GameDetailsFlyout.SetGame(selected);
-					Helper.MainWindow.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
-					Helper.MainWindow.StatsWindow.FlyoutGameDetails.IsOpen = true;
+					Core.Windows.StatsWindow.GameDetailsFlyout.SetGame(selected);
+					Core.Windows.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
+					Core.Windows.StatsWindow.FlyoutGameDetails.IsOpen = true;
 				}
 				else
 				{
-					Helper.MainWindow.GameDetailsFlyout.SetGame(selected);
-					Helper.MainWindow.FlyoutGameDetails.Header = selected.ToString();
-					Helper.MainWindow.FlyoutGameDetails.IsOpen = true;
+					Core.MainWindow.GameDetailsFlyout.SetGame(selected);
+					Core.MainWindow.FlyoutGameDetails.Header = selected.ToString();
+					Core.MainWindow.FlyoutGameDetails.IsOpen = true;
 				}
 			}
 		}
@@ -415,7 +420,7 @@ namespace Hearthstone_Deck_Tracker
 				var selectedGames = DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList();
 				var allTheSameHero = selectedGames.All(g => g.PlayerHero == selectedGames[0].PlayerHero);
 				BtnOverallMoveToOtherDeck.IsEnabled = allTheSameHero;
-				if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+				if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
 				{
 					var game = DataGridOverallGames.SelectedItem as GameStats;
 					if(game != null)
@@ -451,7 +456,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnNote.IsEnabled = enabled;
 			BtnMoveToOtherDeck.IsEnabled = enabled;
 			BtnEditGame.IsEnabled = enabled;
-			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
 			{
 				var game = DataGridGames.SelectedItem as GameStats;
 				if(game != null)
@@ -471,9 +476,9 @@ namespace Hearthstone_Deck_Tracker
 			var settings = new MetroDialogSettings {DefaultText = selected.Note};
 			string newNote;
 			if(Config.Instance.StatsInWindow)
-				newNote = await Helper.MainWindow.StatsWindow.ShowInputAsync("Note", "", settings);
+				newNote = await Core.Windows.StatsWindow.ShowInputAsync("Note", "", settings);
 			else
-				newNote = await Helper.MainWindow.ShowInputAsync("Note", "", settings);
+				newNote = await Core.MainWindow.ShowInputAsync("Note", "", settings);
 			if(newNote == null)
 				return;
 			selected.Note = newNote;
@@ -512,7 +517,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			//todo: probably not the best performance
 			Refresh();
 		}
 
@@ -539,7 +543,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
-				dialog.Owner = Helper.MainWindow.StatsWindow;
+				dialog.Owner = Core.Windows.StatsWindow;
 			else
 				dialog.Owner = Helper.MainWindow;
 
@@ -562,10 +566,10 @@ namespace Hearthstone_Deck_Tracker
 					if(deck != null)
 						deck.DeckStats.Games.Remove(game);
 				}
-				game.PlayerDeckVersion = dialog.SelectedVersion;
-				game.HearthStatsDeckVersionId = selectedDeck.GetVersion(dialog.SelectedVersion).HearthStatsDeckVersionId;
-				game.DeckId = selectedDeck.DeckId;
-				game.DeckName = selectedDeck.Name;
+                game.PlayerDeckVersion = dialog.SelectedVersion;
+                game.HearthStatsDeckVersionId = selectedDeck.GetVersion(dialog.SelectedVersion).HearthStatsDeckVersionId;
+                game.DeckId = selectedDeck.DeckId;
+                game.DeckName = selectedDeck.Name;
 				selectedDeck.DeckStats.Games.Add(game);
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 					HearthStatsManager.MoveMatchAsync(game, selectedDeck, background: true);
@@ -573,11 +577,18 @@ namespace Hearthstone_Deck_Tracker
 			DeckStatsList.Save();
 			DeckList.Save();
 			Refresh();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private bool VerifyHeroes(GameStats game)
 		{
+			// If its Brawl skip verification
+			if(game.GameMode == GameMode.Brawl)
+			{
+				game.VerifiedHeroes = true;
+				return false;
+			}
+
 			var modifiedHero = false;
 			var playerHeroes = new Dictionary<string, int>();
 			var opponentHeroes = new Dictionary<string, int>();
@@ -589,7 +600,7 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					if(play.Type.ToString().Contains("Player"))
 					{
-						var hero = Game.GetCardFromId(play.CardId).PlayerClass;
+						var hero = Database.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!playerHeroes.ContainsKey(hero))
@@ -598,7 +609,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(play.Type.ToString().Contains("Opponent"))
 					{
-						var hero = Game.GetCardFromId(play.CardId).PlayerClass;
+						var hero = Database.GetCardFromId(play.CardId).PlayerClass;
 						if(hero == null)
 							continue;
 						if(!opponentHeroes.ContainsKey(hero))
@@ -612,7 +623,7 @@ namespace Hearthstone_Deck_Tracker
 				var pHero = playerHeroes.OrderByDescending(x => x.Value).First().Key;
 				if(game.PlayerHero != pHero)
 				{
-					game.PlayerHero = pHero;
+                    game.PlayerHero = pHero;
 					modifiedHero = true;
 				}
 			}
@@ -621,12 +632,12 @@ namespace Hearthstone_Deck_Tracker
 				var oHero = opponentHeroes.OrderByDescending(x => x.Value).First().Key;
 				if(game.OpponentHero != oHero)
 				{
-					game.OpponentHero = oHero;
+                    game.OpponentHero = oHero;
 					modifiedHero = true;
 				}
 			}
 
-			game.VerifiedHeroes = true;
+            game.VerifiedHeroes = true;
 			return modifiedHero;
 		}
 
@@ -638,7 +649,8 @@ namespace Hearthstone_Deck_Tracker
 			var sortedCol = DataGridOverallGames.Columns.FirstOrDefault(col => col.SortDirection != null);
 			var total = new List<GameStats>();
 			var modified = false;
-			foreach(var @class in Enum.GetNames(typeof(HeroClass)))
+			var classes = Enum.GetNames(typeof(HeroClass)).Concat(DefaultDeckStats.Instance.DeckStats.Select(x => x.Name)).Distinct();
+            foreach(var @class in classes)
 			{
 				var allGames = new List<GameStats>();
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithDeck
@@ -657,8 +669,8 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(string.IsNullOrEmpty(game.PlayerHero))
 					{
-						//for some reason this does not get loaded after saving it to the xml
-						game.PlayerHero = @class;
+                        //for some reason this does not get loaded after saving it to the xml
+                        game.PlayerHero = @class;
 						needToSaveDeckStats = true;
 					}
 					if(!game.VerifiedHeroes && VerifyHeroes(game))
@@ -768,7 +780,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnOverallShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
 				CloseOpponentDeckFlyout();
 			else
 			{
@@ -780,7 +792,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(Helper.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
 				CloseOpponentDeckFlyout();
 			else
 			{
@@ -792,46 +804,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CloseOpponentDeckFlyout()
 		{
-			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = false;
+			Core.MainWindow.FlyoutOpponentDeck.IsOpen = false;
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 		}
+
 		private void ImportOpponentDeck(GameStats stats)
 		{
-			var ignoreCards = new List<Card>();
-			var deck = new Deck {Class = stats.OpponentHero};
-			foreach(var turn in stats.TurnStats)
-			{
-				foreach(var play in turn.Plays)
-				{
-					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
-					   || play.Type == PlayType.OpponentSecretTriggered)
-					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
-						{
-							if(ignoreCards.Contains(card))
-							{
-								ignoreCards.Remove(card);
-								continue;
-							}
-							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
-							if(deckCard != null)
-								deckCard.Count++;
-							else
-								deck.Cards.Add(card);
-						}
-					}
-					else if(play.Type == PlayType.OpponentBackToHand)
-					{
-						var card = Game.GetCardFromId(play.CardId);
-						if(Game.IsActualCard(card))
-							ignoreCards.Add(card);
-					}
-				}
-			}
-			Helper.MainWindow.OpponentDeckFlyout.SetDeck(deck);
-			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = true;
+			if(stats == null)
+				return;
+			Core.MainWindow.OpponentDeckFlyout.SetDeck(stats.GetOpponentDeck());
+			Core.MainWindow.FlyoutOpponentDeck.IsOpen = true;
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 		}
@@ -842,10 +825,10 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			var dialog = new AddGameDialog(_deck);
 			await
-				Helper.MainWindow.ShowMetroDialogAsync(dialog,
+				Core.MainWindow.ShowMetroDialogAsync(dialog,
 				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
 			var game = await dialog.WaitForButtonPressAsync();
-			await Helper.MainWindow.HideMetroDialogAsync(dialog);
+			await Core.MainWindow.HideMetroDialogAsync(dialog);
 			if(game != null)
 			{
 				_deck.DeckStats.AddGameResult(game);
@@ -859,7 +842,7 @@ namespace Hearthstone_Deck_Tracker
 				Refresh();
 			}
 			DeckStatsList.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {_deck});
 		}
 
 		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
@@ -883,23 +866,26 @@ namespace Hearthstone_Deck_Tracker
 
 			var dialog = new AddGameDialog(game);
 			await
-				Helper.MainWindow.ShowMetroDialogAsync(dialog,
+				Core.MainWindow.ShowMetroDialogAsync(dialog,
 				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
 			var result = await dialog.WaitForButtonPressAsync();
-			await Helper.MainWindow.HideMetroDialogAsync(dialog);
+			await Core.MainWindow.HideMetroDialogAsync(dialog);
 			if(result == null) //cancelled
 				return;
 			Refresh();
 			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
 			{
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
-				if(game.GameMode == GameMode.Arena)
-					HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
-				else
-					HearthStatsManager.UpdateMatchAsync(game, _deck.GetVersion(game.PlayerDeckVersion), true, true);
+				if(deck != null)
+				{
+					if(game.GameMode == GameMode.Arena)
+						HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
+					else
+						HearthStatsManager.UpdateMatchAsync(game, deck.GetVersion(game.PlayerDeckVersion), true, true);
+				}
 			}
 			DeckStatsList.Save();
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 
 		private void TabControlDeck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -946,10 +932,10 @@ namespace Hearthstone_Deck_Tracker
 			{
 				get
 				{
-					if(!Enum.GetNames(typeof(HeroClass)).Contains(_playerHero))
-						return new BitmapImage();
-					var uri = new Uri(string.Format("../Resources/{0}_small.png", _playerHero.ToLower()), UriKind.Relative);
-					return new BitmapImage(uri);
+					HeroClassAll playerHero;
+					if(Enum.TryParse(_playerHero, out playerHero))
+						return ImageCache.GetClassIcon(playerHero);
+					return new BitmapImage();
 				}
 			}
 

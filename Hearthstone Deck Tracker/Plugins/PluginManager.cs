@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 #endregion
 
@@ -40,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			get { return Path.Combine(Config.Instance.ConfigDir, "plugins.xml"); }
 		}
 
+		public static int MaxExceptions { get { return 100; } }
+
 		public void LoadPlugins()
 		{
 			LoadPlugins(DefaultPath, true);
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			if(Plugins.Any())
 				UnloadPlugins();
 			var dirInfo = new DirectoryInfo(pluginPath);
-			
+
 			var files = dirInfo.GetFiles().Select(f => f.FullName).ToList();
 			if(checkSubDirs)
 			{
@@ -107,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			return plugins;
 		}
 
-		private void UnloadPlugins()
+		internal void UnloadPlugins()
 		{
 			//not really unloading anything but it's the best I can do without multiple assemblies
 			foreach(var plugin in Plugins)

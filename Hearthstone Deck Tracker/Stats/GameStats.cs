@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -18,12 +19,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 	public class GameStats
 	{
 		private readonly string[] _hsClasses = {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
-
-		public Guid GameId;
-		public string HearthStatsId;
 		private Guid? _deckId;
 		private string _deckName;
 		private List<TurnStats> _turnStats;
+		public Guid GameId;
+		public string HearthStatsId;
 
 		public GameStats()
 		{
@@ -154,10 +154,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if(!_hsClasses.Contains(OpponentHero))
-					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", OpponentHero.ToLower()), UriKind.Relative);
-				return new BitmapImage(uri);
+				HeroClassAll oppHero;
+				if(Enum.TryParse(OpponentHero, out oppHero))
+					return ImageCache.GetClassIcon(oppHero);
+				return new BitmapImage();
 			}
 		}
 
@@ -166,13 +166,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if(!_hsClasses.Contains(PlayerHero))
-					return new BitmapImage();
-				var uri = new Uri(string.Format("../Resources/{0}_small.png", PlayerHero.ToLower()), UriKind.Relative);
-				return new BitmapImage(uri);
+				HeroClassAll playerHero;
+				if(Enum.TryParse(PlayerHero, out playerHero))
+					return ImageCache.GetClassIcon(playerHero);
+				return new BitmapImage();
 			}
 		}
-
 
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]
@@ -271,7 +270,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return GameId.GetHashCode();
 		}
 
-
 		private void ResolveSecrets(IEnumerable<TurnStats> newturnstats)
 		{
 			var unresolvedSecrets = 0;
@@ -360,7 +358,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				TurnStats.Add(turnStats);
 			}
 			turnStats.AddPlay(type, cardId);
-			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats");
+			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats", 2);
 		}
 
 		public override string ToString()
@@ -373,6 +371,43 @@ namespace Hearthstone_Deck_Tracker.Stats
 			HearthStatsDeckId = null;
 			HearthStatsDeckVersionId = null;
 			HearthStatsId = null;
+		}
+
+		public Deck GetOpponentDeck()
+		{
+			var ignoreCards = new List<Card>();
+			var deck = new Deck {Class = OpponentHero};
+			foreach(var turn in TurnStats)
+			{
+				foreach(var play in turn.Plays)
+				{
+					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
+					   || play.Type == PlayType.OpponentSecretTriggered)
+					{
+						var card = Database.GetCardFromId(play.CardId);
+						if(Database.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
+						{
+							if(ignoreCards.Contains(card))
+							{
+								ignoreCards.Remove(card);
+								continue;
+							}
+							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
+							if(deckCard != null)
+								deckCard.Count++;
+							else
+								deck.Cards.Add(card);
+						}
+					}
+					else if(play.Type == PlayType.OpponentBackToHand)
+					{
+						var card = Database.GetCardFromId(play.CardId);
+						if(Database.IsActualCard(card))
+							ignoreCards.Add(card);
+					}
+				}
+			}
+			return deck;
 		}
 	}
 }

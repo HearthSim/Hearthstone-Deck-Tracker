@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker
 {
-	internal class User32
+	public class User32
 	{
 		[Flags]
 		public enum MouseEventFlags : uint
@@ -20,12 +21,17 @@ namespace Hearthstone_Deck_Tracker
 			LeftDown = 0x00000002,
 			LeftUp = 0x00000004,
 			RightDown = 0x00000008,
-			RightUp = 0x00000010
+			RightUp = 0x00000010,
+			Wheel = 0x00000800
 		}
 
-		private const int WsExTransparent = 0x00000020;
+		public const int WsExTransparent = 0x00000020;
+		public const int WsExToolWindow = 0x00000080;
 		private const int GwlExstyle = (-20);
 		public const int SwRestore = 9;
+		private const int Alt = 0xA4;
+		private const int ExtendedKey = 0x1;
+		private const int KeyUp = 0x2;
 		private static DateTime _lastCheck;
 		private static IntPtr _hsWindow;
 
@@ -48,7 +54,7 @@ namespace Hearthstone_Deck_Tracker
 		public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		[DllImport("user32.dll")]
-		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint dwData, UIntPtr dwExtraInfo);
+		public static extern void mouse_event(uint dwFlags, uint dx, uint dy, int dwData, UIntPtr dwExtraInfo);
 
 		[DllImport("user32.dll")]
 		public static extern bool ClientToScreen(IntPtr hWnd, ref Point lpPoint);
@@ -62,13 +68,16 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern bool IsWindow(IntPtr hWnd);
 
-		[DllImport("user32.dll")]
+		[DllImport("user32.dll", CharSet = CharSet.Unicode)]
 		private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-		public static void SetWindowExTransparent(IntPtr hwnd)
+		[DllImport("user32.dll")]
+		private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
+		public static void SetWindowExStyle(IntPtr hwnd, int style)
 		{
 			var extendedStyle = GetWindowLong(hwnd, GwlExstyle);
-			SetWindowLong(hwnd, GwlExstyle, extendedStyle | WsExTransparent);
+			SetWindowLong(hwnd, GwlExstyle, extendedStyle | style);
 		}
 
 		public static bool IsHearthstoneInForeground()
@@ -87,34 +96,49 @@ namespace Hearthstone_Deck_Tracker
 			return new Point(p.X, p.Y);
 		}
 
+		private static readonly string[] WindowNames = { "Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说" };
 
 		public static IntPtr GetHearthstoneWindow()
 		{
-			if(!Game.IsRunning && DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
+			if(DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
 				return _hsWindow;
 			if(_hsWindow != IntPtr.Zero && IsWindow(_hsWindow))
 				return _hsWindow;
-			_hsWindow = FindWindow("UnityWndClass", "Hearthstone");
-			if(_hsWindow != IntPtr.Zero)
-				return _hsWindow;
-
-			if(Config.Instance.AdvancedWindowSearch)
+			if(Config.Instance.UseAnyUnityWindow)
 			{
-				Parallel.ForEach(Process.GetProcesses(), (process, state) =>
+				foreach(var process in Process.GetProcesses())
 				{
 					var sb = new StringBuilder(200);
 					GetClassName(process.MainWindowHandle, sb, 200);
 					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
 					{
 						_hsWindow = process.MainWindowHandle;
-						state.Break();
+						break;
 					}
-				});
+                }
+            }
+			else
+			{
+				_hsWindow = FindWindow("UnityWndClass", Config.Instance.HearthstoneWindowName);
+				if(_hsWindow != IntPtr.Zero)
+					return _hsWindow;
+				foreach(var windowName in WindowNames)
+				{
+					_hsWindow = FindWindow("UnityWndClass", windowName);
+					if(_hsWindow != IntPtr.Zero)
+					{
+						if(Config.Instance.HearthstoneWindowName != windowName)
+						{
+							Config.Instance.HearthstoneWindowName = windowName;
+							Config.Save();
+						}
+						break;
+					}
+				}
 			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
 		}
-
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling)
 		{
@@ -149,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 		public static void BringHsToForeground()
 		{
 			var hsHandle = GetHearthstoneWindow();
-			ShowWindow(hsHandle, SwRestore);
+			ActivateWindow(hsHandle);
 			SetForegroundWindow(hsHandle);
 		}
 
@@ -159,10 +183,28 @@ namespace Hearthstone_Deck_Tracker
 			FlashWindow(hsHandle, false);
 		}
 
+		//http://www.roelvanlisdonk.nl/?p=4032
+		public static void ActivateWindow(IntPtr mainWindowHandle)
+		{
+			// Guard: check if window already has focus.
+			if(mainWindowHandle == GetForegroundWindow()) return;
+
+			// Show window maximized.
+			ShowWindow(mainWindowHandle, SwRestore);
+
+			// Simulate an "ALT" key press.
+			keybd_event(Alt, 0x45, ExtendedKey | 0, 0);
+
+			// Simulate an "ALT" key release.
+			keybd_event(Alt, 0x45, ExtendedKey | KeyUp, 0);
+
+			// Show window in forground.
+			SetForegroundWindow(mainWindowHandle);
+		}
+
+
 
 		//http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/
-
-
 		public class MouseInput : IDisposable
 		{
 			private const Int32 WH_MOUSE_LL = 14;
@@ -170,7 +212,6 @@ namespace Hearthstone_Deck_Tracker
 			private const Int32 WM_LBUTTONUP = 0x0202;
 			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
 			private readonly IntPtr _mouseHandle;
-
 			private bool _disposed;
 
 			public MouseInput()
@@ -255,7 +296,6 @@ namespace Hearthstone_Deck_Tracker
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr UnhookWindowsHookEx(IntPtr hHook);
-
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr SetWindowsHookEx(Int32 idHook, HookDelegate lpfn, IntPtr hmod, Int32 dwThreadId);

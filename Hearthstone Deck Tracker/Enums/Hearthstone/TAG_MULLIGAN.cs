@@ -6,6 +6,6 @@
 		INPUT,
 		DEALING,
 		WAITING,
-		DONE,
+		DONE
 	}
 }

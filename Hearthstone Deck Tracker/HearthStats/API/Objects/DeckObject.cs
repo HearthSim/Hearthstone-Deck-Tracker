@@ -41,17 +41,17 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 						archived = true;
 						notes = notes.Replace(noteArchived, "");
 					}
+					notes = notes.Trim();
 				}
 
-				notes = notes.Trim();
 
 				//tags are returned all lowercase, find matching tag
 				var tags =
 					rawTags.Select(
-					            tag =>
-					            DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
-					            ?? tag);
-                var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
+					               tag =>
+					               DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
+					               ?? tag);
+				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
 				                    cards == null
 					                    ? new List<Card>()
 					                    : cards.Where(x => x != null && x.count != null && x.id != null)

@@ -12,6 +12,6 @@
 		WEAPON,
 		ITEM,
 		TOKEN,
-		HERO_POWER,
+		HERO_POWER
 	}
 }

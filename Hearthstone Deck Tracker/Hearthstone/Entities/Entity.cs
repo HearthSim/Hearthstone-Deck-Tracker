@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Newtonsoft.Json;
 
 #endregion
@@ -34,14 +35,50 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsPlayer { get; set; }
 
 		[JsonIgnore]
+		public bool IsOpponent
+		{
+			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
+		}
+
+		[JsonIgnore]
+		public bool IsMinion
+		{
+			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.MINION; }
+		}
+
+		[JsonIgnore]
+		public bool IsWeapon
+		{
+			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.WEAPON; }
+		}
+
+		[JsonIgnore]
+		public bool IsInHand
+		{
+			get { return IsInZone(TAG_ZONE.HAND); }
+		}
+
+		[JsonIgnore]
+		public bool IsInPlay
+		{
+			get { return IsInZone(TAG_ZONE.PLAY); }
+		}
+
+		[JsonIgnore]
+		public bool IsInGraveyard
+		{
+			get { return IsInZone(TAG_ZONE.GRAVEYARD); }
+		}
+
+		[JsonIgnore]
 		public Card Card
 		{
 			get
 			{
 				return _cachedCard
 				       ?? (_cachedCard =
-				           (Game.GetCardFromId(CardId)
-				            ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", 0, 0, "unknown", null, 0, "",
+				           (Database.GetCardFromId(CardId)
+				            ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
 				                        "")));
 			}
 		}
@@ -153,6 +190,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
+		public bool IsSecret
+		{
+			get { return HasTag(GAME_TAG.SECRET); }
+		}
+
+		public bool IsInZone(TAG_ZONE zone)
+		{
+			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
+		}
+
+		public bool IsControlledBy(int controllerId)
+		{
+			return HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
+		}
+
 		public bool HasTag(GAME_TAG tag)
 		{
 			return GetTag(tag) > 0;
@@ -167,20 +219,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public void SetTag(GAME_TAG tag, int value)
 		{
-			var prevVal = 0;
 			if(!Tags.ContainsKey(tag))
 				Tags.Add(tag, value);
 			else
 			{
-				prevVal = Tags[tag];
 				Tags[tag] = value;
 			}
-			//Logger.WriteLine(string.Format("[id={0} cardId={1} name={2} TAG={3}] {4} -> {5}", Id, CardId, Name, tag, prevVal, value));
 		}
 
 		public void SetCardCount(int count)
 		{
 			Card.Count = count;
+		}
+
+		public override string ToString()
+		{
+			var card = Database.GetCardFromId(CardId);
+			var cardName = card != null ? card.Name : "";
+			return string.Format("id={0}, cardId={1}, cardName={2}", Id, CardId,cardName);
 		}
 	}
 }

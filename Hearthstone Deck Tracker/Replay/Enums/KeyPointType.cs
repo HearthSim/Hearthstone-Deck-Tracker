@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		HeroPower,
 		Victory,
 		Defeat,
-		SecretStolen
+		SecretStolen,
+		CreateToDeck
 	}
 }

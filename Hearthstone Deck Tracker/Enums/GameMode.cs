@@ -6,6 +6,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Ranked,
 		Casual,
 		Arena,
+		Brawl,
 		Friendly,
 		Practice,
 		Spectator,

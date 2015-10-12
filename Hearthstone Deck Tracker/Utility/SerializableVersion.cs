@@ -60,6 +60,11 @@ namespace Hearthstone_Deck_Tracker
 			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
 		}
 
+		public string ToString(bool reverseRevBuild)
+		{
+			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
+		}
+
 		/// <summary>
 		/// {M}: Major, {m}: Minor, {r}: Revision, {b}: Build
 		/// </summary>
@@ -84,7 +89,7 @@ namespace Hearthstone_Deck_Tracker
 			if((Object)p == null)
 				return false;
 			// Return true if the fields match:
-			return this.Equals(p);
+			return Equals(p);
 		}
 
 		public bool Equals(SerializableVersion sv)
@@ -94,7 +99,7 @@ namespace Hearthstone_Deck_Tracker
 				return false;
 
 			// Return true if the fields match:
-			return this.Major == sv.Major && this.Minor == sv.Minor && this.Revision == sv.Revision && this.Build == sv.Build;
+			return Major == sv.Major && Minor == sv.Minor && Revision == sv.Revision && Build == sv.Build;
 		}
 
 		public static SerializableVersion IncreaseMajor(SerializableVersion sv)
@@ -149,7 +154,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(string.IsNullOrEmpty(verionString))
 					return Default;
-				if(verionString.Length == 1)
+				if(!verionString.Contains("."))
 					verionString += ".0";
 				Version version;
 				if(Version.TryParse(verionString.Replace("v", ""), out version))

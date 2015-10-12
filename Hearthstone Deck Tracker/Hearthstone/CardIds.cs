@@ -32,36 +32,43 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"NAX",
 			"FP1_006",
 			"PART",
-			"BRMA"
+			"BRMA",
+			"BRMC",
+			"TBA",
+			"TB_",
+			"TBST_"
 		};
 
 		public static readonly List<string> SecretIdsHunter = new List<string>
 		{
+			"AT_060",  //bear trap
 			"EX1_610", //explosive trap
 			"EX1_611", //freezing trap
 			"EX1_533", //misdirection
 			"EX1_609", //snipe
-			"EX1_554" //snake trap
+			"EX1_554"  //snake trap
 		};
 
 		public static readonly List<string> SecretIdsMage = new List<string>
 		{
 			"EX1_287", //counterspell
 			"FP1_018", //duplicate
-			"EX1_289", //ice barrier
+			"AT_002",  //effigy
+            "EX1_289", //ice barrier
 			"EX1_295", //ice block
 			"EX1_294", //mirror entity
-			"tt_010", //spellbender
-			"EX1_594" //vaporize
+			"tt_010",  //spellbender
+			"EX1_594"  //vaporize
 		};
 
 		public static readonly List<string> SecretIdsPaladin = new List<string>
 		{
 			"FP1_020", //avenge
-			"EX1_132", //eye for an eye
+			"AT_073",  //competitive spirit
+            "EX1_132", //eye for an eye
 			"EX1_130", //noble sacrifice
 			"EX1_136", //redemption
-			"EX1_379" //repentance
+			"EX1_379"  //repentance
 		};
 
 		public static readonly Dictionary<string, string[]> SubCardIds = new Dictionary<string, string[]>
@@ -84,7 +91,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			},
 			{
 				//Bane of Doom
-				"EX1_320", new[] {"EX1_306", "CS2_065", "EX1_319", "EX1_301", "CS2_059", "CS2_064", "EX1_323", "GVG_021", "EX1_614", "EX1_310", "GVG_100", "EX1_313", "FP1_022", "EX1_304", "GVG_018", "BRM_006" }
+				"EX1_320",
+				new[]
+				{
+					"EX1_306",
+					"CS2_065",
+					"EX1_319",
+					"EX1_301",
+					"CS2_059",
+					"CS2_064",
+					"EX1_323",
+					"GVG_021",
+					"EX1_614",
+					"EX1_310",
+					"GVG_100",
+					"EX1_313",
+					"FP1_022",
+					"EX1_304",
+					"GVG_018",
+					"BRM_006"
+				}
 			},
 			{
 				//Power of the Horde
@@ -107,8 +133,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"HERO_07", "Warlock"},
 			{"HERO_08", "Mage"},
 			{"HERO_09", "Priest"},
-			{"EX1_323h", "Jaraxxus"},
-			{"BRM_027h", "Ragnaros the Firelord"}
+			{"EX1_323", "Jaraxxus"},
+			{"BRM_027", "Ragnaros the Firelord"}
 		};
 	}
 }

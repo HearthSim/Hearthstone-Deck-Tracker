@@ -14,11 +14,20 @@ namespace Hearthstone_Deck_Tracker.Replay
 	{
 		private static readonly List<ReplayViewer> Viewers = new List<ReplayViewer>();
 
-		public static void Read(string fileName)
+		public static void LaunchReplayViewer(string fileName)
+		{
+			var replay = LoadReplay(fileName);
+			var rv = new ReplayViewer();
+			rv.Show();
+			rv.Load(replay);
+			Viewers.Add(rv);
+		}
+
+		public static List<ReplayKeyPoint> LoadReplay(string fileName)
 		{
 			var path = Path.Combine(Config.Instance.ReplayDir, fileName);
 			if(!File.Exists(path))
-				return;
+				return new List<ReplayKeyPoint>();
 			const string jsonFile = "replay.json";
 			string json;
 
@@ -27,13 +36,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			using(var sr = new StreamReader(archive.GetEntry(jsonFile).Open()))
 				json = sr.ReadToEnd();
 
-			var replay = (List<ReplayKeyPoint>)JsonConvert.DeserializeObject(json, typeof(List<ReplayKeyPoint>));
-
-
-			var rv = new ReplayViewer();
-			rv.Show();
-			rv.Load(replay);
-			Viewers.Add(rv);
+			return (List<ReplayKeyPoint>)JsonConvert.DeserializeObject(json, typeof(List<ReplayKeyPoint>));
 		}
 
 		public static void CloseViewers()

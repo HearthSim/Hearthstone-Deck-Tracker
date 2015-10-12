@@ -10,6 +10,6 @@
 		LOST,
 		TIED,
 		DISCONNECTED,
-		QUIT,
+		QUIT
 	}
 }

@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.UpdateNotes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
+             xmlns:xaml="clr-namespace:Hearthstone_Deck_Tracker.Utility.Markdown.Xaml"
+             mc:Ignorable="d" Loaded="UpdateNotes_OnLoaded"
+             d:DesignHeight="300" d:DesignWidth="500">
+    <UserControl.Resources>
+        <Style TargetType="FlowDocument" x:Key="DocumentStyle">
+            <Setter Property="FontFamily"
+                    Value="Calibri" />
+            <Setter Property="TextAlignment"
+                    Value="Left" />
+        </Style>
+
+        <Style x:Key="PageHeader"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="42" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+
+        <Style x:Key="SubHeader"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+
+        <Style x:Key="SubHeaderSecondary"
+               TargetType="Paragraph">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="FontWeight"
+                    Value="Light" />
+        </Style>
+
+        <xaml:Markdown x:Key="Markdown"
+                        DocumentStyle="{StaticResource DocumentStyle}"
+                        Heading1Style="{StaticResource PageHeader}"
+                        Heading2Style="{StaticResource SubHeader}"
+                        Heading3Style="{StaticResource SubHeaderSecondary}"/>
+
+        <xaml:TextToFlowDocumentConverter x:Key="TextToFlowDocumentConverter" 
+                                           Markdown="{StaticResource Markdown}"/>
+    </UserControl.Resources>
+    <DockPanel>
+        <GroupBox DockPanel.Dock="Bottom" Header="Continue...">
+            <StackPanel Margin="5">
+                <TextBlock Text="If you like my work please consider helping me justify the time I put into making this by clicking the button below or the little heart the title bar. Thank you!" Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="ButtonPaypal" Content="donate" Width="160" Height="30" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPaypal_Click" />
+                    <Button Name="ButtonShowGithub" Content="Show Releases on GitHub" Margin="10,0,10,0" Width="160" Height="30" Click="ButtonShowGithub_OnClick" Style="{DynamicResource SquareButtonStyle}"/>
+                    <Button Name="ButtonClose" Content="close" Width="160" Height="30" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="5">
+            <ScrollViewer Name="ScrollViewerNotes" ScrollChanged="ScrollViewer_OnScrollChanged">
+                <ItemsControl ItemsSource="{Binding ReleaseNotes, RelativeSource={RelativeSource AncestorType=flyoutControls:UpdateNotes}}" Margin="-5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                            <GroupBox Header="{Binding Name}">
+                                <FlowDocumentScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="FlowDocumentScrollViewer_OnPreviewMouseWheel" Margin="5" Document="{Binding Body, Converter={StaticResource TextToFlowDocumentConverter}}"/>
+                        </GroupBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

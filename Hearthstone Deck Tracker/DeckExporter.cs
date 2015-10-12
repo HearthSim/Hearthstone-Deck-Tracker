@@ -18,8 +18,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(deck == null)
 				return;
+			string Current_Clipboard = "";
+
 			try
 			{
+				if(Config.Instance.ExportPasteClipboard && Clipboard.ContainsText())
+					Current_Clipboard = Clipboard.GetText();
 				Logger.WriteLine(string.Format("Exporting " + deck.GetDeckInfo()), "DeckExporter");
 				var hsHandle = User32.GetHearthstoneWindow();
 
@@ -33,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 				if(!User32.IsHearthstoneInForeground())
 				{
-					MessageBox.Show("Can't find Heartstone window.");
+					MessageBox.Show("Can't find Hearthstone window.");
 					Logger.WriteLine("Can't find Hearthstone window.", "DeckExporter");
 					return;
 				}
@@ -44,23 +48,24 @@ namespace Hearthstone_Deck_Tracker
 				var hsRect = User32.GetHearthstoneRect(false);
 				var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 
-				var searchBoxPos = new Point((int)(GetXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)),
+				var searchBoxPos = new Point((int)(Helper.GetScaledXPos(Config.Instance.ExportSearchBoxX, hsRect.Width, ratio)),
 				                             (int)(Config.Instance.ExportSearchBoxY * hsRect.Height));
-				var cardPosX = GetXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
-				var card2PosX = GetXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
+				var cardPosX = Helper.GetScaledXPos(Config.Instance.ExportCard1X, hsRect.Width, ratio);
+				var card2PosX = Helper.GetScaledXPos(Config.Instance.ExportCard2X, hsRect.Width, ratio);
 				var cardPosY = Config.Instance.ExportCardsY * hsRect.Height;
 
 
-				Helper.MainWindow.Overlay.ForceHidden = true;
-				Helper.MainWindow.Overlay.UpdatePosition();
+				Core.Overlay.ForceHidden = true;
+				Core.Overlay.UpdatePosition();
 
 				if(Config.Instance.AutoClearDeck)
 					await ClearDeck(hsRect.Width, hsRect.Height, hsHandle, ratio);
 
-				if(Config.Instance.ExportSetDeckName)
+				if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
 					await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
 
-				await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
+				if (Config.Instance.EnableExportAutoFilter)
+					await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
 
 				Logger.WriteLine("Creating deck...", "DeckExporter");
 				deck.MissingCards.Clear();
@@ -98,24 +103,81 @@ namespace Hearthstone_Deck_Tracker
 			}
 			finally
 			{
-				Helper.MainWindow.Overlay.ForceHidden = false;
-				Helper.MainWindow.Overlay.UpdatePosition();
+				Core.Overlay.ForceHidden = false;
+				Core.Overlay.UpdatePosition();
+				if(Config.Instance.ExportPasteClipboard && Current_Clipboard != "")
+					Clipboard.SetText(Current_Clipboard);
 			}
 		}
 
 		private static async Task ClickAllCrystal(double ratio, int width, int height, IntPtr hsHandle)
 		{
-			Logger.WriteLine("Clicking \"all\" crystal...", "DeckExporter");
-			await
-				ClickOnPoint(hsHandle,
-				             new Point((int)GetXPos(Config.Instance.ExportAllButtonX, width, ratio),
-				                       (int)(Config.Instance.ExportAllButtonY * height)));
+			await ClearZeroCrystal(ratio, width, height, hsHandle);
+		}
+
+		private static async Task ClearZeroCrystal(double ratio, int width, int height, IntPtr hsHandle)
+		{
+			Logger.WriteLine("Clearing \"Zero\" crystal...", "DeckExporter");
+
+			// First, ensure mana filters are cleared
+
+			var crystalPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportZeroButtonX, width, ratio),
+				(int)(Config.Instance.ExportZeroButtonY * height));
+
+			if (IsZeroCrystalSelected(hsHandle, ratio, width, height))
+			{
+				// deselect it
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+			}
+			else
+			{
+				// select it and then unselect it (in case other crystals are on)
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+				await ClickOnKnownPoint(hsHandle, crystalPoint);
+			}
+
+			// Then ensure "All Sets" is selected
+
+			var setsPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportSetsButtonX, width, ratio),
+				(int)(Config.Instance.ExportSetsButtonY * height));
+
+			// open sets menu
+			await ClickOnKnownPoint(hsHandle, setsPoint);
+			// select "All Sets"
+			await ClickOnPoint(hsHandle,
+				new Point((int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, width, ratio), 
+					(int)(Config.Instance.ExportAllSetsButtonY * height)));
+			// close sets menu
+			await ClickOnKnownPoint(hsHandle, setsPoint);
+		}
+
+		private static bool IsZeroCrystalSelected(IntPtr wndHandle, double ratio, int width, int height)
+		{
+			const double scale = 0.020; // 22px @ height = 1080
+			const double minBrightness = 0.55;
+
+			int size = (int)Math.Round(height * scale);
+
+			int posX = (int)Helper.GetScaledXPos(Config.Instance.ExportZeroSquareX, width, ratio);
+			int posY = (int)(Config.Instance.ExportZeroSquareY * height);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
+
+			if(capture == null)
+				return false;
+
+			return GetAverageHueAndBrightness(capture).Brightness > minBrightness;
+		}
+
+		private static async Task ClickOnKnownPoint(IntPtr wndHandle, Point p)
+		{
+			await ClickOnPoint(wndHandle, p);
 		}
 
 		private static async Task SetDeckName(string name, double ratio, int width, int height, IntPtr hsHandle)
 		{
 			Logger.WriteLine("Setting deck name...", "DeckExporter");
-			var nameDeckPos = new Point((int)GetXPos(Config.Instance.ExportNameDeckX, width, ratio),
+			var nameDeckPos = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportNameDeckX, width, ratio),
 			                            (int)(Config.Instance.ExportNameDeckY * height));
 			await ClickOnPoint(hsHandle, nameDeckPos);
 			//send enter and second click to make sure the current name gets selected
@@ -131,9 +193,10 @@ namespace Hearthstone_Deck_Tracker
 			SendKeys.SendWait("{ENTER}");
 		}
 
-		private static double GetXPos(double left, int width, double ratio)
+		[Obsolete("Use Helper.GetScaledXPos")]
+		public static double GetXPos(double left, int width, double ratio)
 		{
-			return (width * ratio * left) + (width * (1 - ratio) / 2);
+			return Helper.GetScaledXPos(left, width, ratio);
 		}
 
 		//returns the number of missing cards
@@ -142,7 +205,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!User32.IsHearthstoneInForeground())
 			{
-				Helper.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
+				Core.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
 				Logger.WriteLine("Exporting aborted, window lost focus", "DeckExporter");
 				return -1;
 			}
@@ -167,7 +230,7 @@ namespace Hearthstone_Deck_Tracker
 				return 0;
 
 			//Check if Card exist in collection
-			if(CardExists(hsHandle, (int)cardPosX, (int)cardPosY))
+			if(CardExists(hsHandle, (int)cardPosX, (int)cardPosY, width, height))
 			{
 				//move mouse over card if card is new  TODO: currently does nothing
 				/*var newCard = new Point((int)cardPosX, (int)cardPosY);
@@ -176,7 +239,7 @@ namespace Hearthstone_Deck_Tracker
 					Cursor.Position = new Point(newCard.X + i + 50, newCard.Y - i + 50);*/
 
 				//Check if a golden exist
-				if(Config.Instance.PrioritizeGolden && CardExists(hsHandle, (int)card2PosX, (int)cardPosY))
+				if(Config.Instance.PrioritizeGolden && CardExists(hsHandle, (int)card2PosX, (int)cardPosY, width, height))
 				{
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
 
@@ -193,9 +256,20 @@ namespace Hearthstone_Deck_Tracker
 					if(card.Count == 2)
 					{
 						//Check if two card are not available 
-						await Task.Delay(100);
-						if(CardHasLock(hsHandle, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287)))
-							return 1;
+						await Task.Delay(200 - Config.Instance.DeckExportDelay);
+						if(CardHasLock(hsHandle, (int)(cardPosX + width * 0.048), (int)(cardPosY + height * 0.287), width, height))
+						{
+							if(CardExists(hsHandle, (int)card2PosX, (int)cardPosY, width, height))
+							{
+								await ClickOnPoint(hsHandle, new Point((int)card2PosX + 50, (int)cardPosY + 50));
+								return 0;
+							}
+							else
+							{
+								Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter", 1);
+								return 1;
+							}
+						}
 
 						await ClickOnPoint(hsHandle, new Point((int)cardPosX + 50, (int)cardPosY + 50));
 					}
@@ -262,26 +336,31 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(Config.Instance.DeckExportDelay);
 		}
 
-		private static bool CardExists(IntPtr wndHandle, int posX, int posY)
+		private static bool CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
-			const int width = 40;
-			const int height = 40;
+			const double scale = 0.037; // 40px @ height = 1080
 			const double minHue = 90;
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, wndHandle);
+			int size = (int)Math.Round(height * scale);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
 			if(capture == null)
 				return false;
 
 			return GetAverageHueAndBrightness(capture).Hue > minHue;
 		}
 
-		private static bool CardHasLock(IntPtr wndHandle, int posX, int posY)
+		private static bool CardHasLock(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
-			const int width = 55;
-			const int height = 30;
+			// setting this as a "width" value relative to height, maybe not best solution?
+			const double xScale = 0.051; // 55px @ height = 1080
+			const double yScale = 0.0278; // 30px @ height = 1080
 			const double maxBrightness = 5.0 / 11.0;
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, wndHandle);
+			int lockWidth = (int)Math.Round(height * xScale);
+			int lockHeight = (int)Math.Round(height * yScale);
+
+			var capture = Helper.CaptureHearthstone(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
 			if(capture == null)
 				return false;
 
@@ -320,7 +399,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				await
 					ClickOnPoint(handle,
-					             new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearY * height)));
+					             new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, width, ratio), (int)(Config.Instance.ExportClearY * height)));
 				if(count++ > 35)
 					break;
 			}
@@ -330,9 +409,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var capture =
 				Helper.CaptureHearthstone(
-				                          new Point((int)GetXPos(Config.Instance.ExportClearX, width, ratio),
+				                          new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, width, ratio),
 				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
-			return ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
+			return capture != null && ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
 		}
 
 		private static bool ColorDistance(Color color, Color target, double distance)

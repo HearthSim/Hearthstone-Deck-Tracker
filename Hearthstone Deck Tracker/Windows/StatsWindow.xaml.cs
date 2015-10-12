@@ -26,7 +26,6 @@ namespace Hearthstone_Deck_Tracker
 				Top = Config.Instance.StatsWindowTop.Value;
 		}
 
-
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			if(_appIsClosing)
