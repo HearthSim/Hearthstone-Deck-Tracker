@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker
 					                           Helper.GetCurrentVersion().ToVersionString());
 					ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
 					e.Handled = true;
+					return;
 				}
 			}
 #if (!DEBUG)
