@@ -460,7 +460,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
 		public bool HighlightDraw { get; set; }
+		[XmlIgnore]
 		public bool HighlightInHand { get; set; }
 
 		public object Clone()
