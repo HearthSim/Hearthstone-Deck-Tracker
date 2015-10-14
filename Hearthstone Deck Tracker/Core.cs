@@ -106,6 +106,8 @@ namespace Hearthstone_Deck_Tracker
             UpdateOverlayAsync();
             NewsUpdater.UpdateAsync();
             Initialized = true;
+
+			new TestWindow().Show();
         }
 
         private static async void UpdateOverlayAsync()

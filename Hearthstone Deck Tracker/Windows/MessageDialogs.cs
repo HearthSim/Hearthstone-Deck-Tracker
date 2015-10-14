@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Process.Start(releaseDownloadUrl);
 		}
 
-		public static async Task ShowMessage(this MainWindow window, string title, string message)
+		public static async Task ShowMessage(this MetroWindow window, string title, string message)
 		{
 			await window.ShowMessageAsync(title, message);
 		}

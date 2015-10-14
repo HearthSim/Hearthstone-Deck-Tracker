@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -160,23 +161,41 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isArenaDeck = value; }
 		}
 
-		public int? GoldReward
+		private ArenaReward _arenaReward = new ArenaReward();
+		public ArenaReward ArenaReward
 		{
-			get { return IsArenaDeck ? _goldReward : null; }
+			get { return IsArenaDeck ? _arenaReward : null; }
 			set
 			{
 				if(IsArenaDeck)
-					_goldReward = value;
+					_arenaReward = value;
+			}
+		}
+		public int? GoldReward
+		{
+			get { return IsArenaDeck ? (int?)ArenaReward.Gold : null; }
+			set
+			{
+				if(IsArenaDeck)
+				{
+					if(value.HasValue)
+						ArenaReward.Gold = value.Value;
+					//_goldReward = value;
+				}
 			}
 		}
 
 		public int? DustReward
 		{
-			get { return IsArenaDeck ? _dustReward : null; }
+			get { return IsArenaDeck ? (int?)ArenaReward.Gold : null; }
 			set
 			{
 				if(IsArenaDeck)
-					_dustReward = value;
+				{
+					if(value.HasValue)
+						ArenaReward.Gold = value.Value;
+					//_dustReward = value;
+				}
 			}
 		}
 

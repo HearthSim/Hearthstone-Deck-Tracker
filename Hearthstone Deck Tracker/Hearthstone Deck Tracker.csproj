@@ -143,6 +143,15 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
+      <DependentUpon>ArenaRewards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\ArenaStats.xaml.cs">
+      <DependentUpon>ArenaStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
@@ -269,6 +278,10 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
+    <Compile Include="Stats\CompiledStats.cs" />
+    <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
+      <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -417,6 +430,9 @@
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\TestWindow.xaml.cs">
+      <DependentUpon>TestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
@@ -470,6 +486,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ElementSorterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\ArenaRewards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\ArenaStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Overview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -562,6 +590,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HearthStats\Controls\DuplicateMatchesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ArenaRewardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -679,6 +711,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\StatsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

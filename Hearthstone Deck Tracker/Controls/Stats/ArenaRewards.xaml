@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.ArenaRewards"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
+             mc:Ignorable="d" 
+             d:DesignHeight="320" d:DesignWidth="300">
+    <StackPanel>
+        <UniformGrid Rows="1">
+            <GroupBox Header="Gold">
+                <TextBox Name="TextBoxGold" controls:TextBoxHelper.Watermark="50+125" TextChanged="TextBoxGold_OnTextChanged"/>
+            </GroupBox>
+            <GroupBox Header="Dust">
+                <TextBox Name="TextBoxDust" controls:TextBoxHelper.Watermark="0" TextChanged="TextBoxDust_OnTextChanged"/>
+            </GroupBox>
+        </UniformGrid>
+        <GroupBox Header="Packs">
+            <StackPanel>
+            <DockPanel>
+                <Label Content="#1:"/>
+                <ComboBox Name="ComboBoxPack1" SelectedIndex="0" Margin="3,0,0,0" DockPanel.Dock="Top" SelectionChanged="ComboBoxPack1_OnSelectionChanged">
+                    <ComboBox.Items>
+                            <system:String>Classic</system:String>
+                            <system:String>Goblins vs Gnomes</system:String>
+                            <system:String>The Grand Tournament</system:String>
+                    </ComboBox.Items>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="#2:"/>
+                    <ComboBox Name="ComboBoxPack2" SelectedIndex="0" Margin="3,0,0,0" SelectionChanged="ComboBoxPack2_OnSelectionChanged">
+                    <ComboBox.Items>
+                            <system:String>None</system:String>
+                            <system:String>Classic</system:String>
+                            <system:String>Goblins vs Gnomes</system:String>
+                            <system:String>The Grand Tournament</system:String>
+                    </ComboBox.Items>
+                </ComboBox>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Cards">
+            <StackPanel>
+                <DockPanel Margin="0,2,0,0">
+                    <Label Content="#1:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden1" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+                <DockPanel Margin="0,2,0,0">
+                    <Label Content="#2:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden2" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+                <DockPanel Margin="0,2,0,0">
+                    <Label Content="#3:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden3" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>
