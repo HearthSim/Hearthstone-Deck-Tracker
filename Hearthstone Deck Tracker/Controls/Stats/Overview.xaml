@@ -28,16 +28,6 @@
                 </TreeViewItem>
             </TreeView>
         </Border>
-        <DockPanel>
-            <GroupBox Header="Filters and stuff" DockPanel.Dock="Top">
-                <WrapPanel>
-                    <StackPanel>
-                        <Label Content="Timeframe"/>
-                        <ComboBox Width="100"/>
-                    </StackPanel>
-                </WrapPanel>
-            </GroupBox>
-            <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0" Content="{Binding ElementName=TreeViewStatsOverview, Path=SelectedItem.DataContext}" />
-        </DockPanel>
+        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0" Content="{Binding ElementName=TreeViewStatsOverview, Path=SelectedItem.DataContext}" />
     </DockPanel>
 </UserControl>

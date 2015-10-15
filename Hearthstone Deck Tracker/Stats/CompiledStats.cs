@@ -1,100 +1,187 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
-	public class CompiledStats
+	public class CompiledStats : INotifyPropertyChanged
 	{
-		private static IEnumerable<Deck> ArenaDecks { get { return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck); } } 
-		public static IEnumerable<ArenaRun> ArenaRuns { get { return ArenaDecks.Select(x => new ArenaRun(x)); } }
+		private static readonly CompiledStats _instance = new CompiledStats();
 
-		public static IEnumerable<ChartStats> ArenaPlayedClassesPercent
+		public static CompiledStats Instance
+		{
+			get { return _instance; }
+		}
+
+		private IEnumerable<Deck> ArenaDecks
+		{
+			get { return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck); }
+		}
+
+		public IEnumerable<ArenaRun> ArenaRuns
+		{
+			get { return ArenaDecks.Select(x => new ArenaRun(x)); }
+		}
+
+		public IEnumerable<ArenaRun> FilteredArenaRuns
+		{
+			get
+			{
+				switch(Config.Instance.ArenaStatsTimeFrameFilter)
+				{
+					case DisplayedTimeFrame.AllTime:
+						return ArenaRuns;
+					case DisplayedTimeFrame.CurrentSeason:
+						return ArenaRuns.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+					case DisplayedTimeFrame.ThisWeek:
+						return ArenaRuns.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
+					case DisplayedTimeFrame.Today:
+						return ArenaRuns.Where(g => g.StartTime > DateTime.Today);
+					case DisplayedTimeFrame.Custom:
+						var start = Config.Instance.ArenaStatsTimeFrameCustomStart ?? DateTime.MinValue;
+						var end = Config.Instance.ArenaStatsTimeFrameCustomEnd ?? DateTime.MaxValue;
+						return ArenaRuns.Where(g => g.StartTime >= start && g.EndTime <= end);
+					default:
+						return ArenaRuns;
+				}
+			}
+		}
+
+		public IEnumerable<ChartStats> ArenaPlayedClassesPercent
 		{
 			get
 			{
 				return
-					ArenaDecks.GroupBy(x => x.Class).OrderBy(x => x.Key)
-					          .Select(
-					                  x =>
-					                  new ChartStats
-					                  {
-						                  Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
-						                  Value = x.Count(),
-						                  Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
-					                  });
+					FilteredArenaRuns.GroupBy(x => x.Class)
+					                 .OrderBy(x => x.Key)
+					                 .Select(
+					                         x =>
+					                         new ChartStats
+					                         {
+						                         Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
+						                         Value = x.Count(),
+						                         Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					                         });
 			}
 		}
 
-		public static IEnumerable<ChartStats> ArenaOpponentClassesPercent
+		public IEnumerable<ChartStats> ArenaOpponentClassesPercent
 		{
 			get
 			{
-				var opponents = ArenaDecks.SelectMany(x => x.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
+				var opponents = FilteredArenaRuns.SelectMany(x => x.Deck.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
 				return
-					opponents.GroupBy(x => x).OrderBy(x => x.Key)
-						 .Select(
-					             g =>
-					             new ChartStats
-					             {
-						             Name = g.Key + " (" + Math.Round(100.0 * g.Count() / opponents.Count()) + "%)",
-						             Value = g.Count(),
-						             Brush = new SolidColorBrush(Helper.GetClassColor(g.Key, true))
-					             });
+					opponents.GroupBy(x => x)
+					         .OrderBy(x => x.Key)
+					         .Select(
+					                 g =>
+					                 new ChartStats
+					                 {
+						                 Name = g.Key + " (" + Math.Round(100.0 * g.Count() / opponents.Count()) + "%)",
+						                 Value = g.Count(),
+						                 Brush = new SolidColorBrush(Helper.GetClassColor(g.Key, true))
+					                 });
 			}
 		}
 
-		public static ChartStats[][] ArenaWins
+
+		public IEnumerable<ChartStats> ArenaWins
 		{
 			get
 			{
 				var groupedByWins =
-					ArenaDecks.GroupBy(x => x.DeckStats.Games.Count(g => g.Result == GameResult.Win))
-					          .Select(x => new {Wins = x.Key, Count = x.Count(), Runs = x})
-					          .ToList();
+					FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+					                 .Select(x => new {Wins = x.Key, Count = x.Count(), Runs = x})
+					                 .ToList();
 				return Enumerable.Range(0, 13).Select(n =>
 				{
 					var runs = groupedByWins.FirstOrDefault(x => x.Wins == n);
 					if(runs == null)
-						return new[] {new ChartStats {Name = n.ToString(), Value = 0, Brush = new SolidColorBrush()}};
+						return new ChartStats {Name = n + " wins", Value = 0};
+					return new ChartStats {Name = n + " wins", Value = runs.Count};
+				});
+			}
+		}
+
+		public IEnumerable<ChartStats>[] ArenaWinsByClass
+		{
+			get
+			{
+				var groupedByWins =
+					FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+									 .Select(x => new { Wins = x.Key, Count = x.Count(), Runs = x })
+									 .ToList();
+				return Enumerable.Range(0, 13).Select(n =>
+				{
+					var runs = groupedByWins.FirstOrDefault(x => x.Wins == n);
+					if(runs == null)
+						return new[] { new ChartStats { Name = n.ToString(), Value = 0, Brush = new SolidColorBrush() } };
 					return
-						runs.Runs.GroupBy(x => x.Class).OrderBy(x => x.Key)
-						    .Select(
-						            x =>
-						            new ChartStats
-						            {
-							            Name = n + "wins (" + x.Key + ")",
-							            Value = x.Count(),
-							            Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
-						            })
-						    .ToArray();
+						runs.Runs.GroupBy(x => x.Class)
+							.OrderBy(x => x.Key)
+							.Select(
+									x =>
+									new ChartStats
+					{
+						Name = n + " wins (" + x.Key + ")",
+						Value = x.Count(),
+						Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					});
 				}).ToArray();
 			}
 		}
 
-		public static IEnumerable<ChartStats> AvgWinsPerClass
+		public IEnumerable<ChartStats> AvgWinsPerClass
 		{
 			get
 			{
 				return
-					ArenaDecks.GroupBy(x => x.Class).OrderBy(x => x.Key)
-					          .Select(
-					                  x =>
-					                  new ChartStats
-					                  {
-						                  Name = x.Key,
-						                  Value = Math.Round((double)x.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / x.Count(),1),
-						                  Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
-					                  });
+					FilteredArenaRuns.GroupBy(x => x.Class)
+					                 .OrderBy(x => x.Key)
+					                 .Select(
+					                         x =>
+					                         new ChartStats
+					                         {
+						                         Name = x.Key,
+						                         Value =
+							                         Math.Round(
+							                                    (double)x.Sum(d => d.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+							                                    / x.Count(), 1),
+						                         Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					                         });
 			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public void UpdateArenaStats()
+		{
+			OnPropertyChanged("ArenaRuns");
+			OnPropertyChanged("ArenaOpponentClassesPercent");
+			OnPropertyChanged("ArenaPlayedClassesPercent");
+			OnPropertyChanged("ArenaWins");
+			OnPropertyChanged("ArenaWinsByClass");
+			OnPropertyChanged("AvgWinsPerClass");
+			OnPropertyChanged("FilteredArenaRuns");
 		}
 	}
 
@@ -118,8 +205,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string StartTimeString { get { return StartTime == DateTime.MinValue ? "-" :  StartTime.ToString("dd.MMM HH:mm"); } }
 		public DateTime StartTime { get { return _deck.DeckStats.Games.Any() ? _deck.DeckStats.Games.Min(g => g.StartTime) : DateTime.MinValue; } }
 		public DateTime EndTime { get { return _deck.DeckStats.Games.Any() ? _deck.DeckStats.Games.Max(g => g.EndTime) : DateTime.MinValue; } }
-		public string Wins { get { return _deck.DeckStats.Games.Count(x => x.Result == GameResult.Win).ToString(); } }
-		public string Losses { get { return _deck.DeckStats.Games.Count(x => x.Result == GameResult.Loss).ToString(); } }
+		public int Wins { get { return _deck.DeckStats.Games.Count(x => x.Result == GameResult.Win); } }
+		public int Losses { get { return _deck.DeckStats.Games.Count(x => x.Result == GameResult.Loss); } }
 		public int Gold { get { return _deck.ArenaReward.Gold; } }
 		public int Dust { get { return _deck.ArenaReward.Dust; } }
 		public int PackCount { get { return _deck.ArenaReward.Packs.Count(x => !string.IsNullOrEmpty(x)); } }

@@ -36,6 +36,15 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AlwaysShowGoldProgress = false;
 
+		[DefaultValue(DisplayedTimeFrame.AllTime)]
+		public DisplayedTimeFrame ArenaStatsTimeFrameFilter = DisplayedTimeFrame.AllTime;
+
+		[DefaultValue(null)]
+		public DateTime? ArenaStatsTimeFrameCustomStart = null;
+
+		[DefaultValue(null)]
+		public DateTime? ArenaStatsTimeFrameCustomEnd = null;
+
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
