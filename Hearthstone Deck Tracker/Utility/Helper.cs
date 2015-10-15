@@ -29,6 +29,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
@@ -735,6 +736,32 @@ namespace Hearthstone_Deck_Tracker
 		public static double GetScaledXPos(double left, int width, double ratio)
 		{
 			return (width * ratio * left) + (width * (1 - ratio) / 2);
+		}
+		
+		public static Dictionary<string, string> ClassColors = new Dictionary<string, string>
+		{
+			{"Druid", "#FF7D0A"},
+			{"Death Knight", "#C41F3B"},
+			{"Hunter", "#ABD473"},
+			{"Mage", "#69CCF0"},
+			{"Monk", "#00FF96"},
+			{"Paladin", "#F58CBA"},
+			{"Priest", "#FFFFFF"},
+			{"Rogue", "#FFF569"},
+			{"Shaman", "#0070DE"},
+			{"Warlock", "#9482C9"},
+			{"Warrior", "#C79C6E"}
+		};
+
+		public static System.Windows.Media.Color GetClassColor(string className, bool priestAsGray)
+		{
+			string color;
+			if(className == "Priest" && priestAsGray)
+				color = "#D2D2D2";
+			else
+			if(!ClassColors.TryGetValue(className, out color))
+				color = "#808080";
+			return (System.Windows.Media.Color)ColorConverter.ConvertFromString(color);
 		}
 	}
 }

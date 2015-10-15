@@ -24,12 +24,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public ArenaStats()
 		{
 			InitializeComponent();
-			Load();
-		}
-
-		public void Load()
-		{
-
 		}
 	}
 }

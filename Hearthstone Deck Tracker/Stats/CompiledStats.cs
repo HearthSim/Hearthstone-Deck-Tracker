@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -12,9 +14,96 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class CompiledStats
 	{
-		public static ObservableCollection<ArenaRun> ArenaRuns { get { return new ObservableCollection<ArenaRun>(DeckList.Instance.Decks.Where(x => x.IsArenaDeck).Select(x => new ArenaRun(x))); } } 
+		private static IEnumerable<Deck> ArenaDecks { get { return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck); } } 
+		public static IEnumerable<ArenaRun> ArenaRuns { get { return ArenaDecks.Select(x => new ArenaRun(x)); } }
+
+		public static IEnumerable<ChartStats> ArenaPlayedClassesPercent
+		{
+			get
+			{
+				return
+					ArenaDecks.GroupBy(x => x.Class).OrderBy(x => x.Key)
+					          .Select(
+					                  x =>
+					                  new ChartStats
+					                  {
+						                  Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
+						                  Value = x.Count(),
+						                  Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					                  });
+			}
+		}
+
+		public static IEnumerable<ChartStats> ArenaOpponentClassesPercent
+		{
+			get
+			{
+				var opponents = ArenaDecks.SelectMany(x => x.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
+				return
+					opponents.GroupBy(x => x).OrderBy(x => x.Key)
+						 .Select(
+					             g =>
+					             new ChartStats
+					             {
+						             Name = g.Key + " (" + Math.Round(100.0 * g.Count() / opponents.Count()) + "%)",
+						             Value = g.Count(),
+						             Brush = new SolidColorBrush(Helper.GetClassColor(g.Key, true))
+					             });
+			}
+		}
+
+		public static ChartStats[][] ArenaWins
+		{
+			get
+			{
+				var groupedByWins =
+					ArenaDecks.GroupBy(x => x.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+					          .Select(x => new {Wins = x.Key, Count = x.Count(), Runs = x})
+					          .ToList();
+				return Enumerable.Range(0, 13).Select(n =>
+				{
+					var runs = groupedByWins.FirstOrDefault(x => x.Wins == n);
+					if(runs == null)
+						return new[] {new ChartStats {Name = n.ToString(), Value = 0, Brush = new SolidColorBrush()}};
+					return
+						runs.Runs.GroupBy(x => x.Class).OrderBy(x => x.Key)
+						    .Select(
+						            x =>
+						            new ChartStats
+						            {
+							            Name = n + "wins (" + x.Key + ")",
+							            Value = x.Count(),
+							            Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+						            })
+						    .ToArray();
+				}).ToArray();
+			}
+		}
+
+		public static IEnumerable<ChartStats> AvgWinsPerClass
+		{
+			get
+			{
+				return
+					ArenaDecks.GroupBy(x => x.Class).OrderBy(x => x.Key)
+					          .Select(
+					                  x =>
+					                  new ChartStats
+					                  {
+						                  Name = x.Key,
+						                  Value = Math.Round((double)x.Sum(d => d.DeckStats.Games.Count(g => g.Result == GameResult.Win)) / x.Count(),1),
+						                  Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					                  });
+			}
+		}
 	}
 
+	public class ChartStats
+	{
+		public string Name { get; set; }
+		public double Value { get; set; }
+		public Brush Brush { get; set; }
+	}
 	public class ArenaRun
 	{
 		private readonly Deck _deck;

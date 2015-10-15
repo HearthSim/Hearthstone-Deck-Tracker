@@ -4,13 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="800">
-    <Grid>
-        <TabControl>
-            <TabItem Header="Arena">
-                <stats:ArenaStats></stats:ArenaStats>
-            </TabItem>
-        </TabControl>
-    </Grid>
+    <DockPanel>
+        <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+            <TreeView Name="TreeViewStatsOverview" Width="150">
+                <TreeViewItem Header="Arena Runs" IsExpanded="True" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <TreeViewItem Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Constructed" IsExpanded="True">
+                    <TreeViewItem Header="Overall" IsExpanded="True">
+                        <TreeViewItem Header="Overview"/>
+                        <TreeViewItem Header="Tables"/>
+                        <TreeViewItem Header="Charts"/>
+                        <TreeViewItem Header="Games"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Active Deck" IsExpanded="True">
+                        <TreeViewItem Header="Overview"/>
+                        <TreeViewItem Header="Tables"/>
+                        <TreeViewItem Header="Charts"/>
+                        <TreeViewItem Header="Games"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+            </TreeView>
+        </Border>
+        <DockPanel>
+            <GroupBox Header="Filters and stuff" DockPanel.Dock="Top">
+                <WrapPanel>
+                    <StackPanel>
+                        <Label Content="Timeframe"/>
+                        <ComboBox Width="100"/>
+                    </StackPanel>
+                </WrapPanel>
+            </GroupBox>
+            <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0" Content="{Binding ElementName=TreeViewStatsOverview, Path=SelectedItem.DataContext}" />
+        </DockPanel>
+    </DockPanel>
 </UserControl>

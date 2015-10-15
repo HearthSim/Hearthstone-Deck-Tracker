@@ -59,6 +59,10 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -146,7 +150,7 @@
     <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
       <DependentUpon>ArenaRewards.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\ArenaStats.xaml.cs">
+    <Compile Include="Controls\Stats\Arena\Overview\ArenaStats.xaml.cs">
       <DependentUpon>ArenaStats.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Overview.xaml.cs">
@@ -493,7 +497,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\ArenaStats.xaml">
+    <Page Include="Controls\Stats\Arena\Overview\ArenaStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

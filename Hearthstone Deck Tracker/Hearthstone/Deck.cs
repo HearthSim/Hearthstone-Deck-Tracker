@@ -375,36 +375,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public Color ClassColor
 		{
-			get
-			{
-				switch(Class)
-				{
-					case "Druid":
-						return (Color)ColorConverter.ConvertFromString("#FF7D0A");
-					case "Death Knight":
-						return (Color)ColorConverter.ConvertFromString("#C41F3B");
-					case "Hunter":
-						return (Color)ColorConverter.ConvertFromString("#ABD473");
-					case "Mage":
-						return (Color)ColorConverter.ConvertFromString("#69CCF0");
-					case "Monk":
-						return (Color)ColorConverter.ConvertFromString("#00FF96");
-					case "Paladin":
-						return (Color)ColorConverter.ConvertFromString("#F58CBA");
-					case "Priest":
-						return (Color)ColorConverter.ConvertFromString("#FFFFFF");
-					case "Rogue":
-						return (Color)ColorConverter.ConvertFromString("#FFF569");
-					case "Shaman":
-						return (Color)ColorConverter.ConvertFromString("#0070DE");
-					case "Warlock":
-						return (Color)ColorConverter.ConvertFromString("#9482C9");
-					case "Warrior":
-						return (Color)ColorConverter.ConvertFromString("#C79C6E");
-					default:
-						return Colors.Gray;
-				}
-			}
+			get { return Helper.GetClassColor(Class, false); }
 		}
 
 		[XmlIgnore]

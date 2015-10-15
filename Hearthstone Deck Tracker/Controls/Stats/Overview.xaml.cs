@@ -20,9 +20,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class Overview : UserControl
 	{
+		private readonly ArenaStats _arenaOverview = new ArenaStats();
+
 		public Overview()
 		{
 			InitializeComponent();
+		}
+
+		public ArenaStats ArenaOverview
+		{
+			get { return _arenaOverview; }
 		}
 	}
 }

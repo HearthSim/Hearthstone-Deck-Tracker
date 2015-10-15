@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Resources>
         <CollectionViewSource x:Key="ArenaRunsViewSource" Source="{Binding Path=., Source={x:Static stats:CompiledStats.ArenaRuns}}">
             <CollectionViewSource.SortDescriptions>
@@ -14,6 +15,53 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
     </UserControl.Resources>
+    <DockPanel>
+    <Border DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="Played" Height="300" Width="300">
+                    <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:DoughnutChart.Series>
+                            <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=., Source={x:Static stats:CompiledStats.ArenaPlayedClassesPercent}}"/>
+                            </metroChart:DoughnutChart.Series>
+                    </metroChart:DoughnutChart>
+                </GroupBox>
+                <GroupBox Header="Opponenets" Height="300" Width="300">
+                    <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:DoughnutChart.Series>
+                            <metroChart:ChartSeries SeriesTitle="Opponents(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=., Source={x:Static stats:CompiledStats.ArenaOpponentClassesPercent}}"/>
+                        </metroChart:DoughnutChart.Series>
+                    </metroChart:DoughnutChart>
+                </GroupBox>
+                <GroupBox Header="Avg wins per class" Height="300" Width="300">
+                    <metroChart:ClusteredColumnChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:ClusteredColumnChart.Series>
+                            <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=., Source={x:Static stats:CompiledStats.AvgWinsPerClass}}"/>
+                        </metroChart:ClusteredColumnChart.Series>
+                    </metroChart:ClusteredColumnChart>
+                </GroupBox>
+                <GroupBox Header="Wins" Height="300" Width="500">
+                    <metroChart:StackedColumnChart Background="Transparent" ChartTitleVisibility="Collapsed" ChartLegendVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:StackedColumnChart.Series>
+                            <metroChart:ChartSeries SeriesTitle="0" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[0], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="1" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[1], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="2" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[2], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="3" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[3], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="4" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[4], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="5" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[5], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="6" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[6], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="7" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[7], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="8" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[8], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="9" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[9], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="10" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[10], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="11" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[11], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                            <metroChart:ChartSeries SeriesTitle="12" DisplayMember="Name" ValueMember="Value" BrushMember="Brush" ItemsSource="{Binding Path=[12], Source={x:Static stats:CompiledStats.ArenaWins}}"/>
+                        </metroChart:StackedColumnChart.Series>
+                    </metroChart:StackedColumnChart>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
     <GroupBox Header="ARENA RUNS">
         <DataGrid Name="DataGridArenaRuns" ItemsSource="{Binding Source={StaticResource ArenaRunsViewSource}}" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -121,4 +169,5 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </GroupBox>
+    </DockPanel>
 </UserControl>

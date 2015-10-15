@@ -7,6 +7,6 @@
     <Grid>
         <Button Content="Reload" Width="70" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
         <Button Content="Set Arena Reward" Width="118" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonArenaReward_Click" Margin="119,0,0,0"/>
-        <stats:ArenaStats x:Name="ArenaStats" Margin="0,40,0,0"/>
+        <stats:Overview x:Name="ArenaStats" Margin="0,40,0,0"/>
     </Grid>
 </controls:MetroWindow>

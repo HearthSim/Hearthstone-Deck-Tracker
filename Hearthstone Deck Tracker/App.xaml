@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Hearthstone_Deck_Tracker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
     <Application.Resources>
@@ -19,6 +20,35 @@
                 <ResourceDictionary Source="Resources/ReplayViewIcons.xaml"/>
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <metroChart:ResourceDictionaryCollection x:Key="ClassColorPalette">
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush1" Color="#FF7D0A"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush2" Color="#ABD473"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush3" Color="#69CCF0"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush4" Color="#F58CBA"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush5" Color="#FFFFFF"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush6" Color="#FFF569"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush7" Color="#0070DE"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush8" Color="#9482C9"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Brush9" Color="#C79C6E"/>
+                </ResourceDictionary>
+            </metroChart:ResourceDictionaryCollection>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
