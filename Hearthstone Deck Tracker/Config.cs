@@ -46,6 +46,9 @@ namespace Hearthstone_Deck_Tracker
 		public DateTime? ArenaStatsTimeFrameCustomEnd = null;
 
 		[DefaultValue(true)]
+		public bool ArenaStatsShowLegends = true;
+
+		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
 		[DefaultValue(71.67)]

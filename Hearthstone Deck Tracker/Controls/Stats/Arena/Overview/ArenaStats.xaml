@@ -8,6 +8,8 @@
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:overview="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena.Overview"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1500">
     <UserControl.Resources>
@@ -17,6 +19,8 @@
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <utility:ConfigWrapper x:Key="ConfigWrapper"/>
     </UserControl.Resources>
     <DockPanel>
         <Expander Header="Filters" DockPanel.Dock="Top" IsExpanded="True">
@@ -35,7 +39,13 @@
                 </StackPanel>
             </ScrollViewer>
         </Expander>
-    <Expander IsExpanded="True" Header="Charts" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+    <Expander IsExpanded="True" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        <Expander.Header>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="CHARTS" Foreground="White"/>
+                <CheckBox Name="CheckBoxShowLegends" Content="show legends" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
+            </StackPanel>
+        </Expander.Header>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -45,21 +55,21 @@
                         <ColumnDefinition Width="1.6667*"/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Played" Height="300" MinWidth="300" Grid.Column="0">
-                    <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <metroChart:DoughnutChart.Series>
                                 <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaPlayedClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
                             </metroChart:DoughnutChart.Series>
                     </metroChart:DoughnutChart>
                 </GroupBox>
                     <GroupBox Header="Opponenets" Height="300" MinWidth="300" Grid.Column="1">
-                    <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                        <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <metroChart:DoughnutChart.Series>
                                 <metroChart:ChartSeries SeriesTitle="Opponents(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaOpponentClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
                         </metroChart:DoughnutChart.Series>
                     </metroChart:DoughnutChart>
                 </GroupBox>
                     <GroupBox Header="Avg wins per class" Height="300" MinWidth="300" Grid.Column="2">
-                    <metroChart:ClusteredColumnChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                    <metroChart:ClusteredColumnChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
                         <metroChart:ClusteredColumnChart.Series>
                                 <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinsPerClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
                         </metroChart:ClusteredColumnChart.Series>
@@ -73,7 +83,7 @@
                             </StackPanel>
                         </GroupBox.Header>
                         <!--<ContentControl Content="{Binding Path=ChartWinsControl, RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
-                        <overview:ChartWinsByClass/>
+                        <overview:ChartWinsByClass Margin="0,0,0,-30"/>
 
                     </GroupBox>
                 </Grid>
