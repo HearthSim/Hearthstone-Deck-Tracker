@@ -45,6 +45,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public DateTime? ArenaStatsTimeFrameCustomEnd = null;
 
+		[DefaultValue(RegionAll.ALL)]
+		public RegionAll ArenaStatsRegionFilter = RegionAll.ALL;
+
 		[DefaultValue(true)]
 		public bool ArenaStatsShowLegends = true;
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.ArenaStats"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Arena.ArenaStats"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -48,7 +48,7 @@
                         </metroChart:DoughnutChart.Series>
                     </metroChart:DoughnutChart>
                 </GroupBox>
-                    <GroupBox Header="Avg wins per class" Height="300" MinWidth="300" Grid.Column="2">
+                    <GroupBox Header="Average wins per class" Height="300" MinWidth="300" Grid.Column="2">
                     <metroChart:ClusteredColumnChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
                         <metroChart:ClusteredColumnChart.Series>
                                 <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinsPerClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>

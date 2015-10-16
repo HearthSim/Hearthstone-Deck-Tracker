@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -33,6 +34,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxTimeframe.SelectedItem = Config.Instance.ArenaStatsTimeFrameFilter;
 			ComboBoxClass.ItemsSource = Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
 			ComboBoxClass.SelectedItem = Config.Instance.ArenaStatsClassFilter;
+			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
+			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
 			_initialized = true;
 		}
 
@@ -71,6 +74,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			if(TreeViewItemArenaRuns.IsSelected)
 				CompiledStats.Instance.UpdateArenaStats();
+		}
+
+		private void ComboBoxRegion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(TreeViewItemArenaRuns.IsSelected)
+			{
+				Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
+				Config.Save();
+				CompiledStats.Instance.UpdateArenaStats();
+			}
 		}
 	}
 

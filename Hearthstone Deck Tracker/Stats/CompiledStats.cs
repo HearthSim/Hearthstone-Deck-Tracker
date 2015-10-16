@@ -43,6 +43,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
 				}
+				if(Config.Instance.ArenaStatsRegionFilter != RegionAll.ALL)
+				{
+					var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ArenaStatsRegionFilter.ToString());
+					filtered = filtered.Where(x => x.Games.Any(g => g.Region == region));
+				}
 				switch(Config.Instance.ArenaStatsTimeFrameFilter)
 				{
 					case DisplayedTimeFrame.AllTime:
@@ -153,7 +158,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				return
 					FilteredArenaRuns.GroupBy(x => x.Class)
-					                 .OrderBy(x => x.Key)
 					                 .Select(
 					                         x =>
 					                         new ChartStats
@@ -164,7 +168,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 							                                    (double)x.Sum(d => d.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
 							                                    / x.Count(), 1),
 						                         Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
-					                         });
+					                         })
+					                 .OrderBy(x => x.Value);
 			}
 		}
 

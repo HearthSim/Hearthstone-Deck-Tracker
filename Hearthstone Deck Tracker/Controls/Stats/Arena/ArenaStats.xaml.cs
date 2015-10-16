@@ -1,34 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using De.TorstenMandelkow.MetroChart;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Overview;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using DataGrid = System.Windows.Controls.DataGrid;
 
-namespace Hearthstone_Deck_Tracker.Controls.Stats
+namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
 	/// <summary>
 	/// Interaction logic for ArenaStats.xaml
@@ -87,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			var addedGame = await window.ShowAddGameDialog(run.Deck);
 			if(addedGame)
-				CompiledStats.Instance.UpdateArenaRuns();
+				CompiledStats.Instance.UpdateArenaStats();
 		}
 
 		private async void ButtonEditGame_OnClick(object sender, RoutedEventArgs e)
@@ -99,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			var edited = await window.ShowEditGameDialog(SelectedGame);
 			if(edited)
-				CompiledStats.Instance.UpdateArenaRuns();
+				CompiledStats.Instance.UpdateArenaStats();
 		}
 
 		public MetroWindow GetParentWindow()
@@ -130,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {SelectedGame});
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
-			CompiledStats.Instance.UpdateArenaRuns();
+			CompiledStats.Instance.UpdateArenaStats();
 		}
 	}
 }

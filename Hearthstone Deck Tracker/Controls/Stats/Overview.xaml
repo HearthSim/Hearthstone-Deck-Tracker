@@ -8,7 +8,7 @@
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
-             d:DesignHeight="500" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
         <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter"/>
@@ -61,6 +61,9 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                    </Expander>
+                    <Expander Header="Region" IsExpanded="True">
+                        <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged"/>
                     </Expander>
                 </StackPanel>
             </GroupBox>
