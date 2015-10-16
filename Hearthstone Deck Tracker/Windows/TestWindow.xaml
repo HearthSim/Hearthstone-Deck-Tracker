@@ -4,6 +4,20 @@
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         Title="TestWindow" Height="500" Width="800" Closed="TestWindow_OnClosed">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="BtnSwitchToMainWindow_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="Move to main window" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     <Grid>
         <stats:Overview x:Name="ArenaStats"/>
     </Grid>

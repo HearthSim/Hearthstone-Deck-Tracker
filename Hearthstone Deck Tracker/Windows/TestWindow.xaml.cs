@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,30 +27,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			;
-		}
-
-		private void ButtonArenaReward_Click(object sender, RoutedEventArgs e)
-		{
-			/*var arenaRun = ArenaOverview.DataGridArenaRuns.SelectedItem as ArenaRun;
-			if(arenaRun != null)
-			{
-				var dialog = new ArenaRewardDialog();
-				dialog.ShowDialog();
-				if(dialog.ArenaRewards != null)
-				{
-					arenaRun.Deck.ArenaReward = dialog.ArenaRewards.Reward;
-					DeckList.Save();
-					ArenaOverview.DataGridArenaRuns.Items.Refresh();
-				}
-			}*/
-		}
-
+		private bool _shutdown = true;
 		private void TestWindow_OnClosed(object sender, EventArgs e)
 		{
-			Application.Current.Shutdown();
+			if(_shutdown)
+				Application.Current.Shutdown();
+		}
+
+		private void BtnSwitchToMainWindow_OnClick(object sender, RoutedEventArgs e)
+		{
+			Core.MainWindow.WindowState = WindowState.Normal;
+			Core.MainWindow.Show();
+			Core.MainWindow.Activate();
+			Core.MainWindow.FlyoutNewStats.IsOpen = true;
+			_shutdown = false;
+			Close();
+		}
+
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			e.Cancel = true;
+			Hide();
 		}
 	}
 }

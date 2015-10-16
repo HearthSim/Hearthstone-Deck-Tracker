@@ -99,6 +99,12 @@
     <Canvas x:Key="appbar_page_bold_black" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="36" Height="42" Canvas.Left="20" Canvas.Top="17" Stretch="Fill" Fill="Black" Data="F1 M 20,17L 42.25,17L 56,30.75L 56,59L 20,59L 20,17 Z M 25,22L 25,54L 51,54L 51,37L 36,37L 36,22L 25,22 Z M 41,22.25L 41,32L 50.75,32L 41,22.25 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_arrow_right_left_white" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="46.4999" Height="44" Canvas.Left="14.75" Canvas.Top="16" Stretch="Fill" Fill="White" Data="F1 M 54,52.0001L 29.25,52.0001L 37.25,60L 26.75,60L 14.75,48.0001L 26.75,36L 37.25,36L 29.25,44.0001L 54,44.0001L 54,52.0001 Z M 22,23.9999L 46.75,23.9999L 38.75,16L 49.25,16L 61.25,27.9999L 49.25,40L 38.75,40L 46.75,31.9999L 22,31.9999L 22,23.9999 Z "/>
+    </Canvas>
+    <Canvas x:Key="appbar_arrow_left_white" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="White" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z "/>
+    </Canvas>
     <Canvas x:Key="hdticon">
         <Path Fill="White" StrokeThickness="10.0819521" StrokeMiterLimit="4" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Opacity="1">
             <Path.Data>

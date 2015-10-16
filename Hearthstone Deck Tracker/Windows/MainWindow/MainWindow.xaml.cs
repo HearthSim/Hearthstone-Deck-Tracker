@@ -916,6 +916,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
+		private void BtnDeckNewStats_Click(object sender, RoutedEventArgs e)
+		{
+			if(Config.Instance.StatsInWindow)
+			{
+				Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
+				Core.Windows.NewStatsWindow.Show();
+				Core.Windows.NewStatsWindow.Activate();
+			}
+			else
+				FlyoutNewStats.IsOpen = true;
+		}
+
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
 		{
 			SelectDeck(deck, Config.Instance.AutoUseDeck);
@@ -1063,5 +1075,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Helper.StartHearthstoneAsync();
 		}
 
+		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e)
+		{
+			FlyoutNewStats.IsOpen = false;
+		}
+
+		private void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
+		{
+			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
+			Core.Windows.NewStatsWindow.Show();
+			Core.Windows.NewStatsWindow.Activate();
+			FlyoutNewStats.IsOpen = false;
+		}
 	}
 }
