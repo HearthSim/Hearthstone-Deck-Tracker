@@ -247,6 +247,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			return true;
 		}
+
+		public static async Task<bool> ShowCheckHearthStatsMatchDeletionDialog(this MetroWindow window)
+		{
+			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
+				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
+			var dialogResult =
+				await
+				window.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
+									  MessageDialogStyle.AffirmativeAndNegative,
+									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
+			Core.MainWindow.MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
+			Config.Save();
+			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
+		}
 	}
 
 	public class SaveScreenshotOperation

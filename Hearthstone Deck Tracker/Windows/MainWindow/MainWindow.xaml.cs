@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -495,22 +496,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Save();
 			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
 		}
-
-		public async Task<bool> CheckHearthStatsMatchDeletion()
-		{
-			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
-				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
-			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
-			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
-			Config.Save();
-			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
-		}
-
+		
 		private void MenuItemCheckBoxAutoDeleteDecks_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
