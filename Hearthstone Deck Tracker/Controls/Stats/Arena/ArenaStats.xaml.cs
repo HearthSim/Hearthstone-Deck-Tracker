@@ -51,7 +51,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				OnPropertyChanged();
 			}
 		}
-		
+
+		public GameStats SelectedGame { get; set; }
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
@@ -88,31 +90,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private async void ButtonEditGame_OnClick(object sender, RoutedEventArgs e)
 		{
-
-			var subDataGrid = GetSubDataGrid(DataGridArenaRuns);
-			if(subDataGrid == null)
-				return;
-			var game = subDataGrid.SelectedItem as GameStats;
-			if(game == null)
+			if(SelectedGame == null)
 				return;
 			var window = GetParentWindow();
 			if(window == null)
 				return;
-			var addedGame = await window.ShowEditGameDialog(game);
-			if(addedGame)
+			var edited = await window.ShowEditGameDialog(SelectedGame);
+			if(edited)
 				CompiledStats.Instance.UpdateArenaRuns();
-		}
-
-		public DataGrid GetSubDataGrid(DependencyObject obj)
-		{
-			var childCount = VisualTreeHelper.GetChildrenCount(obj);
-			for(int i = 0; i < childCount; i++)
-			{
-				var child = VisualTreeHelper.GetChild(obj, i);
-				var grid = child as DataGrid;
-				return grid ?? GetSubDataGrid(child);
-			}
-			return null;
 		}
 
 		public MetroWindow GetParentWindow()
