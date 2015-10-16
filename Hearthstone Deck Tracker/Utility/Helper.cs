@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -762,6 +763,13 @@ namespace Hearthstone_Deck_Tracker
 			if(!ClassColors.TryGetValue(className, out color))
 				color = "#808080";
 			return (System.Windows.Media.Color)ColorConverter.ConvertFromString(color);
+		}
+		public static MetroWindow GetParentWindow(DependencyObject current)
+		{
+			var parent = VisualTreeHelper.GetParent(current);
+			while(parent != null && !(parent is MetroWindow))
+				parent = VisualTreeHelper.GetParent(parent);
+			return (MetroWindow)parent;
 		}
 	}
 }

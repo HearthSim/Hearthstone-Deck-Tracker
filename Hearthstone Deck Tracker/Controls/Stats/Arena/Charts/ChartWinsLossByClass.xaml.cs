@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
@@ -10,14 +12,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 	/// <summary>
 	/// Interaction logic for ChartWinsByClass.xaml
 	/// </summary>
-	public partial class ChartWinsByClass : INotifyPropertyChanged
+	public partial class ChartWinsLossByClass : INotifyPropertyChanged
 	{
-		public ChartWinsByClass()
+		public ChartWinsLossByClass()
 		{
 			InitializeComponent();
 			CompiledStats.Instance.PropertyChanged += (sender, args) =>
 			{
-				if(args.PropertyName == "ArenaWinsByClass")
+				if(args.PropertyName == "ArenaWinLossByClass")
 					OnPropertyChanged("SeriesSourceWins");
 			};
 		}
@@ -27,13 +29,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 			get
 			{
 				return
-					Enumerable.Range(0, 13)
+					Enumerable.Range(0, 9)
 							  .Select(
 									  n =>
 									  new WinChartData
 				{
-					Index = n.ToString(),
-					ItemsSource = CompiledStats.Instance.ArenaWinsByClass[n]
+					Index = Enum.GetNames(typeof(HeroClass))[n],
+					ItemsSource = CompiledStats.Instance.ArenaWinLossByClass[n]
 				});
 			}
 		}

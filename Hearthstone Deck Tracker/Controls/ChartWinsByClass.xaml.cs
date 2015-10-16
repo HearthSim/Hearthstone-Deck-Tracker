@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Stats;
 
-namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
+namespace Hearthstone_Deck_Tracker.Controls
 {
 	/// <summary>
 	/// Interaction logic for ChartWinsByClass.xaml

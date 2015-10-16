@@ -126,12 +126,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public IEnumerable<ChartStats>[] ArenaWinsByClass
 		{
-			get
-			{
+			get {
 				var groupedByWins =
-					FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
-									 .Select(x => new { Wins = x.Key, Count = x.Count(), Runs = x })
-									 .ToList();
+				  FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+								   .Select(x => new { Wins = x.Key, Count = x.Count(), Runs = x })
+								   .ToList();
 				return Enumerable.Range(0, 13).Select(n =>
 				{
 					var runs = groupedByWins.FirstOrDefault(x => x.Wins == n);
@@ -148,6 +147,26 @@ namespace Hearthstone_Deck_Tracker.Stats
 						Value = x.Count(),
 						Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
 					});
+				}).ToArray();
+			}
+		}
+		public IEnumerable<ChartStats>[] ArenaWinLossByClass
+		{
+			get {
+				var gamesGroupedByOppHero = FilteredArenaRuns.SelectMany(x => x.Deck.DeckStats.Games).GroupBy(x => x.OpponentHero);
+				return Enum.GetNames(typeof(HeroClass)).Select(x =>
+				{
+					var classGames = gamesGroupedByOppHero.FirstOrDefault(g => g.Key == x);
+					if(classGames == null)
+						return new[] { new ChartStats { Name = x, Value = 0, Brush = new SolidColorBrush() } };
+					return classGames.GroupBy(g => g.Result).OrderBy(g => g.Key).Select(g =>
+					{
+						var color = Helper.GetClassColor(x, true);
+						if(g.Key == GameResult.Loss)
+							color = Color.FromRgb((byte)(color.R * 0.7), (byte)(color.G * 0.7), (byte)(color.B * 0.7));
+						return new ChartStats { Name = g.Key.ToString() + " vs " + x.ToString(), Value = g.Count(), Brush = new SolidColorBrush(color) };
+					});
+
 				}).ToArray();
 			}
 		}
@@ -189,7 +208,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			OnPropertyChanged("ArenaOpponentClassesPercent");
 			OnPropertyChanged("ArenaPlayedClassesPercent");
 			OnPropertyChanged("ArenaWins");
-			OnPropertyChanged("ArenaWinsByClass");
 			OnPropertyChanged("AvgWinsPerClass");
 			OnPropertyChanged("FilteredArenaRuns");
 		}
@@ -198,6 +216,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			OnPropertyChanged("ArenaRuns");
 			OnPropertyChanged("FilteredArenaRuns");
+		}
+
+		public void UpdateExpensiveArenaStats()
+		{
+			OnPropertyChanged("ArenaWinLossByClass");
+			OnPropertyChanged("ArenaWinsByClass");
 		}
 	}
 

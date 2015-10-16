@@ -17,8 +17,11 @@
     <DockPanel>
         <DockPanel>
             <GroupBox Header="TITLE?" DockPanel.Dock="Top">
-                <TreeView Name="TreeViewStats" Width="150" Height="200">
-                    <TreeViewItem Name="TreeViewItemArenaRuns" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <TreeView Name="TreeViewStats" Width="150" Height="250">
+                    <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <TreeViewItem Name="TreeViewItemArenaRunsOverview" Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TreeViewItem Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </TreeViewItem>
                     <TreeViewItem Header="Constructed" IsExpanded="True">
                         <TreeViewItem Header="Overall" IsExpanded="True">
                             <TreeViewItem Header="Overview"/>

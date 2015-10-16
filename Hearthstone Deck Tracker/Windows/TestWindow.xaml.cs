@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ButtonArenaReward_Click(object sender, RoutedEventArgs e)
 		{
-			/*var arenaRun = ArenaStats.DataGridArenaRuns.SelectedItem as ArenaRun;
+			/*var arenaRun = ArenaOverview.DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(arenaRun != null)
 			{
 				var dialog = new ArenaRewardDialog();
@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					arenaRun.Deck.ArenaReward = dialog.ArenaRewards.Reward;
 					DeckList.Save();
-					ArenaStats.DataGridArenaRuns.Items.Refresh();
+					ArenaOverview.DataGridArenaRuns.Items.Refresh();
 				}
 			}*/
 		}

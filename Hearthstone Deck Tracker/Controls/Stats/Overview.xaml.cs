@@ -24,7 +24,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class Overview : UserControl
 	{
-		private readonly ArenaStats _arenaOverview = new ArenaStats();
+		private readonly ArenaOverview _arenaOverview = new ArenaOverview();
+		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
 		private readonly bool _initialized;
 
 		public Overview()
@@ -39,16 +40,21 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			_initialized = true;
 		}
 
-		public ArenaStats ArenaOverview
+		public ArenaOverview ArenaOverview
 		{
 			get { return _arenaOverview; }
+		}
+
+		public object ArenaAdvancedCharts
+		{
+			get { return _arenaAdvancedCharts; }
 		}
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected)
+			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
 			{
 				Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
 				Config.Save();
@@ -60,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected)
+			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
 			{
 				Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 				Config.Save();
@@ -72,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected)
+			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
 				CompiledStats.Instance.UpdateArenaStats();
 		}
 
@@ -80,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected)
+			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
 			{
 				Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
 				Config.Save();

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Overview;
+using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
@@ -14,14 +14,14 @@ using MahApps.Metro.Controls.Dialogs;
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
 	/// <summary>
-	/// Interaction logic for ArenaStats.xaml
+	/// Interaction logic for ArenaOverview.xaml
 	/// </summary>
-	public partial class ArenaStats : INotifyPropertyChanged
+	public partial class ArenaOverview : INotifyPropertyChanged
 	{
 		private readonly bool _initialized;
 		private object _chartWinsControl = new ChartWins();
 
-		public ArenaStats()
+		public ArenaOverview()
 		{
 			InitializeComponent();
 			_initialized = true;
@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			var window = GetParentWindow();
+			var window = Helper.GetParentWindow(this);
 			if(window == null)
 				return;
 			var addedGame = await window.ShowAddGameDialog(run.Deck);
@@ -77,20 +77,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			var window = GetParentWindow();
+			var window = Helper.GetParentWindow(this);
 			if(window == null)
 				return;
 			var edited = await window.ShowEditGameDialog(SelectedGame);
 			if(edited)
 				CompiledStats.Instance.UpdateArenaStats();
-		}
-
-		public MetroWindow GetParentWindow()
-		{
-			var parent = VisualTreeHelper.GetParent(this);
-			while(parent != null && !(parent is MetroWindow))
-				parent = VisualTreeHelper.GetParent(parent);
-			return (MetroWindow)parent;
 		}
 
 		private async void ButtonDeleteGame_OnClick(object sender, RoutedEventArgs e)
@@ -100,14 +92,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			var window = GetParentWindow();
+			var window = Helper.GetParentWindow(this);
 			if(await window.ShowDeleteGameStatsMessage(SelectedGame) != MessageDialogResult.Affirmative)
 				return;
 			if(run.Deck.DeckStats.Games.Contains(SelectedGame))
 			{
 				SelectedGame.DeleteGameFile();
 				run.Deck.DeckStats.Games.Remove(SelectedGame);
-				Logger.WriteLine("Deleted game " + SelectedGame, "ArenaStats.ButtonDeleteGame");
+				Logger.WriteLine("Deleted game " + SelectedGame, "ArenaOverview.ButtonDeleteGame");
 			}
 			if(HearthStatsAPI.IsLoggedIn && SelectedGame.HasHearthStatsId && await window.ShowCheckHearthStatsMatchDeletionDialog())
 				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {SelectedGame});

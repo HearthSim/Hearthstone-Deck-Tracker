@@ -122,6 +122,9 @@
     <Compile Include="Controls\CardToolTipControl.xaml.cs">
       <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ChartWinsByClass.xaml.cs">
+      <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckPicker\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
     </Compile>
@@ -150,11 +153,17 @@
     <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
       <DependentUpon>ArenaRewards.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\ArenaStats.xaml.cs">
-      <DependentUpon>ArenaStats.xaml</DependentUpon>
+    <Compile Include="Controls\Stats\Arena\ArenaAdvancedCharts.xaml.cs">
+      <DependentUpon>ArenaAdvancedCharts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaOverview.xaml.cs">
+      <DependentUpon>ArenaOverview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Arena\Charts\ChartWins.xaml.cs">
       <DependentUpon>ChartWins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsLossByClass.xaml.cs">
+      <DependentUpon>ChartWinsLossByClass.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
@@ -466,6 +475,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ChartWinsByClass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\DeckListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -506,13 +519,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\ArenaStats.xaml">
+    <Page Include="Controls\Stats\Arena\ArenaAdvancedCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaOverview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\Arena\Charts\ChartWins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\Charts\ChartWinsLossByClass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml">
       <SubType>Designer</SubType>
