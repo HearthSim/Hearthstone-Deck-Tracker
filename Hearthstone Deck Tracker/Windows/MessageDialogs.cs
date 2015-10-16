@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -192,6 +195,57 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});
+		}
+
+		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
+		{
+			if(deck == null)
+				return false;
+			var dialog = new AddGameDialog(deck);
+			await window.ShowMetroDialogAsync(dialog, new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
+			var game = await dialog.WaitForButtonPressAsync();
+			await window.HideMetroDialogAsync(dialog);
+			if(game == null)
+				return false;
+			deck.DeckStats.AddGameResult(game);
+			if(Config.Instance.HearthStatsAutoUploadNewGames)
+			{
+				if(game.GameMode == GameMode.Arena)
+					HearthStatsManager.UploadArenaMatchAsync(game, deck, true, true);
+				else
+					HearthStatsManager.UploadMatchAsync(game, deck.GetSelectedDeckVersion(), true, true);
+			}
+			DeckStatsList.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
+			return true;
+		}
+
+		public static async Task<bool> ShowEditGameDialog(this MetroWindow window, GameStats game)
+		{
+			if(game == null)
+				return false;
+			var dialog = new AddGameDialog(game);
+			await
+				window.ShowMetroDialogAsync(dialog,
+													   new MetroDialogSettings { AffirmativeButtonText = "save", NegativeButtonText = "cancel" });
+			var result = await dialog.WaitForButtonPressAsync();
+			await window.HideMetroDialogAsync(dialog);
+			if(result == null)
+				return false;
+			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
+			{
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
+				if(deck != null)
+				{
+					if(game.GameMode == GameMode.Arena)
+						HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
+					else
+						HearthStatsManager.UpdateMatchAsync(game, deck.GetVersion(game.PlayerDeckVersion), true, true);
+				}
+			}
+			DeckStatsList.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			return true;
 		}
 	}
 

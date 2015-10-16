@@ -10,35 +10,15 @@
              xmlns:overview="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena.Overview"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1500">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="ArenaRunsViewSource" Source="{Binding Path=FilteredArenaRuns, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}">
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="StartTime" Direction="Descending"/>
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+        <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
     </UserControl.Resources>
     <DockPanel>
-        <Expander Header="Filters" DockPanel.Dock="Top" IsExpanded="True">
-            <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Timeframe: "/>
-                        <ComboBox Width="130" Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </Expander>
     <Expander IsExpanded="True" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
         <Expander.Header>
             <StackPanel Orientation="Horizontal">
@@ -64,7 +44,7 @@
                     <GroupBox Header="Opponenets" Height="300" MinWidth="300" Grid.Column="1">
                         <metroChart:DoughnutChart Background="Transparent" Palette="{StaticResource ClassColorPalette}" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <metroChart:DoughnutChart.Series>
-                                <metroChart:ChartSeries SeriesTitle="Opponents(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaOpponentClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaOpponentClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
                         </metroChart:DoughnutChart.Series>
                     </metroChart:DoughnutChart>
                 </GroupBox>
@@ -75,24 +55,38 @@
                         </metroChart:ClusteredColumnChart.Series>
                     </metroChart:ClusteredColumnChart>
                 </GroupBox>
-                    <GroupBox Height="300" MinWidth="500" Grid.Column="3">
-                        <GroupBox.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="WINS BY CLASS" Foreground="White" />
-                                <!--<CheckBox  Margin="15,0,0,0" Content="BY CLASS (slow)" Foreground="White" Checked="CheckBoxWinsByClass_OnChecked" Unchecked="CheckBoxWinsByClass_OnUnchecked"/>-->
-                            </StackPanel>
-                        </GroupBox.Header>
-                        <!--<ContentControl Content="{Binding Path=ChartWinsControl, RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
-                        <overview:ChartWinsByClass Margin="0,0,0,-30"/>
+                    <GroupBox Height="300" MinWidth="500" Grid.Column="3" Header="Wins">
+                        <Grid>
+                            <metroChart:ClusteredColumnChart Name="ClusteredColumnChartWins" Background="Transparent" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" >
+                                <metroChart:ClusteredColumnChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=ArenaWins, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                </metroChart:ClusteredColumnChart.Series>
+                            </metroChart:ClusteredColumnChart>
+                            <metroChart:EvenlyDistributedColumnsGrid Margin="45,240,25,0" Height="24">
+                                <TextBlock Text="0" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="1" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="2" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="3" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="4" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="5" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="6" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="7" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="8" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="9" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="10" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="11" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                <TextBlock Text="12" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                            </metroChart:EvenlyDistributedColumnsGrid>
 
+                        </Grid>
                     </GroupBox>
                 </Grid>
         </ScrollViewer>
     </Expander>
     <GroupBox Header="ARENA RUNS">
-        <DataGrid Name="DataGridArenaRuns" ItemsSource="{Binding Source={StaticResource ArenaRunsViewSource}}" AutoGenerateColumns="False">
+        <DataGrid Name="DataGridArenaRuns" ItemsSource="{Binding Path=FilteredArenaRuns, Source={x:Static stats:CompiledStats.Instance}}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Class">
+                <DataGridTemplateColumn Header="Class" SortMemberPath="Class">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Image Source="{Binding ClassImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding Class}" />
@@ -133,12 +127,19 @@
                                 </CollectionViewSource.SortDescriptions>
                             </CollectionViewSource>
                         </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[0].ActualWidth}"/>
-                            <ColumnDefinition Width="*"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[0].ActualWidth}"/>
+                                <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[1].ActualWidth}"/>
+                                <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="1">
-                        <DataGrid.Columns>
+                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
+                                <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
+                                <Button Margin="4,4,4,0" Content="Add game" Click="ButtonAddGame_OnClick"/>
+                                <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
+                                <Button Margin="4,4,4,4" Content="Delete game" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
+                            </StackPanel>
+                            <DataGrid Name="DataGridGames" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+                            <DataGrid.Columns>
                             <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -146,7 +147,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}">
+                                    <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}" SortMemberPath="StartTime">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Center" />

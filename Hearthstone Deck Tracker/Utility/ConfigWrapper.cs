@@ -18,5 +18,25 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 			}
 		}
+
+		public static DateTime? ArenaStatsTimeFrameCustomStart
+		{
+			get { return Config.Instance.ArenaStatsTimeFrameCustomStart; }
+			set
+			{
+				Config.Instance.ArenaStatsTimeFrameCustomStart = value;
+				Config.Save();
+			}
+		}
+
+		public static DateTime? ArenaStatsTimeFrameCustomEnd
+		{
+			get { return Config.Instance.ArenaStatsTimeFrameCustomEnd; }
+			set
+			{
+				Config.Instance.ArenaStatsTimeFrameCustomEnd = value;
+				Config.Save();
+			}
+		}
 	}
 }

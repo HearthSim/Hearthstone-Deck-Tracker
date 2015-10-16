@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="TestWindow" Height="500" Width="800">
+        Title="TestWindow" Height="500" Width="800" Closed="TestWindow_OnClosed">
     <Grid>
-        <Button Content="Reload" Width="70" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Content="Set Arena Reward" Width="118" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonArenaReward_Click" Margin="119,0,0,0"/>
-        <stats:Overview x:Name="ArenaStats" Margin="0,40,0,0"/>
+        <stats:Overview x:Name="ArenaStats"/>
     </Grid>
 </controls:MetroWindow>

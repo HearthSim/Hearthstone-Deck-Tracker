@@ -60,12 +60,12 @@ namespace Hearthstone_Deck_Tracker
                 splashScreenWindow = new SplashScreenWindow();
                 splashScreenWindow.Show();
             }
-            MainWindow = new MainWindow();
+            /*MainWindow = new MainWindow();
             MainWindow.LoadConfigSettings();
-            MainWindow.Show();
+            MainWindow.Show();*/
             splashScreenWindow.Close();
 
-            if (ConfigManager.UpdatedVersion != null)
+			/*if (ConfigManager.UpdatedVersion != null)
             {
                 Updater.Cleanup();
                 MainWindow.FlyoutUpdateNotes.IsOpen = true;
@@ -104,8 +104,8 @@ namespace Hearthstone_Deck_Tracker
             PluginManager.Instance.StartUpdateAsync();
 
             UpdateOverlayAsync();
-            NewsUpdater.UpdateAsync();
-            Initialized = true;
+            NewsUpdater.UpdateAsync();*/
+			Initialized = true;
 
 			new TestWindow().Show();
         }

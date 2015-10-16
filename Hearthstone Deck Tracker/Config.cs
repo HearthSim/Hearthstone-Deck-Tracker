@@ -289,6 +289,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Hearthstone")]
 		public string HearthstoneWindowName = "Hearthstone";
 
+		[DefaultValue(HeroClassStatsFilter.All)]
+		public HeroClassStatsFilter ArenaStatsClassFilter = HeroClassStatsFilter.All;
+
 		[DefaultValue(false)]
 		public bool HideDecksInOverlay = false;
 

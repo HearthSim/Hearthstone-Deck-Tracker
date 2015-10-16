@@ -229,6 +229,28 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			UpdateCardRewardGolden(false, checkBox);
 		}
+
+		public void LoadArenaReward(ArenaReward reward)
+		{
+			TextBoxGold.Text = reward.Gold.ToString();
+			TextBoxDust.Text = reward.Dust.ToString();
+			if(reward.Packs[0] != null)
+				ComboBoxPack1.SelectedItem = reward.Packs[0];
+			if(reward.Packs[1] != null)
+				ComboBoxPack2.SelectedItem = reward.Packs[1];
+			if(reward.Cards[0] != null && !string.IsNullOrEmpty(reward.Cards[0].CardId))
+				TextBoxCard1.Text = Database.GetCardFromId(reward.Cards[0].CardId).LocalizedName;
+			if(reward.Cards[1] != null && !string.IsNullOrEmpty(reward.Cards[1].CardId))
+				TextBoxCard2.Text = Database.GetCardFromId(reward.Cards[1].CardId).LocalizedName;
+			if(reward.Cards[2] != null && !string.IsNullOrEmpty(reward.Cards[2].CardId))
+				TextBoxCard3.Text = Database.GetCardFromId(reward.Cards[2].CardId).LocalizedName;
+			if(reward.Cards[0] != null)
+				CheckBoxGolden1.IsChecked = reward.Cards[0].Golden;
+			if(reward.Cards[1] != null)
+				CheckBoxGolden2.IsChecked = reward.Cards[1].Golden;
+			if(reward.Cards[2] != null)
+				CheckBoxGolden3.IsChecked = reward.Cards[2].Golden;
+		}
 	}
 
 	public class ArenaReward

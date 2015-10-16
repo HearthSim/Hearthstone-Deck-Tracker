@@ -150,15 +150,17 @@
     <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
       <DependentUpon>ArenaRewards.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\Overview\ArenaStats.xaml.cs">
+    <Compile Include="Controls\Stats\Arena\ArenaStats.xaml.cs">
       <DependentUpon>ArenaStats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\Overview\ChartWins.xaml.cs">
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWins.xaml.cs">
       <DependentUpon>ChartWins.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\Overview\ChartWinsByClass.xaml.cs">
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -504,15 +506,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\Overview\ArenaStats.xaml">
+    <Page Include="Controls\Stats\Arena\ArenaStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\Overview\ChartWins.xaml">
+    <Page Include="Controls\Stats\Arena\Charts\ChartWins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\Overview\ChartWinsByClass.xaml">
+    <Page Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

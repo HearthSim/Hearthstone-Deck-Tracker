@@ -46,5 +46,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}*/
 		}
+
+		private void TestWindow_OnClosed(object sender, EventArgs e)
+		{
+			Application.Current.Shutdown();
+		}
 	}
 }

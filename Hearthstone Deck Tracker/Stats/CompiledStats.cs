@@ -31,29 +31,34 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public IEnumerable<ArenaRun> ArenaRuns
 		{
-			get { return ArenaDecks.Select(x => new ArenaRun(x)); }
+			get { return ArenaDecks.Select(x => new ArenaRun(x)).OrderByDescending(x => x.StartTime); }
 		}
 
 		public IEnumerable<ArenaRun> FilteredArenaRuns
 		{
 			get
 			{
+				var filtered = ArenaRuns;
+				if(Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
+				{
+					filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
+				}
 				switch(Config.Instance.ArenaStatsTimeFrameFilter)
 				{
 					case DisplayedTimeFrame.AllTime:
-						return ArenaRuns;
+						return filtered;
 					case DisplayedTimeFrame.CurrentSeason:
-						return ArenaRuns.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						return filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
 					case DisplayedTimeFrame.ThisWeek:
-						return ArenaRuns.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
+						return filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
 					case DisplayedTimeFrame.Today:
-						return ArenaRuns.Where(g => g.StartTime > DateTime.Today);
+						return filtered.Where(g => g.StartTime > DateTime.Today);
 					case DisplayedTimeFrame.Custom:
-						var start = Config.Instance.ArenaStatsTimeFrameCustomStart ?? DateTime.MinValue;
-						var end = Config.Instance.ArenaStatsTimeFrameCustomEnd ?? DateTime.MaxValue;
-						return ArenaRuns.Where(g => g.StartTime >= start && g.EndTime <= end);
+						var start = (Config.Instance.ArenaStatsTimeFrameCustomStart ?? DateTime.MinValue).Date;
+						var end = (Config.Instance.ArenaStatsTimeFrameCustomEnd ?? DateTime.MaxValue).Date;
+						return filtered.Where(g => g.EndTime.Date >= start && g.EndTime.Date <= end);
 					default:
-						return ArenaRuns;
+						return filtered;
 				}
 			}
 		}
@@ -181,6 +186,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 			OnPropertyChanged("ArenaWins");
 			OnPropertyChanged("ArenaWinsByClass");
 			OnPropertyChanged("AvgWinsPerClass");
+			OnPropertyChanged("FilteredArenaRuns");
+		}
+
+		public void UpdateArenaRuns()
+		{
+			OnPropertyChanged("ArenaRuns");
 			OnPropertyChanged("FilteredArenaRuns");
 		}
 	}

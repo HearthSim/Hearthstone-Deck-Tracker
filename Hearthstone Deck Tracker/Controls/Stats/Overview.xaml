@@ -4,30 +4,67 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter"/>
+        <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+    </UserControl.Resources>
     <DockPanel>
-        <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-            <TreeView Name="TreeViewStatsOverview" Width="150">
-                <TreeViewItem Header="Arena Runs" IsExpanded="True" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                    <TreeViewItem Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Constructed" IsExpanded="True">
-                    <TreeViewItem Header="Overall" IsExpanded="True">
-                        <TreeViewItem Header="Overview"/>
-                        <TreeViewItem Header="Tables"/>
-                        <TreeViewItem Header="Charts"/>
-                        <TreeViewItem Header="Games"/>
+        <DockPanel>
+            <GroupBox Header="TITLE?" DockPanel.Dock="Top">
+                <TreeView Name="TreeViewStats" Width="150" Height="200">
+                    <TreeViewItem Name="TreeViewItemArenaRuns" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <TreeViewItem Header="Constructed" IsExpanded="True">
+                        <TreeViewItem Header="Overall" IsExpanded="True">
+                            <TreeViewItem Header="Overview"/>
+                            <TreeViewItem Header="Games"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Active Deck" IsExpanded="True">
+                            <TreeViewItem Header="Overview"/>
+                            <TreeViewItem Header="Games"/>
+                        </TreeViewItem>
                     </TreeViewItem>
-                    <TreeViewItem Header="Active Deck" IsExpanded="True">
-                        <TreeViewItem Header="Overview"/>
-                        <TreeViewItem Header="Tables"/>
-                        <TreeViewItem Header="Charts"/>
-                        <TreeViewItem Header="Games"/>
-                    </TreeViewItem>
-                </TreeViewItem>
-            </TreeView>
-        </Border>
-        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0" Content="{Binding ElementName=TreeViewStatsOverview, Path=SelectedItem.DataContext}" />
+                </TreeView>
+            </GroupBox>
+            <GroupBox Header="Filters">
+                <StackPanel Margin="-5,0">
+                    <Expander Header="Timeframe" IsExpanded="True">
+                        <StackPanel>
+                            <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <StackPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+                                <Label Content="Start"/>
+                                <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right" SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}" SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged"/>
+                                <Label Content="End"/>
+                                <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right" SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}" SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="Class" IsExpanded="True">
+                        <ComboBox Name="ComboBoxClass" SelectedIndex="0" SelectionChanged="ComboBoxClass_OnSelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Height="24">
+                                        <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0" Visibility="{Binding ImageVisibility}"/>
+                                        <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Expander>
+                </StackPanel>
+            </GroupBox>
+        </DockPanel>
+        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0" Content="{Binding ElementName=TreeViewStats, Path=SelectedItem.DataContext}" />
     </DockPanel>
 </UserControl>

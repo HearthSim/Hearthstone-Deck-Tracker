@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Hearthstone_Deck_Tracker.Controls.Stats;
-using MahApps.Metro.Controls;
+﻿using System.Windows;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -21,11 +8,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class ArenaRewardDialog
 	{
-		public ArenaRewardDialog()
+		private readonly Deck _deck;
+		public bool SaveButtonWasClicked { get; set; }
+		public ArenaRewardDialog(Deck deck)
 		{
+			_deck = deck;
 			InitializeComponent();
+			ArenaRewards.LoadArenaReward(deck.ArenaReward);
 		}
-		public ArenaReward Reward { get; set; }
 		private async void ButtonSave_OnClick(object sender, RoutedEventArgs e)
 		{
 			string warning;
@@ -34,7 +24,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await this.ShowMessage("Error saving Arena Rewards", warning);
 				return;
 			}
-			Reward = ArenaRewards.Reward;
+			_deck.ArenaReward = ArenaRewards.Reward;
+			DeckList.Save();
+			SaveButtonWasClicked = true;
 			Close();
 		}
 	}
