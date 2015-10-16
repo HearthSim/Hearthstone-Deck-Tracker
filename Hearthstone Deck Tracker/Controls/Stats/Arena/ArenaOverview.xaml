@@ -93,12 +93,42 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Started" Binding="{Binding StartTimeString}" SortMemberPath="StartTime"/>
-                <DataGridTextColumn Header="Wins" Binding="{Binding Wins}"/>
-                <DataGridTextColumn Header="Losses" Binding="{Binding Losses}"/>
-                <DataGridTextColumn Header="Gold" Binding="{Binding Gold}"/>
-                <DataGridTextColumn Header="Dust" Binding="{Binding Dust}"/>
-                <DataGridTextColumn Header="Packs" Binding="{Binding PackCount}">
+                    <DataGridTextColumn Header="Started" Binding="{Binding StartTimeString}" SortMemberPath="StartTime">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Wins" Binding="{Binding Wins}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Losses" Binding="{Binding Losses}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Gold" Binding="{Binding Gold}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Dust" Binding="{Binding Dust}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Packs" Binding="{Binding PackCount}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -114,9 +144,21 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Duration" Binding="{Binding DurationString}" SortMemberPath="Duration"/>
-                <DataGridTextColumn Header="Region" Binding="{Binding Region}"/>
-            </DataGrid.Columns>
+                    <DataGridTextColumn Header="Duration" Binding="{Binding DurationString}" SortMemberPath="Duration">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Region" Binding="{Binding Region}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <Grid>
@@ -134,11 +176,13 @@
                         </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
                                 <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
+                                <Button Margin="4,4,4,0" Content="Show deck" Click="ButtonShowDeck_OnClick"/>
+                                <Button Margin="4,4,4,0" Content="Show replay" Click="ButtonShowReplay_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                                 <Button Margin="4,4,4,0" Content="Add game" Click="ButtonAddGame_OnClick"/>
                                 <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                                 <Button Margin="4,4,4,4" Content="Delete game" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                             </StackPanel>
-                            <DataGrid Name="DataGridGames" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+                            <DataGrid Name="DataGridGames" SelectedIndex="-1" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
                             <DataGrid.Columns>
                             <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -158,6 +202,7 @@
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="Foreground" Value="{Binding ResultTextColor}"/>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>

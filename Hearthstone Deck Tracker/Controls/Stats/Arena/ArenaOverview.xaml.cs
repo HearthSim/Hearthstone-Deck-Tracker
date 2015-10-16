@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -106,6 +107,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			CompiledStats.Instance.UpdateArenaStats();
+		}
+
+		private void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

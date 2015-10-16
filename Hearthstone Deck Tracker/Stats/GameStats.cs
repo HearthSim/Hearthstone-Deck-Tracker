@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
@@ -95,6 +96,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 				return _deckName;
 			}
 			set { _deckName = value; }
+		}
+
+		[XmlIgnore]
+		public SolidColorBrush ResultTextColor
+		{
+			get
+			{
+				var c = Colors.Black;
+				if(Result == GameResult.Win)
+					c = Colors.Green;
+				else if(Result == GameResult.Loss)
+					c = Colors.Red;
+				return new SolidColorBrush(c);
+			}
 		}
 
 		[XmlIgnore]
