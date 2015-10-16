@@ -561,11 +561,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckList.Instance.ActiveDeck != null ? DeckList.Instance.ActiveDeckVersion.Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
+			var prev = DeckPickerList.SelectedDecks.FirstOrDefault();
 			SelectLastUsedDeck();
+			DeckPickerList.SelectDeck(prev);
 		}
 
 		internal void SaveDeckWithOverwriteCheck()

@@ -1026,8 +1026,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastSelected.Id);
 				if(deck != null)
 				{
+					DeckPickerList.SelectDeck(deck);
 					SelectDeck(deck, true);
-					DeckPickerList.UpdateDecks();
 				}
 			}
 		}
