@@ -1,7 +1,7 @@
 ﻿<Application x:Class="Hearthstone_Deck_Tracker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="LoginWindow.xaml"
+             Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
     <Application.Resources>
         <ResourceDictionary>

@@ -240,7 +240,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					removedAllClassItem.OnDelselected();
 			}
 
-			if(Helper.MainWindow.IsLoaded)
+			if(Core.MainWindow.IsLoaded)
 				UpdateDecks();
 		}
 
@@ -491,7 +491,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					Logger.WriteLine("Set tags to ALL so the deck shows up");
 				}
 				Config.Save();
-				Helper.MainWindow.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
+				Core.MainWindow.SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 			}
 
 			UpdateDecks(false);
@@ -648,11 +648,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void ContextMenu_OnOpened(object sender, RoutedEventArgs e)
 		{
-			var selectedDecks = Helper.MainWindow.DeckPickerList.SelectedDecks;
+			var selectedDecks = Core.MainWindow.DeckPickerList.SelectedDecks;
 			if(!selectedDecks.Any())
 				return;
-			Helper.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
-			MenuItemQuickSetTag.ItemsSource = Helper.MainWindow.TagControlEdit.Tags;
+			Core.MainWindow.TagControlEdit.SetSelectedTags(selectedDecks);
+			MenuItemQuickSetTag.ItemsSource = Core.MainWindow.TagControlEdit.Tags;
 			MenuItemMoveDecktoArena.Visibility = selectedDecks.First().IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemMoveDeckToConstructed.Visibility = selectedDecks.First().IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemMissingCards.Visibility = selectedDecks.First().MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
@@ -669,77 +669,77 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnEditDeck_Click(sender, e);
+			Core.MainWindow.BtnEditDeck_Click(sender, e);
 		}
 
 		private void BtnNotes_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnNotes_Click(sender, e);
+			Core.MainWindow.BtnNotes_Click(sender, e);
 		}
 
 		private void BtnTags_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnTags_Click(sender, e);
+			Core.MainWindow.BtnTags_Click(sender, e);
 		}
 
 		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnMoveDeckToArena_Click(sender, e);
+			Core.MainWindow.BtnMoveDeckToArena_Click(sender, e);
 		}
 
 		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnMoveDeckToConstructed_Click(sender, e);
+			Core.MainWindow.BtnMoveDeckToConstructed_Click(sender, e);
 		}
 
 		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.MenuItemMissingDust_OnClick(sender, e);
+			Core.MainWindow.MenuItemMissingDust_OnClick(sender, e);
 		}
 
 		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnUpdateDeck_Click(sender, e);
+			Core.MainWindow.BtnUpdateDeck_Click(sender, e);
 		}
 
 		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnOpenDeckUrl_Click(sender, e);
+			Core.MainWindow.BtnOpenDeckUrl_Click(sender, e);
 		}
 
 		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnArchiveDeck_Click(sender, e);
+			Core.MainWindow.BtnArchiveDeck_Click(sender, e);
 		}
 
 		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnUnarchiveDeck_Click(sender, e);
+			Core.MainWindow.BtnUnarchiveDeck_Click(sender, e);
 		}
 
 		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnDeleteDeck_Click(sender, e);
+			Core.MainWindow.BtnDeleteDeck_Click(sender, e);
 		}
 
 		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnCloneDeck_Click(sender, e);
+			Core.MainWindow.BtnCloneDeck_Click(sender, e);
 		}
 
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
+			Core.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
 		}
 
 		private void BtnName_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnName_Click(sender, e);
+			Core.MainWindow.BtnName_Click(sender, e);
 		}
 
 		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.BtnOpenHearthStats_Click(sender, e);
+			Core.MainWindow.BtnOpenHearthStats_Click(sender, e);
 		}
 
 		private async void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -759,9 +759,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			var deck = SelectedDecks.FirstOrDefault();
 			if(deck != null)
 			{
-				Helper.MainWindow.DeckPickerList.SelectDeck(deck);
-				Helper.MainWindow.SelectDeck(deck, true);
-				Helper.MainWindow.DeckPickerList.RefreshDisplayedDecks();
+				Core.MainWindow.DeckPickerList.SelectDeck(deck);
+				Core.MainWindow.SelectDeck(deck, true);
+				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 			}
 		}
 	}

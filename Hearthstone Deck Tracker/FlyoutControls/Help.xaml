@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
-    <Grid>
-        <ScrollViewer Margin="0,0,0,33">
+    <DockPanel>
+        <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="-1" DockPanel.Dock="Bottom">
+            <DockPanel VerticalAlignment="Bottom">
+                <Button Name="ButtonUpdateNotes" Content="Show update notes" Click="ButtonUpdateNotes_OnClick" DockPanel.Dock="Right" Margin="2" Width="200" Style="{DynamicResource AccentedSquareButtonStyle}"/>
+                <TextBlock Name="TxtblockVersion" Text="Version:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </DockPanel>
+        </Border>
+        <ScrollViewer>
             <StackPanel>
                 <GroupBox Header="FAQ">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
@@ -96,7 +102,7 @@
                                         click here.
                                     </Hyperlink>
                         <LineBreak />
-                                    <Run Text="2) Send me an email: epikz37@gmail.com" />
+                                    <Run Text="2) Send an email to support@hsdecktracker.net" />
                     </TextBlock>
                 </GroupBox>
                 <GroupBox Header="GitHub Project">
@@ -121,6 +127,5 @@
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>
-        <TextBlock Name="TxtblockVersion" Text="Version:" Margin="10,0,340,10" VerticalAlignment="Bottom" />
-    </Grid>
+    </DockPanel>
 </UserControl>

@@ -10077,6 +10077,140 @@ Zadaj $3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Dokładka!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Umieść na polu bitwy
+po jednym stronniku
+z każdej talii.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Szyderczy tłum</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Przyzwij Kibica 1/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Szyderczy tłum</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij Kibica 1/1
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>Majordomus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij Żarzyciela Akolitę 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>JA WALIĆ!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zniszcz losowego wrogiego stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>JA WALIĆ!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zniszcz losowego wrogiego stronnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Otwarcie wrót</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij trzy
+Pisklęta 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Dzika magia</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Umieść losowe zaklęcie
+z klasy przeciwnika
+w twojej ręce.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Aktywacja!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Aktywuj losowego trona.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Kościani stronnicy</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Przyzwij dwa Kościane konstrukty 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Żywa bomba</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10413,6 +10547,58 @@ Zadaj $3 pkt. obrażeń wrogiemu bohaterowi.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Trujący obłok</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj 1 pkt. obrażeń wszystkim wrogim stronnikom. Jeśli któryś zginie, przyzwij śluz.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Dziesiątkowanie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zmień zdrowie wrogich stronników na 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Pajęczyna</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Cofnij losowego wrogiego stronnika do ręki przeciwnika.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Żniwa</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Dobierz kartę. Otrzymujesz kryształ many.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros Władca Ognia</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10469,7 +10655,7 @@ Przyzwij Wulkanicznego furiata 5/1.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;Prowokacja&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
@@ -10727,6 +10913,81 @@ Odzyskuje &lt;b&gt;Ukrycie&lt;/b&gt;, gdy zabije stronnika.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Wkurzotron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>Witaj. Witaj. Witaj.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Daj swojemu stronnikowi z najniższym atakiem &lt;b&gt;Boską tarczę&lt;/b&gt; oraz &lt;b&gt;Prowokację&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Hukobot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Hukobot junior</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
+Zadaj 1 pkt. obrażeń
+2 losowym wrogom.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Tajemniczy pilot</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10736,6 +10997,39 @@ Odzyskuje &lt;b&gt;Ukrycie&lt;/b&gt;, gdy zabije stronnika.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Kto to może być?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -17134,7 +17428,9 @@ z &lt;b&gt;Agonią&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Umieść na polu bitwy po jednym stronniku z każdej talii.</Text>
+Umieść na polu bitwy
+po jednym stronniku
+z każdej talii.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18160,7 +18456,7 @@ Każdy gracz dobiera 3 karty. Otrzymujesz kryształ many.</Text>
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Moc specjalna:&lt;/b&gt;
+    <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Odrzuć losową kartę.</Text>
     <Mechanics />
   </Card>
@@ -18441,7 +18737,9 @@ Niech rozpocznie się gra!</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
+Umieść losowe zaklęcie
+z klasy przeciwnika
+w twojej ręce.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18454,7 +18752,9 @@ Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Umieść losowe zaklęcie z klasy przeciwnika w twojej ręce.</Text>
+Umieść losowe zaklęcie
+z klasy przeciwnika
+w twojej ręce.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20093,7 +20393,7 @@ Zadaj $8 pkt. obrażeń losowemu wrogowi. DWUKROTNIE.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20449,7 +20749,6 @@ u każdego gracza.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Daj Demonowi +3/+3. Daj twojemu przeciwnikowi
 kryształ many.</Text>
     <Mechanics />
@@ -20703,7 +21002,7 @@ w broń, daj jej
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Wtasuj 3 karty Zasadzki! do talii przeciwnika. Kiedy jedna
+    <Text>Wtasuj 3 karty Zasadzki! do talii przeciwnika. Kiedy któraś
 z nich zostanie dobrana, przyzwij Nerubianina 4/4.</Text>
     <Mechanics />
     <Artist>Daren Bader</Artist>
@@ -20800,6 +21099,7 @@ Nerubianina 4/4.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21780,7 +22080,7 @@ oraz &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -22726,7 +23026,7 @@ w tej grze.</Text>
     <Durability>0</Durability>
     <Race>Dragon</Race>
     <Text>&lt;b&gt;Prowokacja.&lt;/b&gt;
-&lt;b&gt;Okrzyk bojowy:&lt;/b&gt; Zadaj 3 pkt. obrażeń wszystkim stronnikom, jeśli masz w ręce Smoka.</Text>
+&lt;b&gt;Agonia:&lt;/b&gt; Zadaj 3 pkt. obrażeń wszystkim stronnikom, jeśli masz w ręce Smoka.</Text>
     <Mechanics>
       <string>Deathrattle</string>
       <string>Taunt</string>

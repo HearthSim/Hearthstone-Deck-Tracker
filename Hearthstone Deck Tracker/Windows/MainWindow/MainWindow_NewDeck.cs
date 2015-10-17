@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -23,7 +21,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
@@ -76,12 +74,15 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
 					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput)
+					   && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
 					   && (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
 						continue;
 					if(Config.Instance.UseFullTextSearch
 					   && words.Any(
 					                w =>
 					                !cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+					                && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
+					                && card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
 					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
 					                && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
@@ -560,19 +561,20 @@ namespace Hearthstone_Deck_Tracker
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
-			ListViewDeck.ItemsSource = DeckList.Instance.ActiveDeck != null ? DeckList.Instance.ActiveDeckVersion.Cards : null;
 			CloseNewDeck();
 			EditingDeck = false;
 			editedDeckName = string.Empty;
+			var prev = DeckPickerList.SelectedDecks.FirstOrDefault();
 			SelectLastUsedDeck();
+			DeckPickerList.SelectDeck(prev);
 		}
 
-		private void SaveDeckWithOverwriteCheck()
+		internal void SaveDeckWithOverwriteCheck()
 		{
 			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-		private void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+        internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
 			if(saveAsNew)
 			{

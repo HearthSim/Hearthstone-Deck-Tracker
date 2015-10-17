@@ -358,7 +358,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				TurnStats.Add(turnStats);
 			}
 			turnStats.AddPlay(type, cardId);
-			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats");
+			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats", 2);
 		}
 
 		public override string ToString()

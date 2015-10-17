@@ -9982,6 +9982,134 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Куча мала!!!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Кладет на поле боя по одному существу из каждой колоды.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Насмехающаяся толпа</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Призывает на поле боя зрителя 1/1 со способностью &lt;b&gt;Провокация&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Насмехающаяся толпа</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает на поле боя зрителя 1/1 со способностью &lt;b&gt;Провокация&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>Мажордом</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает на поле боя поджигателя-послушника 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>Я КРУШИТЬ!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает случайное существо противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>Я КРУШИТЬ!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Уничтожает случайное существо противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Открыть ворота</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя трех дракончиков 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Дикая магия</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Кладет в руку случайное классовое заклинание противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Активация!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Активирует случайного Трона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Костяные прислужники</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает два костяных создания 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Живая бомба</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10316,6 +10444,58 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Отравленное облако</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Наносит 1 ед. урона всем существам противника. Если какое-либо существо умирает, призывается слизь.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Истребление</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Здоровье всех существ противника становится равно 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Кокон</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Возвращает случайное существо противника в его руку.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Жатва</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Берет карту и получает кристалл маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Рагнарос</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10630,6 +10810,80 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Раздражатор</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>ПРИВЕТ, ПРИВЕТ, ПРИВЕТ.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Ваше существо с наименьшей атакой получает способности &lt;b&gt;«Божественный щит»&lt;/b&gt; и &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Взрыв-бот</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Взрыв-бот-младший</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Наносит 1 ед. урона двум случайным персонажам противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Таинственный пилот</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10639,6 +10893,39 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Кто бы это мог быть?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -19829,7 +20116,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Наносит существу $8 ед. урона.</Text>
+    <Text>Наносит $8 ед. урона выбранному существу.</Text>
     <Mechanics />
     <Artist>Nutthapon Petchthai</Artist>
   </Card>
@@ -19955,7 +20242,7 @@
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20305,7 +20592,6 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Выбранный демон получает +3/+3. Ваш противник получает кристалл маны.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20511,7 +20797,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Вы кладете в руку два случайных заклинания &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
+    <Text>Вы кладете в руку две случайных карты &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -20648,6 +20934,7 @@
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21218,7 +21505,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Вы кладете в руку случайную карту охотника за каждое заклинание, разыгранное вами на этом ходу.</Text>
+    <Text>Вы кладете в руку случайную карту охотника за каждое заклинание, которое разыграете на этом ходу.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -21263,7 +21550,7 @@
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>Уничтожает любое другое существо, получившее урон.</Text>
+    <Text>Уничтожает любое другое существо, которое получает урон.</Text>
     <Mechanics />
     <Artist>Andrew Hou</Artist>
   </Card>
@@ -21601,7 +21888,7 @@
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -21658,7 +21945,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете на поле боя по каждому &lt;b&gt;секрету&lt;/b&gt; из вашей колоды.</Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете на поле боя по каждому &lt;b&gt;секрету&lt;/b&gt; из вашей колоды.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22485,7 +22772,7 @@
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете существо со способностью &lt;b&gt;«Боевой клич»&lt;/b&gt;.</Text>
+    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете карту со способностью &lt;b&gt;«Боевой клич»&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Jakub Kasper</Artist>
   </Card>

@@ -1,13 +1,17 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Point = System.Drawing.Point;
@@ -19,26 +23,24 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for PlayerWindow.xaml
 	/// </summary>
-	public partial class OpponentWindow
+	public partial class OpponentWindow : INotifyPropertyChanged
 	{
 		public static double Scaling = 1.0;
 	    private readonly GameV2 _game;
-	    private readonly Config _config;
 		private bool _appIsClosing;
 
-		public OpponentWindow(GameV2 game, Config config, ObservableCollection<Card> opponentDeck)
+		public OpponentWindow(GameV2 game)
 		{
 			InitializeComponent();
 		    _game = game;
-		    _config = config;
-			ListViewOpponent.ItemsSource = opponentDeck;
-			opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
-			Height = _config.OpponentWindowHeight;
-			if(_config.OpponentWindowLeft.HasValue)
-				Left = _config.OpponentWindowLeft.Value;
-			if(_config.OpponentWindowTop.HasValue)
-				Top = _config.OpponentWindowTop.Value;
-			Topmost = _config.WindowsTopmost;
+			//ListViewOpponent.ItemsSource = opponentDeck;
+			//opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
+			Height = Config.Instance.OpponentWindowHeight;
+			if(Config.Instance.OpponentWindowLeft.HasValue)
+				Left = Config.Instance.OpponentWindowLeft.Value;
+			if(Config.Instance.OpponentWindowTop.HasValue)
+				Top = Config.Instance.OpponentWindowTop.Value;
+			Topmost = Config.Instance.WindowsTopmost;
 
 			var titleBarCorners = new[]
 			{
@@ -55,27 +57,32 @@ namespace Hearthstone_Deck_Tracker
 			Update();
 		}
 
+		public List<Card> OpponentDeck
+		{
+			get { return _game.Opponent.DisplayRevealedCards; }
+		}
+
 		public bool ShowToolTip
 		{
-			get { return _config.WindowCardToolTips; }
+			get { return Config.Instance.WindowCardToolTips; }
 		}
 
 		public void Update()
 		{
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
-			CanvasOpponentChance.Visibility = _config.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
-			CanvasOpponentCount.Visibility = _config.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
-			ListViewOpponent.Visibility = _config.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentChance.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
+			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
-			if(_game.PlayingAgainst != string.Empty)
+			if(!string.IsNullOrEmpty(_game.Opponent.Class))
 			{
-				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.PlayingAgainst);
-				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.PlayingAgainst);
+				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.Class);
+				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.Class);
 				var percent = (winsVs + lossesVs) > 0 ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString(CultureInfo.InvariantCulture) : "-";
-				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", _game.PlayingAgainst, winsVs, lossesVs, percent);
+				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", _game.Opponent.Class, winsVs, lossesVs, percent);
 			}
 		}
 
@@ -112,7 +119,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(cardsLeftInDeck <= 0)
 			{
-				LblOpponentFatigue.Text = "Next draw fatigues for: " + (_game.OpponentFatigueCount + 1);
+				LblOpponentFatigue.Text = "Next draw fatigues for: " + (_game.Opponent.Fatigue + 1);
 
 				LblOpponentDrawChance2.Text = "0%";
 				LblOpponentDrawChance1.Text = "0%";
@@ -143,7 +150,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			const int offsetToMakeSureGraphicsAreNotClipped = 30;
+			const int offsetToMakeSureGraphicsAreNotClipped = 40;
 			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
@@ -186,7 +193,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{
-			if(!_config.WindowsTopmost)
+			if(!Config.Instance.WindowsTopmost)
 				Topmost = false;
 		}
 
@@ -205,6 +212,27 @@ namespace Hearthstone_Deck_Tracker
                 StackPanelMain.Children.Add(CanvasOpponentChance);
                 StackPanelMain.Children.Add(CanvasOpponentCount);
             }
+		}
+
+		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
+		public async void UpdateOpponentCards()
+		{
+			_lastOpponentUpdateReqest = DateTime.Now;
+			await Task.Delay(50);
+			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
+				return;
+			OnPropertyChanged("OpponentDeck");
+			Scale();
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

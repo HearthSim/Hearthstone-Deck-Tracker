@@ -22,22 +22,23 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class LoginWindow : INotifyPropertyChanged
 	{
-	    private readonly GameV2 _game;
+	    //private readonly GameV2 _game;
 	    private readonly bool _initialized;
 		private ProgressDialogController _controller;
 		private Visibility _loginRegisterVisibility;
+        public bool LoginResult { get; private set; }
 
 		public LoginWindow()
 		{
-			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			Logger.Initialzie();
-			Config.Load();
-			_game = new GameV2();
-            Card.SetGame(_game);
-			API.Core.Game = _game;
+			//Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+			//Config.Load();
+			//Logger.Initialzie();
+			//_game = new GameV2();
+            //Card.SetGame(_game);
+			//API.Core.Game = _game;
 		    InitializeComponent();
-			if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)
-				StartMainApp();
+			//if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)
+			//	StartMainApp();
 			CheckBoxRememberLogin.IsChecked = Config.Instance.RememberHearthStatsLogin;
 			_initialized = true;
 		}
@@ -70,7 +71,7 @@ namespace Hearthstone_Deck_Tracker
 			Process.Start(e.Uri.AbsoluteUri);
 		}
 
-		private void StartMainApp()
+		/*private void StartMainApp()
 		{
 			IsEnabled = false;
 			var mainWindow = new MainWindow(_game);
@@ -83,7 +84,7 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine("Error showing main window: " + ex, "LoginWindow");
 			}
 			Close();
-		}
+		}*/
 
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
@@ -102,8 +103,11 @@ namespace Hearthstone_Deck_Tracker
 			_controller = await this.ShowProgressAsync("Logging in...", "");
 			var result = await HearthStatsAPI.LoginAsync(TextBoxEmail.Text, TextBoxPassword.Password);
 			TextBoxPassword.Clear();
-			if(result.Success)
-				StartMainApp();
+		    if (result.Success)
+		    {
+		        LoginResult = true;
+                Close();
+		    }
 			else if(result.Message.Contains("401"))
 				DisplayLoginError("Invalid email or password");
 			else
@@ -197,9 +201,8 @@ namespace Hearthstone_Deck_Tracker
 			TextBoxRegisterPasswordConfirm.Clear();
 			if(result.Success)
 			{
-				var mw = new MainWindow(_game);
-				mw.Show();
-				Close();
+			    LoginResult = true;
+                Close();
 			}
 		}
 
@@ -228,7 +231,8 @@ namespace Hearthstone_Deck_Tracker
 		private void Button_ContinueAnyway(object sender, RoutedEventArgs e)
 		{
 			Logger.WriteLine("Continuing as guest...");
-			StartMainApp();
+		    LoginResult = true;
+		    Close();
 		}
 
 		[NotifyPropertyChangedInvocator]

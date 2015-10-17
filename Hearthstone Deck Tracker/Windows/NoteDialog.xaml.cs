@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.Note = TextBoxNote.Text;
 				DeckStatsList.Save();
-				(Config.Instance.StatsInWindow ? Helper.MainWindow.StatsWindow.StatsControl : Helper.MainWindow.DeckStatsFlyout).Refresh();
+				(Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Core.MainWindow.DeckStatsFlyout).Refresh();
 			}
 			Close();
 		}

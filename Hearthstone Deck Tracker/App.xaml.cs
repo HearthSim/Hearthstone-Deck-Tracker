@@ -5,8 +5,10 @@
 // ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using Hearthstone_Deck_Tracker.Controls.Error;
 
 #endregion
 
@@ -21,6 +23,19 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
+			if(e.Exception is MissingMethodException || e.Exception is TypeLoadException)
+			{
+				var plugin = Plugins.PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
+				if(plugin != null)
+				{
+					plugin.IsEnabled = false;
+					var header = string.Format("{0} is not compatible with HDT {1}.", plugin.NameAndVersion,
+					                           Helper.GetCurrentVersion().ToVersionString());
+					ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
+					e.Handled = true;
+					return;
+				}
+			}
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
@@ -33,16 +48,22 @@ namespace Hearthstone_Deck_Tracker
 			{
 				sr.WriteLine("########## " + DateTime.Now + " ##########");
 				sr.WriteLine(e.Exception);
-				sr.WriteLine(Helper.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
+				sr.WriteLine(Core.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
 			}
 
 			MessageBox.Show(
 			                "A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName
-			                + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send me an email (epikz37@gmail.com).\n\nPlease include the generated crash report(s) and a short explanation of what you were doing before the crash.",
+			                + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send an email to support@hsdecktracker.net.\n\nPlease include the generated crash report(s) and a short explanation of what you were doing before the crash.",
 			                "Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
 			e.Handled = true;
 			Shutdown();
 #endif
 		}
+
+	    private void App_OnStartup(object sender, StartupEventArgs e)
+        {
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Core.Initialize();
+	    }
 	}
 }

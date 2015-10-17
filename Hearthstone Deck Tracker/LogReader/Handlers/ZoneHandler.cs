@@ -1,4 +1,6 @@
+using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
@@ -14,7 +16,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 var from = match.Groups["from"].Value.Trim();
                 var to = match.Groups["to"].Value.Trim();
 
-                if (id.Contains("HERO") || (id.Contains("NAX") && id.Contains("_01")) || id.StartsWith("BRMA"))
+	            var card = Database.GetCardFromId(id);
+                if(card != null && card.Type == "Hero")
                 {
                     if (!from.Contains("PLAY"))
                     {

@@ -12,7 +12,7 @@ using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{

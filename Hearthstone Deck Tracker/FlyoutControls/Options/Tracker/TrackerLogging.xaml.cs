@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				using(var sr = new StreamWriter(fileName, false))
 					sr.Write(TextBoxLog.Text);
 
-				await Helper.MainWindow.ShowSavedFileMessage(fileName);
+				await Core.MainWindow.ShowSavedFileMessage(fileName);
 			}
 		}
 

@@ -33,15 +33,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, SortDirection.Up);
-				Helper.MainWindow.Overlay.UpdatePlayerLayout();
-				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
+				Core.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, SortDirection.Up);
+				Core.Overlay.UpdatePlayerLayout();
+				Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, SortDirection.Up);
-				Helper.MainWindow.Overlay.UpdateOpponentLayout();
-				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
+				Core.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, SortDirection.Up);
+				Core.Overlay.UpdateOpponentLayout();
+				Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			}
 		}
 
@@ -49,15 +49,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_isPlayerList)
 			{
-				Helper.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, SortDirection.Down);
-				Helper.MainWindow.Overlay.UpdatePlayerLayout();
-				Helper.MainWindow.PlayerWindow.UpdatePlayerLayout();
+				Core.MainWindow.Options.OptionsOverlayPlayer.ElementSorterPlayer.MoveItem(this, SortDirection.Down);
+				Core.Overlay.UpdatePlayerLayout();
+				Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			}
 			else
 			{
-				Helper.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, SortDirection.Down);
-				Helper.MainWindow.Overlay.UpdateOpponentLayout();
-				Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
+				Core.MainWindow.Options.OptionsOverlayOpponent.ElementSorterOpponent.MoveItem(this, SortDirection.Down);
+				Core.Overlay.UpdateOpponentLayout();
+				Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			}
 		}
 
@@ -67,11 +67,11 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_setConfigValue(true);
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(false);
+			Core.Overlay.Update(false);
 			if(_isPlayerList)
-				Helper.MainWindow.PlayerWindow.Update();
+				Core.Windows.PlayerWindow.Update();
 			else
-				Helper.MainWindow.OpponentWindow.Update();
+				Core.Windows.OpponentWindow.Update();
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -80,11 +80,11 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_setConfigValue(false);
 			Config.Save();
-			Helper.MainWindow.Overlay.Update(false);
+			Core.Overlay.Update(false);
 			if(_isPlayerList)
-				Helper.MainWindow.PlayerWindow.Update();
+				Core.Windows.PlayerWindow.Update();
 			else
-				Helper.MainWindow.OpponentWindow.Update();
+				Core.Windows.OpponentWindow.Update();
 		}
 	}
 }

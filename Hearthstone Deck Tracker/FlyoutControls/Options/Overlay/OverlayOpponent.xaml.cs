@@ -1,6 +1,11 @@
 ﻿#region
 
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -10,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// <summary>
 	/// Interaction logic for Opponent.xaml
 	/// </summary>
-	public partial class OverlayOpponent
+	public partial class OverlayOpponent : INotifyPropertyChanged
 	{
 	    private GameV2 _game;
 	    private bool _initialized;
@@ -28,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
+		    SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var itemName in Config.Instance.PanelOrderOpponent)
@@ -56,8 +62,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Helper.MainWindow.Overlay.UpdateOpponentLayout();
-			Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
+			Core.Overlay.UpdateOpponentLayout();
+			Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			_initialized = true;
 		}
 
@@ -66,7 +72,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = true;
-            _game.HighlightDiscarded = true;
 			SaveConfig(true);
 		}
 
@@ -75,21 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HighlightDiscarded = false;
-            _game.HighlightDiscarded = false;
 			SaveConfig(true);
-		}
-
-		private void SliderOverlayOpponentScaling_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if(!_initialized)
-				return;
-			var scaling = SliderOverlayOpponentScaling.Value;
-			Config.Instance.OverlayOpponentScaling = scaling;
-			SaveConfig(false);
-			Helper.MainWindow.Overlay.UpdateScaling();
-
-			if(Config.Instance.UseSameScaling && Helper.OptionsMain.OptionsOverlayPlayer.SliderOverlayPlayerScaling.Value != scaling)
-				Helper.OptionsMain.OptionsOverlayPlayer.SliderOverlayPlayerScaling.Value = scaling;
 		}
 
 		private void SliderOpponentOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -100,11 +91,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
+
+		private void SliderSecretOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SecretsOpacity = SliderSecretOpacity.Value;
+			SaveConfig(true);
+		}
+
 		private void SaveConfig(bool updateOverlay)
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
@@ -123,6 +123,65 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Helper.OptionsMain.OptionsOverlayPlayer.CheckboxSameScaling.IsChecked = false;
 			Config.Instance.UseSameScaling = false;
 			Config.Save();
+		}
+
+
+		public double OpponentScaling
+		{
+			get { return Config.Instance.OverlayOpponentScaling; }
+			set
+			{
+
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlayOpponentScaling.Minimum)
+					value = SliderOverlayOpponentScaling.Minimum;
+				else if(value > SliderOverlayOpponentScaling.Maximum)
+					value = SliderOverlayOpponentScaling.Maximum;
+				Config.Instance.OverlayOpponentScaling = value;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value)
+					Helper.OptionsMain.OptionsOverlayPlayer.PlayerScaling = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public double SecretScaling
+		{
+			get { return Config.Instance.SecretsPanelScaling * 100; }
+			set
+			{
+
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlaySecretScaling.Minimum)
+					value = SliderOverlaySecretScaling.Minimum;
+				else if(value > SliderOverlaySecretScaling.Maximum)
+					value = SliderOverlaySecretScaling.Maximum;
+				Config.Instance.SecretsPanelScaling = value / 100;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if(handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void TextBoxScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
 		}
 	}
 }

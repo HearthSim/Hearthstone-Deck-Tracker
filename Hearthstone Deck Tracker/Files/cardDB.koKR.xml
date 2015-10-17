@@ -9989,6 +9989,134 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>다들 모여!!!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+각 플레이어의 덱에서 하수인을 하나씩 뽑아 전장에 놓습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>야유하는 군중</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;도발&lt;/b&gt; 능력을 가진 1/1 구경꾼을 1명 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>야유하는 군중</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+&lt;b&gt;도발&lt;/b&gt; 능력을 가진 1/1 구경꾼을 1명 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>청지기의 권능</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+3/3 불꽃꼬리 수행사제를 하나 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>너 박살낸다!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>무작위 적 하수인 하나를 처치합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>너 박살낸다!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+무작위 적 하수인 하나를 처치합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>문을 열어라!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+1/1 새끼용 3마리를 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>마법 폭주</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+상대편 직업의 주문 카드 1장을 무작위로 내 손에 가져옵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>가동!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+무작위 골렘 하나를 가동시킵니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>해골 하수인</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+2/1 해골 피조물을 둘 소환합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>살아있는 폭탄</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10323,6 +10451,58 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>독구름</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+모든 적 하수인에게 피해를 1 줍니다. 하나라도 죽으면, 독액괴물을 소환합니다. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>척살</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+적 하수인들의 생명력을 1로 바꿉니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>거미줄 감싸기</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+무작위 적 하수인 하나를 상대편의 손으로 돌려보냅니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>착취</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+카드를 1장 뽑고, 마나 수정을 1개 획득합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>불의 군주 라그나로스</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10637,6 +10817,80 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>안녕로봇</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>안녕! 안녕! 안녕!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+공격력이 가장 낮은 내 하수인 하나에게 &lt;b&gt;천상의 보호막&lt;/b&gt;과 &lt;b&gt;도발&lt;/b&gt;을 부여합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>폭탄로봇</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>꼬마 폭탄로봇</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
+무작위 적 둘에게 피해를 1씩 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>수수께끼의 조종수</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10646,6 +10900,39 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>과연 누구일까요?!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>Boss HP Swapper2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -17003,7 +17290,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
   </Card>
   <Card>
     <CardId>BRMA01_2</CardId>
-    <Name>한판 붙자!</Name>
+    <Name>다들 모여!</Name>
     <CardSet>Blackrock Mountain</CardSet>
     <Type>Hero Power</Type>
     <Attack>0</Attack>
@@ -17016,7 +17303,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
   </Card>
   <Card>
     <CardId>BRMA01_2H</CardId>
-    <Name>한판 붙자!</Name>
+    <Name>다들 모여!</Name>
     <CardSet>Blackrock Mountain</CardSet>
     <Type>Hero Power</Type>
     <Attack>0</Attack>
@@ -19962,7 +20249,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20226,7 +20513,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
   </Card>
   <Card>
     <CardId>AT_020</CardId>
-    <Name>섬뜩한 파멸의 수호병</Name>
+    <Name>무시무시한 파멸의 수호병</Name>
     <CardSet>The Grand Tournament</CardSet>
     <Rarity>Common</Rarity>
     <Type>Minion</Type>
@@ -20312,7 +20599,6 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>악마 하나에게 +3/+3을 부여합니다. 상대편에게 마나 수정을 1개 줍니다.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20371,7 +20657,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>영웅 능력으로 뽑은 카드의 비용이 (0)이 됩니다.</Text>
+    <Text>내 영웅 능력으로 뽑은 카드의 비용이 (0)이 됩니다.</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -20533,7 +20819,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>4</Cost>
     <Durability>3</Durability>
     <Class>Rogue</Class>
-    <Text>영웅 능력을 사용하면 무기를 교체하는 대신, 이 무기에 공격력을 +1 부여합니다.</Text>
+    <Text>내가 영웅 능력을 사용하면 무기를 교체하는 대신, 이 무기에 공격력을 +1 부여합니다.</Text>
     <Mechanics />
     <Artist>Nutthapon Petchthai</Artist>
   </Card>
@@ -20655,6 +20941,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21211,7 +21498,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받은 후에 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 3/3 곰을 소환합니다.</Text>
+    <Text>&lt;b&gt;비밀:&lt;/b&gt; 내 영웅이 공격받은 후에 &lt;b&gt;도발&lt;/b&gt; 능력이 있는 3/3 곰을 1마리 소환합니다.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -21611,7 +21898,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -22495,7 +22782,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>내가 &lt;b&gt;전투의 함성&lt;/b&gt; 능력을 가진 하수인을 소환할 때마다 +1/+1을 얻습니다.</Text>
+    <Text>내가 &lt;b&gt;전투의 함성&lt;/b&gt; 능력을 가진 카드를 낼 때마다 +1/+1을 얻습니다.</Text>
     <Mechanics />
     <Artist>Jakub Kasper</Artist>
   </Card>

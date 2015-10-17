@@ -22,9 +22,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		private static void AddBackgroundActivity()
 		{
 			_backgroundActivities++;
-			if(!Helper.MainWindow.ProgressRingTitleBar.IsActive)
+			if(!Core.MainWindow.ProgressRingTitleBar.IsActive)
 				Logger.WriteLine("background process indicator ON", "HearthStatsManager");
-			Helper.MainWindow.ProgressRingTitleBar.IsActive = true;
+			Core.MainWindow.ProgressRingTitleBar.IsActive = true;
 		}
 
 		private static void RemoveBackgroundActivity()
@@ -33,9 +33,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			if(_backgroundActivities <= 0)
 			{
 				_backgroundActivities = 0;
-				if(Helper.MainWindow.ProgressRingTitleBar.IsActive)
+				if(Core.MainWindow.ProgressRingTitleBar.IsActive)
 					Logger.WriteLine("background process indicator OFF", "HearthStatsManager");
-				Helper.MainWindow.ProgressRingTitleBar.IsActive = false;
+				Core.MainWindow.ProgressRingTitleBar.IsActive = false;
 			}
 		}
 
@@ -362,7 +362,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					AddBackgroundActivity();
 
 				var controller = background
-					                 ? null : await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
+					                 ? null : await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
 				Logger.WriteLine("Checking HearthStats for new decks...", "HearthStatsManager");
 				var localDecks = DeckList.Instance.Decks;
 				var remoteDecks = await DownloadDecksAsync(forceFullSync);
@@ -371,24 +371,24 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					var newDecks = remoteDecks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId)).ToList();
 					if(newDecks.Any())
 					{
-						Helper.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
+						Core.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
 						if(!background)
 							await controller.CloseAsync();
-						newDecks = await Helper.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
+						newDecks = await Core.MainWindow.HearthStatsDownloadDecksControl.LoadDecks(newDecks);
 						foreach(var deck in newDecks)
 						{
 							DeckList.Instance.Decks.Add(deck);
 							Logger.WriteLine("saved new deck " + deck, "HearthStatsManager");
 						}
 						DeckList.Save();
-						Helper.MainWindow.DeckPickerList.UpdateDecks();
-						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
+						Core.MainWindow.DeckPickerList.UpdateDecks();
+						Core.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 						background = false;
 					}
 					if(!background)
 					{
 						if(controller == null || !controller.IsOpen)
-							controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new versions...");
+							controller = await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking for new versions...");
 						else
 							controller.SetMessage("Checking for new versions...");
 					}
@@ -431,13 +431,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							}
 						}
 						DeckList.Save();
-						Helper.MainWindow.DeckPickerList.UpdateDecks();
-						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
+						Core.MainWindow.DeckPickerList.UpdateDecks();
+						Core.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 					}
 					if(!background)
 					{
 						if(controller == null || !controller.IsOpen)
-							controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for edited decks...");
+							controller = await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking for edited decks...");
 						else
 							controller.SetMessage("Checking for edited decks...");
 					}
@@ -467,8 +467,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 								Logger.WriteLine("edited latest version of " + localDeck, "HearthStatsManager");
 							}
 						}
-						Helper.MainWindow.DeckPickerList.UpdateDecks();
-						Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
+						Core.MainWindow.DeckPickerList.UpdateDecks();
+						Core.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
 						DeckList.Save();
 						Logger.WriteLine("edited " + editedDecks.Count + " decks", "HearthStatsManager");
 					}
@@ -477,7 +477,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(!background)
 				{
 					if(controller == null || !controller.IsOpen)
-						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new matches...");
+						controller = await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new matches...");
 					else
 						controller.SetMessage("Checking HearthStats for new matches...");
 				}
@@ -521,9 +521,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						deck.DeckStats.AddGameResult(game);
 					}
 					DeckStatsList.Save();
-					Helper.MainWindow.DeckPickerList.UpdateDecks();
-					Helper.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
-					Helper.MainWindow.DeckStatsFlyout.LoadOverallStats();
+					Core.MainWindow.DeckPickerList.UpdateDecks();
+					Core.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
+					Core.MainWindow.DeckStatsFlyout.LoadOverallStats();
 				}
 
 				if(!background)
@@ -537,11 +537,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					Logger.WriteLine("found " + newLocalDecks.Count + " new decks", "HearthStatsManager");
 					if(!background)
 						await controller.CloseAsync();
-					Helper.MainWindow.FlyoutHearthStatsUpload.IsOpen = true;
-					newLocalDecks = await Helper.MainWindow.HearthStatsUploadDecksControl.LoadDecks(newLocalDecks);
+					Core.MainWindow.FlyoutHearthStatsUpload.IsOpen = true;
+					newLocalDecks = await Core.MainWindow.HearthStatsUploadDecksControl.LoadDecks(newLocalDecks);
 					if(newLocalDecks.Any())
 					{
-						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Uploading " + newLocalDecks.Count + " new decks...");
+						controller = await Core.MainWindow.ShowProgressAsync("Syncing...", "Uploading " + newLocalDecks.Count + " new decks...");
 						Logger.WriteLine("Uploading " + newLocalDecks.Count + " new decks...", "HearthStatsManager");
 						await Task.Run(() =>
 						{
@@ -550,7 +550,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 								UploadDeck(deck, false);
 
 								if(controller != null)
-									Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
+									Core.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
 							});
 						});
 						DeckList.Save(); //save new ids
@@ -561,7 +561,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(!background)
 				{
 					if(controller == null || !controller.IsOpen)
-						controller = await Helper.MainWindow.ShowProgressAsync("Syncing...", "Checking for new local versions...");
+						controller = await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking for new local versions...");
 					else
 						controller.SetMessage("Checking for new local versions...");
 				}
@@ -592,7 +592,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							await UploadVersionAsync(v.version, v.hearthStatsId, false);
 
 							if(controller != null)
-								Helper.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
+								Core.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
 						}
 					}
 					DeckList.Save();
@@ -659,7 +659,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							UploadMultipleMatches(matches.Select(m => m.game), matches.First().deckVersion, false);
 							if(controller != null)
 							{
-								Helper.MainWindow.Dispatcher.BeginInvoke(
+								Core.MainWindow.Dispatcher.BeginInvoke(
 								                                         new Action(
 									                                         () => { controller.SetProgress(1.0 * (uploaded += matches.Count()) / total); }));
 							}

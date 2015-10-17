@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxWindowsTopmost_Checked(object sender, RoutedEventArgs e)
@@ -61,8 +61,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.WindowsTopmost = true;
-			Helper.MainWindow.PlayerWindow.Topmost = true;
-			Helper.MainWindow.OpponentWindow.Topmost = true;
+			Core.Windows.PlayerWindow.Topmost = true;
+			Core.Windows.OpponentWindow.Topmost = true;
 			CheckboxWinTopmostHsForeground.IsEnabled = true;
 			SaveConfig(true);
 		}
@@ -72,8 +72,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.WindowsTopmost = false;
-			Helper.MainWindow.PlayerWindow.Topmost = false;
-			Helper.MainWindow.OpponentWindow.Topmost = false;
+			Core.Windows.PlayerWindow.Topmost = false;
+			Core.Windows.OpponentWindow.Topmost = false;
 			CheckboxWinTopmostHsForeground.IsEnabled = false;
 			CheckboxWinTopmostHsForeground.IsChecked = false;
 			SaveConfig(true);
@@ -84,8 +84,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.WindowsTopmostIfHsForeground = true;
-			Helper.MainWindow.PlayerWindow.Topmost = false;
-			Helper.MainWindow.OpponentWindow.Topmost = false;
+			Core.Windows.PlayerWindow.Topmost = false;
+			Core.Windows.OpponentWindow.Topmost = false;
 			SaveConfig(false);
 		}
 
@@ -96,8 +96,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.WindowsTopmostIfHsForeground = false;
 			if(Config.Instance.WindowsTopmost)
 			{
-				Helper.MainWindow.PlayerWindow.Topmost = true;
-				Helper.MainWindow.OpponentWindow.Topmost = true;
+				Core.Windows.PlayerWindow.Topmost = true;
+				Core.Windows.OpponentWindow.Topmost = true;
 			}
 			SaveConfig(false);
 		}
@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.TimerWindowTopmost = true;
-			Helper.MainWindow.TimerWindow.Topmost = true;
+			Core.Windows.TimerWindow.Topmost = true;
 			CheckboxTimerTopmostHsForeground.IsEnabled = true;
 			SaveConfig(true);
 		}
@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.TimerWindowTopmost = false;
-			Helper.MainWindow.TimerWindow.Topmost = false;
+			Core.Windows.TimerWindow.Topmost = false;
 			CheckboxTimerTopmostHsForeground.IsEnabled = false;
 			CheckboxTimerTopmostHsForeground.IsChecked = false;
 			SaveConfig(true);
@@ -127,8 +127,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.TimerWindow.Show();
-			Helper.MainWindow.TimerWindow.Activate();
+			Core.Windows.TimerWindow.Show();
+			Core.Windows.TimerWindow.Activate();
 			Config.Instance.TimerWindowOnStartup = true;
 			SaveConfig(true);
 		}
@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.TimerWindow.Hide();
+			Core.Windows.TimerWindow.Hide();
 			Config.Instance.TimerWindowOnStartup = false;
 			SaveConfig(true);
 		}
@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.TimerWindowTopmostIfHsForeground = true;
-			Helper.MainWindow.TimerWindow.Topmost = false;
+			Core.Windows.TimerWindow.Topmost = false;
 			SaveConfig(false);
 		}
 
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.TimerWindowTopmostIfHsForeground = false;
 			if(Config.Instance.TimerWindowTopmost)
-				Helper.MainWindow.TimerWindow.Topmost = true;
+				Core.Windows.TimerWindow.Topmost = true;
 			SaveConfig(false);
 		}
 
@@ -203,10 +203,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.PlayerWindow.Show();
-			Helper.MainWindow.PlayerWindow.Activate();
-			Helper.MainWindow.PlayerWindow.SetCardCount(_game.PlayerHandCount,
-			                                            30 - _game.PlayerDrawn.Where(c => !c.IsStolen).Sum(card => card.Count));
+			Core.Windows.PlayerWindow.Show();
+			Core.Windows.PlayerWindow.Activate();
+			Core.Windows.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.Player.DeckCount);
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}
@@ -215,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.PlayerWindow.Hide();
+			Core.Windows.PlayerWindow.Hide();
 			Config.Instance.PlayerWindowOnStart = false;
 			Config.Save();
 		}
@@ -224,9 +223,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.OpponentWindow.Show();
-			Helper.MainWindow.OpponentWindow.Activate();
-			Helper.MainWindow.OpponentWindow.SetOpponentCardCount(_game.OpponentHandCount, _game.OpponentDeckCount, _game.OpponentHasCoin);
+			Core.Windows.OpponentWindow.Show();
+			Core.Windows.OpponentWindow.Activate();
+			Core.Windows.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.Opponent.DeckCount, _game.Opponent.HasCoin);
 			Config.Instance.OpponentWindowOnStart = true;
 			Config.Save();
 		}
@@ -235,7 +234,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.MainWindow.OpponentWindow.Hide();
+			Core.Windows.OpponentWindow.Hide();
 			Config.Instance.OpponentWindowOnStart = false;
 			Config.Save();
 		}
@@ -261,16 +260,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				var hexBackground = BackgroundFromHex();
 				if(hexBackground != null)
 				{
-					Helper.MainWindow.PlayerWindow.Background = hexBackground;
-					Helper.MainWindow.OpponentWindow.Background = hexBackground;
-					Helper.MainWindow.TimerWindow.Background = hexBackground;
+					Core.Windows.PlayerWindow.Background = hexBackground;
+					Core.Windows.OpponentWindow.Background = hexBackground;
+					Core.Windows.TimerWindow.Background = hexBackground;
 				}
 			}
 			else
 			{
-				Helper.MainWindow.PlayerWindow.Background = background;
-				Helper.MainWindow.OpponentWindow.Background = background;
-				Helper.MainWindow.TimerWindow.Background = background;
+				Core.Windows.PlayerWindow.Background = background;
+				Core.Windows.OpponentWindow.Background = background;
+				Core.Windows.TimerWindow.Background = background;
 			}
 		}
 

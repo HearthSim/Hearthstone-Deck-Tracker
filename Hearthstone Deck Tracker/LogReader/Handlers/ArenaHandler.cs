@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
@@ -17,8 +18,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             else
             {
                 match = HsLogReaderConstants.ExistingCardRegex.Match(logLine);
-                if (match.Success)
-                    game.NewArenaCard(match.Groups["id"].Value);
+	            if(match.Success)
+	            {
+		            try
+					{
+						game.NewArenaCard(match.Groups["id"].Value);
+					}
+		            catch(Exception ex)
+		            {
+						Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
+		            }
+	            }
                 else
                 {
                     match = HsLogReaderConstants.NewChoiceRegex.Match(logLine);
@@ -37,7 +47,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			                    return;
 		                    }
 
-                            game.NewArenaCard(cardId);
+							try
+							{
+								game.NewArenaCard(cardId);
+							}
+							catch (Exception ex)
+							{
+								Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
+							}
 
 		                    _lastChoice = DateTime.Now;
 		                    _lastChoiceId = cardId;

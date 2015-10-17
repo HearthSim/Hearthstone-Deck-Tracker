@@ -55,12 +55,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="HearthStats\ApiTest.cs" />
+    <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="LogReader\ArenaHandlerTest.cs" />
     <Compile Include="LogReader\AssetHandlerTest.cs" />
     <Compile Include="LogReader\BobHandlerTest.cs" />
     <Compile Include="LogReader\PowerHandlerTest.cs" />
+    <Compile Include="LogReader\LogReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +76,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="LogReader\TestFiles\Test1_Bob.log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="LogReader\TestFiles\Test1_Power.log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

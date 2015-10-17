@@ -9973,6 +9973,134 @@ Fügt dem feindlichen Helden $3 Schaden zu.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>BRMA01_2H_2_TB</CardId>
+    <Name>Schlägerei!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Legt aus jedem Deck einen Diener auf das Schlachtfeld.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2c_TB</CardId>
+    <Name>Johlende Menge</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ruft einen Zuschauer (1/1) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA02_2_2_TB</CardId>
+    <Name>Johlende Menge</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft einen Zuschauer (1/1) mit &lt;b&gt;Spott&lt;/b&gt; herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA06_2H_TB</CardId>
+    <Name>Der Majordomus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft einen Flammenschürerakolythen (3/3) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2c_TB</CardId>
+    <Name>ICH HAUEN</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vernichtet einen zufälligen feindlichen Diener.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA07_2_2_TB</CardId>
+    <Name>ICH HAUEN</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Vernichtet einen zufälligen feindlichen Diener.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA09_2_TB</CardId>
+    <Name>Öffnet das Tor!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft drei Welplinge (1/1) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA13_4_2_TB</CardId>
+    <Name>Wilde Magie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Erhaltet einen zufälligen Zauber von der Klasse Eures Gegners auf die Hand.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA14_10H_TB</CardId>
+    <Name>Aktivieren!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Aktiviert einen zufälligen Tron.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>BRMA17_5_TB</CardId>
+    <Name>Knochendiener</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Ruft zwei Knochenkonstrukte (2/1) herbei.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>BRMC_100</CardId>
     <Name>Lebende Bombe</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10307,6 +10435,58 @@ Fügt dem feindlichen Helden $3 Schaden zu.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>NAX11_02H_2_TB</CardId>
+    <Name>Giftwolke</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Fügt allen feindlichen Dienern 1 Schaden zu. Pro getötetem Diener erscheint ein Schleim.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2_TB</CardId>
+    <Name>Dezimieren</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Setzt das Leben aller feindlichen Diener auf 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX3_02_TB</CardId>
+    <Name>Fangnetz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Lasst einen zufälligen feindlichen Diener auf die Hand Eures Gegners zurückkehren.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX8_02H_TB</CardId>
+    <Name>Ernten</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Zieht eine Karte. Erhaltet 1 Manakristall.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TBA01_1</CardId>
     <Name>Ragnaros der Feuerfürst</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10620,6 +10800,80 @@ Ruft einen Magmawüter (5/1) herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_GreatCurves_01</CardId>
+    <Name>TB_ClockworkCardDealer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1</CardId>
+    <Name>Nerv-o-Tron</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss1_HeroPower</CardId>
+    <Name>Hallo! Hallo! Hallo!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Verleiht dem befreundeten Diener mit dem niedrigsten Angriff &lt;b&gt;Gottesschild&lt;/b&gt; und &lt;b&gt;Spott&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2</CardId>
+    <Name>Bummbot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Faction>Neutral</Faction>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_Boss2_HeroPower</CardId>
+    <Name>Bummbot jr.</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
+Fügt 2 zufälligen Feinden 1 Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_MechWar_CommonCards</CardId>
+    <Name>TBMechWarCommonCards</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Mysteriöser Insasse</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10629,6 +10883,39 @@ Ruft einen Magmawüter (5/1) herbei.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>Wer könnte es nur sein?</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandCardCost</CardId>
+    <Name>TBRandomCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RandHero2_001</CardId>
+    <Name>TB_EnchWhosTheBossNow</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_RMC_001</CardId>
+    <Name>TB_EnchRandomManaCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -10951,7 +11238,7 @@ Verursacht 1 Schaden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Beschwört zwei Diener (2/1).</Text>
+Ruft zwei Diener (2/1) herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12894,7 +13181,7 @@ Fügt allen Dienern 1 Schaden zu. Ruft für jeden Diener, der dabei stirbt, eine
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Fügt allen Dienern 2 Schaden zu. Ruft für jeden Diener, der dabei stirbt, einen Schleim herbei.</Text>
+Fügt allen Feinden 2 Schaden zu. Ruft pro Feind, der dabei stirbt, einen Schleim herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17473,7 +17760,7 @@ Ruft einen Flammenschürerakolythen (3/3) herbei.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
-Vernichtet einen zufälligen verletzten Diener des Feindes.</Text>
+Vernichtet einen zufälligen verletzten Diener Eures Gegners.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19932,7 +20219,7 @@ Fügt einem zufälligen Feind $8 Schaden zu. ZWEIMAL.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
-    <Artist>Erik Ko</Artist>
+    <Artist>Andrew Hou</Artist>
   </Card>
   <Card>
     <CardId>AT_008</CardId>
@@ -20098,7 +20385,7 @@ Fügt einem zufälligen Feind $8 Schaden zu. ZWEIMAL.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Erhaltet eine Kopie eines feindlichen Dieners auf die Hand.</Text>
+    <Text>Wählt einen feindlichen Diener aus und erhaltet eine Kopie davon auf die Hand.</Text>
     <Mechanics />
     <Artist>Dan Dos Santos</Artist>
   </Card>
@@ -20282,7 +20569,6 @@ Fügt einem zufälligen Feind $8 Schaden zu. ZWEIMAL.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Race>Demon</Race>
     <Text>Verleiht einem Dämon +3/+3. Gebt Eurem Gegner 1 Manakristall.</Text>
     <Mechanics />
     <Artist>Kevin Chen</Artist>
@@ -20503,7 +20789,7 @@ Fügt einem zufälligen Feind $8 Schaden zu. ZWEIMAL.</Text>
     <Cost>4</Cost>
     <Durability>3</Durability>
     <Class>Rogue</Class>
-    <Text>Eure Heldenfähigkeit erhöht den Angriff dieser Waffe um +1, anstatt sie zu ersetzen.</Text>
+    <Text>Eure Heldenfähigkeit verleiht dieser Waffe +1 Angriff, anstatt sie zu ersetzen.</Text>
     <Mechanics />
     <Artist>Nutthapon Petchthai</Artist>
   </Card>
@@ -20625,6 +20911,7 @@ Fügt einem zufälligen Feind $8 Schaden zu. ZWEIMAL.</Text>
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
+    <Class>Druid</Class>
     <Mechanics />
   </Card>
   <Card>
@@ -21048,7 +21335,7 @@ Verursacht $2 Schaden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>Ziehe 2 Karten. &lt;b&gt;Überladung:&lt;/b&gt; (2)</Text>
+    <Text>Zieht 2 Karten. &lt;b&gt;Überladung:&lt;/b&gt; (2)</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -21574,7 +21861,7 @@ Verursacht $2 Schaden.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
-    <Artist>Sam Nielsen</Artist>
+    <Artist>Sam Nielson</Artist>
   </Card>
   <Card>
     <CardId>AT_077</CardId>
@@ -21821,8 +22108,7 @@ Verursacht $2 Schaden.</Text>
     <Health>1</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Ansturm&lt;/b&gt;
-&lt;b&gt;Gottesschild&lt;/b&gt;</Text>
+    <Text>&lt;b&gt;Ansturm&lt;/b&gt;, &lt;b&gt;Gottesschild&lt;/b&gt;</Text>
     <Mechanics>
       <string>Charge</string>
       <string>Divine Shield</string>
@@ -22203,7 +22489,7 @@ Verursacht $2 Schaden.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Kann nicht angreifen.
-&lt;b&gt;Inspiration:&lt;/b&gt; Kann in diesem Zug angreifen.</Text>
+&lt;b&gt;Inspiration:&lt;/b&gt; Kann in diesem Zug wie ein gewöhnlicher Diener angreifen.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>

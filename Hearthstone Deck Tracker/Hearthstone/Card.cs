@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -10,6 +11,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -20,10 +22,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		private ImageBrush _cachedBackground;
 		private bool _coloredFrame;
+		private bool _coloredGem;
 		private int _count;
 		private int _inHandCount;
-		private bool _isStolen;
-		private bool _justDrawn;
+		private bool _isCreated;
 		private int _lastCount;
 		private bool _loaded;
 		private string _localizedName;
@@ -50,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
-		            string set)
+		            string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -70,6 +72,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = mechanics;
 			Artist = artist;
 			Set = set;
+			if (alternativeNames != null)
+				AlternativeNames = alternativeNames;
+			if (alternativeTexts != null)
+				AlternativeTexts = alternativeTexts;
 		}
 
 		public int Count
@@ -123,6 +129,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								   .Replace("#", "")
 								   .Replace("\\n", "\n") : null;
 			}
+		}
+
+		[XmlIgnore]
+		public string AlternativeLanguageText
+		{
+			get
+			{
+				string result = "";
+				for (int i = 0; i < AlternativeNames.Count; ++i)
+				{
+					if (i > 0)
+					{
+						result += "-\n";
+					}
+					result += "[" + AlternativeNames[i] + "]\n";
+					if (AlternativeTexts[i] != null)
+					{						 
+						result += AlternativeTexts[i].Replace("<b>", "")
+									   .Replace("</b>", "")
+									   .Replace("<i>", "")
+									   .Replace("</i>", "")
+									   .Replace("$", "")
+									   .Replace("#", "")
+									   .Replace("\\n", "\n")  + "\n";
+					}
+				}
+				return result.TrimEnd(new char[]{' ', '\n'});
+			}
+		}
+
+		[XmlIgnore]
+		public Visibility ShowAlternativeLanguageTextInTooltip
+		{
+			get { return AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		[XmlIgnore]
@@ -204,6 +244,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
+		public List<string> AlternativeNames = new List<string>();
+
+		[XmlIgnore]
+		public List<string> AlternativeTexts = new List<string>();
+
+		[XmlIgnore]
 		public int InHandCount
 		{
 			get { return _inHandCount; }
@@ -221,12 +267,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public bool IsStolen
+		public bool IsCreated
 		{
-			get { return _isStolen; }
+			get { return _isCreated; }
 			set
 			{
-				_isStolen = value;
+				_isCreated = value;
 				OnPropertyChanged();
 			}
 		}
@@ -269,17 +315,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public SolidColorBrush ColorPlayer
 		{
-            //TODO: Consider moving this out of the Card class as it shouldn't care about the state of the Game 
 			get
 			{
 				Color color;
-				if(_justDrawn)
+				if(HighlightDraw && Config.Instance.HighlightLastDrawn)
 					color = Colors.Orange;
-				else if(InHandCount > 0 && _game.HighlightCardsInHand || IsStolen)
+				else if(HighlightInHand && Config.Instance.HighlightCardsInHand)
 					color = Colors.GreenYellow;
 				else if(Count <= 0 || Jousted)
 					color = Colors.Gray;
-				else if(WasDiscarded && _game.HighlightDiscarded)
+				else if(WasDiscarded && Config.Instance.HighlightDiscarded)
 					color = Colors.IndianRed;
 				else
 					color = Colors.White;
@@ -310,10 +355,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames)
+				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems)
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
+				_coloredGem = Config.Instance.RarityCardGems;
 				if(Id == null || Name == null)
 					return new ImageBrush();
 				try
@@ -336,6 +382,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						switch(Rarity)
 						{
+							case "Free":
 							case "Common":
 								frame = "Images/frame_rarity_common.png";
 								break;
@@ -351,8 +398,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						}
 					}
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
+					//gem
+					if(Config.Instance.RarityCardGems)
+					{
+						var gem = "Images/gem_rarity_common.png";
+						switch(Rarity)
+						{
+							case "Rare":
+								gem = "Images/gem_rarity_rare.png";
+								break;
+							case "Epic":
+								gem = "Images/gem_rarity_epic.png";
+								break;
+							case "Legendary":
+								gem = "Images/gem_rarity_legendary.png";
+								break;
+						}
+						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(gem, UriKind.Relative)), new Rect(3, 3, 28, 28)));
+					}
 
-					//extra info?
 					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
@@ -372,6 +436,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						}
 					}
 
+					if(IsCreated)
+					{
+						var xOffset = Math.Abs(Count) > 1 || Rarity == "Legendary" ? 23 : 3;
+                        drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"),
+																   new Rect(192 - xOffset, 8, 21, 21)));
+						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-icon-created.png", "Images"),
+							                                           new Rect(194 - xOffset, 9, 16, 16)));
+					}
+
 					//dark overlay
 					if(Count <= 0 || Jousted)
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
@@ -387,10 +460,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public bool HighlightDraw { get; set; }
+		[XmlIgnore]
+		public bool HighlightInHand { get; set; }
+
 		public object Clone()
 		{
 			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack, Health, Race,
-			                       Mechanics, Durability, Artist, Set);
+			                       Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 			return newcard;
 		}
 
@@ -419,14 +497,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Name.GetHashCode();
 		}
 
-
-        //TODO: This is to get around having a static Game class unless we change ColorPlayer
-        private static GameV2 _game;
-        public static void SetGame(GameV2 game)
-        {
-            _game = game;
-        }
-
 		public void Load()
 		{
 			if(_loaded)
@@ -449,21 +519,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = stats.Mechanics;
 			Artist = stats.Artist;
 			Set = stats.Set;
-			_wasDiscarded = false;
+			AlternativeNames = stats.AlternativeNames;
+			AlternativeTexts = stats.AlternativeTexts;
 			_loaded = true;
 			OnPropertyChanged();
-		}
-
-		public async Task JustDrawn()
-		{
-			if(!Config.Instance.HighlightLastDrawn)
-				return;
-
-			_justDrawn = true;
-			OnPropertyChanged("ColorPlayer");
-			await Task.Delay(4000);
-			_justDrawn = false;
-			OnPropertyChanged("ColorPlayer");
 		}
 
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
