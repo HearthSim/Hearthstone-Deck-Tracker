@@ -38,7 +38,7 @@
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaWorstClass, Source={x:Static stats:CompiledStats.Instance}}"/>
         </Expander>
         <Expander MinWidth="280">
             <Expander.Header>
@@ -54,7 +54,7 @@
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaMostPickedClass, Source={x:Static stats:CompiledStats.Instance}}"/>
         </Expander>
         <Expander MinWidth="280">
             <Expander.Header>
@@ -70,7 +70,7 @@
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaLeastPickedClass, Source={x:Static stats:CompiledStats.Instance}}"/>
         </Expander>
     </StackPanel>
 </UserControl>
