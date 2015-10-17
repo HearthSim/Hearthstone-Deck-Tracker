@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Arena.ArenaClassStats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
+             mc:Ignorable="d"
+             d:DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="5,0,10,0" VerticalAlignment="Center">
+            <Image Source="{Binding ClassImage}" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Class}" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Runs: {0} ({1}% of total)">
+                        <Binding Path="Runs"/>
+                        <Binding Path="PickedPercent"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Total games: {0} ({1}-{2})">
+                        <Binding Path="Games"/>
+                        <Binding Path="Wins"/>
+                        <Binding Path="Losses"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Average wins: {0}">
+                        <Binding Path="AverageWins"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Win rate: {0}%">
+                        <Binding Path="WinRatePercent"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Best run: {0} - {1}">
+                        <Binding Path="BestRun.Wins"/>
+                        <Binding Path="BestRun.Losses"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Best matchup: {0} ({1}-{2}, {3}%)">
+                        <Binding Path="BestMatchup.Class"/>
+                        <Binding Path="BestMatchup.Wins"/>
+                        <Binding Path="BestMatchup.Losses"/>
+                        <Binding Path="BestMatchup.WinRatePercent"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Worst matchup: {0} ({1}-{2}, {3}%)">
+                        <Binding Path="WorstMatchup.Class"/>
+                        <Binding Path="WorstMatchup.Wins"/>
+                        <Binding Path="WorstMatchup.Losses"/>
+                        <Binding Path="WorstMatchup.WinRatePercent"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

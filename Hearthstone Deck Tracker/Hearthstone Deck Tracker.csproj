@@ -156,8 +156,23 @@
     <Compile Include="Controls\Stats\Arena\ArenaAdvancedCharts.xaml.cs">
       <DependentUpon>ArenaAdvancedCharts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaClassStats.xaml.cs">
+      <DependentUpon>ArenaClassStats.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Arena\ArenaOverview.xaml.cs">
       <DependentUpon>ArenaOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaRunsTable.xaml.cs">
+      <DependentUpon>ArenaRunsTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaStatsSummary.xaml.cs">
+      <DependentUpon>ArenaStatsSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml.cs">
+      <DependentUpon>ArenaStatsSummaryHighlights.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArensStatsSummaryClasses.xaml.cs">
+      <DependentUpon>ArensStatsSummaryClasses.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Arena\Charts\ChartWins.xaml.cs">
       <DependentUpon>ChartWins.xaml</DependentUpon>
@@ -170,6 +185,7 @@
     </Compile>
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\ToUpperValueConverter.cs" />
     <Compile Include="Controls\Stats\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -523,7 +539,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Stats\Arena\ArenaClassStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Stats\Arena\ArenaOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaRunsTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaStatsSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArensStatsSummaryClasses.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,12 +11,12 @@
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:charts="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts"
+             xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1500">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
-        <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
     </UserControl.Resources>
     <DockPanel>
     <Expander IsExpanded="True" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
@@ -83,164 +83,10 @@
                 </Grid>
         </ScrollViewer>
     </Expander>
-    <GroupBox Header="ARENA RUNS">
-        <DataGrid Name="DataGridArenaRuns" ItemsSource="{Binding Path=FilteredArenaRuns, Source={x:Static stats:CompiledStats.Instance}}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Class" SortMemberPath="Class">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding ClassImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding Class}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Started" Binding="{Binding StartTimeString}" SortMemberPath="StartTime">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Wins" Binding="{Binding Wins}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Losses" Binding="{Binding Losses}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Gold" Binding="{Binding Gold}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Dust" Binding="{Binding Dust}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Packs" Binding="{Binding PackCount}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="ToolTip" Value="{Binding PackString}"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Cards" Binding="{Binding CardCount}" >
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="ToolTip" Value="{Binding CardString}"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding DurationString}" SortMemberPath="Duration">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Region" Binding="{Binding Region}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.Resources>
-                            <CollectionViewSource x:Key="ArenaGamesViewSource" Source="{Binding Games}">
-                                <CollectionViewSource.SortDescriptions>
-                                    <componentModel:SortDescription PropertyName="StartTime" Direction="Descending"/>
-                                </CollectionViewSource.SortDescriptions>
-                            </CollectionViewSource>
-                        </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[0].ActualWidth}"/>
-                                <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[1].ActualWidth}"/>
-                                <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
-                                <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
-                                <Button Margin="4,4,4,0" Content="Show deck" Click="ButtonShowDeck_OnClick"/>
-                                <Button Margin="4,4,4,0" Content="Show replay" Click="ButtonShowReplay_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
-                                <Button Margin="4,4,4,0" Content="Add game" Click="ButtonAddGame_OnClick"/>
-                                <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
-                                <Button Margin="4,4,4,4" Content="Delete game" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
-                            </StackPanel>
-                            <DataGrid Name="DataGridGames" SelectedIndex="-1" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
-                            <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                            <Image RenderOptions.BitmapScalingMode="Fant" Source="{Binding OpponentHeroImage}" Height="24" Width="24" ToolTip="{Binding OpponentHero}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}" SortMemberPath="StartTime">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Result" Binding="{Binding Result}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                        <Setter Property="Foreground" Value="{Binding ResultTextColor}"/>
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Name" Binding="{Binding OpponentName}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Time" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
-                        </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
-        </DataGrid>
-    </GroupBox>
+        <DockPanel>
+            <GroupBox Header="ARENA RUNS">
+                <arena:ArenaRunsTable/>
+            </GroupBox>
+        </DockPanel>
     </DockPanel>
 </UserControl>

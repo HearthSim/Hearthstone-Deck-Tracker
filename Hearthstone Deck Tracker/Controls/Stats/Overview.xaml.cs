@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	{
 		private readonly ArenaOverview _arenaOverview = new ArenaOverview();
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
+		private readonly ArenaStatsSummary _arenaStatsSummary = new ArenaStatsSummary();
 		private readonly bool _initialized;
 
 		public Overview()
@@ -38,6 +39,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
 			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
 			_initialized = true;
+		}
+
+		public ArenaStatsSummary ArenaStatsSummary
+		{
+			get { return _arenaStatsSummary; }
 		}
 
 		public ArenaOverview ArenaOverview
