@@ -38,5 +38,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 			}
 		}
+
+		public static bool ArenaStatsIncludeArchived
+		{
+			get { return Config.Instance.ArenaStatsIncludeArchived; }
+			set
+			{
+				Config.Instance.ArenaStatsIncludeArchived = value;
+				Config.Save();
+			}
+		}
 	}
 }

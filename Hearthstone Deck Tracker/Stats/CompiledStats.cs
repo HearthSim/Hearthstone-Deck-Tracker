@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public IEnumerable<ClassStats> ArenaClasses
 		{
-			get { return FilteredArenaRuns.GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class); }
+			get { return GetFilteredArenaRuns(classFilter: false).GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class); }
 		}
 
 		public ClassStats ArenaBestClass
@@ -62,27 +62,27 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public ClassStats ArenaAllClasses
 		{
-			get { return FilteredArenaRuns.GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault(); }
+			get { return GetFilteredArenaRuns().GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault(); }
 		}
 
 		public int ArenaRunsCount
 		{
-			get { return FilteredArenaRuns.Count(); }
+			get { return GetFilteredArenaRuns().Count(); }
 		}
 
 		public int ArenaGamesCountTotal
 		{
-			get { return FilteredArenaRuns.Sum(x => x.Games.Count()); }
+			get { return GetFilteredArenaRuns().Sum(x => x.Games.Count()); }
 		}
 
 		public int ArenaGamesCountWon
 		{
-			get { return FilteredArenaRuns.Sum(x => x.Games.Count(g => g.Result == GameResult.Win)); }
+			get { return GetFilteredArenaRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Win)); }
 		}
 
 		public int ArenaGamesCountLost
 		{
-			get { return FilteredArenaRuns.Sum(x => x.Games.Count(g => g.Result == GameResult.Loss)); }
+			get { return GetFilteredArenaRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Loss)); }
 		}
 
 		public double AverageWinsPerRun
@@ -90,38 +90,52 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return (double)ArenaGamesCountWon / ArenaRunsCount; }
 		}
 
-		public IEnumerable<ArenaRun> FilteredArenaRuns
+		public IEnumerable<ArenaRun> GetFilteredArenaRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
+		                                          bool timeframeFilter = true)
 		{
-			get
+
+			var filtered = ArenaRuns;
+			if(archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 			{
-				var filtered = ArenaRuns;
-				if(Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
-				{
-					filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
-				}
-				if(Config.Instance.ArenaStatsRegionFilter != RegionAll.ALL)
-				{
-					var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ArenaStatsRegionFilter.ToString());
-					filtered = filtered.Where(x => x.Games.Any(g => g.Region == region));
-				}
+				filtered = filtered.Where(x => !x.Deck.Archived);
+			}
+			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
+			{
+				filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
+			}
+			if(regionFilter && Config.Instance.ArenaStatsRegionFilter != RegionAll.ALL)
+			{
+				var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ArenaStatsRegionFilter.ToString());
+				filtered = filtered.Where(x => x.Games.Any(g => g.Region == region));
+			}
+			if(timeframeFilter)
+			{
 				switch(Config.Instance.ArenaStatsTimeFrameFilter)
 				{
 					case DisplayedTimeFrame.AllTime:
-						return filtered;
+						break;
 					case DisplayedTimeFrame.CurrentSeason:
-						return filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						break;
 					case DisplayedTimeFrame.ThisWeek:
-						return filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
+						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
+						break;
 					case DisplayedTimeFrame.Today:
-						return filtered.Where(g => g.StartTime > DateTime.Today);
+						filtered = filtered.Where(g => g.StartTime > DateTime.Today);
+						break;
 					case DisplayedTimeFrame.Custom:
 						var start = (Config.Instance.ArenaStatsTimeFrameCustomStart ?? DateTime.MinValue).Date;
 						var end = (Config.Instance.ArenaStatsTimeFrameCustomEnd ?? DateTime.MaxValue).Date;
-						return filtered.Where(g => g.EndTime.Date >= start && g.EndTime.Date <= end);
-					default:
-						return filtered;
+						filtered = filtered.Where(g => g.EndTime.Date >= start && g.EndTime.Date <= end);
+						break;
 				}
 			}
+			return filtered;
+		} 
+
+		public IEnumerable<ArenaRun> FilteredArenaRuns
+		{
+			get { return GetFilteredArenaRuns(); }
 		}
 
 		public IEnumerable<ChartStats> ArenaPlayedClassesPercent
@@ -129,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				return
-					FilteredArenaRuns.GroupBy(x => x.Class)
+					GetFilteredArenaRuns().GroupBy(x => x.Class)
 					                 .OrderBy(x => x.Key)
 					                 .Select(
 					                         x =>
@@ -146,7 +160,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				var opponents = FilteredArenaRuns.SelectMany(x => x.Deck.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
+				var opponents = GetFilteredArenaRuns().SelectMany(x => x.Deck.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
 				return
 					opponents.GroupBy(x => x)
 					         .OrderBy(x => x.Key)
@@ -167,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				var groupedByWins =
-					FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+					GetFilteredArenaRuns().GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
 					                 .Select(x => new {Wins = x.Key, Count = x.Count(), Runs = x})
 					                 .ToList();
 				return Enumerable.Range(0, 13).Select(n =>
@@ -185,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				var groupedByWins =
-					FilteredArenaRuns.GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
+					GetFilteredArenaRuns().GroupBy(x => x.Deck.DeckStats.Games.Count(g => g.Result == GameResult.Win))
 					                 .Select(x => new {Wins = x.Key, Count = x.Count(), Runs = x})
 					                 .ToList();
 				return Enumerable.Range(0, 13).Select(n =>
@@ -212,7 +226,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				var gamesGroupedByOppHero = FilteredArenaRuns.SelectMany(x => x.Deck.DeckStats.Games).GroupBy(x => x.OpponentHero);
+				var gamesGroupedByOppHero = GetFilteredArenaRuns().SelectMany(x => x.Deck.DeckStats.Games).GroupBy(x => x.OpponentHero);
 				return Enum.GetNames(typeof(HeroClass)).Select(x =>
 				{
 					var classGames = gamesGroupedByOppHero.FirstOrDefault(g => g.Key == x);
@@ -235,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				return
-					FilteredArenaRuns.GroupBy(x => x.Class)
+					GetFilteredArenaRuns().GroupBy(x => x.Class)
 					                 .Select(
 					                         x =>
 					                         new ChartStats
@@ -261,6 +275,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 
+
+		public void OnPropertyChanged(string[] properties)
+		{
+			foreach(var prop in properties)
+				OnPropertyChanged(prop);
+		}
+
 		public void UpdateArenaStats()
 		{
 			OnPropertyChanged("ArenaRuns");
@@ -269,7 +290,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 			OnPropertyChanged("ArenaWins");
 			OnPropertyChanged("AvgWinsPerClass");
 			OnPropertyChanged("FilteredArenaRuns");
+		}
+
+		public void UpdateArenaStatsHighlights()
+		{
 			OnPropertyChanged("ArenaBestClass");
+			OnPropertyChanged("ArenaWorstClass");
+			OnPropertyChanged("ArenaMostPickedClass");
+			OnPropertyChanged("ArenaLeastPickedClass");
 		}
 
 		public void UpdateArenaRuns()

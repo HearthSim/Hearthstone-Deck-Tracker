@@ -54,6 +54,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
 
+		[DefaultValue(true)]
+		public bool ArenaStatsIncludeArchived = true;
+
 		[DefaultValue(71.67)]
 		public double AttackIconPlayerVerticalPosition = 71.67;
 

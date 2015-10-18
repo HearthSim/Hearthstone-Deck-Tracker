@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker
             NewsUpdater.UpdateAsync();
 			Initialized = true;
 
-			new TestWindow().Show();
+			new StatsWindow_New().Show();
         }
 
         private static async void UpdateOverlayAsync()
@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker
             private static OpponentWindow _opponentWindow;
             private static TimerWindow _timerWindow;
             private static StatsWindow _statsWindow;
-	        private static TestWindow _newStatsWindow;
+	        private static StatsWindow_New _newStatsWindow;
 
             public static PlayerWindow PlayerWindow
             {
@@ -228,9 +228,9 @@ namespace Hearthstone_Deck_Tracker
 			{
 				get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
 			}
-			public static TestWindow NewStatsWindow
+			public static StatsWindow_New NewStatsWindow
 			{
-				get { return _newStatsWindow ?? (_newStatsWindow = new TestWindow()); }
+				get { return _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New()); }
 			}
 		}
     }

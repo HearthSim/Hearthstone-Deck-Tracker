@@ -18,11 +18,11 @@ using Hearthstone_Deck_Tracker.Stats;
 namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
-	/// Interaction logic for TestWindow.xaml
+	/// Interaction logic for StatsWindow_New.xaml
 	/// </summary>
-	public partial class TestWindow
+	public partial class StatsWindow_New
 	{
-		public TestWindow()
+		public StatsWindow_New()
 		{
 			InitializeComponent();
 		}

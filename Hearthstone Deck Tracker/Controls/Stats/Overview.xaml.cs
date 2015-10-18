@@ -60,45 +60,58 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
-			{
-				Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
-				Config.Save();
-				CompiledStats.Instance.UpdateArenaStats();
-			}
+			Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
+			Config.Save();
+			UpdateStats();
 		}
 
 		private void ComboBoxClass_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
-			{
-				Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
-				Config.Save();
-				CompiledStats.Instance.UpdateArenaStats();
-			}
+			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
+			Config.Save();
+			UpdateStats();
 		}
 
 		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
-				CompiledStats.Instance.UpdateArenaStats();
+			UpdateStats();
 		}
 
 		private void ComboBoxRegion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
-			{
-				Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
-				Config.Save();
-				CompiledStats.Instance.UpdateArenaStats();
-			}
+			Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
+			Config.Save();
+			UpdateStats();
 		}
+
+		private void CheckBoxArchived_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void CheckBoxArchived_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void UpdateStats()
+		{
+			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
+				CompiledStats.Instance.UpdateArenaStats();
+			if(TreeViewItemArenaRunsSummary.IsSelected)
+				CompiledStats.Instance.UpdateArenaStatsHighlights();
+		}
+
 	}
 
 	public class HeroClassStatsFilterWrapper

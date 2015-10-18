@@ -19,16 +19,16 @@
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} wins average | {1}% winrate">
-                                <Binding Path="ArenaAllClasses.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
-                                <Binding Path="ArenaAllClasses.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaAllClasses.AverageWins" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                                <Binding Path="ArenaAllClasses.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
-        <ItemsControl ItemsSource="{Binding Path=ArenaClasses, Source={x:Static stats:CompiledStats.Instance}}">
+        <ItemsControl ItemsSource="{Binding Path=ArenaClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel />
@@ -39,7 +39,7 @@
                     <Expander Width="280">
                         <Expander.Header>
                             <DockPanel>
-                                <TextBlock Foreground="White" Text="{Binding Path=Class, Converter={StaticResource ToUpperValueConverter}}" DockPanel.Dock="Left"/>
+                                <TextBlock Foreground="White" Text="{Binding Path=Class, Converter={StaticResource ToUpperValueConverter}, IsAsync=True}" DockPanel.Dock="Left"/>
                                 <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0} wins average | {1}% winrate">
@@ -50,7 +50,7 @@
                                 </TextBlock>
                             </DockPanel>
                         </Expander.Header>
-                        <arena:ArenaClassStats DataContext="{Binding}"/>
+                        <arena:ArenaClassStats DataContext="{Binding Path=., IsAsync=True}"/>
                     </Expander>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

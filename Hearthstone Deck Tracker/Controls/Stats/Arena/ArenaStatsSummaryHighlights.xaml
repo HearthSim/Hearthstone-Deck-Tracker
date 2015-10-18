@@ -15,14 +15,14 @@
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} | {1}% winrate">
-                                <Binding Path="ArenaBestClass.Class" Source="{x:Static stats:CompiledStats.Instance}"/>
-                                <Binding Path="ArenaBestClass.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" />
+                                <Binding Path="ArenaBestClass.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                                <Binding Path="ArenaBestClass.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaBestClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
         <Expander MinWidth="280">
             <Expander.Header>
@@ -31,14 +31,14 @@
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} | {1}% winrate">
-                                <Binding Path="ArenaWorstClass.Class" Source="{x:Static stats:CompiledStats.Instance}"/>
-                                <Binding Path="ArenaWorstClass.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaWorstClass.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                                <Binding Path="ArenaWorstClass.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaWorstClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaWorstClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
         <Expander MinWidth="280">
             <Expander.Header>
@@ -47,14 +47,14 @@
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} | {1}% picked">
-                                <Binding Path="ArenaMostPickedClass.Class" Source="{x:Static stats:CompiledStats.Instance}"/>
-                                <Binding Path="ArenaMostPickedClass.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaMostPickedClass.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                                <Binding Path="ArenaMostPickedClass.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaMostPickedClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaMostPickedClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
         <Expander MinWidth="280">
             <Expander.Header>
@@ -63,14 +63,14 @@
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} | {1}% picked">
-                                <Binding Path="ArenaLeastPickedClass.Class" Source="{x:Static stats:CompiledStats.Instance}"/>
-                                <Binding Path="ArenaLeastPickedClass.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaLeastPickedClass.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                                <Binding Path="ArenaLeastPickedClass.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaLeastPickedClass, Source={x:Static stats:CompiledStats.Instance}}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ArenaLeastPickedClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
     </StackPanel>
 </UserControl>

@@ -21,7 +21,7 @@
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <TreeViewItem Name="TreeViewItemArenaRunsSummary" Header="Summary" DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         <TreeViewItem Name="TreeViewItemArenaRunsOverview" Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                        <TreeViewItem Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TreeViewItem Name="TreeViewItemArenaRunsAdvanced" Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Constructed" IsExpanded="True">
                         <TreeViewItem Header="Overall" IsExpanded="True">
@@ -68,6 +68,9 @@
                     </Expander>
                     <Expander Header="Region" IsExpanded="True">
                         <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged"/>
+                    </Expander>
+                    <Expander Header="Archived" IsExpanded="True">
+                        <CheckBox Name="CheckBoxArchived" Content="Include archived" IsChecked="{Binding Path=ArenaStatsIncludeArchived, Source={StaticResource ConfigWrapper}}" Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked"/>
                     </Expander>
                 </StackPanel>
             </GroupBox>
