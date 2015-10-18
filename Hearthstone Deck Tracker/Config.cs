@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static Config _config;
 
-		public readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+		public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                     + @"\HearthstoneDeckTracker";
 
 		[DefaultValue("Blue")]
@@ -252,6 +252,9 @@ namespace Hearthstone_Deck_Tracker
         [DefaultValue(new[] { 0, 0, 0, 0, 0 })]
         //move this to some data file
         public int[] GoldProgressTotal = { 0, 0, 0, 0, 0 };
+
+		[DefaultValue(true)]
+		public bool GoogleAnalytics = true;
 
 		[DefaultValue(null)]
 		public bool? HearthStatsAutoDeleteDecks = null;
@@ -920,9 +923,9 @@ namespace Hearthstone_Deck_Tracker
 					_config = XmlManager<Config>.Load("config.xml");
 					foundConfig = true;
 				}
-				else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
+				else if(File.Exists(AppDataPath + @"\config.xml"))
 				{
-					_config = XmlManager<Config>.Load(Instance.AppDataPath + @"\config.xml");
+					_config = XmlManager<Config>.Load(AppDataPath + @"\config.xml");
 					foundConfig = true;
 				}
 				else if(!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)))
@@ -955,10 +958,10 @@ namespace Hearthstone_Deck_Tracker
 						Logger.WriteLine("Moved config to appdata", "Config");
 					}
 				}
-				else if(File.Exists(Instance.AppDataPath + @"\config.xml"))
+				else if(File.Exists(AppDataPath + @"\config.xml"))
 				{
 					SaveBackup(true); //backup in case the file already exists
-					File.Move(Instance.AppDataPath + @"\config.xml", Instance.ConfigPath);
+					File.Move(AppDataPath + @"\config.xml", Instance.ConfigPath);
 					Logger.WriteLine("Moved config to local", "Config");
 				}
 			}
