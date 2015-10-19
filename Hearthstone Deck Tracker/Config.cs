@@ -777,7 +777,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool UseAnyUnityWindow = false;
  
 		[DefaultValue(true)]
-		public bool UseDialogAnimations = true;
+		public bool UseAnimations = true;
 
 		[DefaultValue(false)]
 		public bool UseFullTextSearch = false;
