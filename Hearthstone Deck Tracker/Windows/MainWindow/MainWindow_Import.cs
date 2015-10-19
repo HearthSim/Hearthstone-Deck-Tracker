@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async Task<string> InputDeckURL()
 		{
-			var settings = new MetroDialogSettings();
+			var settings = new MessageDialogs.Settings();
 			var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
 			var validUrls = new[]
 			{
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					this.ShowMessageAsync("NetDeck",
 					                      "For easier (one-click!) web importing check out the NetDeck Chrome Extension!\n\n(This message will not be displayed again, no worries.)",
 					                      MessageDialogStyle.AffirmativeAndNegative,
-					                      new MetroDialogSettings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
+					                      new MessageDialogs.Settings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
 
 				if(result == MessageDialogResult.Affirmative)
 				{
@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						this.ShowMessageAsync("Enable one-click importing?",
 						                      "Would you like to enable one-click importing via NetDeck?\n(options > other > importing)",
 						                      MessageDialogStyle.AffirmativeAndNegative,
-						                      new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
+						                      new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 					if(enableOptionResult == MessageDialogResult.Affirmative)
 					{
 						Options.OptionsTrackerImporting.CheckboxImportNetDeck.IsChecked = true;
@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			try
 			{
-				var settings = new MetroDialogSettings();
+				var settings = new MessageDialogs.Settings();
 				var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
 				if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
 					settings.DefaultText = clipboard;
@@ -421,7 +421,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						this.ShowMessageAsync("Setting up",
 						                      "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
 						                      MessageDialogStyle.AffirmativeAndNegative,
-						                      new MetroDialogSettings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
+						                      new MessageDialogs.Settings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
 					if(result != MessageDialogResult.Affirmative)
 						return;
 					await Helper.SetupConstructedImporting(Core.Game);

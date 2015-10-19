@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.Controls;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Utility
@@ -58,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Utility
                         Core.MainWindow.ShowMessageAsync("Detected " + numMatches + " duplicate matches.",
                                               "Due to sync issues some matches have been duplicated, click \"fix now\" to see and delete duplicates. Sorry about this.",
                                               MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-                                              new MetroDialogSettings {
+                                              new MessageDialogs.Settings {
                                                   AffirmativeButtonText = "fix now",
                                                   NegativeButtonText = "fix later",
                                                   FirstAuxiliaryButtonText = "don't fix"
@@ -206,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Utility
                 var fix =
                     await
                     Core.MainWindow.ShowMessageAsync("Cancelled", "Fix remaining names on next start?", MessageDialogStyle.AffirmativeAndNegative,
-                                          new MetroDialogSettings { AffirmativeButtonText = "next time", NegativeButtonText = "don\'t fix" });
+                                          new MessageDialogs.Settings { AffirmativeButtonText = "next time", NegativeButtonText = "don\'t fix" });
                 if(fix == MessageDialogResult.Negative)
                 {
                     Config.Instance.ResolvedOpponentNames = true;
