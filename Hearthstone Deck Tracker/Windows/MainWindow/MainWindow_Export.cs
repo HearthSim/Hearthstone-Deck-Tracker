@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 				}
 
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
+				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "export"};
 				var result =
 					await
 					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					english =
 						await
 						this.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
-						                      new MetroDialogSettings
+						                      new MessageDialogs.Settings
 						                      {
 							                      AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
 							                      NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key

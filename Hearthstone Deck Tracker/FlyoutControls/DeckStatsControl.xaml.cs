@@ -473,7 +473,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(selected == null)
 				return;
-			var settings = new MetroDialogSettings {DefaultText = selected.Note};
+			var settings = new MessageDialogs.Settings {DefaultText = selected.Note};
 			string newNote;
 			if(Config.Instance.StatsInWindow)
 				newNote = await Core.Windows.StatsWindow.ShowInputAsync("Note", "", settings);
@@ -826,7 +826,7 @@ namespace Hearthstone_Deck_Tracker
 			var dialog = new AddGameDialog(_deck);
 			await
 				Core.MainWindow.ShowMetroDialogAsync(dialog,
-				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
+				                                       new MessageDialogs.Settings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
 			var game = await dialog.WaitForButtonPressAsync();
 			await Core.MainWindow.HideMetroDialogAsync(dialog);
 			if(game != null)
@@ -867,7 +867,7 @@ namespace Hearthstone_Deck_Tracker
 			var dialog = new AddGameDialog(game);
 			await
 				Core.MainWindow.ShowMetroDialogAsync(dialog,
-				                                       new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
+				                                       new MessageDialogs.Settings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
 			var result = await dialog.WaitForButtonPressAsync();
 			await Core.MainWindow.HideMetroDialogAsync(dialog);
 			if(result == null) //cancelled

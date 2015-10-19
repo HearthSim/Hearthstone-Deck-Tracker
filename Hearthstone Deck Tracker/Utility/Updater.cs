@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Utility
@@ -40,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Utility
             _showingUpdateMessage = true;
 
             const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-            var settings = new MetroDialogSettings
+            var settings = new MessageDialogs.Settings
             {
                 AffirmativeButtonText = "Download",
                 NegativeButtonText = "Not now"
