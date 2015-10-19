@@ -473,7 +473,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(selected == null)
 				return;
-			var settings = new MetroDialogSettings {DefaultText = selected.Note};
+			var settings = new MessageDialogs.Settings {DefaultText = selected.Note};
 			string newNote;
 			if(Config.Instance.StatsInWindow)
 				newNote = await Core.Windows.StatsWindow.ShowInputAsync("Note", "", settings);

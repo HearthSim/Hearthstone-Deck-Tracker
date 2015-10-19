@@ -22,9 +22,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public static class MessageDialogs
 	{
+		public class Settings : MetroDialogSettings
+		{
+			public Settings() : base()
+			{
+				AnimateHide = AnimateShow = Config.Instance.UseDialogAnimations;
+			}
+		}
+
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 		{
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			var settings = new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 			return
 				await
 				window.ShowMessageAsync("Delete Game",
@@ -34,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(this MetroWindow window, int count)
 		{
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			var settings = new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
 			return
 				await
 				window.ShowMessageAsync("Delete Games", "This will delete the selected games (" + count + ").\n\nAre you sure?",
@@ -44,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task ShowUpdateNotesMessage(this MetroWindow window)
 		{
 			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"};
+			var settings = new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"};
 
 			var result = await window.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
@@ -58,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedFileMessage(this MainWindow window, string fileName)
 		{
-			var settings = new MetroDialogSettings {NegativeButtonText = "Open folder"};
+			var settings = new Settings {NegativeButtonText = "Open folder"};
 			var result =
 				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
@@ -67,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
 		{
-			var settings = new MetroDialogSettings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"};
+			var settings = new Settings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"};
 			var sb = new StringBuilder();
 			if(fileName != null)
 				sb.AppendLine("Saved to\n\"" + fileName + "\"");
@@ -99,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
 		{
-			var settings = new MetroDialogSettings
+			var settings = new Settings
 			{
 				AffirmativeButtonText = "save only",
 				NegativeButtonText = "save & upload",
@@ -118,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
 		{
-			var settings = new MetroDialogSettings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
+			var settings = new Settings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
 			var result =
 				await
 				window.ShowMessageAsync("Hearthstone install directory not found",
@@ -150,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await
 					window.ShowMessageAsync("No missing cards",
 					                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-					                        MessageDialogStyle.Affirmative, new MetroDialogSettings {AffirmativeButtonText = "OK"});
+					                        MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 				return;
 			}
 			var message = "The following cards were not found:\n";
@@ -194,7 +202,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
-				                        new MetroDialogSettings {AffirmativeButtonText = "OK"});
+				                        new Settings {AffirmativeButtonText = "OK"});
 		}
 
 		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
