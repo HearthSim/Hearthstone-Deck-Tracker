@@ -112,6 +112,29 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				CompiledStats.Instance.UpdateArenaStatsHighlights();
 		}
 
+		private void ExpandChildExpanders(DependencyObject obj, bool expand)
+		{
+			var count = VisualTreeHelper.GetChildrenCount(obj);
+			for(int i = 0; i < count; i++)
+			{
+				var expander = VisualTreeHelper.GetChild(obj, i) as Expander;
+				if(expander != null)
+					expander.IsExpanded = expand;
+			}
+		}
+
+		private void ToggleButtonExpandFilters_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			ExpandChildExpanders(StackPanelFilters, true);
+		}
+		private void ToggleButtonExpandFilters_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			ExpandChildExpanders(StackPanelFilters, false);
+		}
 	}
 
 	public class HeroClassStatsFilterWrapper

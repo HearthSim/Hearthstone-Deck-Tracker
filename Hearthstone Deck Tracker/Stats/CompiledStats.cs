@@ -40,29 +40,74 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return GetFilteredArenaRuns(classFilter: false).GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class); }
 		}
 
-		public ClassStats ArenaBestClass
+		public ClassStats ArenaClassStatsBest
 		{
 			get { return !ArenaClasses.Any() ? null :  ArenaClasses.OrderByDescending(x => x.WinRate).First(); }
 		}
 
-		public ClassStats ArenaWorstClass
+		public ClassStats ArenaClassStatsWorst
 		{
 			get { return !ArenaClasses.Any() ? null : ArenaClasses.OrderBy(x => x.WinRate).First(); }
 		}
 
-		public ClassStats ArenaMostPickedClass
+		public ClassStats ArenaClassStatsMostPicked
 		{
 			get { return !ArenaClasses.Any() ? null : ArenaClasses.OrderByDescending(x => x.Runs).First(); }
 		}
 
-		public ClassStats ArenaLeastPickedClass
+		public ClassStats ArenaClassStatsLeastPicked
 		{
 			get { return !ArenaClasses.Any() ? null : ArenaClasses.OrderBy(x => x.Runs).First(); }
 		}
 
+		public ClassStats ArenaClassStatsDruid
+		{
+			get { return GetClassStats("Druid"); }
+		}
+		public ClassStats ArenaClassStatsHunter
+		{
+			get { return GetClassStats("Hunter"); }
+		}
+		public ClassStats ArenaClassStatsMage
+		{
+			get { return GetClassStats("Mage"); }
+		}
+		public ClassStats ArenaClassStatsPaladin
+		{
+			get { return GetClassStats("Paladin"); }
+		}
+		public ClassStats ArenaClassStatsPriest
+		{
+			get { return GetClassStats("Priest"); }
+		}
+		public ClassStats ArenaClassStatsRogue
+		{
+			get { return GetClassStats("Rogue"); }
+		}
+		public ClassStats ArenaClassStatsShaman
+		{
+			get { return GetClassStats("Shaman"); }
+		}
+		public ClassStats ArenaClassStatsWarlock
+		{
+			get { return GetClassStats("Warlock"); }
+		}
+		public ClassStats ArenaClassStatsWarrior
+		{
+			get { return GetClassStats("Warrior"); }
+		}
+
+		public ClassStats GetClassStats(string @class)
+		{
+			var runs = GetFilteredArenaRuns(classFilter: false).Where(x => x.Class == @class).ToList();
+			if(!runs.Any())
+				return null;
+            return new ClassStats(@class, runs);
+		}
+
 		public ClassStats ArenaAllClasses
 		{
-			get { return GetFilteredArenaRuns().GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault(); }
+			get { return GetFilteredArenaRuns(classFilter: false).GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault(); }
 		}
 
 		public int ArenaRunsCount
@@ -87,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public double AverageWinsPerRun
 		{
-			get { return (double)ArenaGamesCountWon / ArenaRunsCount; }
+			get { return (double)ArenaGamesCountWon / GetFilteredArenaRuns().Count(); }
 		}
 
 		public IEnumerable<ArenaRun> GetFilteredArenaRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
@@ -294,10 +339,21 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public void UpdateArenaStatsHighlights()
 		{
-			OnPropertyChanged("ArenaBestClass");
-			OnPropertyChanged("ArenaWorstClass");
-			OnPropertyChanged("ArenaMostPickedClass");
-			OnPropertyChanged("ArenaLeastPickedClass");
+			OnPropertyChanged("ArenaClasses");
+			OnPropertyChanged("ArenaClassStatsDruid");
+			OnPropertyChanged("ArenaClassStatsHunter");
+			OnPropertyChanged("ArenaClassStatsMage");
+			OnPropertyChanged("ArenaClassStatsPaladin");
+			OnPropertyChanged("ArenaClassStatsPriest");
+			OnPropertyChanged("ArenaClassStatsRogue");
+			OnPropertyChanged("ArenaClassStatsShaman");
+			OnPropertyChanged("ArenaClassStatsWarlock");
+			OnPropertyChanged("ArenaClassStatsWarrior");
+			OnPropertyChanged("ArenaAllClasses");
+			OnPropertyChanged("ArenaClassStatsBest");
+			OnPropertyChanged("ArenaClassStatsWorst");
+			OnPropertyChanged("ArenaClassStatsMostPicked");
+			OnPropertyChanged("ArenaClassStatsLeastPicked");
 		}
 
 		public void UpdateArenaRuns()
@@ -438,9 +494,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public IEnumerable<MatchupStats> Matchups { get { return ArenaRuns.SelectMany(r => r.Games).GroupBy(x => x.OpponentHero).Select(x => new MatchupStats(x.Key, x)); } }
 
-		public MatchupStats BestMatchup { get { return Matchups.OrderByDescending(x => x.WinRate).First(); } }
+		public MatchupStats BestMatchup { get { return Matchups.OrderByDescending(x => x.WinRate).FirstOrDefault(); } }
 
-		public MatchupStats WorstMatchup { get { return Matchups.OrderBy(x => x.WinRate).First(); } }
+		public MatchupStats WorstMatchup { get { return Matchups.OrderBy(x => x.WinRate).FirstOrDefault(); } }
 
 		public int Runs
 		{
@@ -449,7 +505,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public ArenaRun BestRun
 		{
-			get { return ArenaRuns.OrderByDescending(x => x.Wins).ThenBy(x => x.Losses).First(); }
+			get { return ArenaRuns.OrderByDescending(x => x.Wins).ThenBy(x => x.Losses).FirstOrDefault(); }
 		}
 
 		public int Games
@@ -484,7 +540,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public double PickedPercent
 		{
-			get { return Math.Round(100.0 * Runs / CompiledStats.Instance.ArenaRunsCount); }
+			get { return Math.Round(100.0 * Runs / CompiledStats.Instance.GetFilteredArenaRuns(classFilter: false).Count()); }
 		}
 
 		public BitmapImage ClassImage
@@ -492,6 +548,30 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return ImageCache.GetClassIcon(Class); }
 		}
 
+		public TimeSpan Duration
+		{
+			get { return TimeSpan.FromMinutes(ArenaRuns.Sum(x => x.Duration)); }
+		}
+
+		public SolidColorBrush WinRateTextBrush
+		{
+			get
+			{
+				if(double.IsNaN(WinRate))
+					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+				return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
+			}
+		}
+
+		public SolidColorBrush BestRunTextBrush
+		{
+			get
+			{
+				if(BestRun == null)
+					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+				return new SolidColorBrush(BestRun.Wins >= 3 ? Colors.Green : Colors.Red);
+			}
+		}
 
 		public ClassStats(string @class, IEnumerable<ArenaRun> arenaRuns)
 		{
@@ -529,6 +609,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 			public double WinRatePercent
 			{
 				get { return Math.Round(WinRate * 100); }
+			}
+
+			public SolidColorBrush WinRateTextBrush
+			{
+				get
+				{
+					if(double.IsNaN(WinRate))
+						return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+					return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
+				}
 			}
 		}
 	}

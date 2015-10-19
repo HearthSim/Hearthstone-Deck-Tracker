@@ -16,27 +16,40 @@
     </UserControl.Resources>
     <DockPanel>
         <DockPanel>
-            <GroupBox Header="TITLE?" DockPanel.Dock="Top">
-                <TreeView Name="TreeViewStats" Width="150" Height="250">
+            <GroupBox Header="MENU" DockPanel.Dock="Top">
+                <TreeView Name="TreeViewStats" Width="150" Height="150" >
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                        <TreeViewItem Name="TreeViewItemArenaRunsSummary" Header="Summary" DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TreeViewItem Name="TreeViewItemArenaRunsSummary" Header="Summary" IsSelected="True" DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         <TreeViewItem Name="TreeViewItemArenaRunsOverview" Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         <TreeViewItem Name="TreeViewItemArenaRunsAdvanced" Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="Constructed" IsExpanded="True">
-                        <TreeViewItem Header="Overall" IsExpanded="True">
+                    <TreeViewItem Header="Constructed" IsExpanded="True" IsEnabled="False">
+                        <TreeViewItem Header="[coming soon]"/>
+                        <!--<TreeViewItem Header="Overall" IsExpanded="False">
                             <TreeViewItem Header="Overview"/>
                             <TreeViewItem Header="Games"/>
                         </TreeViewItem>
-                        <TreeViewItem Header="Active Deck" IsExpanded="True">
+                        <TreeViewItem Header="Active Deck" IsExpanded="False">
                             <TreeViewItem Header="Overview"/>
                             <TreeViewItem Header="Games"/>
-                        </TreeViewItem>
+                        </TreeViewItem>-->
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>
-            <GroupBox Header="Filters">
-                <StackPanel Margin="-5,0">
+            <GroupBox>
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ToggleButton Style="{DynamicResource MetroCircleToggleButtonStyle}" Width="28" Height="28" Margin="-5" IsChecked="True" Checked="ToggleButtonExpandFilters_OnChecked" Unchecked="ToggleButtonExpandFilters_OnUnchecked">
+                            <Rectangle Width="8" Height="12">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </ToggleButton>
+                        <TextBlock Text="FILTERS" Foreground="White" Margin="14,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                <StackPanel Name="StackPanelFilters" >
                     <Expander Header="Timeframe" IsExpanded="True">
                         <StackPanel>
                             <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">

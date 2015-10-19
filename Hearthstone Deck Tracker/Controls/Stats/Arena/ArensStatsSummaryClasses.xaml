@@ -8,52 +8,150 @@
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:ToUpperValueConverter x:Key="ToUpperValueConverter"/>
-    </UserControl.Resources>
     <StackPanel>
-        <Expander Width="280">
+        <Expander>
             <Expander.Header>
                 <DockPanel>
-                    <TextBlock Foreground="White" Text="TOTAL" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Text="DRUID" DockPanel.Dock="Left"/>
                     <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} wins average | {1}% winrate">
-                                <Binding Path="ArenaAllClasses.AverageWins" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                                <Binding Path="ArenaAllClasses.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsDruid.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsDruid.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DockPanel>
             </Expander.Header>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+            <arena:ArenaClassStats Class="Druid" DataContext="{Binding Path=ArenaClassStatsDruid, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
         </Expander>
-        <ItemsControl ItemsSource="{Binding Path=ArenaClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Expander Width="280">
-                        <Expander.Header>
-                            <DockPanel>
-                                <TextBlock Foreground="White" Text="{Binding Path=Class, Converter={StaticResource ToUpperValueConverter}, IsAsync=True}" DockPanel.Dock="Left"/>
-                                <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} wins average | {1}% winrate">
-                                            <Binding Path="AverageWins" />
-                                            <Binding Path="WinRatePercent" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DockPanel>
-                        </Expander.Header>
-                        <arena:ArenaClassStats DataContext="{Binding Path=., IsAsync=True}"/>
-                    </Expander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="HUNTER" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsHunter.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsHunter.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Hunter" DataContext="{Binding Path=ArenaClassStatsHunter, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="MAGE" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsMage.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsMage.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Mage" DataContext="{Binding Path=ArenaClassStatsMage, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="PALADIN" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsPaladin.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsPaladin.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Paladin" DataContext="{Binding Path=ArenaClassStatsPaladin, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="PRIEST" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsPriest.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsPriest.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Priest" DataContext="{Binding Path=ArenaClassStatsPriest, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="ROGUE" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsRogue.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsRogue.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Rogue" DataContext="{Binding Path=ArenaClassStatsRogue, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="SHAMAN" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsShaman.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsShaman.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Shaman" DataContext="{Binding Path=ArenaClassStatsShaman, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="WARLOCK" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsWarlock.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsWarlock.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Warlock" DataContext="{Binding Path=ArenaClassStatsWarlock, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
+        <Expander>
+            <Expander.Header>
+                <DockPanel>
+                    <TextBlock Foreground="White" Text="WARRIOR" DockPanel.Dock="Left"/>
+                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} wins average | {1}% win rate" FallbackValue="None">
+                                <Binding Path="ArenaClassStatsWarrior.AverageWins" Source="{x:Static stats:CompiledStats.Instance}"/>
+                                <Binding Path="ArenaClassStatsWarrior.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
+            </Expander.Header>
+            <arena:ArenaClassStats Class="Warrior" DataContext="{Binding Path=ArenaClassStatsWarrior, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+        </Expander>
     </StackPanel>
 </UserControl>

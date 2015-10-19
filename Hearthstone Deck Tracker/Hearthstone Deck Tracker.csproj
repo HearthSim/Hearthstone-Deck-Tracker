@@ -171,6 +171,9 @@
     <Compile Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml.cs">
       <DependentUpon>ArenaStatsSummaryHighlights.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaStatsSummaryTotal.xaml.cs">
+      <DependentUpon>ArenaStatsSummaryTotal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Arena\ArensStatsSummaryClasses.xaml.cs">
       <DependentUpon>ArensStatsSummaryClasses.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,7 @@
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Converters\ToUpperValueConverter.cs" />
     <Compile Include="Controls\Stats\Overview.xaml.cs">
@@ -556,6 +560,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaStatsSummaryTotal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

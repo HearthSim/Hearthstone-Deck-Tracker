@@ -1082,6 +1082,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
 		{
+			Config.Instance.StatsInWindow = true;
+			Config.Save();
 			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 			Core.Windows.NewStatsWindow.Show();
 			Core.Windows.NewStatsWindow.Activate();

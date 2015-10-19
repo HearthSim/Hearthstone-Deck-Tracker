@@ -4,18 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
-             mc:Ignorable="d" Width="300"
-             d:DesignHeight="800" d:DesignWidth="300">
+             mc:Ignorable="d" Width="700"
+             d:DesignHeight="400" d:DesignWidth="600">
     <DockPanel>
-        <StackPanel DockPanel.Dock="Left">
-            <GroupBox Header="Highlights">
-                <arena:ArenaStatsSummaryHighlights/>
-            </GroupBox>
-            <Expander Header="Classes">
+        <DockPanel DockPanel.Dock="Left">
+            <GroupBox Header="Highlights" Width="320">
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                    <arena:ArensStatsSummaryClasses/>
+                    <StackPanel>
+                        <arena:ArenaStatsSummaryTotal DockPanel.Dock="Top"/>
+                        <arena:ArenaStatsSummaryHighlights />
+                    </StackPanel>
                 </ScrollViewer>
-            </Expander>
-        </StackPanel>
+            </GroupBox>
+            <Grid/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Left">
+            <GroupBox Header="Classes" DockPanel.Dock="Top" Width="320">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <arena:ArensStatsSummaryClasses />
+                </ScrollViewer>
+            </GroupBox>
+            <Grid/>
+        </DockPanel>
+        <Grid/>
     </DockPanel>
 </UserControl>
