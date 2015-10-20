@@ -198,6 +198,9 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml.cs">
       <DependentUpon>TrackerGeneral.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml.cs">
+      <DependentUpon>TrackerHotKeys.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml.cs">
       <DependentUpon>TrackerImporting.xaml</DependentUpon>
     </Compile>
@@ -269,6 +272,14 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
+    <Compile Include="Utility\HotKeys\HotKey.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyManager.cs" />
+    <Compile Include="Utility\HotKeys\KeyboardHook.cs" />
+    <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
+    <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -510,6 +521,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

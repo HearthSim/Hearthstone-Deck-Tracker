@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerHotKeys"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hotKeys="clr-namespace:Hearthstone_Deck_Tracker.Utility.HotKeys"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <GroupBox Header="Hotkeys">
+        <GroupBox.Resources>
+            <hotKeys:HotKeyManager x:Key="HotKeyManager" />
+            <hotKeys:PredefinedHotKeyActions x:Key="PredefinedHotKeyActions" />
+        </GroupBox.Resources>
+        <StackPanel>
+            <StackPanel.Resources>
+                <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Keys">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type TypeName="forms:Keys" />
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+                <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Mods">
+                    <ObjectDataProvider.MethodParameters>
+                        <x:Type TypeName="hotKeys:ModifierKeys" />
+                    </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+            </StackPanel.Resources>
+            <DataGrid Name="DataGridHotKeys" Height="200"
+                      ItemsSource="{Binding Path=RegisteredHotKeysInfo, Source={StaticResource HotKeyManager}}"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False"
+                      CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                      CanUserSortColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mod" Binding="{Binding Key.Mod}" />
+                    <DataGridTextColumn Header="Key" Binding="{Binding Key.Key}" />
+                    <DataGridTextColumn Header="Action" Binding="{Binding Value}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Margin="0,5" Content="delete seleceted" Click="ButtonDelete_OnClick" />
+            <GroupBox Header="New">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Content="Mod:" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0" />
+                        <ComboBox Name="ComboBoxMod" ItemsSource="{Binding Source={StaticResource Mods}}"
+                                  SelectedIndex="0" Margin="5,2" Grid.Column="1" Grid.Row="0"
+                                  SelectionChanged="ComboBoxMod_OnSelectionChanged" />
+                        <Label Content="Key:" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1" />
+                        <TextBox Name="TextBoxKey" controls:TextBoxHelper.Watermark="Press key" Margin="5,2"
+                                 Grid.Column="1" Grid.Row="1" PreviewKeyDown="TextBoxKey_OnPreviewKeyDown" />
+                        <Label Content="Action:" Grid.Column="0" Grid.Row="2" />
+                        <ComboBox Name="ComboBoxActions" Margin="5,2"
+                                  ItemsSource="{Binding Path=PredefinedActionNames, Source={StaticResource PredefinedHotKeyActions}}"
+                                  SelectedIndex="1" Grid.Column="1" Grid.Row="2">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Description}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" FontStyle="Normal" FontWeight="SemiBold"
+                               Text="{Binding Path=SelectedItem.Title, ElementName=ComboBoxActions, StringFormat={}{0}:}" />
+                    <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=ComboBoxActions}"
+                               TextWrapping="Wrap" FontStyle="Italic" />
+                    <TextBlock TextWrapping="Wrap" Foreground="Red"
+                               Text="{Binding Path=ErrorText, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                    <Button Content="Add new" Margin="0,5,0,0" Click="ButtonAddNew_OnClick"
+                            IsEnabled="{Binding Path=SelectedHotKeyIsValue, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </GroupBox>
+</UserControl>
