@@ -653,6 +653,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowLoginDialog = true;
 
+		[DefaultValue(true)]
+		public bool ShowSplashScreen = true;
+
 		[DefaultValue(false)]
 		public bool ShowLogTab = false;
 

@@ -48,6 +48,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
                                               Unchecked="CheckboxShowLoginDialog_Unchecked" />
+                    <CheckBox x:Name="CheckBoxShowSplashScreen" Content="Show the loading splash screen"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
+                                              Unchecked="CheckboxShowSplashScreen_Unchecked" />
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
                                               Content="Close with Hearthstone" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"

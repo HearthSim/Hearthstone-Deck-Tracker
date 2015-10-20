@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
+			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 
 			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
@@ -330,6 +331,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ShowLoginDialog = false;
+			Config.Save();
+		}
+
+		private void CheckboxShowSplashScreen_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowSplashScreen_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = false;
 			Config.Save();
 		}
 
