@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker
             Logger.Initialzie();
             Helper.UpdateAppTheme();
             var splashScreenWindow = new SplashScreenWindow();
-            splashScreenWindow.Show();
+            splashScreenWindow.ShowConditional();
             Game = new GameV2();
             if (!HearthStatsAPI.LoadCredentials() && Config.Instance.ShowLoginDialog)
             {
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker
                     return;
                 }
                 splashScreenWindow = new SplashScreenWindow();
-                splashScreenWindow.Show();
+                splashScreenWindow.ShowConditional();
             }
             MainWindow = new MainWindow();
             MainWindow.LoadConfigSettings();
