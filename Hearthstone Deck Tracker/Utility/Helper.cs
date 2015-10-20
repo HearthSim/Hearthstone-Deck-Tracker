@@ -52,6 +52,7 @@ namespace Hearthstone_Deck_Tracker
 			{"French", "frFR"},
 			{"German", "deDE"},
 			{"Italian", "itIT"},
+			{"Japanese", "jaJP"},
 			{"Korean", "koKR"},
 			{"Polish", "plPL"},
 			{"Portuguese (Brazil)", "ptBR"},
