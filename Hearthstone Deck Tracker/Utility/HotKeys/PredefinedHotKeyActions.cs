@@ -57,6 +57,48 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
+		[PredefinedHotKeyAction("Toggle overlay: card marks", "Turns the card marks and age on the overlay on or off (if the game is running).")]
+		public static void ToggleOverlayCardMarks()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HideOpponentCardMarks = !Config.Instance.HideOpponentCardMarks;
+			Config.Instance.HideOpponentCardAge = Config.Instance.HideOpponentCardMarks;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+
+		[PredefinedHotKeyAction("Toggle overlay: secrets", "Turns the secrets panel on the overlay on or off (if the game is running).")]
+		public static void ToggleOverlaySecrets()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HideSecrets = !Config.Instance.HideSecrets;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+
+		[PredefinedHotKeyAction("Toggle overlay: timers", "Turns the timers on the overlay on or off (if the game is running).")]
+		public static void ToggleOverlayTimer()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HideTimers = !Config.Instance.HideTimers;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+		
+		[PredefinedHotKeyAction("Toggle overlay: attack icons", "Turns both attack icons on the overlay on or off (if the game is running).")]
+		public static void ToggleOverlayAttack()
+		{
+			if(!Core.Game.IsRunning)
+				return;
+			Config.Instance.HidePlayerAttackIcon = !Config.Instance.HidePlayerAttackIcon;
+			Config.Instance.HideOpponentAttackIcon = Config.Instance.HidePlayerAttackIcon;
+			Config.Save();
+			Core.Overlay.UpdatePosition();
+		}
+		
 		[PredefinedHotKeyAction("Toggle no deck mode", "Activates \"no deck mode\" (use no deck) or selects the last used deck.")]
 		public static void ToggleNoDeckMode()
 		{
