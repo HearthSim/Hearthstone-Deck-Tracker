@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public async void ImportDeck(string url = null)
 		{
 			if(url == null)
-				await InputDeckURL();
+				url = await InputDeckURL();
 			if(url == null)
 				return;
 			var deck = await ImportDeckFromURL(url);
