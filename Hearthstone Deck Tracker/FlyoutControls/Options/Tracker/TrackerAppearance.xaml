@@ -55,6 +55,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
                                               Unchecked="CheckboxDeckPickerCaps_Unchecked" ToolTip="Uncheck to use normal case in Deck Picker."/>
+                    <CheckBox x:Name="CheckboxUseAnimations" Content="Use metro animations"
+                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                    	VerticalAlignment="Top"
+                    	Unchecked="CheckboxUseAnimations_Unchecked" ToolTip="Uncheck to disable most animations for popup dialogs and flyouts" Checked="CheckboxUseAnimations_Checked"/>
                     <GroupBox Header="Card Language" Margin="10,10,10,0">
                         <StackPanel>
                             <DockPanel Margin="0,5,0,0">

@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
 			ComboBoxIconSet.ItemsSource = Enum.GetValues(typeof(IconStyle));
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
+			CheckboxUseAnimations.IsChecked = Config.Instance.UseAnimations;
 
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
@@ -180,6 +181,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.DeckPickerCaps = false;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+		}
+
+		private void CheckboxUseAnimations_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.UseAnimations = false;
+			Core.MainWindow.UpdateFlyoutAnimationsEnabled();
+			Config.Save();
+		}
+
+		private void CheckboxUseAnimations_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.UseAnimations = true;
+			Core.MainWindow.UpdateFlyoutAnimationsEnabled();
+			Config.Save();
 		}
 	}
 }

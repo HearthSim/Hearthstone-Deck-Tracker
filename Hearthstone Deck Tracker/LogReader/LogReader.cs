@@ -155,6 +155,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						var offset = 0;
 						while(offset < fs.Length)
 						{
+							var sizeDiff = 4096 - Math.Min(fs.Length - offset, 4096);
 							offset += 4096;
 							var buffer = new char[4096];
 							fs.Seek(Math.Max(fs.Length - offset, 0), SeekOrigin.Begin);
@@ -170,13 +171,13 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							var lines = (new string(buffer.Skip(skip).ToArray())).Split(new [] {Environment.NewLine}, StringSplitOptions.None).ToArray();
 							for(int i = lines.Length - 1; i > 0; i--)
 							{
-								if(string.IsNullOrWhiteSpace(lines[i]))
+								if(string.IsNullOrWhiteSpace(lines[i].Trim('\0')))
 									continue;
 								var logLine = new LogLineItem(_info.Name, lines[i], fileInfo.LastWriteTime);
 								if(logLine.Time < _startingPoint)
 								{
 									var negativeOffset = lines.Take(i + 1).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
-									_offset = Math.Max(fs.Length - offset + negativeOffset, 0);
+									_offset = Math.Max(fs.Length - offset + negativeOffset + sizeDiff, 0);
 									return;
 								}
 							}

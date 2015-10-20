@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -62,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 					await
 					Core.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
 					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MetroDialogSettings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
+					                                   new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}
