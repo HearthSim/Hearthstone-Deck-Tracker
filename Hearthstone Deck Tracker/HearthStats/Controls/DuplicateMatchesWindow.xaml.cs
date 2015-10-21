@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 					deck.DeckStats.Games.Remove(match);
 				}
 				DeckStatsList.Save();
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
 				await controller.CloseAsync();
 			}
 			await this.ShowMessageAsync("Success", "Deleted " + _allWrappers.Count(x => x.ToDelete) + " duplicates.");

@@ -487,15 +487,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                         gameState.ProposeKeyPoint(KeyPointType.HeroPower, id, ActivePlayer.Opponent);
                 }
             }
-            else if (tag == GAME_TAG.CONTROLLER && game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+            else if (tag == GAME_TAG.CONTROLLER)
             {
-                if (value == game.Player.Id)
-                {
-                    gameState.GameHandler.HandleOpponentSecretTrigger(game.Entities[id], cardId, gameState.GetTurnNumber(), id);
-                    gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
-                }
-                else if (value == game.Opponent.Id)
-                    gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+	            if (value == game.Player.Id)
+	            {
+		            if (game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+		            {
+			            gameState.GameHandler.HandleOpponentSecretTrigger(game.Entities[id], cardId, gameState.GetTurnNumber(), id);
+			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+		            }
+		            else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
+						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+				}
+	            else if (value == game.Opponent.Id)
+	            {
+		            if (game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+					else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
+						gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+	            }
             }
             else if (tag == GAME_TAG.FATIGUE)
             {

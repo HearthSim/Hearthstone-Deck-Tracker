@@ -42,6 +42,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
                                               Unchecked="CheckboxAutoClear_Unchecked" />
+                    <CheckBox x:Name="CheckboxAutoClearFilters" Content="Auto clear filters"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxAutoClearFilters_Checked"
+                                              Unchecked="CheckboxAutoClearFilters_Unchecked" />
                     <CheckBox x:Name="CheckboxExportPasteClipboard"
                                               Content="Paste names from clipboard"
                                               ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"

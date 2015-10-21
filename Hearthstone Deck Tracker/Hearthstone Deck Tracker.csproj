@@ -143,6 +143,7 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Core.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
@@ -196,6 +197,9 @@
     </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml.cs">
       <DependentUpon>TrackerGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml.cs">
+      <DependentUpon>TrackerHotKeys.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml.cs">
       <DependentUpon>TrackerImporting.xaml</DependentUpon>
@@ -268,15 +272,29 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="Utility\HotKeys\HotKey.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyManager.cs" />
+    <Compile Include="Utility\HotKeys\KeyboardHook.cs" />
+    <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
+    <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
+    <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TrayIcon.cs" />
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Protocol\PipeServer.cs" />
+    <Compile Include="Utility\ConfigManager.cs" />
+    <Compile Include="Utility\DataIssueResolver.cs" />
     <Compile Include="Utility\ImageCache.cs" />
     <Compile Include="Utility\Imgur.cs" />
     <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
+    <Compile Include="Utility\NetDeck.cs" />
+    <Compile Include="Utility\NewsUpdater.cs" />
+    <Compile Include="Utility\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -365,16 +383,16 @@
     <Compile Include="Enums\GameResult.cs" />
     <Compile Include="Enums\ActivePlayer.cs" />
     <Compile Include="Utility\Logger.cs" />
-    <Compile Include="MainWindow\MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeckList.cs" />
     <Compile Include="Utility\Helper.cs" />
-    <Compile Include="MainWindow\MainWindow_Edit.cs" />
-    <Compile Include="MainWindow\MainWindow_Export.cs" />
-    <Compile Include="MainWindow\MainWindow_Import.cs" />
-    <Compile Include="MainWindow\MainWindow_Load.cs" />
-    <Compile Include="MainWindow\MainWindow_NewDeck.cs" />
+    <Compile Include="Windows\MainWindow\MainWindow_Edit.cs" />
+    <Compile Include="Windows\MainWindow\MainWindow_Export.cs" />
+    <Compile Include="Windows\MainWindow\MainWindow_Import.cs" />
+    <Compile Include="Windows\MainWindow\MainWindow_Load.cs" />
+    <Compile Include="Windows\MainWindow\MainWindow_NewDeck.cs" />
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
@@ -404,6 +422,9 @@
     </Compile>
     <Compile Include="Utility\SerializableVersion.cs" />
     <Compile Include="Utility\User32.cs" />
+    <Compile Include="Windows\SplashScreenWindow.xaml.cs">
+      <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
@@ -503,6 +524,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -555,7 +580,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="Windows\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -607,7 +632,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\MainWindow.xaml">
+    <Page Include="Windows\MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -664,6 +689,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\SplashScreenWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\StatsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -691,7 +720,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
-    <SplashScreen Include="SplashScreen.png" />
+    <Resource Include="Resources\SplashScreen.png" />
     <Content Include="Files\cardDB.deDE.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -711,6 +740,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.itIT.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\cardDB.jaJP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.koKR.xml">
@@ -1057,6 +1089,30 @@
     <Resource Include="Images\card-icon-mulligan.png" />
     <Resource Include="Images\card-icon-returned.png" />
     <Resource Include="Images\card-marker.png" />
+    <Content Include="Images\board_damage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gold_progress_frame_center.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gold_progress_frame_left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gold_progress_frame_right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gem_rarity_common.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gem_rarity_epic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gem_rarity_legendary.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\gem_rarity_rare.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\thunder-bluff-valiant.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

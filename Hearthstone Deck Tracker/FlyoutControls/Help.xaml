@@ -102,7 +102,7 @@
                                         click here.
                                     </Hyperlink>
                         <LineBreak />
-                                    <Run Text="2) Send me an email: epikz37@gmail.com" />
+                                    <Run Text="2) Send an email to support@hsdecktracker.net" />
                     </TextBlock>
                 </GroupBox>
                 <GroupBox Header="GitHub Project">

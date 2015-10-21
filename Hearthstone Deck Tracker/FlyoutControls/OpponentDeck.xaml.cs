@@ -22,9 +22,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonImport_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.SetNewDeck(_deck);
-			Helper.MainWindow.FlyoutDeckStats.IsOpen = false;
-			Helper.MainWindow.FlyoutOpponentDeck.IsOpen = false;
+			Core.MainWindow.SetNewDeck(_deck);
+			Core.MainWindow.FlyoutDeckStats.IsOpen = false;
+			Core.MainWindow.FlyoutOpponentDeck.IsOpen = false;
 		}
 
 		public void SetDeck(Deck deck)

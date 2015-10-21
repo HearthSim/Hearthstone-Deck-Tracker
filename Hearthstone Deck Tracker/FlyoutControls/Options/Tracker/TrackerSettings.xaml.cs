@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using Microsoft.Win32;
@@ -34,8 +35,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
-			ComboboxKeyPressGameStart.ItemsSource = Helper.MainWindow.EventKeys;
-			ComboboxKeyPressGameEnd.ItemsSource = Helper.MainWindow.EventKeys;
+			ComboboxKeyPressGameStart.ItemsSource = Helper.EventKeys;
+			ComboboxKeyPressGameEnd.ItemsSource = Helper.EventKeys;
 
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
@@ -47,13 +48,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
+			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 
-			if(!Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";
 			ComboboxKeyPressGameStart.SelectedValue = Config.Instance.KeyPressOnGameStart;
 
-			if(!Helper.MainWindow.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 				Config.Instance.KeyPressOnGameEnd = "None";
 			ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
@@ -64,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxMinimizeTray_Checked(object sender, RoutedEventArgs e)
@@ -155,8 +157,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = true;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Helper.MainWindow.Restart();
+			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			Core.MainWindow.Restart();
 		}
 
 		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
@@ -166,8 +168,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var path = Config.Instance.ConfigPath;
 			Config.Instance.SaveConfigInAppData = false;
 			XmlManager<Config>.Save(path, Config.Instance);
-			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Helper.MainWindow.Restart();
+			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			Core.MainWindow.Restart();
 		}
 
 		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
@@ -176,8 +178,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
-			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Helper.MainWindow.Restart();
+			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			Core.MainWindow.Restart();
 		}
 
 		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
@@ -186,8 +188,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
-			await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-			Helper.MainWindow.Restart();
+			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+			Core.MainWindow.Restart();
 		}
 
 		private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
@@ -239,7 +241,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.HearthstoneDirectory = dialog.SelectedPath;
 				Config.Save();
-				Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+				Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 			}
 		}
 
@@ -256,10 +258,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					foreach(var value in new List<bool> {true, false})
 					{
 						Config.Instance.SaveDataInAppData = value;
-						Helper.MainWindow.CopyReplayFiles();
-						Helper.MainWindow.SetupDeckStatsFile();
-						Helper.MainWindow.SetupDeckListFile();
-						Helper.MainWindow.SetupDefaultDeckStatsFile();
+						Helper.CopyReplayFiles();
+						DeckStatsList.SetupDeckStatsFile();
+						DeckList.SetupDeckListFile();
+						DefaultDeckStats.SetupDefaultDeckStatsFile();
 						Config.Instance.DataDirPath = dialog.SelectedPath;
 					}
 				}
@@ -267,8 +269,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Save();
 				if(!saveInAppData)
 				{
-					await Helper.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
-					Helper.MainWindow.Restart();
+					await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+					Core.MainWindow.Restart();
 				}
 			}
 		}
@@ -332,9 +334,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
+		private void CheckboxShowSplashScreen_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowSplashScreen_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = false;
+			Config.Save();
+		}
+
 		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.Restart();
+			Core.MainWindow.Restart();
 		}
 
 	}

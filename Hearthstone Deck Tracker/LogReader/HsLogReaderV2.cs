@@ -330,39 +330,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
             return _gameState.FoundRanked;
         }
 
-        public static void GetCurrentRegion(GameV2 game)
-        {
-            try
-            {
-                var regex = new Regex(@"AccountListener.OnAccountLevelInfoUpdated.*currentRegion=(?<region>(\d))");
-                var conLogPath = Path.Combine(Config.Instance.HearthstoneDirectory, "ConnectLog.txt");
-                //while(!_gameState.GameLoaded)
-                //	await Task.Delay(100);
-                using (var fs = new FileStream(conLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (var reader = new StreamReader(fs))
-                {
-                    var lines = reader.ReadToEnd().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var line in lines)
-                    {
-                        var match = regex.Match(line);
-                        if (match.Success)
-                        {
-                            Region region;
-                            if (Enum.TryParse(match.Groups["region"].Value, out region))
-                            {
-								game.CurrentRegion = region;
-                                Logger.WriteLine("Current region: " + region, "LogReader");
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.WriteLine("Error getting region:\n" + ex, "LogReader");
-            }
-        }
+
 
         public int GetTurnNumber()
         {

@@ -55,6 +55,10 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxCardFrameRarity_OnChecked"
                                           Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
+                    <CheckBox x:Name="CheckboxCardGemRarity" Content="Rarity-colored card gems"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxCardGemRarity_OnChecked"
+                                          Unchecked="CheckboxCardGemRarity_OnUnchecked" />
                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
                                               Content="Show Manacurve" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"

@@ -4,7 +4,7 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
                       BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
-                      Icon="Images\HearthstoneDeckTracker.ico"
+                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
                       ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True"
                       Title="Hearthstone Deck Tracker" Height="400" Width="300">
     <controls:MetroWindow.Resources>
@@ -13,7 +13,7 @@
     </controls:MetroWindow.Resources>
     <Grid>
         <StackPanel>
-            <Image Source="HearthStats/Resources/hearthstats_logo.png" Width="64" Height="64" Margin="0,28,0,2" />
+            <Image Source="/HearthstoneDeckTracker;component/HearthStats/Resources/hearthstats_logo.png" Width="64" Height="64" Margin="0,28,0,2" />
             <TextBlock HorizontalAlignment="Center" FontSize="14" FontWeight="SemiBold">
                 <Hyperlink Foreground="{DynamicResource TextBrush}" TextDecorations="None"
                            NavigateUri="http://www.hearthstats.net"

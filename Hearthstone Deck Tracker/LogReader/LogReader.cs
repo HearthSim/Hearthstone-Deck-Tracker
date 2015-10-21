@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public LogReader(LogReaderInfo info)
 		{
 			_info = info;
-			_filePath = Path.Combine(Config.Instance.HearthstoneDirectory, string.Format("Logs/{0}.log", _info.Name));
+			_filePath = string.IsNullOrEmpty(info.FilePath) ? Path.Combine(Config.Instance.HearthstoneDirectory, string.Format("Logs/{0}.log", _info.Name)) : info.FilePath;
 		}
 
 
@@ -122,6 +123,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 								{
 									if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
 										break;
+									if(_info.Name == "Power")
+										GameV2.AddHSLogLine(line);
 									if(!_info.HasFilters || _info.StartsWithFilters.Any(x => line.Substring(19).StartsWith(x))
 									   || _info.ContainsFilters.Any(x => line.Substring(19).Contains(x)))
 									{
@@ -152,6 +155,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						var offset = 0;
 						while(offset < fs.Length)
 						{
+							var sizeDiff = 4096 - Math.Min(fs.Length - offset, 4096);
 							offset += 4096;
 							var buffer = new char[4096];
 							fs.Seek(Math.Max(fs.Length - offset, 0), SeekOrigin.Begin);
@@ -167,13 +171,13 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							var lines = (new string(buffer.Skip(skip).ToArray())).Split(new [] {Environment.NewLine}, StringSplitOptions.None).ToArray();
 							for(int i = lines.Length - 1; i > 0; i--)
 							{
-								if(string.IsNullOrWhiteSpace(lines[i]))
+								if(string.IsNullOrWhiteSpace(lines[i].Trim('\0')))
 									continue;
 								var logLine = new LogLineItem(_info.Name, lines[i], fileInfo.LastWriteTime);
 								if(logLine.Time < _startingPoint)
 								{
 									var negativeOffset = lines.Take(i + 1).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
-									_offset = Math.Max(fs.Length - offset + negativeOffset, 0);
+									_offset = Math.Max(fs.Length - offset + negativeOffset + sizeDiff, 0);
 									return;
 								}
 							}
@@ -187,10 +191,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public DateTime FindEntryPoint(string str)
 		{
+			return FindEntryPoint(new [] {str});
+		}
+
+		public DateTime FindEntryPoint(string[] str)
+		{
 			var fileInfo = new FileInfo(_filePath);
 			if(fileInfo.Exists)
 			{
-				var target = new string(str.Reverse().ToArray());
+				var targets = str.Select(x => new string(x.Reverse().ToArray())).ToList();
 				using (var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
 					using(var sr = new StreamReader(fs, Encoding.ASCII))
@@ -211,10 +220,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							}
 							offset -= skip;
 							var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
-							var gameStartOffset = reverse.IndexOf(target, StringComparison.Ordinal);
-							if(gameStartOffset != -1)
+							var targetOffsets = targets.Select(x => reverse.IndexOf(x, StringComparison.Ordinal)).Where(x => x > -1).ToList();
+							var targetOffset = targetOffsets.Any() ? targetOffsets.Min() : -1;
+							if(targetOffset != -1)
 							{
-								var line = new string(reverse.Substring(gameStartOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
+								var line = new string(reverse.Substring(targetOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
 								return new LogLineItem("", line, fileInfo.LastWriteTime).Time;
 							}
 						}

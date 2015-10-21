@@ -62,8 +62,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Helper.MainWindow.Overlay.UpdateOpponentLayout();
-			Helper.MainWindow.OpponentWindow.UpdateOpponentLayout();
+			Core.Overlay.UpdateOpponentLayout();
+			Core.Windows.OpponentWindow.UpdateOpponentLayout();
 			_initialized = true;
 		}
 
@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxSameScaling_Checked(object sender, RoutedEventArgs e)
@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 					value = SliderOverlayOpponentScaling.Maximum;
 				Config.Instance.OverlayOpponentScaling = value;
 				Config.Save();
-				Helper.MainWindow.Overlay.UpdateScaling();
+				Core.Overlay.UpdateScaling();
 				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value)
 					Helper.OptionsMain.OptionsOverlayPlayer.PlayerScaling = value;
 				OnPropertyChanged();
@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 					value = SliderOverlaySecretScaling.Maximum;
 				Config.Instance.SecretsPanelScaling = value / 100;
 				Config.Save();
-				Helper.MainWindow.Overlay.UpdateScaling();
+				Core.Overlay.UpdateScaling();
 				OnPropertyChanged();
 			}
 		}

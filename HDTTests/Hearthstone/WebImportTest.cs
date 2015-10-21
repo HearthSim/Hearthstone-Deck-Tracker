@@ -14,8 +14,8 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void Hearthstats()
 		{
-			Deck expected = CreateDeck("Inner Rage;2", "Cruel Taskmaster;2", "Loot Hoarder;2", "Slam;0", "Unstable Ghoul;0");
-			Deck found = DeckImporter.Import(@"https://hearthstats.net/decks/pavel-s-onog-tgt-patron-warrior--2").Result;
+			Deck expected = CreateDeck();
+			Deck found = DeckImporter.Import(@"https://hearthstats.net/decks/senfglas-patron--248").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
@@ -24,6 +24,14 @@ namespace HDTTests.Hearthstone
 		{
 			Deck expected = CreateDeck();
 			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/274631-senfglas-1-legend-grim-patron-warrior-1074").Result;
+			Assert.IsTrue(AreDecksEqual(expected, found));
+		}
+
+		[TestMethod]
+		public void HearthpwnDeckBuilder()
+		{
+			Deck expected = CreateDeck();
+			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/deckbuilder/warrior#69:2;161:2;193:2;215:2;227:2;246:2;261:1;328:1;366:1;428:2;632:2;644:2;664:2;7734:2;7757:2;14435:2;14454:1").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 

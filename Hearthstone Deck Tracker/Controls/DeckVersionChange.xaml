@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Vertical">
@@ -26,7 +27,7 @@
                     <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                     <Setter Property="ToolTipService.ShowDuration" Value="60000" />
                     <Setter Property="ToolTipService.IsEnabled"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainWindow}}, Path=ShowToolTip}" />
+                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=ShowToolTip}" />
                     <Setter Property="ToolTip">
                         <Setter.Value>
                             <ToolTip Background="Transparent" BorderBrush="Transparent">

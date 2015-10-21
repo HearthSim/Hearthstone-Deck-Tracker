@@ -507,6 +507,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					break;
 			}
 		}
+
+		public void StolenByOpponent(Entity entity, int turn)
+		{
+			var ce = MoveCardEntity(entity, Board, Removed, turn);
+			Log("StolenByOpponent", ce);
+		}
+
+		public void StolenFromOpponent(Entity entity, int turn)
+		{
+			var ce = MoveCardEntity(entity, Removed, Board, turn);
+			ce.Created = true;
+			Log("StolenFromOpponent", ce);
+		}
 	}
 
 

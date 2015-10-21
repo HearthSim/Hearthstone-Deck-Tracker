@@ -12,16 +12,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class RachelleHandler
 	{
-		private const string GoldRewardLogLine =
-			"RewardUtils.GetViewableRewards() - processing reward [GoldRewardData: Amount=10 Origin=TOURNEY OriginData=0]";
-
-		private const string ProgressLogLine = "VictoryScreen.InitGoldRewardUI(): goldRewardState = INVALID";
-		private const int WinsRequiredForReward = 3;
-		private const int GoldRewardAmount = 10;
-		private const int TotalMaxGoldReward = 100;
-		private readonly GameMode[] _goldTrackingGameModes = {GameMode.Casual, GameMode.Ranked, GameMode.Brawl};
-		private bool _receivedGoldReward;
-
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
 			if(HsLogReaderConstants.CardAlreadyInCacheRegex.IsMatch(logLine))
@@ -32,12 +22,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					gameState.GameHandler.HandlePossibleConstructedCard(id, false);
 			}
-			else if((DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10))
+			else if(HsLogReaderConstants.GoldProgressRegex.IsMatch(logLine)
+				&& (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
+				&& game.CurrentGameMode != GameMode.Spectator)
 			{
-				if(logLine.Contains(GoldRewardLogLine))
-					_receivedGoldReward = true;
-				else if(logLine.Contains(ProgressLogLine))
-					HandleGoldProgress(game);
+
+				int wins;
+				var rawWins = HsLogReaderConstants.GoldProgressRegex.Match(logLine).Groups["wins"].Value;
+				if(int.TryParse(rawWins, out wins))
+				{
+					var timeZone = GetTimeZoneInfo(game.CurrentRegion);
+					if(timeZone != null)
+					{
+						UpdateGoldProgress(wins, game, timeZone);
+					}
+                }
+
 			}
 			else if(HsLogReaderConstants.DustRewardRegex.IsMatch(logLine))
 			{
@@ -51,21 +51,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(int.TryParse(HsLogReaderConstants.GoldRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
 					gameState.GameHandler.HandleGoldReward(amount);
 			}
-		}
-
-		private async void HandleGoldProgress(IGame game)
-		{
-			Logger.WriteLine("Updating GoldProgress, waiting for GameModeDetection...", "RachelleHandler");
-			await game.GameModeDetection(300);
-			if(_goldTrackingGameModes.All(mode => game.CurrentGameMode != mode))
-			{
-				Logger.WriteLine(string.Format("Current GameMode is {0} - cancelled GoldProgress update.", game.CurrentGameMode), "RachelleHandler");
-				return;
-			}
-
-			var timeZone = GetTimeZoneInfo(game.CurrentRegion);
-			if(timeZone != null)
-				UpdateGoldProgress(game, timeZone);
 		}
 
 		private TimeZoneInfo GetTimeZoneInfo(Region region)
@@ -94,42 +79,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return null;
 		}
 
-		private void UpdateGoldProgress(IGame game, TimeZoneInfo timeZone)
+		private void UpdateGoldProgress(int wins, IGame game, TimeZoneInfo timeZone)
 		{
 			try
 			{
-				var regionIndex = (int)game.CurrentRegion - 1;
-				var previousGoldProgress = GetGoldProgressString(regionIndex);
-				var wins = Config.Instance.GoldProgress[regionIndex] + 1;
+				var region = (int)game.CurrentRegion - 1;
 				var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
-				if(Config.Instance.GoldProgressLastReset[regionIndex].Date != date)
+				if(Config.Instance.GoldProgressLastReset[region].Date != date)
 				{
-					wins = 1;
-					Config.Instance.GoldProgressTotal[regionIndex] = 0;
-					Config.Instance.GoldProgressLastReset[regionIndex] = date;
+					Config.Instance.GoldProgressTotal[region] = 0;
+					Config.Instance.GoldProgressLastReset[region] = date;
 				}
-				if(_receivedGoldReward)
-				{
-					wins = 0;
-					_receivedGoldReward = false;
-					Config.Instance.GoldProgressTotal[regionIndex] += GoldRewardAmount;
-				}
-				if(Config.Instance.GoldProgressTotal[regionIndex] == TotalMaxGoldReward)
-					wins = 0;
-				Config.Instance.GoldProgress[regionIndex] = wins;
+				Config.Instance.GoldProgress[region] = wins == 3 ? 0 : wins;
+				if(wins == 3)
+					Config.Instance.GoldProgressTotal[region] += 10;
 				Config.Save();
-				Logger.WriteLine(string.Format("Updated GoldProgress from {0} to {1} for region {2}.", previousGoldProgress, GetGoldProgressString(regionIndex), game.CurrentRegion));
 			}
 			catch(Exception ex)
 			{
 				Logger.WriteLine("Error updating GoldProgress: " + ex, "RachelleHandler");
 			}
-		}
-
-		private string GetGoldProgressString(int regionIndex)
-		{
-			return string.Format("{0}/{1} - {2}/{3}", Config.Instance.GoldProgress[regionIndex], WinsRequiredForReward,
-			                     Config.Instance.GoldProgressTotal[regionIndex], TotalMaxGoldReward);
 		}
 	}
 }

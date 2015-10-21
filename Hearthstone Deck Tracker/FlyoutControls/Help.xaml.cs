@@ -25,9 +25,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ButtonUpdateNotes_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.MainWindow.FlyoutHelp.IsOpen = false;
-			Helper.MainWindow.UpdateNotesControl.LoadUpdateNotes();
-			Helper.MainWindow.FlyoutUpdateNotes.IsOpen = true;
+			Core.MainWindow.FlyoutHelp.IsOpen = false;
+			Core.MainWindow.UpdateNotesControl.LoadUpdateNotes();
+			Core.MainWindow.FlyoutUpdateNotes.IsOpen = true;
 		}
 	}
 }

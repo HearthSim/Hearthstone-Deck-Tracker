@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static DateTime GetStartingPoint()
 		{
-			var powerEntry = _powerLogReader.FindEntryPoint("GameState.DebugPrintPower() - CREATE_GAME");
+			var powerEntry = _powerLogReader.FindEntryPoint(new [] {"GameState.DebugPrintPower() - CREATE_GAME", "tag=GOLD_REWARD_STATE" });
 			var bobEntry = _bobLogReader.FindEntryPoint("legend rank");
 			return powerEntry > bobEntry ? powerEntry : bobEntry;
 		}
@@ -147,7 +147,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Power":
 							PowerGameStateLineHandler.Handle(line.Line, _gameState, _game);
 							API.LogEvents.OnPowerLogLine.Execute(line.Line);
-							GameV2.AddHSLogLine(line.Line);
 							break;
 						case "Zone":
 							ZoneHandler.Handle(line.Line, _gameState);

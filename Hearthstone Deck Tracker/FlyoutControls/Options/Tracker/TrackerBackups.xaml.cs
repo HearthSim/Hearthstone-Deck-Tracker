@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				var result =
 					await
-					Helper.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
+					Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
 					                                   "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
 					                                   MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Affirmative)
@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					DeckStatsList.Save();
 					DefaultDeckStats.Load();
 					DefaultDeckStats.Save();
-					Helper.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
+					Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
 				}
 			}
 		}
@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				          ? "Delete backup " + ((BackupFile)ListBoxBackups.SelectedItem).DisplayName
 				          : "Delete " + ListBoxBackups.SelectedItems.Count + " backups";
 			var result =
-				await Helper.MainWindow.ShowMessageAsync(msg, "Are you sure? This can not be undone!", MessageDialogStyle.AffirmativeAndNegative);
+				await Core.MainWindow.ShowMessageAsync(msg, "Are you sure? This can not be undone!", MessageDialogStyle.AffirmativeAndNegative);
 			if(result == MessageDialogResult.Affirmative)
 			{
 				foreach(var backupFile in ListBoxBackups.SelectedItems.OfType<BackupFile>())

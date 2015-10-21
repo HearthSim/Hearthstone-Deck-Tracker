@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error saving file: " + path + "\n" + e.Message, "XmlManager", 1);
+				Logger.WriteLine("Error saving file: " + path + "\n" + e, "XmlManager", 1);
 				try
 				{
 					//restore backup
@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//restoring failed 
 					deleteBackup = false;
-					Logger.WriteLine("Error restoring backup for: " + path + "\n" + e2.Message, "XmlManager", 1);
+					Logger.WriteLine("Error restoring backup for: " + path + "\n" + e2, "XmlManager", 1);
 				}
 			}
 			finally

@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -33,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
 			OpponentSecrets = new OpponentSecrets(this);
+            Reset();
 		}
 
 		public static List<string> HSLogLines
@@ -91,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_currentGameMode = value;
-				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
+				Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
 			}
 		}
 
@@ -117,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			_hsLogLines = new List<string>();
 
-			if(Helper.MainWindow.Overlay != null)
+			if(Core.Game != null && Core.Overlay != null)
 			{
 				Helper.UpdatePlayerCards();
 				Helper.UpdateOpponentCards();
@@ -204,24 +206,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoImportSave)
 				{
 					Logger.WriteLine("...auto saving new arena deck.");
-					Helper.MainWindow.SetNewDeck(TempArenaDeck);
-					Helper.MainWindow.SaveDeck(false, TempArenaDeck.Version);
+					Core.MainWindow.SetNewDeck(TempArenaDeck);
+					Core.MainWindow.SaveDeck(false, TempArenaDeck.Version);
 					TempArenaDeck = null;
 				}
 				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
 				{
 					var result =
 						await
-						Helper.MainWindow.ShowMessageAsync("New arena deck detected!",
+						Core.MainWindow.ShowMessageAsync("New arena deck detected!",
 						                                   "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
 						                                   MessageDialogStyle.AffirmativeAndNegative,
-						                                   new MetroDialogSettings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+						                                   new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
 
 					if(result == MessageDialogResult.Affirmative)
 					{
 						Logger.WriteLine("...saving new arena deck.");
-						Helper.MainWindow.SetNewDeck(TempArenaDeck);
-						Helper.MainWindow.ActivateWindow();
+						Core.MainWindow.SetNewDeck(TempArenaDeck);
+						Core.MainWindow.ActivateWindow();
 						TempArenaDeck = null;
 					}
 					else
