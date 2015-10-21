@@ -59,6 +59,14 @@ namespace Hearthstone_Deck_Tracker
 			return heroClass;
 		}
 
+		public void Trigger(string cardId)
+		{
+			if(Secrets.Any(s => s.PossibleSecrets[cardId]))
+				SetZero(cardId);
+			else
+				SetMax(cardId);
+		}
+
 		public void NewSecretPlayed(HeroClass heroClass, int id, int turn)
 		{
 			Secrets.Add(new SecretHelper(heroClass, id, turn));
@@ -137,19 +145,10 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Cleared secrets", "OpponentSecrets");
 		}
 
-		public void SetMax(string cardId, HeroClass? heroClass)
+		public void SetMax(string cardId)
 		{
-			if(heroClass == null)
-			{
-				heroClass = GetHeroClass(cardId);
-				if(!heroClass.HasValue)
-					return;
-			}
-
-			foreach(var secret in Secrets.Where(s => s.HeroClass == heroClass))
-			{
+			foreach(var secret in Secrets)
 				secret.PossibleSecrets[cardId] = true;
-			}
 		}
 
         public void SetZero(string cardId)

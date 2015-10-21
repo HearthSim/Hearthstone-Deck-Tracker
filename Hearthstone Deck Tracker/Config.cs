@@ -223,6 +223,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
 
+		[DefaultValue(true)]
+		public bool ExtraFeaturesFriendslist = true;
+
+		[DefaultValue(false)]
+		public bool ExtraFeaturesSecrets = false;
+
 		[DefaultValue(false)]
 		public bool FixedDuplicateMatches = false;
 
