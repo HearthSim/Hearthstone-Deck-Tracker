@@ -228,6 +228,16 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait(fixedName);
 			SendKeys.SendWait("{ENTER}");
 
+			Version win8version = new Version(6, 2, 9200, 0);
+			if (Environment.OSVersion.Version >= win8version) {
+				// The second ENTER is to workaround exporting issues in Win 8/10.
+				// If HS detects it's a tablet, or the software "Touch Keyboard" was opened on a
+				// non-tablet machine, the game will use a new and buggy search box in the upper-right,
+				// causing strange behaviors. This workaround looks strange too, but just works.
+				// See https://github.com/ko-vasilev/Hearthstone-Collection-Tracker/issues/25#issuecomment-135025630
+				SendKeys.SendWait("{ENTER}");
+			}
+
 			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter", 1);
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
