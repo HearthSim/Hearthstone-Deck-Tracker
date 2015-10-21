@@ -154,6 +154,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.915)]
 		public double ExportAllButtonY = 0.915;
 
+		[DefaultValue(false)]
+		public bool ExportAddDeckVersionToName = false;
+
 		[DefaultValue(0.118)]
 		public double ExportZeroButtonX = 0.118;
 

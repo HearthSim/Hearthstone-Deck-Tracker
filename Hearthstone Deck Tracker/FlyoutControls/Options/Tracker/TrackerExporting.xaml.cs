@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAutoClearFilters.IsChecked = Config.Instance.EnableExportAutoFilter;
 			TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
 			CheckboxShowDialog.IsChecked = Config.Instance.ShowExportingDialog;
+			CheckboxExportAddVersion.IsChecked = Config.Instance.ExportAddDeckVersionToName;
 
 			var delay = Config.Instance.DeckExportDelay;
 			ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
@@ -221,6 +222,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ShowExportingDialog = false;
+			Config.Save();
+		}
+
+		private void CheckboxExportAddVersion_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExportAddDeckVersionToName = true;
+			Config.Save();
+		}
+
+		private void CheckboxExportAddVersion_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExportAddDeckVersionToName = false;
 			Config.Save();
 		}
 	}

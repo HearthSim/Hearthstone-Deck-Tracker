@@ -62,7 +62,12 @@ namespace Hearthstone_Deck_Tracker
 					await ClearDeck(hsRect.Width, hsRect.Height, hsHandle, ratio);
 
 				if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
-					await SetDeckName(deck.Name, ratio, hsRect.Width, hsRect.Height, hsHandle);
+				{
+					var name = deck.Name;
+					if(Config.Instance.ExportAddDeckVersionToName)
+						name += " " + deck.SelectedVersion.ShortVersionString;
+					await SetDeckName(name, ratio, hsRect.Width, hsRect.Height, hsHandle);
+				}
 
 				if (Config.Instance.EnableExportAutoFilter)
 					await ClickAllCrystal(ratio, hsRect.Width, hsRect.Height, hsHandle);
