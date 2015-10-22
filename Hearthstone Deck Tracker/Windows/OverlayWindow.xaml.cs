@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
@@ -768,8 +769,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
-			TextBlockPlayerAttack.Text = Core.Game.Player.Board.Where(x => x != null && x.Entity != null).Sum(x => x.Entity.GetTag(GAME_TAG.ATK)).ToString();
-			TextBlockOpponentAttack.Text = Core.Game.Opponent.Board.Where(x => x != null && x.Entity != null).Sum(x => x.Entity.GetTag(GAME_TAG.ATK)).ToString();
+			var board = new BoardState();
+			TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
+			TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 		}
 
 	    private void UpdateGoldProgress()

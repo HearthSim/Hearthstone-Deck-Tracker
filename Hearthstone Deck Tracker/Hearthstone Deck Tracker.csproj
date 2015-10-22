@@ -245,6 +245,7 @@
     <Compile Include="Exporting\ExportingHelper.cs" />
     <Compile Include="Exporting\ExportingInfo.cs" />
     <Compile Include="Exporting\HueAndBrightness.cs" />
+<<<<<<< HEAD
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
@@ -265,6 +266,9 @@
     <Compile Include="Importing\Websites\Hearthstonetopdecks.cs" />
     <Compile Include="Importing\Websites\Icyveins.cs" />
     <Compile Include="Importing\Websites\Tempostorm.cs" />
+=======
+    <Compile Include="Utility\BoardState.cs" />
+>>>>>>> c2c9d20... add damage tab to debug window, and board state stub
     <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
