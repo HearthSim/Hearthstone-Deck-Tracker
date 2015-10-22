@@ -509,6 +509,12 @@ namespace Hearthstone_Deck_Tracker
                 Hide();
         }
 
+	    public void ForceHide(bool hide)
+	    {
+		    ForceHidden = hide;
+			UpdatePosition();
+	    }
+
         private void SetRect(int top, int left, int width, int height)
         {
             Top = top + _offsetY;

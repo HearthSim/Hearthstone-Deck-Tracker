@@ -182,6 +182,11 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Exporting\ExportingActions.cs" />
+    <Compile Include="Exporting\ExportingHelper.cs" />
+    <Compile Include="Exporting\ExportingInfo.cs" />
+    <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
       <DependentUpon>OpponentDeck.xaml</DependentUpon>
@@ -355,7 +360,7 @@
     <Compile Include="Hearthstone\CardIds.cs" />
     <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
-    <Compile Include="DeckExporter.cs" />
+    <Compile Include="Exporting\DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Hearthstone\Entities\Entity.cs" />
