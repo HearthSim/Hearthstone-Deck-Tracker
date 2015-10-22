@@ -76,6 +76,11 @@ namespace Hearthstone_Deck_Tracker
         public void SecretRemoved(int id, string cardId)
         {
             int index = Secrets.FindIndex(s => s.Id == id);
+	        if(index == -1)
+			{
+				Logger.WriteLine(string.Format("Secret with id={0}, cardId={1} not found when trying to remove it.", id, cardId), "OpponentSecrets");
+				return;
+	        }
             Entity attacker, defender;
             Game.Entities.TryGetValue(proposedAttackerEntityId, out attacker);
             Game.Entities.TryGetValue(proposedDefenderEntityId, out defender);
